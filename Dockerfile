@@ -9,7 +9,7 @@ FROM base AS build
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --force
 RUN VITE_APP_MODE=development pnpm run build --base="/"
 
-FROM nginx:alpine as final
+FROM nginx:alpine AS final
 
 COPY docker/front/default.conf /etc/nginx/conf.d/
 
