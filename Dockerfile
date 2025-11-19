@@ -11,7 +11,7 @@ RUN VITE_APP_MODE=development pnpm run build --base="/"
 
 FROM nginx:alpine AS final
 
-COPY docker/front/default.conf /etc/nginx/conf.d/
+COPY docker/default.conf /etc/nginx/conf.d/
 
 COPY --from=build /app/public/config.local.json /usr/share/nginx/html/config.json
 COPY --from=build /app/dist /usr/share/nginx/html
