@@ -15,7 +15,9 @@ export const FlowbitsMatchTemplate = ({ flowbits }: FlowbitsMatchProps) => {
         {flowbits.operator && <Badge>{flowbits.operator}</Badge>}
       </MatchLabel>
       <MatchContent className="flex flex-col">
-        {flowbits.names?.map((name) => <div key={name}>{name}</div>)}
+        {flowbits.names?.map((name) => (
+          <div key={name}>{name}</div>
+        ))}
       </MatchContent>
     </Match>
   );
