@@ -131,7 +131,7 @@ export const FilterSetsPage = () => {
               <CommandFilterSingle
                 title="Type"
                 value={type}
-                onChange={setType}
+                onChange={setType as (value: string | null) => void}
                 options={[
                   {
                     label: 'Global',

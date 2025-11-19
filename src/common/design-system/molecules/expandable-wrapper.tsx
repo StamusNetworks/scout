@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority';
 import { Expand, Minimize } from 'lucide-react';
-import { RefObject, useEffect, useRef, useState } from 'react';
+import React, { RefObject, useEffect, useRef, useState } from 'react';
 
 import { useResizeObserver } from '@/common/lib/use-resize-observer';
 
@@ -23,7 +23,7 @@ interface ExpandableWrapperProps {
     width: number,
     height: number,
     mode: 'detached' | 'wrapped',
-  ) => JSX.Element;
+  ) => React.JSX.Element;
 }
 
 export const ExpandableWrapper = ({ render }: ExpandableWrapperProps) => {

@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useTheme } from '@/features/ui/theming/useTheme';
 
@@ -19,7 +19,9 @@ interface UseDrawGraphProps<T = Record<string, unknown>> {
     d: MouseEvent,
     p: d3.HierarchyRectangularNode<SunburstNode<T>>,
   ) => void;
-  renderTooltip?: (treeNode: SunburstNode<T> | undefined) => JSX.Element | null;
+  renderTooltip?: (
+    treeNode: SunburstNode<T> | undefined,
+  ) => React.JSX.Element | null;
   selectedNode: string | null | undefined;
   onSelectionChange?: (path: string | null) => void;
   setTooltipData: (data: SunburstNode<T> | null) => void;

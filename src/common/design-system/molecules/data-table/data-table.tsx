@@ -58,7 +58,7 @@ interface NewTable<TData> {
   }: {
     row: Row<TData>;
     index?: number;
-  }) => JSX.Element;
+  }) => React.JSX.Element;
   onRowClick?: (row: Row<TData>) => void;
   getRowId?: (
     originalRow: TData,

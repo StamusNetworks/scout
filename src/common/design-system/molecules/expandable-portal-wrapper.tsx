@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority';
 import { Expand, Minimize } from 'lucide-react';
-import { type RefObject, useEffect, useRef, useState } from 'react';
+import React, { type RefObject, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useResizeObserver } from '@/common/lib/use-resize-observer';
@@ -24,7 +24,7 @@ interface ExpandableWrapperProps {
     width: number,
     height: number,
     mode: 'detached' | 'wrapped',
-  ) => JSX.Element;
+  ) => React.JSX.Element;
 }
 export const ExpandablePortalWrapper = ({ render }: ExpandableWrapperProps) => {
   const [mode, setMode] = useState<'detached' | 'wrapped'>('wrapped');
