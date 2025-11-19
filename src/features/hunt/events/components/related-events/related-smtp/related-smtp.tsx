@@ -1,0 +1,10 @@
+import { SmtpEvent } from '../../../model/event-types/smtp.schema';
+import { RelatedTable } from '../related-table';
+import { relatedFlowColumns } from './related-smtp.columns';
+
+export const RelatedSmtpTab = ({ data }: { data?: SmtpEvent[] }) => (
+  <RelatedTable<SmtpEvent>
+    columns={relatedFlowColumns}
+    data={data || []}
+  />
+);

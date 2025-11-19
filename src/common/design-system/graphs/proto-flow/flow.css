@@ -1,0 +1,56 @@
+.drawflow .drawflow-node.drawflow-value {
+    background: var(--card) !important;
+    border: 2px solid var(--border) !important;
+    width: 220px;
+    color: var(--card-foreground);
+    border-radius: var(--radius);
+  }
+  .drawflow .drawflow-node.drawflow-value .drawflow_content_node {
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: center;
+  }
+  .drawflow .drawflow-node.drawflow-value.selected {
+    background-color: #FFF !important;
+    box-shadow: 0px 4px 18px 0px #0000003b;
+  }
+  
+  .drawflow .drawflow-node.info-box,
+  .drawflow .drawflow-node.flow-box.selected {
+    cursor: default !important;
+    color: #005892;
+    font-style: italic;
+    width: 200px;
+    background: transparent !important;
+    border: 0px solid #FFF;
+  }
+  
+  .drawflow .drawflow-delete {
+    display: none;
+  }
+  .drawflow .drawflow-node {
+    padding: 8px 15px !important;
+  }
+  .drawflow .drawflow-node:hover,
+  .drawflow .drawflow-node .input,
+  .drawflow .drawflow-node .output {
+    cursor: default !important;
+  }
+
+  .drawflow .connection .main-path {
+    stroke: color-mix(in oklch, var(--primary) 50%, transparent) !important;
+    opacity: 0.5;
+  }
+  .drawflow .connection .main-path:hover {
+    stroke: color-mix(in oklch, var(--primary) 50%, transparent) !important;
+    cursor: default !important;
+    opacity: 0.5;
+
+  }
+
+.drawflow .drawflow-node .input,
+.drawflow .drawflow-node .output {
+  background: var(--card) !important;
+  border: 2px solid color-mix(in oklch, var(--primary) 50%, transparent) !important;
+}

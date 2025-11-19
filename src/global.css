@@ -1,0 +1,334 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@config '../tailwind.config.ts';
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --chart-1: oklch(0.646 0.222 41.116);
+    --chart-2: oklch(0.6 0.118 184.704);
+    --chart-3: oklch(0.398 0.07 227.392);
+    --chart-4: oklch(0.828 0.189 84.429);
+    --chart-5: oklch(0.769 0.188 70.08);
+
+    --tw-shadow-color: rgba(0, 0, 0, 0.25);
+    --menu: oklch(1 0 0);
+    --menu-foreground: oklch(0.3598 0 0);
+
+    /* --reconnaissance: oklch(0.851 0.1716 100.13);
+    --reconnaissance-foreground: oklch(0.401 0.1716 100.13);
+    --weaponization: oklch(0.8023 0.167 88.15);
+    --weaponization-foreground: oklch(0.4023 0.167 88.15);
+    --delivery: oklch(0.7514 0.1638 74.19);
+    --delivery-foreground: oklch(0.4014 0.1638 74.19);
+    --exploitation: oklch(0.694 0.1745 52.42);
+    --exploitation-foreground: oklch(0.3594 0.1745 52.42);
+    --installation: oklch(0.6234 0.2179 36.39);
+    --installation-foreground: oklch(0.3034 0.2179 36.39);
+    --command_and_control: oklch(0.5815 0.2514 28.3);
+    --command_and_control-foreground: oklch(0.2815 0.2514 28.3);
+    --action_on_objectives: oklch(0.5103 0.2541 312.35);
+    --action_on_objectives-foreground: oklch(0.2563 0.2459 343.48); */
+
+    --reconnaissance: oklch(0.851 0.1716 100.13);
+    --reconnaissance-foreground: oklch(0.251 0.1716 100.13);
+    --weaponization: oklch(0.7867 0.1716 71.47);
+    --weaponization-foreground: oklch(0.2867 0.1716 71.47);
+    --delivery: oklch(0.68 0.2273 40.76);
+    --delivery-foreground: oklch(0.28 0.2273 40.76);
+    --exploitation: oklch(0.5815 0.2514 28.3);
+    --exploitation-foreground: oklch(0.2815 0.2514 28.3);
+    --installation: oklch(0.6309 0.2565 1.59);
+    --installation-foreground: oklch(0.309 0.2565 1.59);
+    --command_and_control: oklch(0.64 0.2763 313.94);
+    --command_and_control-foreground: oklch(0.24 0.2763 313.94);
+    --action_on_objectives: oklch(0.5103 0.2541 312.35);
+    --action_on_objectives-foreground: oklch(0.2103 0.2541 312.35);
+
+    --untagged: oklch(0.5461 0.2152 262.88);
+    --informational: oklch(0.8133 0.1865 81);
+    --relevant: oklch(0.58 0.1865 32.29);
+
+    --doc: var(--color-red-500);
+    --doc-foreground: var(--color-red-600);
+    --doc-offender: var(--color-purple-500);
+    --doc-offender-foreground: var(--color-purple-600);
+    --dopv: var(--color-yellow-500);
+    --dopv-foreground: var(--color-yellow-600);
+  }
+
+  .dark {
+    --background: oklch(0.1445 0 0);
+    --foreground: oklch(0.9848 0 0);
+    
+    --card: oklch(0.1445 0 0);
+    --card-foreground: oklch(0.9848 0 0);
+    
+    --popover: oklch(0.1445 0 0);
+    --popover-foreground: oklch(0.9848 0 0);
+    
+    --primary: oklch(0.9619 0 0);
+    --primary-foreground: oklch(0.2044 0 0);
+    
+    --secondary: oklch(0.2686 0 0);
+    --secondary-foreground: oklch(0.9848 0 0);
+    
+    --muted: oklch(0.2686 0 0);
+    --muted-foreground: oklch(0.7153 0 0);
+    
+    --accent: oklch(0.2686 0 0);
+    --accent-foreground: oklch(0.9848 0 0);
+    
+    --destructive: oklch(0.5656 0.1949 26.07);
+    --destructive-foreground: oklch(0.9848 0 0);
+    
+    --menu: oklch(0.1804 0 0);
+    --menu-foreground: oklch(0.9848 0 0);
+    
+    --border: oklch(0.2686 0 0);
+    --input: oklch(0.2686 0 0);
+    --ring: oklch(0.8697 0 0);
+  }
+
+  .matrix {
+    --background: oklch(0.1954 0.0284 150.53);
+    --foreground: oklch(0.9643 0.0281 150.98);
+
+    --muted: oklch(0.2912 0.042852 150.9951);
+    --muted-foreground: oklch(0.6584 0.0286 172.25);
+
+    --popover: oklch(0.1663 0.0187 151.42);
+    --popover-foreground: oklch(0.9643 0.0281 150.98);
+
+    --card: oklch(0.1663 0.0187 151.42);
+    --card-foreground: oklch(0.9643 0.0281 150.98);
+
+    --border: oklch(0.3483 0.0774 148.98);
+    --input: oklch(0.3099 0.0669 149.18);
+
+    --primary: oklch(0.7697 0.205 149.22);
+    --primary-foreground: oklch(0.1606 0.0046 202.72);
+
+    --secondary: oklch(0.3394 0.0949 146.59);
+    --secondary-foreground:oklch(0.9729 0.029 152.75);
+
+    --accent: oklch(0.2859 0.0506 149.79);
+    --accent-foreground: oklch(0.9643 0.0281 150.98);
+
+    --destructive: oklch(0.3959 0.1331 25.72);
+    --destructive-foreground: oklch(0.9818 0.0015 173.53);
+
+    --ring: oklch(0.6685 0.2782 144.39);
+
+    --menu: oklch(0.1663 0.0187 151.42);
+    --menu-foreground: oklch(0.7697 0.205 149.22);
+  }
+
+  .catppuccin {
+    --background: oklch(0.2438 0.0305 283.91);
+    --foreground: oklch(0.8784 0.0426 272.09);
+    --muted: oklch(0.3031 0.0327 284.28);
+    --muted-foreground: oklch(0.7327 0.0272 285.71);
+    --popover: oklch(0.2162 0.0251 284.1);
+    --popover-foreground: oklch(0.9799 0.0068 272.58);
+    --card: oklch(0.2255 0.0269 284.03);
+    --card-foreground: oklch(0.9293 0.0244 272.37);
+    --border: oklch(0.3402 0.0234 285.09);
+    --input: oklch(0.3402 0.0234 285.09);
+    --primary: oklch(0.7865 0.1191 304.45);
+    --primary-foreground: oklch(0.267 0.139 295.6);
+    --secondary: oklch(0.3336 0.0684 303.66);
+    --secondary-foreground: oklch(0.9101 0.0218 306.12);
+    --accent: oklch(0.3725 0.0547 283.42);
+    --accent-foreground: oklch(0.9103 0.0145 286.11);
+    --destructive: oklch(0.5912 0.22753401215620966 20.403832281823927);
+    --destructive-foreground: oklch(1 0 0);
+    --ring: oklch(0.7865 0.1191 304.45);
+    --menu: oklch(0.2573 0.033 283.84);
+    --menu-foreground: oklch(0.8784 0.0426 272.09);
+
+  }
+
+  .diesel {
+    --background: oklch(0.2062 0.0121 277.39);
+    --foreground: oklch(0.9785 0.0097 106.58);
+    --muted: oklch(0.2778 0.0164 277.39);
+    --muted-foreground: oklch(0.7034 0.0267 277.74);
+    --popover: oklch(0.1746 0.0088 277.53);
+    --popover-foreground: oklch(1 0 0);
+    --card: oklch(0.1853 0.01 277.48);
+    --card-foreground: oklch(1 0 0);
+    --border: oklch(0.3454 0.007 278.02);
+    --input: oklch(0.3454 0.007 278.02);
+    --primary: oklch(0.7481 0.0458 264.25);
+    --primary-foreground: oklch(0.1685 0.0213 264.27);
+    --secondary: oklch(0.3678 0.0047 264.51);
+    --secondary-foreground: oklch(0.8832 0.0022 264.54);
+    --accent: oklch(0.3503 0.0267 277.1);
+    --accent-foreground: oklch(0.8745 0.0126 278.11);
+    --destructive: oklch(0.5912 0.22753401215620966 20.403832281823927);
+    --destructive-foreground: oklch(1 0 0);
+    --ring: oklch(0.7481 0.0458 264.25);
+    --menu: oklch(0.2266 0.0142 277.33);
+    --menu-foreground: oklch(0.9785 0.0097 106.58);
+  }
+
+  .color-blind-prot-deut {
+    --doc: oklch(0.7146 0.1426 247.78);
+    --doc-foreground: oklch(0.6546 0.1426 247.78);
+    --doc-offender: oklch(0.844 0.1306 194.96);
+    --doc-offender-foreground: oklch(0.674 0.1306 194.96);
+    --dopv: oklch(0.7574 0.1752 89.73);
+    --dopv-foreground: oklch(0.7074 0.1752 89.73);
+  }
+  .color-blind-trit {
+    --doc: oklch(0.6017 0.2469 29.23);
+    --doc-foreground: oklch(0.5517 0.2469 29.23);
+    --doc-offender: oklch(0.7201 0.1458 329.07);
+    --doc-offender-foreground: oklch(0.5501 0.1458 329.07);
+    --dopv: oklch(0.7583 0.1084 217.31);
+    --dopv-foreground: oklch(0.7083 0.1084 217.31);
+  }
+  [data-theme=dark].color-blind-trit {
+    --doc-offender-foreground: oklch(0.701 0.1458 329.07);
+  }
+  [data-theme=dark] {
+    /* --reconnaissance: oklch(0.901 0.1716 100.13);
+    --reconnaissance-foreground:  oklch(1 0.0516 100.13);
+    --weaponization: oklch(0.8623 0.167 88.15);
+    --weaponization-foreground: oklch(1 0.0627 88.15);
+    --delivery: oklch(0.8114 0.1638 74.19);
+    --delivery-foreground: oklch(1 0.0267 47.6);
+    --exploitation: oklch(0.744 0.1745 52.42);
+    --exploitation-foreground: oklch(1 0.0745 52.42);
+    --installation: oklch(0.6734 0.2179 36.39);
+    --installation-foreground: oklch(1 0.1179 36.39);
+    --command_and_control: oklch(0.6015 0.3214 30.3);
+    --command_and_control-foreground: oklch(1 0.1014 28.3);
+    --action_on_objectives: oklch(0.5763 0.2459 343.48);
+    --action_on_objectives-foreground: oklch(1 0.1559 343.48); */
+    --reconnaissance-foreground: oklch(1 0.1716 100.13);
+    --weaponization-foreground: oklch(1 0.1716 71.47);
+    --delivery-foreground: oklch(1 0.2273 40.76);
+    --exploitation-foreground: oklch(1 0.2514 28.3);
+    --installation-foreground: oklch(1 0.2565 1.59);
+    --command_and_control-foreground: oklch(1 0.2763 313.94);
+    --action_on_objectives-foreground: oklch(1 0.2541 312.35);
+    --doc-offender-foreground: var(--color-purple-400);
+  }
+   
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+* {
+  @apply [&_svg.lucide:not([class*='size-'])]:size-4
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-menu: var(--menu);
+  --color-menu-foreground: var(--menu-foreground);
+
+  --color-ring: var(--ring);
+  --color-radius: var(--radius);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-reconnaissance: var(--reconnaissance);
+  --color-reconnaissance-foreground: var(--reconnaissance-foreground);
+  --color-weaponization: var(--weaponization);
+  --color-weaponization-foreground: var(--weaponization-foreground);
+  --color-delivery: var(--delivery);
+  --color-delivery-foreground: var(--delivery-foreground);
+  --color-exploitation: var(--exploitation);
+  --color-exploitation-foreground: var(--exploitation-foreground);
+  --color-installation: var(--installation);
+  --color-installation-foreground: var(--installation-foreground);
+  --color-command_and_control: var(--command_and_control);
+  --color-command_and_control-foreground: var(--command_and_control-foreground);
+  --color-action_on_objectives: var(--action_on_objectives);
+  --color-action_on_objectives-foreground: var(--action_on_objectives-foreground);
+  --color-pre-condition: var(--pre-condition);
+  --color-pre-condition-foreground: var(--pre-condition-foreground);
+
+  --color-informational: var(--informational);
+  --color-relevant: var(--relevant);
+  --color-untagged: var(--untagged);
+
+  --color-doc: var(--doc);
+  --color-doc-foreground: var(--doc-foreground);
+  --color-dopv: var(--dopv);
+  --color-dopv-foreground: var(--dopv-foreground);
+  --color-doc-offender: var(--doc-offender);
+  --color-doc-offender-foreground: var(--doc-offender-foreground);
+}

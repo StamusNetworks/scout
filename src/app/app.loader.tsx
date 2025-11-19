@@ -1,0 +1,65 @@
+import { useEffect } from 'react';
+
+import { Spin } from '@/common/design-system/atoms/ui/spin';
+import { getConfig } from '@/config';
+import { refreshRange } from '@/features/hunt/filtering/dates-filters/dates-filters.slice';
+import { useAutoReload } from '@/features/ui/use-auto-reload';
+import { useSessionActivity } from '@/features/user/auth/hooks/use-session-activity';
+import {
+  useGetESMappingQuery,
+  useGetGlobalSettingsQuery,
+  useGetSystemSettingsQuery,
+  useGetTenantsListQuery,
+} from '@/features/user/settings/settings.api';
+import { useAppDispatch } from '@/store/store';
+
+export const AppLoader = ({ children }: { children: React.ReactNode }) => {
+  const dispatch = useAppDispatch();
+  useSessionActivity();
+  const { isLoading: globalSettingsLoading } = useGetGlobalSettingsQuery(
+    undefined,
+    {
+      refetchOnFocus: false,
+      refetchOnReconnect: false,
+    },
+  );
+  const { isLoading: tenantsListLoading } = useGetTenantsListQuery(undefined, {
+    refetchOnFocus: false,
+    refetchOnReconnect: false,
+  });
+  const { isLoading: systemSettingsLoading, error } = useGetSystemSettingsQuery(
+    undefined,
+    {
+      refetchOnFocus: false,
+      refetchOnReconnect: false,
+    },
+  );
+  useGetESMappingQuery();
+  useAutoReload();
+
+  useEffect(() => {
+    if (
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+      (error as any)?.status === 403 &&
+      import.meta.env.VITE_APP_MODE !== 'development'
+    ) {
+      window.location.href =
+        getConfig()?.apiUrl + '/accounts/login' + import.meta.env.BASE_URL;
+    }
+  }, [error]);
+
+  useEffect(() => {
+    dispatch(refreshRange());
+  }, [dispatch]);
+
+  return globalSettingsLoading ||
+    tenantsListLoading ||
+    systemSettingsLoading ||
+    error ? (
+    <div className="flex h-screen w-screen items-center justify-center">
+      <Spin />
+    </div>
+  ) : (
+    children
+  );
+};

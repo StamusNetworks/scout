@@ -1,0 +1,70 @@
+// Define the original routes as a typed constant
+export const routes = {
+  login: '/login',
+  register: '/register',
+  home: '/',
+  explorer: '/explorer',
+  events: '/events',
+  event: '/events/:eventId',
+  operational_center: '/operational-center',
+  filters_actions: '/filters-actions',
+  detection_methods: '/detection-methods',
+  detection_method: '/detection-methods/:detectionMethodId',
+  threats: '/threats',
+  threats_timeline: '/threats/timeline',
+  threats_graph: '/threats/entities-graph',
+  threats_coverage: '/threats/coverage',
+  threats_coverage_family: '/threats/coverage/family/:familyId',
+  threats_coverage_family_events: '/threats/coverage/family/:familyId/events',
+  threats_coverage_family_detection_methods:
+    '/threats/coverage/family/:familyId/detection-methods',
+  threats_coverage_family_threats: '/threats/coverage/family/:familyId/threats',
+  threats_coverage_threat: '/threats/coverage/threat/:threatId',
+  threats_coverage_threat_events: '/threats/coverage/threat/:threatId/events',
+  threats_coverage_threat_detection_methods:
+    '/threats/coverage/threat/:threatId/detection-methods',
+  policy_violations: '/policy-violations',
+  policy_violations_timeline: '/policy-violations/timeline',
+  policy_violations_graph: '/policy-violations/entities-graph',
+  policy_violations_coverage: '/policy-violations/coverage',
+  policy_violations_coverage_family:
+    '/policy-violations/coverage/family/:familyId',
+  policy_violations_coverage_family_events:
+    '/policy-violations/coverage/family/:familyId/events',
+  policy_violations_coverage_family_detection_methods:
+    '/policy-violations/coverage/family/:familyId/detection-methods',
+  policy_violations_coverage_family_threats:
+    '/policy-violations/coverage/family/:familyId/threats',
+  policy_violations_coverage_threat:
+    '/policy-violations/coverage/threat/:threatId',
+  policy_violations_coverage_threat_events:
+    '/policy-violations/coverage/threat/:threatId/events',
+  policy_violations_coverage_threat_detection_methods:
+    '/policy-violations/coverage/threat/:threatId/detection-methods',
+  analytics: '/analytics',
+  beaconing_ips: '/analytics/beaconing-ips',
+  beaconing_ips_details: '/analytics/beaconing-ips/:ip',
+  beaconing_ja3s: '/analytics/beaconing-ja3s',
+  beaconing_ja3s_details: '/analytics/beaconing-ja3s/:ja3s',
+  sightings: '/analytics/sightings',
+  sightings_details: '/analytics/sightings/:sightingId',
+  attack_surface: '/attack-surface',
+  attack_surface_inventory: '/attack-surface/inventory',
+  hosts: '/hosts',
+  hosts_host: '/hosts/:hostId',
+  hosts_host_incidents: '/hosts/:hostId/incidents',
+  hosts_host_detection_methods: '/hosts/:hostId/detection-methods',
+  hosts_host_beacons: '/hosts/:hostId/beacons',
+  hosts_host_sightings: '/hosts/:hostId/sightings',
+  hosts_host_timeline: '/hosts/:hostId/timeline',
+  hosts_host_outlierevents: '/hosts/:hostId/outlier-events',
+  investigations: '/investigations',
+  explore: '/explore',
+  deeplinks: '/deeplinks',
+  operations_history: '/operations-history',
+  user_settings: '/user-settings',
+  session_events: '/session-events',
+  filter_sets: '/filter-sets',
+} as const;
+
+export type Routes = typeof routes;

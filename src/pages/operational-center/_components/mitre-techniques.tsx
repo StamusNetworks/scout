@@ -1,0 +1,195 @@
+import { Search } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Label, Pie, PieChart } from 'recharts';
+
+import { Column } from '@/common/design-system/atoms/layout/column';
+import { Grid } from '@/common/design-system/atoms/layout/grid';
+import { Row } from '@/common/design-system/atoms/layout/row';
+import { Badge } from '@/common/design-system/atoms/ui/badge';
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@/common/design-system/atoms/ui/chart';
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+} from '@/common/design-system/atoms/ui/empty';
+import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { formatNumber } from '@/common/lib/numbers';
+import { useGetDashboardFieldsQuery } from '@/features/hunt/dashboard/api/dashboard.api';
+import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
+import { replaceFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
+import { enableTags } from '@/features/hunt/filtering/query-filters/use-cases/enable-tags';
+import { routes } from '@/pages/routes.config';
+import { useAppDispatch } from '@/store/store';
+
+export const MitreTechniques = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const params = useGlobalQueryParams(['tenant', 'dates']);
+  const { data, config, total, isError, isEmpty } = useGetDashboardFieldsQuery(
+    {
+      ...params,
+      alert: true,
+      discovery: true,
+      stamus: true,
+      fields: 'alert.metadata.mitre_technique_name',
+      page_size: 10,
+    },
+    {
+      selectFromResult: (result) => ({
+        ...result,
+        data:
+          result.data?.['alert.metadata.mitre_technique_name']?.map((item) => ({
+            ...item,
+            fill: `var(--color-${item.key})`,
+          })) || [],
+        config:
+          result.data?.['alert.metadata.mitre_technique_name']?.reduce(
+            (acc, curr, i) => {
+              acc[curr.key] = {
+                label: curr.key,
+                color: `var(--chart-${(i % 5) + 1})`,
+              };
+              return acc;
+            },
+            {} as Record<string, ChartConfig[keyof ChartConfig]>,
+          ) || {},
+        total:
+          result.data?.['alert.metadata.mitre_technique_name']?.reduce(
+            (acc, curr) => acc + curr.doc_count,
+            0,
+          ) || 0,
+        isEmpty: !result.data?.['alert.metadata.mitre_technique_name']?.length,
+      }),
+    },
+  );
+
+  const handleClickMitreTechnique = (data: { name: string }) => {
+    enableTags(dispatch);
+    dispatch(
+      replaceFilters([
+        {
+          key: 'alert.metadata.mitre_technique_name',
+          value: data.name,
+        },
+      ]),
+    );
+    navigate(routes.explorer);
+  };
+
+  if (isError) {
+    return <div>There was an error while fetching the data</div>;
+  }
+
+  if (isEmpty) {
+    return (
+      <Empty className="border">
+        <EmptyMedia variant="icon">
+          <Search />
+        </EmptyMedia>
+        <EmptyContent>
+          <EmptyHeader>No MITRE Techniques found</EmptyHeader>
+          <EmptyDescription>
+            Either there are no events in the selected time period, or none of
+            them have a MITRE Technique associated.
+          </EmptyDescription>
+        </EmptyContent>
+      </Empty>
+    );
+  }
+  return (
+    <Grid className="grid-cols-[minmax(14rem,2fr)_3fr] items-center gap-6">
+      <ChartContainer
+        config={config}
+        className="mx-auto aspect-square min-h-64"
+      >
+        <PieChart margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+          <ChartTooltip
+            content={
+              <ChartTooltipContent
+                hideLabel
+                nameKey="key"
+                formatter={(value, name, item) => (
+                  <Row className="flex-nowrap items-center gap-1 text-nowrap">
+                    <div
+                      className="h-2.5 w-2.5 shrink-0 rounded-[2px] bg-(--color-bg)"
+                      style={
+                        {
+                          '--color-bg': `var(--color-${name})`,
+                        } as React.CSSProperties
+                      }
+                    />
+                    {item.payload.key.replaceAll('_', ' ')}
+                    <div className="text-foreground ml-4 flex items-baseline gap-0.5 font-mono font-medium tabular-nums">
+                      {`${Math.round(((value as number) / total) * 100)}% (${value})`}
+                    </div>
+                  </Row>
+                )}
+              />
+            }
+          />
+          <Pie
+            data={data}
+            dataKey="doc_count"
+            nameKey="key"
+            innerRadius={60}
+            onClick={handleClickMitreTechnique}
+            cursor="pointer"
+          >
+            <Label
+              content={({ viewBox }) => {
+                if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
+                  return (
+                    <text
+                      x={viewBox.cx}
+                      y={viewBox.cy}
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                    >
+                      <tspan
+                        x={viewBox.cx}
+                        y={viewBox.cy}
+                        className="fill-foreground text-3xl font-bold"
+                      >
+                        {formatNumber(total)}
+                      </tspan>
+                      <tspan
+                        x={viewBox.cx}
+                        y={(viewBox.cy || 0) + 24}
+                        className="fill-muted-foreground"
+                      >
+                        Total
+                      </tspan>
+                    </text>
+                  );
+                }
+              }}
+            />
+          </Pie>
+        </PieChart>
+      </ChartContainer>
+      <Column className="gap-1 truncate">
+        {data.map((item) => (
+          <Row
+            className="items-center justify-between gap-2"
+            key={item.key}
+          >
+            <EventValue
+              query_key="alert.metadata.mitre_technique_name"
+              className="truncate text-sm"
+              value={item.key}
+              onClick={() => handleClickMitreTechnique({ name: item.key })}
+            />
+            <Badge variant="secondary">{formatNumber(item.doc_count)}</Badge>
+          </Row>
+        ))}
+      </Column>
+    </Grid>
+  );
+};

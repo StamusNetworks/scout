@@ -1,0 +1,20 @@
+import { z } from 'zod';
+
+import { baseFlowEventSchema } from '../flowEvent.schema';
+
+export const snmpSchema = z.object({
+  community: z.string().optional(),
+  pdu_type: z.string(),
+  trap_address: z.string().optional(),
+  trap_oid: z.string().optional(),
+  trap_type: z.string().optional(),
+  usm: z.any().optional(),
+  vars: z.array(z.string()).optional(),
+  version: z.number(),
+});
+
+export const snmpEventSchema = baseFlowEventSchema.extend({
+  snmp: snmpSchema,
+});
+
+export type SnmpEvent = z.infer<typeof snmpEventSchema>;

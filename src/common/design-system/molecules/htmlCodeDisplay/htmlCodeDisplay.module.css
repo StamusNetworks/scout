@@ -1,0 +1,23 @@
+.code pre {
+    display: block;
+    padding: 10px;
+    height: 100%;
+    font-size: 14px;
+    line-height: 1.66667;
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    color: #747276;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 1px;
+    margin-bottom: 0;
+}
+
+.code .highlight {
+    height: 100%;
+}
+
+.code .highlight .err {
+    border: none;
+}

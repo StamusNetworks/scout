@@ -1,0 +1,63 @@
+import { Entity } from '../../model/entity';
+
+export type Node = {
+  id: string;
+  value: string;
+  color: string;
+} & (
+  | {
+      type: 'entity';
+    }
+  | {
+      type: 'threat';
+      threatId: number;
+    }
+);
+export type Link = {
+  source: string;
+  target: string;
+};
+export type ForceGraphData = {
+  nodes: Node[];
+  links: Link[];
+};
+
+export const formatForcegraph = (data: Entity[]) => {
+  const nodes: Node[] = [];
+  const links: Link[] = [];
+
+  data.forEach((entity) => {
+    // Add entity node if it doesn't exist
+    if (!nodes.find((node) => node.id === entity.value)) {
+      nodes.push({
+        id: entity.pk.toString(),
+        type: 'entity',
+        value: entity.value,
+        color: 'foreground',
+      });
+    }
+
+    // Add threat nodes and links for each threat
+    entity.threats.forEach((threat) => {
+      const threatNodeId = `threat-${threat.threat__threat_id}`;
+
+      // Add threat node if it doesn't exist
+      if (!nodes.find((node) => node.id === threatNodeId)) {
+        nodes.push({
+          id: threatNodeId,
+          type: 'threat',
+          threatId: threat.threat__threat_id,
+          value: threat.threat__name,
+          color: 'destructive',
+        });
+      }
+
+      // Add link between entity and threat
+      links.push({
+        source: threatNodeId,
+        target: entity.pk.toString(),
+      });
+    });
+  });
+  return { nodes, links };
+};

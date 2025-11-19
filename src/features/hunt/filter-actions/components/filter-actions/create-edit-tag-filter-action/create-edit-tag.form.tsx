@@ -1,0 +1,254 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import { z } from 'zod';
+
+import { Column } from '@/common/design-system/atoms/layout/column';
+import { Row } from '@/common/design-system/atoms/layout/row';
+import { Button } from '@/common/design-system/atoms/ui/button';
+import { Checkbox } from '@/common/design-system/atoms/ui/checkbox';
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/common/design-system/atoms/ui/form';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/common/design-system/atoms/ui/select';
+import { Spin } from '@/common/design-system/atoms/ui/spin';
+import { useGetRulesetsQuery } from '@/features/hunt/rulesets/api/rulesets.api';
+import { routes } from '@/pages/routes.config';
+
+import { FilterInput } from '../../../../filtering/query-filters/components/filters-input';
+import {
+  useCreateFilterActionMutation,
+  useUpdateFilterActionMutation,
+} from '../../../api/filter-actions.api';
+import {
+  FilterActionPayload,
+  TagFilterAction,
+} from '../../../model/filter-action.schema';
+import { baseFilterActionSchema } from '../filter-actions.baseSchema';
+import { toFilterDefDto } from '../to-dto';
+import { useInitialValues } from '../use-initial-values';
+
+const formSchema = baseFilterActionSchema.extend({
+  tag: z.enum(['relevant', 'informational']),
+});
+
+const useInitialTagValues = (
+  keep?: boolean,
+  filterAction?: TagFilterAction,
+): TagFilterActionFormValues => {
+  const initialValues = useInitialValues(
+    keep ? 'tagkeep' : 'tag',
+    filterAction,
+  );
+  return {
+    ...initialValues,
+    tag: filterAction?.options.tag ?? 'relevant',
+  };
+};
+
+export type TagFilterActionFormValues = z.infer<typeof formSchema>;
+
+interface CreateEditTagFilterActionFormProps {
+  edit: boolean;
+  filterAction?: TagFilterAction | undefined;
+  keep?: boolean;
+  onClose?: () => void;
+}
+export const CreateEditTagFilterActionForm = ({
+  edit,
+  filterAction,
+  keep,
+  onClose,
+}: CreateEditTagFilterActionFormProps) => {
+  const navigate = useNavigate();
+  const initialValues = useInitialTagValues(keep, filterAction);
+  const { data: rulesetsList } = useGetRulesetsQuery();
+
+  const form = useForm<TagFilterActionFormValues>({
+    defaultValues: initialValues,
+    resolver: zodResolver(formSchema),
+    mode: 'onChange',
+  });
+
+  const { fields } = useFieldArray({
+    control: form.control,
+    name: 'filters',
+  });
+  useEffect(() => {
+    form.setValue('filters', initialValues?.filters ?? []);
+  }, [form, initialValues?.filters]);
+
+  const [createFilterAction] = useCreateFilterActionMutation();
+  const [updateFilterAction] = useUpdateFilterActionMutation();
+
+  const handleSubmit = (data: TagFilterActionFormValues): void => {
+    const response: FilterActionPayload = {
+      action: keep ? 'tagkeep' : 'tag',
+      comment: data.comment || '',
+      filter_defs: data.filters.filter((f) => f.enabled).map(toFilterDefDto),
+      rulesets: data.rulesets,
+      options: {
+        tag: data.tag,
+      },
+    };
+    const submitFn =
+      edit && filterAction
+        ? () => updateFilterAction({ ...response, pk: filterAction.pk })
+        : () => createFilterAction(response);
+    submitFn()
+      .unwrap()
+      .then(() => {
+        onClose?.();
+        navigate(routes.filters_actions);
+        toast.success(
+          `Filter action ${edit ? 'updated' : 'created'} successfully`,
+        );
+      })
+      .catch((error) =>
+        toast.error(`Failed to ${edit ? 'update' : 'create'} filter action`, {
+          description: error.data.detail,
+        }),
+      );
+  };
+
+  return (
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="space-y-4"
+      >
+        <FormField
+          control={form.control}
+          name="filters"
+          render={() => (
+            <FormItem>
+              <FormLabel>Filters</FormLabel>
+              <Column className="gap-3">
+                {fields.map((field, index) => (
+                  <FormField
+                    key={field.id}
+                    control={form.control}
+                    name={`filters.${index}`}
+                    render={({ field: formField }) => {
+                      return (
+                        <FormItem>
+                          <FormControl>
+                            <FilterInput
+                              initialValue={formField.value}
+                              edit={edit}
+                              onValueChange={(item) => formField.onChange(item)}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      );
+                    }}
+                  />
+                ))}
+              </Column>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="tag"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{keep ? 'Tag and keep' : 'Tag'}</FormLabel>
+              <Select
+                value={field.value}
+                onValueChange={field.onChange}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select tag" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="informational">Informational</SelectItem>
+                  <SelectItem value="relevant">Relevant</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="rulesets"
+          render={() => (
+            <FormItem>
+              <div className="mb-4">
+                <FormLabel>Rulesets</FormLabel>
+                <FormDescription>
+                  Select the rulesets on which to apply the filter action.
+                </FormDescription>
+              </div>
+              {rulesetsList?.map((item) => (
+                <FormField
+                  key={item.pk}
+                  control={form.control}
+                  name="rulesets"
+                  render={({ field }) => {
+                    return (
+                      <FormItem
+                        key={item.pk}
+                        className="flex flex-row items-start space-y-0 space-x-3"
+                      >
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value?.includes(item.pk)}
+                            onCheckedChange={(checked) => {
+                              return checked
+                                ? field.onChange([...field.value, item.pk])
+                                : field.onChange(
+                                    field.value?.filter(
+                                      (value) => value !== item.pk,
+                                    ),
+                                  );
+                            }}
+                          />
+                        </FormControl>
+                        <FormLabel>{item.name}</FormLabel>
+                      </FormItem>
+                    );
+                  }}
+                />
+              ))}
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Row className="mt-4 justify-end gap-2">
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={onClose}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            disabled={!form.formState.isValid}
+          >
+            {form.formState.isSubmitting ? <Spin /> : 'Submit'}
+          </Button>
+        </Row>
+      </form>
+    </Form>
+  );
+};

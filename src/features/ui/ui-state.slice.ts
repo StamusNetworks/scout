@@ -1,0 +1,116 @@
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+
+import { RootState } from '@/store/store';
+
+import { addQueryFilter } from '../hunt/filtering/query-filters/store/query-filters.slice';
+
+const initialState: UIState = {
+  theme: (localStorage.getItem('theme') as Theme) || 'light',
+  openModal: null,
+  initialValues: null,
+  isNavigationOpen: true,
+  isSidebarOpen: false,
+  autoReloadInterval: 0,
+  autoReloadStartDate: 0,
+  jsonViewOpen: 10,
+};
+
+export type Theme = 'dark' | 'light' | 'catppuccin' | 'diesel' | 'matrix';
+
+export type Modal =
+  | 'globalCommand'
+  | 'addQfilter'
+  | 'saveFilterSet'
+  | 'addFilterCommand'
+  | 'addTagFilterAction'
+  | 'addTagAndKeepFilterAction'
+  | 'addSuppressFilterAction'
+  | 'addThresholdFilterAction'
+  | 'addDeclarationFilterAction'
+  | 'editFilterAction';
+
+type UIState = {
+  theme: Theme;
+  openModal: null | Modal;
+  initialValues: object | null;
+  isNavigationOpen: boolean;
+  isSidebarOpen: boolean;
+  autoReloadInterval: number;
+  autoReloadStartDate: number;
+  jsonViewOpen: number;
+};
+
+export const uiStateSlice = createSlice({
+  name: 'uiState',
+  initialState,
+  reducers: {
+    setTheme: (state, action: PayloadAction<Theme>) => {
+      state.theme = action.payload;
+      localStorage.setItem('theme', action.payload);
+    },
+    setOpenModal: (state, action: PayloadAction<UIState['openModal']>) => {
+      if (action.payload === state.openModal) {
+        state.openModal = null;
+        return;
+      }
+      state.openModal = action.payload;
+    },
+    setIsNavigationOpen: (state, action: PayloadAction<boolean>) => {
+      state.isNavigationOpen = action.payload;
+    },
+    setIsSidebarOpen: (state, action: PayloadAction<boolean>) => {
+      state.isSidebarOpen = action.payload;
+    },
+    setAutoReloadInterval: (
+      state,
+      action: PayloadAction<UIState['autoReloadInterval']>,
+    ) => {
+      state.autoReloadInterval = action.payload;
+      if (state.autoReloadInterval === 0) {
+        state.autoReloadStartDate = 0;
+      } else {
+        state.autoReloadStartDate = new Date().getTime();
+      }
+    },
+    resetAutoReloadStartDate: (state) => {
+      state.autoReloadStartDate = new Date().getTime();
+    },
+    setJsonViewOpen: (state, action: PayloadAction<number>) => {
+      state.jsonViewOpen = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(addQueryFilter, (state) => {
+      state.isSidebarOpen = true;
+    });
+  },
+});
+
+export const {
+  setTheme,
+  setOpenModal,
+  setIsNavigationOpen,
+  setIsSidebarOpen,
+  setAutoReloadInterval,
+  resetAutoReloadStartDate,
+  setJsonViewOpen,
+} = uiStateSlice.actions;
+export const uiStateInitialState = initialState;
+
+export const selectIsModalOpen = (modal: Modal) => (state: RootState) =>
+  state.uiState.openModal === modal;
+
+export const selectIsNavigationOpen = (state: RootState) =>
+  state.uiState.isNavigationOpen;
+
+export const selectAutoReloadInterval = (state: RootState) =>
+  state.uiState.autoReloadInterval;
+
+export const selectAutoReloadStartDate = (state: RootState) =>
+  state.uiState.autoReloadStartDate;
+
+export const selectJsonViewOpen = (state: RootState) =>
+  state.uiState.jsonViewOpen;
+
+export const selectIsSidebarOpen = (state: RootState) =>
+  state.uiState.isSidebarOpen;

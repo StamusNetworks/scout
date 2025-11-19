@@ -1,0 +1,10 @@
+import { SnmpEvent } from '../../../model/event-types/snmp.schema';
+import { RelatedTable } from '../related-table';
+import { relatedFlowColumns } from './related-snmp.columns';
+
+export const RelatedSnmpTab = ({ data }: { data?: SnmpEvent[] }) => (
+  <RelatedTable<SnmpEvent>
+    columns={relatedFlowColumns}
+    data={data || []}
+  />
+);
