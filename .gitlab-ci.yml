@@ -13,7 +13,7 @@ test-backend:
   stage: code-quality
   image: mcr.microsoft.com/playwright:v1.56.1-noble
   services:
-    - name: git.stamus-networks.com:4567/devel/dev/front-end/scirius-fake:main
+    - name: git.stamus-networks.com:4567/devel/dev/front-end/scirius-fake:main-d6a527b8
       alias: backend
   script:
     - curl http://backend:3000/
@@ -50,7 +50,7 @@ codecept:
       alias: frontend
       variables:
         APP_API_URL: "http://backend:3000/"
-    - name: git.stamus-networks.com:4567/devel/dev/front-end/scirius-fake:main
+    - name: git.stamus-networks.com:4567/devel/dev/front-end/scirius-fake:main-d6a527b8
       alias: backend
   variables:
     APP_URL: "http://frontend:80"
