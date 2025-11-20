@@ -40,7 +40,7 @@ codecept:
     - name: $CI_REGISTRY_IMAGE:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
       alias: frontend
       variables:
-        APP_API_URL: "http://backend:3000"
+        APP_API_URL: "http://backend:3000/"
     - name: git.stamus-networks.com:4567/devel/dev/front-end/scirius-fake:main
       alias: backend
   variables:
