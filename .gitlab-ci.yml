@@ -48,7 +48,7 @@ codecept:
   script:
     - cd codecept
     - npm install --frozen-lockfile
-    - npx codeceptjs run
+    - HEADLESS=true npx codeceptjs run
 
 # Build frontend and expose dist/ as downloadable artifact
 build-artifacts:
