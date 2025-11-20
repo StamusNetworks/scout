@@ -17,7 +17,7 @@ COPY --from=build /app/public/config.local.json /usr/share/nginx/html/config.jso
 COPY --from=build /app/dist /usr/share/nginx/html
 
 # Add startup script
-COPY docker-entrypoint.sh /docker-entrypoint.sh
+COPY /docker/docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker/docker-entrypoint.sh"]
