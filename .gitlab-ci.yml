@@ -3,10 +3,10 @@ default:
     - k8s
 
 stages:
+  - e2e-tests
   - code-quality
   - unit-tests
   - build
-  - e2e-tests
   - deploy
 
 linting:
