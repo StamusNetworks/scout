@@ -3,11 +3,20 @@ default:
     - k8s
 
 stages:
-  - e2e-tests
   - code-quality
   - unit-tests
   - build
+  - e2e-tests
   - deploy
+
+test-backend:
+  stage: code-quality
+  image: mcr.microsoft.com/playwright:v1.56.1-noble
+  services:
+    - name: git.stamus-networks.com:4567/devel/dev/front-end/scirius-fake:main
+      alias: backend
+  script:
+    - curl http://backend:3000/
 
 linting:
   stage: code-quality
