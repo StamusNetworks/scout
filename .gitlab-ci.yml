@@ -48,6 +48,7 @@ codecept:
   script:
     - cd codecept
     - npm install --frozen-lockfile
+    - npx playwright install
     - npx codeceptjs run
 
 # Build frontend and expose dist/ as downloadable artifact
