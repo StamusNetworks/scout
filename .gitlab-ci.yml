@@ -67,6 +67,8 @@ codecept:
       - codecept/screenshots/
       - codecept/videos/
       - codecept/output/
+    reports:
+      junit: codecept/output/*.xml
 
 # Build frontend and expose dist/ as downloadable artifact
 build-artifacts:

@@ -17,6 +17,13 @@ export const config: CodeceptJS.MainConfig = {
       waitForNavigation: 'load',
       waitForTimeout: 5000,
       waitForAction: 2000,
+      // Enable video recording
+      video: 'retain-on-failure',
+      screenshot: true,
+      keepBrowserState: !process.env.CI,
+      keepCookies: !process.env.CI,
+      trace: true,
+      keepTraceForPassedTests: true,
     },
   },
   include: {
@@ -25,6 +32,14 @@ export const config: CodeceptJS.MainConfig = {
   plugins: {
     htmlReporter: {
       enabled: true,
+    },
+    trace: {
+      enabled: true,
+      keepTraces: 'all',
+    },
+    stepByStepReport: {
+      enabled: true,
+      deleteSuccessful: false,
     },
   },
   name: 'codecept',
