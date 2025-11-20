@@ -54,6 +54,7 @@ codecept:
       alias: backend
   variables:
     APP_URL: "http://frontend:80"
+    CI_DEBUG_SERVICES: "true"
   script:
     - curl http://backend:3000/
     - cd codecept
