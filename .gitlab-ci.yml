@@ -46,6 +46,7 @@ codecept:
   variables:
     APP_URL: "http://frontend:80"
   script:
+    - curl http://backend:3000/
     - cd codecept
     - npm install --frozen-lockfile
     - HEADLESS=true npx codeceptjs run
