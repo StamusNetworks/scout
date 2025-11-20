@@ -30,10 +30,6 @@ export const config: CodeceptJS.MainConfig = {
     htmlReporter: {
       enabled: true,
     },
-    trace: {
-      enabled: true,
-      keepTraces: 'all',
-    },
     stepByStepReport: {
       enabled: true,
       deleteSuccessful: false,
