@@ -9,14 +9,6 @@ stages:
   - e2e-tests
   - deploy
 
-test-backend:
-  stage: code-quality
-  image: mcr.microsoft.com/playwright:v1.56.1-noble
-  services:
-    - name: git.stamus-networks.com:4567/devel/dev/front-end/scirius-fake:main-d6a527b8
-      alias: backend
-  script:
-    - curl http://backend:3000/
 
 linting:
   stage: code-quality
@@ -50,13 +42,11 @@ codecept:
       alias: frontend
       variables:
         APP_API_URL: "http://backend:3000"
-    - name: git.stamus-networks.com:4567/devel/dev/front-end/scirius-fake:main-d6a527b8
+    - name: git.stamus-networks.com:4567/devel/dev/front-end/scirius-fake:main
       alias: backend
   variables:
     APP_URL: "http://frontend:80"
-    CI_DEBUG_SERVICES: "true"
   script:
-    - curl http://backend:3000/
     - cd codecept
     - npm install --frozen-lockfile
     - HEADLESS=true npx codeceptjs run
