@@ -15,3 +15,10 @@ COPY docker/default.conf /etc/nginx/conf.d/
 
 COPY --from=build /app/public/config.local.json /usr/share/nginx/html/config.json
 COPY --from=build /app/dist /usr/share/nginx/html
+
+# Add startup script
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+
+ENTRYPOINT ["/docker/docker-entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]

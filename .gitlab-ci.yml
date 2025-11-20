@@ -4,14 +4,14 @@ default:
 
 stages:
   - code-quality
-  - tests
+  - unit-tests
   - build
-  - docker
+  - e2e-tests
   - deploy
 
 linting:
   stage: code-quality
-  image: node:20-alpine
+  image: node:22-alpine
   script:
     - npm i -g pnpm@9.15.2
     - pnpm install --frozen-lockfile
@@ -19,19 +19,36 @@ linting:
 
 typescript:
   stage: code-quality
-  image: node:20-alpine
+  image: node:22-alpine
   script:
     - npm i -g pnpm@9.15.2
     - pnpm install --frozen-lockfile
     - pnpm check
 
 unit-tests:
-  stage: tests
-  image: node:20-alpine
+  stage: unit-tests
+  image: node:22-alpine
   script:
     - npm i -g pnpm@9.15.2
     - pnpm install --frozen-lockfile
     - pnpm test
+
+codecept:
+  stage: e2e-tests
+  image: node:22-alpine
+  services:
+    - name: $CI_REGISTRY_IMAGE:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+      alias: frontend
+      variables:
+        APP_API_URL: "http://backend:3000"
+    - name: git.stamus-networks.com:4567/devel/dev/front-end/scirius-fake:main
+      alias: backend
+  variables:
+    APP_URL: "http://frontend:80"
+  script:
+    - cd codecept
+    - npm install --frozen-lockfile
+    - npx codeceptjs run
 
 # Build frontend and expose dist/ as downloadable artifact
 build-artifacts:
@@ -54,7 +71,7 @@ build-artifacts:
     - if: $UPSTREAM_NAME == "nightly_build"
 
 docker:
-  stage: docker
+  stage: build
   image: docker:latest
   services:
     - docker:dind
