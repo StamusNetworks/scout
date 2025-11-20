@@ -44,7 +44,7 @@ codecept:
     - name: git.stamus-networks.com:4567/devel/dev/front-end/scirius-fake:main
       alias: backend
   variables:
-    APP_URL: "http://frontend:80"
+    APP_API_URL: "http://frontend:80"
   script:
     - cd codecept
     - npm install --frozen-lockfile

@@ -8,4 +8,8 @@ if [ -n "${APP_API_URL:-}" ]; then
   sed -i "s|\"apiUrl\": \".*\"|\"apiUrl\": \"${APP_API_URL}\"|" "$CONFIG"
 fi
 
+echo "Final configuration:"
+cat "$CONFIG"
+echo ""
+
 exec "$@"
