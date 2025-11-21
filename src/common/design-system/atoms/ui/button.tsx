@@ -64,6 +64,7 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   disabledTooltip?: string;
+  role?: string;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(

@@ -105,6 +105,7 @@ const DeeplinkActions = ({ deeplink }: { deeplink: Deeplink }) => {
             variant="ghost"
             size="none"
             className="h-fit p-2"
+            role="edit"
           >
             <Edit size={14} />
           </Button>
@@ -127,6 +128,7 @@ const DeeplinkActions = ({ deeplink }: { deeplink: Deeplink }) => {
             variant="ghost"
             size="none"
             className="h-fit p-2"
+            role="delete"
           >
             <Trash size={14} />
           </Button>
