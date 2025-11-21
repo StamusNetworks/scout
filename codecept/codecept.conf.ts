@@ -14,7 +14,7 @@ export const config: CodeceptJS.MainConfig = {
       browser: 'chromium',
       url: process.env.APP_URL || 'http://localhost:5173',
       show: true,
-      waitForNavigation: 'domcontentloaded',
+      waitForNavigation: 'load',
       waitForTimeout: 5000,
       keepBrowserState: !process.env.CI,
       keepCookies: !process.env.CI,
