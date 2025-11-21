@@ -22,7 +22,7 @@ export = function () {
       entities,
     }: CreateDeeplink) {
       this.amOnPage('/deeplinks');
-      this.click('Create deeplink');
+      this.click('button:has-text("Create deeplink")');
       this.fillField('Name', name);
       this.fillField('Template', template);
       if (entities?.length) {
