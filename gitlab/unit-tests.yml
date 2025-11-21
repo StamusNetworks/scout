@@ -1,0 +1,7 @@
+unit-tests:
+  stage: unit-tests
+  image: node:22-alpine
+  script:
+    - npm i -g pnpm@9.15.2
+    - pnpm install --frozen-lockfile
+    - pnpm test

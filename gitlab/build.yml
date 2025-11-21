@@ -1,0 +1,41 @@
+# Build frontend and expose dist/ as downloadable artifact
+build-artifacts:
+  stage: build
+  image: node:22-slim
+  script:
+    - corepack enable
+    - corepack prepare pnpm@8.15.6 --activate
+    - pnpm install --frozen-lockfile
+    - pnpm run build --base=/preview/
+  artifacts:
+    name: "frontend-dist-$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA"
+    when: on_success
+    expire_in: 1 week
+    paths:
+      - /dist
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $UPSTREAM_NAME == "nightly_build"
+
+docker:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_TLS_CERTDIR: "/certs"
+    DOCKER_TLS_VERIFY: 1
+    DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
+  before_script:
+    - until docker info; do sleep 1; done
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build
+      -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME .
+      -t $CI_REGISTRY_IMAGE:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+    - docker push $CI_REGISTRY_IMAGE:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+  rules:
+    - if: $UPSTREAM_NAME != "nightly_build"

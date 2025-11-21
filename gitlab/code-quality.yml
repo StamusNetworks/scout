@@ -1,0 +1,15 @@
+linting:
+  stage: code-quality
+  image: node:22-alpine
+  script:
+    - npm i -g pnpm@9.15.2
+    - pnpm install --frozen-lockfile
+    - pnpm lint
+
+typescript:
+  stage: code-quality
+  image: node:22-alpine
+  script:
+    - npm i -g pnpm@9.15.2
+    - pnpm install --frozen-lockfile
+    - pnpm check

@@ -1,0 +1,31 @@
+
+.codecept:
+  stage: end2fake
+  image: mcr.microsoft.com/playwright:v1.56.1-noble
+  services:
+    - name: $CI_REGISTRY_IMAGE:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+      alias: frontend
+      variables:
+        APP_API_URL: "http://backend:3000"
+    - name: git.stamus-networks.com:4567/devel/dev/front-end/scirius-fake:main
+      alias: backend
+  variables:
+    APP_URL: "http://frontend:80"
+  script:
+    - cd codecept
+    - npm install --frozen-lockfile
+    - HEADLESS=true npx codeceptjs run ./tests/$FOLDER/*
+  artifacts:
+    when: always
+    expire_in: 3 days
+    paths:
+      - codecept/screenshots/
+      - codecept/videos/
+      - codecept/output/
+    reports:
+      junit: codecept/output/*.xml
+
+feat-deeplinks:
+  extends: .codecept
+  variables:
+    FOLDER: features/deeplinks

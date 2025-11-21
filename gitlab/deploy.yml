@@ -1,0 +1,44 @@
+
+refresh-app-of-apps:
+  stage: deploy
+  needs:
+    - docker
+  variables:
+    APP: scout
+    ACTION: update
+    BRANCH: $CI_COMMIT_BRANCH
+    SHA: $CI_COMMIT_SHORT_SHA
+    PROJECT: $CI_PROJECT_NAME
+    NAMESPACE: $CI_PROJECT_NAMESPACE
+    SLUG: $CI_PROJECT_PATH_SLUG
+  trigger:
+    project: devel/devops/app-of-app
+    strategy: depend
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    url: https://scout.$CI_COMMIT_BRANCH.$CI_PROJECT_PATH_SLUG.stamus-networks.net
+    on_stop: delete-env-from-app-of-apps
+  rules:
+    - if: $UPSTREAM_NAME != "nightly_build"
+
+delete-env-from-app-of-apps:
+  stage: deploy
+  variables:
+    APP: scout
+    ACTION: delete
+    BRANCH: $CI_COMMIT_BRANCH
+    SHA: $CI_COMMIT_SHORT_SHA
+    PROJECT: $CI_PROJECT_NAME
+    NAMESPACE: $CI_PROJECT_NAMESPACE
+    SLUG: $CI_PROJECT_PATH_SLUG
+  trigger:
+    project: devel/devops/app-of-app
+    strategy: depend
+  needs:
+    - refresh-app-of-apps
+  when: manual
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    action: stop
+  rules:
+    - if: $UPSTREAM_NAME != "nightly_build"
