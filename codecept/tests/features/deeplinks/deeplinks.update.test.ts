@@ -1,4 +1,4 @@
-Feature('Updating deeplinks');
+Feature('Updating @deeplinks');
 
 Before(async ({ I }) => {
   I.sendPostRequest('http://localhost:3000/rest/rules/deeplink/reset');
