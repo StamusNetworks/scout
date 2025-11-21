@@ -14,13 +14,15 @@ export const config: CodeceptJS.MainConfig = {
       browser: 'chromium',
       url: process.env.APP_URL || 'http://localhost:5173',
       show: true,
-      waitForNavigation: 'load',
+      waitForNavigation: 'domcontentloaded',
       waitForTimeout: 5000,
-      waitForAction: 2000,
       keepBrowserState: !process.env.CI,
       keepCookies: !process.env.CI,
       trace: true,
       keepTraceForPassedTests: true,
+    },
+    REST: {
+      endpoint: process.env.API_URL || 'http://localhost:3000',
     },
   },
   include: {
