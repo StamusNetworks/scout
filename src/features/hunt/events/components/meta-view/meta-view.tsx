@@ -108,7 +108,7 @@ export const MetaView = ({ event }: { event: Event }) => {
           <HostSummary
             host={sourceHost}
             entity={sourceEntity}
-            hostId={event.src_ip}
+            hostId={event.flow?.src_ip || event.src_ip}
           />
         </Card>
         <div className="self-center">
@@ -119,7 +119,7 @@ export const MetaView = ({ event }: { event: Event }) => {
           <HostSummary
             host={destinationHost}
             entity={destinationEntity}
-            hostId={event.dest_ip}
+            hostId={event.flow?.dest_ip || event.dest_ip}
           />
         </Card>
       </Grid>
