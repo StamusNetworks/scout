@@ -246,7 +246,7 @@ export const SidebarQueryFilter = ({
             </Tooltip>
           </TooltipProvider>
         )}
-        <p className="-mt-1 overflow-hidden text-sm text-nowrap text-ellipsis text-inherit">
+        <p className="-mt-1 line-clamp-3 overflow-hidden text-sm text-inherit">
           {displayValue}
         </p>
       </Row>
