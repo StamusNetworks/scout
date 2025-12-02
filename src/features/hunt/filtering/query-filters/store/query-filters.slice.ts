@@ -58,6 +58,7 @@ const initialState: QueryFiltersSliceState = {
 const authorizeMultipleFilters: (keyof typeof QueryFiltersRecord)[] = [
   'msg',
   'es_filter',
+  'ip',
 ];
 
 export const queryFiltersSlice = createSlice({
