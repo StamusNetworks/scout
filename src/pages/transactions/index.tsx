@@ -254,7 +254,10 @@ export const TransactionCard = ({ row }: { row: EventTail }) => {
             </Column>
           </Grid>
         </Column>
-        <div className="truncate">{row.event_type}</div>
+        <EventValue
+          query_key="event_type"
+          value={row.event_type}
+        />
         {row.event_type === 'flow' ? (
           <Row className="items-center gap-4">
             <Column className="gap-2 truncate">
@@ -309,57 +312,22 @@ export const TransactionCard = ({ row }: { row: EventTail }) => {
           </Column>
         ) : row.event_type === 'http' ? (
           <Row className="flex-wrap gap-4">
-            {row.http?.hostname && (
+            {row.http?.url && (
+              <Column className="max-w-80">
+                <Label query_key="http.url" />
+                <EventValue
+                  query_key="http.url"
+                  className="line-clamp-3 text-wrap break-all"
+                  value={row.http?.url}
+                />
+              </Column>
+            )}
+            {row.http?.http_method && (
               <Column>
                 <Label query_key="http.http_method" />
                 <EventValue
                   query_key="http.http_method"
                   value={row.http?.http_method}
-                />
-              </Column>
-            )}
-            {row.http?.url && (
-              <Column className="max-w-24 truncate">
-                <Label query_key="http.url" />
-                <EventValue
-                  query_key="http.url"
-                  value={row.http?.url}
-                />
-              </Column>
-            )}
-            {row.http?.protocol && (
-              <Column className="max-w-24 truncate">
-                <Label query_key="http.protocol" />
-                <EventValue
-                  query_key="http.protocol"
-                  value={row.http?.protocol}
-                />
-              </Column>
-            )}
-            {row.http?.http_method && (
-              <Column className="max-w-24 truncate">
-                <Label query_key="http.http_method" />
-                <EventValue
-                  query_key="http.http_method"
-                  value={row.http?.http_method}
-                />
-              </Column>
-            )}
-            {row.http?.status && (
-              <Column className="max-w-24 truncate">
-                <Label query_key="http.status" />
-                <EventValue
-                  query_key="http.status"
-                  value={row.http?.status}
-                />
-              </Column>
-            )}
-            {row.http?.server && (
-              <Column className="max-w-24 truncate">
-                <Label query_key="http.server" />
-                <EventValue
-                  query_key="http.server"
-                  value={row.http?.server}
                 />
               </Column>
             )}
@@ -372,18 +340,46 @@ export const TransactionCard = ({ row }: { row: EventTail }) => {
                 />
               </Column>
             )}
-            {row.http?.http_user_agent && (
+            {row.http?.status && (
               <Column className="max-w-24 truncate">
+                <Label query_key="http.status" />
+                <EventValue
+                  query_key="http.status"
+                  value={row.http?.status}
+                />
+              </Column>
+            )}
+            {row.http?.protocol && (
+              <Column className="truncate">
+                <Label query_key="http.protocol" />
+                <EventValue
+                  query_key="http.protocol"
+                  value={row.http?.protocol}
+                />
+              </Column>
+            )}
+            {row.http?.server && (
+              <Column className="truncate">
+                <Label query_key="http.server" />
+                <EventValue
+                  query_key="http.server"
+                  value={row.http?.server}
+                />
+              </Column>
+            )}
+            {row.http?.http_user_agent && (
+              <Column className="max-w-80 truncate">
                 <Label query_key="http.http_user_agent" />
                 <EventValue
                   query_key="http.http_user_agent"
+                  className="line-clamp-3 text-wrap"
                   value={row.http?.http_user_agent}
                 />
               </Column>
             )}
           </Row>
         ) : row.event_type === 'stamus' ? (
-          <Row className="gap-2">
+          <Row className="gap-4">
             {row.stamus?.threat_id !== undefined && (
               <ThreatTagById threatId={parseInt(row.stamus.threat_id)} />
             )}
@@ -394,9 +390,9 @@ export const TransactionCard = ({ row }: { row: EventTail }) => {
             )}
           </Row>
         ) : row.event_type === 'tls' ? (
-          <Row className="gap-2">
+          <Row className="gap-4">
             {row.tls?.sni && (
-              <Column className="max-w-24 truncate">
+              <Column>
                 <Label query_key="tls.sni" />
                 <EventValue
                   query_key="tls.sni"
@@ -405,10 +401,11 @@ export const TransactionCard = ({ row }: { row: EventTail }) => {
               </Column>
             )}
             {row.tls?.ja3?.agent && (
-              <Column className="max-w-48 truncate">
+              <Column className="max-w-80">
                 <Label query_key="tls.ja3.agent" />
                 <EventValue
                   query_key="tls.ja3.agent"
+                  className="line-clamp-3 text-wrap break-all"
                   value={
                     Array.isArray(row.tls.ja3.agent)
                       ? row.tls.ja3.agent[0]
@@ -418,7 +415,7 @@ export const TransactionCard = ({ row }: { row: EventTail }) => {
               </Column>
             )}
             {row.tls?.ja3s && (
-              <Column className="max-w-24 truncate">
+              <Column>
                 <Label query_key="tls.ja3s" />
                 <EventValue
                   query_key="tls.ja3s"
@@ -428,8 +425,8 @@ export const TransactionCard = ({ row }: { row: EventTail }) => {
             )}
           </Row>
         ) : row.event_type === 'fileinfo' ? (
-          <Row className="gap-2">
-            <Column className="max-w-80 break-words">
+          <Row className="gap-4">
+            <Column className="max-w-80 wrap-break-word">
               <Label query_key="fileinfo.filename" />
               <EventValue
                 query_key="fileinfo.filename"
@@ -461,12 +458,12 @@ export const TransactionCard = ({ row }: { row: EventTail }) => {
             </Column>
           </Row>
         ) : row.event_type === 'anomaly' ? (
-          <Row className="gap-2">
-            <Column className="max-w-80 break-words">
+          <Row className="gap-4">
+            <Column className="max-w-80 wrap-break-word">
               <Label query_key="anomaly.app_proto" />
               <EventValue
                 query_key="anomaly.app_proto"
-                value={row.anomaly?.app_proto}
+                value={row.anomaly?.app_proto ?? ''}
               />
             </Column>
             <Column className="max-w-24 truncate">
@@ -485,9 +482,9 @@ export const TransactionCard = ({ row }: { row: EventTail }) => {
             </Column>
           </Row>
         ) : row.event_type === 'smb' ? (
-          <Row className="gap-2">
+          <Row className="gap-4">
             {row.smb?.command && (
-              <Column className="max-w-80 break-words">
+              <Column className="max-w-80 wrap-break-word">
                 <Label query_key="smb.command" />
                 <EventValue
                   query_key="smb.command"
@@ -496,7 +493,7 @@ export const TransactionCard = ({ row }: { row: EventTail }) => {
               </Column>
             )}
             {row.smb?.dcerpc?.endpoint && (
-              <Column className="max-w-80 break-words">
+              <Column className="wrap-break-word">
                 <Label query_key="smb.dcerpc.endpoint" />
                 <EventValue
                   query_key="smb.dcerpc.endpoint"
@@ -505,7 +502,7 @@ export const TransactionCard = ({ row }: { row: EventTail }) => {
               </Column>
             )}
             {row.smb?.dcerpc?.interface && (
-              <Column className="max-w-80 break-words">
+              <Column className="max-w-80 wrap-break-word">
                 <Label query_key="smb.dcerpc.interface.name" />
                 <EventValue
                   query_key="smb.dcerpc.interface.name"
@@ -515,9 +512,9 @@ export const TransactionCard = ({ row }: { row: EventTail }) => {
             )}
           </Row>
         ) : row.event_type === 'dns' ? (
-          <Row className="gap-2">
+          <Row className="gap-4">
             {row.dns?.rrname && (
-              <Column className="max-w-80 break-words">
+              <Column className="max-w-80 wrap-break-word">
                 <Label query_key="dns.rrname" />
                 <EventValue
                   query_key="dns.rrname"
@@ -526,7 +523,7 @@ export const TransactionCard = ({ row }: { row: EventTail }) => {
               </Column>
             )}
             {row.dns?.rrtype && (
-              <Column className="max-w-80 break-words">
+              <Column className="max-w-80 wrap-break-word">
                 <Label query_key="dns.rrtype" />
                 <EventValue
                   query_key="dns.rrtype"
