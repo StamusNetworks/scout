@@ -12,6 +12,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/common/design-system/atoms/ui/tooltip';
+import { compressIPv6, isIPv6 } from '@/common/lib/ips';
 import { cn } from '@/common/lib/utils';
 import { useAppDispatch } from '@/store/store';
 
@@ -52,7 +53,9 @@ export const EventValue = ({
     ? typeof value === 'string'
       ? (formatFn as (value: string) => string)(value)
       : (formatFn as (value: number) => string)(value)
-    : value?.toString();
+    : isIPv6(value?.toString())
+      ? compressIPv6(value?.toString())
+      : value?.toString();
   const decoded = decode(value?.toString());
   return (
     <ContextMenu>

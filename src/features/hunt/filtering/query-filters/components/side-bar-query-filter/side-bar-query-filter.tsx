@@ -30,6 +30,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/common/design-system/atoms/ui/tooltip';
+import { compressIPv6, isIPv6 } from '@/common/lib/ips';
 import { capitalizeAll } from '@/common/lib/strings';
 import { cn } from '@/common/lib/utils';
 
@@ -84,7 +85,9 @@ export const SidebarQueryFilter = ({
     ? (filterDefinition.toDisplayValue as (value: string | number) => string)(
         filter.value,
       ) || filter.value.toString()
-    : filter.value;
+    : isIPv6(filter.value?.toString())
+      ? compressIPv6(filter.value?.toString())
+      : filter.value;
 
   const [isEditing, setIsEditing] = useState(false);
 
