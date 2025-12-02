@@ -78,27 +78,32 @@ export const queryFiltersSlice = createSlice({
         (f) => f.key === action.payload.key,
       );
       if (
+        !newFilter.is_negated &&
         siblings?.length > 0 &&
         !authorizeMultipleFilters.includes(action.payload.key)
       ) {
         if (!newFilter.is_wildcarded) {
-          siblings.forEach((sibling) => {
-            sibling.is_suspended = true;
-          });
+          siblings
+            .filter((f) => !f.is_negated)
+            .forEach((sibling) => {
+              sibling.is_suspended = true;
+            });
         }
         if (
           newFilter.is_wildcarded &&
           state.types?.[newFilter.key].type === 'text'
         ) {
           siblings
-            .filter((f) => !f.is_wildcarded)
+            .filter((f) => !f.is_wildcarded && !f.is_negated)
             .forEach((sibling) => {
               sibling.is_suspended = true;
             });
         } else {
-          siblings.forEach((sibling) => {
-            sibling.is_suspended = true;
-          });
+          siblings
+            .filter((f) => !f.is_negated)
+            .forEach((sibling) => {
+              sibling.is_suspended = true;
+            });
         }
       }
 
@@ -118,10 +123,7 @@ export const queryFiltersSlice = createSlice({
       });
       state.queryFilters.push(newFilter);
     },
-    updateQueryFilter: (
-      state,
-      action: PayloadAction<Partial<QueryFilterState>>,
-    ) => {
+    updateQueryFilter: (state, action: PayloadAction<QueryFilterState>) => {
       const index = state.queryFilters.findIndex(
         (f) => f.id === action.payload.id,
       );
@@ -129,9 +131,46 @@ export const queryFiltersSlice = createSlice({
         console.log("Filter doesn't exist");
         return;
       }
+      const payload = action.payload;
       const filter = state.queryFilters[index];
+      const siblings = state.queryFilters.filter(
+        (f) => f.key === filter.key && f.id !== filter.id,
+      );
+
+      if (
+        !payload.is_negated &&
+        siblings?.length > 0 &&
+        !authorizeMultipleFilters.includes(action.payload.key)
+      ) {
+        if (!payload.is_wildcarded) {
+          siblings
+            .filter((f) => !f.is_negated)
+            .forEach((sibling) => {
+              sibling.is_suspended = true;
+            });
+        }
+        if (
+          payload.is_wildcarded &&
+          state.types?.[payload.key].type === 'text'
+        ) {
+          siblings
+            .filter((f) => !f.is_wildcarded && !f.is_negated)
+            .forEach((sibling) => {
+              sibling.is_suspended = true;
+            });
+        } else {
+          siblings
+            .filter((f) => !f.is_negated)
+            .forEach((sibling) => {
+              sibling.is_suspended = true;
+            });
+        }
+      }
+
+      // Update the filter
       state.queryFilters[index] = { ...filter, ...action.payload };
 
+      // Show the success toast
       const filterDef = getFilterDef(filter!.key);
       const label =
         filterDef?.label ?? capitalizeAll(filter.key.replaceAll('.', ' '));
@@ -183,34 +222,34 @@ export const queryFiltersSlice = createSlice({
         return;
       }
 
+      const siblings = state.queryFilters.filter(
+        (f) => f.key === filter.key && f.id !== filter.id,
+      );
+
       if (
-        filter.is_suspended &&
+        !filter.is_negated &&
+        siblings?.length > 0 &&
         !authorizeMultipleFilters.includes(filter.key)
       ) {
-        // When enablind a suspended filter
-        const siblings = state.queryFilters.filter(
-          (f) => f.key === filter.key && f.id !== filter.id,
-        );
-        if (siblings?.length > 0) {
-          if (!filter.is_wildcarded) {
-            siblings.forEach((sibling) => {
+        if (!filter.is_wildcarded) {
+          siblings
+            .filter((f) => !f.is_negated)
+            .forEach((sibling) => {
               sibling.is_suspended = true;
             });
-          }
-          if (
-            filter.is_wildcarded &&
-            state.types?.[filter.key].type === 'text'
-          ) {
-            siblings
-              .filter((f) => !f.is_wildcarded)
-              .forEach((sibling) => {
-                sibling.is_suspended = true;
-              });
-          } else {
-            siblings.forEach((sibling) => {
+        }
+        if (filter.is_wildcarded && state.types?.[filter.key].type === 'text') {
+          siblings
+            .filter((f) => !f.is_wildcarded && !f.is_negated)
+            .forEach((sibling) => {
               sibling.is_suspended = true;
             });
-          }
+        } else {
+          siblings
+            .filter((f) => !f.is_negated)
+            .forEach((sibling) => {
+              sibling.is_suspended = true;
+            });
         }
       }
 
