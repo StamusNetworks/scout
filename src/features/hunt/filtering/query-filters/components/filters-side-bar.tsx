@@ -127,7 +127,7 @@ export const FiltersSideBar = () => {
     [routes.hosts]: {
       enabled: withAlerts
         ? ['outliers', 'events', 'tags', 'query_filters']
-        : [],
+        : ['query_filters'],
       filterTypes: [
         FilterCategory.HOST,
         ...(withAlerts ? [FilterCategory.EVENT] : []),
