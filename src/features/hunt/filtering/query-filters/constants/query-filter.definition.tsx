@@ -136,6 +136,11 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.EVENT,
   },
   {
+    label: 'Event Type',
+    key: 'event_type',
+    category: FilterCategory.EVENT,
+  },
+  {
     label: 'Data Stream Source IP',
     key: 'src_ip',
     category: FilterCategory.EVENT,
