@@ -67,8 +67,10 @@ export const FilterSetsPage = () => {
       data
         ?.filter(
           (filterSet) =>
-            filterSet.name.toLowerCase().includes(search.toLowerCase()) ||
-            filterSet.description.toLowerCase().includes(search.toLowerCase()),
+            filterSet.name?.toLowerCase().includes(search?.toLowerCase()) ||
+            filterSet.description
+              ?.toLowerCase()
+              .includes(search?.toLowerCase()),
         )
         .filter((filterSet) =>
           type ? filterSet.share === reverseTypeMap[type] : true,
