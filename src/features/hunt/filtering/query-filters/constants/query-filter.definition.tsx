@@ -155,6 +155,8 @@ export const QueryFilters: QueryFilterDefinition[] = [
     entity: FilterType.PORT,
     inputType: FilterInputType.NUMBER,
     validationType: FilterValidationType.POSITIVE_INT,
+    toQFString: ({ value, negated }) =>
+      `(${negated ? 'NOT ' : ''}(src_port: "${value}" OR dest_port: "${value}"))`,
   },
   {
     label: 'Destination Net',
@@ -689,7 +691,8 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.EVENT,
     entity: FilterType.IP,
     validationType: FilterValidationType.IP,
-    toQFString: ({ value }) => `(src_ip: "${value}" OR dest_ip: "${value}")`,
+    toQFString: ({ value, negated }) =>
+      `(${negated ? 'NOT ' : ''}(src_ip: "${value}" OR dest_ip: "${value}"))`,
   },
   {
     label: 'Host IP',
