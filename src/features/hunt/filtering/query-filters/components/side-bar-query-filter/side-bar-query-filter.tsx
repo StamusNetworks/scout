@@ -132,7 +132,7 @@ export const SidebarQueryFilter = ({
             <RadioGroup
               defaultValue={filter.key}
               onValueChange={(value) =>
-                dispatch(updateQueryFilter({ id: filter.id, key: value }))
+                dispatch(updateQueryFilter({ ...filter, key: value }))
               }
               className="space-y-1"
             >
