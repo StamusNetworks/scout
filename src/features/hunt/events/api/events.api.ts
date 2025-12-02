@@ -164,7 +164,7 @@ export const EventsAPI = API.injectEndpoints({
     >({
       query: ({ host, eventId }) => ({
         url: `/rules/filestore_pcap/${eventId}/retrieve/?host=${host}`,
-        method: 'POST',
+        method: 'GET',
       }),
     }),
   }),
