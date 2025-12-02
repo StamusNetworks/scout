@@ -231,7 +231,10 @@ const handleLoadFilterSet = (
             key: filter.id,
             value: filter.value as string,
             options: {
-              is_wildcarded: 'fullString' in filter && !filter.fullString,
+              is_wildcarded:
+                filter.id === 'es_filter'
+                  ? false
+                  : 'fullString' in filter && !filter.fullString,
               is_negated: 'negated' in filter && filter.negated,
             },
           }),
