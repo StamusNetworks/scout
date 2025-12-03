@@ -52,7 +52,7 @@ export const AddQfilterCommand = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
   const open = useAppSelector(selectIsModalOpen('addFilterCommand'));
-  const { step, filter, search, negated, value, wildcarded } =
+  const { step, filter, search, negated, wildcarded } =
     useAppSelector(selectFilterCommand);
 
   const filterDefinition = getFilterDef(filter || '');
@@ -98,7 +98,7 @@ export const AddQfilterCommand = () => {
     >
       <Row className="shadow-border items-center justify-between gap-3 px-3 shadow-[0_0_0_1px]">
         <Row className="grow items-center gap-1">
-          {step > 1 && (
+          {step > 0 && (
             <Button
               size="sm"
               variant="secondary"
@@ -106,7 +106,7 @@ export const AddQfilterCommand = () => {
               {filterDefinition?.label || filter}
             </Button>
           )}
-          {step > 0 && negated === true && (
+          {step > 1 && negated === true && (
             <Button
               size="sm"
               variant="secondary"
@@ -114,17 +114,9 @@ export const AddQfilterCommand = () => {
               NOT
             </Button>
           )}
-          {step > 2 && (
-            <Button
-              size="sm"
-              variant="secondary"
-            >
-              {value}
-            </Button>
-          )}
           <CommandPrimitive.Input
             className={cn(
-              'placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50',
+              'placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50 [button+*]:ml-1',
             )}
             value={search}
             onValueChange={(value) => dispatch(setSearch(value))}
