@@ -42,6 +42,9 @@ export const PolicyViolationsPage = () => {
             <TabsTriggerLink value={routes.policy_violations}>
               Entities
             </TabsTriggerLink>
+            <TabsTriggerLink value={routes.policy_violations_graph}>
+              Graph
+            </TabsTriggerLink>
             <TabsTriggerLink value={routes.policy_violations_coverage}>
               Coverage
             </TabsTriggerLink>

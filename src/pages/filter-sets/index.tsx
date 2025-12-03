@@ -1,4 +1,4 @@
-import { Group, Trash } from 'lucide-react';
+import { Group, Info, Trash, X } from 'lucide-react';
 import { parseAsString, parseAsStringLiteral, useQueryState } from 'nuqs';
 import { keys, values } from 'ramda';
 import { useMemo } from 'react';
@@ -15,6 +15,11 @@ import {
   PageHeaderContent,
   PageTitle,
 } from '@/common/design-system/atoms/page';
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from '@/common/design-system/atoms/ui/alert';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableToolbar } from '@/common/design-system/molecules/data-table/data-table.toolbar';
@@ -31,6 +36,7 @@ import {
   clearQueryFilters,
   updateTagFilters,
 } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
+import { disableHelp, useHelpState } from '@/features/ui/help/help.slice';
 import { useAppDispatch } from '@/store/store';
 
 const typeMap = {
@@ -85,9 +91,30 @@ export const FilterSetsPage = () => {
     };
   }, [data, search, type, page]);
 
+  const { showFilterSetsBackNavTip } = useHelpState();
+
   return (
     <Page>
       <PageContainer>
+        {showFilterSetsBackNavTip && (
+          <Alert className="mb-4">
+            <Info />
+            <AlertTitle>Pro tip</AlertTitle>
+            <AlertDescription>
+              After loading a Filter Set, use your browser&apos;s back button to
+              come back to the Filter Sets page with preserved filters to cycle
+              through the list effortlessly.
+            </AlertDescription>
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              className="absolute top-2 right-2 size-7 pl-0!"
+              onClick={() => dispatch(disableHelp('showFilterSetsBackNavTip'))}
+            >
+              <X />
+            </Button>
+          </Alert>
+        )}
         <PageHeader>
           <PageHeaderContent>
             <PageTitle>Filter Sets</PageTitle>

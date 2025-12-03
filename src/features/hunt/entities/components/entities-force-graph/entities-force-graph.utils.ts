@@ -12,6 +12,10 @@ export type Node = {
       type: 'threat';
       threatId: number;
     }
+  | {
+      type: 'policy_violation';
+      threatId: number;
+    }
 );
 export type Link = {
   source: string;
@@ -45,7 +49,7 @@ export const formatForcegraph = (data: Entity[]) => {
       if (!nodes.find((node) => node.id === threatNodeId)) {
         nodes.push({
           id: threatNodeId,
-          type: 'threat',
+          type: threat.kill_chain === -1 ? 'policy_violation' : 'threat',
           threatId: threat.threat__threat_id,
           value: threat.threat__name,
           color: 'destructive',

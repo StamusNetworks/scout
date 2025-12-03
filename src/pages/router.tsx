@@ -54,6 +54,7 @@ import { PolicyViolationThreatsListPage } from './policy-violations/coverage/fam
 import { PolicyViolationByIdPage } from './policy-violations/coverage/policy-violation';
 import { PolicyViolationByIdDetectionMethods } from './policy-violations/coverage/policy-violation/detection-methods';
 import { PolicyViolationByIdEventsPage } from './policy-violations/coverage/policy-violation/events';
+import { PolicyViolationsGraphPage } from './policy-violations/graph';
 import { PolicyViolationsImpactedEntities } from './policy-violations/impacted-entities';
 import { UserSettingsPage } from './preferences';
 import { Routes, routes } from './routes.config';
@@ -328,6 +329,14 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                 element: (
                   <PageBoundary key="policy_violations-root">
                     <PolicyViolationsImpactedEntities />
+                  </PageBoundary>
+                ),
+              },
+              {
+                path: routes.policy_violations_graph,
+                element: (
+                  <PageBoundary key="policy_violations-graph">
+                    <PolicyViolationsGraphPage />
                   </PageBoundary>
                 ),
               },

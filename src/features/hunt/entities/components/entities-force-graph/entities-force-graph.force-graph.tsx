@@ -38,6 +38,7 @@ export const EntitiesForceGraphComponent = ({
   const bgColor = useRootCssVariableValue('--background');
   const destructiveColor = useRootCssVariableValue('--doc');
   const foregroundColor = useRootCssVariableValue('--foreground');
+  const policyViolationColor = useRootCssVariableValue('--dopv');
 
   console.log(bgColor, destructiveColor, foregroundColor);
 
@@ -67,7 +68,7 @@ export const EntitiesForceGraphComponent = ({
       nodeThreeObject={(node) => {
         const el = document.createElement('div');
         el.textContent = node.value;
-        el.className = `node-label text-xs px-1 ${node.type === 'threat' ? 'text-doc bg-doc/20' : 'text-foreground bg-foreground/20'}`;
+        el.className = `node-label text-xs px-1 ${node.type === 'threat' ? 'text-doc bg-doc/20' : node.type === 'policy_violation' ? 'text-dopv-foreground bg-dopv/20' : 'text-foreground bg-foreground/20'}`;
 
         const nodeLabel = new CSS2DObject(el);
 
@@ -79,6 +80,9 @@ export const EntitiesForceGraphComponent = ({
       nodeColor={(node) => {
         if (node.type === 'entity') {
           return `${convertOklch(foregroundColor).hex}`;
+        }
+        if (node.type === 'policy_violation') {
+          return `${convertOklch(policyViolationColor).hex}`;
         }
         return `${convertOklch(destructiveColor).hex}`;
       }}

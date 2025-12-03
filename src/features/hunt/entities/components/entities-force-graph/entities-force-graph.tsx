@@ -6,11 +6,15 @@ import { useGetImpactedEntitiesQuery } from '../../api/entities.api';
 import { EntitiesForceGraphComponent } from './entities-force-graph.force-graph';
 import { formatForcegraph } from './entities-force-graph.utils';
 
-export const EntitiesForceGraph = () => {
+export const EntitiesForceGraph = ({
+  familyClass,
+}: {
+  familyClass: 'doc' | 'dopv';
+}) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const { data, isLoading } = useGetImpactedEntitiesQuery({
     ...params,
-    family_class: 'doc',
+    family_class: familyClass,
   });
   if (isLoading)
     return <Column className="h-[850px] w-full">Loading...</Column>;
