@@ -58,6 +58,7 @@ export const routes = {
   hosts_host_sightings: '/hosts/:hostId/sightings',
   hosts_host_timeline: '/hosts/:hostId/timeline',
   hosts_host_outlierevents: '/hosts/:hostId/outlier-events',
+  hosts_host_detectionevents: '/hosts/:hostId/detection-events',
   investigations: '/investigations',
   explore: '/explore',
   deeplinks: '/deeplinks',

@@ -85,15 +85,27 @@ export const HostDetails = () => {
       page_size: 10,
     });
 
-  const { data: eventsData, isLoading: isLoadingEvents } = useGetEventsQuery({
-    ...params,
-    page: 1,
-    page_size: 10,
-    qfilter: `stamus.asset:"${hostId}" AND stamus_novel:true`,
-    stamus: true,
-    alert: true,
-    discovery: true,
-  });
+  const { data: outlierEventsData, isLoading: isLoadingOutlierEvents } =
+    useGetEventsQuery({
+      ...params,
+      page: 1,
+      page_size: 10,
+      qfilter: `stamus.asset:"${hostId}" AND stamus_novel:true`,
+      stamus: true,
+      alert: true,
+      discovery: true,
+    });
+
+  const { data: detectionEventsData, isFetching: isFetchingDetectionEvents } =
+    useGetEventsQuery({
+      ...params,
+      page: 1,
+      page_size: 10,
+      qfilter: `stamus.asset:"${hostId}"`,
+      stamus: true,
+      alert: true,
+      discovery: true,
+    });
 
   return (
     <>
@@ -122,7 +134,7 @@ export const HostDetails = () => {
                 beacons={beaconingData?.count || 0}
                 detectionMethods={detectionMethodsList?.count || 0}
                 sightings={sightingsData?.count || 0}
-                outlierEvents={eventsData?.count || 0}
+                outlierEvents={outlierEventsData?.count || 0}
               />
             </div>
             <div className="h-fit max-w-[450px] grow">
@@ -168,8 +180,20 @@ export const HostDetails = () => {
                 <Link to={getUrl(routes.hosts_host_outlierevents, hostId!)}>
                   Outlier Events{' '}
                   <TabsBadge
-                    count={eventsData?.count || 0}
-                    isLoading={isLoadingEvents}
+                    count={outlierEventsData?.count || 0}
+                    isLoading={isLoadingOutlierEvents}
+                  />
+                </Link>
+              </TabsTrigger>
+              <TabsTrigger
+                value={getUrl(routes.hosts_host_detectionevents, hostId!)}
+                asChild
+              >
+                <Link to={getUrl(routes.hosts_host_detectionevents, hostId!)}>
+                  Detection Events{' '}
+                  <TabsBadge
+                    count={detectionEventsData?.count || 0}
+                    isLoading={isFetchingDetectionEvents}
                   />
                 </Link>
               </TabsTrigger>

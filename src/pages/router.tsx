@@ -38,6 +38,7 @@ import { AttackSurfaceVisualisation } from './attack-surface/visualisation';
 import { FilterSetsPage } from './filter-sets';
 import { HostsPage } from './hosts';
 import { HostBeaconing } from './hosts/[hostId]/beacons';
+import { HostDetectionEvents } from './hosts/[hostId]/detection-events';
 import { HostDetectionMethods } from './hosts/[hostId]/detection-methods';
 import { HostIncidents } from './hosts/[hostId]/incidents';
 import { HostInsights } from './hosts/[hostId]/insights';
@@ -601,6 +602,14 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                 element: (
                   <PageBoundary key="host-outlier-events">
                     <HostOutlierEvents />
+                  </PageBoundary>
+                ),
+              },
+              {
+                path: routes.hosts_host_detectionevents,
+                element: (
+                  <PageBoundary key="host-detection-events">
+                    <HostDetectionEvents />
                   </PageBoundary>
                 ),
               },
