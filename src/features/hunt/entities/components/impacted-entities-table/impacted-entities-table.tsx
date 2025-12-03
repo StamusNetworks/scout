@@ -144,7 +144,7 @@ export const ImpactedEntitiesTable = ({
       columns={customColumns || columns}
       exportColumns={exportThreatsColumns({ threatId, familyClass })}
       toolBar={toolBar}
-      ExpandedRow={ExpandedRow}
+      ExpandedRow={ExpandedRow(familyClass || 'doc')}
       onRowClick={(row) =>
         navigate(
           routes.hosts_host_incidents.replace(':hostId', row.original.value),
