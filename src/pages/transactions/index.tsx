@@ -25,6 +25,7 @@ import { getDuration } from '@/common/lib/duration';
 import { formatBytes, formatNumber } from '@/common/lib/numbers';
 import { startsWithOneOf } from '@/common/lib/strings';
 import { Hostname } from '@/features/analytics/hosts/components/host-details/hostname';
+import { Network } from '@/features/analytics/hosts/components/host-details/network';
 import { useGetEventsTailQuery } from '@/features/hunt/events/api/events.api';
 import { SyntheticView } from '@/features/hunt/events/components/synthetic-view/synthetic-view';
 import { Event } from '@/features/hunt/events/model/event.schema';
@@ -240,6 +241,10 @@ export const TransactionCard = ({ row }: { row: EventTail }) => {
                 host={row.src_ip!}
                 size="small"
               />
+              <Network
+                host={row.src_ip!}
+                size="small"
+              />
             </Column>
             <span>{'->'}</span>
             <Column className="gap-1 truncate">
@@ -248,6 +253,10 @@ export const TransactionCard = ({ row }: { row: EventTail }) => {
                 value={row.dest_ip!}
               />
               <Hostname
+                host={row.dest_ip!}
+                size="small"
+              />
+              <Network
                 host={row.dest_ip!}
                 size="small"
               />

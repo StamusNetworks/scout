@@ -8,10 +8,12 @@ import {
   PopoverTrigger,
 } from '@/common/design-system/atoms/ui/popover';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
+import { cn } from '@/common/lib/utils';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 
 import { useGetHostInsights } from '../../hooks/use-get-host-insights';
 import { Host } from '../../model/host';
+import { DetailsVariants, detailsVariants } from './details.variants';
 
 const queryKeys = {
   host: 'host_id.net_info.agg',
@@ -20,11 +22,17 @@ const queryKeys = {
 } as const;
 type QueryKey = keyof typeof queryKeys;
 
-interface NetworkProps {
+interface NetworkProps extends DetailsVariants {
   host: string;
   keyType?: QueryKey;
+  className?: string;
 }
-export const Network = ({ host, keyType = 'host' }: NetworkProps) => {
+export const Network = ({
+  host,
+  keyType = 'host',
+  size,
+  className,
+}: NetworkProps) => {
   const { data, isFetching, isError } = useGetHostInsights(host);
   if (isFetching) return <Spin />;
   if (isError) return <div>Error.</div>;
@@ -32,23 +40,28 @@ export const Network = ({ host, keyType = 'host' }: NetworkProps) => {
     <NetworkTemplate
       networks={data?.host_id.net_info}
       keyType={keyType}
+      size={size}
+      className={className}
     />
   );
 };
 
-interface NetworkTemplateProps {
+interface NetworkTemplateProps extends DetailsVariants {
   networks: Host['host_id']['net_info'] | undefined;
   keyType?: QueryKey;
+  className?: string;
 }
 export const NetworkTemplate = ({
   networks,
   keyType = 'host',
+  className,
+  size,
 }: NetworkTemplateProps) => {
   if (!networks?.length) return null;
   const queryKey = queryKeys[keyType];
   const sortedNetworks = sortNetworks(networks);
   return (
-    <Row className="items-center">
+    <Row className={cn('items-center', detailsVariants({ size }), className)}>
       <NetworkIcon className="mr-1 shrink-0" />
       <EventValue
         query_key={queryKey}

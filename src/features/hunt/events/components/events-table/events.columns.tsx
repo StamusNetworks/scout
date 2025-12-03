@@ -12,6 +12,7 @@ import { DataTableRowExpander } from '@/common/design-system/molecules/data-tabl
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { cn } from '@/common/lib/utils';
 import { Hostname } from '@/features/analytics/hosts/components/host-details/hostname';
+import { Network } from '@/features/analytics/hosts/components/host-details/network';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 
 import { Event } from '../../model/event.schema';
@@ -93,6 +94,10 @@ export const columns: CustomColumnDef<Event>[] = [
               host={row.original.flow.src_ip}
               size="small"
             />
+            <Network
+              host={row.original.flow.src_ip}
+              size="small"
+            />
           </>
         ) : (
           <>
@@ -101,6 +106,10 @@ export const columns: CustomColumnDef<Event>[] = [
               value={row.original.src_ip}
             />
             <Hostname
+              host={row.original.src_ip}
+              size="small"
+            />
+            <Network
               host={row.original.src_ip}
               size="small"
             />
@@ -130,6 +139,10 @@ export const columns: CustomColumnDef<Event>[] = [
               host={row.original.flow.dest_ip}
               size="small"
             />
+            <Network
+              host={row.original.flow.dest_ip}
+              size="small"
+            />
           </>
         ) : (
           <>
@@ -138,6 +151,10 @@ export const columns: CustomColumnDef<Event>[] = [
               value={row.original.dest_ip}
             />
             <Hostname
+              host={row.original.dest_ip}
+              size="small"
+            />
+            <Network
               host={row.original.dest_ip}
               size="small"
             />
