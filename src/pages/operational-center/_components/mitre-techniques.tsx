@@ -1,4 +1,5 @@
-import { Search } from 'lucide-react';
+import { DoubleArrowLeftIcon } from '@radix-ui/react-icons';
+import { ChevronLeftIcon, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Label, Pie, PieChart } from 'recharts';
 
@@ -6,6 +7,7 @@ import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Badge } from '@/common/design-system/atoms/ui/badge';
+import { Button } from '@/common/design-system/atoms/ui/button';
 import {
   ChartConfig,
   ChartContainer,
@@ -19,6 +21,11 @@ import {
   EmptyHeader,
   EmptyMedia,
 } from '@/common/design-system/atoms/ui/empty';
+import { usePaginationState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
+import {
+  ComposablePagination,
+  PageSelector,
+} from '@/common/design-system/molecules/pagination';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { formatNumber } from '@/common/lib/numbers';
 import { useGetDashboardFieldsQuery } from '@/features/hunt/dashboard/api/dashboard.api';
@@ -32,6 +39,7 @@ export const MitreTechniques = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const params = useGlobalQueryParams(['tenant', 'dates']);
+  const [pagination, setPagination] = usePaginationState();
   const { data, config, total, isError, isEmpty } = useGetDashboardFieldsQuery(
     {
       ...params,
@@ -39,7 +47,7 @@ export const MitreTechniques = () => {
       discovery: true,
       stamus: true,
       fields: 'alert.metadata.mitre_technique_name',
-      page_size: 10,
+      page_size: 100000,
     },
     {
       selectFromResult: (result) => ({
@@ -104,92 +112,126 @@ export const MitreTechniques = () => {
     );
   }
   return (
-    <Grid className="grid-cols-[minmax(14rem,2fr)_3fr] items-center gap-6">
-      <ChartContainer
-        config={config}
-        className="mx-auto aspect-square min-h-64"
-      >
-        <PieChart margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
-          <ChartTooltip
-            content={
-              <ChartTooltipContent
-                hideLabel
-                nameKey="key"
-                formatter={(value, name, item) => (
-                  <Row className="flex-nowrap items-center gap-1 text-nowrap">
-                    <div
-                      className="h-2.5 w-2.5 shrink-0 rounded-[2px] bg-(--color-bg)"
-                      style={
-                        {
-                          '--color-bg': `var(--color-${name})`,
-                        } as React.CSSProperties
-                      }
-                    />
-                    {item.payload.key.replaceAll('_', ' ')}
-                    <div className="text-foreground ml-4 flex items-baseline gap-0.5 font-mono font-medium tabular-nums">
-                      {`${Math.round(((value as number) / total) * 100)}% (${value})`}
-                    </div>
-                  </Row>
-                )}
-              />
-            }
-          />
-          <Pie
-            data={data}
-            dataKey="doc_count"
-            nameKey="key"
-            innerRadius={60}
-            onClick={handleClickMitreTechnique}
-            cursor="pointer"
-          >
-            <Label
-              content={({ viewBox }) => {
-                if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
-                  return (
-                    <text
-                      x={viewBox.cx}
-                      y={viewBox.cy}
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                    >
-                      <tspan
+    <Column>
+      <Grid className="grid-cols-[minmax(14rem,2fr)_3fr] gap-6">
+        <ChartContainer
+          config={config}
+          className="mx-auto aspect-square min-h-64"
+        >
+          <PieChart margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+            <ChartTooltip
+              content={
+                <ChartTooltipContent
+                  hideLabel
+                  nameKey="key"
+                  formatter={(value, name, item) => (
+                    <Row className="flex-nowrap items-center gap-1 text-nowrap">
+                      <div
+                        className="h-2.5 w-2.5 shrink-0 rounded-[2px] bg-(--color-bg)"
+                        style={
+                          {
+                            '--color-bg': `var(--color-${name})`,
+                          } as React.CSSProperties
+                        }
+                      />
+                      {item.payload.key.replaceAll('_', ' ')}
+                      <div className="text-foreground ml-4 flex items-baseline gap-0.5 font-mono font-medium tabular-nums">
+                        {`${Math.round(((value as number) / total) * 100)}% (${value})`}
+                      </div>
+                    </Row>
+                  )}
+                />
+              }
+            />
+            <Pie
+              data={data}
+              dataKey="doc_count"
+              nameKey="key"
+              innerRadius={60}
+              onClick={handleClickMitreTechnique}
+              cursor="pointer"
+            >
+              <Label
+                content={({ viewBox }) => {
+                  if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
+                    return (
+                      <text
                         x={viewBox.cx}
                         y={viewBox.cy}
-                        className="fill-foreground text-3xl font-bold"
+                        textAnchor="middle"
+                        dominantBaseline="middle"
                       >
-                        {formatNumber(total)}
-                      </tspan>
-                      <tspan
-                        x={viewBox.cx}
-                        y={(viewBox.cy || 0) + 24}
-                        className="fill-muted-foreground"
-                      >
-                        Total
-                      </tspan>
-                    </text>
-                  );
-                }
-              }}
-            />
-          </Pie>
-        </PieChart>
-      </ChartContainer>
-      <Column className="gap-1 truncate">
-        {data.map((item) => (
-          <Row
-            className="items-center justify-between gap-2"
-            key={item.key}
-          >
-            <EventValue
-              query_key="alert.metadata.mitre_technique_name"
-              className="truncate text-sm"
-              value={item.key}
-              onClick={() => handleClickMitreTechnique({ name: item.key })}
-            />
-            <Badge variant="secondary">{formatNumber(item.doc_count)}</Badge>
-          </Row>
-        ))}
-      </Column>
-    </Grid>
+                        <tspan
+                          x={viewBox.cx}
+                          y={viewBox.cy}
+                          className="fill-foreground text-3xl font-bold"
+                        >
+                          {formatNumber(total)}
+                        </tspan>
+                        <tspan
+                          x={viewBox.cx}
+                          y={(viewBox.cy || 0) + 24}
+                          className="fill-muted-foreground"
+                        >
+                          Total
+                        </tspan>
+                      </text>
+                    );
+                  }
+                }}
+              />
+            </Pie>
+          </PieChart>
+        </ChartContainer>
+        <Column className="gap-1 truncate">
+          {data
+            .slice(
+              pagination.pageIndex * pagination.pageSize,
+              (pagination.pageIndex + 1) * pagination.pageSize,
+            )
+            .map((item) => (
+              <Row
+                className="items-center justify-between gap-2"
+                key={item.key}
+              >
+                <EventValue
+                  query_key="alert.metadata.mitre_technique_name"
+                  className="truncate text-sm"
+                  value={item.key}
+                  onClick={() => handleClickMitreTechnique({ name: item.key })}
+                />
+                <Badge variant="secondary">
+                  {formatNumber(item.doc_count)}
+                </Badge>
+              </Row>
+            ))}
+        </Column>
+      </Grid>
+      <Row className="mt-2 justify-end">
+        <ComposablePagination
+          className="px-0"
+          areSomeRowsSelected={false}
+          selectedRowsCount={0}
+          rowsCount={data.length}
+          totalCount={total}
+          pageSize={pagination.pageSize}
+          pageIndex={pagination.pageIndex}
+          onPageSizeChange={(pageSize) =>
+            setPagination((prev) => ({ ...prev, pageSize }))
+          }
+          onPageIndexChange={(pageIndex) =>
+            setPagination((prev) => ({ ...prev, pageIndex }))
+          }
+          isPreviousPage={pagination.pageIndex > 0}
+          isNextPage={
+            pagination.pageIndex <
+            Math.ceil(data.length / pagination.pageSize) - 1
+          }
+          pageCount={Math.ceil(data.length / pagination.pageSize)}
+        >
+          <PageSelector />
+        </ComposablePagination>
+      </Row>
+    </Column>
   );
 };
