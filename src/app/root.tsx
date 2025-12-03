@@ -1,5 +1,5 @@
 import { PanelRightClose, PanelRightOpen } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -10,6 +10,7 @@ import {
   setIsSidebarOpen,
   setOpenModal,
 } from '@/features/ui/ui-state.slice';
+import { useGetSystemSettingsQuery } from '@/features/user/settings/settings.api';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { Header } from '../common/design-system/layouts/components/header/header';
@@ -55,10 +56,16 @@ export const Root = () => {
     };
   }, [dispatch]);
 
+  const { data: systemSettings } = useGetSystemSettingsQuery();
+
+  const menu = useMemo(() => {
+    return defaultMenu(routes, systemSettings!);
+  }, [systemSettings]);
+
   return (
     <div className="relative flex h-screen w-screen max-w-screen">
       <Modals />
-      <Navigation menu={defaultMenu(routes)} />
+      <Navigation menu={menu} />
       <div className="relative flex h-screen w-full flex-col overflow-hidden">
         <Header />
         <Row className="h-full gap-0 overflow-clip">

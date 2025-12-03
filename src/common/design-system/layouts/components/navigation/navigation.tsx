@@ -34,7 +34,7 @@ import { useAppDispatch, useAppSelector } from '@/store/store';
 
 export type MenuItem = {
   key: string;
-  type: 'link';
+  type: 'link' | 'external';
   url: string;
   title: string;
   icon: React.ReactNode;
@@ -146,11 +146,8 @@ export const Navigation = ({ menu, className }: MenuProps) => {
                           'bg-primary/10 text-primary hover:bg-primary/10',
                       )}
                       onClick={() =>
-                        item.key === 'management'
-                          ? window.open(
-                              getConfig()?.apiUrl +
-                                '/appliances/global_settings/',
-                            )
+                        item.type === 'external'
+                          ? window.open(item.url)
                           : navigate(item.url)
                       }
                     >

@@ -13,6 +13,7 @@ import {
   PencilRuler,
   Radar,
   Scale,
+  ScanSearch,
   Search,
   SquareKanban,
   WandSparkles,
@@ -20,10 +21,14 @@ import {
 } from 'lucide-react';
 
 import { getConfig } from '@/config';
+import { SystemSettings } from '@/features/user/settings/settings.model';
 
 import { type Submenu } from './navigation';
 
-export const defaultMenu = (routes: Record<string, string>): Submenu[] => [
+export const defaultMenu = (
+  routes: Record<string, string>,
+  systemSettings: SystemSettings,
+): Submenu[] => [
   {
     label: 'Security Posture',
     children: [
@@ -172,10 +177,17 @@ export const defaultMenu = (routes: Record<string, string>): Submenu[] => [
       },
       {
         key: 'management',
-        type: 'link',
+        type: 'external',
         url: getConfig()?.apiUrl + '/appliances/',
         title: 'Management',
         icon: <SquareKanban />,
+      },
+      {
+        key: 'kibana-opensearch',
+        type: 'external',
+        url: getConfig()?.apiUrl + systemSettings.kibana_url,
+        title: systemSettings.use_opensearch ? 'OpenSearch' : 'Kibana',
+        icon: <ScanSearch />,
       },
     ],
   },
