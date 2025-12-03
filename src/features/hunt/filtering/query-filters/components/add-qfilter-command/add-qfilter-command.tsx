@@ -129,6 +129,7 @@ export const AddQfilterCommand = () => {
             value={search}
             onValueChange={(value) => dispatch(setSearch(value))}
             ref={inputRef}
+            placeholder="Type in to search"
           />
         </Row>
       </Row>
