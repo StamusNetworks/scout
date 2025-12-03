@@ -10,14 +10,17 @@ import { capitalizeAll } from '@/common/lib/strings';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { FilterCategory } from '../../constants/query-filter.config';
-import { isNegatable } from '../../constants/query-filter.definition';
+import {
+  isNegatable,
+  QueryFiltersRecord,
+} from '../../constants/query-filter.definition';
 import { useQueryFiltersDefinitions } from '../../hooks/use-filters-definitions';
 import { selectFilterCommand } from './add-qfilter-command.selectors';
 import { setFilter } from './add-qfilter-command.slice';
 
 export const FilterOptions = () => {
   const dispatch = useAppDispatch();
-  const { negated } = useAppSelector(selectFilterCommand);
+  const { negated, search } = useAppSelector(selectFilterCommand);
 
   const filters = useQueryFiltersDefinitions();
   const definitions = useMemo(() => {
@@ -39,6 +42,21 @@ export const FilterOptions = () => {
   return (
     <>
       <CommandEmpty>No filters found.</CommandEmpty>
+      {search.length > 0 && (
+        <CommandGroup heading="Prefered filters">
+          {PreferedOptions.map((o) => (
+            <CommandItem
+              key={o.value}
+              value={`${o.value}-${o.label}`}
+              onSelect={() => dispatch(setFilter(o.value))}
+              className="justify-between"
+            >
+              <span>{o.label}</span>
+              <span className="text-muted-foreground">{o.value}</span>
+            </CommandItem>
+          ))}
+        </CommandGroup>
+      )}
       {values(FilterCategory).map((category) => (
         <CommandGroup
           key={category}
@@ -62,3 +80,19 @@ export const FilterOptions = () => {
     </>
   );
 };
+
+export const PreferedOptions = [
+  'ip',
+  'src_ip',
+  'flow.src_ip',
+  'dest_ip',
+  'flow.dest_ip',
+  'port',
+  'src_port',
+  'dest_port',
+  'flow.src_port',
+  'flow.dest_port',
+].map((k) => ({
+  label: QueryFiltersRecord[k].label,
+  value: k,
+}));
