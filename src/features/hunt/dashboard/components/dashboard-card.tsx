@@ -14,7 +14,7 @@ import {
   Search,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -37,6 +37,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/common/design-system/atoms/ui/dropdown-menu';
+import { ScrollArea } from '@/common/design-system/atoms/ui/scroll-area';
 import {
   Select,
   SelectContent,
@@ -190,11 +191,13 @@ export const ValueListCard = ({
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <DialogContent className="w-fit max-w-screen min-w-lg">
-            <ViewAll
-              es_key={es_key}
-              title={title}
-            />
+          <DialogContent className="flex max-h-[80vh] w-fit max-w-screen min-w-lg overflow-hidden p-0 pr-0.5">
+            <ScrollArea className="overflow-auto p-4 pb-2">
+              <ViewAll
+                es_key={es_key}
+                title={title}
+              />
+            </ScrollArea>
           </DialogContent>
         </Dialog>
       </CardHeader>
@@ -231,7 +234,7 @@ export const ValueListCard = ({
   );
 };
 
-const pageSize = 10;
+const pageSizeOptions = [20, 50, 100];
 
 const ViewAll = ({ es_key, title }: { es_key: string; title: string }) => {
   const ordering = useAppSelector(selectOrdering);
@@ -240,9 +243,23 @@ const ViewAll = ({ es_key, title }: { es_key: string; title: string }) => {
     { page_size: 100000000 },
   );
   const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(pageSizeOptions[0]);
   const pages = allData?.[es_key]
     ? Math.ceil(allData?.[es_key]?.length / pageSize)
     : 0;
+  const handlePageSizeChange = useCallback(
+    (value: string) => {
+      const newValue = parseInt(value);
+      const totalItems = allData?.[es_key]?.length || 0;
+      const firstItemIndex = (currentPage - 1) * pageSize;
+      const newPage = Math.floor(firstItemIndex / newValue) + 1;
+      setPageSize(newValue);
+      setCurrentPage(
+        newPage > 0 ? Math.min(newPage, Math.ceil(totalItems / newValue)) : 1,
+      );
+    },
+    [currentPage, pageSize, allData, es_key],
+  );
 
   const header = [title, 'hits'];
   const handleDownload = () => {
@@ -255,7 +272,7 @@ const ViewAll = ({ es_key, title }: { es_key: string; title: string }) => {
   };
 
   return (
-    <Column className="overflow-hidden">
+    <Column>
       <Row className="mb-4 flex items-center justify-between">
         <h2 className="flex items-center gap-2 text-lg font-bold">
           {title}{' '}
@@ -321,8 +338,28 @@ const ViewAll = ({ es_key, title }: { es_key: string; title: string }) => {
             />
           </motion.div>
         ))}
-
       <Row className="mt-4 -translate-y-1 items-center justify-end gap-2">
+        <Row className="items-center gap-2">
+          <span className="text-sm">Per page</span>
+          <Select
+            value={pageSize.toString()}
+            onValueChange={handlePageSizeChange}
+          >
+            <SelectTrigger className="h-8 w-fit">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {pageSizeOptions.map((option) => (
+                <SelectItem
+                  key={option}
+                  value={option.toString()}
+                >
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </Row>
         <Button
           variant="outline"
           className="hidden h-8 w-8 p-0 lg:flex"
@@ -378,7 +415,7 @@ const ViewAll = ({ es_key, title }: { es_key: string; title: string }) => {
           <span className="sr-only">Go to last page</span>
           <DoubleArrowRightIcon className="h-4 w-4" />
         </Button>
-      </Row>
+      </Row>{' '}
     </Column>
   );
 };
