@@ -1,4 +1,5 @@
 import { Command as CommandPrimitive } from 'cmdk';
+import { Asterisk } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -18,6 +19,7 @@ import {
   resetCommand,
   resetStep,
   setSearch,
+  setStep,
 } from './add-qfilter-command.slice';
 import { FilterOptions } from './filter-options';
 import { OperatorOptions } from './operator-options';
@@ -102,16 +104,19 @@ export const AddQfilterCommand = () => {
             <Button
               size="sm"
               variant="secondary"
+              onClick={() => dispatch(setStep(0))}
             >
               {filterDefinition?.label || filter}
             </Button>
           )}
-          {step > 1 && negated === true && (
+          {step > 1 && (
             <Button
               size="sm"
               variant="secondary"
+              onClick={() => dispatch(setStep(1))}
             >
-              NOT
+              {negated === true ? 'NOT' : 'IS'}
+              {wildcarded === true && <Asterisk />}
             </Button>
           )}
           <CommandPrimitive.Input

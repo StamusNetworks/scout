@@ -48,6 +48,9 @@ export const addQfilterCommandSlice = createSlice({
       if (state.step === 0) return;
       state.step = state.step - 1;
     },
+    setStep: (state, action: PayloadAction<number>) => {
+      state.step = action.payload;
+    },
     resetCommand: (state) => {
       state.step = 0;
       state.search = '';
@@ -66,6 +69,7 @@ export const {
   setNegated,
   setWildcarded,
   resetStep,
+  setStep,
   resetCommand,
 } = addQfilterCommandSlice.actions;
 
