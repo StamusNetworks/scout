@@ -238,7 +238,7 @@ export const NetworkTreeSunburst = () => {
 const ChildBadge = ({ count, Icon }: { count: number; Icon: LucideIcon }) => (
   <Badge
     variant="discreet"
-    className="group-hover:bg-foreground/10 justify-between gap-2 transition-all duration-100"
+    className="group-hover:bg-primary/5 dark:group-hover:bg-primary/25 justify-between gap-2 transition-all duration-100"
   >
     <Icon />
     {formatNumber(count)}
