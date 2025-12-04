@@ -8,9 +8,14 @@ import {
 } from 'lucide-react';
 import { parseAsStringLiteral, useQueryState } from 'nuqs';
 import { useCallback, useEffect, useMemo } from 'react';
+import { B } from 'vitest/dist/chunks/benchmark.geERunq4';
 
+import { Column } from '@/common/design-system/atoms/layout/column';
+import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Badge } from '@/common/design-system/atoms/ui/badge';
+import { Button } from '@/common/design-system/atoms/ui/button';
+import { Card } from '@/common/design-system/atoms/ui/card';
 import {
   Empty,
   EmptyDescription,
@@ -119,6 +124,10 @@ export const NetworkTreeSunburst = () => {
     NetworkTreeFilterService.clearFilterNonAttackSurface();
   }, []);
 
+  const currentNode = useMemo(() => {
+    return findNodeByPath(treeData, selectedNode);
+  }, [treeData, selectedNode]);
+
   if (!treeData || treeData?.children?.length === 0)
     return (
       <Empty className="min-h-96 border">
@@ -152,21 +161,89 @@ export const NetworkTreeSunburst = () => {
           <EmptyDescription>Try another counting method</EmptyDescription>
         </Empty>
       ) : (
-        <Row className="gap-2">
+        <Grid className="grid-cols-[1fr_270px] gap-2">
           <SunburstGraph<TreeDataPayload>
             data={treeData}
             renderTooltip={renderTooltip}
             selectedNode={selectedNode}
             onNodeClick={handleNodeClick}
           />
-          <div className="w-48 shrink-0">
-            {renderTooltip(findNodeByPath(treeData, selectedNode))}
-          </div>
-        </Row>
+          <Column className="w-full shrink-0 gap-4">
+            {renderTooltip(currentNode)}
+            {currentNode?.children && currentNode.children.length > 0 && (
+              <Column>
+                <h2 className="text-sm font-bold">Children</h2>
+                <Column className="gap-2">
+                  {currentNode?.children
+                    ?.map((child) => ({
+                      ...child,
+                      aggregatedCounts: aggregateCountsForTooltip(child),
+                    }))
+                    .sort((a, b) => {
+                      const key = options.find((o) => o.value === count)?.key;
+                      return (
+                        b.aggregatedCounts[
+                          key as keyof typeof b.aggregatedCounts
+                        ] -
+                        a.aggregatedCounts[
+                          key as keyof typeof a.aggregatedCounts
+                        ]
+                      );
+                    })
+                    .map((child) => {
+                      return (
+                        <Button
+                          key={child.path}
+                          variant="outline"
+                          size="none"
+                          className="group flex-col items-start justify-center gap-1 rounded-md p-2 pt-0.5"
+                          onClick={() => handleNodeClick(null, { data: child })}
+                        >
+                          <p className="text-sm font-medium">{child.name}</p>
+                          <Grid className="w-full grid-cols-3 gap-1">
+                            <ChildBadge
+                              count={child.aggregatedCounts.ips_count}
+                              Icon={MapPin}
+                            />
+                            <ChildBadge
+                              count={child.aggregatedCounts.roles_count}
+                              Icon={Settings}
+                            />
+                            <ChildBadge
+                              count={child.aggregatedCounts.hostnames_count}
+                              Icon={LaptopMinimal}
+                            />
+                            <ChildBadge
+                              count={child.aggregatedCounts.usernames_count}
+                              Icon={User}
+                            />
+                            <ChildBadge
+                              count={child.aggregatedCounts.services_count}
+                              Icon={LaptopMinimal}
+                            />
+                          </Grid>
+                        </Button>
+                      );
+                    })}
+                </Column>
+              </Column>
+            )}
+          </Column>
+        </Grid>
       )}
     </>
   );
 };
+
+const ChildBadge = ({ count, Icon }: { count: number; Icon: LucideIcon }) => (
+  <Badge
+    variant="discreet"
+    className="group-hover:bg-foreground/10 justify-between gap-2 transition-all duration-100"
+  >
+    <Icon />
+    {formatNumber(count)}
+  </Badge>
+);
 
 const selectNode = createSelector([selectQueryFilters], (filters) => {
   const filter = filters.find(
@@ -321,7 +398,7 @@ const renderTooltip = (treeNode: TreeData | undefined) => {
         <RowTemplate
           Icon={LaptopMinimal}
           label="Services"
-          value={aggregatedCounts.usernames_count}
+          value={aggregatedCounts.services_count}
         />
       </div>
     </div>
