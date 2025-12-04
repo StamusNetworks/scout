@@ -104,7 +104,7 @@ export const defaultMenu = (
         key: 'session-events',
         type: 'link',
         url: routes.session_events,
-        title: 'Session Events',
+        title: 'Network Events',
         icon: <ArrowDownUp />,
       },
       {

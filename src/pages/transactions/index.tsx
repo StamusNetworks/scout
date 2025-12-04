@@ -122,7 +122,7 @@ export const TransactionsPage = () => {
 
   return (
     <DefaultPage
-      title="Transactions"
+      title="Network Events"
       description="Explore detailed network activity with transaction cards that help you investigate and correlate related NSM events, making it easier to follow key flows and gain meaningful context for effective incident analysis."
     >
       <Row className="mb-2 h-8 justify-between gap-4">
