@@ -7,6 +7,7 @@ import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { Checkbox } from '@/common/design-system/atoms/ui/checkbox';
+import { CommandShortcut } from '@/common/design-system/atoms/ui/command';
 import {
   Form,
   FormControl,
@@ -211,7 +212,10 @@ export const EditFilterForm = ({
               <Column>
                 <FormMessage />
                 <FormLabel>Wildcard</FormLabel>
-                <FormDescription>Wildcard the filter</FormDescription>
+                <FormDescription>
+                  Enables * and ? symbols to wildcard the string. Without
+                  symbols, the string will be treated as a word match.
+                </FormDescription>
               </Column>
             </FormItem>
           )}
