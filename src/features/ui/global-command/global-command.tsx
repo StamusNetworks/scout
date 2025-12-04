@@ -23,7 +23,7 @@ export const GlobalCommand = () => {
     <CommandDialog
       open={globalCommandOpen}
       onOpenChange={handleOpenChange}
-      className="[&_[cmdk-item]]:py-2"
+      className="**:[[cmdk-item]]:py-2"
     >
       <CommandInput placeholder="Type a command or search..." />
       <CommandList className="max-h-[400px]">

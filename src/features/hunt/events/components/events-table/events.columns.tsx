@@ -68,7 +68,7 @@ export const columns: CustomColumnDef<Event>[] = [
         <EventValue
           query_key="alert.signature"
           value={row.original.alert?.signature}
-          className="line-clamp-2 max-w-[28rem] whitespace-break-spaces"
+          className="line-clamp-2 max-w-112 whitespace-break-spaces"
         />
       ) : (
         row.original.stamus?.threat_name

@@ -1,5 +1,4 @@
-import { DoubleArrowLeftIcon } from '@radix-ui/react-icons';
-import { ChevronLeftIcon, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Label, Pie, PieChart } from 'recharts';
 
@@ -7,7 +6,6 @@ import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Badge } from '@/common/design-system/atoms/ui/badge';
-import { Button } from '@/common/design-system/atoms/ui/button';
 import {
   ChartConfig,
   ChartContainer,
