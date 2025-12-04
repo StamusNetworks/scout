@@ -163,15 +163,15 @@ export const FilterSetsPage = () => {
                 onChange={setType as (value: string | null) => void}
                 options={[
                   {
-                    label: 'Global',
-                    value: 'global',
-                  },
-                  {
-                    label: 'Private',
+                    label: 'Personal',
                     value: 'private',
                   },
                   {
-                    label: 'Stamus',
+                    label: 'Shared',
+                    value: 'global',
+                  },
+                  {
+                    label: 'Built-in',
                     value: 'stamus',
                   },
                 ]}

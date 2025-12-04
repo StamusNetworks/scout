@@ -308,9 +308,9 @@ export const SaveFilterSetForm = ({
                 <FormMessage />
                 <FormLabel>Shared</FormLabel>
                 <FormDescription>
-                  Enabled: Create Filter Set for all users (global)
+                  Enabled: Create Filter Set for all users (shared)
                   <br />
-                  Disabled: Create Filter Set only for you (private)
+                  Disabled: Create Filter Set only for you (personal)
                 </FormDescription>
               </Column>
             </FormItem>
