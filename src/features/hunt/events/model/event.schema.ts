@@ -246,6 +246,7 @@ export const eventSchema = z.object({
   files: z.array(fileInfoSchema).optional(),
   fileinfo: fileInfoSchema.optional(),
   anomaly: anomalySchema.optional(),
+  stamus_novel: z.boolean().optional(),
 });
 
 export type Event = z.infer<typeof eventSchema>;

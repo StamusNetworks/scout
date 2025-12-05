@@ -251,12 +251,12 @@ export const columns: CustomColumnDef<Event>[] = [
     ),
   },
   {
-    id: 'novel',
+    id: 'outlier',
     visible: false,
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
-        title="Novel"
+        title="Outlier"
       />
     ),
     cell: ({ row }) => (
