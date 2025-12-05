@@ -1,4 +1,5 @@
 import { pipe, toPairs } from 'ramda';
+import { useMemo } from 'react';
 
 import { FilterCategory } from '../../filtering/query-filters/constants/query-filter.config';
 import { QueryFiltersRecord } from '../../filtering/query-filters/constants/query-filter.definition';
@@ -8,7 +9,7 @@ import { MixedQueryFilterDefinitions } from '../../filtering/query-filters/store
 
 export const useSupportedFilterActionsFilters = () => {
   const filterDefs = useQueryFiltersDefinitions();
-  return getSupportedFiltersKeys(filterDefs);
+  return useMemo(() => getSupportedFiltersKeys(filterDefs), [filterDefs]);
 };
 
 export const getSupportedFiltersKeys = (

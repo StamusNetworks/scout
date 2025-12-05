@@ -6,7 +6,7 @@ import {
   WandSparkles,
 } from 'lucide-react';
 import { Reorder } from 'motion/react';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
@@ -111,65 +111,69 @@ export const FiltersSideBar = () => {
 
   const sideBarConfigPerPage: Partial<
     Record<(typeof routes)[keyof typeof routes], SideBarConfig>
-  > = {
-    [routes.explorer]: {
-      enabled: ['outliers', 'events', 'tags', 'query_filters'],
-      filterTypes: [FilterCategory.EVENT, FilterCategory.HOST],
-    },
-    [routes.attack_surface]: {
-      enabled: ['query_filters'],
-      filterTypes: [FilterCategory.HOST],
-    },
-    [routes.attack_surface_inventory]: {
-      enabled: ['query_filters'],
-      filterTypes: [FilterCategory.HOST],
-    },
-    [routes.hosts]: {
-      enabled: withAlerts
-        ? ['outliers', 'events', 'tags', 'query_filters']
-        : ['query_filters'],
-      filterTypes: [
-        FilterCategory.HOST,
-        ...(withAlerts ? [FilterCategory.EVENT] : []),
-      ],
-    },
-    [routes.events]: {
-      enabled: ['outliers', 'events', 'tags', 'query_filters'],
-      filterTypes: [FilterCategory.EVENT, FilterCategory.HOST],
-    },
-    [routes.detection_methods]: {
-      enabled: ['outliers', 'events', 'tags', 'query_filters'],
-      filterTypes: [
-        FilterCategory.SIGNATURE,
-        ...(withAlerts ? [FilterCategory.EVENT] : []),
-      ],
-    },
-    [routes.filters_actions]: {
-      enabled: ['outliers', 'events', 'tags', 'query_filters'],
-      filterTypes: [FilterCategory.EVENT, FilterCategory.SIGNATURE],
-      getIsInapplicable: (filter) =>
-        !filterActionSupportedFilters.includes(filter.key),
-    },
-    [routes.filter_sets]: {
-      enabled: ['outliers', 'events', 'tags', 'query_filters'],
-      filterTypes: [
-        FilterCategory.EVENT,
-        FilterCategory.SIGNATURE,
-        FilterCategory.HOST,
-      ],
-    },
-    [routes.session_events]: {
-      enabled: ['query_filters'],
-      filterTypes: [FilterCategory.EVENT],
-      getIsInapplicable: (filter) =>
-        startsWithOneOf(filter.key, ['alert.', 'stamus.', 'discovery.']),
-    },
-  };
+  > = useMemo(
+    () => ({
+      [routes.explorer]: {
+        enabled: ['outliers', 'events', 'tags', 'query_filters'],
+        filterTypes: [FilterCategory.EVENT, FilterCategory.HOST],
+      },
+      [routes.attack_surface]: {
+        enabled: ['query_filters'],
+        filterTypes: [FilterCategory.HOST],
+      },
+      [routes.attack_surface_inventory]: {
+        enabled: ['query_filters'],
+        filterTypes: [FilterCategory.HOST],
+      },
+      [routes.hosts]: {
+        enabled: withAlerts
+          ? ['outliers', 'events', 'tags', 'query_filters']
+          : ['query_filters'],
+        filterTypes: [
+          FilterCategory.HOST,
+          ...(withAlerts ? [FilterCategory.EVENT] : []),
+        ],
+      },
+      [routes.events]: {
+        enabled: ['outliers', 'events', 'tags', 'query_filters'],
+        filterTypes: [FilterCategory.EVENT, FilterCategory.HOST],
+      },
+      [routes.detection_methods]: {
+        enabled: ['outliers', 'events', 'tags', 'query_filters'],
+        filterTypes: [
+          FilterCategory.SIGNATURE,
+          ...(withAlerts ? [FilterCategory.EVENT] : []),
+        ],
+      },
+      [routes.filters_actions]: {
+        enabled: ['outliers', 'events', 'tags', 'query_filters'],
+        filterTypes: [FilterCategory.EVENT, FilterCategory.SIGNATURE],
+        getIsInapplicable: (filter) =>
+          !filterActionSupportedFilters.includes(filter.key),
+      },
+      [routes.filter_sets]: {
+        enabled: ['outliers', 'events', 'tags', 'query_filters'],
+        filterTypes: [
+          FilterCategory.EVENT,
+          FilterCategory.SIGNATURE,
+          FilterCategory.HOST,
+        ],
+      },
+      [routes.session_events]: {
+        enabled: ['query_filters'],
+        filterTypes: [FilterCategory.EVENT],
+        getIsInapplicable: (filter) =>
+          startsWithOneOf(filter.key, ['alert.', 'stamus.', 'discovery.']),
+      },
+    }),
+    [withAlerts, filterActionSupportedFilters],
+  );
 
   const sideBarConfig =
     sideBarConfigPerPage[pathname as (typeof routes)[keyof typeof routes]];
 
   useEffect(() => {
+    console.log('hello');
     if (sideBarConfig?.enabled) {
       dispatch(setIsSidebarOpen(true));
     } else {
