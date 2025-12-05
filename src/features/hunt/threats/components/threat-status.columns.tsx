@@ -1,5 +1,6 @@
 import { Crosshair, Swords } from 'lucide-react';
 
+import { Spin } from '@/common/design-system/atoms/ui/spin';
 import {
   Tooltip,
   TooltipContent,
@@ -13,6 +14,7 @@ import { EventValue } from '@/features/hunt/filtering/query-filters/components/e
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 import { ThreatTagById } from '@/features/hunt/threats/components/threat-tag';
 
+import { useThreat } from '../hooks/use-threat';
 import { ThreatStatus } from '../model/threat-status.schema';
 
 export const threatStatusColumns: CustomColumnDef<ThreatStatus>[] = [
@@ -50,15 +52,7 @@ export const threatStatusColumns: CustomColumnDef<ThreatStatus>[] = [
         title="Kill chain"
       />
     ),
-    cell: ({ row }) => (
-      <KillchainTag
-        kc={
-          row.original.is_offender
-            ? row.original.kill_chain_offender
-            : row.original.kill_chain
-        }
-      />
-    ),
+    cell: ({ row }) => <KillChainTagWithContext row={row.original} />,
   },
   {
     id: 'is_offender',
@@ -101,3 +95,17 @@ export const threatStatusColumns: CustomColumnDef<ThreatStatus>[] = [
     ),
   },
 ];
+
+export const KillChainTagWithContext = ({ row }: { row: ThreatStatus }) => {
+  const { data, isLoading } = useThreat(row.threat_id);
+  if (isLoading) return <Spin />;
+  return (
+    <KillchainTag
+      kc={row.is_offender ? row.kill_chain_offender : row.kill_chain}
+      context={[
+        { es_key: 'stamus.asset', value: row.asset },
+        { es_key: 'stamus.threat_name', value: data?.name || '' },
+      ]}
+    />
+  );
+};

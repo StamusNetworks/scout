@@ -1,7 +1,15 @@
+import { LayoutDashboard } from 'lucide-react';
+import { useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { Badge } from '@/common/design-system/atoms/ui/badge';
+import { ContextMenuItem } from '@/common/design-system/atoms/ui/context-menu';
 import { cn } from '@/common/lib/utils';
+import { routes } from '@/pages/routes.config';
+import { useAppDispatch } from '@/store/store';
 
 import { EventValue } from '../../filtering/query-filters/components/event-value/event-value';
+import { replaceFilters } from '../../filtering/query-filters/store/query-filters.slice';
 import { KillChainMap, killChainsConfig } from '../killchain';
 
 export const KillchainTag = ({
@@ -9,12 +17,16 @@ export const KillchainTag = ({
   status,
   className,
   onClick,
+  context,
 }: {
   kc: keyof typeof killChainsConfig | number;
   status?: 'fixed' | 'new';
   className?: string;
   onClick?: () => void;
+  context?: { es_key: string; value: string | number }[];
 }) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const killchain =
     typeof kc === 'number'
       ? KillChainMap[kc.toString() as keyof typeof KillChainMap]
@@ -23,12 +35,40 @@ export const KillchainTag = ({
     killChainsConfig[killchain]?.shorthand?.toUpperCase() ||
     killChainsConfig[killchain]?.name.toUpperCase();
 
+  const defaultOnClick = useCallback(() => {
+    navigate(routes.threats + '?killchain=' + killchain);
+  }, [navigate, killchain]);
+
+  const contextMenuOptions = useMemo(
+    () => (
+      <ContextMenuItem
+        key="explore-with-context"
+        onClick={() => {
+          dispatch(
+            replaceFilters([
+              { key: 'stamus.kill_chain', value: killchain },
+              ...(context?.map(({ es_key, value }) => ({
+                key: es_key,
+                value,
+              })) || []),
+            ]),
+          );
+          navigate(routes.explorer);
+        }}
+      >
+        <LayoutDashboard /> Explore with context
+      </ContextMenuItem>
+    ),
+    [dispatch, context, killchain, navigate],
+  );
+
   return (
     <EventValue
       query_key="stamus.kill_chain"
       value={killchain}
-      className="no-underline"
-      onClick={onClick}
+      className="cursor-pointer no-underline"
+      onClick={onClick ?? defaultOnClick}
+      contextMenuOptions={contextMenuOptions}
     >
       <Badge
         className={cn(
