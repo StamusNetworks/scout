@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { persistReducer } from 'redux-persist';
+import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage';
 
 import { dashboardPageStateSlice } from '@/features/hunt/dashboard/store/dashboard.slice';
@@ -28,6 +29,7 @@ const persistConfig = {
   key: 'root',
   storage,
   whitelist: ['filters', 'pages', 'preferences', 'help', 'investigation'],
+  stateReconciler: autoMergeLevel2,
 };
 
 export const rootReducer = () =>
@@ -62,8 +64,9 @@ export const rootReducer = () =>
   });
 
 export function setupStore(preloadedState?: Partial<RootStateWithAPI>) {
+  const reducer = rootReducer();
   return configureStore({
-    reducer: persistReducer(persistConfig, rootReducer()),
+    reducer: persistReducer<RootStateWithAPI>(persistConfig, reducer),
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(API.middleware),
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
