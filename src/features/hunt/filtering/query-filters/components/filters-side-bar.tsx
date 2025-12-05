@@ -29,6 +29,7 @@ import { FilterActionsDropdown } from '@/features/hunt/filter-actions/components
 import { useSupportedFilterActionsFilters } from '@/features/hunt/filter-actions/utils/get-supported-filters';
 import { Investigation } from '@/features/hunt/investigation/components/ongoing-investigation/ongoing-investigation';
 import { selectInvestigationStage } from '@/features/hunt/investigation/investigation.slice';
+import { selectAutoOpenSidebarOnNavigation } from '@/features/ui/preferences/preferences.slice';
 import {
   selectIsSidebarOpen,
   setIsSidebarOpen,
@@ -106,6 +107,9 @@ export const FiltersSideBar = () => {
   const queryFilters = useSelector(selectQueryFilters);
   const isOpen = useAppSelector(selectIsSidebarOpen);
   const filterActionSupportedFilters = useSupportedFilterActionsFilters();
+  const autoOpenSidebarOnNavigation = useAppSelector(
+    selectAutoOpenSidebarOnNavigation,
+  );
 
   const [withAlerts] = useWithAlertsParam();
 
@@ -173,13 +177,13 @@ export const FiltersSideBar = () => {
     sideBarConfigPerPage[pathname as (typeof routes)[keyof typeof routes]];
 
   useEffect(() => {
-    console.log('hello');
+    if (!autoOpenSidebarOnNavigation) return;
     if (sideBarConfig?.enabled) {
       dispatch(setIsSidebarOpen(true));
     } else {
       dispatch(setIsSidebarOpen(false));
     }
-  }, [sideBarConfig?.enabled, dispatch]);
+  }, [sideBarConfig?.enabled, dispatch, autoOpenSidebarOnNavigation]);
 
   const investigationStage = useAppSelector(selectInvestigationStage);
 

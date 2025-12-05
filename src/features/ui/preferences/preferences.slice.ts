@@ -13,6 +13,7 @@ const initialState: PreferencesState = {
   exportFormat: 'csv',
   exportAction: 'download',
   enabledActions: ['download-csv', 'copy-csv', 'copy-markdown'],
+  autoOpenSidebarOnNavigation: true,
 };
 
 type PreferencesState = {
@@ -21,6 +22,7 @@ type PreferencesState = {
   exportFormat: keyof typeof copyActions | keyof typeof downloadActions;
   exportAction: keyof typeof actionTypes;
   enabledActions: ExportAction[];
+  autoOpenSidebarOnNavigation: boolean;
 };
 
 export type ExportAction =
@@ -62,6 +64,9 @@ export const preferencesSlice = createSlice({
         state.enabledActions.push(action.payload);
       }
     },
+    setAutoOpenSidebarOnNavigation: (state, action: PayloadAction<boolean>) => {
+      state.autoOpenSidebarOnNavigation = action.payload;
+    },
   },
 });
 
@@ -71,6 +76,7 @@ export const {
   setExportFormat,
   setExportAction,
   toggleEnabledAction,
+  setAutoOpenSidebarOnNavigation,
 } = preferencesSlice.actions;
 export const preferencesInitialState = initialState;
 
@@ -88,6 +94,9 @@ export const selectExportAction = (state: RootState) =>
 
 export const selectEnabledActions = (state: RootState) =>
   state.preferences.enabledActions;
+
+export const selectAutoOpenSidebarOnNavigation = (state: RootState) =>
+  state.preferences.autoOpenSidebarOnNavigation;
 
 export type TimeDisplay =
   | 'relative'

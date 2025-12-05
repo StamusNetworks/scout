@@ -6,6 +6,7 @@ import { ColorBlindnessSelector } from './_components/color-blindness';
 import { DataDisplay } from './_components/data-display';
 import { DateTimeSelector } from './_components/date-time-format';
 import { ExportFormatSelector } from './_components/export-format-selector';
+import { SidebarConfig } from './_components/sidebars';
 
 export const UserSettingsPage = () => {
   return (
@@ -21,6 +22,8 @@ export const UserSettingsPage = () => {
         <ColorBlindnessSelector />
         <Separator />
         <ExportFormatSelector />
+        <Separator />
+        <SidebarConfig />
         <div className="bg-muted/30 dark:bg-card absolute -top-8 right-0 -z-10 h-[calc(100%+4rem)] w-1/2 border">
           <p className="absolute top-6 left-8 text-sm font-bold">Preview</p>
         </div>

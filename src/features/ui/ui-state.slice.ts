@@ -13,6 +13,7 @@ const initialState: UIState = {
   autoReloadInterval: 0,
   autoReloadStartDate: 0,
   jsonViewOpen: 10,
+  autoOpenSidebarOnFilterAdd: true,
 };
 
 export type Theme = 'dark' | 'light' | 'catppuccin' | 'diesel' | 'matrix';
@@ -38,6 +39,7 @@ type UIState = {
   autoReloadInterval: number;
   autoReloadStartDate: number;
   jsonViewOpen: number;
+  autoOpenSidebarOnFilterAdd: boolean;
 };
 
 export const uiStateSlice = createSlice({
@@ -78,10 +80,15 @@ export const uiStateSlice = createSlice({
     setJsonViewOpen: (state, action: PayloadAction<number>) => {
       state.jsonViewOpen = action.payload;
     },
+    setAutoOpenSidebarOnFilterAdd: (state, action: PayloadAction<boolean>) => {
+      state.autoOpenSidebarOnFilterAdd = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(addQueryFilter, (state) => {
-      state.isSidebarOpen = true;
+      if (state.autoOpenSidebarOnFilterAdd) {
+        state.isSidebarOpen = true;
+      }
     });
   },
 });
@@ -94,6 +101,7 @@ export const {
   setAutoReloadInterval,
   resetAutoReloadStartDate,
   setJsonViewOpen,
+  setAutoOpenSidebarOnFilterAdd,
 } = uiStateSlice.actions;
 export const uiStateInitialState = initialState;
 
@@ -114,3 +122,6 @@ export const selectJsonViewOpen = (state: RootState) =>
 
 export const selectIsSidebarOpen = (state: RootState) =>
   state.uiState.isSidebarOpen;
+
+export const selectAutoOpenSidebarOnFilterAdd = (state: RootState) =>
+  state.uiState.autoOpenSidebarOnFilterAdd;
