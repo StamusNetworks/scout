@@ -1,4 +1,23 @@
 import {
+  closestCenter,
+  DndContext,
+  DragEndEvent,
+  KeyboardSensor,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import { restrictToHorizontalAxis } from '@dnd-kit/modifiers';
+import {
+  arrayMove,
+  horizontalListSortingStrategy,
+  SortableContext,
+  useSortable,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import {
+  Cell,
   ColumnFiltersState,
   ExpandedState,
   flexRender,
@@ -8,6 +27,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  Header,
   PaginationState,
   Row,
   RowSelectionState,
@@ -17,8 +37,8 @@ import {
   VisibilityState,
 } from '@tanstack/react-table';
 import { cva } from 'class-variance-authority';
-import { Search } from 'lucide-react';
-import React, { useEffect, useMemo, useState } from 'react';
+import { GripVertical, Search } from 'lucide-react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 
 import {
   Table,
@@ -31,6 +51,7 @@ import {
 import { DataTablePagination } from '@/common/design-system/molecules/data-table/data-table.pagination';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { Paginated } from '@/common/fetching/fetching.types';
+import { cn } from '@/common/lib/utils';
 
 import { Row as RowComponent } from '../../atoms/layout/row';
 import {
@@ -130,17 +151,6 @@ export function DataTable<TData>({
   });
   const [expanded, setExpanded] = useState<ExpandedState>({});
 
-  const columnsWithSkeleton = useMemo(
-    () =>
-      isLoading
-        ? columns.map((column) => ({
-            ...column,
-            cell: () => <Skeleton className="my-0.5 h-4 w-full" />,
-          }))
-        : columns,
-    [isLoading, columns],
-  );
-
   const tableData = React.useMemo(() => {
     if (isLoading) {
       return Array.from({ length: skeletonRows }).map(() => ({}) as TData);
@@ -148,9 +158,13 @@ export function DataTable<TData>({
     return data?.results ?? [];
   }, [isLoading, data, skeletonRows]);
 
+  const [columnOrder, setColumnOrder] = useState<string[]>(() =>
+    columns.map((col) => col.id!),
+  );
+
   const table = useReactTable({
     data: tableData,
-    columns: columnsWithSkeleton,
+    columns: columns,
     state: {
       sorting: controlledSorting ?? sorting,
       columnVisibility: controlledColumnVisibility ?? columnVisibility,
@@ -158,6 +172,7 @@ export function DataTable<TData>({
       columnFilters: controlledColumnFilters ?? columnFilters,
       pagination: controlledPagination ?? pagination,
       expanded: controlledExpanded ?? expanded,
+      columnOrder: columnOrder,
     },
     getRowId: getRowId,
     enableRowSelection: true,
@@ -179,7 +194,25 @@ export function DataTable<TData>({
       controlledOnColumnVisibilityChange ?? setColumnVisibility,
     onSortingChange: controlledOnSortingChange ?? setSorting,
     onExpandedChange: controlledOnExpandedChange ?? setExpanded,
+    onColumnOrderChange: setColumnOrder,
   });
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (active && over && active.id !== over.id) {
+      setColumnOrder((columnOrder) => {
+        const oldIndex = columnOrder.indexOf(active.id as string);
+        const newIndex = columnOrder.indexOf(over.id as string);
+        return arrayMove(columnOrder, oldIndex, newIndex); //this is just a splice util
+      });
+    }
+  }
+
+  const sensors = useSensors(
+    useSensor(MouseSensor, {}),
+    useSensor(TouchSensor, {}),
+    useSensor(KeyboardSensor, {}),
+  );
 
   // hide visible false columns
   useEffect(() => {
@@ -209,91 +242,103 @@ export function DataTable<TData>({
           <DataTableViewOptions table={table} />
         </RowComponent>
       </RowComponent>
-      <div className="bg-card rounded-md border">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead
-                      key={header.id}
-                      colSpan={header.colSpan}
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row, index) => (
-                <React.Fragment key={row.id}>
-                  <TableRow
-                    data-state={row.getIsSelected() && 'selected'}
-                    onClick={onRowClick ? () => onRowClick(row) : undefined}
-                    className={rowVariants({
-                      cursor: onRowClick ? rowClickCursor : 'default',
-                    })}
+      <DndContext
+        collisionDetection={closestCenter}
+        modifiers={[restrictToHorizontalAxis]}
+        onDragEnd={handleDragEnd}
+        sensors={sensors}
+      >
+        <div className="bg-card rounded-md border">
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  <SortableContext
+                    items={columnOrder}
+                    strategy={horizontalListSortingStrategy}
                   >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                  {row.getIsExpanded() && !!ExpandedRow && (
-                    <tr
-                      key={row.id + '-expanded'}
-                      className="table-row"
-                    >
-                      <td
-                        colSpan={row.getVisibleCells().length}
-                        className="border-border bg-card border-b"
-                      >
-                        <ExpandedRow
-                          row={row}
-                          index={index}
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <DataTableHead
+                          header={header}
+                          key={header.id}
                         />
-                      </td>
-                    </tr>
+                      );
+                    })}
+                  </SortableContext>
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row, index) => (
+                  <React.Fragment key={row.id}>
+                    <TableRow
+                      data-state={row.getIsSelected() && 'selected'}
+                      onClick={onRowClick ? () => onRowClick(row) : undefined}
+                      className={rowVariants({
+                        cursor: onRowClick ? rowClickCursor : 'default',
+                      })}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <SortableContext
+                          key={cell.id}
+                          items={columnOrder}
+                          strategy={horizontalListSortingStrategy}
+                        >
+                          {isLoading ? (
+                            <TableCell>
+                              <Skeleton className="my-0.5 h-4 w-full" />
+                            </TableCell>
+                          ) : (
+                            <DataTableCell cell={cell} />
+                          )}
+                        </SortableContext>
+                      ))}
+                    </TableRow>
+                    {row.getIsExpanded() && !!ExpandedRow && (
+                      <tr
+                        key={row.id + '-expanded'}
+                        className="table-row"
+                      >
+                        <td
+                          colSpan={row.getVisibleCells().length}
+                          className="border-border bg-card border-b"
+                        >
+                          <ExpandedRow
+                            row={row}
+                            index={index}
+                          />
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
+                ))
+              ) : (
+                <TableRow>
+                  {Empty ? (
+                    <TableCell colSpan={columns.length}>{Empty}</TableCell>
+                  ) : (
+                    <TableCell
+                      colSpan={columns.length}
+                      className="h-24 text-center"
+                    >
+                      <EmptyComponent>
+                        <EmptyMedia variant="icon">
+                          <Search />
+                        </EmptyMedia>
+                        <EmptyContent>
+                          <EmptyHeader>No results found</EmptyHeader>
+                        </EmptyContent>
+                      </EmptyComponent>
+                    </TableCell>
                   )}
-                </React.Fragment>
-              ))
-            ) : (
-              <TableRow>
-                {Empty ? (
-                  <TableCell colSpan={columns.length}>{Empty}</TableCell>
-                ) : (
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    <EmptyComponent>
-                      <EmptyMedia variant="icon">
-                        <Search />
-                      </EmptyMedia>
-                      <EmptyContent>
-                        <EmptyHeader>No results found</EmptyHeader>
-                      </EmptyContent>
-                    </EmptyComponent>
-                  </TableCell>
-                )}
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+      </DndContext>
       {paginationbar && <DataTablePagination table={table} />}
     </div>
   );
@@ -311,3 +356,69 @@ const rowVariants = cva('', {
     cursor: 'default',
   },
 });
+
+const DataTableHead = <TData,>({
+  header,
+}: {
+  header: Header<TData, unknown>;
+}) => {
+  const { attributes, isDragging, listeners, setNodeRef, transform } =
+    useSortable({
+      id: header.column.id,
+    });
+
+  const style: CSSProperties = {
+    opacity: isDragging ? 0.8 : 1,
+    position: 'relative',
+    transform: CSS.Translate.toString(transform), // translate instead of transform to avoid squishing
+    transition: 'width transform 0.2s ease-in-out',
+    whiteSpace: 'nowrap',
+    zIndex: isDragging ? 1 : 0,
+  };
+  return (
+    <TableHead
+      key={header.id}
+      colSpan={header.colSpan}
+      ref={setNodeRef}
+      style={style}
+    >
+      <RowComponent className="items-center gap-1">
+        {header.column.columnDef.meta?.canReorder !== false && (
+          <button
+            {...attributes}
+            {...listeners}
+            className={cn(isDragging ? 'cursor-grabbing' : 'cursor-grab')}
+          >
+            <GripVertical />
+          </button>
+        )}
+        {header.isPlaceholder
+          ? null
+          : flexRender(header.column.columnDef.header, header.getContext())}
+      </RowComponent>
+    </TableHead>
+  );
+};
+
+const DataTableCell = <TData,>({ cell }: { cell: Cell<TData, unknown> }) => {
+  const { isDragging, setNodeRef, transform } = useSortable({
+    id: cell.column.id,
+  });
+
+  const style: CSSProperties = {
+    opacity: isDragging ? 0.8 : 1,
+    position: 'relative',
+    transform: CSS.Translate.toString(transform), // translate instead of transform to avoid squishing
+    transition: 'width transform 0.2s ease-in-out',
+    zIndex: isDragging ? 1 : 0,
+  };
+
+  return (
+    <TableCell
+      style={style}
+      ref={setNodeRef}
+    >
+      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+    </TableCell>
+  );
+};

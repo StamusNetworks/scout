@@ -22,6 +22,9 @@ export const columns: CustomColumnDef<Event>[] = [
     id: 'event-expanded',
     cell: ({ row }) => <DataTableRowExpander row={row} />,
     enableHiding: false,
+    meta: {
+      canReorder: false,
+    },
   },
   {
     id: 'tag',
@@ -44,9 +47,12 @@ export const columns: CustomColumnDef<Event>[] = [
         </Tooltip>
       </TooltipProvider>
     ),
+    meta: {
+      canReorder: false,
+    },
   },
   {
-    accessorKey: 'timestamp',
+    id: 'timestamp',
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
@@ -75,7 +81,7 @@ export const columns: CustomColumnDef<Event>[] = [
       ),
   },
   {
-    accessorKey: 'src_ip',
+    id: 'src_ip',
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
@@ -120,7 +126,7 @@ export const columns: CustomColumnDef<Event>[] = [
     meta: { viewLabel: 'Source IP' },
   },
   {
-    accessorKey: 'dest_ip',
+    id: 'dest_ip',
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
