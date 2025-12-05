@@ -1,4 +1,5 @@
 import { ChevronRight, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import { useCallback } from 'react';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
@@ -13,6 +14,7 @@ import {
 } from '@/common/design-system/molecules/breadcrumbs';
 import { getShortcutDisplay } from '@/common/lib/platform';
 import { NewsFeedModal } from '@/features/marketing/components/news-modal';
+import { disableHelp, selectHelpState } from '@/features/ui/help/help.slice';
 import { ThemeSelector } from '@/features/ui/theming/themeSelector';
 import {
   selectIsNavigationOpen,
@@ -27,7 +29,13 @@ import { ReloadButton } from '../reload-button';
 
 export const Header = () => {
   const dispatch = useAppDispatch();
-
+  const { highlightGlobalCommands } = useAppSelector(selectHelpState);
+  const handleOpenGlobalCommands = useCallback(() => {
+    if (highlightGlobalCommands) {
+      dispatch(disableHelp('highlightGlobalCommands'));
+    }
+    dispatch(setOpenModal('globalCommand'));
+  }, [dispatch, highlightGlobalCommands]);
   return (
     <Row className="bg-primary-muted h-12 w-full shrink-0 items-center justify-between border-b px-2">
       <Row className="items-center">
@@ -48,7 +56,8 @@ export const Header = () => {
             <Button
               variant="ghost"
               className="flex items-center"
-              onClick={() => dispatch(setOpenModal('globalCommand'))}
+              onClick={handleOpenGlobalCommands}
+              highlight={highlightGlobalCommands}
             >
               <Row className="mr-2 items-center">
                 <ChevronRight className="mr-1" />

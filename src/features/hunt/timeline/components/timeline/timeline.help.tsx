@@ -12,9 +12,9 @@ import { useAppDispatch, useAppSelector } from '@/store/store';
 
 export function TimelineHelpButton() {
   const dispatch = useAppDispatch();
-  const { showTimelineHelp } = useAppSelector(selectHelpState);
+  const { highlightTimelineHelp } = useAppSelector(selectHelpState);
   const handleDisableHelp = (open: boolean) => {
-    if (!open) dispatch(disableHelp('showTimelineHelp'));
+    if (!open) dispatch(disableHelp('highlightTimelineHelp'));
   };
   return (
     <Popover onOpenChange={handleDisableHelp}>
@@ -23,7 +23,7 @@ export function TimelineHelpButton() {
           variant="ghost"
           aria-label="Timeline help"
           size="sm"
-          highlight={showTimelineHelp}
+          highlight={highlightTimelineHelp}
         >
           <HelpCircle className="h-5 w-5" /> Help
         </Button>

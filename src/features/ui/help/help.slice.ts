@@ -1,14 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { keys } from 'ramda';
 
-import { RootState } from '@/store/store';
+import { RootState, useAppSelector } from '@/store/store';
 
 const initialState: HelpState = {
-  showTimelineHelp: true,
+  // HIGHLIGHTS
+  highlightTimelineHelp: true,
+  highlightGlobalCommands: true,
+  // ALERTS
+  showFilterSetsBackNavTip: true,
 };
 
 export type HelpState = {
-  showTimelineHelp: boolean;
+  highlightTimelineHelp: boolean;
+  highlightGlobalCommands: boolean;
+  showFilterSetsBackNavTip: boolean;
 };
 
 export const helpSlice = createSlice({
@@ -30,3 +36,4 @@ export const { disableHelp, resetHelps } = helpSlice.actions;
 export const helpInitialState = initialState;
 
 export const selectHelpState = (state: RootState) => state.help;
+export const useHelpState = () => useAppSelector(selectHelpState);
