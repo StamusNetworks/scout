@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { hostnameInfoSchema } from './enrichments/hostnameInfo.schema';
 import { anomalySchema } from './event-types/anomaly.schema';
 import { fileInfoSchema } from './event-types/fileinfo.schema';
 import { smbSchema } from './event-types/smb.schema';
@@ -233,6 +234,7 @@ export const eventSchema = z.object({
     os_full: z.string(),
   }),
   hostname: z.string(),
+  hostname_info: hostnameInfoSchema.optional(),
   url: z.string(),
   http_user_agent: z.string(),
   http_content_type: z.string(),

@@ -1,4 +1,5 @@
 import { Column } from '@/common/design-system/atoms/layout/column';
+import { Row } from '@/common/design-system/atoms/layout/row';
 import {
   Tooltip,
   TooltipContent,
@@ -74,100 +75,84 @@ export const columns: CustomColumnDef<Event>[] = [
         <EventValue
           query_key="alert.signature"
           value={row.original.alert?.signature}
-          className="line-clamp-2 max-w-112 whitespace-break-spaces"
+          className="line-clamp-2 max-w-112 min-w-80 whitespace-break-spaces"
         />
       ) : (
         row.original.stamus?.threat_name
       ),
   },
   {
-    id: 'src_ip',
+    id: 'source',
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
-        title="Source IP"
+        title="Source"
       />
     ),
-    cell: ({ row }) => (
-      <Column className="gap-1">
-        {row.original.flow?.src_ip ? (
-          <>
+    cell: ({ row }) => {
+      const data = row.original.flow ? row.original.flow : row.original;
+      const prefix = row.original.flow ? 'flow.' : '';
+      return (
+        <Column>
+          <Row className="mb-1 gap-1">
             <EventValue
-              query_key="flow.src_ip"
-              value={row.original.flow.src_ip}
+              query_key={`${prefix}src_ip`}
+              value={data.src_ip}
             />
-            <Hostname
-              host={row.original.flow.src_ip}
-              size="small"
-            />
-            <Network
-              host={row.original.flow.src_ip}
-              size="small"
-            />
-          </>
-        ) : (
-          <>
+            <span>:</span>
             <EventValue
-              query_key="src_ip"
-              value={row.original.src_ip}
+              query_key={`${prefix}src_port`}
+              value={data.src_port}
             />
-            <Hostname
-              host={row.original.src_ip}
-              size="small"
-            />
-            <Network
-              host={row.original.src_ip}
-              size="small"
-            />
-          </>
-        )}
-      </Column>
-    ),
+          </Row>
+          <Hostname
+            host={data.src_ip}
+            size="small"
+          />
+          <Network
+            host={data.src_ip}
+            size="small"
+          />
+        </Column>
+      );
+    },
     meta: { viewLabel: 'Source IP' },
   },
   {
-    id: 'dest_ip',
+    id: 'destination',
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
-        title="Destination IP"
+        title="Destination"
       />
     ),
-    cell: ({ row }) => (
-      <Column className="gap-1">
-        {row.original.flow?.dest_ip ? (
-          <>
+    cell: ({ row }) => {
+      const data = row.original.flow ? row.original.flow : row.original;
+      const prefix = row.original.flow ? 'flow.' : '';
+      return (
+        <Column>
+          <Row className="mb-1 gap-1">
             <EventValue
-              query_key="flow.dest_ip"
-              value={row.original.flow.dest_ip}
+              query_key={`${prefix}dest_ip`}
+              value={data.dest_ip}
             />
-            <Hostname
-              host={row.original.flow.dest_ip}
-              size="small"
-            />
-            <Network
-              host={row.original.flow.dest_ip}
-              size="small"
-            />
-          </>
-        ) : (
-          <>
+            <span>:</span>
             <EventValue
-              query_key="dest_ip"
-              value={row.original.dest_ip}
+              query_key={`${prefix}dest_port`}
+              value={data.dest_port}
             />
-            <Hostname
-              host={row.original.dest_ip}
-              size="small"
-            />
-            <Network
-              host={row.original.dest_ip}
-              size="small"
-            />
-          </>
-        )}
-      </Column>
-    ),
+          </Row>
+          <Hostname
+            host={data.dest_ip}
+            size="small"
+          />
+          <Network
+            host={data.dest_ip}
+            size="small"
+          />
+        </Column>
+      );
+    },
     meta: { viewLabel: 'Destination IP' },
   },
   {
@@ -181,7 +166,7 @@ export const columns: CustomColumnDef<Event>[] = [
     cell: ({ row }) => (
       <EventValue
         query_key="app_proto"
-        value={row.original.app_proto || row.original.proto}
+        value={row.original.app_proto}
       />
     ),
   },
@@ -215,6 +200,70 @@ export const columns: CustomColumnDef<Event>[] = [
           value={row.original.alert?.category}
         />
       </div>
+    ),
+  },
+  {
+    id: 'hostname_url',
+    visible: false,
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="Hostname/URL"
+      />
+    ),
+    cell: ({ row }) => (
+      <EventValue
+        query_key="hostname_info.url"
+        value={row.original.hostname_info?.url}
+      />
+    ),
+  },
+  {
+    id: 'lateral',
+    visible: false,
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="Lateral"
+      />
+    ),
+    cell: ({ row }) => (
+      <EventValue
+        query_key="alert.lateral"
+        value={row.original.alert?.lateral}
+      />
+    ),
+  },
+  {
+    id: 'tls_sni',
+    visible: false,
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="TLS SNI"
+      />
+    ),
+    cell: ({ row }) => (
+      <EventValue
+        query_key="tls.sni"
+        value={row.original.tls?.sni}
+      />
+    ),
+  },
+  {
+    id: 'novel',
+    visible: false,
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="Novel"
+      />
+    ),
+    cell: ({ row }) => (
+      <EventValue
+        query_key="stamus_novel"
+        value={(!!row.original.stamus_novel).toString()}
+      />
     ),
   },
 ];
