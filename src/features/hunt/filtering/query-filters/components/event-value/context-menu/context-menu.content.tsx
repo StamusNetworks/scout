@@ -147,7 +147,7 @@ export const ContextMenuContent = ({
           }}
         >
           <LayoutDashboard className={iconClass} />
-          Hunt in Dashboard
+          Explore
         </ContextMenuItem>
       )}
       <ContextMenuItem
