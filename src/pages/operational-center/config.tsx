@@ -5,6 +5,7 @@ import {
   Calendar,
   Cpu,
   OctagonAlert,
+  Scale,
 } from 'lucide-react';
 
 import { StatsCardHorizontalProps } from '@/common/design-system/molecules/stats-card-horizontal';
@@ -91,6 +92,6 @@ export const indicators: Record<
       'Count of unique DoPV Threats active over the displayed period',
     formatFunction: formatNumber,
     dataTest: 'active-threats-counter-dopv',
-    Icon: Biohazard,
+    Icon: Scale,
   },
 };
