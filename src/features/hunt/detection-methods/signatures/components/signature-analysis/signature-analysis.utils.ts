@@ -100,7 +100,18 @@ const getSignatureReferences = (raw: string) =>
     .filter((data) => data.startsWith('reference:'))
     .map((data) => data.slice(10))
     .map((data) => data.split(','))
-    .map(([label, value]) => ({ label, value: formatReference(value, label) }));
+    .map(([label, value]) => ({
+      label,
+      value: formatReference(value, label),
+      link: getReferenceLink(label, value),
+    }));
+
+const getReferenceLink = (label: string, value: string) => {
+  if (label.toLowerCase() === 'cve')
+    return `https://nvd.nist.gov/vuln/detail/CVE-${value}`;
+  if (label.toLowerCase() === 'url') return formatReference(value, label);
+  return undefined;
+};
 
 const fallback = {
   originIp: 'unknown',

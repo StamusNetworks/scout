@@ -95,6 +95,7 @@ export const SignatureAnalysis = ({ rule }: { rule: Rule }) => {
                 key={item.label}
                 label={item.label}
                 value={item.value}
+                link={item.link}
               />
             ))}
           </Column>

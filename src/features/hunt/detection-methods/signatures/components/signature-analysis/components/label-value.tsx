@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { ExternalLink } from '@/common/design-system/atoms/external-link';
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Badge } from '@/common/design-system/atoms/ui/badge';
@@ -10,10 +11,12 @@ export const LabelValue = ({
   label,
   value,
   tags,
+  link,
 }: {
   label: string;
   value: string | React.ReactNode;
   tags?: string[];
+  link?: string;
 }) => {
   const [open, setOpen] = useState(false);
   return (
@@ -31,15 +34,19 @@ export const LabelValue = ({
           </Badge>
         ))}
       </Row>
-      <p
-        className={cn(
-          'text-foreground line-clamp-2 text-sm break-words',
-          open && 'line-clamp-none',
-        )}
-        onClick={() => setOpen(!open)}
-      >
-        {value}
-      </p>
+      {link ? (
+        <ExternalLink to={link}>{value}</ExternalLink>
+      ) : (
+        <p
+          className={cn(
+            'text-foreground line-clamp-2 text-sm break-words',
+            open && 'line-clamp-none',
+          )}
+          onClick={() => setOpen(!open)}
+        >
+          {value}
+        </p>
+      )}
     </Column>
   );
 };
