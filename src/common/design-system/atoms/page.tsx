@@ -36,7 +36,7 @@ interface PageHeaderProps
   extends React.PropsWithChildren,
     React.HTMLAttributes<HTMLDivElement> {}
 export const PageHeader = ({ children }: PageHeaderProps) => (
-  <Row className="mb-4 justify-between">{children}</Row>
+  <Row className="mb-4 justify-between gap-4">{children}</Row>
 );
 
 interface PageAlertProps extends React.ComponentProps<typeof Alert> {
