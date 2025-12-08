@@ -147,7 +147,7 @@ export const QueryFilters: QueryFilterDefinition[] = [
     entity: FilterType.IP,
   },
   {
-    label: 'Data Stream Source port',
+    label: 'Data Stream Source Port',
     key: 'src_port',
     category: FilterCategory.EVENT,
     entity: FilterType.PORT,
@@ -175,7 +175,7 @@ export const QueryFilters: QueryFilterDefinition[] = [
     entity: FilterType.IP,
   },
   {
-    label: 'Data Stream Destination port',
+    label: 'Data Stream Destination Port',
     key: 'dest_port',
     category: FilterCategory.EVENT,
     entity: FilterType.PORT,
@@ -256,7 +256,7 @@ export const QueryFilters: QueryFilterDefinition[] = [
     entity: FilterType.IP,
   },
   {
-    label: 'Attacker port',
+    label: 'Attacker Port',
     key: 'alert.source.port',
     category: FilterCategory.EVENT,
     entity: FilterType.PORT,
@@ -436,7 +436,7 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.EVENT,
   },
   {
-    label: 'Port',
+    label: 'HTTP Port',
     key: 'http.http_port',
     category: FilterCategory.EVENT,
     entity: FilterType.PORT,

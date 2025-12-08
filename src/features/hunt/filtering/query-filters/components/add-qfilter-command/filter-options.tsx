@@ -43,7 +43,7 @@ export const FilterOptions = () => {
     <>
       <CommandEmpty>No filters found.</CommandEmpty>
       {search.length > 0 && (
-        <CommandGroup heading="Prefered filters">
+        <CommandGroup heading="Preferred filters">
           {PreferedOptions.map((o) => (
             <CommandItem
               key={o.value}
