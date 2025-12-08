@@ -127,19 +127,19 @@ export const OperationalCenter = () => {
               </BlockTitle>
               <OutliersTimeline />
             </Column>
-            <Column>
-              <BlockTitle className="mb-2">
-                <Lock />
-                Cipher Security
-              </BlockTitle>
-              <CipherSecurity />
-            </Column>
             <Column className="w-full">
               <BlockTitle className="mb-2">
                 <ShieldAlert />
                 MITRE Techniques
               </BlockTitle>
               <MitreTechniques />
+            </Column>
+            <Column>
+              <BlockTitle className="mb-2">
+                <Lock />
+                Cipher Security
+              </BlockTitle>
+              <CipherSecurity />
             </Column>
           </Column>
         </Grid>
