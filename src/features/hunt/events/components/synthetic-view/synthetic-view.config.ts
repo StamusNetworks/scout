@@ -243,11 +243,12 @@ export const getSyntheticView = (row: Event): SyntheticViewProps[] => [
     ],
   },
   {
-    title: 'Samba',
+    title: 'SMB',
     valid: (row) => !!row.smb && keys(row.smb).length > 0,
     items: [
       { key: 'smb.command', value: row.smb?.command },
       { key: 'smb.status', value: row.smb?.status },
+      { key: 'smb.dcerpc.endpoint', value: row.smb?.dcerpc?.endpoint },
       { key: 'smb.filename', value: row.smb?.filename },
       { key: 'smb.share', value: row.smb?.share },
       { key: 'smb.session_id', value: row.smb?.session_id },
