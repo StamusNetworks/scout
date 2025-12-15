@@ -74,7 +74,7 @@ describe('Managing Query Filters', () => {
       const patch = { value: '10.0.0.2' };
 
       reduxStore.dispatch(
-        updateQueryFilter({ id: testFilters[patchIndex].id, ...patch }),
+        updateQueryFilter({ ...testFilters[patchIndex], ...patch }),
       );
 
       expectFilters(selectQueryFilters(reduxStore.getState()), [

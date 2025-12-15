@@ -16,8 +16,8 @@ export const NetworkTreeFilterService = {
       .filter(
         (f: QueryFilterState) => !f.is_suspended && f.role !== 'attack_surface',
       )
-      .forEach(() => {
-        store.dispatch(updateQueryFilter({ is_suspended: true }));
+      .forEach((f) => {
+        store.dispatch(updateQueryFilter({ ...f, is_suspended: true }));
       });
 
     if (value === 'Undefined Network') {
@@ -58,7 +58,7 @@ export const NetworkTreeFilterService = {
       .filter((f: QueryFilterState) => !f.is_suspended)
       .forEach((f: QueryFilterState) => {
         store.dispatch(
-          store.dispatch(updateQueryFilter({ id: f.id, is_suspended: true })),
+          store.dispatch(updateQueryFilter({ ...f, is_suspended: true })),
         );
       });
   },
@@ -73,7 +73,7 @@ export const NetworkTreeFilterService = {
       .filter((f: QueryFilterState) => !f.is_suspended)
       .forEach((f: QueryFilterState) => {
         store.dispatch(
-          store.dispatch(updateQueryFilter({ id: f.id, is_suspended: true })),
+          store.dispatch(updateQueryFilter({ ...f, is_suspended: true })),
         );
       });
   },
