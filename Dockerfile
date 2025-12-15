@@ -1,13 +1,16 @@
 FROM node:22-slim AS base
+ARG BASE_PATH="/"
+
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+ENV BASE_PATH=$BASE_PATH
 RUN corepack enable
 COPY . /app
 WORKDIR /app
 
 FROM base AS build
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --force
-RUN VITE_APP_MODE=development pnpm run build --base="/"
+RUN VITE_APP_MODE=production pnpm run build --base=$BASE_PATH
 
 FROM nginx:alpine AS final
 
