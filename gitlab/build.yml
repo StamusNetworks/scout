@@ -12,7 +12,7 @@ build-artifacts:
     when: on_success
     expire_in: 1 week
     paths:
-      - /dist
+      - dist
   rules:
     - if: $CI_PIPELINE_SOURCE == "push"
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
