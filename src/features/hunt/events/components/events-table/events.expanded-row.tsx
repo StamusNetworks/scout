@@ -45,7 +45,7 @@ import { RelatedTlsTab } from '../related-events/related-tls/related-tls';
 import { SyntheticView } from '../synthetic-view/synthetic-view';
 
 export const ExpandedEventRow = ({ row }: { row: Row<Event> }) => {
-  const params = useGlobalQueryParams(['tenant']);
+  const params = useGlobalQueryParams(['tenant', 'dates']);
   const { data: flowEvents, isLoading: flowEventsLoading } =
     useGetEventsFromFlowQuery({
       ...params,
