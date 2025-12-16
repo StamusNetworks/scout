@@ -21,6 +21,7 @@ import {
 } from '@/common/design-system/atoms/ui/context-menu';
 import { saveToClipboard } from '@/common/lib/save';
 import { startsWithOneOf } from '@/common/lib/strings';
+import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useGetDeeplinksQuery } from '@/features/hunt/deeplinks/api/deeplinks.api';
 import {
   addEvidence,
@@ -79,6 +80,7 @@ export const ContextMenuContent = ({
   }, [deeplinksData, filterDef]);
   const investigationStage = useAppSelector(selectInvestigationStage);
   const currentStage = useAppSelector(selectCurrentInvestigationStage);
+  const { enterprise } = useFeatureFlags();
   return (
     <ContextMenuContentBase
       className="w-64"
@@ -161,7 +163,7 @@ export const ContextMenuContent = ({
         See transactions
       </ContextMenuItem>
 
-      {filterDef?.type === 'ip' && (
+      {enterprise && filterDef?.type === 'ip' && (
         <ContextMenuItem asChild>
           <Link to={`${routes.hosts}/${value}`}>
             <LaptopMinimal className={iconClass} />
