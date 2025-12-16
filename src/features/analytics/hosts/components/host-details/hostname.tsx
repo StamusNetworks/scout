@@ -22,7 +22,7 @@ interface HostnameProps extends DetailsVariants {
 export const Hostname = ({ host, className, size }: HostnameProps) => {
   const { data, isFetching, isError } = useGetHostInsights(host);
   if (isFetching) return <Spin />;
-  if (isError) return <div>Error.</div>;
+  if (isError) return null;
   return (
     <HostnameTemplate
       hostnames={data?.host_id.hostname}

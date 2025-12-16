@@ -35,7 +35,7 @@ export const Network = ({
 }: NetworkProps) => {
   const { data, isFetching, isError } = useGetHostInsights(host);
   if (isFetching) return <Spin />;
-  if (isError) return <div>Error.</div>;
+  if (isError) return null;
   return (
     <NetworkTemplate
       networks={data?.host_id.net_info}

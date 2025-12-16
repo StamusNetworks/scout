@@ -14,7 +14,7 @@ interface RolesProps {
 export const Roles = ({ host, className }: RolesProps) => {
   const { data, isFetching, isError } = useGetHostInsights(host);
   if (isFetching) return <Spin />;
-  if (isError) return <div>Error.</div>;
+  if (isError) return null;
   return (
     <RolesTemplate
       roles={data?.host_id.roles}

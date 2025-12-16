@@ -19,7 +19,7 @@ interface UsernameProps {
 export const Username = ({ host }: UsernameProps) => {
   const { data, isFetching, isError } = useGetHostInsights(host);
   if (isFetching) return <Spin />;
-  if (isError) return <div>Error.</div>;
+  if (isError) return null;
   return <UsernameTemplate usernames={data?.host_id.username} />;
 };
 interface UsernameTemplateProps {
