@@ -1,6 +1,7 @@
+import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useAppSelector } from '@/store/store';
 
-import { dashboard } from '../../components/dashboard.config';
+import { CEdashboard, dashboard } from '../../components/dashboard.config';
 import {
   selectOrdering,
   selectPageSize,
@@ -11,8 +12,9 @@ export const useDashboard = () => {
   const ordering = useAppSelector(selectOrdering);
   const pageSize = useAppSelector(selectPageSize);
   const prefix = ordering === 'ascending' ? '-' : '';
+  const { enterprise } = useFeatureFlags();
   return useFieldsStats(
-    Object.values(dashboard)
+    Object.values(enterprise ? dashboard : CEdashboard)
       .map((panel) => panel.items.map((i) => `${prefix}${i.i}`))
       .flat()
       .join(','),

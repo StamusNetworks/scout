@@ -1,11 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { keys } from 'ramda';
 
-import { dashboard } from '@/features/hunt/dashboard/components/dashboard.config';
+import {
+  CEdashboard,
+  dashboard,
+} from '@/features/hunt/dashboard/components/dashboard.config';
 import { RootState } from '@/store/store';
 
-const getPanelsOrdering = () => {
-  const dashboardKeys = Object.keys(dashboard) as (keyof typeof dashboard)[];
+const getPanelsOrdering = (enterprise: boolean) => {
+  const dashboardKeys = Object.keys(
+    enterprise ? dashboard : CEdashboard,
+  ) as (keyof typeof dashboard)[];
   const localStoragePanelsOrdering = JSON.parse(
     localStorage.getItem('dashboard-panels-ordering') || '[]',
   );
@@ -19,7 +24,7 @@ const initialState: DashboardState = {
   ordering: 'descending',
   chartTarget: false,
   pageSize: 5,
-  panelsOrdering: getPanelsOrdering(),
+  panelsOrdering: [],
   collapsedPanels: [],
   hideEmptyPanels: false,
   disabledKeys: JSON.parse(
@@ -117,6 +122,12 @@ export const dashboardPageStateSlice = createSlice({
     toggleHideEmptyPanels: (state) => {
       state.hideEmptyPanels = !state.hideEmptyPanels;
     },
+    initializePanelsOrdering: (
+      state,
+      action: PayloadAction<{ enterprise: boolean }>,
+    ) => {
+      state.panelsOrdering = getPanelsOrdering(action.payload.enterprise);
+    },
   },
 });
 
@@ -131,6 +142,7 @@ export const {
   collapseAllPanels,
   expandAllPanels,
   toggleHideEmptyPanels,
+  initializePanelsOrdering,
 } = dashboardPageStateSlice.actions;
 
 export const selectDashboardPageState = (state: RootState) => ({

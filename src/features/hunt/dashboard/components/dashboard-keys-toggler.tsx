@@ -10,18 +10,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/common/design-system/atoms/ui/dialog';
+import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { selectDisabledKeys } from '../store/dashboard.selectors';
 import { toggleDisabledKey } from '../store/dashboard.slice';
-import { dashboard } from './dashboard.config';
+import { CEdashboard, dashboard } from './dashboard.config';
 
 export const DashboardKeysToggler = ({
   panelId,
 }: {
   panelId: keyof typeof dashboard;
 }) => {
-  const config = dashboard[panelId];
+  const { enterprise } = useFeatureFlags();
+  const config = enterprise ? dashboard[panelId] : CEdashboard[panelId];
   const disabledKeys = useAppSelector(selectDisabledKeys);
   const dispatch = useAppDispatch();
   return (

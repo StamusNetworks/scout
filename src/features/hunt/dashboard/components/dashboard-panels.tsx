@@ -1,6 +1,6 @@
 import { ArrowDown, ArrowUp, FoldVertical, UnfoldVertical } from 'lucide-react';
 import { values } from 'ramda';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -17,6 +17,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/common/design-system/atoms/ui/tooltip';
+import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { useDashboard } from '../api/hooks/useDashboard';
@@ -29,15 +30,22 @@ import {
   selectPanelsOrder,
 } from '../store/dashboard.selectors';
 import {
+  initializePanelsOrdering,
   movePanelDown,
   movePanelUp,
   toggleCollapse,
 } from '../store/dashboard.slice';
-import { dashboard, DashboardItem } from './dashboard.config';
+import { CEdashboard, dashboard, DashboardItem } from './dashboard.config';
 import { ValueListCard } from './dashboard-card';
 import { DashboardKeysToggler } from './dashboard-keys-toggler';
 
 export const DashboardPanels = () => {
+  const dispatch = useAppDispatch();
+  const { enterprise } = useFeatureFlags();
+  useEffect(() => {
+    dispatch(initializePanelsOrdering({ enterprise }));
+  }, [dispatch, enterprise]);
+
   const sortedPanelsIds = useAppSelector(selectPanelsOrder);
   const hideEmptyPanels = useAppSelector(selectHideEmptyPanels);
   const { data, isLoading, isFetching, isError } = useDashboard();
@@ -68,17 +76,18 @@ export const DashboardPanel = ({
 }: {
   panelId: keyof typeof dashboard;
 }) => {
-  const config = dashboard[panelId];
+  const { enterprise } = useFeatureFlags();
+  const config = enterprise ? dashboard[panelId] : CEdashboard[panelId];
   const collapsed = useAppSelector(selectIsPanelCollapsed(panelId));
   const hideEmptyPanels = useAppSelector(selectHideEmptyPanels);
   const { data } = useDashboard();
   const disabledKeys = useAppSelector(selectDisabledKeys);
   const emptyPanel = useMemo(() => {
-    const keys = dashboard[panelId].items
+    const keys = config.items
       .map((item) => item.i)
       .filter((i) => !disabledKeys.includes(i));
     return keys.every((key) => data?.[key].length === 0);
-  }, [data, panelId, disabledKeys]);
+  }, [data, disabledKeys, config.items]);
 
   if (!config || (hideEmptyPanels && emptyPanel)) return null;
 
@@ -111,13 +120,15 @@ export const DashboardPanel = ({
 
 const DashboardMosaic = ({ panelId }: { panelId: keyof typeof dashboard }) => {
   const disabledKeys = useAppSelector(selectDisabledKeys);
+  const { enterprise } = useFeatureFlags();
+  const config = enterprise ? dashboard[panelId] : CEdashboard[panelId];
 
-  if (!dashboard[panelId]) return null;
+  if (!config) return null;
 
   const rows = splitBlocksIntoRows(
-    dashboard[panelId].items as readonly DashboardItem[],
+    config.items as readonly DashboardItem[],
     disabledKeys,
-    dashboard[panelId].cols || 4,
+    config.cols || 4,
   );
 
   return (
