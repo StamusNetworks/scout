@@ -28,6 +28,7 @@ import { type Submenu } from './navigation';
 export const defaultMenu = (
   routes: Record<string, string>,
   systemSettings: SystemSettings,
+  enterprise: boolean,
 ): Submenu[] => [
   {
     label: 'Security Posture',
@@ -179,7 +180,7 @@ export const defaultMenu = (
       {
         key: 'management',
         type: 'external',
-        url: getConfig()?.apiUrl + '/appliances/',
+        url: getConfig()?.apiUrl + (enterprise ? '/appliances/' : '/suricata/'),
         title: 'Management',
         icon: <SquareKanban />,
       },

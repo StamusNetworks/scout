@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
+import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { FiltersSideBar } from '@/features/hunt/filtering/query-filters/components/filters-side-bar';
 import {
   selectIsSidebarOpen,
@@ -21,6 +22,8 @@ import { routes } from '../pages/routes.config';
 
 export const Root = () => {
   const dispatch = useAppDispatch();
+
+  const { enterprise } = useFeatureFlags();
 
   const isFiltersOpen = useAppSelector(selectIsSidebarOpen);
 
@@ -59,8 +62,8 @@ export const Root = () => {
   const { data: systemSettings } = useGetSystemSettingsQuery();
 
   const menu = useMemo(() => {
-    return defaultMenu(routes, systemSettings!);
-  }, [systemSettings]);
+    return defaultMenu(routes, systemSettings!, enterprise);
+  }, [systemSettings, enterprise]);
 
   return (
     <div className="relative flex h-screen w-screen max-w-screen">
