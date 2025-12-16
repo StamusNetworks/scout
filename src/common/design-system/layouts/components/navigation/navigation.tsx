@@ -44,6 +44,7 @@ export type MenuItem = {
 
 export type Submenu = {
   label: string;
+  enterprise?: boolean;
   children: MenuItem[];
 };
 
@@ -126,54 +127,58 @@ export const Navigation = ({ menu, className }: MenuProps) => {
           </div>
         )}
         <div className="flex w-full flex-col items-start gap-4">
-          {menu.map((subMenu: Submenu) => (
-            <div
-              key={`submenu-${subMenu.label}`}
-              className="w-full"
-            >
-              <div className="text-muted-foreground mb-1 ml-1 text-xs font-bold">
-                {subMenu.label.toUpperCase()}
-              </div>
-              <NavigationMenuList className="mb-4 flex w-full flex-col space-y-1 space-x-0 last:mb-0">
-                {subMenu.children
-                  .filter((item) => (enterprise ? true : !item.enterprise))
-                  .map((item: MenuItem) => (
-                    <NavigationMenuItem
-                      key={`item-${item.key}`}
-                      className={cn(
-                        'hover:bg-primary/5 flex w-full cursor-pointer items-center gap-3 rounded-md p-2 py-1.5',
-                        pathname.startsWith(item.url) &&
-                          'bg-primary/10 text-primary hover:bg-primary/10',
-                      )}
-                      onClick={() =>
-                        item.type === 'external'
-                          ? window.open(item.url)
-                          : navigate(item.url)
-                      }
-                    >
-                      <span className="text-menu-foreground/50 text-sm">
-                        {item.icon}
-                      </span>
-                      <span
+          {menu
+            .filter((subMenu) => (enterprise ? true : !subMenu.enterprise))
+            .map((subMenu: Submenu) => (
+              <div
+                key={`submenu-${subMenu.label}`}
+                className="w-full"
+              >
+                <div className="text-muted-foreground mb-1 ml-1 text-xs font-bold">
+                  {subMenu.label.toUpperCase()}
+                </div>
+                <NavigationMenuList className="mb-4 flex w-full flex-col space-y-1 space-x-0 last:mb-0">
+                  {subMenu.children
+                    .filter((item) => (enterprise ? true : !item.enterprise))
+                    .map((item: MenuItem) => (
+                      <NavigationMenuItem
+                        key={`item-${item.key}`}
                         className={cn(
-                          'text-foreground/90) text-sm font-medium text-nowrap',
+                          'hover:bg-primary/5 flex w-full cursor-pointer items-center gap-3 rounded-md p-2 py-1.5',
+                          pathname.startsWith(item.url) &&
+                            'bg-primary/10 text-primary hover:bg-primary/10',
                         )}
+                        onClick={() =>
+                          item.type === 'external'
+                            ? window.open(item.url)
+                            : navigate(item.url)
+                        }
                       >
-                        {item.title}
-                      </span>
-                      <Row>
-                        {item.beta && (
-                          <Tag className="bg-lime-200 text-lime-900">Beta</Tag>
-                        )}
-                        {!enterprise && item.enterprise && (
-                          <Tag variant="secondary">Enterprise</Tag>
-                        )}
-                      </Row>
-                    </NavigationMenuItem>
-                  ))}
-              </NavigationMenuList>
-            </div>
-          ))}
+                        <span className="text-menu-foreground/50 text-sm">
+                          {item.icon}
+                        </span>
+                        <span
+                          className={cn(
+                            'text-foreground/90) text-sm font-medium text-nowrap',
+                          )}
+                        >
+                          {item.title}
+                        </span>
+                        <Row>
+                          {item.beta && (
+                            <Tag className="bg-lime-200 text-lime-900">
+                              Beta
+                            </Tag>
+                          )}
+                          {!enterprise && item.enterprise && (
+                            <Tag variant="secondary">Enterprise</Tag>
+                          )}
+                        </Row>
+                      </NavigationMenuItem>
+                    ))}
+                </NavigationMenuList>
+              </div>
+            ))}
         </div>
       </div>
       <Footer />

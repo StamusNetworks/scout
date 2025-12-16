@@ -31,6 +31,7 @@ export const defaultMenu = (
 ): Submenu[] => [
   {
     label: 'Security Posture',
+    enterprise: true,
     children: [
       {
         key: 'operational-center',
