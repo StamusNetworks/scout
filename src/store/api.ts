@@ -5,9 +5,10 @@ import {
 } from '@reduxjs/toolkit/query/react';
 
 import { startsWithOneOf } from '@/common/lib/strings';
+import { selectIsEnterprise } from '@/common/lib/use-feature-flags';
 import { getConfig } from '@/config';
 
-import { type RootState } from './store';
+import { type RootState, RootStateWithAPI } from './store';
 
 const getCookieValue = (cookieName: string) => {
   if (typeof document === 'undefined') {
@@ -21,10 +22,26 @@ const getCookieValue = (cookieName: string) => {
 };
 
 const baseQuery: BaseQueryFn = (...baseQueryArgs) => {
-  const [args] = baseQueryArgs;
+  const [args, api] = baseQueryArgs;
+  const state =
+    (api.getState() as RootStateWithAPI) || ({} as RootStateWithAPI);
+
+  // Prevent requests to /appliance endpoints when in community mode
+  // These requests would all fail anyway since the Clear NDR CE backend does not contain these endpoints.
+  const isEnterprise = selectIsEnterprise(state);
+  if (!isEnterprise && args.url?.includes('/appliance')) {
+    return {
+      error: {
+        status: 'CUSTOM',
+        data: 'Request to /appliance endpoint is not allowed in community mode',
+      },
+    };
+  }
+
   const urlPrefix = startsWithOneOf(args.url, ['/blog', '/api'])
     ? '/'
     : '/rest/';
+
   return fetchBaseQuery({
     baseUrl: getConfig()?.apiUrl + urlPrefix,
     prepareHeaders: (headers, { getState }) => {
