@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
+import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { ThreatFamilyDefault } from '@/features/hunt/threats/templates/family-by-id/family-by-id';
 import { ThreatByIdIndex } from '@/features/hunt/threats/templates/threat-by-id/threat-by-id';
 import { Analytics } from '@/pages/analytics/analytics';
@@ -80,12 +81,485 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
         children: [
           { path: '/', element: <Slash /> },
           {
-            path: routes.operational_center,
-            element: (
-              <PageBoundary key="operational-center">
-                <OperationalCenter />
-              </PageBoundary>
-            ),
+            path: '/',
+            element: <EnterpriseRoutes />,
+            children: [
+              {
+                path: routes.operational_center,
+                element: (
+                  <PageBoundary key="operational-center">
+                    <OperationalCenter />
+                  </PageBoundary>
+                ),
+              },
+              {
+                path: routes.threats,
+                element: (
+                  <PageBoundary key="threats">
+                    <ThreatsPage />
+                  </PageBoundary>
+                ),
+                children: [
+                  {
+                    index: true,
+                    element: (
+                      <PageBoundary key="threats-root">
+                        <ThreatsImpactedEntities />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.threats_timeline,
+                    element: (
+                      <PageBoundary key="threats-timeline">
+                        <ThreatsTimelinePage />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.threats_graph,
+                    element: (
+                      <PageBoundary key="threats-graph">
+                        <ThreatsGraphPage />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.threats_coverage,
+                    element: (
+                      <PageBoundary key="threats-coverage">
+                        <ThreatsCoveragePage />
+                      </PageBoundary>
+                    ),
+                  },
+                ],
+              },
+              {
+                path: routes.threats_coverage_threat,
+                element: (
+                  <PageBoundary key="threat-by-id">
+                    <OutletBreadcrumb link={routes.threats}>
+                      Threats
+                    </OutletBreadcrumb>
+                    <OutletBreadcrumb link={routes.threats_coverage}>
+                      Coverage
+                    </OutletBreadcrumb>
+                    <ThreatByIdPage />
+                  </PageBoundary>
+                ),
+                children: [
+                  {
+                    index: true,
+                    element: (
+                      <PageBoundary key="threat-by-id-index">
+                        <ThreatByIdIndex />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.threats_coverage_threat_events,
+                    element: (
+                      <PageBoundary key="threat-by-id-events">
+                        <ThreatByIdEventsPage />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.threats_coverage_threat_detection_methods,
+                    element: (
+                      <PageBoundary key="threat-by-id-detection-methods">
+                        <ThreatByIdDetectionMethodsPage />
+                      </PageBoundary>
+                    ),
+                  },
+                ],
+              },
+              {
+                path: routes.threats_coverage_family,
+                element: (
+                  <PageBoundary key="threat-family-by-id">
+                    <OutletBreadcrumb link={routes.threats}>
+                      Threats
+                    </OutletBreadcrumb>
+                    <OutletBreadcrumb link={routes.threats_coverage}>
+                      Coverage
+                    </OutletBreadcrumb>
+                    <ThreatFamilyByIdPage />
+                  </PageBoundary>
+                ),
+                children: [
+                  {
+                    index: true,
+                    element: (
+                      <PageBoundary key="threat-family-default">
+                        <ThreatFamilyDefault />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.threats_coverage_family_threats,
+                    element: (
+                      <PageBoundary key="threat-family-threats-list">
+                        <ThreatFamilyThreatsListPage />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.threats_coverage_family_events,
+                    element: (
+                      <PageBoundary key="threat-family-events">
+                        <ThreatFamilyEventsPage />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.threats_coverage_family_detection_methods,
+                    element: (
+                      <PageBoundary key="threat-family-detection-methods">
+                        <ThreatFamilyDetectionMethodsPage />
+                      </PageBoundary>
+                    ),
+                  },
+                ],
+              },
+              {
+                path: routes.policy_violations_coverage_threat,
+                element: (
+                  <PageBoundary key="threat-by-id">
+                    <OutletBreadcrumb link={routes.policy_violations}>
+                      Policy Violations
+                    </OutletBreadcrumb>
+                    <OutletBreadcrumb link={routes.policy_violations_coverage}>
+                      Coverage
+                    </OutletBreadcrumb>
+                    <PolicyViolationByIdPage />
+                  </PageBoundary>
+                ),
+                children: [
+                  {
+                    index: true,
+                    element: (
+                      <PageBoundary key="threat-by-id-index">
+                        <ThreatByIdIndex />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.policy_violations_coverage_threat_events,
+                    element: (
+                      <PageBoundary key="threat-by-id-events">
+                        <PolicyViolationByIdEventsPage />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.policy_violations_coverage_threat_detection_methods,
+                    element: (
+                      <PageBoundary key="threat-by-id-detection-methods">
+                        <PolicyViolationByIdDetectionMethods />
+                      </PageBoundary>
+                    ),
+                  },
+                ],
+              },
+              {
+                path: routes.policy_violations_coverage_family,
+                element: (
+                  <PageBoundary key="threat-family-by-id">
+                    <OutletBreadcrumb link={routes.policy_violations}>
+                      Policy Violations
+                    </OutletBreadcrumb>
+                    <OutletBreadcrumb link={routes.policy_violations_coverage}>
+                      Coverage
+                    </OutletBreadcrumb>
+                    <PolicyViolationFamilyByIdPage />
+                  </PageBoundary>
+                ),
+                children: [
+                  {
+                    index: true,
+                    element: (
+                      <PageBoundary key="threat-family-default">
+                        <ThreatFamilyDefault />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.policy_violations_coverage_family_threats,
+                    element: (
+                      <PageBoundary key="threat-family-threats-list">
+                        <PolicyViolationThreatsListPage />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.policy_violations_coverage_family_events,
+                    element: (
+                      <PageBoundary key="threat-family-events">
+                        <PolicyViolationFamilyEventsPage />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.policy_violations_coverage_family_detection_methods,
+                    element: (
+                      <PageBoundary key="threat-family-detection-methods">
+                        <PolicyViolationFamilyDetectionMethodsPage />
+                      </PageBoundary>
+                    ),
+                  },
+                ],
+              },
+              {
+                path: routes.policy_violations,
+                element: (
+                  <PageBoundary key="policy_violations">
+                    <PolicyViolationsPage />
+                  </PageBoundary>
+                ),
+                children: [
+                  {
+                    index: true,
+                    element: (
+                      <PageBoundary key="policy_violations-root">
+                        <PolicyViolationsImpactedEntities />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.policy_violations_graph,
+                    element: (
+                      <PageBoundary key="policy_violations-graph">
+                        <PolicyViolationsGraphPage />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.policy_violations_coverage,
+                    element: (
+                      <PageBoundary key="policy_violations-coverage">
+                        <PolicyViolationsCoveragePage />
+                      </PageBoundary>
+                    ),
+                  },
+                ],
+              },
+              {
+                path: routes.analytics,
+                element: (
+                  <>
+                    <OutletBreadcrumb>Analytics</OutletBreadcrumb>
+                    <Outlet />
+                  </>
+                ),
+                children: [
+                  {
+                    index: true,
+                    element: (
+                      <Navigate
+                        to={routes.beaconing_ips}
+                        replace
+                      />
+                    ),
+                  },
+                  {
+                    path: routes.beaconing_ips,
+                    element: (
+                      <>
+                        <OutletBreadcrumb>Beaconing IPs</OutletBreadcrumb>
+                        <Outlet />
+                      </>
+                    ),
+                    children: [
+                      {
+                        index: true,
+                        element: (
+                          <Analytics>
+                            <PageBoundary key="beaconing-ips">
+                              <BeaconingIps />
+                            </PageBoundary>
+                          </Analytics>
+                        ),
+                      },
+                      {
+                        path: routes.beaconing_ips_details,
+                        element: (
+                          <PageBoundary key="beaconing-ip-details">
+                            <BeaconingIpDetails />
+                          </PageBoundary>
+                        ),
+                      },
+                    ],
+                  },
+                  {
+                    path: routes.beaconing_ja3s,
+                    element: (
+                      <>
+                        <OutletBreadcrumb>Beaconing JA3s</OutletBreadcrumb>
+                        <Outlet />
+                      </>
+                    ),
+                    children: [
+                      {
+                        index: true,
+                        element: (
+                          <Analytics>
+                            <PageBoundary key="beaconing-ja3s">
+                              <BeaconingJa3s />
+                            </PageBoundary>
+                          </Analytics>
+                        ),
+                      },
+                      {
+                        path: routes.beaconing_ja3s_details,
+                        element: (
+                          <PageBoundary key="beaconing-ja3s-details">
+                            <BeaconingJa3sDetails />
+                          </PageBoundary>
+                        ),
+                      },
+                    ],
+                  },
+                  {
+                    path: routes.sightings,
+                    element: (
+                      <>
+                        <OutletBreadcrumb>Sightings</OutletBreadcrumb>
+                        <Outlet />
+                      </>
+                    ),
+                    children: [
+                      {
+                        index: true,
+                        element: (
+                          <Analytics>
+                            <PageBoundary key="sightings">
+                              <Sightings />
+                            </PageBoundary>
+                          </Analytics>
+                        ),
+                      },
+                      {
+                        path: routes.sightings_details,
+                        element: (
+                          <PageBoundary key="sightings-details">
+                            <SightingDetails />
+                          </PageBoundary>
+                        ),
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                path: routes.attack_surface,
+                element: (
+                  <PageBoundary key="attack-surface">
+                    <AttackSurface />
+                  </PageBoundary>
+                ),
+                children: [
+                  {
+                    index: true,
+                    element: (
+                      <PageBoundary key="attack-surface-visualisation">
+                        <AttackSurfaceVisualisation />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.attack_surface_inventory,
+                    element: (
+                      <PageBoundary key="attack-surface-inventory">
+                        <AttackSurfaceInventory />
+                      </PageBoundary>
+                    ),
+                  },
+                ],
+              },
+              {
+                path: routes.hosts,
+                element: (
+                  <PageBoundary key="hosts">
+                    <HostsPage />
+                  </PageBoundary>
+                ),
+              },
+              {
+                path: routes.hosts_host,
+                element: (
+                  <PageBoundary key="attack-surface-host">
+                    <HostDetails />
+                  </PageBoundary>
+                ),
+                children: [
+                  {
+                    index: true,
+                    element: (
+                      <PageBoundary key="host-insights">
+                        <HostInsights />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.hosts_host_incidents,
+                    element: (
+                      <PageBoundary key="host-incidents">
+                        <HostIncidents />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.hosts_host_detection_methods,
+                    element: (
+                      <PageBoundary key="host-detection-methods">
+                        <HostDetectionMethods />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.hosts_host_beacons,
+                    element: (
+                      <PageBoundary key="host-beaconing">
+                        <HostBeaconing />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.hosts_host_sightings,
+                    element: (
+                      <PageBoundary key="host-sightings">
+                        <HostSightings />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.hosts_host_timeline,
+                    element: (
+                      <PageBoundary key="host-timeline">
+                        <HostTimeline />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.hosts_host_outlierevents,
+                    element: (
+                      <PageBoundary key="host-outlier-events">
+                        <HostOutlierEvents />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.hosts_host_detectionevents,
+                    element: (
+                      <PageBoundary key="host-detection-events">
+                        <HostDetectionEvents />
+                      </PageBoundary>
+                    ),
+                  },
+                ],
+              },
+            ],
           },
           {
             path: routes.user_settings,
@@ -94,261 +568,6 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                 <UserSettingsPage />
               </PageBoundary>
             ),
-          },
-          {
-            path: routes.threats,
-            element: (
-              <PageBoundary key="threats">
-                <ThreatsPage />
-              </PageBoundary>
-            ),
-            children: [
-              {
-                index: true,
-                element: (
-                  <PageBoundary key="threats-root">
-                    <ThreatsImpactedEntities />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.threats_timeline,
-                element: (
-                  <PageBoundary key="threats-timeline">
-                    <ThreatsTimelinePage />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.threats_graph,
-                element: (
-                  <PageBoundary key="threats-graph">
-                    <ThreatsGraphPage />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.threats_coverage,
-                element: (
-                  <PageBoundary key="threats-coverage">
-                    <ThreatsCoveragePage />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.threats_coverage_family,
-              },
-            ],
-          },
-          {
-            path: routes.threats_coverage_threat,
-            element: (
-              <PageBoundary key="threat-by-id">
-                <OutletBreadcrumb link={routes.threats}>
-                  Threats
-                </OutletBreadcrumb>
-                <OutletBreadcrumb link={routes.threats_coverage}>
-                  Coverage
-                </OutletBreadcrumb>
-                <ThreatByIdPage />
-              </PageBoundary>
-            ),
-            children: [
-              {
-                index: true,
-                element: (
-                  <PageBoundary key="threat-by-id-index">
-                    <ThreatByIdIndex />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.threats_coverage_threat_events,
-                element: (
-                  <PageBoundary key="threat-by-id-events">
-                    <ThreatByIdEventsPage />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.threats_coverage_threat_detection_methods,
-                element: (
-                  <PageBoundary key="threat-by-id-detection-methods">
-                    <ThreatByIdDetectionMethodsPage />
-                  </PageBoundary>
-                ),
-              },
-            ],
-          },
-          {
-            path: routes.threats_coverage_family,
-            element: (
-              <PageBoundary key="threat-family-by-id">
-                <OutletBreadcrumb link={routes.threats}>
-                  Threats
-                </OutletBreadcrumb>
-                <OutletBreadcrumb link={routes.threats_coverage}>
-                  Coverage
-                </OutletBreadcrumb>
-                <ThreatFamilyByIdPage />
-              </PageBoundary>
-            ),
-            children: [
-              {
-                index: true,
-                element: (
-                  <PageBoundary key="threat-family-default">
-                    <ThreatFamilyDefault />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.threats_coverage_family_threats,
-                element: (
-                  <PageBoundary key="threat-family-threats-list">
-                    <ThreatFamilyThreatsListPage />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.threats_coverage_family_events,
-                element: (
-                  <PageBoundary key="threat-family-events">
-                    <ThreatFamilyEventsPage />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.threats_coverage_family_detection_methods,
-                element: (
-                  <PageBoundary key="threat-family-detection-methods">
-                    <ThreatFamilyDetectionMethodsPage />
-                  </PageBoundary>
-                ),
-              },
-            ],
-          },
-          {
-            path: routes.policy_violations_coverage_threat,
-            element: (
-              <PageBoundary key="threat-by-id">
-                <OutletBreadcrumb link={routes.policy_violations}>
-                  Policy Violations
-                </OutletBreadcrumb>
-                <OutletBreadcrumb link={routes.policy_violations_coverage}>
-                  Coverage
-                </OutletBreadcrumb>
-                <PolicyViolationByIdPage />
-              </PageBoundary>
-            ),
-            children: [
-              {
-                index: true,
-                element: (
-                  <PageBoundary key="threat-by-id-index">
-                    <ThreatByIdIndex />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.policy_violations_coverage_threat_events,
-                element: (
-                  <PageBoundary key="threat-by-id-events">
-                    <PolicyViolationByIdEventsPage />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.policy_violations_coverage_threat_detection_methods,
-                element: (
-                  <PageBoundary key="threat-by-id-detection-methods">
-                    <PolicyViolationByIdDetectionMethods />
-                  </PageBoundary>
-                ),
-              },
-            ],
-          },
-          {
-            path: routes.policy_violations_coverage_family,
-            element: (
-              <PageBoundary key="threat-family-by-id">
-                <OutletBreadcrumb link={routes.policy_violations}>
-                  Policy Violations
-                </OutletBreadcrumb>
-                <OutletBreadcrumb link={routes.policy_violations_coverage}>
-                  Coverage
-                </OutletBreadcrumb>
-                <PolicyViolationFamilyByIdPage />
-              </PageBoundary>
-            ),
-            children: [
-              {
-                index: true,
-                element: (
-                  <PageBoundary key="threat-family-default">
-                    <ThreatFamilyDefault />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.policy_violations_coverage_family_threats,
-                element: (
-                  <PageBoundary key="threat-family-threats-list">
-                    <PolicyViolationThreatsListPage />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.policy_violations_coverage_family_events,
-                element: (
-                  <PageBoundary key="threat-family-events">
-                    <PolicyViolationFamilyEventsPage />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.policy_violations_coverage_family_detection_methods,
-                element: (
-                  <PageBoundary key="threat-family-detection-methods">
-                    <PolicyViolationFamilyDetectionMethodsPage />
-                  </PageBoundary>
-                ),
-              },
-            ],
-          },
-          {
-            path: routes.policy_violations,
-            element: (
-              <PageBoundary key="policy_violations">
-                <PolicyViolationsPage />
-              </PageBoundary>
-            ),
-            children: [
-              {
-                index: true,
-                element: (
-                  <PageBoundary key="policy_violations-root">
-                    <PolicyViolationsImpactedEntities />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.policy_violations_graph,
-                element: (
-                  <PageBoundary key="policy_violations-graph">
-                    <PolicyViolationsGraphPage />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.policy_violations_coverage,
-                element: (
-                  <PageBoundary key="policy_violations-coverage">
-                    <PolicyViolationsCoveragePage />
-                  </PageBoundary>
-                ),
-              },
-            ],
           },
           {
             path: routes.explorer,
@@ -402,227 +621,12 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
             ),
           },
           {
-            path: routes.analytics,
-            element: (
-              <>
-                <OutletBreadcrumb>Analytics</OutletBreadcrumb>
-                <Outlet />
-              </>
-            ),
-            children: [
-              {
-                index: true,
-                element: (
-                  <Navigate
-                    to={routes.beaconing_ips}
-                    replace
-                  />
-                ),
-              },
-              {
-                path: routes.beaconing_ips,
-                element: (
-                  <>
-                    <OutletBreadcrumb>Beaconing IPs</OutletBreadcrumb>
-                    <Outlet />
-                  </>
-                ),
-                children: [
-                  {
-                    index: true,
-                    element: (
-                      <Analytics>
-                        <PageBoundary key="beaconing-ips">
-                          <BeaconingIps />
-                        </PageBoundary>
-                      </Analytics>
-                    ),
-                  },
-                  {
-                    path: routes.beaconing_ips_details,
-                    element: (
-                      <PageBoundary key="beaconing-ip-details">
-                        <BeaconingIpDetails />
-                      </PageBoundary>
-                    ),
-                  },
-                ],
-              },
-              {
-                path: routes.beaconing_ja3s,
-                element: (
-                  <>
-                    <OutletBreadcrumb>Beaconing JA3s</OutletBreadcrumb>
-                    <Outlet />
-                  </>
-                ),
-                children: [
-                  {
-                    index: true,
-                    element: (
-                      <Analytics>
-                        <PageBoundary key="beaconing-ja3s">
-                          <BeaconingJa3s />
-                        </PageBoundary>
-                      </Analytics>
-                    ),
-                  },
-                  {
-                    path: routes.beaconing_ja3s_details,
-                    element: (
-                      <PageBoundary key="beaconing-ja3s-details">
-                        <BeaconingJa3sDetails />
-                      </PageBoundary>
-                    ),
-                  },
-                ],
-              },
-              {
-                path: routes.sightings,
-                element: (
-                  <>
-                    <OutletBreadcrumb>Sightings</OutletBreadcrumb>
-                    <Outlet />
-                  </>
-                ),
-                children: [
-                  {
-                    index: true,
-                    element: (
-                      <Analytics>
-                        <PageBoundary key="sightings">
-                          <Sightings />
-                        </PageBoundary>
-                      </Analytics>
-                    ),
-                  },
-                  {
-                    path: routes.sightings_details,
-                    element: (
-                      <PageBoundary key="sightings-details">
-                        <SightingDetails />
-                      </PageBoundary>
-                    ),
-                  },
-                ],
-              },
-            ],
-          },
-          {
             path: routes.filters_actions,
             element: (
               <PageBoundary key="filters_actions">
                 <FiltersActionsList />
               </PageBoundary>
             ),
-          },
-          {
-            path: routes.attack_surface,
-            element: (
-              <PageBoundary key="attack-surface">
-                <AttackSurface />
-              </PageBoundary>
-            ),
-            children: [
-              {
-                index: true,
-                element: (
-                  <PageBoundary key="attack-surface-visualisation">
-                    <AttackSurfaceVisualisation />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.attack_surface_inventory,
-                element: (
-                  <PageBoundary key="attack-surface-inventory">
-                    <AttackSurfaceInventory />
-                  </PageBoundary>
-                ),
-              },
-            ],
-          },
-          {
-            path: routes.hosts,
-            element: (
-              <PageBoundary key="hosts">
-                <HostsPage />
-              </PageBoundary>
-            ),
-          },
-          {
-            path: routes.hosts_host,
-            element: (
-              <PageBoundary key="attack-surface-host">
-                <HostDetails />
-              </PageBoundary>
-            ),
-            children: [
-              {
-                index: true,
-                element: (
-                  <PageBoundary key="host-insights">
-                    <HostInsights />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.hosts_host_incidents,
-                element: (
-                  <PageBoundary key="host-incidents">
-                    <HostIncidents />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.hosts_host_detection_methods,
-                element: (
-                  <PageBoundary key="host-detection-methods">
-                    <HostDetectionMethods />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.hosts_host_beacons,
-                element: (
-                  <PageBoundary key="host-beaconing">
-                    <HostBeaconing />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.hosts_host_sightings,
-                element: (
-                  <PageBoundary key="host-sightings">
-                    <HostSightings />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.hosts_host_timeline,
-                element: (
-                  <PageBoundary key="host-timeline">
-                    <HostTimeline />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.hosts_host_outlierevents,
-                element: (
-                  <PageBoundary key="host-outlier-events">
-                    <HostOutlierEvents />
-                  </PageBoundary>
-                ),
-              },
-              {
-                path: routes.hosts_host_detectionevents,
-                element: (
-                  <PageBoundary key="host-detection-events">
-                    <HostDetectionEvents />
-                  </PageBoundary>
-                ),
-              },
-            ],
           },
           {
             path: routes.investigations,
@@ -690,4 +694,16 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
 
 export const Router = () => {
   return <RouterProvider router={createRouter(routes)} />;
+};
+
+const EnterpriseRoutes = () => {
+  const { enterprise } = useFeatureFlags();
+  return enterprise ? (
+    <Outlet />
+  ) : (
+    <Navigate
+      to={routes.explorer}
+      replace
+    />
+  );
 };
