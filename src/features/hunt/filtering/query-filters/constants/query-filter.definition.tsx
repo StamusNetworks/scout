@@ -11,7 +11,7 @@ import {
 
 export const getFilterDef = (key: string) => QueryFiltersRecord[key];
 
-export const QueryFilters: QueryFilterDefinition[] = [
+export const CEQueryFilters: QueryFilterDefinition[] = [
   /* Signature filters */
   {
     label: 'Events min',
@@ -188,21 +188,9 @@ export const QueryFilters: QueryFilterDefinition[] = [
     entity: FilterType.PROTO,
   },
   {
-    label: 'IP Protocol',
-    key: 'host_id.services.proto',
-    category: FilterCategory.HOST,
-    entity: FilterType.PROTO,
-  },
-  {
     label: 'App Protocol',
     key: 'app_proto',
     category: FilterCategory.EVENT,
-    entity: FilterType.APP_PROTO,
-  },
-  {
-    label: 'App Protocol',
-    key: 'host_id.services.values.app_proto',
-    category: FilterCategory.HOST,
     entity: FilterType.APP_PROTO,
   },
   {
@@ -425,12 +413,6 @@ export const QueryFilters: QueryFilterDefinition[] = [
     entity: FilterType.USER_AGENT,
   },
   {
-    label: 'HTTP User Agent',
-    key: 'host_id.http.user_agent.agent',
-    category: FilterCategory.HOST,
-    entity: FilterType.USER_AGENT,
-  },
-  {
     label: 'Referrer',
     key: 'http.http_refer',
     category: FilterCategory.EVENT,
@@ -460,11 +442,6 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.EVENT,
   },
   {
-    label: 'HTTP Server',
-    key: 'host_id.services.values.http.server',
-    category: FilterCategory.HOST,
-  },
-  {
     label: 'Accept Language',
     key: 'http.accept_language',
     category: FilterCategory.EVENT,
@@ -481,23 +458,12 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.EVENT,
     convertible: ['host_id.services.values.tls.subject'],
   },
-  {
-    label: 'Subject DN',
-    key: 'host_id.services.values.tls.subject',
-    category: FilterCategory.HOST,
-    convertible: ['tls.subject'],
-  },
+
   {
     label: 'Issuer DN',
     key: 'tls.issuerdn',
     category: FilterCategory.EVENT,
     convertible: ['host_id.services.values.tls.issuerdn'],
-  },
-  {
-    label: 'Issuer DN',
-    key: 'host_id.services.values.tls.issuerdn',
-    category: FilterCategory.HOST,
-    convertible: ['tls.issuerdn'],
   },
   {
     label: 'Not Before',
@@ -521,12 +487,6 @@ export const QueryFilters: QueryFilterDefinition[] = [
     convertible: ['host_id.tls.ja4.hash'],
   },
   {
-    label: 'JA4',
-    key: 'host_id.tls.ja4.hash',
-    category: FilterCategory.HOST,
-    convertible: ['tls.ja4'],
-  },
-  {
     label: 'Serial',
     key: 'tls.serial',
     category: FilterCategory.EVENT,
@@ -543,22 +503,10 @@ export const QueryFilters: QueryFilterDefinition[] = [
     convertible: ['host_id.tls.ja4.agent'],
   },
   {
-    label: 'JA4 User-Agent',
-    key: 'host_id.tls.ja4.agent',
-    category: FilterCategory.HOST,
-    convertible: ['tls.ja4.agent'],
-  },
-  {
     label: 'Fingerprint',
     key: 'tls.fingerprint',
     category: FilterCategory.EVENT,
     convertible: ['host_id.services.values.tls.fingerprint'],
-  },
-  {
-    label: 'Fingerprint',
-    key: 'host_id.services.values.tls.fingerprint',
-    category: FilterCategory.HOST,
-    convertible: ['tls.fingerprint'],
   },
   {
     label: 'JA3S',
@@ -600,12 +548,6 @@ export const QueryFilters: QueryFilterDefinition[] = [
     convertible: ['host_id.ssh.client.software_version'],
   },
   {
-    label: 'Client Software',
-    key: 'host_id.ssh.client.software_version',
-    category: FilterCategory.HOST,
-    convertible: ['ssh.client.software_version'],
-  },
-  {
     key: 'ssh.client.proto_version',
     label: 'Client Version',
     category: FilterCategory.EVENT,
@@ -615,12 +557,6 @@ export const QueryFilters: QueryFilterDefinition[] = [
     key: 'ssh.server.software_version',
     category: FilterCategory.EVENT,
     convertible: ['host_id.ssh.server.software_version'],
-  },
-  {
-    label: 'Server Software',
-    key: 'host_id.ssh.server.software_version',
-    category: FilterCategory.HOST,
-    convertible: ['ssh.server.software_version'],
   },
   {
     label: 'Server Version',
@@ -640,57 +576,6 @@ export const QueryFilters: QueryFilterDefinition[] = [
     entity: FilterType.MACADDRESS,
   },
   {
-    key: 'stamus.asset',
-    label: 'Entity',
-    category: FilterCategory.EVENT,
-    entity: FilterType.STAMUS_ASSET,
-    type: 'ip',
-  },
-  {
-    label: 'Offender',
-    key: 'stamus.source',
-    category: FilterCategory.EVENT,
-    entity: FilterType.STAMUS_ASSET,
-  },
-  {
-    label: 'Threat',
-    key: 'stamus.threat_name',
-    category: FilterCategory.EVENT,
-  },
-  {
-    label: 'Family',
-    key: 'stamus.family_name',
-    category: FilterCategory.EVENT,
-  },
-  {
-    label: 'Kill Chain Phase',
-    key: 'stamus.kill_chain',
-    category: FilterCategory.EVENT,
-    toDisplayValue: (value: string) =>
-      KillChainStepsEnum[value as keyof typeof KillChainStepsEnum] || value,
-    inputType: FilterInputType.SELECT,
-    options: [
-      { value: 'reconnaissance', label: 'Reconnaissance' },
-      { value: 'weaponization', label: 'Weaponization' },
-      { value: 'delivery', label: 'Delivery' },
-      { value: 'exploitation', label: 'Exploitation' },
-      { value: 'installation', label: 'Installation' },
-      { value: 'command_and_control', label: 'Command and Control' },
-      { value: 'actions_on_objectives', label: 'Actions on Objectives' },
-      { value: 'pre_condition', label: 'Policy Violation' },
-    ],
-  },
-  {
-    label: 'Method ID',
-    key: 'stamus.threat_id',
-    category: FilterCategory.EVENT,
-  },
-  {
-    label: 'Event ID',
-    key: 'stamus.event_id',
-    category: FilterCategory.EVENT,
-  },
-  {
     label: 'IP',
     key: 'ip',
     category: FilterCategory.EVENT,
@@ -698,13 +583,6 @@ export const QueryFilters: QueryFilterDefinition[] = [
     validationType: FilterValidationType.IP,
     toQFString: ({ value, negated }) =>
       `(${negated ? 'NOT ' : ''}(src_ip: "${value}" OR dest_ip: "${value}"))`,
-  },
-  {
-    label: 'Host IP',
-    key: 'host_id.ip',
-    category: FilterCategory.HOST,
-    entity: FilterType.IP,
-    validationType: FilterValidationType.IP,
   },
   {
     label: 'DNS rdata',
@@ -952,6 +830,62 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.HISTORY,
   },
   {
+    label: 'Proposed Layer',
+    key: 'tls.alpn_ts',
+    category: FilterCategory.EVENT,
+  },
+  {
+    label: 'Negociated Layer',
+    key: 'tls.alpn_tc',
+    category: FilterCategory.EVENT,
+  },
+];
+
+export const QueryFilters: QueryFilterDefinition[] = [
+  ...CEQueryFilters,
+  {
+    label: 'HTTP Server',
+    key: 'host_id.services.values.http.server',
+    category: FilterCategory.HOST,
+  },
+  {
+    label: 'Subject DN',
+    key: 'host_id.services.values.tls.subject',
+    category: FilterCategory.HOST,
+    convertible: ['tls.subject'],
+  },
+  {
+    label: 'Server Software',
+    key: 'host_id.ssh.server.software_version',
+    category: FilterCategory.HOST,
+    convertible: ['ssh.server.software_version'],
+  },
+  {
+    label: 'IP Protocol',
+    key: 'host_id.services.proto',
+    category: FilterCategory.HOST,
+    entity: FilterType.PROTO,
+  },
+  {
+    label: 'App Protocol',
+    key: 'host_id.services.values.app_proto',
+    category: FilterCategory.HOST,
+    entity: FilterType.APP_PROTO,
+  },
+  {
+    label: 'HTTP User Agent',
+    key: 'host_id.http.user_agent.agent',
+    category: FilterCategory.HOST,
+    entity: FilterType.USER_AGENT,
+  },
+  {
+    label: 'Host IP',
+    key: 'host_id.ip',
+    category: FilterCategory.HOST,
+    entity: FilterType.IP,
+    validationType: FilterValidationType.IP,
+  },
+  {
     label: 'Hostname',
     key: 'host_id.hostname.host',
     category: FilterCategory.HOST,
@@ -1069,13 +1003,84 @@ export const QueryFilters: QueryFilterDefinition[] = [
     toDisplayValue: (value: string) => ROLES[value as Role]?.name,
   },
   {
-    label: 'Proposed Layer',
-    key: 'tls.alpn_ts',
+    label: 'Issuer DN',
+    key: 'host_id.services.values.tls.issuerdn',
+    category: FilterCategory.HOST,
+    convertible: ['tls.issuerdn'],
+  },
+  {
+    label: 'JA4',
+    key: 'host_id.tls.ja4.hash',
+    category: FilterCategory.HOST,
+    convertible: ['tls.ja4'],
+  },
+  {
+    label: 'JA4 User-Agent',
+    key: 'host_id.tls.ja4.agent',
+    category: FilterCategory.HOST,
+    convertible: ['tls.ja4.agent'],
+  },
+  {
+    label: 'Fingerprint',
+    key: 'host_id.services.values.tls.fingerprint',
+    category: FilterCategory.HOST,
+    convertible: ['tls.fingerprint'],
+  },
+  {
+    label: 'Client Software',
+    key: 'host_id.ssh.client.software_version',
+    category: FilterCategory.HOST,
+    convertible: ['ssh.client.software_version'],
+  },
+  {
+    key: 'stamus.asset',
+    label: 'Entity',
+    category: FilterCategory.EVENT,
+    entity: FilterType.STAMUS_ASSET,
+    type: 'ip',
+  },
+  {
+    label: 'Offender',
+    key: 'stamus.source',
+    category: FilterCategory.EVENT,
+    entity: FilterType.STAMUS_ASSET,
+  },
+  {
+    label: 'Threat',
+    key: 'stamus.threat_name',
     category: FilterCategory.EVENT,
   },
   {
-    label: 'Negociated Layer',
-    key: 'tls.alpn_tc',
+    label: 'Family',
+    key: 'stamus.family_name',
+    category: FilterCategory.EVENT,
+  },
+  {
+    label: 'Kill Chain Phase',
+    key: 'stamus.kill_chain',
+    category: FilterCategory.EVENT,
+    toDisplayValue: (value: string) =>
+      KillChainStepsEnum[value as keyof typeof KillChainStepsEnum] || value,
+    inputType: FilterInputType.SELECT,
+    options: [
+      { value: 'reconnaissance', label: 'Reconnaissance' },
+      { value: 'weaponization', label: 'Weaponization' },
+      { value: 'delivery', label: 'Delivery' },
+      { value: 'exploitation', label: 'Exploitation' },
+      { value: 'installation', label: 'Installation' },
+      { value: 'command_and_control', label: 'Command and Control' },
+      { value: 'actions_on_objectives', label: 'Actions on Objectives' },
+      { value: 'pre_condition', label: 'Policy Violation' },
+    ],
+  },
+  {
+    label: 'Method ID',
+    key: 'stamus.threat_id',
+    category: FilterCategory.EVENT,
+  },
+  {
+    label: 'Event ID',
+    key: 'stamus.event_id',
     category: FilterCategory.EVENT,
   },
   {
@@ -1128,6 +1133,14 @@ export function isWildcardable(type: string) {
 }
 
 export const QueryFiltersRecord = QueryFilters.reduce(
+  (acc, curr) => {
+    acc[curr.key] = curr;
+    return acc;
+  },
+  {} as Record<string, QueryFilterDefinition>,
+);
+
+export const CEQueryFiltersRecord = CEQueryFilters.reduce(
   (acc, curr) => {
     acc[curr.key] = curr;
     return acc;

@@ -6,6 +6,8 @@ import { RootState } from '@/store/store';
 
 import { FilterCategory } from '../constants/query-filter.config';
 import {
+  CEQueryFilters,
+  CEQueryFiltersRecord,
   getFilterDef,
   QueryFilters,
   QueryFiltersRecord,
@@ -129,10 +131,12 @@ export type MixedQueryFilterDefinitions = Record<
 >;
 
 export const selectQueryFiltersDefinitions = createSelector(
-  [(state: RootState) => state.filters.queryFilters.types],
-  (filterTypes) => {
-    if (!filterTypes) return QueryFiltersRecord;
-    return QueryFilters.reduce(
+  [(state: RootState) => state.filters.queryFilters.types, selectIsEnterprise],
+  (filterTypes, isEnterprise) => {
+    if (!filterTypes)
+      return isEnterprise ? QueryFiltersRecord : CEQueryFiltersRecord;
+    const filters = isEnterprise ? QueryFilters : CEQueryFilters;
+    return filters.reduce(
       (acc, curr) => {
         acc[curr.key] = {
           ...acc[curr.key],
