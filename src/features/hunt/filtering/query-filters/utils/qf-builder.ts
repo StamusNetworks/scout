@@ -21,7 +21,7 @@ export function QFBuilder(
 ) {
   function toQFString(
     queryFilters: QueryFilterState[],
-    tagsFilters?: AlertTags,
+    tagsFilters?: AlertTags | null,
     novelty?: boolean,
   ) {
     const qfilter = [];
@@ -81,7 +81,7 @@ export function QFBuilder(
   };
 }
 
-function getTagsFilters(tagsFilters?: AlertTags) {
+function getTagsFilters(tagsFilters?: AlertTags | null) {
   const tagsQfilter = [];
   if (tagsFilters) {
     Object.entries(tagsFilters).forEach(([key, value]) => {

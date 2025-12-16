@@ -1,5 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 
+import { selectIsEnterprise } from '@/common/lib/use-feature-flags';
 import { selectInvestigationFilter } from '@/features/hunt/investigation/investigation.slice';
 import { RootState } from '@/store/store';
 
@@ -75,12 +76,15 @@ export const selectAlertTagsFiltersParams = createSelector(
 );
 
 export const selectEventsTypesParams = createSelector(
-  [selectDiscovery, selectStamus, selectAlert],
-  (discovery, stamus, alert): EventTypes => ({
-    discovery,
-    stamus,
-    alert,
-  }),
+  [selectDiscovery, selectStamus, selectAlert, selectIsEnterprise],
+  (discovery, stamus, alert, isEnterprise): EventTypes | null =>
+    isEnterprise
+      ? {
+          discovery,
+          stamus,
+          alert,
+        }
+      : null,
 );
 
 export const selectTagFilters = createSelector(
@@ -92,6 +96,7 @@ export const selectTagFilters = createSelector(
     selectRelevant,
     selectUntagged,
     selectNovelty,
+    selectIsEnterprise,
   ],
   (
     alert,
@@ -101,15 +106,19 @@ export const selectTagFilters = createSelector(
     relevant,
     untagged,
     novelty,
-  ): TagFilters => ({
-    alert,
-    discovery,
-    stamus,
-    informational,
-    relevant,
-    untagged,
-    novelty,
-  }),
+    isEnterprise,
+  ): TagFilters | null =>
+    isEnterprise
+      ? {
+          alert,
+          discovery,
+          stamus,
+          informational,
+          relevant,
+          untagged,
+          novelty,
+        }
+      : null,
 );
 
 export type FilterMapping = { type: string; category: FilterCategory };
@@ -177,11 +186,11 @@ export const selectEventsQfilter = (
   createSelector(
     [
       (state: RootState) => state.filters.queryFilters.queryFilters,
-      (state: RootState) => state.filters.queryFilters.tagFilters,
+      selectTagFilters,
       selectQfilterBuilder,
     ],
     (queryFilters, tags, Builder) => {
-      const novelty = options?.tags ? tags.novelty : false;
+      const novelty = options?.tags ? tags?.novelty : false;
       if (typeof filterExtension === 'string') {
         const filterString = Builder?.toQFString(
           [

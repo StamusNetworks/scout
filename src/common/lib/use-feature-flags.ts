@@ -1,17 +1,10 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { values } from 'ramda';
 
-import { SystemSettings } from '@/features/user/settings/settings.model';
 import { RootStateWithAPI, useAppSelector } from '@/store/store';
 
 export const useFeatureFlags = () => {
-  const enterprise = useAppSelector((state: RootStateWithAPI) => {
-    const license = (
-      state.API.queries['getSystemSettings(undefined)']?.data as
-        | SystemSettings
-        | undefined
-    )?.license;
-    return !!license && values(license).some((value) => value === true);
-  });
+  const enterprise = useAppSelector(selectIsEnterprise);
   return {
     experimental: true,
     enterprise,
@@ -21,3 +14,13 @@ export const useFeatureFlags = () => {
     },
   };
 };
+
+export const selectSystemSettings = (state: RootStateWithAPI) =>
+  state.API.queries['getSystemSettings(undefined)']?.data;
+
+export const selectIsEnterprise = createSelector(
+  [selectSystemSettings],
+  (systemSettings) =>
+    !!systemSettings?.license &&
+    values(systemSettings.license).some((value) => value === true),
+);

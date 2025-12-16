@@ -23,6 +23,7 @@ import {
   TooltipTrigger,
 } from '@/common/design-system/atoms/ui/tooltip';
 import { startsWithOneOf } from '@/common/lib/strings';
+import { selectIsEnterprise } from '@/common/lib/use-feature-flags';
 import { cn } from '@/common/lib/utils';
 import { useWithAlertsParam } from '@/features/analytics/hosts/components/hostsTable/use-with-alerts-param';
 import { FilterActionsDropdown } from '@/features/hunt/filter-actions/components/filter-actions/filter-actions.dropdown';
@@ -110,7 +111,7 @@ export const FiltersSideBar = () => {
   const autoOpenSidebarOnNavigation = useAppSelector(
     selectAutoOpenSidebarOnNavigation,
   );
-
+  const enterprise = useAppSelector(selectIsEnterprise);
   const [withAlerts] = useWithAlertsParam();
 
   const sideBarConfigPerPage: Partial<
@@ -259,82 +260,94 @@ export const FiltersSideBar = () => {
       className={`${isOpen ? 'w-72' : 'w-0'} relative h-[calc(100vh-48px)] shrink-0 grow-0 overflow-clip border-l transition-all duration-200 ease-in-out`}
     >
       <div className="max-w-72 p-3 pb-5">
-        <div className="w-full">
-          <div className="mb-2">
-            <h2 className="mb-1 text-sm font-bold">Global Filters</h2>
-            <SideBarFilter
-              filter_key="novelty"
-              label="Outlier events"
-              dispatch={dispatch}
-              checked={tagFilters.novelty}
-              disabled={
-                !sideBarConfig?.filterTypes.includes(FilterCategory.EVENT) ||
-                !isEnabled(pathname, 'outliers', sideBarConfigPerPage)
-              }
-              type="switch"
-            />
-          </div>
-          <div className="mb-2">
-            <h3 className="text-muted-foreground mb-1 text-[0.75rem]">
-              Event types
-            </h3>
-            {eventsTypes.map((f) => (
-              <SideBarFilter
-                key={f.key}
-                filter_key={f.key}
-                label={f.label}
-                dispatch={dispatch}
-                checked={tagFilters[f.key]}
-                disabled={
-                  !sideBarConfig?.filterTypes.includes(FilterCategory.EVENT) ||
-                  !isEnabled(pathname, 'events', sideBarConfigPerPage)
-                }
-              />
-            ))}
-          </div>
-          <div>
-            <h3 className="text-muted-foreground mb-1 text-[0.75rem]">
-              Alert tags
-            </h3>
-            {tags.map((f) => (
-              <label
-                key={f.key}
-                className={cn(
-                  'flex items-center gap-2',
-                  !sideBarConfig?.filterTypes.includes(FilterCategory.EVENT) ||
-                    (!isEnabled(pathname, 'tags', sideBarConfigPerPage) &&
-                      'text-muted-foreground'),
-                )}
-              >
-                <Checkbox
-                  checked={tagFilters[f.key]}
-                  onCheckedChange={() =>
-                    dispatch(updateTagFilters({ [f.key]: !tagFilters[f.key] }))
-                  }
+        {tagFilters && enterprise && (
+          <>
+            <div className="w-full">
+              <div className="mb-2">
+                <h2 className="mb-1 text-sm font-bold">Global Filters</h2>
+                <SideBarFilter
+                  filter_key="novelty"
+                  label="Outlier events"
+                  dispatch={dispatch}
+                  checked={tagFilters.novelty}
                   disabled={
                     !sideBarConfig?.filterTypes.includes(
                       FilterCategory.EVENT,
-                    ) || !isEnabled(pathname, 'tags', sideBarConfigPerPage)
+                    ) || !isEnabled(pathname, 'outliers', sideBarConfigPerPage)
                   }
+                  type="switch"
                 />
-                <div
-                  className="size-2 rounded-full bg-(--bg)"
-                  style={{ '--bg': `var(--${f.key})` } as React.CSSProperties}
-                />
-                <p
-                  className={cn(
-                    'text-sm',
-                    !isEnabled(pathname, 'tags', sideBarConfigPerPage) &&
-                      'text-muted-foreground',
-                  )}
-                >
-                  {f.label}
-                </p>
-              </label>
-            ))}
-          </div>
-        </div>
-        <Separator className="my-3" />
+              </div>
+              <div className="mb-2">
+                <h3 className="text-muted-foreground mb-1 text-[0.75rem]">
+                  Event types
+                </h3>
+                {eventsTypes.map((f) => (
+                  <SideBarFilter
+                    key={f.key}
+                    filter_key={f.key}
+                    label={f.label}
+                    dispatch={dispatch}
+                    checked={tagFilters[f.key]}
+                    disabled={
+                      !sideBarConfig?.filterTypes.includes(
+                        FilterCategory.EVENT,
+                      ) || !isEnabled(pathname, 'events', sideBarConfigPerPage)
+                    }
+                  />
+                ))}
+              </div>
+              <div>
+                <h3 className="text-muted-foreground mb-1 text-[0.75rem]">
+                  Alert tags
+                </h3>
+                {tags.map((f) => (
+                  <label
+                    key={f.key}
+                    className={cn(
+                      'flex items-center gap-2',
+                      !sideBarConfig?.filterTypes.includes(
+                        FilterCategory.EVENT,
+                      ) ||
+                        (!isEnabled(pathname, 'tags', sideBarConfigPerPage) &&
+                          'text-muted-foreground'),
+                    )}
+                  >
+                    <Checkbox
+                      checked={tagFilters[f.key]}
+                      onCheckedChange={() =>
+                        dispatch(
+                          updateTagFilters({ [f.key]: !tagFilters[f.key] }),
+                        )
+                      }
+                      disabled={
+                        !sideBarConfig?.filterTypes.includes(
+                          FilterCategory.EVENT,
+                        ) || !isEnabled(pathname, 'tags', sideBarConfigPerPage)
+                      }
+                    />
+                    <div
+                      className="size-2 rounded-full bg-(--bg)"
+                      style={
+                        { '--bg': `var(--${f.key})` } as React.CSSProperties
+                      }
+                    />
+                    <p
+                      className={cn(
+                        'text-sm',
+                        !isEnabled(pathname, 'tags', sideBarConfigPerPage) &&
+                          'text-muted-foreground',
+                      )}
+                    >
+                      {f.label}
+                    </p>
+                  </label>
+                ))}
+              </div>
+            </div>
+            <Separator className="my-3" />
+          </>
+        )}
         <Column>
           <Row className="justify-between">
             <h2 className="text-sm font-bold">Query filters</h2>
