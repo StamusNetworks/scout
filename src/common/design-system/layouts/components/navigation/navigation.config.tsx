@@ -111,6 +111,7 @@ export const defaultMenu = (
       },
       {
         key: 'hosts',
+        enterprise: true,
         type: 'link',
         url: routes.hosts,
         title: 'Hosts',
