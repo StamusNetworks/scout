@@ -1,6 +1,8 @@
 import { DefaultPage } from '@/common/design-system/atoms/default-page';
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Separator } from '@/common/design-system/atoms/ui/separator';
+import { selectIsEnterprise } from '@/common/lib/use-feature-flags';
+import { useAppSelector } from '@/store/store';
 
 import { ColorBlindnessSelector } from './_components/color-blindness';
 import { DataDisplay } from './_components/data-display';
@@ -9,6 +11,7 @@ import { ExportFormatSelector } from './_components/export-format-selector';
 import { SidebarConfig } from './_components/sidebars';
 
 export const UserSettingsPage = () => {
+  const isEnterprise = useAppSelector(selectIsEnterprise);
   return (
     <DefaultPage
       title="User settings"
@@ -19,8 +22,13 @@ export const UserSettingsPage = () => {
         <Separator />
         <DataDisplay />
         <Separator />
-        <ColorBlindnessSelector />
-        <Separator />
+        {isEnterprise ? ( // Currently only applies to features of Enteprise Edition
+          <>
+            <ColorBlindnessSelector />
+            <Separator />
+          </>
+        ) : null}
+
         <ExportFormatSelector />
         <Separator />
         <SidebarConfig />
