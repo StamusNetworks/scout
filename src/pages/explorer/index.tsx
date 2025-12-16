@@ -42,7 +42,7 @@ export const Explorer = () => {
         title="Explorer"
         description="Quickly understand and investigate event data through interactive panels and timelines, enabling deep exploration and agile threat hunting to support confident, informed security decisions."
       >
-        <Grid className="grid-cols-[1fr_300px] gap-4">
+        <Grid className="grid-cols-[1fr_300px] items-center gap-4">
           <EventsCountTimeline />
           <EventsCounter />
         </Grid>

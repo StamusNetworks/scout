@@ -10,6 +10,7 @@ import {
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/pillTabs';
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
+import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { EventsCounter } from '@/features/hunt/dashboard/components/events-counter';
 import { EventsTable } from '@/features/hunt/events/components/events-table/events-table';
@@ -24,7 +25,7 @@ export const Events = () => {
       title="Events"
       description="Monitor, explore, and analyze your organization’s security events in real time. Gain actionable insight and accelerate investigations by exploring the detailed events data."
     >
-      <Grid className="grid-cols-[1fr_300px] gap-4">
+      <Grid className="grid-cols-[1fr_300px] items-center gap-4">
         <EventsCountTimeline />
         <EventsCounter />
       </Grid>
@@ -34,8 +35,11 @@ export const Events = () => {
 };
 
 export const EventsCountTimeline = () => {
-  const [chartTarget, setChartTarget] = useState<boolean>(true);
-  const { data } = useTimeline(chartTarget);
+  const { enterprise } = useFeatureFlags();
+  const [chartTarget, setChartTarget] = useState<boolean>(true); // Chart target can only be specified in Enterprise
+  const compChartTarget = enterprise ? chartTarget : false;
+
+  const { data } = useTimeline(compChartTarget);
 
   const dispatch = useAppDispatch();
   const handleBarClick = (obj: { time: number }) => {
@@ -50,24 +54,26 @@ export const EventsCountTimeline = () => {
 
   return (
     <Column>
-      <Row className="mb-2 justify-end">
-        <Tabs value={chartTarget.toString()}>
-          <TabsList>
-            <TabsTrigger
-              value="true"
-              onClick={() => setChartTarget(true)}
-            >
-              Tags
-            </TabsTrigger>
-            <TabsTrigger
-              value="false"
-              onClick={() => setChartTarget(false)}
-            >
-              Probes
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
-      </Row>
+      {enterprise && (
+        <Row className="mb-2 justify-end">
+          <Tabs value={compChartTarget.toString()}>
+            <TabsList>
+              <TabsTrigger
+                value="true"
+                onClick={() => setChartTarget(true)}
+              >
+                Tags
+              </TabsTrigger>
+              <TabsTrigger
+                value="false"
+                onClick={() => setChartTarget(false)}
+              >
+                Probes
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </Row>
+      )}
       {!data ? null : (
         <BarChartTimeline
           data={data}

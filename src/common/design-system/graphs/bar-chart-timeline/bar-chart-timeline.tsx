@@ -1,4 +1,5 @@
 import { add, format } from 'date-fns';
+import { toPairs } from 'ramda';
 import * as React from 'react';
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 import {
@@ -31,7 +32,7 @@ export const BarChartTimeline = ({
   const chart = React.useMemo(() => {
     if (!data)
       return {
-        chartConfig: {},
+        chartConfig: {} as Record<string, { label: string; color: string }>,
         chartData: [],
         dates: {
           interval: 0,
@@ -39,6 +40,8 @@ export const BarChartTimeline = ({
       };
     return getTimelineData(data as CountsTimeline);
   }, [data]);
+
+  console.log(chart);
 
   return (
     <ChartContainer
@@ -108,11 +111,11 @@ export const BarChartTimeline = ({
           }
         />
         {typeof chart.chartData === 'object' &&
-          Object.keys(chart.chartConfig).map((key) => (
+          toPairs(chart.chartConfig).map(([key, value]) => (
             <Bar
               key={key}
               dataKey={key}
-              fill={`var(--color-${key})`}
+              fill={value.color}
               radius={0}
               stackId="stack1"
               /* eslint-disable-next-line @typescript-eslint/no-explicit-any */

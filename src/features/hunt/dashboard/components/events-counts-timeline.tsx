@@ -6,6 +6,7 @@ import {
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/pillTabs';
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
+import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useTimeline } from '@/features/hunt/timeline/api/hooks/useTimeline';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
@@ -14,29 +15,35 @@ import { setChartTarget } from '../store/dashboard.slice';
 
 export const EventsCountTimeline = () => {
   const dispatch = useAppDispatch();
+
   const chartTarget = useAppSelector(selectChartTarget);
-  const { data } = useTimeline(chartTarget);
+  const { enterprise } = useFeatureFlags();
+  const compChartTarget = enterprise ? chartTarget : false; // Chart target can only be specified in Enterprise
+
+  const { data } = useTimeline(compChartTarget);
 
   return (
     <Column>
-      <Row className="mb-2 justify-end">
-        <Tabs value={chartTarget.toString()}>
-          <TabsList>
-            <TabsTrigger
-              value="true"
-              onClick={() => dispatch(setChartTarget(true))}
-            >
-              Tags
-            </TabsTrigger>
-            <TabsTrigger
-              value="false"
-              onClick={() => dispatch(setChartTarget(false))}
-            >
-              Probes
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
-      </Row>
+      {enterprise && (
+        <Row className="mb-2 justify-end">
+          <Tabs value={compChartTarget.toString()}>
+            <TabsList>
+              <TabsTrigger
+                value="true"
+                onClick={() => dispatch(setChartTarget(true))}
+              >
+                Tags
+              </TabsTrigger>
+              <TabsTrigger
+                value="false"
+                onClick={() => dispatch(setChartTarget(false))}
+              >
+                Probes
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </Row>
+      )}
       {!data ? null : <BarChartTimeline data={data} />}
     </Column>
   );
