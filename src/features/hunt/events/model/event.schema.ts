@@ -22,6 +22,8 @@ export const eventSchema = z.object({
   logger: z.string(),
   flow_id: z.string(),
   flow: z.object({
+    age: z.number().optional(),
+    tx_cnt: z.number().optional(),
     pkts_toserver: z.number(),
     start: z.string(),
     end: z.string(),

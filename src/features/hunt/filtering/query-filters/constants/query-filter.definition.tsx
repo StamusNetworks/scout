@@ -1,3 +1,5 @@
+import { formatDuration } from 'date-fns';
+
 import { Role, ROLES } from '@/features/analytics/hosts/hosts.config';
 
 import { QueryFilterDefinition, QueryFilterType } from '../model/query-filter';
@@ -351,6 +353,12 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
     label: 'Flow ID',
     key: 'flow_id',
     category: FilterCategory.EVENT,
+  },
+  {
+    label: 'Flow Duration',
+    key: 'flow.age',
+    category: FilterCategory.EVENT,
+    toDisplayValue: (value: number) => formatDuration({ seconds: value }),
   },
   {
     label: 'Community ID',

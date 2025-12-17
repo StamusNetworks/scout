@@ -71,6 +71,8 @@ export const getSyntheticView = (row: Event): SyntheticViewProps[] => [
       { key: 'flow.bytes_toclient', value: row.flow?.bytes_toclient },
       { key: 'flow.pkts_toserver', value: row.flow?.pkts_toserver },
       { key: 'flow.pkts_toclient', value: row.flow?.pkts_toclient },
+      { key: 'flow.age', value: row.flow?.age },
+      { key: 'flow.tx_cnt', value: row.flow?.tx_cnt },
       { key: 'flow_id', value: row.flow_id },
     ],
   },
