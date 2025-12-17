@@ -409,16 +409,16 @@ export const TransactionCard = ({ row }: { row: EventTail }) => {
                 />
               </Column>
             )}
-            {row.tls?.ja3?.agent && (
+            {row.tls?.ja3?.hash && (
               <Column className="max-w-80">
-                <Label query_key="tls.ja3.agent" />
+                <Label query_key="tls.ja3.hash" />
                 <EventValue
-                  query_key="tls.ja3.agent"
+                  query_key="tls.ja3.hash"
                   className="line-clamp-3 text-wrap break-all"
                   value={
-                    Array.isArray(row.tls.ja3.agent)
-                      ? row.tls.ja3.agent[0]
-                      : row.tls.ja3.agent
+                    Array.isArray(row.tls.ja3.hash)
+                      ? row.tls.ja3.hash[0]
+                      : row.tls.ja3.hash
                   }
                 />
               </Column>
@@ -429,6 +429,15 @@ export const TransactionCard = ({ row }: { row: EventTail }) => {
                 <EventValue
                   query_key="tls.ja3s"
                   value={row.tls?.ja3s.hash}
+                />
+              </Column>
+            )}
+            {row.tls?.ja4 && (
+              <Column>
+                <Label query_key="tls.ja4" />
+                <EventValue
+                  query_key="tls.ja4"
+                  value={row.tls?.ja4}
                 />
               </Column>
             )}
