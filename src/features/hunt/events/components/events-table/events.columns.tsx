@@ -1,5 +1,6 @@
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
+import { ScrollArea } from '@/common/design-system/atoms/ui/scroll-area';
 import {
   Tooltip,
   TooltipContent,
@@ -248,6 +249,23 @@ export const columns: CustomColumnDef<Event>[] = [
         query_key="tls.sni"
         value={row.original.tls?.sni}
       />
+    ),
+  },
+  {
+    id: 'payload_printable',
+    visible: false,
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="Payload"
+      />
+    ),
+    cell: ({ row }) => (
+      <div className="flex">
+        <ScrollArea className="flex max-h-48 max-w-[800px] overflow-clip text-xs wrap-anywhere">
+          <pre className="block">{row.original.payload_printable}</pre>
+        </ScrollArea>
+      </div>
     ),
   },
   {
