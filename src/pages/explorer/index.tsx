@@ -69,11 +69,6 @@ export const Explorer = () => {
                 <EmptyDescription>
                   Either there are no events or the filters are too restrictive.
                 </EmptyDescription>
-                <Button asChild>
-                  <Link to={getConfig()?.apiUrl + kibana_url}>
-                    Go to Kibana
-                  </Link>
-                </Button>
               </EmptyContent>
             </Empty>
           )}
