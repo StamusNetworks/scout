@@ -13,6 +13,17 @@ import {
 } from '@/features/user/settings/settings.api';
 import { useAppDispatch } from '@/store/store';
 
+export const SystemSettings = ({ children }: { children: React.ReactNode }) => {
+  const { isLoading: systemSettingsLoading } = useGetSystemSettingsQuery(
+    undefined,
+    {
+      refetchOnFocus: false,
+      refetchOnReconnect: false,
+    },
+  );
+  return systemSettingsLoading ? <Spin /> : children;
+};
+
 export const AppLoader = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useAppDispatch();
   useSessionActivity();

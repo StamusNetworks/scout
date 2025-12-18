@@ -10,7 +10,7 @@ import { setupStore } from '@/store/store';
 
 import { Toaster } from '../common/design-system/atoms/ui/sonner';
 import { Router } from '../pages/router';
-import { AppLoader } from './app.loader';
+import { AppLoader, SystemSettings } from './app.loader';
 
 export const store = setupStore();
 export const persistor = persistStore(store);
@@ -22,12 +22,14 @@ function App() {
       persistor={persistor}
     >
       <Provider store={store}>
-        <AppLoader>
-          <NuqsAdapter>
-            <Router />
-          </NuqsAdapter>
-          <Toaster />
-        </AppLoader>
+        <SystemSettings>
+          <AppLoader>
+            <NuqsAdapter>
+              <Router />
+            </NuqsAdapter>
+            <Toaster />
+          </AppLoader>
+        </SystemSettings>
       </Provider>
     </PersistGate>
   );
