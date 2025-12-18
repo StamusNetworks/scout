@@ -29,6 +29,7 @@ import {
 } from '@/common/design-system/atoms/ui/select';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { Textarea } from '@/common/design-system/atoms/ui/textarea';
+import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 
 import { useCreateFilterSetMutation } from '../../../query-filters/api/query-filter.api';
 import { FilterInput } from '../../../query-filters/components/filters-input';
@@ -40,15 +41,17 @@ const formSchema = z.object({
   name: z.string().min(1),
   description: z.string(),
   page: z.string(),
-  share: z.boolean(),
-  tags: z.object({
-    alert: z.boolean(),
-    discovery: z.boolean(),
-    stamus: z.boolean(),
-    informational: z.boolean(),
-    relevant: z.boolean(),
-    untagged: z.boolean(),
-  }),
+  share: z.boolean().optional(),
+  tags: z
+    .object({
+      alert: z.boolean(),
+      discovery: z.boolean(),
+      stamus: z.boolean(),
+      informational: z.boolean(),
+      relevant: z.boolean(),
+      untagged: z.boolean(),
+    })
+    .optional(),
   filters: z.array(
     z.object({
       key: z.string(),
@@ -60,7 +63,7 @@ const formSchema = z.object({
   ),
 });
 
-const getDefaultValues = (filters: QueryFilterState[], tags: TagFilters) => ({
+const getDefaultValues = (filters: QueryFilterState[], tags?: TagFilters) => ({
   name: '',
   page: 'DASHBOARDS',
   share: true,
@@ -102,6 +105,7 @@ export const SaveFilterSetForm = ({
   tags,
   onClose,
 }: SaveFilterSetFormProps) => {
+  const { enterprise } = useFeatureFlags();
   const initialValues = getDefaultValues(filters, tags);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -112,7 +116,7 @@ export const SaveFilterSetForm = ({
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     createFilterSet({
       ...data,
-      share: data.share ? 'global' : 'private',
+      share: enterprise ? (data.share ? 'global' : 'private') : undefined,
       filters: data.filters.map((item) => ({
         id: item.key,
         value: item.value.toString(),
@@ -292,30 +296,32 @@ export const SaveFilterSetForm = ({
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="share"
-          render={({ field }) => (
-            <FormItem className="flex space-x-2">
-              <FormControl>
-                <Checkbox
-                  checked={!!field.value}
-                  onCheckedChange={field.onChange}
-                  className="mt-1"
-                />
-              </FormControl>
-              <Column>
-                <FormMessage />
-                <FormLabel>Shared</FormLabel>
-                <FormDescription>
-                  Enabled: Create Filter Set for all users (shared)
-                  <br />
-                  Disabled: Create Filter Set only for you (personal)
-                </FormDescription>
-              </Column>
-            </FormItem>
-          )}
-        />
+        {enterprise && (
+          <FormField
+            control={form.control}
+            name="share"
+            render={({ field }) => (
+              <FormItem className="flex space-x-2">
+                <FormControl>
+                  <Checkbox
+                    checked={!!field.value}
+                    onCheckedChange={field.onChange}
+                    className="mt-1"
+                  />
+                </FormControl>
+                <Column>
+                  <FormMessage />
+                  <FormLabel>Shared</FormLabel>
+                  <FormDescription>
+                    Enabled: Create Filter Set for all users (shared)
+                    <br />
+                    Disabled: Create Filter Set only for you (personal)
+                  </FormDescription>
+                </Column>
+              </FormItem>
+            )}
+          />
+        )}
         <FormField
           control={form.control}
           name="description"

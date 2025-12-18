@@ -5,7 +5,7 @@ import { qfilterDef } from './query-filter';
 export const queryFilterSetCreatePayload = z.object({
   name: z.string(),
   page: z.string(),
-  share: z.enum(['static', 'global', 'private']),
+  share: z.enum(['static', 'global', 'private']).optional(),
   description: z.string(),
   filters: z.array(qfilterDef),
   tags: z
