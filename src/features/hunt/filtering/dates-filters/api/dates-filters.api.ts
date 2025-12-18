@@ -7,7 +7,7 @@ export const DatesAPI = API.injectEndpoints({
     // QUERIES
     getAutoDateRange: builder.query<
       { min_timestamp: number; max_timestamp: number },
-      EventTypes
+      EventTypes | null
     >({
       query: (params) => ({
         url: '/rules/es/alerts_timerange/',
