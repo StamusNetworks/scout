@@ -27,6 +27,7 @@ import { CommandFilterSingle } from '@/common/design-system/molecules/data-table
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
 import { capitalizeFirst } from '@/common/lib/strings';
+import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useGetFilterSetsQuery } from '@/features/hunt/filtering/query-filters/api/query-filter.api';
 import { openSaveFilterSetModal } from '@/features/hunt/filtering/query-filters/components/save-filterset/save-filterset.slice';
 import { filterSetPageConfig } from '@/features/hunt/filtering/query-filters/constants/query-filtersets';
@@ -66,7 +67,7 @@ export const FilterSetsPage = () => {
     'type',
     parseAsStringLiteral(['global', 'private', 'stamus']),
   );
-  const { data } = useGetFilterSetsQuery(undefined);
+  const { data, isLoading } = useGetFilterSetsQuery(undefined);
 
   const filteredData = useMemo(() => {
     const filteredData =
@@ -92,6 +93,9 @@ export const FilterSetsPage = () => {
   }, [data, search, type, page]);
 
   const { showFilterSetsBackNavTip } = useHelpState();
+
+  const { enterprise } = useFeatureFlags();
+  const columns = getColumns(enterprise);
 
   return (
     <Page>
@@ -135,6 +139,7 @@ export const FilterSetsPage = () => {
         </PageHeader>
         <DataTable
           data={filteredData}
+          isLoading={isLoading}
           serverSide={false}
           columns={columns}
           defaultPageSize={20}
@@ -185,7 +190,7 @@ export const FilterSetsPage = () => {
   );
 };
 
-const columns: CustomColumnDef<QueryFilterSet>[] = [
+const getColumns = (enterprise: boolean): CustomColumnDef<QueryFilterSet>[] => [
   {
     id: 'page',
     header: 'Page',
@@ -204,11 +209,16 @@ const columns: CustomColumnDef<QueryFilterSet>[] = [
     header: 'Name',
     cell: ({ row }) => <div>{row.original.name}</div>,
   },
-  {
-    id: 'type',
-    header: 'Type',
-    accessorFn: (row) => capitalizeFirst(typeMap[row.share]),
-  },
+  ...(enterprise
+    ? ([
+        {
+          id: 'type',
+          header: 'Type',
+          accessorFn: (row) =>
+            row.share ? capitalizeFirst(typeMap[row.share]) : null,
+        },
+      ] as CustomColumnDef<QueryFilterSet>[])
+    : []),
   {
     id: 'description',
     header: 'Description',
@@ -218,7 +228,7 @@ const columns: CustomColumnDef<QueryFilterSet>[] = [
     id: 'delete',
     header: '',
     cell: ({ row }) =>
-      row.original.share === 'static' ? null : (
+      row.original.id < 1 ? null : (
         <Button
           onClick={(e) => {
             e.stopPropagation();
@@ -254,21 +264,19 @@ const handleLoadFilterSet = (
   filterSet.content
     .filter((f) => f.id !== 'alert.tag')
     .forEach((filter) => {
-      if (globalFilter && typeof globalFilter.value !== 'string') {
-        store.dispatch(
-          addQueryFilter({
-            key: filter.id,
-            value: filter.value as string,
-            options: {
-              is_wildcarded:
-                filter.id === 'es_filter'
-                  ? false
-                  : 'fullString' in filter && !filter.fullString,
-              is_negated: 'negated' in filter && filter.negated,
-            },
-          }),
-        );
-      }
+      store.dispatch(
+        addQueryFilter({
+          key: filter.id,
+          value: filter.value as string,
+          options: {
+            is_wildcarded:
+              filter.id === 'es_filter'
+                ? false
+                : 'fullString' in filter && !filter.fullString,
+            is_negated: 'negated' in filter && filter.negated,
+          },
+        }),
+      );
     });
   navigate(filterSetPageConfig[filterSet.page].route);
   toast.success('Filterset applied');

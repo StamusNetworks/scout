@@ -41,7 +41,7 @@ export const queryFilterSetSchema = z.object({
   description: z.string(),
   id: z.number(),
   imported: z.boolean(),
-  share: z.enum(['static', 'global', 'private']),
+  share: z.enum(['static', 'global', 'private']).optional(),
 });
 
 export type QueryFilterSet = z.infer<typeof queryFilterSetSchema>;
