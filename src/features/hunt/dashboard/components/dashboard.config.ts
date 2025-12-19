@@ -443,57 +443,30 @@ export const CEdashboard: Record<string, DashboardPanel> = {
     title: 'File Info',
     tooltip:
       'Information about files transferred or accessed during network communications',
+    cols: 2,
     items: [
       {
-        i: 'fileinfo.filename',
+        i: 'files.filename',
+        weight: 6,
         title: 'Filename',
         tooltip: 'Names of files transferred or accessed',
       },
       {
-        i: 'fileinfo.mimetype',
+        i: 'files.mimetype',
+        weight: 4,
         title: 'Mimetype',
         tooltip: 'MIME types indicating file content types',
       },
       {
-        i: 'fileinfo.gaps',
-        title: 'Gaps',
-        tooltip: 'Indicates if there were gaps in file data capture',
-      },
-      {
-        i: 'fileinfo.sha256',
+        i: 'files.sha256',
         title: 'Sha256',
         tooltip:
           'SHA-256 cryptographic hashes of file contents for integrity verification',
       },
       {
-        i: 'fileinfo.type',
-        title: 'Type',
-        tooltip: 'File type classifications based on content analysis',
-      },
-      {
-        i: 'fileinfo.tx_id',
-        title: 'Tx ID',
-        tooltip: 'Transaction identifiers linking files to network sessions',
-      },
-      {
-        i: 'fileinfo.sid',
-        title: 'SID',
-        tooltip: 'Session identifiers for file transfer sessions',
-      },
-      {
-        i: 'fileinfo.state',
+        i: 'files.state',
         title: 'State',
         tooltip: 'File transfer states',
-      },
-      {
-        i: 'fileinfo.size',
-        title: 'Size',
-        tooltip: 'File sizes in bytes',
-      },
-      {
-        i: 'fileinfo.stored',
-        title: 'Stored',
-        tooltip: 'Indicates whether files were stored for analysis',
       },
     ],
   },
