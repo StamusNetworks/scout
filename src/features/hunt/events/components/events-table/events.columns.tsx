@@ -262,7 +262,7 @@ export const columns: CustomColumnDef<Event>[] = [
     ),
     cell: ({ row }) => (
       <div className="flex">
-        <ScrollArea className="flex max-h-48 max-w-[800px] overflow-clip text-xs wrap-anywhere">
+        <ScrollArea className="flex max-h-48 w-full max-w-[600px] overflow-clip text-xs wrap-anywhere">
           <pre className="block">{row.original.payload_printable}</pre>
         </ScrollArea>
       </div>
@@ -293,7 +293,7 @@ export const exportColumns: ExportColumn<Event>[] = [
   },
   {
     label: 'Method',
-    value: (event) => event.alert?.signature || event.stamus?.threat_name,
+    value: (event) => event.alert?.signature || event.stamus?.threat_name || '',
   },
   {
     label: 'Source IP',
