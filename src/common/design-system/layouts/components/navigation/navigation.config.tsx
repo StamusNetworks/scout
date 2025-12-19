@@ -139,6 +139,13 @@ export const defaultMenu = (
         title: 'Filter Sets',
         icon: <Group />,
       },
+      {
+        key: 'filters-actions',
+        type: 'link',
+        url: routes.filters_actions,
+        title: 'Filter Actions',
+        icon: <WandSparkles />,
+      },
     ],
   },
   {
@@ -164,13 +171,6 @@ export const defaultMenu = (
   {
     label: 'Administration',
     children: [
-      {
-        key: 'filters-actions',
-        type: 'link',
-        url: routes.filters_actions,
-        title: 'Filter Actions',
-        icon: <WandSparkles />,
-      },
       {
         key: 'operations-history',
         type: 'link',
