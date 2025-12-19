@@ -683,61 +683,6 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.EVENT,
   },
   {
-    label: 'Host Domain',
-    key: 'hostname_info.domain',
-    category: FilterCategory.EVENT,
-    entity: FilterType.HOSTNAME,
-  },
-  {
-    label: 'Host Subdomain',
-    key: 'hostname_info.subdomain',
-    category: FilterCategory.EVENT,
-    toDisplayValue: (value: string) =>
-      value !== '' ? value || 'Unknown' : 'Unknown',
-    toQueryValue: (value: string) => (value === 'Unknown' ? '' : value),
-  },
-  {
-    label: 'Host TLD',
-    key: 'hostname_info.tld',
-    category: FilterCategory.EVENT,
-  },
-  {
-    label: 'Host Domain Without TLD',
-    key: 'hostname_info.domain_without_tld',
-    category: FilterCategory.EVENT,
-  },
-  {
-    label: 'HTTP Refer Domain',
-    key: 'http.http_refer_info.domain',
-    category: FilterCategory.EVENT,
-    entity: FilterType.DOMAIN,
-  },
-  {
-    key: 'http.http_refer_info.subdomain',
-    label: 'HTTP Refer Subdomain',
-    category: FilterCategory.EVENT,
-  },
-  {
-    label: 'Referrer TLD',
-    key: 'http.http_refer_info.tld',
-    category: FilterCategory.EVENT,
-  },
-  {
-    label: 'Referrer Resource Path',
-    key: 'http.http_refer_info.resource_path',
-    category: FilterCategory.EVENT,
-  },
-  {
-    label: 'Referrer Schema',
-    key: 'http.http_refer_info.scheme',
-    category: FilterCategory.EVENT,
-  },
-  {
-    label: 'HTTP Refer Domain Without TLD',
-    key: 'http.http_refer_info.domain_without_tld',
-    category: FilterCategory.EVENT,
-  },
-  {
     label: 'TLS SNI',
     key: 'tls.sni',
     category: FilterCategory.EVENT,
@@ -1126,6 +1071,61 @@ export const QueryFilters: QueryFilterDefinition[] = [
     label: 'Incident ID',
     category: FilterCategory.EVENT,
     inputType: FilterInputType.NUMBER,
+  },
+  {
+    label: 'Host Domain',
+    key: 'hostname_info.domain',
+    category: FilterCategory.EVENT,
+    entity: FilterType.HOSTNAME,
+  },
+  {
+    label: 'Host Subdomain',
+    key: 'hostname_info.subdomain',
+    category: FilterCategory.EVENT,
+    toDisplayValue: (value: string) =>
+      value !== '' ? value || 'Unknown' : 'Unknown',
+    toQueryValue: (value: string) => (value === 'Unknown' ? '' : value),
+  },
+  {
+    label: 'Host TLD',
+    key: 'hostname_info.tld',
+    category: FilterCategory.EVENT,
+  },
+  {
+    label: 'Host Domain Without TLD',
+    key: 'hostname_info.domain_without_tld',
+    category: FilterCategory.EVENT,
+  },
+  {
+    label: 'HTTP Refer Domain',
+    key: 'http.http_refer_info.domain',
+    category: FilterCategory.EVENT,
+    entity: FilterType.DOMAIN,
+  },
+  {
+    key: 'http.http_refer_info.subdomain',
+    label: 'HTTP Refer Subdomain',
+    category: FilterCategory.EVENT,
+  },
+  {
+    label: 'Referrer TLD',
+    key: 'http.http_refer_info.tld',
+    category: FilterCategory.EVENT,
+  },
+  {
+    label: 'Referrer Resource Path',
+    key: 'http.http_refer_info.resource_path',
+    category: FilterCategory.EVENT,
+  },
+  {
+    label: 'Referrer Schema',
+    key: 'http.http_refer_info.scheme',
+    category: FilterCategory.EVENT,
+  },
+  {
+    label: 'HTTP Refer Domain Without TLD',
+    key: 'http.http_refer_info.domain_without_tld',
+    category: FilterCategory.EVENT,
   },
 ];
 
