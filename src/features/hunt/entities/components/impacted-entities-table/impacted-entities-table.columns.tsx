@@ -1,4 +1,4 @@
-import { Crosshair, Swords } from 'lucide-react';
+import { Swords } from 'lucide-react';
 import { isNil } from 'ramda';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
@@ -138,16 +138,7 @@ export const getColumns = ({
                 <TooltipContent>Entity is an Offender</TooltipContent>
               </Tooltip>
             </TooltipProvider>
-          ) : (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Crosshair />
-                </TooltipTrigger>
-                <TooltipContent>Entity is a Victim</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          )}
+          ) : null}
         </Row>
       ) : null;
     },
