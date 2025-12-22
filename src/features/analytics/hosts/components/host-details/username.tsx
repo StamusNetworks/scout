@@ -8,28 +8,42 @@ import {
   PopoverTrigger,
 } from '@/common/design-system/atoms/ui/popover';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
+import { cn } from '@/common/lib/utils';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 
 import { useGetHostInsights } from '../../hooks/use-get-host-insights';
 import { Host } from '../../model/host';
+import { DetailsVariants, detailsVariants } from './details.variants';
 
-interface UsernameProps {
+interface UsernameProps extends DetailsVariants {
   host: string;
+  className?: string;
 }
-export const Username = ({ host }: UsernameProps) => {
+export const Username = ({ host, className, size }: UsernameProps) => {
   const { data, isFetching, isError } = useGetHostInsights(host);
   if (isFetching) return <Spin />;
   if (isError) return null;
-  return <UsernameTemplate usernames={data?.host_id.username} />;
+  return (
+    <UsernameTemplate
+      usernames={data?.host_id.username}
+      size={size}
+      className={className}
+    />
+  );
 };
-interface UsernameTemplateProps {
+interface UsernameTemplateProps extends DetailsVariants {
   usernames: Host['host_id']['username'];
+  className?: string;
 }
-export const UsernameTemplate = ({ usernames }: UsernameTemplateProps) => {
+export const UsernameTemplate = ({
+  usernames,
+  size,
+  className,
+}: UsernameTemplateProps) => {
   if (!usernames?.length) return null;
   const sortedUsernames = sortUsernames(usernames);
   return (
-    <Row className="items-center">
+    <Row className={cn('items-center', detailsVariants({ size }), className)}>
       <User className="mr-1 shrink-0" />
       <EventValue
         query_key="host_id.username.user"

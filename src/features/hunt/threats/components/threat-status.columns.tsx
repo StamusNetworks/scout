@@ -1,5 +1,6 @@
 import { Crosshair, Swords } from 'lucide-react';
 
+import { Column } from '@/common/design-system/atoms/layout/column';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import {
   Tooltip,
@@ -10,6 +11,9 @@ import {
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
+import { Hostname } from '@/features/analytics/hosts/components/host-details/hostname';
+import { Network } from '@/features/analytics/hosts/components/host-details/network';
+import { Username } from '@/features/analytics/hosts/components/host-details/username';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 import { ThreatTagById } from '@/features/hunt/threats/components/threat-tag';
@@ -30,6 +34,21 @@ export const threatStatusColumns: CustomColumnDef<ThreatStatus>[] = [
     cell: ({ row }) => <DateTime date={row.original.first_seen} />,
   },
   {
+    id: 'threat',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="Threat"
+      />
+    ),
+    cell: ({ row }) => (
+      <ThreatTagById
+        threatId={row.original.threat_id}
+        is_offender={row.original.is_offender}
+      />
+    ),
+  },
+  {
     id: 'entity',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -45,7 +64,33 @@ export const threatStatusColumns: CustomColumnDef<ThreatStatus>[] = [
     ),
   },
   {
+    id: 'network_info',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="Network info"
+      />
+    ),
+    cell: ({ row }) => (
+      <Column>
+        <Hostname
+          host={row.original.asset}
+          size="small"
+        />
+        <Username
+          host={row.original.asset}
+          size="small"
+        />
+        <Network
+          host={row.original.asset}
+          size="small"
+        />
+      </Column>
+    ),
+  },
+  {
     id: 'kill_chain',
+    visible: false,
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
@@ -57,6 +102,7 @@ export const threatStatusColumns: CustomColumnDef<ThreatStatus>[] = [
   {
     id: 'is_offender',
     accessorKey: 'is_offender',
+    visible: false,
     header: () => null,
     cell: ({ row }) =>
       row.original.is_offender ? (
@@ -78,21 +124,6 @@ export const threatStatusColumns: CustomColumnDef<ThreatStatus>[] = [
           </Tooltip>
         </TooltipProvider>
       ),
-  },
-  {
-    id: 'threat',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="Threat"
-      />
-    ),
-    cell: ({ row }) => (
-      <ThreatTagById
-        threatId={row.original.threat_id}
-        is_offender={row.original.is_offender}
-      />
-    ),
   },
 ];
 
