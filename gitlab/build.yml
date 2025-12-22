@@ -1,7 +1,7 @@
 # Build frontend and expose dist/ as downloadable artifact
 build-artifacts:
   stage: build
-  image: node:22-slim
+  image: node:24-slim
   script:
     - corepack enable
     - corepack prepare pnpm@10.26.0 --activate
