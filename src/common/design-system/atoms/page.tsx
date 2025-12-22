@@ -33,8 +33,7 @@ export const PageContainer = ({
 );
 
 interface PageHeaderProps
-  extends React.PropsWithChildren,
-    React.HTMLAttributes<HTMLDivElement> {}
+  extends React.PropsWithChildren, React.HTMLAttributes<HTMLDivElement> {}
 export const PageHeader = ({ children }: PageHeaderProps) => (
   <Row className="mb-4 justify-between gap-4">{children}</Row>
 );
@@ -75,8 +74,7 @@ export const PageActions = ({ children }: PageActionsProps) => (
 );
 
 interface PageTitleProps
-  extends React.PropsWithChildren,
-    React.HTMLAttributes<HTMLDivElement> {}
+  extends React.PropsWithChildren, React.HTMLAttributes<HTMLDivElement> {}
 export const PageTitle = ({ className, children, slot }: PageTitleProps) => (
   <Row className={cn('mb-1 items-center gap-2', className)}>
     <h1 className="text-xl font-bold">{children}</h1>

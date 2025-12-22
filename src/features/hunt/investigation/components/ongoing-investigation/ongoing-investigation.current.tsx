@@ -81,7 +81,8 @@ export const CurrentStage = () => {
 };
 
 interface InvestigationVoteButtonProps
-  extends React.ComponentPropsWithoutRef<typeof Button>,
+  extends
+    React.ComponentPropsWithoutRef<typeof Button>,
     VariantProps<typeof buttonVariants> {}
 const InvestigationVoteButton = ({
   children,

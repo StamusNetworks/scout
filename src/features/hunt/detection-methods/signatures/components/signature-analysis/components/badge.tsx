@@ -3,7 +3,8 @@ import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '@/common/lib/utils';
 
 interface BadgeProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends
+    React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof badgeVariants> {
   children: React.ReactNode;
 }

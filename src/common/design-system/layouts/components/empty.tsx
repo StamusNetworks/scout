@@ -5,8 +5,7 @@ import { cn } from '@/common/lib/utils';
 import { Column } from '../../atoms/layout/column';
 
 interface EmptyProps
-  extends React.PropsWithChildren,
-    React.HTMLAttributes<HTMLDivElement> {}
+  extends React.PropsWithChildren, React.HTMLAttributes<HTMLDivElement> {}
 export const Empty = ({ className, children, ...props }: EmptyProps) => {
   return (
     <Column

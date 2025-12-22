@@ -98,7 +98,7 @@ export function useZoomTransition({
         const element = this as SVGPathElement;
         return Boolean(
           +(element.getAttribute('fill-opacity') || '0') ||
-            arcVisible((d as any).target),
+          arcVisible((d as any).target),
         );
       })
       .attr('fill-opacity', (d) =>
@@ -113,7 +113,7 @@ export function useZoomTransition({
         const element = this as SVGTextElement;
         return Boolean(
           +(element.getAttribute('fill-opacity') || '0') ||
-            labelVisible((d as any).target),
+          labelVisible((d as any).target),
         );
       })
       .transition(t as any)
