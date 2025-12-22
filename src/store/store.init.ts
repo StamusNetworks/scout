@@ -14,6 +14,7 @@ import { helpInitialState } from '@/features/ui/help/help.slice';
 import { preferencesInitialState } from '@/features/ui/preferences/preferences.slice';
 import { uiStateInitialState } from '@/features/ui/ui-state.slice';
 import { authInitialState } from '@/features/user/auth/store/auth.slice';
+import { settingsInitialState } from '@/features/user/settings/settings.slice';
 import { tenancyInitialState } from '@/features/user/tenancy/tenancy.slice';
 import { userInitialState } from '@/features/user/user/user.slice';
 
@@ -22,6 +23,7 @@ import { RootState } from './store';
 export const initialState: Omit<RootState, 'API'> = {
   auth: authInitialState,
   user: userInitialState,
+  settings: settingsInitialState,
   filters: {
     queryFilters: queryFiltersInitialState,
     datesFilters: datesFiltersInitialState,

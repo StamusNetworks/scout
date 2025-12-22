@@ -20,6 +20,7 @@ import { helpSlice } from '@/features/ui/help/help.slice';
 import { preferencesSlice } from '@/features/ui/preferences/preferences.slice';
 import { uiStateSlice } from '@/features/ui/ui-state.slice';
 import { authSlice } from '@/features/user/auth/store/auth.slice';
+import { settingsSlice } from '@/features/user/settings/settings.slice';
 import { tenancySlice } from '@/features/user/tenancy/tenancy.slice';
 import { userSlice } from '@/features/user/user/user.slice';
 
@@ -36,6 +37,7 @@ export const rootReducer = () =>
   combineReducers({
     auth: authSlice.reducer,
     user: userSlice.reducer,
+    settings: settingsSlice.reducer,
     filters: combineReducers({
       queryFilters: queryFiltersSlice.reducer,
       datesFilters: datesFiltersSlice.reducer,
