@@ -1,4 +1,5 @@
 /// <reference types="vitest" />
+
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
@@ -33,19 +34,6 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
-    },
-  },
-  test: {
-    globals: true,
-    includeSource: ['src/**/*.test.{js,ts,jsx,tsx}'],
-    include: ['src/**/*.test.{js,ts,jsx,tsx}'],
-    environment: 'happy-dom',
-    setupFiles: ['./src/common/testing/test-setup.ts'],
-    coverage: {
-      provider: 'v8',
-    },
-    alias: {
-      '@': path.resolve(__dirname, './src'),
     },
   },
 });
