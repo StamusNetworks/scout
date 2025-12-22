@@ -22,9 +22,11 @@ export const settingsSlice = createSlice({
       (state, action) => {
         // We could use a selector here, but this makes the test setup cleaner, avoiding the need to wrap the renderWithProviders and mock the API.
         // And makes it easier to init store with setting.enterprise: false to create a test for CE.
-        state.enterprise = Object.values(action.payload.license).some(
-          (value) => value === true,
-        );
+        state.enterprise = action.payload.license
+          ? Object.values(action.payload.license).some(
+              (value) => value === true,
+            )
+          : false;
       },
     );
   },
