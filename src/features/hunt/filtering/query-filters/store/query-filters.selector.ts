@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-import { selectIsEnterprise } from '@/common/lib/use-feature-flags';
 import { selectInvestigationFilter } from '@/features/hunt/investigation/investigation.slice';
+import { selectIsEnterprise } from '@/features/user/settings/settings.slice';
 import { RootState } from '@/store/store';
 
 import { FilterCategory } from '../constants/query-filter.config';

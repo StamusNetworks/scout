@@ -23,7 +23,6 @@ import {
   TooltipTrigger,
 } from '@/common/design-system/atoms/ui/tooltip';
 import { startsWithOneOf } from '@/common/lib/strings';
-import { selectIsEnterprise } from '@/common/lib/use-feature-flags';
 import { cn } from '@/common/lib/utils';
 import { useWithAlertsParam } from '@/features/analytics/hosts/components/hostsTable/use-with-alerts-param';
 import { FilterActionsDropdown } from '@/features/hunt/filter-actions/components/filter-actions/filter-actions.dropdown';
@@ -36,6 +35,7 @@ import {
   setIsSidebarOpen,
   setOpenModal,
 } from '@/features/ui/ui-state.slice';
+import { selectIsEnterprise } from '@/features/user/settings/settings.slice';
 import { routes } from '@/pages/routes.config';
 import { useAppSelector } from '@/store/store';
 

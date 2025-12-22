@@ -1,7 +1,7 @@
 import { DefaultPage } from '@/common/design-system/atoms/default-page';
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Separator } from '@/common/design-system/atoms/ui/separator';
-import { selectIsEnterprise } from '@/common/lib/use-feature-flags';
+import { selectIsEnterprise } from '@/features/user/settings/settings.slice';
 import { useAppSelector } from '@/store/store';
 
 import { ColorBlindnessSelector } from './_components/color-blindness';

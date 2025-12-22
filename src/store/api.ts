@@ -5,7 +5,6 @@ import {
 } from '@reduxjs/toolkit/query/react';
 
 import { startsWithOneOf } from '@/common/lib/strings';
-import { selectIsEnterprise } from '@/common/lib/use-feature-flags';
 import { getConfig } from '@/config';
 
 import { type RootState, RootStateWithAPI } from './store';
@@ -28,7 +27,7 @@ const baseQuery: BaseQueryFn = (...baseQueryArgs) => {
 
   // Prevent requests to /appliance endpoints when in community mode
   // These requests would all fail anyway since the Clear NDR CE backend does not contain these endpoints.
-  const isEnterprise = selectIsEnterprise(state);
+  const isEnterprise = state.settings.enterprise;
   if (!isEnterprise && args.url?.includes('/appliance')) {
     return {
       error: {

@@ -23,6 +23,7 @@ describe('QFilter selector', () => {
         tags: createTagFilters(tags),
       });
       const qfilter = selectEventsQfilter(undefined, { tags: true })(
+        // @ts-expect-error We just need a partial of the API
         store as RootStateWithAPI,
       );
       expect(qfilter).toBe(expected);
@@ -66,6 +67,37 @@ const createStoreState = ({
       ...initialState.filters.queryFilters,
       queryFilters: filters,
       tagFilters: tags,
+    },
+  },
+  API: {
+    queries: {
+      'getSystemSettings(undefined)': {
+        data: {
+          id: 1,
+          use_arkime: false,
+          use_opensearch: false,
+          arkime_url: '/arkime',
+          use_http_proxy: false,
+          http_proxy: '',
+          https_proxy: '',
+          ssl_proxy: true,
+          custom_elasticsearch: true,
+          elasticsearch_url: 'http://10.136.0.79:9200/',
+          use_proxy_for_es: false,
+          custom_cookie_age: 360.0,
+          elasticsearch_user: '',
+          custom_login_banner: '',
+          session_cookie_age: 0,
+          kibana: true,
+          evebox: true,
+          es_keyword: 'raw',
+          kibana_url: '/kibana',
+          evebox_url: '/evebox',
+          cyberchef: true,
+          cyberchef_url: '/static/cyberchef/',
+          license: { nta: true, etl: true, mngt: true },
+        },
+      },
     },
   },
 });
