@@ -160,7 +160,7 @@ export const SaveInvestigation = () => {
                           start_date,
                           end_date,
                           qfilter: queryFilters,
-                          tags: tagFilters,
+                          tags: tagFilters ?? undefined,
                         },
                         results: iocData,
                         stages: investigationStages,

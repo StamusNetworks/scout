@@ -270,7 +270,7 @@ const InvestigationHistoryItem = ({
   }: {
     start_date: number;
     end_date: number;
-    tags: TagFilters;
+    tags?: TagFilters;
     qfilter: QueryFilterState[];
     stages: InvestigationState['stages'];
   }) => {
@@ -282,7 +282,7 @@ const InvestigationHistoryItem = ({
         end_date,
       }),
     );
-    dispatch(updateTagFilters(tags));
+    if (tags) dispatch(updateTagFilters(tags));
     dispatch(replaceFilters(qfilter));
     stages.forEach((stage) => {
       dispatch(
@@ -302,7 +302,7 @@ const InvestigationHistoryItem = ({
         <InvestigationParams
           startDate={investigation.initialParams.start_date!}
           endDate={investigation.initialParams.end_date!}
-          tags={investigation.initialParams.tags}
+          tags={investigation.initialParams.tags ?? undefined}
           qfilter={investigation.initialParams.qfilter!}
           comment={investigation.comment}
         />

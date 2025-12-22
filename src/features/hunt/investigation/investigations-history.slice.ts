@@ -15,7 +15,7 @@ export type InvestigationHistory = {
     start_date: number | undefined;
     end_date: number | undefined;
     qfilter: QueryFilterState[] | undefined;
-    tags: TagFilters;
+    tags: TagFilters | undefined;
   };
   results: {
     key: string;

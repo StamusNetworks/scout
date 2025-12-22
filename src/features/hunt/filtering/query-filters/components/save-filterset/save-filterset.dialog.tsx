@@ -37,7 +37,7 @@ export const SaveFilterSetModal = () => {
         <DialogTitle>Save Filter Set</DialogTitle>
         <SaveFilterSetForm
           onClose={handleClose}
-          tags={globalFilters}
+          tags={globalFilters ?? undefined}
           filters={mode === 'create' ? appFilters : filters!}
         />
       </DialogContent>

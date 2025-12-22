@@ -17,7 +17,7 @@ import { valueVariants } from '../ongoing-investigation/ongoing-investigation.cu
 interface InvestigationParamsProps {
   startDate: number;
   endDate: number;
-  tags: TagFilters | null;
+  tags?: TagFilters | null;
   qfilter: QueryFilterState[];
   comment?: string;
 }

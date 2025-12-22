@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
+import { RootStateWithAPI } from '@/store/store';
 import { initialState } from '@/store/store.init';
 
 import { TagFilters } from '../../query-filters/store/query-filters.slice';
@@ -21,7 +22,9 @@ describe('QFilter selector', () => {
         filters: [],
         tags: createTagFilters(tags),
       });
-      const qfilter = selectEventsQfilter(undefined, { tags: true })(store);
+      const qfilter = selectEventsQfilter(undefined, { tags: true })(
+        store as RootStateWithAPI,
+      );
       expect(qfilter).toBe(expected);
     });
   });

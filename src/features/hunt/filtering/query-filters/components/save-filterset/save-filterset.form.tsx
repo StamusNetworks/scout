@@ -97,7 +97,7 @@ const DefaultInput = ({ label, placeholder, ...props }: DefaultInputProps) => {
 
 interface SaveFilterSetFormProps {
   filters: QueryFilterState[];
-  tags: TagFilters;
+  tags?: TagFilters;
   onClose?: () => void;
 }
 export const SaveFilterSetForm = ({
