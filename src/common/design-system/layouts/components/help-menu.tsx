@@ -17,6 +17,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/common/design-system/atoms/ui/dropdown-menu';
+import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { getConfig } from '@/config';
 import {
   useGetSciriusContextQuery,
@@ -42,6 +43,7 @@ export const HelpMenu = () => {
       }),
     },
   );
+  const { enterprise } = useFeatureFlags();
   return (
     <Dialog>
       <DropdownMenu>
@@ -55,6 +57,18 @@ export const HelpMenu = () => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
+          {!enterprise && (
+            <DropdownMenuItem asChild>
+              <Link
+                to="https://docs.clearndr.io"
+                target="_blank"
+                className="flex items-center"
+              >
+                <BookMarked className="mr-2" />
+                Clear NDR Documentation
+              </Link>
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem asChild>
             <Link
               to="https://docs.stamus-networks.com/42.0.0/index.html"
