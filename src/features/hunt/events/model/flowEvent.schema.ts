@@ -92,6 +92,7 @@ export const baseFlowEventSchema = z.object({
   response_icmp_code: z.number().optional(),
   response_icmp_type: z.number().optional(),
   stamus_infrequent: z.boolean().optional(),
+  uuid: z.string().optional(),
 });
 
 export const flowEventsSchema = z.object({

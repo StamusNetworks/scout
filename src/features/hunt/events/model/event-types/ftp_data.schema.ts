@@ -8,6 +8,7 @@ export const ftpDataSchema = z.object({
 });
 
 export const ftpDataEventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('ftp_data'),
   ftp_data: ftpDataSchema,
 });
 

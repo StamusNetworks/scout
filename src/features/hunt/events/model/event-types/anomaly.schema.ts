@@ -10,6 +10,7 @@ export const anomalySchema = z.object({
 });
 
 export const anomalyEventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('anomaly'),
   anomaly: anomalySchema,
 });
 

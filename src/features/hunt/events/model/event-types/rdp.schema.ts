@@ -38,6 +38,7 @@ export const rdpSchema = z.object({
 });
 
 export const rdpEventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('rdp'),
   rdp: rdpSchema,
 });
 

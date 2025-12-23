@@ -97,6 +97,7 @@ export const mqttSchema = z.object({
 });
 
 export const mqttEventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('mqtt'),
   mqtt: mqttSchema,
 });
 

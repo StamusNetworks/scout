@@ -9,6 +9,7 @@ export const tftpSchema = z.object({
 });
 
 export const tftpEventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('tftp'),
   tftp: tftpSchema,
 });
 

@@ -5,7 +5,7 @@ export const routes = {
   home: '/',
   explorer: '/explorer',
   events: '/events',
-  event: '/events/:eventId',
+  event: '/events/event',
   operational_center: '/operational-center',
   filters_actions: '/filters-actions',
   detection_methods: '/detection-methods',

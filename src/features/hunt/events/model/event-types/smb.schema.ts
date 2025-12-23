@@ -124,6 +124,8 @@ export const smbSchema = z.object({
 });
 
 export const smbEventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('smb'),
+  app_proto: z.literal('smb'),
   smb: smbSchema,
 });
 

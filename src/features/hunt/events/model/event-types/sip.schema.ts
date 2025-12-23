@@ -10,6 +10,7 @@ export const sipSchema = z.object({
 });
 
 export const sipEventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('sip'),
   sip: sipSchema,
 });
 

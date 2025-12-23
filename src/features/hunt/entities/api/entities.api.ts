@@ -27,7 +27,7 @@ export const EntitiesAPI = API.injectEndpoints({
         }
     >({
       query: (params) => ({
-        url: `appliances/threat/threats_per_asset/`,
+        url: `/appliances/threat/threats_per_asset/`,
         method: 'GET',
         params: buildQueryParams(params),
       }),

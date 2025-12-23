@@ -13,6 +13,7 @@ export const netflowSchema = z.object({
 });
 
 export const netflowEventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('netflow'),
   netflow: netflowSchema,
 });
 

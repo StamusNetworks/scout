@@ -14,6 +14,7 @@ export const snmpSchema = z.object({
 });
 
 export const snmpEventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('snmp'),
   snmp: snmpSchema,
 });
 

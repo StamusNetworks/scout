@@ -25,6 +25,7 @@ export const dhcpSchema = z.object({
 });
 
 export const dhcpEventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('dhcp'),
   dhcp: dhcpSchema,
 });
 

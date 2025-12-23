@@ -23,7 +23,7 @@ export const HostSummary = ({
 }: {
   host: Host | undefined;
   entity: Entity | undefined;
-  hostId: string | undefined;
+  hostId?: string | undefined;
 }) => (
   <Column>
     <Row className="mb-2 items-center gap-2">

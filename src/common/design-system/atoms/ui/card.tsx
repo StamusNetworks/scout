@@ -11,6 +11,8 @@ const cardVariants = cva(
         base: 'border-border',
         doc: 'border-doc/60 outline-solid outline-3 outline-doc/30',
         dopv: 'border-dopv/70 outline-solid outline-3 outline-dopv/30',
+        alert:
+          'border-primary/40 outline-solid outline-3 outline-primary/10 dark:border-primary/60 dark:outline-primary/30',
       },
     },
     defaultVariants: {

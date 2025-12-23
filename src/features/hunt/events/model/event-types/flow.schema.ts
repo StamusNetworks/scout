@@ -8,7 +8,7 @@ export const flowSchema = z.object({
   dest_ip: z.string().optional(),
   dest_port: z.number().optional(),
   action: z.string().optional(),
-  start: z.string().optional(),
+  start: z.string(),
   end: z.string().optional(),
   age: z.number(),
   bytes_toserver: z.number(),

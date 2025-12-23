@@ -60,7 +60,7 @@ export const EventValue = ({
   return (
     <ContextMenu>
       <ContextMenuTrigger
-        className="overflow-hidden"
+        className="max-w-fit overflow-hidden"
         asChild
       >
         <Row>

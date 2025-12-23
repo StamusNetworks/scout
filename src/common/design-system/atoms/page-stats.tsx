@@ -10,9 +10,9 @@ export const StatsBlock = ({
   label: string;
   value: string | number | React.ReactNode | undefined;
 }) => (
-  <Column>
-    <h3 className="text-foreground/50 mb-1 text-xs font-bold">{label}</h3>
-    <p className="peer text-sm break-all">{value}</p>
+  <Column className="[&:has(>div:empty)]:hidden">
+    <h3 className="text-foreground/50 mb-0 text-xs font-bold">{label}</h3>
+    <div className="peer text-sm break-all">{value}</div>
     <p className="hidden text-sm peer-empty:block">-</p>
   </Column>
 );

@@ -40,7 +40,7 @@ export const EventsTable = () => {
   });
 
   const onRowClick = (row: Row<Event>) =>
-    navigate(routes.event.replace(':eventId', row.original._id));
+    navigate(`${routes.event}?_id=${row.original._id}`);
 
   return (
     <DataTable

@@ -390,7 +390,7 @@ export const TransactionCard = ({ row }: { row: EventTail }) => {
         ) : row.event_type === 'stamus' ? (
           <Row className="gap-4">
             {row.stamus?.threat_id !== undefined && (
-              <ThreatTagById threatId={parseInt(row.stamus.threat_id)} />
+              <ThreatTagById threatId={row.stamus.threat_id} />
             )}
             {row.stamus?.kill_chain && (
               <KillchainTag

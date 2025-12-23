@@ -35,6 +35,7 @@ export const fileInfoSchema = z.object({
 export type EventFileInfo = z.infer<typeof fileInfoSchema>;
 
 export const fileinfoEventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('fileinfo'),
   fileinfo: fileInfoSchema,
 });
 

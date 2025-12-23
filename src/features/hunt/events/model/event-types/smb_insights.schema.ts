@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { baseFlowEventSchema } from '../flowEvent.schema';
 
 export const smbInsightsEventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('smb_insights'),
   see_id: z.string().optional(),
   see_name: z.string().optional(),
   agent: z

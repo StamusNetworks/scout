@@ -58,16 +58,6 @@ export const relatedFlowColumns: CustomColumnDef<DnsEvent>[] = [
     accessorFn: (row) => row.dns.rrtype,
   },
   {
-    id: 'rcode',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="Rcode"
-      />
-    ),
-    accessorFn: (row) => row.dns.rcode,
-  },
-  {
     id: 'type',
     header: ({ column }) => (
       <DataTableColumnHeader
