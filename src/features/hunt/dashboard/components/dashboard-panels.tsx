@@ -2,9 +2,9 @@ import { ArrowDown, ArrowUp, FoldVertical, UnfoldVertical } from 'lucide-react';
 import { values } from 'ramda';
 import React, { useEffect, useMemo } from 'react';
 
-import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
+import { ButtonGroup } from '@/common/design-system/atoms/ui/button-group';
 import {
   ResizableHandle,
   ResizablePanel,
@@ -98,10 +98,12 @@ export const DashboardPanel = ({
       id={panelId}
     >
       <Row className="items-center gap-2">
-        <Column className="mt-0.5">
+        <ButtonGroup>
           <MoveUpButton panelId={panelId} />
           <MoveDownButton panelId={panelId} />
-        </Column>
+          <CollapseButton panelId={panelId} />
+          <DashboardKeysToggler panelId={panelId} />
+        </ButtonGroup>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger className="text-sm font-bold">
@@ -110,8 +112,6 @@ export const DashboardPanel = ({
             <TooltipContent>{config.tooltip}</TooltipContent>
           </Tooltip>
         </TooltipProvider>
-        <CollapseButton panelId={panelId} />
-        <DashboardKeysToggler panelId={panelId} />
       </Row>
       {!collapsed && <DashboardMosaic panelId={panelId} />}
     </div>
@@ -177,14 +177,14 @@ const MoveUpButton = ({ panelId }: { panelId: keyof typeof dashboard }) => {
 
   return (
     <Button
-      variant="ghostIcon"
-      size="none"
+      variant="outline"
+      size="icon-xs"
       onClick={() => dispatch(movePanelUp({ panelId }))}
       data-testid="move-panel-up"
       disabled={!canMoveUp}
-      className="pb-0"
+      className="text-muted-foreground hover:text-foreground"
     >
-      <ArrowUp className="size-3!" />
+      <ArrowUp className="size-4!" />
     </Button>
   );
 };
@@ -195,14 +195,14 @@ const MoveDownButton = ({ panelId }: { panelId: keyof typeof dashboard }) => {
 
   return (
     <Button
-      variant="ghostIcon"
-      size="none"
+      variant="outline"
+      size="icon-xs"
       onClick={() => dispatch(movePanelDown({ panelId }))}
       data-testid="move-panel-down"
       disabled={!canMoveDown}
-      className="pt-0"
+      className="text-muted-foreground hover:text-foreground"
     >
-      <ArrowDown className="size-3!" />
+      <ArrowDown className="size-4!" />
     </Button>
   );
 };
@@ -212,10 +212,11 @@ const CollapseButton = ({ panelId }: { panelId: keyof typeof dashboard }) => {
   const collapsed = useAppSelector(selectIsPanelCollapsed(panelId));
   return (
     <Button
-      variant="ghostIcon"
-      size="none"
+      variant="outline"
+      size="icon-xs"
       onClick={() => dispatch(toggleCollapse(panelId))}
       data-testid="toggle-collapse"
+      className="text-muted-foreground hover:text-foreground"
     >
       {collapsed ? <UnfoldVertical /> : <FoldVertical />}
     </Button>

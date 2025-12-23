@@ -30,8 +30,9 @@ export const DashboardKeysToggler = ({
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          variant="ghostIcon"
-          size="none"
+          variant="outline"
+          size="icon-xs"
+          className="text-muted-foreground hover:text-foreground"
           data-testid="toggle-dashboard-keys"
         >
           <Blocks />
