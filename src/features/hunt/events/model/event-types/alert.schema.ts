@@ -35,6 +35,8 @@ export const alertSchema = z.object({
 });
 
 export const flowAlertSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('alert'),
+  direction: z.enum(['to_server', 'to_client']),
   alert: alertSchema,
 });
 

@@ -15,6 +15,7 @@ export const ftpSchema = z.object({
 });
 
 export const ftpEventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('ftp'),
   ftp: ftpSchema,
 });
 

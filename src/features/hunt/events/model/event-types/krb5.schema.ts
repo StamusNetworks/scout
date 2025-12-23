@@ -16,6 +16,7 @@ export const krb5Schema = z.object({
 });
 
 export const krb5EventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('krb5'),
   krb5: krb5Schema,
 });
 

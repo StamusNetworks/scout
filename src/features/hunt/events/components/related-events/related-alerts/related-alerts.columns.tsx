@@ -23,6 +23,16 @@ export const relatedAlertsColumns: CustomColumnDef<FlowAlert>[] = [
     cell: ({ row }) => <DateTime date={row.original.timestamp} />,
   },
   {
+    id: 'transaction',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="Transaction"
+      />
+    ),
+    accessorFn: (row) => row.tx_id,
+  },
+  {
     id: 'method',
     header: ({ column }) => (
       <DataTableColumnHeader

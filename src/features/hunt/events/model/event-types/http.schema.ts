@@ -101,6 +101,8 @@ export const httpSchema = z.object({
   x_flash_version: z.string().optional(),
   x_forwarded_proto: z.string().optional(),
   x_requested_with: z.string().optional(),
+  http_response_body_printable: z.string().optional(),
+  http_request_body_printable: z.string().optional(),
   xff: z.string().optional(),
   http_refer_info: z
     .object({
@@ -117,6 +119,7 @@ export const httpSchema = z.object({
 });
 
 export const httpEventSchema = baseFlowEventSchema.extend({
+  app_proto: z.literal('http'),
   http: httpSchema,
 });
 

@@ -30,6 +30,7 @@ export const sshSchema = z.object({
 });
 
 export const sshEventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('ssh'),
   ssh: sshSchema,
 });
 

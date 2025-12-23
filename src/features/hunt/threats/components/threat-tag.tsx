@@ -29,7 +29,7 @@ export const ThreatTagById = ({
 }) => {
   const { data, isLoading } = useThreat(threatId);
   if (isLoading) return <Skeleton className="h-4 w-full" />;
-  if (!data) return <span>toto</span>;
+  if (!data) return null;
   const threatFallback: ThreatWithoutLifecycle = {
     threat__threat_id: data.pk,
     threat__name: data.name,

@@ -9,6 +9,7 @@ export const smtpSchema = z.object({
 });
 
 export const smtpEventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('smtp'),
   smtp: smtpSchema,
   email: z
     .object({

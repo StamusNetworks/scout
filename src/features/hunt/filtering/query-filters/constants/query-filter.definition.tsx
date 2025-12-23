@@ -1,5 +1,6 @@
 import { formatDuration } from 'date-fns';
 
+import { formatBytes } from '@/common/lib/numbers';
 import { Role, ROLES } from '@/features/analytics/hosts/hosts.config';
 
 import { QueryFilterDefinition, QueryFilterType } from '../model/query-filter';
@@ -164,6 +165,14 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
     validationType: FilterValidationType.POSITIVE_INT,
     toQFString: ({ value, negated }) =>
       `(${negated ? 'NOT ' : ''}(src_port: "${value}" OR dest_port: "${value}"))`,
+  },
+  {
+    label: 'Network',
+    key: 'net_info.agg',
+    category: FilterCategory.EVENT,
+    entity: FilterType.NETWORK_INFO,
+    toQFString: ({ value, negated }) =>
+      `(${negated ? 'NOT ' : ''}(net_info.src_agg: "${value}" OR net_info.dest_agg: "${value}"))`,
   },
   {
     label: 'Destination Net',
@@ -736,6 +745,12 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
     key: 'es_filter',
     category: FilterCategory.EVENT,
     toQFString: ({ value, negated }) => `${negated ? 'NOT ' : ''}(${value})`,
+  },
+  {
+    label: 'File Size',
+    key: 'fileinfo.size',
+    category: FilterCategory.EVENT,
+    toDisplayValue: (value: number) => formatBytes(value),
   },
   {
     label: 'Filename',

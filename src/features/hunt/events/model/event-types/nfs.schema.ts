@@ -13,6 +13,7 @@ export const nfsSchema = z.object({
 });
 
 export const nfsEventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('nfs'),
   nfs: nfsSchema,
 });
 

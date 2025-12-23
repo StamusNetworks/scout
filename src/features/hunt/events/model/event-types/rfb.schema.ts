@@ -47,6 +47,8 @@ export const rfbSchema = z.object({
 });
 
 export const rfbEventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('rfb'),
+  app_proto: z.literal('rfb'),
   rfb: rfbSchema,
 });
 

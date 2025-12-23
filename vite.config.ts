@@ -17,19 +17,19 @@ export default defineConfig({
     host: '0.0.0.0',
     proxy: {
       '/rest': {
-        target: 'https://10.136.4.17/rest',
+        target: 'https://10.136.4.9/rest',
         rewrite: (path) => path.replace(/^\/rest/, ''),
         changeOrigin: true,
         secure: false,
       },
       '/blog': {
-        target: 'https://10.136.4.17/blog',
+        target: 'https://10.136.4.9/blog',
         rewrite: (path) => path.replace(/^\/blog/, ''),
         changeOrigin: true,
         secure: false,
       },
       '/api': {
-        target: 'https://10.136.4.17/api',
+        target: 'https://10.136.4.9/api',
         rewrite: (path) => path.replace(/^\/api/, ''),
         changeOrigin: true,
         secure: false,

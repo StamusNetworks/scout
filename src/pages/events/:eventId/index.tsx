@@ -1,7 +1,9 @@
 import { TabsContent } from '@radix-ui/react-tabs';
+import { Binary } from 'lucide-react';
+import { parseAsString, useQueryState } from 'nuqs';
 import { keys } from 'ramda';
 import { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { DefaultPage } from '@/common/design-system/atoms/default-page';
 import { JsonView } from '@/common/design-system/atoms/json-view';
@@ -11,6 +13,13 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/borderTabs';
+import { Button } from '@/common/design-system/atoms/ui/button';
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+} from '@/common/design-system/atoms/ui/empty';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import {
@@ -47,22 +56,28 @@ import { RelatedTlsTab } from '@/features/hunt/events/components/related-events/
 import { SyntheticView } from '@/features/hunt/events/components/synthetic-view/synthetic-view';
 
 export const EventByIdPage = () => {
-  const { eventId } = useParams();
-  const params = useGlobalQueryParams(['tenant']);
+  const [_id] = useQueryState('_id', parseAsString);
+  const [uuid] = useQueryState('uuid', parseAsString);
+  const params = useGlobalQueryParams(['tenant', 'dates']);
   const {
     data: eventData,
     isLoading: isLoadingEvent,
     isError: isErrorEvents,
-  } = useGetEventsQuery({
-    ...params,
-    start_date: 1,
-    qfilter: `_id:${eventId}`,
-    pageIndex: 0,
-    pageSize: 1,
-    stamus: true,
-    alert: true,
-    discovery: true,
-  });
+  } = useGetEventsQuery(
+    {
+      ...params,
+      start_date: 1,
+      qfilter: uuid ? `uuid:${uuid}` : `_id:${_id}`,
+      pageIndex: 0,
+      pageSize: 1,
+      stamus: true,
+      alert: true,
+      discovery: true,
+    },
+    {
+      skip: !_id && !uuid,
+    },
+  );
   const event = eventData?.results?.[0];
 
   const { data: flowEvents, isLoading: flowEventsLoading } =
@@ -96,10 +111,23 @@ export const EventByIdPage = () => {
 
   return (
     <>
-      <OutletBreadcrumb>{event?.flow_id}</OutletBreadcrumb>
+      <OutletBreadcrumb>{event?.uuid}</OutletBreadcrumb>
       <DefaultPage title="Event details">
         {isLoadingEvent ? (
           <div>Loading...</div>
+        ) : !_id && !uuid ? (
+          <Empty className="min-h-96 border">
+            <EmptyMedia variant="icon">
+              <Binary />
+            </EmptyMedia>
+            <EmptyHeader>No event id provided</EmptyHeader>
+            <EmptyDescription className="flex flex-col gap-2">
+              An event id is required to view an event.
+              <Link to="/events">
+                <Button>View events</Button>
+              </Link>
+            </EmptyDescription>
+          </Empty>
         ) : isErrorEvents || !event ? (
           <div>Error</div>
         ) : (
@@ -111,19 +139,22 @@ export const EventByIdPage = () => {
               <TabsTrigger value="detection_method">
                 Detection Method
               </TabsTrigger>
-              {flowKeys.sort().map((key) => (
-                <TabsTrigger
-                  key={key}
-                  value={`related-${key}`}
-                >
-                  Related {key}
-                  {key === 'Alert' && 's'}
-                  <TabsBadge
-                    count={flowEvents?.[key]?.length || 0}
-                    isLoading={flowEventsLoading}
-                  />
-                </TabsTrigger>
-              ))}
+              {flowKeys.sort().map((key) => {
+                const count = flowEvents?.[key]?.length || 0;
+                return (
+                  <TabsTrigger
+                    key={key}
+                    value={`related-${key}`}
+                  >
+                    Related {key}
+                    {key === 'Alert' && 's'}
+                    <TabsBadge
+                      count={count}
+                      isLoading={flowEventsLoading}
+                    />
+                  </TabsTrigger>
+                );
+              })}
               <TabsTrigger value="related_smb">Related SMB</TabsTrigger>
               <TabsTrigger value="pcap_file">PCAP File</TabsTrigger>
               {files.length > 0 && (

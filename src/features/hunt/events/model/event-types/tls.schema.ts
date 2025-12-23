@@ -47,6 +47,7 @@ export const tlsSchema = z.object({
 });
 
 export const tlsEventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('tls'),
   tls: tlsSchema,
 });
 

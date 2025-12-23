@@ -5,6 +5,7 @@ import { anomalySchema } from './event-types/anomaly.schema';
 import { fileInfoSchema } from './event-types/fileinfo.schema';
 import { smbSchema } from './event-types/smb.schema';
 import { snmpSchema } from './event-types/snmp.schema';
+import { stamusSchema } from './event-types/stamus.schema';
 
 export const eventSchema = z.object({
   '@timestamp': z.string(),
@@ -16,6 +17,7 @@ export const eventSchema = z.object({
     }),
     offset: z.number(),
   }),
+  direction: z.enum(['to_server', 'to_client']),
   dest_ip: z.string(),
   app_proto: z.string(),
   tags: z.array(z.string()),
@@ -129,21 +131,55 @@ export const eventSchema = z.object({
   dns: z.discriminatedUnion('version', [
     z.object({
       version: z.literal(2),
-      query: z.array(
-        z.object({
-          rrname: z.string(),
-          rrtype: z.string(),
-        }),
-      ),
+      query: z
+        .array(
+          z.object({
+            id: z.number(),
+            rrname: z.string(),
+            rrtype: z.string(),
+            tx_id: z.number(),
+            opcode: z.number(),
+            type: z.literal('query'),
+          }),
+        )
+        .optional(),
+      answer: z
+        .array(
+          z.object({
+            id: z.number(),
+            rrname: z.string(),
+            rrtype: z.string(),
+            ttl: z.number(),
+            rdata: z.string(),
+          }),
+        )
+        .optional(),
     }),
     z.object({
       version: z.literal(3),
-      queries: z.array(
-        z.object({
-          rrname: z.string(),
-          rrtype: z.string(),
-        }),
-      ),
+      queries: z
+        .array(
+          z.object({
+            id: z.number(),
+            rrname: z.string(),
+            rrtype: z.string(),
+            tx_id: z.number(),
+            opcode: z.number(),
+            type: z.literal('query'),
+          }),
+        )
+        .optional(),
+      answers: z
+        .array(
+          z.object({
+            id: z.number(),
+            rrname: z.string(),
+            rrtype: z.string(),
+            ttl: z.number(),
+            rdata: z.string(),
+          }),
+        )
+        .optional(),
     }),
   ]),
   geoip: z.object({
@@ -156,66 +192,66 @@ export const eventSchema = z.object({
       autonomous_system_organization: z.string(),
     }),
   }),
-  http: z.object({
-    hostname: z.string(),
-    url: z.string(),
-    status: z.string(),
-    http_method: z.string(),
-    http_user_agent: z.string(),
-    http_refer: z.string(),
-    http_port: z.string(),
-    http_content_type: z.string(),
-    length: z.string(),
-    server: z.string(),
-    accept_language: z.string(),
-    protocol: z.string(),
-    http_response_body_printable: z.string(),
-    http_request_body_printable: z.string(),
-  }),
-  tls: z.object({
-    sni: z.string(),
-    version: z.string(),
-    cipher_suite: z.string(),
-    cipher_security: z.string(),
-    ja3: z.object({
-      hash: z.string(),
-      agent: z.array(z.string()),
-    }),
-    ja3s: z.object({
-      hash: z.string(),
-      agent: z.array(z.string()),
-    }),
-    ja4: z.string(),
-    alpn_ts: z.array(z.string()),
-    alpn_tc: z.string(),
-    subject: z.string(),
-    issuerdn: z.string(),
-    notbefore: z.string(),
-    notafter: z.string(),
-    fingerprint: z.string(),
-  }),
-  smtp: z.object({
-    mail_from: z.string(),
-    rcpt_to: z.array(z.string()),
-    helo: z.string(),
-  }),
-  ssh: z.object({
-    server: z.object({
-      software_version: z.string(),
-      proto_version: z.string(),
-    }),
-  }),
+  http: z
+    .object({
+      hostname: z.string(),
+      url: z.string(),
+      status: z.string(),
+      http_method: z.string(),
+      http_user_agent: z.string(),
+      http_refer: z.string(),
+      http_port: z.string(),
+      http_content_type: z.string(),
+      length: z.string(),
+      server: z.string(),
+      accept_language: z.string(),
+      protocol: z.string(),
+      http_response_body_printable: z.string().optional(),
+      http_request_body_printable: z.string().optional(),
+    })
+    .optional(),
+  tls: z
+    .object({
+      sni: z.string(),
+      version: z.string(),
+      cipher_suite: z.string(),
+      cipher_security: z.string(),
+      ja3: z.object({
+        hash: z.string(),
+        agent: z.array(z.string()),
+      }),
+      ja3s: z.object({
+        hash: z.string(),
+        agent: z.array(z.string()),
+      }),
+      ja4: z.string(),
+      alpn_ts: z.array(z.string()),
+      alpn_tc: z.string(),
+      subject: z.string(),
+      issuerdn: z.string(),
+      notbefore: z.string(),
+      notafter: z.string(),
+      fingerprint: z.string(),
+    })
+    .optional(),
+  smtp: z
+    .object({
+      mail_from: z.string(),
+      rcpt_to: z.array(z.string()),
+      helo: z.string(),
+    })
+    .optional(),
+  ssh: z
+    .object({
+      server: z.object({
+        software_version: z.string(),
+        proto_version: z.string(),
+      }),
+    })
+    .optional(),
   ether: z.object({
     src_mac: z.string(),
     dest_mac: z.string(),
-  }),
-  stamus: z.object({
-    asset: z.string(),
-    source: z.string(),
-    threat_name: z.string(),
-    family_name: z.string(),
-    kill_chain: z.string(),
-    threat_id: z.string(),
   }),
   smb: smbSchema.optional(),
   snmp: snmpSchema.optional(),
@@ -226,7 +262,7 @@ export const eventSchema = z.object({
     value: z.string(),
     asset_net: z.string(),
   }),
-  payload_printable: z.string(),
+  payload_printable: z.string().optional(),
   http_response_body_printable: z.string(),
   user_agent: z.object({
     os_name: z.string(),
@@ -249,6 +285,8 @@ export const eventSchema = z.object({
   fileinfo: fileInfoSchema.optional(),
   anomaly: anomalySchema.optional(),
   stamus_novel: z.boolean().optional(),
+  uuid: z.string(),
+  stamus: stamusSchema.optional(),
 });
 
 export type Event = z.infer<typeof eventSchema>;

@@ -34,6 +34,7 @@ export const dcerpcSchema = z.object({
 });
 
 export const dcerpcEventSchema = baseFlowEventSchema.extend({
+  event_type: z.literal('dcerpc'),
   dcerpc: dcerpcSchema,
 });
 
