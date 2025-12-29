@@ -29,7 +29,7 @@ export const HostSummary = ({
     <Row className="mb-2 items-center gap-2">
       <EventValue
         value={hostId || host?.ip || ''}
-        query_key="stamus.asset"
+        query_key="ip"
         className="text-xl font-bold"
       />
       {entity?.kill_chain && (
