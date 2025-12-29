@@ -1,5 +1,6 @@
 import {
   ArrowUpDown,
+  Binary,
   Copy,
   Filter,
   FilterX,
@@ -153,16 +154,34 @@ export const ContextMenuContent = ({
           Explore
         </ContextMenuItem>
       )}
-      <ContextMenuItem
-        onClick={() => {
-          dispatch(replaceFilters([{ key: query_key, value }]));
-          navigate(routes.session_events);
-        }}
-        disabled={startsWithOneOf(query_key, ['alert.', 'host_id.', 'stamus.'])}
-      >
-        <ArrowUpDown className={iconClass} />
-        See transactions
-      </ContextMenuItem>
+      {!pathname.startsWith(routes.events) && (
+        <ContextMenuItem
+          onClick={() => {
+            enableTags(dispatch);
+            dispatch(replaceFilters([{ key: query_key, value }]));
+            navigate(routes.events);
+          }}
+        >
+          <Binary className={iconClass} />
+          See detection events
+        </ContextMenuItem>
+      )}
+      {!pathname.startsWith(routes.session_events) && (
+        <ContextMenuItem
+          onClick={() => {
+            dispatch(replaceFilters([{ key: query_key, value }]));
+            navigate(routes.session_events);
+          }}
+          disabled={startsWithOneOf(query_key, [
+            'alert.',
+            'host_id.',
+            'stamus.',
+          ])}
+        >
+          <ArrowUpDown className={iconClass} />
+          See network events
+        </ContextMenuItem>
+      )}
 
       {enterprise &&
         filterDef?.type === 'ip' &&
