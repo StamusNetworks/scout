@@ -21,7 +21,7 @@ export const HostDetectionEvents = () => {
     ...params,
     ...pagination,
     ordering,
-    qfilter: `stamus.asset:"${hostId}"`,
+    qfilter: `(src_ip:"${hostId}" OR dest_ip:"${hostId}")`,
     stamus: true,
     alert: true,
     discovery: true,
@@ -29,7 +29,7 @@ export const HostDetectionEvents = () => {
 
   const { data: timelineData } = useGetCountsTimelineQuery({
     ...params,
-    qfilter: `stamus.asset:"${hostId}"`,
+    qfilter: `(src_ip:"${hostId}" OR dest_ip:"${hostId}")`,
     target: 'true',
     alert: true,
     discovery: true,
