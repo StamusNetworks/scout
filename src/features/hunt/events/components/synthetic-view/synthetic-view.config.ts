@@ -41,11 +41,16 @@ export const getSyntheticView = (row: Event): SyntheticViewProps[] => [
       { key: 'app_proto', value: row.app_proto },
       { key: 'app_proto_orig', value: row.app_proto_orig },
       { key: 'host', value: row.host },
-      { key: 'in_iface', value: row.in_iface },
       {
         key: 'vlan',
         value: row.vlan?.map((v) => [{ key: 'vlan', value: v }]),
       },
+    ],
+  },
+  {
+    title: 'Tunnel',
+    valid: (row) => !!row.tunnel,
+    items: [
       { key: 'tunnel.src_ip', value: row.tunnel?.src_ip },
       { key: 'tunnel.dest_ip', value: row.tunnel?.dest_ip },
       { key: 'tunnel.proto', value: row.tunnel?.proto },
@@ -233,6 +238,7 @@ export const getSyntheticView = (row: Event): SyntheticViewProps[] => [
         key: 'ether.dest_mac',
         value: row.ether?.dest_mac,
       },
+      { key: 'in_iface', value: row.in_iface },
     ],
   },
   {
