@@ -68,8 +68,8 @@
     --installation-foreground: oklch(0.3034 0.2179 36.39);
     --command_and_control: oklch(0.5815 0.2514 28.3);
     --command_and_control-foreground: oklch(0.2815 0.2514 28.3);
-    --action_on_objectives: oklch(0.5103 0.2541 312.35);
-    --action_on_objectives-foreground: oklch(0.2563 0.2459 343.48); */
+    --actions_on_objectives: oklch(0.5103 0.2541 312.35);
+    --actions_on_objectives-foreground: oklch(0.2563 0.2459 343.48); */
 
     --reconnaissance: oklch(0.851 0.1716 100.13);
     --reconnaissance-foreground: oklch(0.251 0.1716 100.13);
@@ -83,8 +83,8 @@
     --installation-foreground: oklch(0.309 0.2565 1.59);
     --command_and_control: oklch(0.64 0.2763 313.94);
     --command_and_control-foreground: oklch(0.24 0.2763 313.94);
-    --action_on_objectives: oklch(0.5103 0.2541 312.35);
-    --action_on_objectives-foreground: oklch(0.2103 0.2541 312.35);
+    --actions_on_objectives: oklch(0.5103 0.2541 312.35);
+    --actions_on_objectives-foreground: oklch(0.2103 0.2541 312.35);
 
     --untagged: oklch(0.5461 0.2152 262.88);
     --informational: oklch(0.8133 0.1865 81);
@@ -246,15 +246,15 @@
     --installation-foreground: oklch(1 0.1179 36.39);
     --command_and_control: oklch(0.6015 0.3214 30.3);
     --command_and_control-foreground: oklch(1 0.1014 28.3);
-    --action_on_objectives: oklch(0.5763 0.2459 343.48);
-    --action_on_objectives-foreground: oklch(1 0.1559 343.48); */
+    --actions_on_objectives: oklch(0.5763 0.2459 343.48);
+    --actions_on_objectives-foreground: oklch(1 0.1559 343.48); */
     --reconnaissance-foreground: oklch(1 0.1716 100.13);
     --weaponization-foreground: oklch(1 0.1716 71.47);
     --delivery-foreground: oklch(1 0.2273 40.76);
     --exploitation-foreground: oklch(1 0.2514 28.3);
     --installation-foreground: oklch(1 0.2565 1.59);
     --command_and_control-foreground: oklch(1 0.2763 313.94);
-    --action_on_objectives-foreground: oklch(1 0.2541 312.35);
+    --actions_on_objectives-foreground: oklch(1 0.2541 312.35);
     --doc-offender-foreground: var(--color-purple-400);
   }
    
@@ -316,8 +316,8 @@
   --color-installation-foreground: var(--installation-foreground);
   --color-command_and_control: var(--command_and_control);
   --color-command_and_control-foreground: var(--command_and_control-foreground);
-  --color-action_on_objectives: var(--action_on_objectives);
-  --color-action_on_objectives-foreground: var(--action_on_objectives-foreground);
+  --color-actions_on_objectives: var(--actions_on_objectives);
+  --color-actions_on_objectives-foreground: var(--actions_on_objectives-foreground);
   --color-pre-condition: var(--pre-condition);
   --color-pre-condition-foreground: var(--pre-condition-foreground);
 

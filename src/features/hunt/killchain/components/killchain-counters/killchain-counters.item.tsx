@@ -74,7 +74,7 @@ const kcitemVariants = cva(
         command_and_control:
           'bg-command_and_control/65 text-command_and_control-foreground before:border-t-command_and_control/65 before:border-b-command_and_control/65 after:border-l-command_and_control/65',
         actions_on_objectives:
-          'bg-action_on_objectives/65 text-action_on_objectives-foreground before:border-t-action_on_objectives/65 before:border-b-action_on_objectives/65',
+          'bg-actions_on_objectives/65 text-actions_on_objectives-foreground before:border-t-actions_on_objectives/65 before:border-b-actions_on_objectives/65',
         pre_condition:
           'bg-primary-700/50 text-primary-950 before:border-t-primary-700/50 before:border-b-primary-700/50 after:border-l-primary-700/50',
       },

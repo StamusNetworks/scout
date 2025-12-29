@@ -36,7 +36,7 @@ const badgeVariants = cva(
         command_and_control:
           'bg-command_and_control/15 dark:bg-command_and_control/25 text-command_and_control-foreground/70 border-command_and_control-foreground/30 ',
         actions_on_objectives:
-          'bg-action_on_objectives/15 dark:bg-action_on_objectives/25 text-action_on_objectives-foreground/70 border-action_on_objectives-foreground/30 ',
+          'bg-actions_on_objectives/15 dark:bg-actions_on_objectives/25 text-actions_on_objectives-foreground/70 border-actions_on_objectives-foreground/30 ',
         notification:
           'bg-red-500 text-red-100 border-red-500/30 rounded-full size-4 text-[0.7rem] p-0',
       },

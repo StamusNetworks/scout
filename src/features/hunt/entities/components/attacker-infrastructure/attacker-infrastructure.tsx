@@ -1,5 +1,6 @@
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { ExpandablePortalWrapper } from '@/common/design-system/molecules/expandable-portal-wrapper';
+import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 
 import { useGetAttackerInfrastructureQuery } from '../../api/entities.api';
 import { AttackerInfrastructureForceGraph } from './attacker-infrastructure.force-graph';
@@ -11,7 +12,9 @@ interface AttackerInfrastructureProps {
 export const AttackerInfrastructure = ({
   entity,
 }: AttackerInfrastructureProps) => {
+  const params = useGlobalQueryParams(['dates', 'tenant']);
   const { data, isLoading } = useGetAttackerInfrastructureQuery({
+    ...params,
     asset: entity,
   });
   if (isLoading)
