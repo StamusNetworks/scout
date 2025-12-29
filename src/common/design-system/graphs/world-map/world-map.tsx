@@ -1,5 +1,6 @@
 import { scaleLinear } from 'd3-scale';
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   ComposableMap,
   Geographies,
@@ -9,7 +10,11 @@ import {
   ZoomableGroup,
 } from 'react-simple-maps';
 
+import { replaceFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
+import { useEnableTags } from '@/features/hunt/filtering/query-filters/use-cases/enable-tags';
 import { useTheme } from '@/features/ui/theming/useTheme';
+import { routes } from '@/pages/routes.config';
+import { useAppDispatch } from '@/store/store';
 
 import { Tooltip, TooltipContent } from '../../molecules/tooltip';
 import { WorldCountriesMap } from './world-map.config';
@@ -18,6 +23,9 @@ interface MapChartProps {
   data: { country: string; value: number }[];
 }
 const WorldMap = ({ data }: MapChartProps) => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const forceTags = useEnableTags();
   const { isDark } = useTheme();
   const moving = useRef<boolean>(false);
 
@@ -101,6 +109,19 @@ const WorldMap = ({ data }: MapChartProps) => {
                         onMouseLeave={() => {
                           setTooltipContent(null);
                         }}
+                        onClick={() => {
+                          navigate(routes.explorer);
+                          forceTags({
+                            alert: false,
+                            discovery: false,
+                            stamus: true,
+                          });
+                          dispatch(
+                            replaceFilters([
+                              { key: 'geoip.country.name', value: NAME },
+                            ]),
+                          );
+                        }}
                         style={{
                           default: {
                             outline: 'none',
@@ -111,6 +132,7 @@ const WorldMap = ({ data }: MapChartProps) => {
                             outline: 'none',
                             stroke: colors.border,
                             strokeWidth: 0.25,
+                            cursor: 'pointer',
                           },
                           pressed: { outline: 'none' },
                         }}

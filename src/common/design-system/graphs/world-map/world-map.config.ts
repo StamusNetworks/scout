@@ -12920,7 +12920,7 @@ export const WorldCountriesMap = {
           ],
           type: 'MultiPolygon',
           properties: {
-            NAME: 'United States of America',
+            NAME: 'United States',
             NAME_LONG: 'United States',
             ABBREV: 'U.S.A.',
             FORMAL_EN: 'United States of America',
