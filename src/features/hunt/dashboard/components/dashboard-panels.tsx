@@ -223,25 +223,49 @@ const CollapseButton = ({ panelId }: { panelId: keyof typeof dashboard }) => {
   );
 };
 
+type DashboardItemWithSize = DashboardItem & { size: number };
+
 const splitBlocksIntoRows = (
   items: readonly DashboardItem[], // All of the blocks in this panel
   disabledKeys: string[], // The keys that are disabled in this panel
-  rowSize: number, // The number of blocks per row in this panel
+  maxColumns: number, // The maximum number of blocks per row in this panel
 ) => {
   // Remove disabled keys
   const filteredItems = items.filter((item) => !disabledKeys.includes(item.i));
 
-  const rows = [];
+  const rows: DashboardItemWithSize[][] = [];
+  const MAX_ROW_WEIGHT = 24;
 
-  for (let i = 0; i < filteredItems.length; i += rowSize) {
-    const row = filteredItems.slice(i, i + rowSize);
-    rows.push(getRowWithSize(row));
+  let currentRow: DashboardItem[] = [];
+  let currentRowWeight = 0;
+
+  for (const item of filteredItems) {
+    const itemWeight = item.weight || MAX_ROW_WEIGHT / maxColumns;
+
+    // If adding this item would exceed max weight or max columns, start a new row
+    if (
+      currentRow.length > 0 &&
+      (currentRow.length >= maxColumns ||
+        currentRowWeight + itemWeight > MAX_ROW_WEIGHT)
+    ) {
+      rows.push(getRowWithSize(currentRow));
+      currentRow = [];
+      currentRowWeight = 0;
+    }
+
+    currentRow.push(item);
+    currentRowWeight += itemWeight;
+  }
+
+  // Add the last row if it has items
+  if (currentRow.length > 0) {
+    rows.push(getRowWithSize(currentRow));
   }
 
   return rows;
 };
 
-const getRowWithSize = (row: DashboardItem[]) => {
+const getRowWithSize = (row: DashboardItem[]): DashboardItemWithSize[] => {
   const rowTotalWeight = row.reduce((acc, curr) => acc + (curr.weight || 2), 0);
   return row.map((item) => ({
     ...item,

@@ -416,6 +416,7 @@ export const CEdashboard: Record<string, DashboardPanel> = {
     title: 'SSH Information',
     tooltip:
       'Secure Shell protocol details including client and server software versions',
+    cols: 4,
     items: [
       {
         i: 'ssh.client.software_version',
@@ -436,6 +437,30 @@ export const CEdashboard: Record<string, DashboardPanel> = {
         i: 'ssh.server.proto_version',
         title: 'Server Version',
         tooltip: 'SSH protocol versions supported by servers',
+      },
+      {
+        i: 'ssh.client.hassh.hash',
+        weight: 12,
+        title: 'Client Hassh Hash',
+        tooltip: 'SSH client Hassh hash',
+      },
+      {
+        i: 'ssh.server.hassh.hash',
+        weight: 12,
+        title: 'Server Hassh Hash',
+        tooltip: 'SSH server Hassh hash',
+      },
+      {
+        i: 'ssh.client.hassh.string',
+        weight: 12,
+        title: 'Client Hassh String',
+        tooltip: 'SSH client Hassh string',
+      },
+      {
+        i: 'ssh.server.hassh.string',
+        weight: 12,
+        title: 'Server Hassh String',
+        tooltip: 'SSH server Hassh string',
       },
     ],
   },
