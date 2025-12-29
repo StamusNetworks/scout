@@ -19,6 +19,7 @@ import {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
 } from '@/common/design-system/atoms/ui/context-menu';
+import { isIP } from '@/common/lib/ips';
 import { saveToClipboard } from '@/common/lib/save';
 import { startsWithOneOf } from '@/common/lib/strings';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
@@ -163,14 +164,16 @@ export const ContextMenuContent = ({
         See transactions
       </ContextMenuItem>
 
-      {enterprise && filterDef?.type === 'ip' && (
-        <ContextMenuItem asChild>
-          <Link to={`${routes.hosts}/${value}`}>
-            <LaptopMinimal className={iconClass} />
-            View Host details
-          </Link>
-        </ContextMenuItem>
-      )}
+      {enterprise &&
+        filterDef?.type === 'ip' &&
+        isIP(value?.toString() || '') && (
+          <ContextMenuItem asChild>
+            <Link to={`${routes.hosts}/${value}`}>
+              <LaptopMinimal className={iconClass} />
+              View Host details
+            </Link>
+          </ContextMenuItem>
+        )}
       {query_key === 'stamus.threat_name' && (
         <ThreatNameOptions threatName={value as string} />
       )}
