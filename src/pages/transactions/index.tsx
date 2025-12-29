@@ -18,6 +18,7 @@ import {
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { Switch } from '@/common/design-system/atoms/ui/switch';
 import { DateTime } from '@/common/design-system/entities/date-time';
+import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { Pagination } from '@/common/design-system/molecules/pagination';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
@@ -26,9 +27,13 @@ import { formatBytes, formatNumber } from '@/common/lib/numbers';
 import { startsWithOneOf } from '@/common/lib/strings';
 import { Hostname } from '@/features/analytics/hosts/components/host-details/hostname';
 import { Network } from '@/features/analytics/hosts/components/host-details/network';
-import { useGetEventsTailQuery } from '@/features/hunt/events/api/events.api';
+import {
+  useGetEventsTailQuery,
+  useGetEventsTimelineQuery,
+} from '@/features/hunt/events/api/events.api';
 import { SyntheticView } from '@/features/hunt/events/components/synthetic-view/synthetic-view';
 import { Event } from '@/features/hunt/events/model/event.schema';
+import { setDates } from '@/features/hunt/filtering/dates-filters/dates-filters.slice';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 import { FilterLabel } from '@/features/hunt/filtering/query-filters/components/filter-label';
 import { FilterCategory } from '@/features/hunt/filtering/query-filters/constants/query-filter.config';
@@ -38,7 +43,8 @@ import { selectQueryFilters } from '@/features/hunt/filtering/query-filters/stor
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 import { killChainsConfig } from '@/features/hunt/killchain/killchain';
 import { ThreatTagById } from '@/features/hunt/threats/components/threat-tag';
-import { useAppSelector } from '@/store/store';
+import { CountsTimeline } from '@/features/hunt/timeline/models/counts-timeline.model';
+import { useAppDispatch, useAppSelector } from '@/store/store';
 
 type EventTail = Event & {
   dns?: {
@@ -85,11 +91,14 @@ export const TransactionsPage = () => {
     ),
   );
   const params = useGlobalQueryParams(['dates', 'tenant']);
+
+  const qfString = `(flow_id:* AND NOT event_type:(alert OR stamus OR discovery)) ${qfilter ? `AND ${qfilter}` : ''}`;
+
   const { data, totalCount, isFetching } = useGetEventsTailQuery(
     {
       ...params,
       ...pagination,
-      qfilter: `(flow_id:* AND NOT event_type:(alert OR stamus OR discovery)) ${qfilter ? `AND ${qfilter}` : ''}`,
+      qfilter: qfString,
     },
     {
       selectFromResult: (result) => ({
@@ -125,6 +134,7 @@ export const TransactionsPage = () => {
       title="Network Events"
       description="Explore detailed network activity with transaction cards that help you investigate and correlate related NSM events, making it easier to follow key flows and gain meaningful context for effective incident analysis."
     >
+      <EventsCountTimeline qfilter={qfString} />
       <Row className="mb-2 h-8 justify-between gap-4">
         <Row className="items-center gap-2">
           <UILabel>Group by Flow</UILabel>
@@ -587,3 +597,46 @@ const Label = ({ query_key }: { query_key: string }) => (
     className="text-xs"
   />
 );
+
+export const EventsCountTimeline = ({ qfilter }: { qfilter: string }) => {
+  const params = useGlobalQueryParams(['dates', 'tenant']);
+
+  const { data } = useGetEventsTimelineQuery(
+    { ...params, qfilter },
+    {
+      selectFromResult: (result) => {
+        return {
+          data: {
+            from_date: params.start_date || 0,
+            to_date: params.end_date || new Date().getTime(),
+            interval: result.data
+              ? result.data[1].time - result.data[0].time
+              : 0,
+            events: {
+              entries: result.data,
+            },
+          },
+        };
+      },
+    },
+  );
+
+  const dispatch = useAppDispatch();
+  const handleBarClick = (obj: { time: number }) => {
+    dispatch(
+      setDates({
+        type: 'range',
+        start_date: obj.time,
+        end_date: obj.time + (data?.interval || 0),
+      }),
+    );
+  };
+
+  return (
+    <BarChartTimeline
+      data={data as unknown as CountsTimeline}
+      className="h-[250px]"
+      onBarClick={handleBarClick}
+    />
+  );
+};
