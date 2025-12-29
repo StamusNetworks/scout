@@ -98,12 +98,6 @@ export const DashboardPanel = ({
       id={panelId}
     >
       <Row className="items-center gap-2">
-        <ButtonGroup>
-          <MoveUpButton panelId={panelId} />
-          <MoveDownButton panelId={panelId} />
-          <CollapseButton panelId={panelId} />
-          <DashboardKeysToggler panelId={panelId} />
-        </ButtonGroup>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger className="text-sm font-bold">
@@ -112,6 +106,12 @@ export const DashboardPanel = ({
             <TooltipContent>{config.tooltip}</TooltipContent>
           </Tooltip>
         </TooltipProvider>
+        <ButtonGroup>
+          <MoveUpButton panelId={panelId} />
+          <MoveDownButton panelId={panelId} />
+          <CollapseButton panelId={panelId} />
+          <DashboardKeysToggler panelId={panelId} />
+        </ButtonGroup>
       </Row>
       {!collapsed && <DashboardMosaic panelId={panelId} />}
     </div>
