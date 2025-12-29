@@ -570,6 +570,26 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.EVENT,
   },
   {
+    label: 'Client HASSH',
+    key: 'ssh.client.hassh.hash',
+    category: FilterCategory.EVENT,
+  },
+  {
+    label: 'Client HASSH String',
+    key: 'ssh.client.hassh.string',
+    category: FilterCategory.EVENT,
+  },
+  {
+    label: 'Server HASSH',
+    key: 'ssh.server.hassh.hash',
+    category: FilterCategory.EVENT,
+  },
+  {
+    label: 'Server HASSH String',
+    key: 'ssh.server.hassh.string',
+    category: FilterCategory.EVENT,
+  },
+  {
     label: 'Server Software',
     key: 'ssh.server.software_version',
     category: FilterCategory.EVENT,

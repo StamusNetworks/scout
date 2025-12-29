@@ -246,6 +246,18 @@ export const eventSchema = z.object({
       server: z.object({
         software_version: z.string(),
         proto_version: z.string(),
+        hassh: z.object({
+          hash: z.string(),
+          string: z.string(),
+        }),
+      }),
+      client: z.object({
+        software_version: z.string(),
+        proto_version: z.string(),
+        hassh: z.object({
+          hash: z.string(),
+          string: z.string(),
+        }),
       }),
     })
     .optional(),

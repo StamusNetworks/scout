@@ -189,12 +189,36 @@ export const getSyntheticView = (row: Event): SyntheticViewProps[] => [
     title: 'SSH',
     items: [
       {
+        key: 'ssh.client.software_version',
+        value: row.ssh?.client?.software_version,
+      },
+      {
+        key: 'ssh.client.proto_version',
+        value: row.ssh?.client?.proto_version,
+      },
+      {
+        key: 'ssh.client.hassh.hash',
+        value: row.ssh?.client?.hassh?.hash,
+      },
+      {
+        key: 'ssh.client.hassh.string',
+        value: row.ssh?.client?.hassh?.string,
+      },
+      {
         key: 'ssh.server.software_version',
         value: row.ssh?.server?.software_version,
       },
       {
         key: 'ssh.server.proto_version',
         value: row.ssh?.server?.proto_version,
+      },
+      {
+        key: 'ssh.server.hassh.hash',
+        value: row.ssh?.server?.hassh?.hash,
+      },
+      {
+        key: 'ssh.server.hassh.string',
+        value: row.ssh?.server?.hassh?.string,
       },
     ],
   },
