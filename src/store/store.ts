@@ -13,6 +13,7 @@ import { datesFiltersSlice } from '@/features/hunt/filtering/dates-filters/dates
 import { addQfilterCommandSlice } from '@/features/hunt/filtering/query-filters/components/add-qfilter-command/add-qfilter-command.slice';
 import { saveFilterSetModalSlice } from '@/features/hunt/filtering/query-filters/components/save-filterset/save-filterset.slice';
 import { queryFiltersSlice } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
+import { queryFiltersSetsSlice } from '@/features/hunt/filtering/query-filters/store/query-filters-sets.slice';
 import { investigationSlice } from '@/features/hunt/investigation/investigation.slice';
 import { investigationsHistorySlice } from '@/features/hunt/investigation/investigations-history.slice';
 import { marketingStateSlice } from '@/features/marketing/store/marketing.store';
@@ -40,6 +41,7 @@ export const rootReducer = () =>
     settings: settingsSlice.reducer,
     filters: combineReducers({
       queryFilters: queryFiltersSlice.reducer,
+      queryFiltersSets: queryFiltersSetsSlice.reducer,
       datesFilters: datesFiltersSlice.reducer,
       tenancy: tenancySlice.reducer,
     }),

@@ -57,6 +57,7 @@ import {
 import { openSaveFilterSetModal } from './save-filterset/save-filterset.slice';
 import { SideBarFilter } from './side-bar-filter';
 import { SidebarQueryFilter } from './side-bar-query-filter';
+import { SideBarQueryFilterSets } from './side-bar-query-filter-sets/side-bar-query-filter-sets';
 
 const eventsTypes = [
   {
@@ -264,7 +265,7 @@ export const FiltersSideBar = () => {
           <>
             <div className="w-full">
               <div className="mb-2">
-                <h2 className="mb-1 text-sm font-bold">Global Filters</h2>
+                <SideBarHeader>Global Filters</SideBarHeader>
                 <SideBarFilter
                   filter_key="novelty"
                   label="Outlier events"
@@ -350,7 +351,7 @@ export const FiltersSideBar = () => {
         )}
         <Column>
           <Row className="justify-between">
-            <h2 className="text-sm font-bold">Query filters</h2>
+            <SideBarHeader>Query filters</SideBarHeader>
             <Row className="items-center gap-3">
               {filterSetActions.map(({ render, key, label }) => (
                 <TooltipProvider key={key}>
@@ -373,7 +374,7 @@ export const FiltersSideBar = () => {
                   dispatch(reorderQueryFilters(newFilters));
                 }}
               >
-                <h3 className="mt-1 mb-2 text-xs">Active filters</h3>
+                <SideBarSubHeader>Active filters</SideBarSubHeader>
                 {queryFilters
                   .filter((item) => !item.is_suspended)
                   .map((item) => {
@@ -406,7 +407,7 @@ export const FiltersSideBar = () => {
                     );
                   })}
                 <Row className="items-center justify-between">
-                  <h3 className="mt-3 mb-2 text-xs">Suspended filters</h3>
+                  <SideBarSubHeader>Suspended filters</SideBarSubHeader>
                   <Button
                     variant="ghost"
                     size="xs"
@@ -441,6 +442,8 @@ export const FiltersSideBar = () => {
             <Investigation />
           </>
         )}
+        <Separator className="my-3" />
+        <SideBarQueryFilterSets />
       </div>
     </ScrollArea>
   );
@@ -460,3 +463,13 @@ const isEnabled = (
   }
   return config.enabled.includes(feature);
 };
+
+export const SideBarHeader = ({ children }: { children: React.ReactNode }) => (
+  <h2 className="mb-1 text-sm font-bold">{children}</h2>
+);
+
+export const SideBarSubHeader = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => <h3 className="mb-1 text-xs">{children}</h3>;

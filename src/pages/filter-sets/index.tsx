@@ -1,5 +1,5 @@
 import { RowSelectionState } from '@tanstack/react-table';
-import { Group, Info, Trash, X } from 'lucide-react';
+import { Group, Info, Plus, Trash, X } from 'lucide-react';
 import { parseAsString, parseAsStringLiteral, useQueryState } from 'nuqs';
 import { keys, values } from 'ramda';
 import { useMemo, useState } from 'react';
@@ -22,6 +22,12 @@ import {
   AlertTitle,
 } from '@/common/design-system/atoms/ui/alert';
 import { Button } from '@/common/design-system/atoms/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/common/design-system/atoms/ui/dropdown-menu';
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableToolbar } from '@/common/design-system/molecules/data-table/data-table.toolbar';
 import { CommandFilterSingle } from '@/common/design-system/molecules/data-table/filters/command-filter-single';
@@ -38,6 +44,10 @@ import {
   clearQueryFilters,
   updateTagFilters,
 } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
+import {
+  addQueryFilterSets,
+  QueryFiltersKey,
+} from '@/features/hunt/filtering/query-filters/store/query-filters-sets.slice';
 import { disableHelp, useHelpState } from '@/features/ui/help/help.slice';
 import { useAppDispatch } from '@/store/store';
 
@@ -100,7 +110,10 @@ export const FilterSetsPage = () => {
 
   const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
 
-  console.log(selectedRows);
+  const selectedIds = keys(selectedRows);
+  const selectedFilterSets = filteredData.results.filter((set) =>
+    selectedIds.includes(set.id?.toString()),
+  );
 
   return (
     <Page>
@@ -190,6 +203,12 @@ export const FilterSetsPage = () => {
                 ]}
                 canSearch={false}
               />
+              {values(selectedRows).length > 0 && (
+                <AddToDropdown
+                  filterSets={selectedFilterSets}
+                  onSuccess={() => setSelectedRows({})}
+                />
+              )}
             </DataTableToolbar>
           }
         />
@@ -251,9 +270,9 @@ const getColumns = (enterprise: boolean): CustomColumnDef<QueryFilterSet>[] => [
   },
 ];
 
-const handleLoadFilterSet = (
+export const handleLoadFilterSet = (
   filterSet: QueryFilterSet,
-  navigate: ReturnType<typeof useNavigate>,
+  navigate?: ReturnType<typeof useNavigate>,
 ) => {
   store.dispatch(clearQueryFilters());
   const globalFilter = filterSet.content.find((f) => f.id === 'alert.tag');
@@ -286,6 +305,41 @@ const handleLoadFilterSet = (
         }),
       );
     });
-  navigate(filterSetPageConfig[filterSet.page].route);
+  navigate?.(filterSetPageConfig[filterSet.page].route);
   toast.success('Filterset applied');
+};
+
+const AddToDropdown = ({
+  filterSets,
+  onSuccess,
+}: {
+  filterSets: QueryFilterSet[];
+  onSuccess: () => void;
+}) => {
+  const dispatch = useAppDispatch();
+  const handleAddTo = (key: QueryFiltersKey) => {
+    dispatch(addQueryFilterSets({ key, sets: filterSets }));
+    toast.success('Filter set added to favorites');
+    onSuccess();
+  };
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <Button
+          variant="outline"
+          size="sm"
+        >
+          <Plus /> Add to...
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem onClick={() => handleAddTo('favorites')}>
+          Favorites
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => handleAddTo('pinned')}>
+          Pinned
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 };
