@@ -54,6 +54,7 @@ import { Paginated } from '@/common/fetching/fetching.types';
 import { cn } from '@/common/lib/utils';
 
 import { Row as RowComponent } from '../../atoms/layout/row';
+import { Checkbox } from '../../atoms/ui/checkbox';
 import {
   Empty as EmptyComponent,
   EmptyContent,
@@ -253,6 +254,22 @@ export function DataTable<TData>({
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
+                  {controlledRowSelection && controlledOnRowSelectionChange && (
+                    <th
+                      className="px-2"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <Checkbox
+                        checked={
+                          table.getIsSomeRowsSelected()
+                            ? 'indeterminate'
+                            : table.getIsAllRowsSelected()
+                        }
+                        onClick={table.getToggleAllRowsSelectedHandler()}
+                      />
+                    </th>
+                  )}
+
                   <SortableContext
                     items={columnOrder}
                     strategy={horizontalListSortingStrategy}
@@ -280,6 +297,18 @@ export function DataTable<TData>({
                         cursor: onRowClick ? rowClickCursor : 'default',
                       })}
                     >
+                      {controlledRowSelection &&
+                        controlledOnRowSelectionChange && (
+                          <td
+                            onClick={(e) => e.stopPropagation()}
+                            className="px-2"
+                          >
+                            <Checkbox
+                              checked={row.getIsSelected()}
+                              onCheckedChange={row.getToggleSelectedHandler()}
+                            />
+                          </td>
+                        )}
                       {row.getVisibleCells().map((cell) => (
                         <SortableContext
                           key={cell.id}

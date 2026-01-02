@@ -1,7 +1,8 @@
+import { RowSelectionState } from '@tanstack/react-table';
 import { Group, Info, Trash, X } from 'lucide-react';
 import { parseAsString, parseAsStringLiteral, useQueryState } from 'nuqs';
 import { keys, values } from 'ramda';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
@@ -97,6 +98,10 @@ export const FilterSetsPage = () => {
   const { enterprise } = useFeatureFlags();
   const columns = getColumns(enterprise);
 
+  const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
+
+  console.log(selectedRows);
+
   return (
     <Page>
       <PageContainer>
@@ -145,6 +150,9 @@ export const FilterSetsPage = () => {
           defaultPageSize={20}
           onRowClick={(row) => handleLoadFilterSet(row.original, navigate)}
           rowClickCursor="pointer"
+          getRowId={(row) => row.id?.toString()}
+          rowSelection={selectedRows}
+          onRowSelectionChange={setSelectedRows}
           toolBar={
             <DataTableToolbar>
               <TextFilter
