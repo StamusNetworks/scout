@@ -17,7 +17,6 @@ import {
   QueryFilterState,
   QueryFilterType,
 } from '../model/query-filter';
-import { buildHostIdQFilter } from '../utils/build-hostid-qfilter';
 import { buildSignatureFilters } from '../utils/build-signature-filters';
 import { QFBuilder } from '../utils/qf-builder';
 import { AlertTags, EventTypes, TagFilters } from './query-filters.slice';
@@ -41,7 +40,7 @@ export const selectHostIDQFilter = (
           ),
         );
       }
-      return buildHostIdQFilter(
+      return QFBuilder.toHostIdQFString(
         filters.filter((f) => !blacklist.includes(f.key)),
       );
     },

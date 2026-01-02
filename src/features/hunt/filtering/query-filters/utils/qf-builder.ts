@@ -24,24 +24,7 @@ export function QFBuilder(
     tagsFilters?: AlertTags | null,
     novelty?: boolean,
   ) {
-    const qfilter = [];
-    // Format each filter from Query Filters
-    queryFilters.forEach((filterState: QueryFilterState) => {
-      const filterDef = definitions[filterState.key] ?? {};
-      const stringifierFn = getStringifierFn(
-        filterDef,
-        filterState.is_wildcarded,
-      );
-      const escapedValue = getEscapedValue(filterDef, filterState.value);
-      qfilter.push(
-        stringifierFn({
-          key: filterState.key,
-          value: escapedValue,
-          keyword: suffix,
-          negated: filterState.is_negated,
-        }),
-      );
-    });
+    const qfilter = filtersToStringArray(queryFilters, definitions, suffix);
     // Add Alert tags filters
     const tagsQfilter = getTagsFilters(tagsFilters);
     if (tagsQfilter) {
@@ -53,6 +36,15 @@ export function QFBuilder(
     }
     // Join everything and return
     return qfilter.length ? qfilter.join(' AND ') : undefined;
+  }
+
+  function toHostIdQFString(queryFilters: QueryFilterState[]) {
+    const hostIdFilters = queryFilters.filter(
+      (f) => !f.is_suspended && f.key.startsWith('host_id.'),
+    );
+    return filtersToStringArray(hostIdFilters, definitions, suffix).join(
+      ' AND ',
+    );
   }
 
   function createFilter(
@@ -77,6 +69,7 @@ export function QFBuilder(
   }
   return {
     toQFString,
+    toHostIdQFString,
     createFilter,
   };
 }
@@ -118,6 +111,7 @@ const getStringifierFn = (definition: CombinedDef, is_wildcarded: boolean) => {
 
   return stringifierFn;
 };
+
 const getEscapedValue = (
   definition: CombinedDef,
   value: string | number | undefined,
@@ -127,4 +121,32 @@ const getEscapedValue = (
       ? value || ''
       : esEscape(value?.toString() || '');
   return escapedValue;
+};
+
+const filtersToStringArray = (
+  queryFilters: QueryFilterState[],
+  definitions: Record<string, CombinedDef>,
+  suffix: string = 'raw',
+) => {
+  const qfilter: string[] = [];
+
+  queryFilters.forEach((filterState: QueryFilterState) => {
+    const filterDef = definitions[filterState.key] ?? {};
+    const stringifierFn = getStringifierFn(
+      filterDef,
+      filterState.is_wildcarded,
+    );
+    const escapedValue = getEscapedValue(filterDef, filterState.value);
+    qfilter.push(
+      stringifierFn({
+        key: filterState.key,
+        value: escapedValue,
+        keyword: suffix,
+        negated: filterState.is_negated,
+        wildcarded: filterState.is_wildcarded,
+      }),
+    );
+  });
+
+  return qfilter;
 };

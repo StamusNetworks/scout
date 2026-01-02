@@ -872,6 +872,9 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.HOST,
     entity: FilterType.IP,
     validationType: FilterValidationType.IP,
+    type: 'ip',
+    toQFString: ({ value, negated }) =>
+      `(${negated ? 'NOT ' : ''}ip:"${value}")`,
   },
   {
     label: 'Hostname',
@@ -905,6 +908,9 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.HOST,
     inputType: FilterInputType.NUMBER,
     validationType: FilterValidationType.POSITIVE_INT,
+    type: 'long',
+    toQFString: ({ value, negated }) =>
+      `(${negated ? 'NOT ' : ''}(host_id.services_count:>=${value}))`,
   },
   {
     label: 'Services count max',
@@ -912,6 +918,9 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.HOST,
     inputType: FilterInputType.NUMBER,
     validationType: FilterValidationType.POSITIVE_INT,
+    type: 'long',
+    toQFString: ({ value, negated }) =>
+      `(${negated ? 'NOT ' : ''}(host_id.services_count:<=${value}))`,
   },
   {
     label: 'Hostnames count min',
@@ -919,6 +928,9 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.HOST,
     inputType: FilterInputType.NUMBER,
     validationType: FilterValidationType.POSITIVE_INT,
+    type: 'long',
+    toQFString: ({ value, negated }) =>
+      `(${negated ? 'NOT ' : ''}(host_id.hostname_count:>=${value}))`,
   },
   {
     label: 'Hostnames count max',
@@ -926,13 +938,19 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.HOST,
     inputType: FilterInputType.NUMBER,
     validationType: FilterValidationType.POSITIVE_INT,
-  }, //
+    type: 'long',
+    toQFString: ({ value, negated }) =>
+      `(${negated ? 'NOT ' : ''}(host_id.hostname_count:>=${value}))`,
+  },
   {
     label: 'TLS JA4 count min',
     key: 'host_id.tls.ja4_count.min',
     category: FilterCategory.HOST,
     inputType: FilterInputType.NUMBER,
     validationType: FilterValidationType.POSITIVE_INT,
+    type: 'long',
+    toQFString: ({ value, negated }) =>
+      `(${negated ? 'NOT ' : ''}(host_id.tls.ja4_count:>=${value}))`,
   },
   {
     label: 'TLS JA4 count max',
@@ -940,6 +958,9 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.HOST,
     inputType: FilterInputType.NUMBER,
     validationType: FilterValidationType.POSITIVE_INT,
+    type: 'long',
+    toQFString: ({ value, negated }) =>
+      `(${negated ? 'NOT ' : ''}(host_id.tls.ja4_count:<=${value}))`,
   },
   {
     label: 'User-Agents count min',
@@ -947,6 +968,9 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.HOST,
     inputType: FilterInputType.NUMBER,
     validationType: FilterValidationType.POSITIVE_INT,
+    type: 'long',
+    toQFString: ({ value, negated }) =>
+      `(${negated ? 'NOT ' : ''}(host_id.http.user_agent_count:>=${value}))`,
   },
   {
     label: 'User-Agents count max',
@@ -954,6 +978,9 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.HOST,
     inputType: FilterInputType.NUMBER,
     validationType: FilterValidationType.POSITIVE_INT,
+    type: 'long',
+    toQFString: ({ value, negated }) =>
+      `(${negated ? 'NOT ' : ''}(host_id.http.user_agent_count:>=${value}))`,
   },
   {
     label: 'Clients count min',
@@ -961,6 +988,9 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.HOST,
     inputType: FilterInputType.NUMBER,
     validationType: FilterValidationType.POSITIVE_INT,
+    type: 'long',
+    toQFString: ({ value, negated }) =>
+      `(${negated ? 'NOT ' : ''}(host_id.ssh.client_count:>=${value}))`,
   },
   {
     label: 'Clients count max',
@@ -968,6 +998,9 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.HOST,
     inputType: FilterInputType.NUMBER,
     validationType: FilterValidationType.POSITIVE_INT,
+    type: 'long',
+    toQFString: ({ value, negated }) =>
+      `(${negated ? 'NOT ' : ''}(host_id.ssh.client_count:<=${value}))`,
   },
   {
     label: 'Usernames count min',
@@ -975,6 +1008,9 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.HOST,
     inputType: FilterInputType.NUMBER,
     validationType: FilterValidationType.POSITIVE_INT,
+    type: 'long',
+    toQFString: ({ value, negated }) =>
+      `(${negated ? 'NOT ' : ''}(host_id.username_count:>=${value}))`,
   },
   {
     label: 'Usernames count max',
@@ -982,6 +1018,9 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.HOST,
     inputType: FilterInputType.NUMBER,
     validationType: FilterValidationType.POSITIVE_INT,
+    type: 'long',
+    toQFString: ({ value, negated }) =>
+      `(${negated ? 'NOT ' : ''}(host_id.username_count:<=${value}))`,
   },
   {
     label: 'Role',
@@ -989,6 +1028,12 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.HOST,
     entity: FilterType.ROLE,
     toDisplayValue: (value: string) => ROLES[value as Role]?.name,
+    toQFString: ({ value, negated, wildcarded }) =>
+      value === 'unclassified'
+        ? `${negated ? '' : 'NOT '}host_id.roles.name: *`
+        : wildcarded
+          ? `host_id.roles.name:${value}`
+          : `(${negated ? 'NOT ' : ''}(host_id.roles.name.raw:"${value}"))`,
   },
   {
     label: 'Issuer DN',

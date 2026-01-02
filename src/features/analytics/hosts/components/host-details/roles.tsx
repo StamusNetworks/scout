@@ -30,12 +30,17 @@ interface RolesTemplateProps {
 export const RolesTemplate = ({ roles, className }: RolesTemplateProps) => {
   if (!roles?.length)
     return (
-      <Badge
-        variant="outline"
-        className="h-fit w-fit"
+      <EventValue
+        query_key="host_id.roles.name"
+        value="unclassified"
       >
-        {getHostRole('unclassified')}
-      </Badge>
+        <Badge
+          variant="outline"
+          className="h-fit w-fit"
+        >
+          unclassified
+        </Badge>
+      </EventValue>
     );
   return (
     <Row className={cn('gap-1', className)}>

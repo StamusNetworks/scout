@@ -37,11 +37,13 @@ export type QueryFilterDefinition = {
     value,
     keyword,
     negated,
+    wildcarded,
   }: {
     key?: string;
     value: string | number;
     keyword?: string;
     negated?: boolean;
+    wildcarded?: boolean;
   }) => string; // A function to format the qfilter value
   toDisplayValue?: ((value: string) => string) | ((value: number) => string);
   toQueryValue?: ((value: string) => string) | ((value: number) => string);
