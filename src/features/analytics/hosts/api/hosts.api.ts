@@ -36,7 +36,7 @@ export const HostsAPI = API.injectEndpoints({
     }),
     getHostsWithAlerts: builder.query<
       Paginated<Host>,
-      Pagination & Dates & Tenant & QFilter
+      Pagination & Dates & Tenant & QFilter & { highlight?: boolean }
     >({
       query: (params) => ({
         url: `/appliances/host_id_alerts/`,

@@ -20,7 +20,7 @@ export function QFBuilder(
   suffix: string = 'raw',
 ) {
   function toQFString(
-    queryFilters: QueryFilterState[],
+    queryFilters?: Omit<QueryFilterState, 'id'>[],
     tagsFilters?: AlertTags | null,
     novelty?: boolean,
   ) {
@@ -38,8 +38,9 @@ export function QFBuilder(
     return qfilter.length ? qfilter.join(' AND ') : undefined;
   }
 
-  function toHostIdQFString(queryFilters: QueryFilterState[]) {
-    const hostIdFilters = queryFilters.filter(
+  function toHostIdQFString(queryFilters?: Omit<QueryFilterState, 'id'>[]) {
+    if (!queryFilters) return undefined;
+    const hostIdFilters = queryFilters?.filter(
       (f) => !f.is_suspended && f.key.startsWith('host_id.'),
     );
     return filtersToStringArray(hostIdFilters, definitions, suffix).join(
@@ -124,13 +125,13 @@ const getEscapedValue = (
 };
 
 const filtersToStringArray = (
-  queryFilters: QueryFilterState[],
+  queryFilters: Omit<QueryFilterState, 'id'>[] | undefined,
   definitions: Record<string, CombinedDef>,
   suffix: string = 'raw',
 ) => {
   const qfilter: string[] = [];
 
-  queryFilters.forEach((filterState: QueryFilterState) => {
+  queryFilters?.forEach((filterState) => {
     const filterDef = definitions[filterState.key] ?? {};
     const stringifierFn = getStringifierFn(
       filterDef,

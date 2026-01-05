@@ -1,10 +1,18 @@
-import { X } from 'lucide-react';
+import {
+  ArrowUpDown,
+  Binary,
+  LaptopMinimal,
+  LucideIcon,
+  PencilRuler,
+  X,
+} from 'lucide-react';
 import { isNil, toPairs } from 'ramda';
 import { useState } from 'react';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
+import { Badge } from '@/common/design-system/atoms/ui/badge';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { Card } from '@/common/design-system/atoms/ui/card';
 import { Checkbox } from '@/common/design-system/atoms/ui/checkbox';
@@ -13,16 +21,30 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/common/design-system/atoms/ui/popover';
+import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { formatNumber } from '@/common/lib/numbers';
 import { capitalizeAll } from '@/common/lib/strings';
+import {
+  useGetHostsQuery,
+  useGetHostsWithAlertsQuery,
+} from '@/features/analytics/hosts/api/hosts.api';
+import { useGetSignaturesQuery } from '@/features/hunt/detection-methods/signatures/api/signatures.api';
+import {
+  useGetEventsCountQuery,
+  useGetEventsTailQuery,
+} from '@/features/hunt/events/api/events.api';
+import { useAppSelector } from '@/store/store';
 
 import { filterSetPageConfig } from '../../constants/query-filtersets';
 import { useQueryFilterDefinition } from '../../hooks/use-filters-definitions';
-import { PersistedFilter } from '../../model/query-filter';
+import { useQFBuilder } from '../../hooks/use-qf-builder';
+import { PersistedFilter, QueryFilterState } from '../../model/query-filter';
 import {
   getFiltersFromFilterSet,
   getTagsFromFilterSet,
   QueryFilterSet,
 } from '../../model/query-filterset.schema';
+import { selectTagFilters } from '../../store/query-filters.selector';
 
 export function FilterSetsHeader({
   children,
@@ -100,10 +122,27 @@ export const FilterSetsItem = ({
           onClick={() => onClickHandler(filterSet)}
           className="flex cursor-pointer items-center justify-between rounded-sm p-1 select-none"
         >
-          <Column>
+          <Column className="gap-1">
             <Row className="gap-1">
               {Icon && <Icon className="shrink-0" />}
               <p className="text-xs">{filterSet.name}</p>
+            </Row>
+            <Row className="gap-1">
+              {filterSet.page === 'HOSTS_LIST' && (
+                <FilterSetHostsBadge filterSet={filterSet} />
+              )}
+              {['DASHBOARDS', 'ALERTS_LIST', 'RULES_LIST'].includes(
+                filterSet.page,
+              ) && <FilterSetEventsBadge filterSet={filterSet} />}
+              {['DASHBOARDS', 'ALERTS_LIST', 'RULES_LIST'].includes(
+                filterSet.page,
+              ) && <FilterSetHostsWithEventsBadge filterSet={filterSet} />}
+              {['DASHBOARDS', 'ALERTS_LIST', 'RULES_LIST'].includes(
+                filterSet.page,
+              ) && <FilterSetDetectionMethodsBadge filterSet={filterSet} />}
+              {filterSet.page === 'SESSION_EVENTS' && (
+                <FilterSetTransactionsBadge filterSet={filterSet} />
+              )}
             </Row>
           </Column>
           <Button
@@ -174,3 +213,153 @@ const PopoverQueryFilter = ({ filter }: { filter: PersistedFilter }) => {
     </Column>
   );
 };
+
+function FilterSetEventsBadge({ filterSet }: { filterSet: QueryFilterSet }) {
+  const params = useFilterSetQueryParams(filterSet);
+  const events = useGetEventsCountQuery({
+    start_date: params.start_date,
+    end_date: params.end_date,
+    tenant: params.tenant,
+    qfilter: params.qfilter,
+    stamus: params.stamus,
+    discovery: params.discovery,
+    alert: params.alert,
+  });
+  return (
+    <FilterSetBadge
+      Icon={Binary}
+      count={events.data?.doc_count || 0}
+    />
+  );
+}
+
+function FilterSetTransactionsBadge({
+  filterSet,
+}: {
+  filterSet: QueryFilterSet;
+}) {
+  const params = useFilterSetQueryParams(filterSet);
+  const events = useGetEventsTailQuery({
+    start_date: params.start_date,
+    end_date: params.end_date,
+    tenant: params.tenant,
+    qfilter: params.qfilter,
+    stamus: params.stamus,
+    discovery: params.discovery,
+    alert: params.alert,
+    pageSize: 1,
+  });
+  return (
+    <FilterSetBadge
+      Icon={ArrowUpDown}
+      count={events.data?.count || 0}
+    />
+  );
+}
+
+function FilterSetHostsBadge({ filterSet }: { filterSet: QueryFilterSet }) {
+  const params = useFilterSetQueryParams(filterSet);
+  const hosts = useGetHostsQuery({
+    start_date: params.start_date,
+    end_date: params.end_date,
+    tenant: params.tenant,
+    host_id_qfilter: params.host_id_qfilter,
+    pageSize: 1,
+  });
+  return (
+    <FilterSetBadge
+      Icon={LaptopMinimal}
+      count={hosts.data?.count || 0}
+    />
+  );
+}
+
+function FilterSetHostsWithEventsBadge({
+  filterSet,
+}: {
+  filterSet: QueryFilterSet;
+}) {
+  const params = useFilterSetQueryParams(filterSet);
+  const hosts = useGetHostsWithAlertsQuery({
+    ...params,
+    pageSize: 1,
+    highlight: true,
+  });
+  return (
+    <FilterSetBadge
+      Icon={LaptopMinimal}
+      count={hosts.data?.count || 0}
+    />
+  );
+}
+
+function FilterSetDetectionMethodsBadge({
+  filterSet,
+}: {
+  filterSet: QueryFilterSet;
+}) {
+  const params = useFilterSetQueryParams(filterSet);
+  const detectionMethods = useGetSignaturesQuery({
+    start_date: params.start_date,
+    end_date: params.end_date,
+    tenant: params.tenant,
+    qfilter: params.qfilter,
+    pageSize: 1,
+    hits_min: 1,
+  });
+  return (
+    <FilterSetBadge
+      Icon={PencilRuler}
+      count={detectionMethods.data?.count || 0}
+    />
+  );
+}
+
+function FilterSetBadge({ Icon, count }: { Icon: LucideIcon; count: number }) {
+  return (
+    <Badge
+      className="w-fit gap-1 px-1"
+      variant={count > 0 ? 'default' : 'discreet'}
+    >
+      {Icon && <Icon className="size-4" />}
+      {formatNumber(count)}
+      {count === 10000 && '+'}
+    </Badge>
+  );
+}
+
+function mapPersistedToFilterState(
+  filter: PersistedFilter,
+): Omit<QueryFilterState, 'id'> {
+  return {
+    key: filter.id,
+    value: filter.value,
+    is_suspended: false,
+    is_negated: filter.negated,
+    is_wildcarded: filter.fullString,
+  };
+}
+
+function useFilterSetQueryParams(filterSet: QueryFilterSet) {
+  const params = useGlobalQueryParams(['tenant', 'dates']);
+  const QFBuilder = useQFBuilder();
+  const appTags = useAppSelector(selectTagFilters);
+  const tags = getTagsFromFilterSet(filterSet);
+  const filters = getFiltersFromFilterSet(filterSet)?.map(
+    mapPersistedToFilterState,
+  );
+  return {
+    start_date: params.start_date,
+    end_date: params.end_date,
+    tenant: params.tenant,
+    qfilter: QFBuilder.toQFString(filters, {
+      untagged: tags?.untagged ?? !!appTags?.untagged,
+      relevant: tags?.relevant ?? !!appTags?.relevant,
+      informational: tags?.informational ?? !!appTags?.informational,
+    }),
+    host_id_qfilter: QFBuilder.toHostIdQFString(filters),
+    stamus: tags?.stamus ?? !!appTags?.stamus,
+    discovery: tags?.sightings ?? !!appTags?.discovery,
+    alert: tags?.alerts ?? !!appTags?.alert,
+  };
+}

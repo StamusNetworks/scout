@@ -44,8 +44,8 @@ const formSchema = z.object({
   share: z.boolean().optional(),
   tags: z
     .object({
-      alert: z.boolean(),
-      discovery: z.boolean(),
+      alerts: z.boolean(),
+      sightings: z.boolean(),
       stamus: z.boolean(),
       informational: z.boolean(),
       relevant: z.boolean(),
@@ -68,7 +68,14 @@ const getDefaultValues = (filters: QueryFilterState[], tags?: TagFilters) => ({
   page: 'DASHBOARDS',
   share: true,
   description: '',
-  tags,
+  tags: {
+    alerts: tags?.alert ?? false,
+    stamus: tags?.stamus ?? false,
+    sightings: tags?.discovery ?? false,
+    informational: tags?.informational ?? false,
+    relevant: tags?.relevant ?? false,
+    untagged: tags?.untagged ?? false,
+  },
   filters: filters.map((item) => ({
     ...item,
     enabled: !item.is_suspended,
@@ -148,7 +155,7 @@ export const SaveFilterSetForm = ({
           {tags && (
             <Grid className="grid-cols-3 gap-2">
               <FormField
-                name="tags.alert"
+                name="tags.alerts"
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-center gap-2 text-sm">
                     <Checkbox
@@ -172,7 +179,7 @@ export const SaveFilterSetForm = ({
                 )}
               />
               <FormField
-                name="tags.discovery"
+                name="tags.sightings"
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-center gap-2 text-sm">
                     <Checkbox

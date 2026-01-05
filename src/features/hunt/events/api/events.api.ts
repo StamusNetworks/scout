@@ -10,6 +10,7 @@ import {
 import { Paginated, Pagination } from '@/common/fetching/fetching.types';
 import { API } from '@/store/api';
 
+import { EventTypes } from '../../filtering/query-filters/store/query-filters.slice';
 import { Event } from '../model/event.schema';
 import { EventsTimeline } from '../model/events-timeline.schema';
 import {
@@ -38,7 +39,8 @@ export const EventsAPI = API.injectEndpoints({
         Dates & {
           hosts?: string;
           prev?: number;
-        }
+        } & QFilter &
+        EventTypes
     >({
       query: (params) => ({
         url: `/rules/es/alerts_count`,
@@ -110,7 +112,7 @@ export const EventsAPI = API.injectEndpoints({
     }),
     getEventsTail: builder.query<
       Paginated<Event>,
-      QFilter & Dates & Tenant & Ordering
+      QFilter & Dates & Tenant & Ordering & Pagination
     >({
       query: (params) => ({
         url: `/rules/es/events_tail/`,

@@ -793,6 +793,27 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
     key: 'files.stored',
     category: FilterCategory.EVENT, // formatFn: (value) => (value ? "Yes" : "No"),
   },
+  {
+    label: 'Filename',
+    key: 'fileinfo.filename',
+    category: FilterCategory.EVENT,
+  },
+  {
+    label: 'SHA256',
+    key: 'fileinfo.sha256',
+    category: FilterCategory.EVENT,
+    entity: [FilterType.SHA256, FilterType.FILE_HASH],
+  },
+  {
+    key: 'fileinfo.mimetype',
+    label: 'Mimetype',
+    category: FilterCategory.EVENT,
+  },
+  {
+    label: 'Stored',
+    key: 'fileinfo.stored',
+    category: FilterCategory.EVENT, // formatFn: (value) => (value ? "Yes" : "No"),
+  },
   /* HISTORY */
   {
     label: 'User',

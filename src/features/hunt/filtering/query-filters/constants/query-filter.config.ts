@@ -47,6 +47,7 @@ export const FilterCategory = {
   HISTORY: 'HISTORY',
   SIGNATURE: 'SIGNATURE',
   HOST: 'HOST',
+  TRANSACTION: 'TRANSACTION',
 } as const;
 
 export type FilterCategory =

@@ -7,4 +7,5 @@ export const FilterIcons = {
   [FilterCategory.HISTORY]: null,
   [FilterCategory.SIGNATURE]: PencilRuler,
   [FilterCategory.HOST]: Network,
+  [FilterCategory.TRANSACTION]: null,
 };
