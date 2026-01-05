@@ -49,5 +49,7 @@ export const {
   clearQueryFilterSets,
 } = queryFiltersSetsSlice.actions;
 
+export const queryFiltersSetsInitialState = initialState;
+
 export const selectQueryFilterSets = (state: RootState, key: QueryFiltersKey) =>
   state.filters.queryFiltersSets[key];

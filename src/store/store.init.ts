@@ -7,6 +7,7 @@ import { datesFiltersInitialState } from '@/features/hunt/filtering/dates-filter
 import { addQfilterCommandInitialState } from '@/features/hunt/filtering/query-filters/components/add-qfilter-command/add-qfilter-command.slice';
 import { saveFilterSetModalInitialState } from '@/features/hunt/filtering/query-filters/components/save-filterset/save-filterset.slice';
 import { queryFiltersInitialState } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
+import { queryFiltersSetsInitialState } from '@/features/hunt/filtering/query-filters/store/query-filters-sets.slice';
 import { investigationInitialState } from '@/features/hunt/investigation/investigation.slice';
 import { investigationsHistoryInitialState } from '@/features/hunt/investigation/investigations-history.slice';
 import { marketingStateInitialState } from '@/features/marketing/store/marketing.store';
@@ -25,6 +26,7 @@ export const initialState: Omit<RootState, 'API'> = {
   user: userInitialState,
   settings: settingsInitialState,
   filters: {
+    queryFiltersSets: queryFiltersSetsInitialState,
     queryFilters: queryFiltersInitialState,
     datesFilters: datesFiltersInitialState,
     tenancy: tenancyInitialState,
