@@ -3,7 +3,7 @@ import {
   createSlice,
   type PayloadAction,
 } from '@reduxjs/toolkit';
-import { toPairs } from 'ramda';
+import { isNil, toPairs } from 'ramda';
 import { toast } from 'sonner';
 
 import { capitalizeAll, startsWithOneOf } from '@/common/lib/strings';
@@ -317,10 +317,13 @@ export const queryFiltersSlice = createSlice({
       });
     },
     updateTagFilters: (state, action: PayloadAction<Partial<TagFilters>>) => {
-      state.tagFilters = {
-        ...state.tagFilters,
-        ...action.payload,
-      };
+      toPairs(action.payload)
+        .filter((value) => !isNil(value))
+        .forEach(([key, value]) => {
+          if (!isNil(value)) {
+            state.tagFilters[key] = value;
+          }
+        });
     },
     suspendQueryFilters: (
       state,
