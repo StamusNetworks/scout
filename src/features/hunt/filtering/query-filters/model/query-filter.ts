@@ -80,6 +80,7 @@ export const qfilterDef = z.object({
   fullString: z.boolean(),
   query: z.string().optional(),
 });
+export type PersistedFilter = z.infer<typeof qfilterDef>;
 
 export const QueryMatching = {
   exact: {

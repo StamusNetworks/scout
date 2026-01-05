@@ -1,5 +1,5 @@
 import { X } from 'lucide-react';
-import { toPairs } from 'ramda';
+import { isNil, toPairs } from 'ramda';
 import { useState } from 'react';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
@@ -17,8 +17,12 @@ import { capitalizeAll } from '@/common/lib/strings';
 
 import { filterSetPageConfig } from '../../constants/query-filtersets';
 import { useQueryFilterDefinition } from '../../hooks/use-filters-definitions';
-import { QueryFilterSet } from '../../model/query-filterset.schema';
-import { TagFilters } from '../../store/query-filters.slice';
+import { PersistedFilter } from '../../model/query-filter';
+import {
+  getFiltersFromFilterSet,
+  getTagsFromFilterSet,
+  QueryFilterSet,
+} from '../../model/query-filterset.schema';
 
 export function FilterSetsHeader({
   children,
@@ -127,35 +131,27 @@ const FilterSetsItemPopoverContent = ({
 }: {
   filterSet: QueryFilterSet;
 }) => {
-  const tags = filterSet.content.find((item) => item.id === 'alert.tag')
-    ?.value as unknown as TagFilters;
-  const filters = filterSet.content.filter(
-    (item) => item.id !== 'alert.tag',
-  ) as {
-    value: string;
-    id: string;
-    label: string;
-    negated: boolean;
-    fullString: boolean;
-    query?: string | undefined;
-  }[];
+  const tags = getTagsFromFilterSet(filterSet);
+  const filters = getFiltersFromFilterSet(filterSet);
   return (
     <Column className="gap-3">
       {tags && (
         <Grid className="grid-cols-3 gap-2">
-          {toPairs(tags).map(([tag, value]) => (
-            <Row
-              key={tag}
-              className="items-center gap-1"
-            >
-              <Checkbox checked={value} />
-              <span className="text-xs">{capitalizeAll(tag)}</span>
-            </Row>
-          ))}
+          {toPairs(tags)
+            .filter((value) => !isNil(value))
+            .map(([tag, value]) => (
+              <Row
+                key={tag}
+                className="items-center gap-1"
+              >
+                <Checkbox checked={value} />
+                <span className="text-xs">{capitalizeAll(tag)}</span>
+              </Row>
+            ))}
         </Grid>
       )}
       <Column className="gap-1">
-        {filters.map((filter) => (
+        {filters?.map((filter) => (
           <PopoverQueryFilter
             key={filter.id}
             filter={filter}
@@ -166,18 +162,7 @@ const FilterSetsItemPopoverContent = ({
   );
 };
 
-const PopoverQueryFilter = ({
-  filter,
-}: {
-  filter: {
-    value: string;
-    id: string;
-    label: string;
-    negated: boolean;
-    fullString: boolean;
-    query?: string | undefined;
-  };
-}) => {
+const PopoverQueryFilter = ({ filter }: { filter: PersistedFilter }) => {
   const definition = useQueryFilterDefinition(filter.id);
   return (
     <Column>

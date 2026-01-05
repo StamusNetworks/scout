@@ -38,7 +38,11 @@ import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useGetFilterSetsQuery } from '@/features/hunt/filtering/query-filters/api/query-filter.api';
 import { openSaveFilterSetModal } from '@/features/hunt/filtering/query-filters/components/save-filterset/save-filterset.slice';
 import { filterSetPageConfig } from '@/features/hunt/filtering/query-filters/constants/query-filtersets';
-import { QueryFilterSet } from '@/features/hunt/filtering/query-filters/model/query-filterset.schema';
+import {
+  getFiltersFromFilterSet,
+  getTagsFromFilterSet,
+  QueryFilterSet,
+} from '@/features/hunt/filtering/query-filters/model/query-filterset.schema';
 import {
   addQueryFilter,
   clearQueryFilters,
@@ -275,36 +279,31 @@ export const handleLoadFilterSet = (
   navigate?: ReturnType<typeof useNavigate>,
 ) => {
   store.dispatch(clearQueryFilters());
-  const globalFilter = filterSet.content.find((f) => f.id === 'alert.tag');
-  if (globalFilter && typeof globalFilter.value !== 'string') {
+  const globalFilter = getTagsFromFilterSet(filterSet);
+  if (globalFilter) {
     store.dispatch(
       updateTagFilters({
-        stamus: globalFilter.value.stamus,
-        alert: globalFilter.value.alerts,
-        discovery: globalFilter.value.sightings,
-        informational: globalFilter.value.informational,
-        relevant: globalFilter.value.relevant,
-        untagged: globalFilter.value.untagged,
+        stamus: globalFilter.stamus,
+        alert: globalFilter.alerts,
+        discovery: globalFilter.sightings,
+        informational: globalFilter.informational,
+        relevant: globalFilter.relevant,
+        untagged: globalFilter.untagged,
       }),
     );
   }
-  filterSet.content
-    .filter((f) => f.id !== 'alert.tag')
-    .forEach((filter) => {
-      store.dispatch(
-        addQueryFilter({
-          key: filter.id,
-          value: filter.value as string,
-          options: {
-            is_wildcarded:
-              filter.id === 'es_filter'
-                ? false
-                : 'fullString' in filter && !filter.fullString,
-            is_negated: 'negated' in filter && filter.negated,
-          },
-        }),
-      );
-    });
+  getFiltersFromFilterSet(filterSet)?.forEach((filter) => {
+    store.dispatch(
+      addQueryFilter({
+        key: filter.id,
+        value: filter.value as string,
+        options: {
+          is_wildcarded: filter.id === 'es_filter' ? false : !filter.fullString,
+          is_negated: filter.negated,
+        },
+      }),
+    );
+  });
   navigate?.(filterSetPageConfig[filterSet.page].route);
   toast.success('Filterset applied');
 };

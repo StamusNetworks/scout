@@ -1,6 +1,16 @@
 import { z } from 'zod';
 
-import { qfilterDef } from './query-filter';
+import { PersistedFilter, qfilterDef } from './query-filter';
+
+export const persistedTagsSchema = z.object({
+  stamus: z.boolean().optional(),
+  alerts: z.boolean(),
+  sightings: z.boolean(),
+  informational: z.boolean(),
+  relevant: z.boolean(),
+  untagged: z.boolean(),
+});
+export type PersistedTags = z.infer<typeof persistedTagsSchema>;
 
 export const queryFilterSetCreatePayload = z.object({
   name: z.string(),
@@ -8,16 +18,7 @@ export const queryFilterSetCreatePayload = z.object({
   share: z.enum(['static', 'global', 'private']).optional(),
   description: z.string(),
   filters: z.array(qfilterDef),
-  tags: z
-    .object({
-      stamus: z.boolean(),
-      alert: z.boolean(),
-      discovery: z.boolean(),
-      informational: z.boolean(),
-      relevant: z.boolean(),
-      untagged: z.boolean(),
-    })
-    .optional(),
+  tags: persistedTagsSchema.optional(),
 });
 
 export const queryFilterSetSchema = z.object({
@@ -25,14 +26,7 @@ export const queryFilterSetSchema = z.object({
     qfilterDef.or(
       z.object({
         id: z.literal('alert.tag'),
-        value: z.object({
-          stamus: z.boolean(),
-          alerts: z.boolean(),
-          sightings: z.boolean(),
-          informational: z.boolean(),
-          relevant: z.boolean(),
-          untagged: z.boolean(),
-        }),
+        value: persistedTagsSchema,
       }),
     ),
   ),
@@ -48,3 +42,17 @@ export type QueryFilterSet = z.infer<typeof queryFilterSetSchema>;
 export type QueryFilterSetCreatePayload = z.infer<
   typeof queryFilterSetCreatePayload
 >;
+
+export function getTagsFromFilterSet(
+  filterSet: QueryFilterSet,
+): PersistedTags | undefined {
+  return filterSet.content.find((item) => item.id === 'alert.tag')
+    ?.value as unknown as PersistedTags | undefined;
+}
+export function getFiltersFromFilterSet(
+  filterSet: QueryFilterSet,
+): PersistedFilter[] | undefined {
+  return filterSet.content.filter(
+    (item) => item.id !== 'alert.tag',
+  ) as unknown as PersistedFilter[] | undefined;
+}
