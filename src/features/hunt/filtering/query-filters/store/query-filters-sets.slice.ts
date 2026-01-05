@@ -1,17 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { RootState } from '@/store/store';
+import { RootState, useAppSelector } from '@/store/store';
 
 import { QueryFilterSet } from '../model/query-filterset.schema';
 
 type QueryFiltersSetsState = {
+  loaded: number | null;
   favorites: QueryFilterSet[];
   pinned: QueryFilterSet[];
 };
 
-export type QueryFiltersKey = keyof QueryFiltersSetsState;
+export type QueryFiltersKey = keyof Omit<QueryFiltersSetsState, 'loaded'>;
 
 const initialState: QueryFiltersSetsState = {
+  loaded: null,
   favorites: [],
   pinned: [],
 };
@@ -53,3 +55,13 @@ export const queryFiltersSetsInitialState = initialState;
 
 export const selectQueryFilterSets = (state: RootState, key: QueryFiltersKey) =>
   state.filters.queryFiltersSets[key];
+
+export const selectLoadedFilterSetId = (state: RootState) =>
+  state.filters.queryFiltersSets.loaded;
+
+export const useIsLoadedFilterSet = (id: number) => {
+  const loadedFilterSetId = useAppSelector((state: RootState) =>
+    selectLoadedFilterSetId(state),
+  );
+  return loadedFilterSetId === id;
+};
