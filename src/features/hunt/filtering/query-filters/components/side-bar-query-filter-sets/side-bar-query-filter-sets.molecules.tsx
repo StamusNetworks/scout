@@ -21,6 +21,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/common/design-system/atoms/ui/popover';
+import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { formatNumber } from '@/common/lib/numbers';
 import { capitalizeAll } from '@/common/lib/strings';
@@ -228,7 +229,8 @@ function FilterSetEventsBadge({ filterSet }: { filterSet: QueryFilterSet }) {
   return (
     <FilterSetBadge
       Icon={Binary}
-      count={events.data?.doc_count || 0}
+      count={events.data?.doc_count}
+      loading={events.isFetching}
     />
   );
 }
@@ -252,7 +254,8 @@ function FilterSetTransactionsBadge({
   return (
     <FilterSetBadge
       Icon={ArrowUpDown}
-      count={events.data?.count || 0}
+      count={events.data?.count}
+      loading={events.isFetching}
     />
   );
 }
@@ -269,7 +272,8 @@ function FilterSetHostsBadge({ filterSet }: { filterSet: QueryFilterSet }) {
   return (
     <FilterSetBadge
       Icon={LaptopMinimal}
-      count={hosts.data?.count || 0}
+      count={hosts.data?.count}
+      loading={hosts.isFetching}
     />
   );
 }
@@ -288,7 +292,8 @@ function FilterSetHostsWithEventsBadge({
   return (
     <FilterSetBadge
       Icon={LaptopMinimal}
-      count={hosts.data?.count || 0}
+      count={hosts.data?.count}
+      loading={hosts.isFetching}
     />
   );
 }
@@ -310,19 +315,32 @@ function FilterSetDetectionMethodsBadge({
   return (
     <FilterSetBadge
       Icon={PencilRuler}
-      count={detectionMethods.data?.count || 0}
+      count={detectionMethods.data?.count}
+      loading={detectionMethods.isFetching}
     />
   );
 }
 
-function FilterSetBadge({ Icon, count }: { Icon: LucideIcon; count: number }) {
+function FilterSetBadge({
+  Icon,
+  count,
+  loading,
+}: {
+  Icon: LucideIcon;
+  count?: number;
+  loading?: boolean;
+}) {
   return (
     <Badge
       className="w-fit gap-1 px-1"
-      variant={count > 0 ? 'default' : 'discreet'}
+      variant={count && count > 0 ? 'default' : 'discreet'}
     >
       {Icon && <Icon className="size-4" />}
-      {formatNumber(count)}
+      {loading ? (
+        <Spin className="size-3 animate-spin" />
+      ) : (
+        formatNumber(count ?? 0)
+      )}
       {count === 10000 && '+'}
     </Badge>
   );
