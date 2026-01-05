@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { store } from '@/app/App';
@@ -40,6 +41,14 @@ export const SideBarQueryFilterSets = () => {
   const pinned = useSelector((state: RootState) =>
     selectQueryFilterSets(state, 'pinned'),
   );
+  const sortedFavorites = useMemo(
+    () => [...favorites].sort((a, b) => a.name.localeCompare(b.name)),
+    [favorites],
+  );
+  const sortedPinned = useMemo(
+    () => [...pinned].sort((a, b) => a.name.localeCompare(b.name)),
+    [pinned],
+  );
   return (
     <Column>
       <SideBarHeader>Filter Sets</SideBarHeader>
@@ -53,7 +62,7 @@ export const SideBarQueryFilterSets = () => {
             />
           </FilterSetsHeader>
           <FilterSetsItems>
-            {favorites.map((filterSet) => (
+            {sortedFavorites.map((filterSet) => (
               <FilterSetsItem
                 key={filterSet.id}
                 filterSet={filterSet}
@@ -69,7 +78,7 @@ export const SideBarQueryFilterSets = () => {
             <FilterSetsClearButton onClear={handleClearPinned} />
           </FilterSetsHeader>
           <FilterSetsItems>
-            {pinned.map((filterSet) => (
+            {sortedPinned.map((filterSet) => (
               <FilterSetsItem
                 key={filterSet.id}
                 filterSet={filterSet}
