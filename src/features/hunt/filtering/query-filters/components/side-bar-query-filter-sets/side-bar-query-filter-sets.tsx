@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { store } from '@/app/App';
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { AlertDialog } from '@/common/design-system/molecules/alert-dialog';
-import { handleLoadFilterSet } from '@/pages/filter-sets';
 import { RootState } from '@/store/store';
 
 import {
@@ -67,7 +66,6 @@ export const SideBarQueryFilterSets = () => {
                 key={filterSet.id}
                 filterSet={filterSet}
                 onDelete={handleDeleteFilterSetFromFavorites}
-                onClickHandler={handleLoadFilterSet}
               />
             ))}
           </FilterSetsItems>
@@ -83,7 +81,6 @@ export const SideBarQueryFilterSets = () => {
                 key={filterSet.id}
                 filterSet={filterSet}
                 onDelete={handleDeleteFilterSetFromPinned}
-                onClickHandler={handleLoadFilterSet}
               />
             ))}
           </FilterSetsItems>

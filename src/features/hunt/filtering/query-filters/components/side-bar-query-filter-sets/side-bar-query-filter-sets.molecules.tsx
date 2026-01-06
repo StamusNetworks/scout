@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { isNil, toPairs } from 'ramda';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
@@ -34,6 +35,7 @@ import {
   useGetEventsCountQuery,
   useGetEventsTailQuery,
 } from '@/features/hunt/events/api/events.api';
+import { routes } from '@/pages/routes.config';
 import { useAppSelector } from '@/store/store';
 
 import { filterSetPageConfig } from '../../constants/query-filtersets';
@@ -46,6 +48,7 @@ import {
   QueryFilterSet,
 } from '../../model/query-filterset.schema';
 import { selectTagFilters } from '../../store/query-filters.selector';
+import { loadFilterSet } from '../../use-cases/load-filter-set';
 
 export function FilterSetsHeader({
   children,
@@ -98,16 +101,25 @@ export function FilterSetsItems({
 interface FilterSetsItemProps extends React.ComponentProps<typeof Card> {
   filterSet: QueryFilterSet;
   onDelete: (id: number) => void;
-  onClickHandler: (filterSet: QueryFilterSet) => void;
 }
 export const FilterSetsItem = ({
   filterSet,
   onDelete,
-  onClickHandler,
   ...props
 }: FilterSetsItemProps) => {
   const Icon = filterSetPageConfig[filterSet.page].icon;
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const onClickHandler = () => {
+    loadFilterSet(filterSet);
+    const filters = getFiltersFromFilterSet(filterSet);
+    const suffix =
+      filterSet.page === 'HOSTS_LIST' &&
+      filters?.some((filter) => !filter.id.startsWith('host_id.'))
+        ? ''
+        : '?with_alerts=false';
+    navigate(filterSetPageConfig[filterSet.page].route + suffix);
+  };
   return (
     <Popover
       open={open}
@@ -120,7 +132,7 @@ export const FilterSetsItem = ({
       >
         <Card
           {...props}
-          onClick={() => onClickHandler(filterSet)}
+          onClick={onClickHandler}
           className="flex cursor-pointer items-center justify-between rounded-sm p-1 select-none"
         >
           <Column className="gap-1">
@@ -216,6 +228,7 @@ const PopoverQueryFilter = ({ filter }: { filter: PersistedFilter }) => {
 };
 
 function FilterSetEventsBadge({ filterSet }: { filterSet: QueryFilterSet }) {
+  const navigate = useNavigate();
   const params = useFilterSetQueryParams(filterSet);
   const events = useGetEventsCountQuery({
     start_date: params.start_date,
@@ -226,11 +239,16 @@ function FilterSetEventsBadge({ filterSet }: { filterSet: QueryFilterSet }) {
     discovery: params.discovery,
     alert: params.alert,
   });
+  const onClickHandler = () => {
+    loadFilterSet(filterSet);
+    navigate(routes.events);
+  };
   return (
     <FilterSetBadge
       Icon={Binary}
       count={events.data?.doc_count}
       loading={events.isFetching}
+      handleClick={onClickHandler}
     />
   );
 }
@@ -240,6 +258,7 @@ function FilterSetTransactionsBadge({
 }: {
   filterSet: QueryFilterSet;
 }) {
+  const navigate = useNavigate();
   const params = useFilterSetQueryParams(filterSet);
   const events = useGetEventsTailQuery({
     start_date: params.start_date,
@@ -251,16 +270,22 @@ function FilterSetTransactionsBadge({
     alert: params.alert,
     pageSize: 1,
   });
+  const onClickHandler = () => {
+    loadFilterSet(filterSet);
+    navigate(routes.session_events);
+  };
   return (
     <FilterSetBadge
       Icon={ArrowUpDown}
       count={events.data?.count}
       loading={events.isFetching}
+      handleClick={onClickHandler}
     />
   );
 }
 
 function FilterSetHostsBadge({ filterSet }: { filterSet: QueryFilterSet }) {
+  const navigate = useNavigate();
   const params = useFilterSetQueryParams(filterSet);
   const hosts = useGetHostsQuery({
     start_date: params.start_date,
@@ -269,11 +294,16 @@ function FilterSetHostsBadge({ filterSet }: { filterSet: QueryFilterSet }) {
     host_id_qfilter: params.host_id_qfilter,
     pageSize: 1,
   });
+  const onClickHandler = () => {
+    loadFilterSet(filterSet);
+    navigate(routes.hosts + '?with_alerts=false');
+  };
   return (
     <FilterSetBadge
       Icon={LaptopMinimal}
       count={hosts.data?.count}
       loading={hosts.isFetching}
+      handleClick={onClickHandler}
     />
   );
 }
@@ -283,17 +313,23 @@ function FilterSetHostsWithEventsBadge({
 }: {
   filterSet: QueryFilterSet;
 }) {
+  const navigate = useNavigate();
   const params = useFilterSetQueryParams(filterSet);
   const hosts = useGetHostsWithAlertsQuery({
     ...params,
     pageSize: 1,
     highlight: true,
   });
+  const onClickHandler = () => {
+    loadFilterSet(filterSet);
+    navigate(routes.hosts);
+  };
   return (
     <FilterSetBadge
       Icon={LaptopMinimal}
       count={hosts.data?.count}
       loading={hosts.isFetching}
+      handleClick={onClickHandler}
     />
   );
 }
@@ -303,6 +339,7 @@ function FilterSetDetectionMethodsBadge({
 }: {
   filterSet: QueryFilterSet;
 }) {
+  const navigate = useNavigate();
   const params = useFilterSetQueryParams(filterSet);
   const detectionMethods = useGetSignaturesQuery({
     start_date: params.start_date,
@@ -312,11 +349,16 @@ function FilterSetDetectionMethodsBadge({
     pageSize: 1,
     hits_min: 1,
   });
+  const onClickHandler = () => {
+    loadFilterSet(filterSet);
+    navigate(routes.detection_methods);
+  };
   return (
     <FilterSetBadge
       Icon={PencilRuler}
       count={detectionMethods.data?.count}
       loading={detectionMethods.isFetching}
+      handleClick={onClickHandler}
     />
   );
 }
@@ -325,15 +367,21 @@ function FilterSetBadge({
   Icon,
   count,
   loading,
+  handleClick,
 }: {
   Icon: LucideIcon;
   count?: number;
   loading?: boolean;
+  handleClick: () => void;
 }) {
   return (
     <Badge
       className="w-fit gap-1 px-1"
       variant={count && count > 0 ? 'default' : 'discreet'}
+      onClick={(e) => {
+        e.stopPropagation();
+        handleClick();
+      }}
     >
       {Icon && <Icon className="size-4" />}
       {loading ? (

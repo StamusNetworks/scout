@@ -6,7 +6,6 @@ import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
-import { store } from '@/app/App';
 import {
   Page,
   PageActions,
@@ -33,25 +32,19 @@ import { DataTableToolbar } from '@/common/design-system/molecules/data-table/da
 import { CommandFilterSingle } from '@/common/design-system/molecules/data-table/filters/command-filter-single';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
-import { capitalizeFirst } from '@/common/lib/strings';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useGetFilterSetsQuery } from '@/features/hunt/filtering/query-filters/api/query-filter.api';
 import { openSaveFilterSetModal } from '@/features/hunt/filtering/query-filters/components/save-filterset/save-filterset.slice';
 import { filterSetPageConfig } from '@/features/hunt/filtering/query-filters/constants/query-filtersets';
 import {
   getFiltersFromFilterSet,
-  getTagsFromFilterSet,
   QueryFilterSet,
 } from '@/features/hunt/filtering/query-filters/model/query-filterset.schema';
-import {
-  addQueryFilter,
-  clearQueryFilters,
-  updateTagFilters,
-} from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
 import {
   addQueryFilterSets,
   QueryFiltersKey,
 } from '@/features/hunt/filtering/query-filters/store/query-filters-sets.slice';
+import { loadFilterSet } from '@/features/hunt/filtering/query-filters/use-cases/load-filter-set';
 import { disableHelp, useHelpState } from '@/features/ui/help/help.slice';
 import { useAppDispatch } from '@/store/store';
 
@@ -59,6 +52,11 @@ const typeMap = {
   global: 'global',
   private: 'private',
   static: 'stamus',
+} as const;
+const labelMap = {
+  global: 'Shared',
+  private: 'Personal',
+  static: 'Built-in',
 } as const;
 const reverseTypeMap = Object.fromEntries(
   Object.entries(typeMap).map(([key, value]) => [value, key]),
@@ -232,8 +230,7 @@ const getColumns = (enterprise: boolean): CustomColumnDef<QueryFilterSet>[] => [
         {
           id: 'type',
           header: 'Type',
-          accessorFn: (row) =>
-            row.share ? capitalizeFirst(typeMap[row.share]) : null,
+          accessorFn: (row) => (row.share ? labelMap[row.share] : null),
         },
       ] as CustomColumnDef<QueryFilterSet>[])
     : []),
@@ -274,38 +271,18 @@ const getColumns = (enterprise: boolean): CustomColumnDef<QueryFilterSet>[] => [
   },
 ];
 
-export const handleLoadFilterSet = (
+const handleLoadFilterSet = (
   filterSet: QueryFilterSet,
-  navigate?: ReturnType<typeof useNavigate>,
+  navigate: ReturnType<typeof useNavigate>,
 ) => {
-  store.dispatch(clearQueryFilters());
-  const globalFilter = getTagsFromFilterSet(filterSet);
-  if (globalFilter) {
-    store.dispatch(
-      updateTagFilters({
-        stamus: globalFilter.stamus,
-        alert: globalFilter.alerts,
-        discovery: globalFilter.sightings,
-        informational: globalFilter.informational,
-        relevant: globalFilter.relevant,
-        untagged: globalFilter.untagged,
-      }),
-    );
-  }
-  getFiltersFromFilterSet(filterSet)?.forEach((filter) => {
-    store.dispatch(
-      addQueryFilter({
-        key: filter.id,
-        value: filter.value as string,
-        options: {
-          is_wildcarded: filter.id === 'es_filter' ? false : !filter.fullString,
-          is_negated: filter.negated,
-        },
-      }),
-    );
-  });
-  navigate?.(filterSetPageConfig[filterSet.page].route);
-  toast.success('Filterset applied');
+  loadFilterSet(filterSet);
+  const filters = getFiltersFromFilterSet(filterSet);
+  const suffix =
+    filterSet.page === 'HOSTS_LIST' &&
+    filters?.some((filter) => !filter.id.startsWith('host_id.'))
+      ? ''
+      : '?with_alerts=false';
+  navigate(filterSetPageConfig[filterSet.page].route + suffix);
 };
 
 const AddToDropdown = ({
