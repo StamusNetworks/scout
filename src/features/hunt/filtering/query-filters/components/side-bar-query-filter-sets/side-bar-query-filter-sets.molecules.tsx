@@ -354,7 +354,7 @@ function mapPersistedToFilterState(
     value: filter.value,
     is_suspended: false,
     is_negated: filter.negated,
-    is_wildcarded: filter.fullString,
+    is_wildcarded: filter.id === 'es_filter' ? false : !filter.fullString,
   };
 }
 
