@@ -9,6 +9,7 @@ import {
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/borderTabs';
 import { ScrollArea } from '@/common/design-system/atoms/ui/scroll-area';
+import { Separator } from '@/common/design-system/atoms/ui/separator';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetBeaconingEventsQuery } from '@/features/analytics/beaconing/api/beaconing.api';
@@ -150,6 +151,18 @@ export const HostDetails = () => {
                 <Link to={getUrl(routes.hosts_host, hostId!)}>Insights</Link>
               </TabsTrigger>
               <TabsTrigger
+                value={getUrl(routes.hosts_host_timeline, hostId!)}
+                asChild
+              >
+                <Link to={getUrl(routes.hosts_host_timeline, hostId!)}>
+                  Timeline
+                </Link>
+              </TabsTrigger>
+              <Separator
+                orientation="vertical"
+                className="bg-foreground/10 dark:bg-foreground/15 mx-1 h-5"
+              />
+              <TabsTrigger
                 value={getUrl(routes.hosts_host_incidents, hostId!)}
                 asChild
               >
@@ -219,14 +232,6 @@ export const HostDetails = () => {
                     count={beaconingData?.count || 0}
                     isLoading={isLoadingBeaconing}
                   />
-                </Link>
-              </TabsTrigger>
-              <TabsTrigger
-                value={getUrl(routes.hosts_host_timeline, hostId!)}
-                asChild
-              >
-                <Link to={getUrl(routes.hosts_host_timeline, hostId!)}>
-                  Timeline
                 </Link>
               </TabsTrigger>
             </TabsList>
