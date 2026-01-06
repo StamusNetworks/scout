@@ -223,19 +223,6 @@ export const FilterSetsPage = () => {
 
 const getColumns = (enterprise: boolean): CustomColumnDef<QueryFilterSet>[] => [
   {
-    id: 'page',
-    header: 'Page',
-    cell: ({ row }) => {
-      const Icon = filterSetPageConfig[row.original.page].icon;
-      return (
-        <div className="flex items-center gap-2 text-nowrap">
-          <Icon />
-          <div>{filterSetPageConfig[row.original.page].label}</div>
-        </div>
-      );
-    },
-  },
-  {
     id: 'name',
     header: 'Name',
     cell: ({ row }) => <div>{row.original.name}</div>,
@@ -250,6 +237,19 @@ const getColumns = (enterprise: boolean): CustomColumnDef<QueryFilterSet>[] => [
         },
       ] as CustomColumnDef<QueryFilterSet>[])
     : []),
+  {
+    id: 'page',
+    header: 'Page',
+    cell: ({ row }) => {
+      const Icon = filterSetPageConfig[row.original.page].icon;
+      return (
+        <div className="flex items-center gap-2 text-nowrap">
+          <Icon />
+          <div>{filterSetPageConfig[row.original.page].label}</div>
+        </div>
+      );
+    },
+  },
   {
     id: 'description',
     header: 'Description',
