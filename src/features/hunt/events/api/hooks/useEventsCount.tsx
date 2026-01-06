@@ -11,5 +11,8 @@ export const useEventsCount = (dates?: Dates) => {
       start_date: dates.start_date,
       end_date: dates.end_date,
     }),
+    discovery: true,
+    alert: true,
+    stamus: true,
   });
 };
