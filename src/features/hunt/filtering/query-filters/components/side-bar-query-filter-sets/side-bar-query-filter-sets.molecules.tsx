@@ -48,6 +48,7 @@ import {
   QueryFilterSet,
 } from '../../model/query-filterset.schema';
 import { selectTagFilters } from '../../store/query-filters.selector';
+import { useIsLoadedFilterSet } from '../../store/query-filters-sets.slice';
 import { loadFilterSet } from '../../use-cases/load-filter-set';
 
 export function FilterSetsHeader({
@@ -95,7 +96,7 @@ export function FilterSetsClearButton({
 export function FilterSetsItems({
   children,
 }: React.ComponentProps<typeof Column>) {
-  return <Column className="gap-1">{children}</Column>;
+  return <Column className="gap-2">{children}</Column>;
 }
 
 interface FilterSetsItemProps extends React.ComponentProps<typeof Card> {
@@ -120,6 +121,7 @@ export const FilterSetsItem = ({
         : '?with_alerts=false';
     navigate(filterSetPageConfig[filterSet.page].route + suffix);
   };
+  const loaded = useIsLoadedFilterSet(filterSet.id);
   return (
     <Popover
       open={open}
@@ -131,6 +133,7 @@ export const FilterSetsItem = ({
         asChild
       >
         <Card
+          variant={loaded ? 'highlight' : 'base'}
           {...props}
           onClick={onClickHandler}
           className="flex cursor-pointer items-center justify-between rounded-sm p-1 select-none"

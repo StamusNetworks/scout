@@ -12,7 +12,10 @@ import {
   clearQueryFilters,
   updateTagFilters,
 } from '../store/query-filters.slice';
-import { selectLoadedFilterSetId } from '../store/query-filters-sets.slice';
+import {
+  selectLoadedFilterSetId,
+  setLoadedFilterSetId,
+} from '../store/query-filters-sets.slice';
 
 export const loadFilterSet = (filterSet: QueryFilterSet) => {
   const loadedFilterSetId = selectLoadedFilterSetId(store.getState());
@@ -46,5 +49,6 @@ export const loadFilterSet = (filterSet: QueryFilterSet) => {
       }),
     );
   });
+  store.dispatch(setLoadedFilterSetId(filterSet.id));
   toast.success('Filterset applied');
 };
