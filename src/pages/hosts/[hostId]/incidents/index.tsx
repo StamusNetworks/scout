@@ -6,10 +6,11 @@ import { useSortingUrlState } from '@/common/design-system/molecules/data-table/
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetThreatsStatusQuery } from '@/features/hunt/threats/api/threats.api';
 import { threatStatusColumns } from '@/features/hunt/threats/components/threat-status.columns';
+import { ThreatStatusExpandedRow } from '@/features/hunt/threats/components/threat-status.expanded-row';
 
-const columns = threatStatusColumns.filter(
-  (col) => !['target', 'target_type'].includes(col.id!),
-);
+const columns = threatStatusColumns
+  .filter((col) => !['target', 'target_type'].includes(col.id!))
+  .map((col) => ({ ...col, visible: true }));
 
 export const HostIncidents = () => {
   const { hostId } = useParams();
@@ -33,6 +34,7 @@ export const HostIncidents = () => {
       onPaginationChange={setPagination}
       sorting={sorting}
       onSortingChange={setSorting}
+      ExpandedRow={ThreatStatusExpandedRow}
     />
   );
 };

@@ -1,0 +1,52 @@
+import { Row } from '@tanstack/react-table';
+import { groupBy } from 'ramda';
+
+import { Column } from '@/common/design-system/atoms/layout/column';
+import { ProtoFlow } from '@/common/design-system/graphs/proto-flow/proto-flow';
+
+import { useGetEventsQuery } from '../../events/api/events.api';
+import { Event } from '../../events/model/event.schema';
+import { EventValue } from '../../filtering/query-filters/components/event-value/event-value';
+import { ThreatStatus } from '../model/threat-status.schema';
+
+export const ThreatStatusExpandedRow = ({
+  row,
+}: {
+  row: Row<ThreatStatus>;
+}) => {
+  const { data } = useGetEventsQuery({
+    start_date: new Date(row.original.first_seen).getTime(),
+    end_date: new Date(row.original.last_seen).getTime(),
+    qfilter: `stamus.threat_id:${row.original.threat_id} AND (src_ip:${row.original.asset} OR dest_ip:${row.original.asset})`,
+    stamus: true,
+    alert: true,
+  });
+  const bySigId = groupBy(
+    (e: Event) => e.alert?.signature_id.toString() || 'unknown',
+  )(data?.results || []);
+  const uniqueSignatures = data?.results.reduce(
+    (acc, e) => {
+      if (acc.find((s) => s.signature_id === e.alert?.signature_id)) return acc;
+      return [...acc, e.alert];
+    },
+    [] as Event['alert'][],
+  );
+  return (
+    <Column className="gap-4 p-2">
+      {uniqueSignatures?.map((s) => (
+        <Column
+          key={s.signature_id}
+          className="gap-1"
+        >
+          <div key={s.signature_id}>
+            <EventValue
+              query_key="alert.signature"
+              value={s.signature}
+            />
+          </div>
+          <ProtoFlow events={bySigId[s.signature_id.toString()] || []} />
+        </Column>
+      ))}
+    </Column>
+  );
+};
