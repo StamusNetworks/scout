@@ -69,13 +69,13 @@ const TabsBadge = ({
 }) =>
   isLoading ? (
     <Spin className="ml-2 h-3 w-3 animate-spin" />
-  ) : count > 0 ? (
+  ) : (
     <Badge
       className="ml-2 min-w-5 px-1"
       variant="discreet"
     >
       {formatNumber(count)}
     </Badge>
-  ) : null;
+  );
 
 export { Tabs, TabsBadge, TabsContent, TabsList, TabsTrigger };
