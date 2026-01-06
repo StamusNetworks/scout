@@ -42,3 +42,25 @@ delete-env-from-app-of-apps:
     action: stop
   rules:
     - if: $UPSTREAM_NAME != "nightly_build"
+
+stamus-install-archive:
+  stage: deploy
+  variables:
+    APP: scout
+  image: kroniak/ssh-client
+  needs:
+    - build-artifacts
+  script:
+    # Pass the package to stamus-install
+    - echo "$CI_COMMIT_REF_NAME" | grep -q "^stamus-\([0-9.]*\)-" || exit 0
+    - export UPGRADE_NO="$(echo "$CI_COMMIT_REF_NAME" | sed -e "s/^stamus-\([0-9.]*\)-.*/\1/")"
+    - mkdir /root/.ssh/
+    - eval $(ssh-agent -s)
+    # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - ssh-keyscan -H "$GITLAB_RUNNER" > /root/.ssh/known_hosts
+    - ssh gitlab@"$GITLAB_RUNNER" mkdir -p "/home/gitlab/packages/$APP/$UPGRADE_NO/tags"
+    - scp -r "$CI_PROJECT_DIR/dist" gitlab@"$GITLAB_RUNNER":"/home/gitlab/packages/$APP/$UPGRADE_NO/tags"
+  rules:
+    - if: '$CI_COMMIT_TAG'
+
