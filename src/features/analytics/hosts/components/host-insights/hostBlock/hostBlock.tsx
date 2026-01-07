@@ -13,11 +13,14 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/common/design-system/atoms/ui/tooltip';
+import {
+  ComposablePagination,
+  ItemsCount,
+  PageSelector,
+} from '@/common/design-system/molecules/pagination';
 import { TableCard } from '@/common/design-system/molecules/table-card';
 import { selectDates } from '@/features/hunt/filtering/dates-filters/dates-filters';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
-
-const maxItems = 10;
 
 function formatForExport(data: HostBlockItem[] | undefined) {
   if (!data) return [];
@@ -27,6 +30,8 @@ function formatForExport(data: HostBlockItem[] | undefined) {
     end: new Date(item.last_seen).toISOString(),
   }));
 }
+
+const pageSize = 10;
 
 export const HostBlock = ({
   title,
@@ -45,7 +50,7 @@ export const HostBlock = ({
   const [fallbackEndDate] = useState(() => Date.now());
   const start_date = datesFilter.start_date ?? 0;
   const end_date = datesFilter.end_date ?? fallbackEndDate;
-
+  const [pageIndex, setPageIndex] = useState(0);
   return (
     <TableCard
       title={title}
@@ -72,31 +77,53 @@ export const HostBlock = ({
         </Row>
       </Grid>
       <Column className="gap-1">
-        {data?.slice(0, maxItems).map((item, index) =>
-          type === 'default' ? (
-            <HostBlockRow
-              key={index}
-              item={item}
-              startDate={start_date}
-              endDate={end_date}
-              filterId={filterId}
-            />
-          ) : type === 'expandable' ? (
-            <HostBlockExpandableRow
-              key={index}
-              item={item}
-              startDate={start_date}
-              endDate={end_date}
-              filterId={filterId}
-            />
-          ) : null,
-        )}
+        {data
+          ?.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
+          .map((item, index) =>
+            type === 'default' ? (
+              <HostBlockRow
+                key={index}
+                item={item}
+                startDate={start_date}
+                endDate={end_date}
+                filterId={filterId}
+              />
+            ) : type === 'expandable' ? (
+              <HostBlockExpandableRow
+                key={index}
+                item={item}
+                startDate={start_date}
+                endDate={end_date}
+                filterId={filterId}
+              />
+            ) : null,
+          )}
         {!data?.length && (
           <div className="mt-2 text-center">
             <p className="text-sm text-gray-500">No captured values.</p>
           </div>
         )}
       </Column>
+      {data && data.length > pageSize && (
+        <div className="mt-2">
+          <ComposablePagination
+            areSomeRowsSelected={false}
+            selectedRowsCount={0}
+            rowsCount={data?.length ?? 0}
+            totalCount={data?.length ?? 0}
+            pageSize={pageSize}
+            pageIndex={pageIndex}
+            onPageSizeChange={() => {}}
+            onPageIndexChange={setPageIndex}
+            isPreviousPage={pageIndex > 0}
+            isNextPage={pageIndex < Math.ceil(data?.length ?? 0 / pageSize) - 1}
+            pageCount={Math.ceil((data?.length ?? 0) / pageSize)}
+          >
+            <ItemsCount />
+            <PageSelector />
+          </ComposablePagination>
+        </div>
+      )}
     </TableCard>
   );
 };
