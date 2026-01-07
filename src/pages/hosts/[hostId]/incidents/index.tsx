@@ -5,8 +5,8 @@ import { usePaginationUrlState } from '@/common/design-system/molecules/data-tab
 import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetThreatsStatusQuery } from '@/features/hunt/threats/api/threats.api';
-import { threatStatusColumns } from '@/features/hunt/threats/components/threat-status.columns';
-import { ThreatStatusExpandedRow } from '@/features/hunt/threats/components/threat-status.expanded-row';
+import { threatStatusColumns } from '@/pages/hosts/[hostId]/incidents/threat-status.columns';
+import { ThreatStatusExpandedRow } from '@/pages/hosts/[hostId]/incidents/threat-status.expanded-row';
 
 const columns = threatStatusColumns
   .filter((col) => !['target', 'target_type'].includes(col.id!))
