@@ -1,11 +1,12 @@
 import { RowSelectionState } from '@tanstack/react-table';
-import { Group, Info, Plus, Trash, X } from 'lucide-react';
+import { Check, Group, Info, Plus, Trash, X } from 'lucide-react';
 import { parseAsString, parseAsStringLiteral, useQueryState } from 'nuqs';
 import { keys, values } from 'ramda';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
+import { Row } from '@/common/design-system/atoms/layout/row';
 import {
   Page,
   PageActions,
@@ -34,6 +35,7 @@ import { CustomColumnDef } from '@/common/design-system/molecules/data-table/fil
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
+import { cn } from '@/common/lib/utils';
 import { useGetFilterSetsQuery } from '@/features/hunt/filtering/query-filters/api/query-filter.api';
 import { openSaveFilterSetModal } from '@/features/hunt/filtering/query-filters/components/save-filterset/save-filterset.slice';
 import { filterSetPageConfig } from '@/features/hunt/filtering/query-filters/constants/query-filtersets';
@@ -44,6 +46,7 @@ import {
 import {
   addQueryFilterSets,
   QueryFiltersKey,
+  useIsLoadedFilterSet,
 } from '@/features/hunt/filtering/query-filters/store/query-filters-sets.slice';
 import { loadFilterSet } from '@/features/hunt/filtering/query-filters/use-cases/load-filter-set';
 import { disableHelp, useHelpState } from '@/features/ui/help/help.slice';
@@ -227,7 +230,7 @@ const getColumns = (enterprise: boolean): CustomColumnDef<QueryFilterSet>[] => [
   {
     id: 'name',
     header: 'Name',
-    cell: ({ row }) => <div>{row.original.name}</div>,
+    cell: ({ row }) => <Name filterSet={row.original} />,
   },
   ...(enterprise
     ? ([
@@ -321,5 +324,15 @@ const AddToDropdown = ({
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+};
+
+export const Name = ({ filterSet }: { filterSet: QueryFilterSet }) => {
+  const isSelected = useIsLoadedFilterSet(filterSet.id);
+  return (
+    <Row className={cn('items-center gap-1', isSelected && 'font-bold')}>
+      {isSelected && <Check className="shrink-0" />}
+      {filterSet.name}{' '}
+    </Row>
   );
 };
