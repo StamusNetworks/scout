@@ -102,6 +102,8 @@ interface NewTable<TData> {
   onPaginationChange?: (updater: Updater<PaginationState>) => void;
   expanded?: ExpandedState;
   onExpandedChange?: (updater: Updater<ExpandedState>) => void;
+  columnOrder?: string[];
+  onColumnOrderChange?: (order: Updater<string[]>) => void;
   // Components
   toolBar?: React.ReactNode;
   paginationbar?: boolean;
@@ -133,6 +135,8 @@ export function DataTable<TData>({
   onPaginationChange: controlledOnPaginationChange,
   expanded: controlledExpanded,
   onExpandedChange: controlledOnExpandedChange,
+  columnOrder: controlledColumnOrder,
+  onColumnOrderChange: controlledOnColumnOrderChange,
   // Components
   toolBar,
   paginationbar = true,
@@ -173,7 +177,7 @@ export function DataTable<TData>({
       columnFilters: controlledColumnFilters ?? columnFilters,
       pagination: controlledPagination ?? pagination,
       expanded: controlledExpanded ?? expanded,
-      columnOrder: columnOrder,
+      columnOrder: controlledColumnOrder ?? columnOrder,
     },
     getRowId: getRowId,
     enableRowSelection: true,
@@ -195,13 +199,13 @@ export function DataTable<TData>({
       controlledOnColumnVisibilityChange ?? setColumnVisibility,
     onSortingChange: controlledOnSortingChange ?? setSorting,
     onExpandedChange: controlledOnExpandedChange ?? setExpanded,
-    onColumnOrderChange: setColumnOrder,
+    onColumnOrderChange: controlledOnColumnOrderChange ?? setColumnOrder,
   });
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     if (active && over && active.id !== over.id) {
-      setColumnOrder((columnOrder) => {
+      table.setColumnOrder((columnOrder) => {
         const oldIndex = columnOrder.indexOf(active.id as string);
         const newIndex = columnOrder.indexOf(over.id as string);
         return arrayMove(columnOrder, oldIndex, newIndex); //this is just a splice util

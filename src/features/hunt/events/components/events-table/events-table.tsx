@@ -13,7 +13,12 @@ import { DataTable } from '@/common/design-system/molecules/data-table/data-tabl
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination.ts';
 import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting.ts';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams.tsx';
+import {
+  getHandleColumnsOrderChange,
+  selectColumnsOrder,
+} from '@/pages/events/eventsTable.slice.ts';
 import { routes } from '@/pages/routes.config.ts';
+import { useAppSelector } from '@/store/store.ts';
 
 import { useGetEventsQuery } from '../../api/events.api';
 import { Event } from '../../model/event.schema';
@@ -23,6 +28,8 @@ import { ExpandedEventRow } from './events.expanded-row.tsx';
 const getRowId = (originalRow: Event) => originalRow._id;
 
 export const EventsTable = () => {
+  const columnsOrder = useAppSelector(selectColumnsOrder);
+  const handleColumnOrderChange = getHandleColumnsOrderChange(columnsOrder);
   const navigate = useNavigate();
   const [pagination, setPagination] = usePaginationUrlState();
   const [sorting, setSorting, ordering] = useSortingUrlState();
@@ -56,6 +63,8 @@ export const EventsTable = () => {
       getRowId={getRowId}
       onRowClick={onRowClick}
       exportColumns={exportColumns}
+      columnOrder={columnsOrder}
+      onColumnOrderChange={handleColumnOrderChange}
       Empty={
         <Empty>
           <EmptyMedia variant="icon">
