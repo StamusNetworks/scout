@@ -32,6 +32,7 @@ import { DataTableToolbar } from '@/common/design-system/molecules/data-table/da
 import { CommandFilterSingle } from '@/common/design-system/molecules/data-table/filters/command-filter-single';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
+import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useGetFilterSetsQuery } from '@/features/hunt/filtering/query-filters/api/query-filter.api';
 import { openSaveFilterSetModal } from '@/features/hunt/filtering/query-filters/components/save-filterset/save-filterset.slice';
@@ -68,12 +69,13 @@ const pageReverseMap = Object.fromEntries(
 export const FilterSetsPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [pagination, setPagination] = usePaginationUrlState();
   const [search, setSearch] = useQueryState(
     'search',
     parseAsString.withDefault(''),
   );
   const [page, setPage] = useQueryState(
-    'page',
+    'target',
     parseAsStringLiteral(values(filterSetPageConfig).map((v) => v.label)),
   );
   const [type, setType] = useQueryState(
@@ -168,6 +170,8 @@ export const FilterSetsPage = () => {
           getRowId={(row) => row.id?.toString()}
           rowSelection={selectedRows}
           onRowSelectionChange={setSelectedRows}
+          pagination={pagination}
+          onPaginationChange={setPagination}
           toolBar={
             <DataTableToolbar>
               <TextFilter
