@@ -40,7 +40,7 @@ export const EventsAPI = API.injectEndpoints({
           hosts?: string;
           prev?: number;
         } & QFilter &
-        EventTypes
+        Partial<EventTypes>
     >({
       query: (params) => ({
         url: `/rules/es/alerts_count`,
