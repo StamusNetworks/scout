@@ -82,24 +82,28 @@ export const columns: CustomColumnDef<Host>[] = [
     ),
   },
   {
-    id: 'first_seen',
+    id: 'host_id.first_seen',
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
         title="First Seen"
       />
     ),
+    accessorKey: 'host_id.first_seen',
     cell: ({ row }) => <DateTime date={row.original.host_id.first_seen} />,
+    meta: { viewLabel: 'First Seen' },
   },
   {
-    id: 'last_seen',
+    id: 'host_id.last_seen',
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
         title="Last Seen"
       />
     ),
+    accessorKey: 'host_id.last_seen',
     cell: ({ row }) => <DateTime date={row.original.host_id.last_seen} />,
+    meta: { viewLabel: 'Last Seen' },
   },
   {
     id: 'hits',

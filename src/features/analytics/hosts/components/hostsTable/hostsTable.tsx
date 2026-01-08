@@ -4,6 +4,7 @@ import { DataTableToolbar } from '@/common/design-system/molecules/data-table/da
 import { DataTable } from '@/common/design-system/molecules/data-table/data-table.tsx';
 import { SwitchFilter } from '@/common/design-system/molecules/data-table/filters/switch-filter.tsx';
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination.ts';
+import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting.ts';
 import { useUpdateEffect } from '@/common/lib/use-update-effect.ts';
 import { routes } from '@/pages/routes.config.ts';
 
@@ -20,6 +21,7 @@ export const HostsTable = ({
   const navigate = useNavigate();
   const [withAlerts, setWithAlerts] = useWithAlertsParam();
   const [pagination, setPagination] = usePaginationUrlState();
+  const [sorting, setSorting, ordering] = useSortingUrlState();
 
   useUpdateEffect(() => {
     setPagination((prev) => ({ ...prev, pageIndex: 0 }));
@@ -29,6 +31,7 @@ export const HostsTable = ({
     pagination,
     withAlerts,
     inHomeNetwork,
+    ordering: ordering ?? '-hits',
   });
 
   return (
@@ -40,6 +43,8 @@ export const HostsTable = ({
       onRowClick={(row) => navigate(`${routes.hosts}/${row.original.ip}`)}
       pagination={pagination}
       onPaginationChange={setPagination}
+      sorting={sorting}
+      onSortingChange={setSorting}
       toolBar={
         <DataTableToolbar>
           <SwitchFilter
