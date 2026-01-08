@@ -82,7 +82,7 @@ export const TableCard = ({
       ) : (
         title
       )}
-      <CardContent className="p-3 pt-0">{children}</CardContent>
+      <CardContent className="px-3 pt-0 pb-2">{children}</CardContent>
     </Card>
   );
 };

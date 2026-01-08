@@ -84,50 +84,52 @@ export const HostBlock = ({
       headers={[title.slice(0, title.indexOf(' (')), 'start', 'end']}
       data={formatForExport(data)}
     >
-      <Grid className="w-full grid-cols-5 gap-2">
-        <div className="col-span-3" />
-        <Row className="col-span-2 mb-1 justify-between">
-          <Row className="items-end gap-1">
-            <span className="bg-foreground/50 h-2 w-0.5" />
-            <span className="text-xs">
-              {format(new Date(start_date), 'MMM do yyyy')}
-            </span>
-          </Row>
-          <Row className="items-end gap-1">
-            <span className="text-right text-xs">
-              {format(new Date(end_date), 'MMM do yyyy')}
-            </span>
-            <span className="bg-foreground/50 h-2 w-0.5" />
-          </Row>
-        </Row>
-      </Grid>
-      <Column className="gap-1">
-        {displayData.map((item, index) =>
-          type === 'default' ? (
-            <HostBlockRow
-              key={index}
-              item={item}
-              startDate={start_date}
-              endDate={end_date}
-              filterId={filterId}
-            />
-          ) : type === 'expandable' ? (
-            <HostBlockExpandableRow
-              key={index}
-              item={item}
-              startDate={start_date}
-              endDate={end_date}
-              filterId={filterId}
-            />
-          ) : null,
-        )}
-        {!data?.length && (
-          <div className="mt-2 text-center">
-            <p className="text-sm text-gray-500">No captured values.</p>
-          </div>
-        )}
-      </Column>
-      {data && data.length > pageSize && (
+      <Column className="h-48 justify-between">
+        <div>
+          <Grid className="w-full grid-cols-5 gap-2">
+            <div className="col-span-3" />
+            <Row className="col-span-2 mb-1 justify-between">
+              <Row className="items-end gap-1">
+                <span className="bg-foreground/50 h-2 w-0.5" />
+                <span className="text-xs">
+                  {format(new Date(start_date), 'MMM do yyyy')}
+                </span>
+              </Row>
+              <Row className="items-end gap-1">
+                <span className="text-right text-xs">
+                  {format(new Date(end_date), 'MMM do yyyy')}
+                </span>
+                <span className="bg-foreground/50 h-2 w-0.5" />
+              </Row>
+            </Row>
+          </Grid>
+          <Column className="gap-1">
+            {displayData.map((item, index) =>
+              type === 'default' ? (
+                <HostBlockRow
+                  key={index}
+                  item={item}
+                  startDate={start_date}
+                  endDate={end_date}
+                  filterId={filterId}
+                />
+              ) : type === 'expandable' ? (
+                <HostBlockExpandableRow
+                  key={index}
+                  item={item}
+                  startDate={start_date}
+                  endDate={end_date}
+                  filterId={filterId}
+                />
+              ) : null,
+            )}
+            {!data?.length && (
+              <div className="mt-2 text-center">
+                <p className="text-sm text-gray-500">No captured values.</p>
+              </div>
+            )}
+          </Column>
+        </div>
         <div className="mt-2">
           <ComposablePagination
             areSomeRowsSelected={false}
@@ -146,7 +148,7 @@ export const HostBlock = ({
             <PageSelector />
           </ComposablePagination>
         </div>
-      )}
+      </Column>
     </TableCard>
   );
 };
