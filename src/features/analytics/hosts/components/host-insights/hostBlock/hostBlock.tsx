@@ -141,8 +141,11 @@ export const HostBlock = ({
             onPageSizeChange={() => {}}
             onPageIndexChange={setPageIndex}
             isPreviousPage={pageIndex > 0}
-            isNextPage={pageIndex < Math.ceil(data?.length ?? 0 / pageSize) - 1}
+            isNextPage={
+              pageIndex < Math.ceil((data?.length ?? 0) / pageSize) - 1
+            }
             pageCount={Math.ceil((data?.length ?? 0) / pageSize)}
+            className="px-0"
           >
             <ItemsCount />
             <PageSelector />
