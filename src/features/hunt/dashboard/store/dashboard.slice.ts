@@ -26,7 +26,7 @@ const initialState: DashboardState = {
   pageSize: 5,
   panelsOrdering: [],
   collapsedPanels: [],
-  hideEmptyPanels: false,
+  hideEmptyPanels: true,
   disabledKeys: JSON.parse(
     localStorage.getItem('dashboard-disabled-keys') || '[]',
   ),
