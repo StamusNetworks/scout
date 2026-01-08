@@ -211,7 +211,7 @@ const HostBlockExpandableRow = ({
           className="col-span-3 cursor-pointer gap-1"
           onClick={() => setExpanded(!expanded)}
         >
-          <Badge>{item.prefix}</Badge>
+          <Badge className="px-1.5 py-0.25">{item.prefix}</Badge>
           <span className="overflow-hidden text-sm text-nowrap text-ellipsis">
             {item.value}
           </span>
