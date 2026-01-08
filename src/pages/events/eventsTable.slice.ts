@@ -66,6 +66,10 @@ export const eventsPageTableStateSlice = createTableSlice({
   defaultColumnsOrder: columns.map((col) => col.id!),
 });
 
+export const eventsPageTableInitialState = getInitialState(
+  columns.map((col) => col.id!),
+);
+
 export const { setColumnOrder, resetColumnOrder } =
   eventsPageTableStateSlice.actions;
 

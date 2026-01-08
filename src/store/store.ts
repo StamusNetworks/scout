@@ -25,6 +25,7 @@ import { settingsSlice } from '@/features/user/settings/settings.slice';
 import { tenancySlice } from '@/features/user/tenancy/tenancy.slice';
 import { userSlice } from '@/features/user/user/user.slice';
 import { eventsPageTableStateSlice } from '@/pages/events/eventsTable.slice';
+import { hostsPageStateSlice } from '@/pages/hosts/hosts-page-state.slice';
 
 import { API } from './api';
 
@@ -51,6 +52,7 @@ export const rootReducer = () =>
       events: combineReducers({
         table: eventsPageTableStateSlice.reducer,
       }),
+      hosts: hostsPageStateSlice.reducer,
     }),
     marketing: marketingStateSlice.reducer,
     uiState: uiStateSlice.reducer,

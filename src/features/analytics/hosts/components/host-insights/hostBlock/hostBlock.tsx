@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import { LaptopMinimal, LucideIcon } from 'lucide-react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
@@ -21,6 +21,8 @@ import {
 import { TableCard } from '@/common/design-system/molecules/table-card';
 import { selectDates } from '@/features/hunt/filtering/dates-filters/dates-filters';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
+import { selectSort } from '@/pages/hosts/hosts-page-state.slice';
+import { useAppSelector } from '@/store/store';
 
 function formatForExport(data: HostBlockItem[] | undefined) {
   if (!data) return [];
@@ -31,7 +33,7 @@ function formatForExport(data: HostBlockItem[] | undefined) {
   }));
 }
 
-const pageSize = 10;
+const pageSize = 5;
 
 export const HostBlock = ({
   title,
@@ -46,11 +48,34 @@ export const HostBlock = ({
   type: 'default' | 'expandable';
   Icon?: LucideIcon;
 }) => {
+  const sort = useAppSelector(selectSort);
   const datesFilter = useSelector(selectDates);
   const [fallbackEndDate] = useState(() => Date.now());
   const start_date = datesFilter.start_date ?? 0;
   const end_date = datesFilter.end_date ?? fallbackEndDate;
   const [pageIndex, setPageIndex] = useState(0);
+
+  const sortedData = useMemo(() => {
+    const copy = [...(data || [])];
+    return copy.sort((a, b) => {
+      switch (sort) {
+        case 'first-seen-asc':
+          return a.first_seen - b.first_seen;
+        case 'first-seen-desc':
+          return b.first_seen - a.first_seen;
+        case 'last-seen-asc':
+          return a.last_seen - b.last_seen;
+        case 'last-seen-desc':
+        default:
+          return b.last_seen - a.last_seen;
+      }
+    });
+  }, [data, sort]);
+
+  const displayData = useMemo(() => {
+    return sortedData?.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize);
+  }, [sortedData, pageIndex]);
+
   return (
     <TableCard
       title={title}
@@ -77,27 +102,25 @@ export const HostBlock = ({
         </Row>
       </Grid>
       <Column className="gap-1">
-        {data
-          ?.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
-          .map((item, index) =>
-            type === 'default' ? (
-              <HostBlockRow
-                key={index}
-                item={item}
-                startDate={start_date}
-                endDate={end_date}
-                filterId={filterId}
-              />
-            ) : type === 'expandable' ? (
-              <HostBlockExpandableRow
-                key={index}
-                item={item}
-                startDate={start_date}
-                endDate={end_date}
-                filterId={filterId}
-              />
-            ) : null,
-          )}
+        {displayData.map((item, index) =>
+          type === 'default' ? (
+            <HostBlockRow
+              key={index}
+              item={item}
+              startDate={start_date}
+              endDate={end_date}
+              filterId={filterId}
+            />
+          ) : type === 'expandable' ? (
+            <HostBlockExpandableRow
+              key={index}
+              item={item}
+              startDate={start_date}
+              endDate={end_date}
+              filterId={filterId}
+            />
+          ) : null,
+        )}
         {!data?.length && (
           <div className="mt-2 text-center">
             <p className="text-sm text-gray-500">No captured values.</p>

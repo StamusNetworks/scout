@@ -9,6 +9,7 @@ import { useUpdateEffect } from '@/common/lib/use-update-effect.ts';
 import { routes } from '@/pages/routes.config.ts';
 
 import { useHostsList } from '../../api/hooks/useHostsList.ts';
+import { HostValuesSort } from '../host-insights/host-values-sort.tsx';
 import { columns, exportColumns } from './hostsTable.columns.tsx';
 import { HostsTableExpandedRow } from './hostsTable.expandedRow.tsx';
 import { useWithAlertsParam } from './use-with-alerts-param.ts';
@@ -31,7 +32,7 @@ export const HostsTable = ({
     pagination,
     withAlerts,
     inHomeNetwork,
-    ordering: ordering ?? '-hits',
+    ordering: ordering ?? (withAlerts ? '-hits' : '-host_id.last_seen'),
   });
 
   return (
@@ -52,6 +53,9 @@ export const HostsTable = ({
             setValue={setWithAlerts}
             value={withAlerts}
           />
+          <div className="ml-2">
+            <HostValuesSort />
+          </div>
         </DataTableToolbar>
       }
       exportColumns={exportColumns.filter((col) =>

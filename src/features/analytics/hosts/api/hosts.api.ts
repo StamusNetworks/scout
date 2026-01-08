@@ -27,7 +27,6 @@ export const HostsAPI = API.injectEndpoints({
         url: `/appliances/host_id/`,
         method: 'GET',
         params: {
-          ordering: '-host_id.first_seen',
           highlight: 'true',
           ...buildQueryParams(params),
         },
@@ -42,6 +41,7 @@ export const HostsAPI = API.injectEndpoints({
         url: `/appliances/host_id_alerts/`,
         method: 'GET',
         params: {
+          highlight: 'true',
           ...buildQueryParams(params),
         },
       }),

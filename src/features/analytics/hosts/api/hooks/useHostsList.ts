@@ -9,10 +9,12 @@ export const useHostsList = ({
   withAlerts,
   pagination,
   inHomeNetwork,
+  ordering,
 }: {
   withAlerts: boolean;
   pagination: PaginationState;
   inHomeNetwork: 'true' | 'false' | 'all';
+  ordering: string;
 }) => {
   const QFBuilder = useQFBuilder();
   const params = useGlobalQueryParams(
@@ -26,12 +28,14 @@ export const useHostsList = ({
   const hostsWithAlertsResult = useGetHostsWithAlertsQuery({
     ...params,
     ...pagination,
+    ordering,
   });
   const hostsResult = useGetHostsQuery({
     tenant: params.tenant,
     start_date: params.start_date,
     end_date: params.end_date,
     host_id_qfilter: params.host_id_qfilter,
+    ordering,
     ...pagination,
   });
 

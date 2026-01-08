@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { DataTable } from '@/common/design-system/molecules/data-table/data-table.tsx';
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination.ts';
+import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting.ts';
 import { routes } from '@/pages/routes.config.ts';
 
 import { useHostsList } from '../../api/hooks/useHostsList.ts';
@@ -16,13 +17,15 @@ export const InventoryTable = ({
 }) => {
   const navigate = useNavigate();
   const [pagination, setPagination] = usePaginationUrlState();
+  const [sorting, setSorting, ordering] = useSortingUrlState();
   useEffect(() => {
     setPagination((prev) => ({ ...prev, pageIndex: 0 }));
-  }, [setPagination, inHomeNetwork]);
+  }, [inHomeNetwork]);
   const { data, isFetching } = useHostsList({
     pagination,
     withAlerts: false,
     inHomeNetwork,
+    ordering: ordering ?? '-host_id.last_seen',
   });
 
   return (
@@ -34,6 +37,8 @@ export const InventoryTable = ({
       onRowClick={(row) => navigate(`${routes.hosts}/${row.original.ip}`)}
       pagination={pagination}
       onPaginationChange={setPagination}
+      sorting={sorting}
+      onSortingChange={setSorting}
       exportColumns={exportColumns.filter((col) => col.label !== 'Hits')}
     />
   );
