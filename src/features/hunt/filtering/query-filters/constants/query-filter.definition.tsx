@@ -216,7 +216,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.EVENT,
   },
   {
-    label: 'Network Interface',
+    label: 'Capture Interface',
     key: 'in_iface',
     category: FilterCategory.EVENT,
   },
