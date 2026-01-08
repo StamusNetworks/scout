@@ -1,6 +1,7 @@
 import {
   ArrowUpDown,
   Binary,
+  Building2,
   LaptopMinimal,
   LucideIcon,
   PencilRuler,
@@ -149,13 +150,17 @@ export const FilterSetsItem = ({
               )}
               {['DASHBOARDS', 'ALERTS_LIST', 'RULES_LIST'].includes(
                 filterSet.page,
-              ) && <FilterSetEventsBadge filterSet={filterSet} />}
-              {['DASHBOARDS', 'ALERTS_LIST', 'RULES_LIST'].includes(
-                filterSet.page,
-              ) && <FilterSetHostsWithEventsBadge filterSet={filterSet} />}
-              {['DASHBOARDS', 'ALERTS_LIST', 'RULES_LIST'].includes(
-                filterSet.page,
-              ) && <FilterSetDetectionMethodsBadge filterSet={filterSet} />}
+              ) && (
+                <>
+                  <FilterSetEventsBadge filterSet={filterSet} />
+                  <FilterSetInternalHostsWithEventsBadge
+                    filterSet={filterSet}
+                  />
+                  <FilterSetHostsWithEventsBadge filterSet={filterSet} />
+                  <FilterSetDetectionMethodsBadge filterSet={filterSet} />
+                </>
+              )}
+
               {filterSet.page === 'SESSION_EVENTS' && (
                 <FilterSetTransactionsBadge filterSet={filterSet} />
               )}
@@ -311,6 +316,35 @@ function FilterSetHostsBadge({ filterSet }: { filterSet: QueryFilterSet }) {
   );
 }
 
+function FilterSetInternalHostsWithEventsBadge({
+  filterSet,
+}: {
+  filterSet: QueryFilterSet;
+}) {
+  const navigate = useNavigate();
+  const QFBuilder = useQFBuilder();
+  const params = useFilterSetQueryParams(filterSet, [
+    QFBuilder.createFilter('host_id.in_home_net', 'true'),
+  ]);
+  const hosts = useGetHostsWithAlertsQuery({
+    ...params,
+    pageSize: 1,
+    highlight: true,
+  });
+  const onClickHandler = () => {
+    loadFilterSet(filterSet);
+    navigate(routes.hosts + '?in_home_net=true');
+  };
+  return (
+    <FilterSetBadge
+      Icon={Building2}
+      count={hosts.data?.count}
+      loading={hosts.isFetching}
+      handleClick={onClickHandler}
+    />
+  );
+}
+
 function FilterSetHostsWithEventsBadge({
   filterSet,
 }: {
@@ -409,14 +443,19 @@ function mapPersistedToFilterState(
   };
 }
 
-function useFilterSetQueryParams(filterSet: QueryFilterSet) {
+function useFilterSetQueryParams(
+  filterSet: QueryFilterSet,
+  additionalFilters?: QueryFilterState[],
+) {
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const QFBuilder = useQFBuilder();
   const appTags = useAppSelector(selectTagFilters);
   const tags = getTagsFromFilterSet(filterSet);
-  const filters = getFiltersFromFilterSet(filterSet)?.map(
-    mapPersistedToFilterState,
-  );
+  const filters = [
+    ...(additionalFilters ?? []),
+    ...(getFiltersFromFilterSet(filterSet)?.map(mapPersistedToFilterState) ??
+      []),
+  ];
   return {
     start_date: params.start_date,
     end_date: params.end_date,

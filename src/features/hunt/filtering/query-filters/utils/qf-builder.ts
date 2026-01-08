@@ -2,6 +2,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { esEscape } from '@/common/lib/strings';
 
+import { FilterCategory } from '../constants/query-filter.config';
+import { getFilterDef } from '../constants/query-filter.definition';
 import {
   QueryFilterDefinition,
   QueryFilterState,
@@ -24,7 +26,12 @@ export function QFBuilder(
     tagsFilters?: AlertTags | null,
     novelty?: boolean,
   ) {
-    const qfilter = filtersToStringArray(queryFilters, definitions, suffix);
+    const eventFilters = queryFilters?.filter(
+      (f) =>
+        getFilterDef(f.key)?.category === FilterCategory.EVENT ||
+        (getFilterDef(f.key) === undefined && !f.key.startsWith('host_id.')),
+    );
+    const qfilter = filtersToStringArray(eventFilters, definitions, suffix);
     // Add Alert tags filters
     const tagsQfilter = getTagsFilters(tagsFilters);
     if (tagsQfilter) {

@@ -853,6 +853,11 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
 export const QueryFilters: QueryFilterDefinition[] = [
   ...CEQueryFilters,
   {
+    label: 'In home network',
+    key: 'host_id.in_home_net',
+    category: FilterCategory.HOST,
+  },
+  {
     label: 'HTTP Server',
     key: 'host_id.services.values.http.server',
     category: FilterCategory.HOST,
