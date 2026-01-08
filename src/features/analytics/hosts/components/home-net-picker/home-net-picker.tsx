@@ -9,14 +9,13 @@ import {
 export const HomeNetPicker = () => {
   const [inHomeNet, setInHomeNet] = useQueryState(
     'in_home_net',
-    parseAsStringLiteral(['internal', 'external', 'all']).withDefault('all'),
+    parseAsStringLiteral(['true', 'false', 'all']).withDefault('all'),
   );
+  console.log(inHomeNet);
   return (
     <Tabs
       value={inHomeNet}
-      onValueChange={(value) =>
-        setInHomeNet(value as 'internal' | 'external' | 'all')
-      }
+      onValueChange={(value) => setInHomeNet(value as 'true' | 'false' | 'all')}
     >
       <TabsList>
         <TabsTrigger value="true">Internal</TabsTrigger>
