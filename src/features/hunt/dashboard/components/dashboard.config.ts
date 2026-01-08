@@ -340,7 +340,7 @@ export const CEdashboard: Record<string, DashboardPanel> = {
       },
       {
         i: 'tls.ja4',
-        title: 'JA4 Hashes',
+        title: 'JA4 fingerprints',
         tooltip: 'JA4 fingerprints for TLS client and server identification',
       },
       {
