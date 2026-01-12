@@ -37,7 +37,7 @@ import {
   VisibilityState,
 } from '@tanstack/react-table';
 import { cva } from 'class-variance-authority';
-import { GripVertical, Search } from 'lucide-react';
+import { GripVertical, RotateCcw, Search } from 'lucide-react';
 import React, { CSSProperties, useEffect, useState } from 'react';
 
 import {
@@ -54,6 +54,7 @@ import { Paginated } from '@/common/fetching/fetching.types';
 import { cn } from '@/common/lib/utils';
 
 import { Row as RowComponent } from '../../atoms/layout/row';
+import { Button } from '../../atoms/ui/button';
 import { Checkbox } from '../../atoms/ui/checkbox';
 import {
   Empty as EmptyComponent,
@@ -111,6 +112,8 @@ interface NewTable<TData> {
   defaultPageSize?: number;
   rowClickCursor?: 'pointer' | 'default' | 'zoomin';
   exportColumns?: ExportColumn<TData>[];
+  canReset?: boolean;
+  onClickReset?: () => void;
 }
 
 export function DataTable<TData>({
@@ -144,6 +147,8 @@ export function DataTable<TData>({
   defaultPageSize = 10,
   rowClickCursor = 'zoomin',
   exportColumns,
+  canReset = false,
+  onClickReset,
 }: NewTable<TData>) {
   // Local state management
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -258,6 +263,19 @@ export function DataTable<TData>({
             />
           )}
           <DataTableViewOptions table={table} />
+          {canReset && !!onClickReset && (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="hidden h-8 border-dashed lg:flex"
+              onClick={onClickReset}
+              aria-label="Reset table view"
+            >
+              <RotateCcw className="h-4 w-4" />
+              Reset
+            </Button>
+          )}
         </RowComponent>
       </RowComponent>
       <DndContext

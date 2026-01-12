@@ -21,6 +21,8 @@ export const InventoryTable = ({
     onColumnOrderChange,
     columnVisibility,
     onColumnVisibilityChange,
+    canReset,
+    onClickReset,
   } = useTablePreferences({
     tableId: 'inventoryTable',
     columns,
@@ -54,6 +56,8 @@ export const InventoryTable = ({
       onColumnOrderChange={onColumnOrderChange}
       columnVisibility={columnVisibility}
       onColumnVisibilityChange={onColumnVisibilityChange}
+      canReset={canReset}
+      onClickReset={onClickReset}
     />
   );
 };

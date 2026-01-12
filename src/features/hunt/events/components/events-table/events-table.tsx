@@ -29,6 +29,8 @@ export const EventsTable = () => {
     onColumnOrderChange,
     columnVisibility,
     onColumnVisibilityChange,
+    canReset,
+    onClickReset,
   } = useTablePreferences({
     tableId: 'eventsPageTable',
     columns,
@@ -70,6 +72,8 @@ export const EventsTable = () => {
       onColumnOrderChange={onColumnOrderChange}
       columnVisibility={columnVisibility}
       onColumnVisibilityChange={onColumnVisibilityChange}
+      canReset={canReset}
+      onClickReset={onClickReset}
       Empty={
         <Empty>
           <EmptyMedia variant="icon">

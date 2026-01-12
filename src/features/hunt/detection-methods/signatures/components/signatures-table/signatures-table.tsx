@@ -23,6 +23,8 @@ export const SignaturesTable = () => {
     onColumnOrderChange,
     columnVisibility,
     onColumnVisibilityChange,
+    canReset,
+    onClickReset,
   } = useTablePreferences({
     tableId: 'detectionMethodsTable',
     columns: detectionMethodsColumns,
@@ -76,6 +78,8 @@ export const SignaturesTable = () => {
       onColumnOrderChange={onColumnOrderChange}
       columnVisibility={columnVisibility}
       onColumnVisibilityChange={onColumnVisibilityChange}
+      canReset={canReset}
+      onClickReset={onClickReset}
     />
   );
 };

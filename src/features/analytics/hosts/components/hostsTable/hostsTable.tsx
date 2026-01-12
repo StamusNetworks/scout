@@ -25,6 +25,8 @@ export const HostsTable = ({
     onColumnOrderChange,
     columnVisibility,
     onColumnVisibilityChange,
+    canReset,
+    onClickReset,
   } = useTablePreferences({
     tableId: 'hostsTable',
     columns,
@@ -75,6 +77,8 @@ export const HostsTable = ({
       onColumnOrderChange={onColumnOrderChange}
       columnVisibility={columnVisibility}
       onColumnVisibilityChange={onColumnVisibilityChange}
+      canReset={canReset}
+      onClickReset={onClickReset}
     />
   );
 };
