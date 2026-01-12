@@ -1,3 +1,4 @@
+import { tablePreferencesInitialState } from '@/common/design-system/molecules/data-table/table-preferences.slice';
 import { dashboardPageStateInitialState } from '@/features/hunt/dashboard/store/dashboard.slice';
 import { createEditDeclarationModalInitialState } from '@/features/hunt/filter-actions/components/filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
 import { createEditSuppressModalInitialState } from '@/features/hunt/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
@@ -18,7 +19,6 @@ import { authInitialState } from '@/features/user/auth/store/auth.slice';
 import { settingsInitialState } from '@/features/user/settings/settings.slice';
 import { tenancyInitialState } from '@/features/user/tenancy/tenancy.slice';
 import { userInitialState } from '@/features/user/user/user.slice';
-import { eventsPageTableInitialState } from '@/pages/events/eventsTable.slice';
 import { hostsPageInitialState } from '@/pages/hosts/hosts-page-state.slice';
 
 import { RootState } from './store';
@@ -35,11 +35,9 @@ export const initialState: Omit<RootState, 'API'> = {
   },
   pages: {
     explorer: dashboardPageStateInitialState,
-    events: {
-      table: eventsPageTableInitialState,
-    },
     hosts: hostsPageInitialState,
   },
+  tablePreferences: tablePreferencesInitialState,
   uiState: uiStateInitialState,
   preferences: preferencesInitialState,
   help: helpInitialState,

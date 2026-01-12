@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { VisibilityState } from '@tanstack/react-table';
 
 import { RootState } from '@/store/store';
 
@@ -7,6 +8,8 @@ export type TableId = string;
 export type TablePreferencesEntry = {
   columnOrder: string[];
   defaultColumnOrder: string[];
+  columnVisibility: VisibilityState;
+  defaultColumnVisibility: VisibilityState;
 };
 
 export type TablePreferencesState = Record<TableId, TablePreferencesEntry>;
@@ -34,11 +37,38 @@ export const normalizeColumnOrder = (
   return [...filtered, ...missing];
 };
 
+export const normalizeColumnVisibility = ({
+  columnIds,
+  defaultVisibility,
+  persistedVisibility,
+}: {
+  columnIds: string[];
+  defaultVisibility: VisibilityState;
+  persistedVisibility: VisibilityState;
+}) => {
+  const normalized: VisibilityState = {};
+  const allowedIds = new Set(columnIds);
+
+  for (const id of columnIds) {
+    normalized[id] = defaultVisibility[id] ?? true;
+  }
+
+  for (const [id, isVisible] of Object.entries(persistedVisibility)) {
+    if (!allowedIds.has(id)) {
+      continue;
+    }
+    normalized[id] = isVisible;
+  }
+
+  return normalized;
+};
+
 const initialState: TablePreferencesState = {};
 
 type RegisterTablePayload = {
   tableId: TableId;
   defaultColumnOrder: string[];
+  defaultColumnVisibility?: VisibilityState;
 };
 
 type SetColumnOrderPayload = {
@@ -46,41 +76,78 @@ type SetColumnOrderPayload = {
   order: string[];
 };
 
+type SetColumnVisibilityPayload = {
+  tableId: TableId;
+  visibility: VisibilityState;
+};
+
 export const tablePreferencesSlice = createSlice({
   name: 'tablePreferences',
   initialState,
   reducers: {
     registerTable: (state, action: PayloadAction<RegisterTablePayload>) => {
-      const { tableId, defaultColumnOrder } = action.payload;
+      const {
+        tableId,
+        defaultColumnOrder,
+        defaultColumnVisibility = {},
+      } = action.payload;
 
       const existing = state[tableId];
       if (!existing) {
         state[tableId] = {
           defaultColumnOrder,
           columnOrder: defaultColumnOrder,
+          defaultColumnVisibility,
+          columnVisibility: normalizeColumnVisibility({
+            columnIds: defaultColumnOrder,
+            defaultVisibility: defaultColumnVisibility,
+            persistedVisibility: {},
+          }),
         };
         return;
       }
 
+      // If persisted, we normalize the order in case of new columns or removed columns
       existing.defaultColumnOrder = defaultColumnOrder;
       existing.columnOrder = normalizeColumnOrder(
         defaultColumnOrder,
         existing.columnOrder,
       );
+      // If persisted, we normalize the visibility in case of new columns or removed columns
+      existing.defaultColumnVisibility = defaultColumnVisibility;
+      existing.columnVisibility = normalizeColumnVisibility({
+        columnIds: defaultColumnOrder,
+        defaultVisibility: defaultColumnVisibility,
+        persistedVisibility: existing.columnVisibility,
+      });
     },
     setColumnOrder: (state, action: PayloadAction<SetColumnOrderPayload>) => {
       const { tableId, order } = action.payload;
 
       const existing = state[tableId];
       if (!existing) {
-        state[tableId] = {
-          defaultColumnOrder: order,
-          columnOrder: order,
-        };
+        return;
+      }
+      existing.columnOrder = normalizeColumnOrder(
+        existing.defaultColumnOrder,
+        order,
+      );
+    },
+    setColumnVisibility: (
+      state,
+      action: PayloadAction<SetColumnVisibilityPayload>,
+    ) => {
+      const { tableId, visibility } = action.payload;
+      const existing = state[tableId];
+      if (!existing) {
         return;
       }
 
-      existing.columnOrder = order;
+      existing.columnVisibility = normalizeColumnVisibility({
+        columnIds: existing.defaultColumnOrder,
+        defaultVisibility: existing.defaultColumnVisibility,
+        persistedVisibility: visibility,
+      });
     },
     resetColumnOrder: (state, action: PayloadAction<TableId>) => {
       const tableId = action.payload;
@@ -91,11 +158,29 @@ export const tablePreferencesSlice = createSlice({
 
       existing.columnOrder = existing.defaultColumnOrder;
     },
+    resetColumnVisibility: (state, action: PayloadAction<TableId>) => {
+      const tableId = action.payload;
+      const existing = state[tableId];
+      if (!existing) {
+        return;
+      }
+
+      existing.columnVisibility = normalizeColumnVisibility({
+        columnIds: existing.defaultColumnOrder,
+        defaultVisibility: existing.defaultColumnVisibility,
+        persistedVisibility: {},
+      });
+    },
   },
 });
 
-export const { registerTable, setColumnOrder, resetColumnOrder } =
-  tablePreferencesSlice.actions;
+export const {
+  registerTable,
+  setColumnOrder,
+  resetColumnOrder,
+  setColumnVisibility,
+  resetColumnVisibility,
+} = tablePreferencesSlice.actions;
 
 export const tablePreferencesInitialState = initialState;
 
@@ -121,4 +206,28 @@ export const selectRawColumnOrder = (state: RootState, tableId: TableId) => {
     return [];
   }
   return entry.columnOrder;
+};
+
+export const selectColumnVisibility = (state: RootState, tableId: TableId) => {
+  const entry = selectTablePreferencesEntry(state, tableId);
+  if (!entry) {
+    return {};
+  }
+
+  return normalizeColumnVisibility({
+    columnIds: entry.defaultColumnOrder,
+    defaultVisibility: entry.defaultColumnVisibility,
+    persistedVisibility: entry.columnVisibility,
+  });
+};
+
+export const selectRawColumnVisibility = (
+  state: RootState,
+  tableId: TableId,
+) => {
+  const entry = selectTablePreferencesEntry(state, tableId);
+  if (!entry) {
+    return {};
+  }
+  return entry.columnVisibility;
 };

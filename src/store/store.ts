@@ -4,6 +4,7 @@ import { persistReducer } from 'redux-persist';
 import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage';
 
+import { tablePreferencesSlice } from '@/common/design-system/molecules/data-table/table-preferences.slice';
 import { dashboardPageStateSlice } from '@/features/hunt/dashboard/store/dashboard.slice';
 import { createEditDeclarationModalSlice } from '@/features/hunt/filter-actions/components/filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
 import { createEditSuppressModalSlice } from '@/features/hunt/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
@@ -24,7 +25,6 @@ import { authSlice } from '@/features/user/auth/store/auth.slice';
 import { settingsSlice } from '@/features/user/settings/settings.slice';
 import { tenancySlice } from '@/features/user/tenancy/tenancy.slice';
 import { userSlice } from '@/features/user/user/user.slice';
-import { eventsPageTableStateSlice } from '@/pages/events/eventsTable.slice';
 import { hostsPageStateSlice } from '@/pages/hosts/hosts-page-state.slice';
 
 import { API } from './api';
@@ -32,7 +32,14 @@ import { API } from './api';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['filters', 'pages', 'preferences', 'help', 'investigation'],
+  whitelist: [
+    'filters',
+    'pages',
+    'preferences',
+    'help',
+    'investigation',
+    'tablePreferences',
+  ],
   stateReconciler: autoMergeLevel2,
 };
 
@@ -49,11 +56,9 @@ export const rootReducer = () =>
     }),
     pages: combineReducers({
       explorer: dashboardPageStateSlice.reducer,
-      events: combineReducers({
-        table: eventsPageTableStateSlice.reducer,
-      }),
       hosts: hostsPageStateSlice.reducer,
     }),
+    tablePreferences: tablePreferencesSlice.reducer,
     marketing: marketingStateSlice.reducer,
     uiState: uiStateSlice.reducer,
     preferences: preferencesSlice.reducer,

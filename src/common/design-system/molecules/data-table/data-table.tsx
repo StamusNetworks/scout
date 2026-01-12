@@ -221,9 +221,22 @@ export function DataTable<TData>({
 
   // hide visible false columns
   useEffect(() => {
+    const currentVisibility = table.getState().columnVisibility;
     const hiddenColumns = columns
       .filter((col) => col.visible === false)
-      .reduce((acc, curr) => ({ ...acc, [curr.id!]: false }), {});
+      .reduce<VisibilityState>((acc, curr) => {
+        const columnId = curr.id!;
+        if (currentVisibility[columnId] !== undefined) {
+          return acc;
+        }
+        acc[columnId] = false;
+        return acc;
+      }, {});
+
+    if (Object.keys(hiddenColumns).length === 0) {
+      return;
+    }
+
     table.setColumnVisibility((state) => ({ ...state, ...hiddenColumns }));
   }, [columns, table]);
 

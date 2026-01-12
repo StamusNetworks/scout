@@ -1,6 +1,5 @@
-import { Row } from '@tanstack/react-table';
+import { Row, VisibilityState } from '@tanstack/react-table';
 import { Binary } from 'lucide-react';
-import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -13,7 +12,7 @@ import {
 import { DataTable } from '@/common/design-system/molecules/data-table/data-table.tsx';
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination.ts';
 import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting.ts';
-import { useTableColumnOrder } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
+import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams.tsx';
 import { routes } from '@/pages/routes.config.ts';
 
@@ -25,11 +24,20 @@ import { ExpandedEventRow } from './events.expanded-row.tsx';
 const getRowId = (originalRow: Event) => originalRow._id;
 
 const defaultColumnOrder = columns.map((col) => col.id!);
+const defaultColumnVisibility: VisibilityState = Object.fromEntries(
+  columns.map((col) => [col.id!, col.visible !== false]),
+);
 
 export const EventsTable = () => {
-  const { columnOrder, onColumnOrderChange } = useTableColumnOrder({
+  const {
+    columnOrder,
+    onColumnOrderChange,
+    columnVisibility,
+    onColumnVisibilityChange,
+  } = useTablePreferences({
     tableId: 'eventsPageTable',
     defaultColumnOrder,
+    defaultColumnVisibility,
   });
   const navigate = useNavigate();
   const [pagination, setPagination] = usePaginationUrlState();
@@ -66,6 +74,8 @@ export const EventsTable = () => {
       exportColumns={exportColumns}
       columnOrder={columnOrder}
       onColumnOrderChange={onColumnOrderChange}
+      columnVisibility={columnVisibility}
+      onColumnVisibilityChange={onColumnVisibilityChange}
       Empty={
         <Empty>
           <EmptyMedia variant="icon">
