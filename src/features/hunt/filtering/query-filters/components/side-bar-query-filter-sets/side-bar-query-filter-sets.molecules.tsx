@@ -146,7 +146,10 @@ export const FilterSetsItem = ({
             </Row>
             <Row className="gap-1">
               {filterSet.page === 'HOSTS_LIST' && (
-                <FilterSetHostsBadge filterSet={filterSet} />
+                <>
+                  <FilterSetInternalHostsBadge filterSet={filterSet} />
+                  <FilterSetHostsBadge filterSet={filterSet} />
+                </>
               )}
               {['DASHBOARDS', 'ALERTS_LIST', 'RULES_LIST'].includes(
                 filterSet.page,
@@ -309,6 +312,37 @@ function FilterSetHostsBadge({ filterSet }: { filterSet: QueryFilterSet }) {
   return (
     <FilterSetBadge
       Icon={LaptopMinimal}
+      count={hosts.data?.count}
+      loading={hosts.isFetching}
+      handleClick={onClickHandler}
+    />
+  );
+}
+
+function FilterSetInternalHostsBadge({
+  filterSet,
+}: {
+  filterSet: QueryFilterSet;
+}) {
+  const navigate = useNavigate();
+  const QFBuilder = useQFBuilder();
+  const params = useFilterSetQueryParams(filterSet, [
+    QFBuilder.createFilter('host_id.in_home_net', 'true'),
+  ]);
+  const hosts = useGetHostsQuery({
+    start_date: params.start_date,
+    end_date: params.end_date,
+    tenant: params.tenant,
+    host_id_qfilter: params.host_id_qfilter,
+    pageSize: 1,
+  });
+  const onClickHandler = () => {
+    loadFilterSet(filterSet);
+    navigate(routes.hosts + '?with_alerts=false&in_home_net=true');
+  };
+  return (
+    <FilterSetBadge
+      Icon={Building2}
       count={hosts.data?.count}
       loading={hosts.isFetching}
       handleClick={onClickHandler}
