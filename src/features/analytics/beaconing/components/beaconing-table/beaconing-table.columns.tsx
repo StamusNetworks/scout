@@ -69,6 +69,7 @@ export const beaconingTableColumns: CustomColumnDef<BeaconingEvent>[] = [
     enableSorting: false,
   },
   {
+    id: 'entities',
     accessorKey: 'entities',
     header: ({ column }) => (
       <DataTableColumnHeader

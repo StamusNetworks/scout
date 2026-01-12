@@ -5,6 +5,7 @@ import { Signature } from '@/features/hunt/detection-methods/signatures/model/si
 
 export const skeletonColumns: CustomColumnDef<Signature>[] = [
   {
+    id: 'sid',
     accessorKey: 'sid',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -15,6 +16,7 @@ export const skeletonColumns: CustomColumnDef<Signature>[] = [
     cell: () => <Skeleton className="h-5 w-24 text-sm" />,
   },
   {
+    id: 'category',
     accessorKey: 'category',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -25,6 +27,7 @@ export const skeletonColumns: CustomColumnDef<Signature>[] = [
     cell: () => <Skeleton className="h-5 w-24 text-sm" />,
   },
   {
+    id: 'msg',
     accessorKey: 'msg',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -35,6 +38,7 @@ export const skeletonColumns: CustomColumnDef<Signature>[] = [
     cell: () => <Skeleton className="h-5 w-80 text-sm" />,
   },
   {
+    id: 'created',
     accessorKey: 'created',
     header: ({ column }) => (
       <DataTableColumnHeader

@@ -73,6 +73,7 @@ export const filterActionsColumns: CustomColumnDef<FilterAction>[] = [
     cell: ({ row }) => <DataTableRowExpander row={row} />,
   },
   {
+    id: 'id',
     accessorKey: 'id',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -83,6 +84,7 @@ export const filterActionsColumns: CustomColumnDef<FilterAction>[] = [
     cell: ({ row }) => <div>{getRowDescription(row.original)}</div>,
   },
   {
+    id: 'action',
     accessorKey: 'action',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -93,6 +95,7 @@ export const filterActionsColumns: CustomColumnDef<FilterAction>[] = [
     enableSorting: false,
   },
   {
+    id: 'filters',
     accessorKey: 'filters',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -103,6 +106,7 @@ export const filterActionsColumns: CustomColumnDef<FilterAction>[] = [
     cell: ({ row }) => <div>{getRowFilters(row.original)}</div>,
   },
   {
+    id: 'rulesets',
     accessorKey: 'rulesets',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -113,6 +117,7 @@ export const filterActionsColumns: CustomColumnDef<FilterAction>[] = [
     enableSorting: false,
   },
   {
+    id: 'index',
     accessorKey: 'index',
     header: ({ column }) => (
       <DataTableColumnHeader

@@ -29,6 +29,7 @@ export const columns: CustomColumnDef<Deeplink>[] = [
     cell: ({ row }) => <SwitchDeeplinkEnabled deeplink={row.original} />,
   },
   {
+    id: 'name',
     accessorKey: 'name',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -52,6 +53,7 @@ export const columns: CustomColumnDef<Deeplink>[] = [
         : row.original.entities.map((entity) => entity.name).join(', '),
   },
   {
+    id: 'template',
     accessorKey: 'template',
     enableSorting: false,
     header: ({ column }) => (

@@ -10,6 +10,7 @@ export const getColumns = (
   onDownload: (file: EventFileInfo & { host: string }) => void,
 ): CustomColumnDef<EventFileInfo & { host: string }>[] => [
   {
+    id: 'sha256',
     accessorKey: 'sha256',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -25,6 +26,7 @@ export const getColumns = (
     ),
   },
   {
+    id: 'filename',
     accessorKey: 'filename',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -35,6 +37,7 @@ export const getColumns = (
     cell: ({ row }) => <div>{row.original.filename}</div>,
   },
   {
+    id: 'mimetype',
     accessorKey: 'mimetype',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -45,6 +48,7 @@ export const getColumns = (
     cell: ({ row }) => <div>{row.original.mimetype}</div>,
   },
   {
+    id: 'size',
     accessorKey: 'size',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -55,6 +59,7 @@ export const getColumns = (
     cell: ({ row }) => <div>{row.original.size}</div>,
   },
   {
+    id: 'download',
     accessorKey: 'download',
     header: ({ column }) => (
       <DataTableColumnHeader

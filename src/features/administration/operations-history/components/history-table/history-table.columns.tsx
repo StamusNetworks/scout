@@ -13,6 +13,7 @@ export const columns: CustomColumnDef<OperationRecord>[] = [
       row.original.comment && <DataTableRowExpander row={row} />,
   },
   {
+    id: 'title',
     accessorKey: 'title',
     enableSorting: false,
     header: ({ column }) => (
@@ -23,6 +24,7 @@ export const columns: CustomColumnDef<OperationRecord>[] = [
     ),
   },
   {
+    id: 'description',
     accessorKey: 'description',
     enableSorting: false,
     header: ({ column }) => (
@@ -34,6 +36,7 @@ export const columns: CustomColumnDef<OperationRecord>[] = [
   },
   {
     id: 'date',
+    accessorKey: 'date',
     enableSorting: false,
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -44,6 +47,7 @@ export const columns: CustomColumnDef<OperationRecord>[] = [
     accessorFn: (row) => format(new Date(row.date), 'yyyy-MM-dd HH:mm:ss'),
   },
   {
+    id: 'username',
     accessorKey: 'username',
     enableSorting: false,
     header: ({ column }) => (
