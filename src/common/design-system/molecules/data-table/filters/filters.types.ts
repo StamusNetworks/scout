@@ -47,6 +47,7 @@ export type Filter =
   | CheckboxFilter;
 
 export type CustomColumnDef<T> = ColumnDef<T> & {
+  id: string;
   colKey?: string;
   filters?: Filter[];
   visible?: boolean;

@@ -1,4 +1,4 @@
-import { Row, VisibilityState } from '@tanstack/react-table';
+import { Row } from '@tanstack/react-table';
 import { Binary } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -23,11 +23,6 @@ import { ExpandedEventRow } from './events.expanded-row.tsx';
 
 const getRowId = (originalRow: Event) => originalRow._id;
 
-const defaultColumnOrder = columns.map((col) => col.id!);
-const defaultColumnVisibility: VisibilityState = Object.fromEntries(
-  columns.map((col) => [col.id!, col.visible !== false]),
-);
-
 export const EventsTable = () => {
   const {
     columnOrder,
@@ -36,8 +31,7 @@ export const EventsTable = () => {
     onColumnVisibilityChange,
   } = useTablePreferences({
     tableId: 'eventsPageTable',
-    defaultColumnOrder,
-    defaultColumnVisibility,
+    columns,
   });
   const navigate = useNavigate();
   const [pagination, setPagination] = usePaginationUrlState();

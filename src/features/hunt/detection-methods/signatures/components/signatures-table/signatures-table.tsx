@@ -5,7 +5,7 @@ import { DataTableToolbar } from '@/common/design-system/molecules/data-table/da
 import { SwitchFilter } from '@/common/design-system/molecules/data-table/filters/switch-filter';
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting';
-import { useTableColumnOrder } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
+import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { selectQueryFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.selector';
 import { useAppSelector } from '@/store/store';
@@ -17,12 +17,15 @@ import {
 } from './signatures-table.columns';
 import { DetectionMethodsExpandedRow } from './signatures-table.expanded-row';
 
-const defaultColumnOrder = detectionMethodsColumns.map((col) => col.id!);
-
 export const SignaturesTable = () => {
-  const { columnOrder, onColumnOrderChange } = useTableColumnOrder({
+  const {
+    columnOrder,
+    onColumnOrderChange,
+    columnVisibility,
+    onColumnVisibilityChange,
+  } = useTablePreferences({
     tableId: 'detectionMethodsTable',
-    defaultColumnOrder,
+    columns: detectionMethodsColumns,
   });
   const [pagination, setPagination] = usePaginationUrlState();
   const [sorting, setSorting, ordering] = useSortingUrlState();
@@ -71,6 +74,8 @@ export const SignaturesTable = () => {
       exportColumns={exportColumns}
       columnOrder={columnOrder}
       onColumnOrderChange={onColumnOrderChange}
+      columnVisibility={columnVisibility}
+      onColumnVisibilityChange={onColumnVisibilityChange}
     />
   );
 };

@@ -5,6 +5,7 @@ import { DataTable } from '@/common/design-system/molecules/data-table/data-tabl
 import { SwitchFilter } from '@/common/design-system/molecules/data-table/filters/switch-filter.tsx';
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination.ts';
 import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting.ts';
+import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences.ts';
 import { useUpdateEffect } from '@/common/lib/use-update-effect.ts';
 import { routes } from '@/pages/routes.config.ts';
 
@@ -19,6 +20,15 @@ export const HostsTable = ({
 }: {
   inHomeNetwork: 'true' | 'false' | 'all';
 }) => {
+  const {
+    columnOrder,
+    onColumnOrderChange,
+    columnVisibility,
+    onColumnVisibilityChange,
+  } = useTablePreferences({
+    tableId: 'hostsTable',
+    columns,
+  });
   const navigate = useNavigate();
   const [withAlerts, setWithAlerts] = useWithAlertsParam();
   const [pagination, setPagination] = usePaginationUrlState();
@@ -61,6 +71,10 @@ export const HostsTable = ({
       exportColumns={exportColumns.filter((col) =>
         withAlerts ? true : col.label !== 'Hits',
       )}
+      columnOrder={columnOrder}
+      onColumnOrderChange={onColumnOrderChange}
+      columnVisibility={columnVisibility}
+      onColumnVisibilityChange={onColumnVisibilityChange}
     />
   );
 };

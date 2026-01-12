@@ -49,16 +49,29 @@ const areVisibilityStatesEqual = (a: VisibilityState, b: VisibilityState) => {
 
 type UseTablePreferencesProps = {
   tableId: TableId;
-  defaultColumnOrder: string[];
-  defaultColumnVisibility?: VisibilityState;
+  columns: {
+    id: string;
+    visible?: boolean;
+  }[];
 };
 
 export const useTablePreferences = ({
   tableId,
-  defaultColumnOrder,
-  defaultColumnVisibility = {},
+  columns,
 }: UseTablePreferencesProps) => {
   const dispatch = useAppDispatch();
+
+  const defaultColumnOrder = useMemo(
+    () => columns.map((col) => col.id),
+    [columns],
+  );
+  const defaultColumnVisibility = useMemo(
+    () =>
+      Object.fromEntries(
+        columns.map((col) => [col.id!, col.visible !== false]),
+      ),
+    [columns],
+  );
 
   const defaultOrderKey = useMemo(
     () => defaultColumnOrder.join('|'),
@@ -168,19 +181,4 @@ export const useTablePreferences = ({
     columnVisibility: normalizedColumnVisibility,
     onColumnVisibilityChange: handleColumnVisibilityChange,
   };
-};
-
-export const useTableColumnOrder = ({
-  tableId,
-  defaultColumnOrder,
-}: {
-  tableId: TableId;
-  defaultColumnOrder: string[];
-}) => {
-  const { columnOrder, onColumnOrderChange } = useTablePreferences({
-    tableId,
-    defaultColumnOrder,
-  });
-
-  return { columnOrder, onColumnOrderChange };
 };
