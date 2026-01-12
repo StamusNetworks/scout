@@ -307,7 +307,7 @@ const AddToDropdown = ({
   };
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
           size="sm"
