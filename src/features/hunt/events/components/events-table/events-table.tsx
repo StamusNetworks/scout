@@ -1,5 +1,6 @@
 import { Row } from '@tanstack/react-table';
 import { Binary } from 'lucide-react';
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -12,13 +13,9 @@ import {
 import { DataTable } from '@/common/design-system/molecules/data-table/data-table.tsx';
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination.ts';
 import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting.ts';
+import { useTableColumnOrder } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams.tsx';
-import {
-  getHandleColumnsOrderChange,
-  selectColumnsOrder,
-} from '@/pages/events/eventsTable.slice.ts';
 import { routes } from '@/pages/routes.config.ts';
-import { useAppSelector } from '@/store/store.ts';
 
 import { useGetEventsQuery } from '../../api/events.api';
 import { Event } from '../../model/event.schema';
@@ -27,9 +24,13 @@ import { ExpandedEventRow } from './events.expanded-row.tsx';
 
 const getRowId = (originalRow: Event) => originalRow._id;
 
+const defaultColumnOrder = columns.map((col) => col.id!);
+
 export const EventsTable = () => {
-  const columnsOrder = useAppSelector(selectColumnsOrder);
-  const handleColumnOrderChange = getHandleColumnsOrderChange(columnsOrder);
+  const { columnOrder, onColumnOrderChange } = useTableColumnOrder({
+    tableId: 'eventsPageTable',
+    defaultColumnOrder,
+  });
   const navigate = useNavigate();
   const [pagination, setPagination] = usePaginationUrlState();
   const [sorting, setSorting, ordering] = useSortingUrlState();
@@ -63,8 +64,8 @@ export const EventsTable = () => {
       getRowId={getRowId}
       onRowClick={onRowClick}
       exportColumns={exportColumns}
-      columnOrder={columnsOrder}
-      onColumnOrderChange={handleColumnOrderChange}
+      columnOrder={columnOrder}
+      onColumnOrderChange={onColumnOrderChange}
       Empty={
         <Empty>
           <EmptyMedia variant="icon">

@@ -47,6 +47,7 @@ export const detectionMethodsColumns: CustomColumnDef<Signature>[] = [
     ),
   },
   {
+    id: 'msg',
     accessorKey: 'msg',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -73,6 +74,7 @@ export const detectionMethodsColumns: CustomColumnDef<Signature>[] = [
     accessorFn: (row) => row.created,
   },
   {
+    id: 'hits',
     accessorKey: 'hits',
     header: ({ column }) => (
       <DataTableColumnHeader
