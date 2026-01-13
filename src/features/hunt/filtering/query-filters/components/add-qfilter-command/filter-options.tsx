@@ -44,7 +44,7 @@ export const FilterOptions = () => {
       <CommandEmpty>No filters found.</CommandEmpty>
       {search.length > 0 && (
         <CommandGroup heading="Frequently used filters">
-          {PreferredOptions.map((o) => (
+          {PreferredOptions.filter((o) => o.value !== 'es_filter').map((o) => (
             <CommandItem
               key={o.value}
               value={`${o.value}-${o.label}`}
@@ -55,6 +55,15 @@ export const FilterOptions = () => {
               <span className="text-muted-foreground">{o.value}</span>
             </CommandItem>
           ))}
+          <CommandItem
+            key="es_filter"
+            value="es_filter-ES Filter raw search query elastic"
+            onSelect={() => dispatch(setFilter('es_filter'))}
+            className="justify-between"
+          >
+            <span>ES Filter</span>
+            <span className="text-muted-foreground">es_filter</span>
+          </CommandItem>
         </CommandGroup>
       )}
       {values(FilterCategory).map((category) => (
@@ -93,6 +102,7 @@ const preferredKeys = [
   'port',
   'src_port',
   'dest_port',
+  'es_filter',
 ];
 export const PreferredOptions = preferredKeys.map((k) => ({
   label: QueryFiltersRecord[k].label,
