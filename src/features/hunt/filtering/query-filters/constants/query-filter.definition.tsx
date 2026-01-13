@@ -44,6 +44,8 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'Severity',
     key: 'alert.severity',
+    description:
+      'Alert severity levels: Severe (1), Suspicious (2), Contextual (3). Severity level 1 (Severe) is assigned by default if not specified in the detection method',
     category: FilterCategory.EVENT,
     toDisplayValue: (value: string) => {
       switch (value?.toString()) {
@@ -84,21 +86,25 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     key: 'smb.session_id',
     label: 'Session ID',
+    description: 'Session IDs for SMB protocol',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Attacker Network',
     key: 'alert.source.net_info_agg',
+    description: 'Network information aggregated for attack source addresses',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Victim Network',
     key: 'alert.target.net_info_agg',
+    description: 'Network information aggregated for attack target addresses',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Method',
     key: 'alert.signature',
+    description: 'Detection methods that triggered the alerts',
     category: FilterCategory.EVENT,
     entity: FilterType.SIGNATURE,
   },
@@ -112,6 +118,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'Category',
     key: 'alert.category',
+    description: 'Classification categories for security events',
     category: FilterCategory.EVENT,
     toDisplayValue: (value: string) =>
       value !== '' ? value || 'Unknown' : 'Unknown',
@@ -120,38 +127,46 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'Revision',
     key: 'alert.rev',
+    description: 'Revision of the alert',
     category: FilterCategory.EVENT,
   },
   {
-    label: 'Tagged',
+    label: 'Tag',
     key: 'alert.tag',
+    description: 'Tag for the alert (informational, relevant)',
     category: FilterCategory.EVENT,
   },
   {
     label: 'X-Forwarded-For',
     key: 'alert.xff',
+    description:
+      'Original client IP addresses when traffic passes through proxies or load balancers',
     category: FilterCategory.EVENT,
     entity: FilterType.IP,
   },
   {
     label: 'Source Net',
     key: 'net_info.src_agg',
+    description: 'Source network information aggregated',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Event Type',
     key: 'event_type',
+    description: 'Type of the event (Stamus, Alert, Sighting...)',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Data Stream Source IP',
     key: 'src_ip',
+    description: 'Source IP addresses in network communications',
     category: FilterCategory.EVENT,
     entity: FilterType.IP,
   },
   {
     label: 'Data Stream Source Port',
     key: 'src_port',
+    description: 'Source port numbers used in network connections',
     category: FilterCategory.EVENT,
     entity: FilterType.PORT,
     inputType: FilterInputType.NUMBER,
@@ -159,6 +174,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'Port',
     key: 'port',
+    description: 'Port numbers used in network communications',
     category: FilterCategory.EVENT,
     entity: FilterType.PORT,
     inputType: FilterInputType.NUMBER,
@@ -177,17 +193,20 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'Destination Net',
     key: 'net_info.dest_agg',
+    description: 'Destination network information aggregated',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Data Stream Destination IP',
     key: 'dest_ip',
+    description: 'Destination IP addresses in network communications',
     category: FilterCategory.EVENT,
     entity: FilterType.IP,
   },
   {
     label: 'Data Stream Destination Port',
     key: 'dest_port',
+    description: 'Destination port numbers used in network connections',
     category: FilterCategory.EVENT,
     entity: FilterType.PORT,
     inputType: FilterInputType.NUMBER,
@@ -195,18 +214,21 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'IP Protocol',
     key: 'proto',
+    description: 'Internet Protocol types',
     category: FilterCategory.EVENT,
     entity: FilterType.PROTO,
   },
   {
     label: 'App Protocol',
     key: 'app_proto',
+    description: 'Application protocol (HTTP, SMB, DNS, etc.)',
     category: FilterCategory.EVENT,
     entity: FilterType.APP_PROTO,
   },
   {
     label: 'Original application protocol',
     key: 'app_proto_orig',
+    description: 'Original application protocol',
     category: FilterCategory.EVENT,
     entity: FilterType.APP_PROTO,
   },
@@ -214,49 +236,60 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
     label: 'Probe',
     key: 'host',
     category: FilterCategory.EVENT,
+    description: 'Stamus Networks probes and sensors that detected the events',
   },
   {
     label: 'Capture Interface',
     key: 'in_iface',
+    description: 'Virtual LAN identifiers for network segmentation',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Vlan',
     key: 'vlan',
+    description: 'Virtual LAN identifiers for network segmentation',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Tunnel Source IP',
     key: 'tunnel.src_ip',
+    description: 'Source IP addresses in tunneled network traffic',
     category: FilterCategory.EVENT,
     entity: FilterType.IP,
   },
   {
     label: 'Tunnel Destination IP',
     key: 'tunnel.dest_ip',
+    description: 'Destination IP addresses in tunneled network traffic',
     category: FilterCategory.EVENT,
     entity: FilterType.IP,
   },
   {
     label: 'Tunnel Protocol',
     key: 'tunnel.proto',
+    description: 'Protocols used for network tunneling',
     category: FilterCategory.EVENT,
     entity: FilterType.PROTO,
   },
   {
     label: 'Tunnel Depth',
     key: 'tunnel.depth',
+    description: 'Number of nested tunnel layers in the network traffic',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Attacker IP',
     key: 'alert.source.ip',
+    description:
+      'IP addresses identified as sources of malicious activity. Might be reversed depending on the detection method. Client IPs is a better indicator for this field',
     category: FilterCategory.EVENT,
     entity: FilterType.IP,
   },
   {
     label: 'Attacker Port',
     key: 'alert.source.port',
+    description:
+      'Source port of identified attacker. Might be reversed depending on the detection method.',
     category: FilterCategory.EVENT,
     entity: FilterType.PORT,
     inputType: FilterInputType.NUMBER,
@@ -264,12 +297,15 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'Victim IP',
     key: 'alert.target.ip',
+    description:
+      'IP addresses identified as targets of attacks. Might be reversed depending on the detection method. Server IPs is a better indicator for this field',
     category: FilterCategory.EVENT,
     entity: FilterType.IP,
   },
   {
     label: 'Victim Port',
     key: 'alert.target.port',
+    description: 'Destination port numbers used in network connections',
     category: FilterCategory.EVENT,
     entity: FilterType.PORT,
     inputType: FilterInputType.NUMBER,
@@ -277,57 +313,71 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'Lateral movement',
     key: 'alert.lateral',
+    description:
+      'Lateral movement indicators showing internal network traversal attempts',
     category: FilterCategory.EVENT,
   },
   {
     label: 'FQDN Source',
     key: 'fqdn.src',
+    description:
+      'Fully Qualified Domain Names associated with source addresses',
     category: FilterCategory.EVENT,
   },
   {
     label: 'FQDN Destination',
     key: 'fqdn.dest',
+    description:
+      'Fully Qualified Domain Names associated with destination addresses',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Queried Name',
     key: 'dns.query.rrname',
+    description: 'Domain names queried in DNS requests',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Queried Type',
     key: 'dns.query.rrtype',
+    description: 'DNS record types',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Queried Name',
     key: 'dns.queries.rrname',
+    description: 'Domain names queried in DNS requests',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Queried Type',
     key: 'dns.queries.rrtype',
+    description: 'DNS record types',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Flow start',
     key: 'flow.start',
+    description: 'Start time of the flow',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Source IP',
     key: 'flow.src_ip',
+    description: 'Source IP addresses in network communications',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Destination IP',
     key: 'flow.dest_ip',
+    description: 'Destination IP addresses in network communications',
     category: FilterCategory.EVENT,
     entity: FilterType.IP,
   },
   {
     label: 'Source Port',
     key: 'flow.src_port',
+    description: 'Source port numbers used in network connections',
     category: FilterCategory.EVENT,
     entity: FilterType.PORT,
     inputType: FilterInputType.NUMBER,
@@ -335,32 +385,39 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'Destination Port',
     key: 'flow.dest_port',
+    description: 'Destination port numbers used in network connections',
     category: FilterCategory.EVENT,
     inputType: FilterInputType.NUMBER,
   },
   {
     label: 'Bytes to server',
     key: 'flow.bytes_toserver',
+    description: 'Bytes sent to the server',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Bytes to client',
     key: 'flow.bytes_toclient',
+    description: 'Bytes sent to the client',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Pkts to server',
     key: 'flow.pkts_toserver',
+    description: 'Packets sent to the server',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Pkts to client',
     key: 'flow.pkts_toclient',
+    description: 'Packets sent to the client',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Flow ID',
     key: 'flow_id',
+    description:
+      'Unique identifier for the flow. Used to identify all related alerts and protocol-specific events.',
     category: FilterCategory.EVENT,
   },
   {
@@ -372,16 +429,20 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'Community ID',
     key: 'community_id',
+    description:
+      'Unique identifier for the flow. Makes pivoting easier (https://github.com/corelight/community-id-spec)',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Country',
     key: 'geoip.country_name',
+    description: 'Countries associated with IP addresses in security events',
     category: FilterCategory.EVENT,
   },
   {
     label: 'City',
     key: 'geoip.city_name',
+    description: 'Cities associated with IP addresses in security events',
     category: FilterCategory.EVENT,
   },
   {
@@ -392,28 +453,34 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'AS Number',
     key: 'geoip.provider.autonomous_system_number',
+    description:
+      'Autonomous System Numbers identifying internet service providers and organizations',
     category: FilterCategory.EVENT,
     entity: FilterType.ASNUMBER,
   },
   {
     label: 'AS Organization',
     key: 'geoip.provider.autonomous_system_organization',
+    description: 'Organizations that own and operate the Autonomous Systems',
     category: FilterCategory.EVENT,
   },
   {
     label: 'HTTP Host',
     key: 'http.hostname',
+    description: 'Domain names accessed in HTTP requests',
     category: FilterCategory.EVENT,
     entity: FilterType.HOSTNAME,
   },
   {
     label: 'URL',
     key: 'http.url',
+    description: 'Complete URLs requested in HTTP traffic',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Status',
     key: 'http.status',
+    description: 'HTTP response status codes',
     category: FilterCategory.EVENT,
     inputType: FilterInputType.NUMBER,
     validationType: FilterValidationType.POSITIVE_INT,
@@ -426,6 +493,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'HTTP User Agent',
     key: 'http.http_user_agent',
+    description: 'Browser and client application identifiers',
     category: FilterCategory.EVENT,
     entity: FilterType.USER_AGENT,
   },
@@ -456,6 +524,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'HTTP Server',
     key: 'http.server',
+    description: 'Web server software and version information',
     category: FilterCategory.EVENT,
   },
   {
@@ -472,6 +541,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'Subject DN',
     key: 'tls.subject',
+    description: 'Distinguished Names of certificate subjects',
     category: FilterCategory.EVENT,
     convertible: ['host_id.services.values.tls.subject'],
   },
@@ -479,6 +549,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'Issuer DN',
     key: 'tls.issuerdn',
+    description: 'Distinguished Names of certificate issuers',
     category: FilterCategory.EVENT,
     convertible: ['host_id.services.values.tls.issuerdn'],
   },
@@ -500,6 +571,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'JA4',
     key: 'tls.ja4',
+    description: 'JA4 fingerprints for TLS client and server identification',
     category: FilterCategory.EVENT,
     convertible: ['host_id.tls.ja4.hash'],
   },
@@ -511,6 +583,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'JA3 User-Agent',
     key: 'tls.ja3.agent',
+    description: 'User-Agent strings associated with JA3 fingerprints',
     category: FilterCategory.EVENT,
   },
   {
@@ -522,82 +595,99 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'Fingerprint',
     key: 'tls.fingerprint',
+    description: 'Unique cryptographic fingerprints of TLS certificates',
     category: FilterCategory.EVENT,
     convertible: ['host_id.services.values.tls.fingerprint'],
   },
   {
     label: 'JA3S',
     key: 'tls.ja3s.hash',
+    description:
+      'JA3S fingerprints for TLS server identification based on handshake parameters',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Version',
     key: 'tls.version',
+    description: 'TLS protocol versions',
     category: FilterCategory.EVENT,
   },
   {
     key: 'tls.cipher_suite',
     label: 'Cipher Suite',
+    description: 'Cryptographic cipher suites negotiated in TLS handshakes',
     category: FilterCategory.EVENT,
     entity: FilterType.CIPHER,
   },
   {
     label: 'Cipher Security',
     key: 'tls.cipher_security',
+    description:
+      'Security strength of the cipher suite used in TLS connections',
     category: FilterCategory.EVENT,
   },
   {
     key: 'smtp.mail_from',
     label: 'From',
+    description: 'Email addresses specified in SMTP MAIL FROM commands',
     category: FilterCategory.EVENT,
     entity: FilterType.USERNAME,
   },
   {
     key: 'smtp.rcpt_to',
     label: 'To',
+    description: 'Email addresses specified in SMTP RCPT TO commands',
     category: FilterCategory.EVENT,
     entity: FilterType.USERNAME,
   },
   {
     label: 'Client Software',
     key: 'ssh.client.software_version',
+    description: 'SSH client software names and versions',
     category: FilterCategory.EVENT,
     convertible: ['host_id.ssh.client.software_version'],
   },
   {
     key: 'ssh.client.proto_version',
     label: 'Client Version',
+    description: 'SSH protocol versions supported by clients',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Client HASSH',
     key: 'ssh.client.hassh.hash',
+    description: 'SSH client Hassh hash',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Client HASSH String',
     key: 'ssh.client.hassh.string',
+    description: 'SSH client Hassh string',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Server HASSH',
     key: 'ssh.server.hassh.hash',
+    description: 'SSH server Hassh hash',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Server HASSH String',
     key: 'ssh.server.hassh.string',
+    description: 'SSH server Hassh string',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Server Software',
     key: 'ssh.server.software_version',
+    description: 'SSH server software names and versions',
     category: FilterCategory.EVENT,
     convertible: ['host_id.ssh.server.software_version'],
   },
   {
     label: 'Server Version',
     key: 'ssh.server.proto_version',
+    description: 'SSH protocol versions supported by servers',
     category: FilterCategory.EVENT,
   },
   {
@@ -615,6 +705,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'IP',
     key: 'ip',
+    description: 'IP addresses involved in security events',
     category: FilterCategory.EVENT,
     entity: FilterType.IP,
     validationType: FilterValidationType.IP,
@@ -648,18 +739,24 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'Mitre Tactic ID',
     key: 'alert.metadata.mitre_tactic_id',
+    description:
+      'MITRE ATT&CK tactic identifiers. See the whole list of tactics at https://attack.mitre.org/tactics/enterprise/',
     category: FilterCategory.EVENT,
     entity: FilterType.MITRE_TACTIC_ID,
   },
   {
     label: 'Mitre Technique ID',
     key: 'alert.metadata.mitre_technique_id',
+    description:
+      'MITRE ATT&CK technique identifiers. See the whole list of techniques at https://attack.mitre.org/techniques/enterprise/',
     category: FilterCategory.EVENT,
     entity: FilterType.MITRE_TECHNIQUE_ID,
   },
   {
     key: 'alert.metadata.mitre_tactic_name',
     label: 'Mitre Tactic Name',
+    description:
+      'MITRE ATT&CK tactic names. See the whole list of tactics at https://attack.mitre.org/tactics/enterprise/',
     category: FilterCategory.EVENT,
     entity: FilterType.MITRE_TACTIC_NAME,
     toDisplayValue: (value: string) => value?.replaceAll('_', ' ') || '',
@@ -667,6 +764,8 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'Mitre Technique Name',
     key: 'alert.metadata.mitre_technique_name',
+    description:
+      'MITRE ATT&CK technique names. See the whole list of techniques at https://attack.mitre.org/techniques/enterprise/',
     category: FilterCategory.EVENT,
     entity: FilterType.MITRE_TECHNIQUE_NAME,
     toDisplayValue: (value: string) => value?.replaceAll('_', ' ') || '',
@@ -674,12 +773,15 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'Method Severity',
     key: 'alert.metadata.signature_severity',
+    description:
+      'Severity levels assigned to detection methods by threat intelligence sources',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Attack Target',
     key: 'alert.metadata.attack_target',
     category: FilterCategory.EVENT,
+    description: 'Types of systems or services targeted by the attack',
   },
   {
     label: 'Deployment',
@@ -705,27 +807,35 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
     label: 'Affected Product',
     key: 'alert.metadata.affected_product',
     category: FilterCategory.EVENT,
+    description: 'Software products or services affected by the security event',
   },
   {
     label: 'Malware Family',
     key: 'alert.metadata.malware_family',
     category: FilterCategory.EVENT,
+    description:
+      'Classification of malware into known families based on behavior, characteristics and threat intelligence',
   },
   {
     label: 'TLS SNI',
     key: 'tls.sni',
+    description:
+      'Domain names specified in TLS Server Name Indication extension',
     category: FilterCategory.EVENT,
     entity: FilterType.HOSTNAME,
   },
   {
     key: 'http.http_refer_info.host',
     label: 'HTTP Refer Host',
+    description: 'Host portions of HTTP referrer URLs',
     category: FilterCategory.EVENT,
     entity: FilterType.HOSTNAME,
   },
   {
     label: 'SMTP Helo',
     key: 'smtp.helo',
+    description:
+      'Domain names or IP addresses specified in SMTP HELO/EHLO commands',
     category: FilterCategory.EVENT,
     entity: FilterType.HOSTNAME,
   },
@@ -738,26 +848,38 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'Command',
     key: 'smb.command',
+    description: 'SMB protocol commands executed',
     category: FilterCategory.EVENT,
   },
   {
     key: 'smb.status',
     label: 'Status',
+    description: 'SMB operation status codes and results',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Filename',
     key: 'smb.filename',
+    description: 'Names of files accessed through SMB protocol',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Share',
     key: 'smb.share',
+    description: 'Network share names accessed through SMB protocol',
     category: FilterCategory.EVENT,
   },
   {
     label: 'DCERPC Interface',
     key: 'smb.dcerpc.interfaces.name',
+    description:
+      'Distributed Computing Environment Remote Procedure Call interface names',
+    category: FilterCategory.EVENT,
+  },
+  {
+    label: 'DCERPC Endpoint',
+    key: 'smb.dcerpc.endpoint',
+    description: 'DCERPC service endpoints accessed through SMB connections',
     category: FilterCategory.EVENT,
   },
   {
@@ -769,49 +891,60 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
   {
     label: 'File Size',
     key: 'fileinfo.size',
+    description: 'File sizes in bytes',
     category: FilterCategory.EVENT,
     toDisplayValue: (value: number) => formatBytes(value),
   },
   {
     label: 'Filename',
     key: 'files.filename',
+    description: 'Names of files transferred or accessed',
     category: FilterCategory.EVENT,
   },
   {
     label: 'SHA256',
     key: 'files.sha256',
+    description:
+      'SHA-256 cryptographic hashes of file contents for integrity verification',
     category: FilterCategory.EVENT,
     entity: [FilterType.SHA256, FilterType.FILE_HASH],
   },
   {
     key: 'files.mimetype',
     label: 'Mimetype',
+    description: 'MIME types indicating file content types',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Stored',
     key: 'files.stored',
+    description: 'Indicates whether the file was stored in the database',
     category: FilterCategory.EVENT, // formatFn: (value) => (value ? "Yes" : "No"),
   },
   {
     label: 'Filename',
     key: 'fileinfo.filename',
+    description: 'Names of files transferred or accessed',
     category: FilterCategory.EVENT,
   },
   {
     label: 'SHA256',
     key: 'fileinfo.sha256',
+    description:
+      'SHA-256 cryptographic hashes of file contents for integrity verification',
     category: FilterCategory.EVENT,
     entity: [FilterType.SHA256, FilterType.FILE_HASH],
   },
   {
     key: 'fileinfo.mimetype',
     label: 'Mimetype',
+    description: 'MIME types indicating file content types',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Stored',
     key: 'fileinfo.stored',
+    description: 'Indicates whether the file was stored in the database',
     category: FilterCategory.EVENT, // formatFn: (value) => (value ? "Yes" : "No"),
   },
   /* HISTORY */
@@ -1094,6 +1227,7 @@ export const QueryFilters: QueryFilterDefinition[] = [
   {
     key: 'stamus.asset',
     label: 'Entity',
+    description: 'Entities identified by Stamus threat intelligence',
     category: FilterCategory.EVENT,
     entity: FilterType.STAMUS_ASSET,
     type: 'ip',
@@ -1101,22 +1235,29 @@ export const QueryFilters: QueryFilterDefinition[] = [
   {
     label: 'Offender',
     key: 'stamus.source',
+    description:
+      'Threat actors and malicious sources identified by Stamus intelligence',
     category: FilterCategory.EVENT,
     entity: FilterType.STAMUS_ASSET,
   },
   {
     label: 'Threat',
     key: 'stamus.threat_name',
+    description:
+      'Named threats and attack campaigns identified by Stamus intelligence',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Family',
     key: 'stamus.family_name',
+    description:
+      'Malware and threat families classified by Stamus intelligence',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Kill Chain Phase',
     key: 'stamus.kill_chain',
+    description: 'Cyber kill chain phases mapped by Stamus threat analysis',
     category: FilterCategory.EVENT,
     toDisplayValue: (value: string) =>
       KillChainStepsEnum[value as keyof typeof KillChainStepsEnum] || value,
@@ -1135,36 +1276,43 @@ export const QueryFilters: QueryFilterDefinition[] = [
   {
     label: 'Method ID',
     key: 'stamus.threat_id',
+    description: 'Unique identifiers for security incidents tracked by Stamus',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Event ID',
     key: 'stamus.event_id',
+    description: 'Unique identifiers for security incidents tracked by Stamus',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Sighting Entity Role',
     key: 'discovery.asset_role',
+    description: 'Roles assigned to discovered network entities',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Sighting Entity',
     key: 'discovery.asset',
+    description: 'Network assets discovered through passive monitoring',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Sighting Entity Net',
     key: 'discovery.asset_net',
+    description: 'Network segments where entities were discovered',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Sighting Key',
     key: 'discovery.key',
+    description: 'Discovery attribute keys',
     category: FilterCategory.EVENT,
   },
   {
     key: 'discovery.value',
     label: 'Sighting Value',
+    description: 'Discovery attribute values corresponding to the keys',
     category: FilterCategory.EVENT,
   },
   {
@@ -1175,18 +1323,21 @@ export const QueryFilters: QueryFilterDefinition[] = [
   {
     key: 'stamus.incidents_id',
     label: 'Incident ID',
+    description: 'Unique identifiers for security incidents tracked by Stamus',
     category: FilterCategory.EVENT,
     inputType: FilterInputType.NUMBER,
   },
   {
     label: 'Host Domain',
     key: 'hostname_info.domain',
+    description: 'Complete domain names including TLD',
     category: FilterCategory.EVENT,
     entity: FilterType.HOSTNAME,
   },
   {
     label: 'Host Subdomain',
     key: 'hostname_info.subdomain',
+    description: 'Subdomain portions of FQDNs',
     category: FilterCategory.EVENT,
     toDisplayValue: (value: string) =>
       value !== '' ? value || 'Unknown' : 'Unknown',
@@ -1195,42 +1346,51 @@ export const QueryFilters: QueryFilterDefinition[] = [
   {
     label: 'Host TLD',
     key: 'hostname_info.tld',
+    description: 'Top-Level Domains',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Host Domain Without TLD',
     key: 'hostname_info.domain_without_tld',
+    description: 'Domain names excluding the top-level domain suffix',
     category: FilterCategory.EVENT,
   },
   {
     label: 'HTTP Refer Domain',
     key: 'http.http_refer_info.domain',
+    description:
+      'Domain names or IP addresses specified in HTTP Referrer header',
     category: FilterCategory.EVENT,
     entity: FilterType.DOMAIN,
   },
   {
     key: 'http.http_refer_info.subdomain',
     label: 'HTTP Refer Subdomain',
+    description: 'Subdomain portions of HTTP referrer URLs',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Referrer TLD',
     key: 'http.http_refer_info.tld',
+    description: 'Top-Level Domains of HTTP referrer URLs',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Referrer Resource Path',
     key: 'http.http_refer_info.resource_path',
+    description: 'Path portions of HTTP referrer URLs',
     category: FilterCategory.EVENT,
   },
   {
     label: 'Referrer Schema',
     key: 'http.http_refer_info.scheme',
+    description: 'URL schemes of HTTP referrer URLs',
     category: FilterCategory.EVENT,
   },
   {
     label: 'HTTP Refer Domain Without TLD',
     key: 'http.http_refer_info.domain_without_tld',
+    description: 'Domain names excluding the top-level domain suffix',
     category: FilterCategory.EVENT,
   },
 ];

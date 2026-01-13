@@ -3,7 +3,6 @@ export type DashboardItem = {
   title: string;
   weight?: number;
   format?: (value: string) => string;
-  tooltip: string;
 };
 
 export type DashboardPanel = {
@@ -23,38 +22,21 @@ export const CEdashboard: Record<string, DashboardPanel> = {
         i: 'alert.signature',
         title: 'Detection Methods',
         weight: 8,
-        tooltip: 'Detection methods that triggered the alerts',
       },
       {
         i: 'alert.category',
         title: 'Categories',
         weight: 4,
-        tooltip: 'Classification categories for security events',
       },
       {
         i: 'alert.severity',
         title: 'Severities',
         weight: 3,
-        tooltip:
-          'Alert severity levels: Severe (1), Suspicious (2), Contextual (3). Severity level 1 (Severe) is assigned by default if not specified in the detection method',
-        format: (value: string) => {
-          switch (value) {
-            case '1':
-              return 'Severe';
-            case '2':
-              return 'Suspicious';
-            case '3':
-              return 'Contextual';
-            default:
-              return value;
-          }
-        },
       },
       {
         i: 'host',
         title: 'Probes',
         weight: 3,
-        tooltip: 'Stamus Networks probes and sensors that detected the events',
       },
     ],
   },
@@ -66,24 +48,18 @@ export const CEdashboard: Record<string, DashboardPanel> = {
       {
         i: 'alert.metadata.signature_severity',
         title: 'Signature Severities',
-        tooltip:
-          'Severity levels assigned to detection methods by threat intelligence sources',
       },
       {
         i: 'alert.metadata.attack_target',
         title: 'Attack Targets',
-        tooltip: 'Types of systems or services targeted by the attack',
       },
       {
         i: 'alert.metadata.affected_product',
         title: 'Affected Products',
-        tooltip: 'Software products or services affected by the security event',
       },
       {
         i: 'alert.metadata.malware_family',
         title: 'Malware Families',
-        tooltip:
-          'Classification of malware into known families based on behavior, characteristics and threat intelligence',
       },
     ],
   },
@@ -95,26 +71,18 @@ export const CEdashboard: Record<string, DashboardPanel> = {
       {
         i: 'alert.metadata.mitre_tactic_id',
         title: 'Tactic IDs',
-        tooltip:
-          'MITRE ATT&CK tactic identifiers. See the whole list of tactics at https://attack.mitre.org/tactics/enterprise/',
       },
       {
         i: 'alert.metadata.mitre_tactic_name',
         title: 'Tactic Names',
-        tooltip:
-          'Human-readable names of MITRE ATT&CK tactics describing adversary goals',
       },
       {
         i: 'alert.metadata.mitre_technique_id',
         title: 'Technique IDs',
-        tooltip:
-          'MITRE ATT&CK technique identifiers. See the whole list of techniques at https://attack.mitre.org/techniques/enterprise/',
       },
       {
         i: 'alert.metadata.mitre_technique_name',
         title: 'Technique Names',
-        tooltip:
-          'Human-readable names of MITRE ATT&CK techniques describing specific attack methods',
       },
     ],
   },
@@ -127,14 +95,10 @@ export const CEdashboard: Record<string, DashboardPanel> = {
       {
         i: 'alert.source.ip',
         title: 'Attackers',
-        tooltip:
-          'IP addresses identified as sources of malicious activity. Might be reversed depending on the detection method. Client IPs is a better indicator for this field',
       },
       {
         i: 'alert.target.ip',
         title: 'Victims',
-        tooltip:
-          'IP addresses identified as targets of attacks. Might be reversed depending on the detection method. Server IPs is a better indicator for this field',
       },
     ],
   },
@@ -146,12 +110,10 @@ export const CEdashboard: Record<string, DashboardPanel> = {
       {
         i: 'geoip.country_name',
         title: 'Country Names',
-        tooltip: 'Countries associated with IP addresses in security events',
       },
       {
         i: 'geoip.city_name',
         title: 'City Names',
-        tooltip: 'Cities associated with IP addresses in security events',
       },
     ],
   },
@@ -163,58 +125,46 @@ export const CEdashboard: Record<string, DashboardPanel> = {
       {
         i: 'src_ip',
         title: 'Data Stream Source IPs',
-        tooltip: 'Source IP addresses in network communications',
       },
       {
         i: 'dest_ip',
         title: 'Data Stream Destinations IPs',
-        tooltip: 'Destination IP addresses in network communications',
       },
       {
         i: 'src_port',
         title: 'Data Stream Source Ports',
-        tooltip: 'Source port numbers used in network connections',
       },
       {
         i: 'dest_port',
         title: 'Data Stream Destinations Ports',
-        tooltip: 'Destination port numbers used in network connections',
       },
       {
         i: 'alert.xff',
         title: 'X-Forwarded-For',
-        tooltip:
-          'Original client IP addresses when traffic passes through proxies or load balancers',
       },
       {
         i: 'proto',
         title: 'IP Protocols',
-        tooltip: 'Internet Protocol types',
       },
       {
         i: 'vlan',
         title: 'VLAN',
-        tooltip: 'Virtual LAN identifiers for network segmentation',
       },
       {
         i: 'tunnel.src_ip',
         title: 'Tunnel Source IPs',
-        tooltip: 'Source IP addresses in tunneled network traffic',
       },
       {
         i: 'tunnel.dest_ip',
         title: 'Tunnel Destination IPs',
-        tooltip: 'Destination IP addresses in tunneled network traffic',
       },
       {
         i: 'tunnel.proto',
         title: 'Tunnel Protocols',
-        tooltip: 'Protocols used for network tunneling',
       },
       {
         i: 'tunnel.depth',
         title: 'Tunnel Depths',
-        tooltip: 'Number of nested tunnel layers in the network traffic',
       },
     ],
   },
@@ -227,27 +177,22 @@ export const CEdashboard: Record<string, DashboardPanel> = {
       {
         i: 'flow.src_ip',
         title: 'Source IPs',
-        tooltip: 'IP addresses of clients initiating connections',
       },
       {
         i: 'flow.dest_ip',
         title: 'Destination IPs',
-        tooltip: 'IP addresses of servers receiving connections',
       },
       {
         i: 'flow.src_port',
         title: 'Source Ports',
-        tooltip: 'Port numbers used by clients for outbound connections',
       },
       {
         i: 'flow.dest_port',
         title: 'Destination Ports',
-        tooltip: 'Port numbers on servers accepting incoming connections',
       },
       {
         i: 'app_proto',
         title: 'App Protocols',
-        tooltip: 'Application layer protocols',
       },
     ],
   },
@@ -261,36 +206,30 @@ export const CEdashboard: Record<string, DashboardPanel> = {
         i: 'http.hostname',
         title: 'Hostnames',
         weight: 4,
-        tooltip: 'Domain names accessed in HTTP requests',
       },
       {
         i: 'http.url',
         title: 'URLs',
         weight: 4,
-        tooltip: 'Complete URLs requested in HTTP traffic',
       },
       {
         i: 'http.status',
         title: 'Statuses',
         weight: 2,
-        tooltip: 'HTTP response status codes',
       },
       {
         i: 'http.http_refer',
         title: 'Referrers',
         weight: 4,
-        tooltip: 'URLs that referred users to the current page',
       },
       {
         i: 'http.http_user_agent',
         title: 'Useragents',
         weight: 6,
-        tooltip: 'Browser and client application identifiers',
       },
       {
         i: 'http.server',
         title: 'Server',
-        tooltip: 'Web server software and version information',
       },
     ],
   },
@@ -302,12 +241,10 @@ export const CEdashboard: Record<string, DashboardPanel> = {
       {
         i: 'dns.query.rrname',
         title: 'Names',
-        tooltip: 'Domain names queried in DNS requests',
       },
       {
         i: 'dns.query.rrtype',
         title: 'Types',
-        tooltip: 'DNS record types',
       },
     ],
   },
@@ -320,45 +257,34 @@ export const CEdashboard: Record<string, DashboardPanel> = {
       {
         i: 'tls.sni',
         title: 'Server Names Indication',
-        tooltip:
-          'Domain names specified in TLS Server Name Indication extension',
       },
       {
         i: 'tls.subject',
         title: 'Subject DNs',
-        tooltip: 'Distinguished Names of certificate subjects',
       },
       {
         i: 'tls.issuerdn',
         title: 'Issuer DNs',
-        tooltip: 'Distinguished Names of certificate issuers',
       },
       {
         i: 'tls.fingerprint',
         title: 'Fingerprints',
-        tooltip: 'Unique cryptographic fingerprints of TLS certificates',
       },
       {
         i: 'tls.ja4',
         title: 'JA4 fingerprints',
-        tooltip: 'JA4 fingerprints for TLS client and server identification',
       },
       {
         i: 'tls.ja3.hash',
         title: 'JA3 Hashes',
-        tooltip:
-          'JA3 fingerprints for TLS client identification based on handshake parameters',
       },
       {
         i: 'tls.ja3.agent',
         title: 'JA3 User-Agents',
-        tooltip: 'User-Agent strings associated with JA3 fingerprints',
       },
       {
         i: 'tls.ja3s.hash',
         title: 'JA3S Hashes',
-        tooltip:
-          'JA3S fingerprints for TLS server identification based on handshake parameters',
       },
     ],
   },
@@ -370,18 +296,14 @@ export const CEdashboard: Record<string, DashboardPanel> = {
       {
         i: 'smtp.mail_from',
         title: 'Mail From',
-        tooltip: 'Email addresses specified in SMTP MAIL FROM commands',
       },
       {
         i: 'smtp.rcpt_to',
         title: 'RCPT To',
-        tooltip: 'Email addresses specified in SMTP RCPT TO commands',
       },
       {
         i: 'smtp.helo',
         title: 'Helo',
-        tooltip:
-          'Domain names or IP addresses specified in SMTP HELO/EHLO commands',
       },
     ],
   },
@@ -393,22 +315,18 @@ export const CEdashboard: Record<string, DashboardPanel> = {
       {
         i: 'smb.command',
         title: 'Commands',
-        tooltip: 'SMB protocol commands executed',
       },
       {
         i: 'smb.status',
         title: 'Statuses',
-        tooltip: 'SMB operation status codes and results',
       },
       {
         i: 'smb.filename',
         title: 'Filenames',
-        tooltip: 'Names of files accessed through SMB protocol',
       },
       {
         i: 'smb.share',
         title: 'Shares',
-        tooltip: 'Network share names accessed through SMB protocol',
       },
     ],
   },
@@ -421,46 +339,38 @@ export const CEdashboard: Record<string, DashboardPanel> = {
       {
         i: 'ssh.client.software_version',
         title: 'Client Software',
-        tooltip: 'SSH client software names and versions',
       },
       {
         i: 'ssh.client.proto_version',
         title: 'Client Version',
-        tooltip: 'SSH protocol versions supported by clients',
       },
       {
         i: 'ssh.server.software_version',
         title: 'Server Software',
-        tooltip: 'SSH server software names and versions',
       },
       {
         i: 'ssh.server.proto_version',
         title: 'Server Version',
-        tooltip: 'SSH protocol versions supported by servers',
       },
       {
         i: 'ssh.client.hassh.hash',
         weight: 12,
         title: 'Client Hassh Hash',
-        tooltip: 'SSH client Hassh hash',
       },
       {
         i: 'ssh.server.hassh.hash',
         weight: 12,
         title: 'Server Hassh Hash',
-        tooltip: 'SSH server Hassh hash',
       },
       {
         i: 'ssh.client.hassh.string',
         weight: 12,
         title: 'Client Hassh String',
-        tooltip: 'SSH client Hassh string',
       },
       {
         i: 'ssh.server.hassh.string',
         weight: 12,
         title: 'Server Hassh String',
-        tooltip: 'SSH server Hassh string',
       },
     ],
   },
@@ -474,24 +384,19 @@ export const CEdashboard: Record<string, DashboardPanel> = {
         i: 'files.filename',
         weight: 6,
         title: 'Filename',
-        tooltip: 'Names of files transferred or accessed',
       },
       {
         i: 'files.mimetype',
         weight: 4,
         title: 'Mimetype',
-        tooltip: 'MIME types indicating file content types',
       },
       {
         i: 'files.sha256',
         title: 'Sha256',
-        tooltip:
-          'SHA-256 cryptographic hashes of file contents for integrity verification',
       },
       {
         i: 'files.state',
         title: 'State',
-        tooltip: 'File transfer states',
       },
     ],
   },
@@ -507,35 +412,26 @@ export const dashboard: Record<string, DashboardPanel> = {
       {
         i: 'stamus.asset',
         title: 'Entities',
-        tooltip: 'Entities identified by Stamus threat intelligence',
       },
       {
         i: 'stamus.source',
         title: 'Offenders',
-        tooltip:
-          'Threat actors and malicious sources identified by Stamus intelligence',
       },
       {
         i: 'stamus.threat_name',
         title: 'Threats',
-        tooltip:
-          'Named threats and attack campaigns identified by Stamus intelligence',
       },
       {
         i: 'stamus.family_name',
         title: 'Families',
-        tooltip:
-          'Malware and threat families classified by Stamus intelligence',
       },
       {
         i: 'stamus.kill_chain',
         title: 'Kill Chain Phases',
-        tooltip: 'Cyber kill chain phases mapped by Stamus threat analysis',
       },
       {
         i: 'stamus.incidents_id',
         title: 'Incident IDs',
-        tooltip: 'Unique identifiers for security incidents tracked by Stamus',
       },
     ],
   },
@@ -548,27 +444,22 @@ export const dashboard: Record<string, DashboardPanel> = {
       {
         i: 'discovery.asset_role',
         title: 'Entity Role',
-        tooltip: 'Roles assigned to discovered network entities',
       },
       {
         i: 'discovery.asset',
         title: 'Entity',
-        tooltip: 'Network assets discovered through passive monitoring',
       },
       {
         i: 'discovery.asset_net',
         title: 'Entity Net',
-        tooltip: 'Network segments where entities were discovered',
       },
       {
         i: 'discovery.key',
         title: 'Key',
-        tooltip: 'Discovery attribute keys',
       },
       {
         i: 'discovery.value',
         title: 'Value',
-        tooltip: 'Discovery attribute values corresponding to the keys',
       },
     ],
   },
@@ -581,27 +472,22 @@ export const dashboard: Record<string, DashboardPanel> = {
       {
         i: 'hostname_info.subdomain',
         title: 'Subdomain',
-        tooltip: 'Subdomain portions of FQDNs',
       },
       {
         i: 'hostname_info.domain',
         title: 'Domains',
-        tooltip: 'Complete domain names including TLD',
       },
       {
         i: 'hostname_info.tld',
         title: 'TLD',
-        tooltip: 'Top-Level Domains',
       },
       {
         i: 'hostname_info.domain_without_tld',
         title: 'Domain Without TLD',
-        tooltip: 'Domain names excluding the top-level domain suffix',
       },
       {
         i: 'hostname_info.host',
         title: 'Host',
-        tooltip: 'Complete hostname including subdomain and domain',
       },
     ],
   },
@@ -614,30 +500,22 @@ export const dashboard: Record<string, DashboardPanel> = {
       {
         i: 'alert.lateral',
         title: 'Laterals',
-        tooltip:
-          'Lateral movement indicators showing internal network traversal attempts',
       },
       {
         i: 'alert.source.net_info_agg',
         title: 'Offender Networks',
-        tooltip: 'Network information aggregated for attack source addresses',
       },
       {
         i: 'alert.target.net_info_agg',
         title: 'Victim Networks',
-        tooltip: 'Network information aggregated for attack target addresses',
       },
       {
         i: 'fqdn.src',
         title: 'FQDN Sources',
-        tooltip:
-          'Fully Qualified Domain Names associated with source addresses',
       },
       {
         i: 'fqdn.dest',
         title: 'FQDN Destinations',
-        tooltip:
-          'Fully Qualified Domain Names associated with destination addresses',
       },
     ],
   },
@@ -648,13 +526,10 @@ export const dashboard: Record<string, DashboardPanel> = {
       {
         i: 'geoip.provider.autonomous_system_number',
         title: 'AS Numbers',
-        tooltip:
-          'Autonomous System Numbers identifying internet service providers and organizations',
       },
       {
         i: 'geoip.provider.autonomous_system_organization',
         title: 'AS Organizations',
-        tooltip: 'Organizations that own and operate the Autonomous Systems',
       },
     ],
   },
@@ -667,37 +542,30 @@ export const dashboard: Record<string, DashboardPanel> = {
       {
         i: 'http.http_refer_info.host',
         title: 'Referrer Hosts',
-        tooltip: 'Host portions of HTTP referrer URLs',
       },
       {
         i: 'http.http_refer_info.subdomain',
         title: 'Referrer Subdomains',
-        tooltip: 'Subdomain portions of HTTP referrer URLs',
       },
       {
         i: 'http.http_refer_info.resource_path',
         title: 'Referrer Resource Paths',
-        tooltip: 'Path portions of HTTP referrer URLs',
       },
       {
         i: 'http.http_refer_info.domain',
         title: 'Referrer Domains',
-        tooltip: 'Domain portions of HTTP referrer URLs',
       },
       {
         i: 'http.http_refer_info.scheme',
         title: 'Referrer Schemas',
-        tooltip: 'URL schemes of HTTP referrer URLs',
       },
       {
         i: 'http.http_refer_info.tld',
         title: 'Referrer TLDs',
-        tooltip: 'Top-Level Domains of HTTP referrer URLs',
       },
       {
         i: 'http.http_refer_info.domain_without_tld',
         title: 'Referrer Domains Without TLD',
-        tooltip: 'Domain names without TLD suffix from HTTP referrer URLs',
       },
     ],
   },
@@ -709,23 +577,18 @@ export const dashboard: Record<string, DashboardPanel> = {
       {
         i: 'tls.version',
         title: 'Version',
-        tooltip:
-          'TLS protocol versions used in connections (1.0, 1.1, 1.2, 1.3)',
       },
       {
         i: 'tls.cipher_suite',
         title: 'Cipher Suite',
-        tooltip: 'Cryptographic cipher suites negotiated in TLS handshakes',
       },
       {
         i: 'tls.cipher_security',
         title: 'Cipher Security',
-        tooltip: 'Security strength classification of TLS cipher suites',
       },
       {
         i: 'tls.alpn_tc',
         title: 'Proposed Protocols',
-        tooltip: 'Application protocols proposed via ALPN',
       },
     ],
   },
@@ -737,13 +600,10 @@ export const dashboard: Record<string, DashboardPanel> = {
       {
         i: 'smb.dcerpc.interfaces.name',
         title: 'DCERPC Interfaces',
-        tooltip:
-          'Distributed Computing Environment Remote Procedure Call interface names',
       },
       {
         i: 'smb.dcerpc.endpoint',
         title: 'DCERPC Endpoints',
-        tooltip: 'DCERPC service endpoints accessed through SMB connections',
       },
       ...CEdashboard.smb.items.slice(2),
     ],

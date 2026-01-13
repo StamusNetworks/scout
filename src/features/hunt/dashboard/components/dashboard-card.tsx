@@ -125,7 +125,7 @@ export const ValueListCard = ({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>{title}</TooltipTrigger>
-              <TooltipContent>{tooltip}</TooltipContent>
+              <TooltipContent className="max-w-56">{tooltip}</TooltipContent>
             </Tooltip>
           </TooltipProvider>
         </CardTitle>

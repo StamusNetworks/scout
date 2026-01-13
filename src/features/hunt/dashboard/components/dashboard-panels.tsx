@@ -20,6 +20,7 @@ import {
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
+import { getFilterDef } from '../../filtering/query-filters/constants/query-filter.definition';
 import { useDashboard } from '../api/hooks/useDashboard';
 import {
   selectCanPanelMoveDown,
@@ -142,29 +143,32 @@ const DashboardMosaic = ({ panelId }: { panelId: keyof typeof dashboard }) => {
           direction="horizontal"
           className="border"
         >
-          {row?.map(({ i, title, tooltip, size }, index: number) => (
-            <React.Fragment key={i + '-' + index}>
-              {/* index as key otherwise the resize feature breaks when
+          {row?.map(({ i, title, size }, index: number) => {
+            const tooltip = getFilterDef(i).description;
+            return (
+              <React.Fragment key={i + '-' + index}>
+                {/* index as key otherwise the resize feature breaks when
               removing/adding blocks */}
-              <ResizablePanel
-                key={i + '-block-' + index}
-                defaultSize={size}
-              >
-                <ValueListCard
-                  key={i}
-                  es_key={i}
-                  title={title}
-                  tooltip={tooltip}
-                />
-              </ResizablePanel>
-              {index < row.length - 1 && (
-                <ResizableHandle
-                  key={index}
-                  withHandle
-                />
-              )}
-            </React.Fragment>
-          ))}
+                <ResizablePanel
+                  key={i + '-block-' + index}
+                  defaultSize={size}
+                >
+                  <ValueListCard
+                    key={i}
+                    es_key={i}
+                    title={title}
+                    tooltip={tooltip || ''}
+                  />
+                </ResizablePanel>
+                {index < row.length - 1 && (
+                  <ResizableHandle
+                    key={index}
+                    withHandle
+                  />
+                )}
+              </React.Fragment>
+            );
+          })}
         </ResizablePanelGroup>
       ))}
     </div>

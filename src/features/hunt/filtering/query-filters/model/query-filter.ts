@@ -29,6 +29,7 @@ export type QueryFilterDefinition = {
   key: string; // ex: sourceIp - Serves to identify a filter
   category: FilterCategory; // Group filters together, host_id, signatures, event etc
   convertible?: string[];
+  description?: string;
   // INFOS
   entity?: FilterType[keyof FilterType] | FilterType[keyof FilterType][]; // ex: Type of entity, allows for auto conversion, ex: IP
   validationType?: FilterValidationType[keyof FilterValidationType];
