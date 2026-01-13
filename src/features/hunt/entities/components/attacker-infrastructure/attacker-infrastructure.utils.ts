@@ -1,3 +1,4 @@
+import { compressIPv6, isIPv6 } from '@/common/lib/ips';
 import { KillChainStepsEnum } from '@/features/hunt/filtering/query-filters/constants/query-filter.config';
 
 import { AttackerInfrastructureAggregation } from './attacker-infrastructure.schema';
@@ -58,7 +59,7 @@ export const formatForcegraph = (
             id: source.key,
             type: 'entity',
             group: 3,
-            label: source.key,
+            label: isIPv6(source.key) ? compressIPv6(source.key) : source.key,
             value: 1000,
             color: 'primary',
           });

@@ -40,8 +40,6 @@ export const EntitiesForceGraphComponent = ({
   const foregroundColor = useRootCssVariableValue('--foreground');
   const policyViolationColor = useRootCssVariableValue('--dopv');
 
-  console.log(bgColor, destructiveColor, foregroundColor);
-
   useEffect(() => {
     forceGraphRef.current?.d3Force('collision', d3.forceCollide(12));
   }, []);

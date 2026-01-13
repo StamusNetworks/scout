@@ -1,3 +1,5 @@
+import { compressIPv6, isIPv6 } from '@/common/lib/ips';
+
 import { Entity } from '../../model/entity';
 
 export type Node = {
@@ -36,7 +38,7 @@ export const formatForcegraph = (data: Entity[]) => {
       nodes.push({
         id: entity.pk.toString(),
         type: 'entity',
-        value: entity.value,
+        value: isIPv6(entity.value) ? compressIPv6(entity.value) : entity.value,
         color: 'foreground',
       });
     }
