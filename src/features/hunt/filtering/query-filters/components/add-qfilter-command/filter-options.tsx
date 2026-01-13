@@ -43,8 +43,8 @@ export const FilterOptions = () => {
     <>
       <CommandEmpty>No filters found.</CommandEmpty>
       {search.length > 0 && (
-        <CommandGroup heading="Common filters">
-          {PreferedOptions.map((o) => (
+        <CommandGroup heading="Frequently used filters">
+          {PreferredOptions.map((o) => (
             <CommandItem
               key={o.value}
               value={`${o.value}-${o.label}`}
@@ -63,7 +63,10 @@ export const FilterOptions = () => {
           heading={`${capitalizeAll(category)} filters`}
         >
           {definitions
-            .filter((f) => f.category === category)
+            .filter(
+              (f) =>
+                f.category === category && !preferredKeys.includes(f.value),
+            )
             .map((f) => (
               <CommandItem
                 key={f.value}
@@ -81,7 +84,7 @@ export const FilterOptions = () => {
   );
 };
 
-export const PreferedOptions = [
+const preferredKeys = [
   'ip',
   'src_ip',
   'flow.src_ip',
@@ -90,9 +93,8 @@ export const PreferedOptions = [
   'port',
   'src_port',
   'dest_port',
-  'flow.src_port',
-  'flow.dest_port',
-].map((k) => ({
+];
+export const PreferredOptions = preferredKeys.map((k) => ({
   label: QueryFiltersRecord[k].label,
   value: k,
 }));
