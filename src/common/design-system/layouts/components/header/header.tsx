@@ -1,4 +1,9 @@
-import { ChevronRight, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import {
+  ChevronRight,
+  GalleryHorizontal,
+  PanelLeftClose,
+  PanelLeftOpen,
+} from 'lucide-react';
 import { useCallback } from 'react';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -18,8 +23,10 @@ import { disableHelp, selectHelpState } from '@/features/ui/help/help.slice';
 import { ThemeSelector } from '@/features/ui/theming/themeSelector';
 import {
   selectIsNavigationOpen,
+  selectWithPageContainer,
   setIsNavigationOpen,
   setOpenModal,
+  setWithPageContainer,
 } from '@/features/ui/ui-state.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
@@ -55,15 +62,14 @@ export const Header = () => {
           <NavigationMenuItem asChild>
             <Button
               variant="ghost"
+              size="sm"
               className="flex items-center"
               onClick={handleOpenGlobalCommands}
               highlight={highlightGlobalCommands}
             >
-              <Row className="mr-2 items-center">
-                <ChevronRight className="mr-1" />
-                Commands
-              </Row>
-              <span className="text-muted-foreground rounded-sm border px-1 text-sm">
+              <ChevronRight />
+              Commands
+              <span className="text-muted-foreground ml-1 rounded-sm border px-1 text-sm">
                 {getShortcutDisplay('K')}
               </span>
             </Button>
@@ -76,6 +82,9 @@ export const Header = () => {
           </NavigationMenuItem>
           <NavigationMenuItem>
             <ThemeSelector />
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <PageContainerSelector />
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
@@ -95,6 +104,20 @@ const NavigationToggler = () => {
       size="icon"
     >
       {isOpen ? <PanelLeftClose /> : <PanelLeftOpen />}
+    </Button>
+  );
+};
+
+const PageContainerSelector = () => {
+  const dispatch = useAppDispatch();
+  const withPageContainer = useAppSelector(selectWithPageContainer);
+  return (
+    <Button
+      variant="ghost"
+      size="icon-sm"
+      onClick={() => dispatch(setWithPageContainer(!withPageContainer))}
+    >
+      <GalleryHorizontal />
     </Button>
   );
 };

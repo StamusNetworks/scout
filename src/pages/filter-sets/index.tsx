@@ -10,7 +10,6 @@ import { Row } from '@/common/design-system/atoms/layout/row';
 import {
   Page,
   PageActions,
-  PageContainer,
   PageDescription,
   PageHeader,
   PageHeaderContent,
@@ -34,6 +33,7 @@ import { CommandFilterSingle } from '@/common/design-system/molecules/data-table
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { cn } from '@/common/lib/utils';
 import { useGetFilterSetsQuery } from '@/features/hunt/filtering/query-filters/api/query-filter.api';
@@ -124,7 +124,7 @@ export const FilterSetsPage = () => {
 
   return (
     <Page>
-      <PageContainer>
+      <TogglePageContainer>
         {showFilterSetsBackNavTip && (
           <Alert className="mb-4">
             <Info />
@@ -221,7 +221,7 @@ export const FilterSetsPage = () => {
             </DataTableToolbar>
           }
         />
-      </PageContainer>
+      </TogglePageContainer>
     </Page>
   );
 };

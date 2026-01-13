@@ -18,14 +18,21 @@ export const Page = ({ children }: PageProps) => (
   </ScrollArea>
 );
 
-type PageContainerProps = React.ComponentProps<typeof Container>;
+interface PageContainerProps extends React.ComponentProps<typeof Container> {
+  fluid?: boolean;
+}
 export const PageContainer = ({
   children,
   className,
+  fluid = false,
   ...rest
 }: PageContainerProps) => (
   <Container
-    className={cn('@container/app py-5 pb-[75px]', className)}
+    className={cn(
+      '@container/app py-5 pb-[75px]',
+      fluid && 'max-w-full',
+      className,
+    )}
     {...rest}
   >
     {children}

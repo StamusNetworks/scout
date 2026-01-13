@@ -1,7 +1,5 @@
-import { cn } from '@/common/lib/utils';
-
+import { TogglePageContainer } from '../molecules/toggle-container';
 import { Column } from './layout/column';
-import { Container } from './layout/container';
 import { Row } from './layout/row';
 import { PageHeader } from './page-header';
 import { StatsList } from './page-stats';
@@ -32,7 +30,7 @@ export const DefaultPage = ({
     className="h-full w-full overflow-clip"
     type="scroll"
   >
-    <Container className={cn('@container/app py-5 pb-[75px]', className)}>
+    <TogglePageContainer className={className}>
       <Row className="justify-between">
         <Column className="grow">
           {alert}
@@ -47,6 +45,6 @@ export const DefaultPage = ({
         {actions}
       </Row>
       {children}
-    </Container>
+    </TogglePageContainer>
   </ScrollArea>
 );

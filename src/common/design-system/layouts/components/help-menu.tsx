@@ -50,6 +50,7 @@ export const HelpMenu = () => {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
+            size="sm"
             data-testid="help-menu-dropdown-trigger"
           >
             <Info />

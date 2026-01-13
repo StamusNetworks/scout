@@ -15,6 +15,7 @@ export const ReloadButton = () => {
       onClick={() => {
         dispatch(API.util.invalidateTags(['Reload']));
       }}
+      size="sm"
       data-testid="reload-button"
     >
       <RefreshCw className={cn(isFetching && 'animate-spin')} />

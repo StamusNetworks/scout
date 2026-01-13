@@ -2,7 +2,6 @@ import { Outlet, useLocation } from 'react-router-dom';
 
 import {
   Page,
-  PageContainer,
   PageDescription,
   PageHeader,
   PageHeaderContent,
@@ -14,6 +13,7 @@ import {
   TabsTriggerLink,
 } from '@/common/design-system/atoms/ui/pillTabs';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { IndicatorsDopv } from '@/features/hunt/operational-center/components/indicators/docdopv.indicators';
 
 import { routes } from '../routes.config';
@@ -23,7 +23,7 @@ export const PolicyViolationsPage = () => {
   return (
     <Page>
       <OutletBreadcrumb>Policy Violations</OutletBreadcrumb>
-      <PageContainer>
+      <TogglePageContainer>
         <PageHeader>
           <PageHeaderContent>
             <PageTitle>Policy Violations</PageTitle>
@@ -53,7 +53,7 @@ export const PolicyViolationsPage = () => {
         <div className="mt-2">
           <Outlet />
         </div>
-      </PageContainer>
+      </TogglePageContainer>
     </Page>
   );
 };

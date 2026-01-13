@@ -82,6 +82,7 @@ export const DatesPicker = () => {
             <TooltipTrigger asChild>
               <Button
                 variant="ghost"
+                size="sm"
                 data-testid="date-picker-dropdown-trigger"
               >
                 <Clock />

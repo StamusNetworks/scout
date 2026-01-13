@@ -9,7 +9,6 @@ import { Row } from '@/common/design-system/atoms/layout/row';
 import {
   Page,
   PageAlert,
-  PageContainer,
   PageDescription,
   PageHeader,
   PageHeaderContent,
@@ -35,6 +34,7 @@ import { CommandFilterMultiple } from '@/common/design-system/molecules/data-tab
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { SwitchFilter } from '@/common/design-system/molecules/data-table/filters/switch-filter';
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { ValueListCard } from '@/common/design-system/molecules/value-list-card';
 import { Paginated } from '@/common/fetching/fetching.types';
 import { usePageTitle } from '@/common/lib/use-page-title';
@@ -68,7 +68,7 @@ export const InvestigationsPage = () => {
     <>
       <OutletBreadcrumb>Investigations</OutletBreadcrumb>
       <Page>
-        <PageContainer>
+        <TogglePageContainer>
           <PageAlert
             Icon={FileWarning}
             title="Beta feature !"
@@ -88,7 +88,7 @@ export const InvestigationsPage = () => {
             </PageHeaderContent>
           </PageHeader>
           <InvestigationHistoryList />
-        </PageContainer>
+        </TogglePageContainer>
       </Page>
     </>
   );

@@ -1,6 +1,5 @@
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 
-import { Container } from '@/common/design-system/atoms/layout/container';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import {
   Tabs,
@@ -11,6 +10,7 @@ import {
 import { ScrollArea } from '@/common/design-system/atoms/ui/scroll-area';
 import { Separator } from '@/common/design-system/atoms/ui/separator';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetBeaconingEventsQuery } from '@/features/analytics/beaconing/api/beaconing.api';
 import { useGetHostWithAlertsQuery } from '@/features/analytics/hosts/api/hosts.api';
@@ -113,7 +113,7 @@ export const HostDetails = () => {
       <OutletBreadcrumb link={routes.hosts}>Hosts</OutletBreadcrumb>
       <OutletBreadcrumb>{hostId}</OutletBreadcrumb>
       <ScrollArea className="h-full w-full overflow-clip">
-        <Container className="@container/app py-3 pb-[75px]">
+        <TogglePageContainer>
           <Row className="mb-4 justify-between">
             <HostSummary
               entity={entity}
@@ -239,7 +239,7 @@ export const HostDetails = () => {
           <div className="mt-2">
             <Outlet />
           </div>
-        </Container>
+        </TogglePageContainer>
       </ScrollArea>
     </>
   );

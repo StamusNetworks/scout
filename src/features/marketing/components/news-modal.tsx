@@ -29,9 +29,9 @@ export const NewsFeedModal = () => {
     <Dialog onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button
-          variant="outline"
+          variant="ghost"
           className="relative"
-          size="icon"
+          size="icon-sm"
         >
           {unreadCount > 0 && (
             <Badge
