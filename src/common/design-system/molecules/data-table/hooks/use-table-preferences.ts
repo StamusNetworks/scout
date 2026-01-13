@@ -88,14 +88,22 @@ export const useTablePreferences = ({
     defaultColumnVisibility,
   ]);
 
-  const {
-    columnOrder,
-    columnVisibility,
-    defaultColumnOrder: normalizedDefaultColumnOrder,
-    defaultColumnVisibility: normalizedDefaultColumnVisibility,
-  } = useAppSelector((state) => selectTablePreferencesEntry(state, tableId));
+  const entry = useAppSelector((state) =>
+    selectTablePreferencesEntry(state, tableId),
+  );
+
+  const columnOrder = entry?.columnOrder ?? defaultColumnOrder;
+  const columnVisibility = entry?.columnVisibility ?? defaultColumnVisibility;
+  const normalizedDefaultColumnOrder =
+    entry?.defaultColumnOrder ?? defaultColumnOrder;
+  const normalizedDefaultColumnVisibility =
+    entry?.defaultColumnVisibility ?? defaultColumnVisibility;
 
   const canReset = useMemo(() => {
+    if (!entry) {
+      return false;
+    }
+
     const hasCustomOrder = !areArraysEqual(
       columnOrder,
       normalizedDefaultColumnOrder,
@@ -107,6 +115,7 @@ export const useTablePreferences = ({
 
     return hasCustomOrder || hasCustomVisibility;
   }, [
+    entry,
     columnOrder,
     normalizedDefaultColumnOrder,
     columnVisibility,
