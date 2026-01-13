@@ -92,17 +92,19 @@ export const tablePreferencesSlice = createSlice({
         defaultColumnVisibility = {},
       } = action.payload;
 
+      const normalizedDefaultColumnVisibility = normalizeColumnVisibility({
+        columnIds: defaultColumnOrder,
+        defaultVisibility: defaultColumnVisibility,
+        persistedVisibility: {},
+      });
+
       const existing = state[tableId];
       if (!existing) {
         state[tableId] = {
           defaultColumnOrder,
           columnOrder: defaultColumnOrder,
-          defaultColumnVisibility,
-          columnVisibility: normalizeColumnVisibility({
-            columnIds: defaultColumnOrder,
-            defaultVisibility: defaultColumnVisibility,
-            persistedVisibility: {},
-          }),
+          defaultColumnVisibility: normalizedDefaultColumnVisibility,
+          columnVisibility: normalizedDefaultColumnVisibility,
         };
         return;
       }
@@ -114,10 +116,10 @@ export const tablePreferencesSlice = createSlice({
         existing.columnOrder,
       );
       // If persisted, we normalize the visibility in case of new columns or removed columns
-      existing.defaultColumnVisibility = defaultColumnVisibility;
+      existing.defaultColumnVisibility = normalizedDefaultColumnVisibility;
       existing.columnVisibility = normalizeColumnVisibility({
         columnIds: defaultColumnOrder,
-        defaultVisibility: defaultColumnVisibility,
+        defaultVisibility: normalizedDefaultColumnVisibility,
         persistedVisibility: existing.columnVisibility,
       });
     },
@@ -165,11 +167,7 @@ export const tablePreferencesSlice = createSlice({
         return;
       }
 
-      existing.columnVisibility = normalizeColumnVisibility({
-        columnIds: existing.defaultColumnOrder,
-        defaultVisibility: existing.defaultColumnVisibility,
-        persistedVisibility: {},
-      });
+      existing.columnVisibility = existing.defaultColumnVisibility;
     },
   },
 });
@@ -197,34 +195,10 @@ export const selectColumnOrder = (state: RootState, tableId: TableId) => {
   if (!entry) {
     return [];
   }
-  return normalizeColumnOrder(entry.defaultColumnOrder, entry.columnOrder);
-};
-
-export const selectRawColumnOrder = (state: RootState, tableId: TableId) => {
-  const entry = selectTablePreferencesEntry(state, tableId);
-  if (!entry) {
-    return [];
-  }
   return entry.columnOrder;
 };
 
 export const selectColumnVisibility = (state: RootState, tableId: TableId) => {
-  const entry = selectTablePreferencesEntry(state, tableId);
-  if (!entry) {
-    return {};
-  }
-
-  return normalizeColumnVisibility({
-    columnIds: entry.defaultColumnOrder,
-    defaultVisibility: entry.defaultColumnVisibility,
-    persistedVisibility: entry.columnVisibility,
-  });
-};
-
-export const selectRawColumnVisibility = (
-  state: RootState,
-  tableId: TableId,
-) => {
   const entry = selectTablePreferencesEntry(state, tableId);
   if (!entry) {
     return {};

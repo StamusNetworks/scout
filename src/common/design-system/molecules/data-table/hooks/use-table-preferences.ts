@@ -4,13 +4,9 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import {
-  normalizeColumnOrder,
-  normalizeColumnVisibility,
   registerTable,
   resetColumnOrder,
   resetColumnVisibility,
-  selectRawColumnOrder,
-  selectRawColumnVisibility,
   selectTablePreferencesEntry,
   setColumnOrder,
   setColumnVisibility,
@@ -92,61 +88,28 @@ export const useTablePreferences = ({
     defaultColumnVisibility,
   ]);
 
-  const entry = useAppSelector((state) =>
-    selectTablePreferencesEntry(state, tableId),
-  );
-  const rawColumnOrder = useAppSelector((state) =>
-    selectRawColumnOrder(state, tableId),
-  );
-  const rawColumnVisibility = useAppSelector((state) =>
-    selectRawColumnVisibility(state, tableId),
-  );
-
-  const normalizedColumnOrder = useMemo(() => {
-    const defaultOrder = entry?.defaultColumnOrder ?? defaultColumnOrder;
-    const persisted = entry ? rawColumnOrder : defaultColumnOrder;
-    return normalizeColumnOrder(defaultOrder, persisted);
-  }, [defaultColumnOrder, entry, rawColumnOrder]);
-
-  const normalizedColumnVisibility = useMemo(() => {
-    const columnIds = entry?.defaultColumnOrder ?? defaultColumnOrder;
-    const defaults = entry?.defaultColumnVisibility ?? defaultColumnVisibility;
-    const persisted = entry ? rawColumnVisibility : {};
-    return normalizeColumnVisibility({
-      columnIds,
-      defaultVisibility: defaults,
-      persistedVisibility: persisted,
-    });
-  }, [defaultColumnOrder, defaultColumnVisibility, entry, rawColumnVisibility]);
-
-  const normalizedDefaultColumnVisibility = useMemo(() => {
-    return normalizeColumnVisibility({
-      columnIds: defaultColumnOrder,
-      defaultVisibility: defaultColumnVisibility,
-      persistedVisibility: {},
-    });
-  }, [defaultColumnOrder, defaultColumnVisibility]);
+  const {
+    columnOrder,
+    columnVisibility,
+    defaultColumnOrder: normalizedDefaultColumnOrder,
+    defaultColumnVisibility: normalizedDefaultColumnVisibility,
+  } = useAppSelector((state) => selectTablePreferencesEntry(state, tableId));
 
   const canReset = useMemo(() => {
-    if (!entry) {
-      return false;
-    }
-
     const hasCustomOrder = !areArraysEqual(
-      normalizedColumnOrder,
-      defaultColumnOrder,
+      columnOrder,
+      normalizedDefaultColumnOrder,
     );
     const hasCustomVisibility = !areVisibilityStatesEqual(
-      normalizedColumnVisibility,
+      columnVisibility,
       normalizedDefaultColumnVisibility,
     );
 
     return hasCustomOrder || hasCustomVisibility;
   }, [
-    defaultColumnOrder,
-    entry,
-    normalizedColumnOrder,
-    normalizedColumnVisibility,
+    columnOrder,
+    normalizedDefaultColumnOrder,
+    columnVisibility,
     normalizedDefaultColumnVisibility,
   ]);
 
@@ -158,48 +121,16 @@ export const useTablePreferences = ({
     dispatch(resetColumnVisibility(tableId));
   }, [dispatch, tableId, defaultColumnOrder, defaultColumnVisibility]);
 
-  useEffect(() => {
-    if (!entry) {
-      return;
-    }
-    if (areArraysEqual(rawColumnOrder, normalizedColumnOrder)) {
-      return;
-    }
-    dispatch(setColumnOrder({ tableId, order: normalizedColumnOrder }));
-  }, [dispatch, entry, rawColumnOrder, normalizedColumnOrder, tableId]);
-
-  useEffect(() => {
-    if (!entry) {
-      return;
-    }
-
-    if (
-      areVisibilityStatesEqual(rawColumnVisibility, normalizedColumnVisibility)
-    ) {
-      return;
-    }
-
-    dispatch(
-      setColumnVisibility({ tableId, visibility: normalizedColumnVisibility }),
-    );
-  }, [
-    dispatch,
-    entry,
-    rawColumnVisibility,
-    normalizedColumnVisibility,
-    tableId,
-  ]);
-
   const handleColumnOrderChange = useCallback(
     (updater: Updater<string[]>) => {
       const nextOrder =
         typeof updater === 'function'
-          ? (updater as (old: string[]) => string[])(normalizedColumnOrder)
+          ? (updater as (old: string[]) => string[])(columnOrder)
           : updater;
 
       dispatch(setColumnOrder({ tableId, order: nextOrder }));
     },
-    [dispatch, normalizedColumnOrder, tableId],
+    [dispatch, columnOrder, tableId],
   );
 
   const handleColumnVisibilityChange = useCallback(
@@ -207,19 +138,19 @@ export const useTablePreferences = ({
       const nextVisibility =
         typeof updater === 'function'
           ? (updater as (old: VisibilityState) => VisibilityState)(
-              normalizedColumnVisibility,
+              columnVisibility,
             )
           : updater;
 
       dispatch(setColumnVisibility({ tableId, visibility: nextVisibility }));
     },
-    [dispatch, normalizedColumnVisibility, tableId],
+    [dispatch, columnVisibility, tableId],
   );
 
   return {
-    columnOrder: normalizedColumnOrder,
+    columnOrder,
     onColumnOrderChange: handleColumnOrderChange,
-    columnVisibility: normalizedColumnVisibility,
+    columnVisibility,
     onColumnVisibilityChange: handleColumnVisibilityChange,
     canReset,
     onClickReset: handleClickReset,

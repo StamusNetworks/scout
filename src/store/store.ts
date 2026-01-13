@@ -32,14 +32,7 @@ import { API } from './api';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: [
-    'filters',
-    'pages',
-    'preferences',
-    'help',
-    'investigation',
-    'tablePreferences',
-  ],
+  whitelist: ['filters', 'pages', 'preferences', 'help', 'investigation'],
   stateReconciler: autoMergeLevel2,
 };
 
