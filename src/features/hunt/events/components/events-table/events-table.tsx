@@ -2,14 +2,8 @@ import { Row } from '@tanstack/react-table';
 import { Binary } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-import {
-  Empty,
-  EmptyContent,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-} from '@/common/design-system/atoms/ui/empty.tsx';
 import { DataTable } from '@/common/design-system/molecules/data-table/data-table.tsx';
+import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty.tsx';
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination.ts';
 import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting.ts';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
@@ -75,17 +69,10 @@ export const EventsTable = () => {
       canReset={canReset}
       onClickReset={onClickReset}
       Empty={
-        <Empty>
-          <EmptyMedia variant="icon">
-            <Binary />
-          </EmptyMedia>
-          <EmptyContent>
-            <EmptyHeader>No events found</EmptyHeader>
-            <EmptyDescription>
-              Either there is no data or the filters are too restrictive.
-            </EmptyDescription>
-          </EmptyContent>
-        </Empty>
+        <DataTableEmpty
+          Icon={Binary}
+          entity="events"
+        />
       }
     />
   );

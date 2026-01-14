@@ -1,7 +1,9 @@
+import { PencilRuler } from 'lucide-react';
 import { parseAsBoolean, useQueryState } from 'nuqs';
 
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableToolbar } from '@/common/design-system/molecules/data-table/data-table.toolbar';
+import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import { SwitchFilter } from '@/common/design-system/molecules/data-table/filters/switch-filter';
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting';
@@ -80,6 +82,12 @@ export const SignaturesTable = () => {
       onColumnVisibilityChange={onColumnVisibilityChange}
       canReset={canReset}
       onClickReset={onClickReset}
+      Empty={
+        <DataTableEmpty
+          Icon={PencilRuler}
+          entity="detection methods"
+        />
+      }
     />
   );
 };

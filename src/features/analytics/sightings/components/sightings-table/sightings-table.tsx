@@ -1,9 +1,11 @@
 import { Row } from '@tanstack/react-table';
+import { Radar } from 'lucide-react';
 import { useQueryState } from 'nuqs';
 
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { ExportColumn } from '@/common/design-system/molecules/data-table/data-table';
 import { DataTableToolbar } from '@/common/design-system/molecules/data-table/data-table.toolbar';
+import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import { CommandFilterSingle } from '@/common/design-system/molecules/data-table/filters/command-filter-single';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
@@ -98,6 +100,12 @@ export const SightingsTable = ({
       onSortingChange={setSorting}
       toolBar={toolBar}
       exportColumns={exportColumns}
+      Empty={
+        <DataTableEmpty
+          Icon={Radar}
+          entity="sightings"
+        />
+      }
     />
   );
 };

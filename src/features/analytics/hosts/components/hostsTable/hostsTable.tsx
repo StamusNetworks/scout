@@ -1,7 +1,9 @@
+import { LaptopMinimal } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 import { DataTableToolbar } from '@/common/design-system/molecules/data-table/data-table.toolbar.tsx';
 import { DataTable } from '@/common/design-system/molecules/data-table/data-table.tsx';
+import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty.tsx';
 import { SwitchFilter } from '@/common/design-system/molecules/data-table/filters/switch-filter.tsx';
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination.ts';
 import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting.ts';
@@ -79,6 +81,12 @@ export const HostsTable = ({
       onColumnVisibilityChange={onColumnVisibilityChange}
       canReset={canReset}
       onClickReset={onClickReset}
+      Empty={
+        <DataTableEmpty
+          Icon={LaptopMinimal}
+          entity="hosts"
+        />
+      }
     />
   );
 };
