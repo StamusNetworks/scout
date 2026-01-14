@@ -144,7 +144,7 @@ const DashboardMosaic = ({ panelId }: { panelId: keyof typeof dashboard }) => {
           className="border"
         >
           {row?.map(({ i, title, size }, index: number) => {
-            const tooltip = getFilterDef(i).description;
+            const tooltip = getFilterDef(i)?.description;
             return (
               <React.Fragment key={i + '-' + index}>
                 {/* index as key otherwise the resize feature breaks when
