@@ -95,11 +95,14 @@ export const FilterOptions = () => {
 
 const preferredKeys = [
   'ip',
-  'src_ip',
   'flow.src_ip',
-  'dest_ip',
   'flow.dest_ip',
+  'src_ip',
+  'dest_ip',
   'port',
+  'host_id.services.port',
+  'flow.src_port',
+  'flow.dest_port',
   'src_port',
   'dest_port',
   'es_filter',
