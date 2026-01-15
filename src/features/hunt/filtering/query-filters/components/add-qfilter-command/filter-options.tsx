@@ -20,7 +20,7 @@ import { setFilter } from './add-qfilter-command.slice';
 
 export const FilterOptions = () => {
   const dispatch = useAppDispatch();
-  const { negated, search } = useAppSelector(selectFilterCommand);
+  const { negated } = useAppSelector(selectFilterCommand);
 
   const filters = useQueryFiltersDefinitions();
   const definitions = useMemo(() => {
@@ -42,30 +42,28 @@ export const FilterOptions = () => {
   return (
     <>
       <CommandEmpty>No filters found.</CommandEmpty>
-      {search.length > 0 && (
-        <CommandGroup heading="Frequently used filters">
-          {PreferredOptions.filter((o) => o.value !== 'es_filter').map((o) => (
-            <CommandItem
-              key={o.value}
-              value={`${o.value}-${o.label}`}
-              onSelect={() => dispatch(setFilter(o.value))}
-              className="justify-between"
-            >
-              <span>{o.label}</span>
-              <span className="text-muted-foreground">{o.value}</span>
-            </CommandItem>
-          ))}
+      <CommandGroup heading="Frequently used filters">
+        {PreferredOptions.filter((o) => o.value !== 'es_filter').map((o) => (
           <CommandItem
-            key="es_filter"
-            value="es_filter-ES Filter raw search query elastic"
-            onSelect={() => dispatch(setFilter('es_filter'))}
+            key={o.value}
+            value={`${o.value}-${o.label}`}
+            onSelect={() => dispatch(setFilter(o.value))}
             className="justify-between"
           >
-            <span>ES Filter</span>
-            <span className="text-muted-foreground">es_filter</span>
+            <span>{o.label}</span>
+            <span className="text-muted-foreground">{o.value}</span>
           </CommandItem>
-        </CommandGroup>
-      )}
+        ))}
+        <CommandItem
+          key="es_filter"
+          value="es_filter-ES Filter raw search query elastic"
+          onSelect={() => dispatch(setFilter('es_filter'))}
+          className="justify-between"
+        >
+          <span>ES Filter</span>
+          <span className="text-muted-foreground">es_filter</span>
+        </CommandItem>
+      </CommandGroup>
       {values(FilterCategory).map((category) => (
         <CommandGroup
           key={category}
