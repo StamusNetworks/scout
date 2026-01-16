@@ -225,15 +225,21 @@ const FilterSetsItemPopoverContent = ({
   );
 };
 
+const getFallbackLabel = (filterId: string) => {
+  const spaced = filterId.replaceAll('.', ' ').replaceAll('_', ' ');
+  return capitalizeAll(spaced);
+};
 const PopoverQueryFilter = ({ filter }: { filter: PersistedFilter }) => {
   const definition = useQueryFilterDefinition(filter.id);
   return (
     <Column>
       <Row className="justify-between">
-        <p className="text-xs font-bold">{definition?.label}</p>
+        <p className="text-xs font-bold">
+          {definition?.label || getFallbackLabel(filter.id)}
+        </p>
         <span className="text-muted-foreground text-xs">{filter.id}</span>
       </Row>
-      <p className="text-sm">{filter.value}</p>
+      <p className="max-w-80 text-sm break-all">{filter.value}</p>
     </Column>
   );
 };
@@ -276,9 +282,6 @@ function FilterSetTransactionsBadge({
     end_date: params.end_date,
     tenant: params.tenant,
     qfilter: params.qfilter,
-    stamus: params.stamus,
-    discovery: params.discovery,
-    alert: params.alert,
     pageSize: 1,
   });
   const onClickHandler = () => {
@@ -417,6 +420,9 @@ function FilterSetDetectionMethodsBadge({
     end_date: params.end_date,
     tenant: params.tenant,
     qfilter: params.qfilter,
+    stamus: params.stamus,
+    discovery: params.discovery,
+    alert: params.alert,
     pageSize: 1,
     hits_min: 1,
   });
