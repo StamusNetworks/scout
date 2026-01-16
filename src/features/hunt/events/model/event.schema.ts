@@ -23,6 +23,7 @@ export const eventSchema = z.object({
   tags: z.array(z.string()),
   logger: z.string(),
   flow_id: z.string(),
+  community_id: z.string(),
   flow: z.object({
     age: z.number().optional(),
     tx_cnt: z.number().optional(),

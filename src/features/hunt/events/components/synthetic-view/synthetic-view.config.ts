@@ -79,6 +79,7 @@ export const getSyntheticView = (row: Event): SyntheticViewProps[] => [
       { key: 'flow.age', value: row.flow?.age },
       { key: 'flow.tx_cnt', value: row.flow?.tx_cnt },
       { key: 'flow_id', value: row.flow_id },
+      { key: 'community_id', value: row.community_id },
     ],
   },
   {
