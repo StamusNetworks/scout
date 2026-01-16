@@ -29,7 +29,7 @@ export const EventField = ({ filterId, value }: EventFieldProps) => {
     <Grid className="grid-cols-[135px_1fr] gap-x-2">
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger className="text-left">{label}</TooltipTrigger>
+          <TooltipTrigger className="flex text-left">{label}</TooltipTrigger>
           {def?.description && (
             <TooltipContent className="max-w-56">
               {def?.description || ''}
