@@ -1,4 +1,4 @@
-import { HardDriveDownload, HardDriveUpload } from 'lucide-react';
+import { ArrowUpDown, HardDriveDownload, HardDriveUpload } from 'lucide-react';
 import { useState } from 'react';
 
 import { DefaultPage } from '@/common/design-system/atoms/default-page';
@@ -19,6 +19,7 @@ import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { Switch } from '@/common/design-system/atoms/ui/switch';
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
+import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { Pagination } from '@/common/design-system/molecules/pagination';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
@@ -146,6 +147,12 @@ export const TransactionsPage = () => {
       </Row>
       {isFetching ? (
         <Spin />
+      ) : data.data.length === 0 ? (
+        <DataTableEmpty
+          Icon={ArrowUpDown}
+          entity="network events"
+          className="border"
+        />
       ) : data.type === 'grouped' ? (
         <GroupedList data={data.data} />
       ) : data.type === 'single' ? (

@@ -11,9 +11,14 @@ import {
 interface DataTableEmptyProps {
   Icon: LucideIcon;
   entity: string;
+  className?: string;
 }
-export const DataTableEmpty = ({ Icon, entity }: DataTableEmptyProps) => (
-  <Empty>
+export const DataTableEmpty = ({
+  Icon,
+  entity,
+  className,
+}: DataTableEmptyProps) => (
+  <Empty className={className}>
     <EmptyMedia variant="icon">
       <Icon />
     </EmptyMedia>
