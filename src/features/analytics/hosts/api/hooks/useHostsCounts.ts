@@ -18,7 +18,7 @@ export const useFetchHostsCounts = ({
     'dates',
   ]);
   const customFilter =
-    dateFilters.type === 'range'
+    dateFilters.type === 'range' || dateFilters.type === 'auto'
       ? getCustomFilter(start_date!, end_date!)
       : undefined;
   const agg = getAggregationBody(tenant, inHomeNetwork, customFilter);
