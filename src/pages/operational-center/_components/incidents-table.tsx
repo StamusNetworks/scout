@@ -1,6 +1,7 @@
+import { Row as TanstackRow } from '@tanstack/react-table';
 import { Biohazard, Crosshair, Swords } from 'lucide-react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -31,6 +32,7 @@ import { Hostname } from '@/features/analytics/hosts/components/host-details/hos
 import { Network } from '@/features/analytics/hosts/components/host-details/network';
 import { Username } from '@/features/analytics/hosts/components/host-details/username';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
+import { replaceFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 import {
   KillChainKeysWithoutPolicies,
@@ -40,8 +42,10 @@ import {
 import { useGetThreatsStatusQuery } from '@/features/hunt/threats/api/threats.api';
 import { ThreatTagById } from '@/features/hunt/threats/components/threat-tag';
 import { useThreat } from '@/features/hunt/threats/hooks/use-threat';
+import { useThreats } from '@/features/hunt/threats/hooks/use-threats';
 import { ThreatStatus } from '@/features/hunt/threats/model/threat-status.schema';
 import { routes } from '@/pages/routes.config';
+import { useAppDispatch } from '@/store/store';
 
 export const IndicidentsTable = () => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
@@ -58,6 +62,28 @@ export const IndicidentsTable = () => {
         ? KillChainKeysWithoutPolicies.join(',')
         : killChain?.join(','),
   });
+  const threats = useThreats({});
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const onRowClick = (row: TanstackRow<ThreatStatus>) => {
+    dispatch(
+      replaceFilters([
+        {
+          key: row.original.is_offender ? 'stamus.source' : 'stamus.asset',
+          value: row.original.asset,
+        },
+        {
+          key: 'stamus.threat_name',
+          value:
+            threats.data?.find((threat) => threat.pk === row.original.threat_id)
+              ?.name || '',
+        },
+      ]),
+    );
+    navigate(routes.explorer);
+  };
   return (
     <DataTable
       data={data}
@@ -65,6 +91,7 @@ export const IndicidentsTable = () => {
       columns={threatStatusColumns}
       pagination={pagination}
       onPaginationChange={setPagination}
+      onRowClick={onRowClick}
       toolBar={
         <DataTableToolbar>
           <CommandFilterMultiple
