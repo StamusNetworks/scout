@@ -366,6 +366,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
     key: 'flow.src_ip',
     description: 'Source IP addresses in network communications',
     category: FilterCategory.EVENT,
+    entity: FilterType.IP,
   },
   {
     label: 'Destination IP',
