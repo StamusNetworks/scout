@@ -132,7 +132,7 @@ const ThemeOption = ({
   );
 };
 
-const useGetPreferredColorScheme = () => {
+export const useGetPreferredColorScheme = () => {
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
   const [preferredColorScheme, setPreferredColorScheme] = useState(
     mediaQuery.matches ? 'dark' : 'light',

@@ -1,7 +1,9 @@
+import { useMemo } from 'react';
 import ReactJson, { type ThemeKeys } from 'react-json-view';
 
+import { useGetPreferredColorScheme } from '@/features/ui/theming/themeSelector';
 import { useTheme } from '@/features/ui/theming/useTheme';
-import { selectJsonViewOpen, Theme } from '@/features/ui/ui-state.slice';
+import { BaseTheme, selectJsonViewOpen } from '@/features/ui/ui-state.slice';
 import { useAppSelector } from '@/store/store';
 
 const ThemesMap = {
@@ -10,7 +12,7 @@ const ThemesMap = {
   catppuccin: 'ashes',
   diesel: 'chalk',
   matrix: 'chalk',
-} satisfies Record<Theme, ThemeKeys>;
+} satisfies Record<BaseTheme, ThemeKeys>;
 
 export const JsonView = ({
   data,
@@ -28,7 +30,14 @@ export const JsonView = ({
   collapsed?: number | boolean | undefined;
 }) => {
   const { theme } = useTheme();
+  const pref = useGetPreferredColorScheme();
   const defaultOpen = useAppSelector(selectJsonViewOpen);
+  const jsonTheme = useMemo(() => {
+    if (theme === 'system') {
+      return ThemesMap[pref === 'dark' ? 'diesel' : 'light'];
+    }
+    return ThemesMap[theme];
+  }, [pref, theme]);
   return (
     <ReactJson
       name={name}
@@ -37,7 +46,7 @@ export const JsonView = ({
       displayObjectSize={displayObjectSize}
       collapseStringsAfterLength={collapseStringsAfterLength}
       collapsed={collapsed ?? defaultOpen}
-      theme={ThemesMap[theme]}
+      theme={jsonTheme}
       style={{ backgroundColor: 'transparent', wordBreak: 'break-all' }}
       enableClipboard={true}
     />
