@@ -17,7 +17,13 @@ const initialState: UIState = {
   withPageContainer: true,
 };
 
-export type Theme = 'dark' | 'light' | 'catppuccin' | 'diesel' | 'matrix';
+export type Theme =
+  | 'system'
+  | 'dark'
+  | 'light'
+  | 'catppuccin'
+  | 'diesel'
+  | 'matrix';
 
 export type Modal =
   | 'globalCommand'

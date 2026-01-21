@@ -56,21 +56,6 @@
     --menu: oklch(1 0 0);
     --menu-foreground: oklch(0.3598 0 0);
 
-    /* --reconnaissance: oklch(0.851 0.1716 100.13);
-    --reconnaissance-foreground: oklch(0.401 0.1716 100.13);
-    --weaponization: oklch(0.8023 0.167 88.15);
-    --weaponization-foreground: oklch(0.4023 0.167 88.15);
-    --delivery: oklch(0.7514 0.1638 74.19);
-    --delivery-foreground: oklch(0.4014 0.1638 74.19);
-    --exploitation: oklch(0.694 0.1745 52.42);
-    --exploitation-foreground: oklch(0.3594 0.1745 52.42);
-    --installation: oklch(0.6234 0.2179 36.39);
-    --installation-foreground: oklch(0.3034 0.2179 36.39);
-    --command_and_control: oklch(0.5815 0.2514 28.3);
-    --command_and_control-foreground: oklch(0.2815 0.2514 28.3);
-    --actions_on_objectives: oklch(0.5103 0.2541 312.35);
-    --actions_on_objectives-foreground: oklch(0.2563 0.2459 343.48); */
-
     --reconnaissance: oklch(0.851 0.1716 100.13);
     --reconnaissance-foreground: oklch(0.251 0.1716 100.13);
     --weaponization: oklch(0.7867 0.1716 71.47);
@@ -234,20 +219,6 @@
     --doc-offender-foreground: oklch(0.701 0.1458 329.07);
   }
   [data-theme=dark] {
-    /* --reconnaissance: oklch(0.901 0.1716 100.13);
-    --reconnaissance-foreground:  oklch(1 0.0516 100.13);
-    --weaponization: oklch(0.8623 0.167 88.15);
-    --weaponization-foreground: oklch(1 0.0627 88.15);
-    --delivery: oklch(0.8114 0.1638 74.19);
-    --delivery-foreground: oklch(1 0.0267 47.6);
-    --exploitation: oklch(0.744 0.1745 52.42);
-    --exploitation-foreground: oklch(1 0.0745 52.42);
-    --installation: oklch(0.6734 0.2179 36.39);
-    --installation-foreground: oklch(1 0.1179 36.39);
-    --command_and_control: oklch(0.6015 0.3214 30.3);
-    --command_and_control-foreground: oklch(1 0.1014 28.3);
-    --actions_on_objectives: oklch(0.5763 0.2459 343.48);
-    --actions_on_objectives-foreground: oklch(1 0.1559 343.48); */
     --reconnaissance-foreground: oklch(1 0.1716 100.13);
     --weaponization-foreground: oklch(1 0.1716 71.47);
     --delivery-foreground: oklch(1 0.2273 40.76);
