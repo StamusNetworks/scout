@@ -5,7 +5,7 @@ import { RootState } from '@/store/store';
 import { addQueryFilter } from '../hunt/filtering/query-filters/store/query-filters.slice';
 
 const initialState: UIState = {
-  theme: (localStorage.getItem('theme') as Theme) || 'light',
+  theme: (localStorage.getItem('theme') as Theme) || 'system',
   openModal: null,
   initialValues: null,
   isNavigationOpen: true,
