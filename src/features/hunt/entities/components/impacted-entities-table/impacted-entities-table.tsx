@@ -154,6 +154,7 @@ export const ImpactedEntitiesTable = ({
       onPaginationChange={setPagination}
       sorting={sorting}
       onSortingChange={setSorting}
+      getRowId={(row) => row.pk?.toString()}
       Empty={
         <Empty>
           <EmptyMedia variant="icon">
