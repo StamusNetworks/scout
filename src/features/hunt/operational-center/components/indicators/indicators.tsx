@@ -117,7 +117,9 @@ export const IndicatorsTemplate = ({
               {...indicators['doc-threats']}
               value={globalStats?.nb_threats || 0}
               previousValue={previousGlobalStats?.nb_threats}
-              onClick={() => navigate(routes.threats_coverage)}
+              onClick={() =>
+                navigate(routes.threats_coverage + '?show=threats')
+              }
               loading={isGlobalLoading || isPreviousGlobalLoading}
             />
           </Row>
@@ -147,7 +149,9 @@ export const IndicatorsTemplate = ({
               {...indicators['dopv-threats']}
               value={globalStats?.nb_policies || 0}
               previousValue={previousGlobalStats?.nb_policies}
-              onClick={() => navigate(routes.policy_violations_coverage)}
+              onClick={() =>
+                navigate(routes.policy_violations_coverage + '?show=threats')
+              }
               loading={isGlobalLoading || isPreviousGlobalLoading}
             />
           </Row>

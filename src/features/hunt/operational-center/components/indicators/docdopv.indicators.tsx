@@ -52,7 +52,7 @@ export const IndicatorsDocDopv = () => {
             {...indicators['doc-threats']}
             value={globalStats?.nb_threats || 0}
             previousValue={previousGlobalStats?.nb_threats}
-            onClick={() => navigate(routes.threats_coverage)}
+            onClick={() => navigate(routes.threats_coverage + '?show=threat')}
             loading={isGlobalLoading || isPreviousGlobalLoading}
           />
         </Row>
@@ -91,7 +91,9 @@ export const IndicatorsDocDopv = () => {
             {...indicators['dopv-threats']}
             value={globalStats?.nb_policies || 0}
             previousValue={previousGlobalStats?.nb_policies}
-            onClick={() => navigate(routes.policy_violations_coverage)}
+            onClick={() =>
+              navigate(routes.policy_violations_coverage + '?show=threat')
+            }
             loading={isGlobalLoading || isPreviousGlobalLoading}
           />
         </Row>
@@ -142,7 +144,7 @@ export const IndicatorsDoc = () => {
           {...indicators['doc-threats']}
           value={globalStats?.nb_threats || 0}
           previousValue={previousGlobalStats?.nb_threats}
-          onClick={() => navigate(routes.threats_coverage)}
+          onClick={() => navigate(routes.threats_coverage + '?show=threat')}
           loading={isGlobalLoading || isPreviousGlobalLoading}
         />
       </Row>
@@ -192,7 +194,9 @@ export const IndicatorsDopv = () => {
           {...indicators['dopv-threats']}
           value={globalStats?.nb_policies || 0}
           previousValue={previousGlobalStats?.nb_policies}
-          onClick={() => navigate(routes.policy_violations_coverage)}
+          onClick={() =>
+            navigate(routes.policy_violations_coverage + '?show=threat')
+          }
           loading={isGlobalLoading || isPreviousGlobalLoading}
         />
       </Row>
