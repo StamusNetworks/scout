@@ -28,6 +28,7 @@ import { CommandFilterMultiple } from '@/common/design-system/molecules/data-tab
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { usePaginationState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { isIP } from '@/common/lib/strings';
 import { Hostname } from '@/features/analytics/hosts/components/host-details/hostname';
 import { Network } from '@/features/analytics/hosts/components/host-details/network';
 import { Username } from '@/features/analytics/hosts/components/host-details/username';
@@ -68,21 +69,28 @@ export const IndicidentsTable = () => {
   const dispatch = useAppDispatch();
 
   const onRowClick = (row: TanstackRow<ThreatStatus>) => {
-    dispatch(
-      replaceFilters([
-        {
-          key: row.original.is_offender ? 'stamus.source' : 'stamus.asset',
-          value: row.original.asset,
-        },
-        {
-          key: 'stamus.threat_name',
-          value:
-            threats.data?.find((threat) => threat.pk === row.original.threat_id)
-              ?.name || '',
-        },
-      ]),
-    );
-    navigate(routes.explorer);
+    if (isIP(row.original.asset)) {
+      navigate(
+        routes.hosts_host_incidents.replace(':hostId', row.original.asset),
+      );
+    } else {
+      dispatch(
+        replaceFilters([
+          {
+            key: row.original.is_offender ? 'stamus.source' : 'stamus.asset',
+            value: row.original.asset,
+          },
+          {
+            key: 'stamus.threat_name',
+            value:
+              threats.data?.find(
+                (threat) => threat.pk === row.original.threat_id,
+              )?.name || '',
+          },
+        ]),
+      );
+      navigate(routes.explorer);
+    }
   };
   return (
     <DataTable
