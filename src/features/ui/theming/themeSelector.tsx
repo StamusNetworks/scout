@@ -160,9 +160,11 @@ const usePreferredColorTheme = (isSystem: boolean) => {
     root.classList.remove('light', 'dark', 'diesel');
 
     if (preferredColorScheme === 'dark') {
+      root.setAttribute('data-theme', 'dark');
       root.classList.add('dark');
       root.classList.add('diesel');
     } else {
+      root.setAttribute('data-theme', 'light');
       root.classList.add('light');
     }
   }, [preferredColorScheme, isSystem]);
