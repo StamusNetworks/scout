@@ -120,12 +120,8 @@ export const ContextMenuContent = ({
         onClick={() =>
           dispatch(addQueryFilter({ key: query_key, value: value }))
         }
-        className="flex items-center justify-between"
       >
-        <div className="flex items-center font-bold">
-          <Filter className={iconClass} /> Filter on value
-        </div>
-        <span className="text-muted-foreground text-xs">(left click)</span>
+        <Filter className={iconClass} /> Add global filter
       </ContextMenuItem>
       <ContextMenuItem
         onClick={() =>
@@ -139,7 +135,7 @@ export const ContextMenuContent = ({
         }
       >
         <FilterX className={iconClass} />
-        Filter on negated value
+        Add negated filter
       </ContextMenuItem>
       <ContextMenuItem onClick={() => saveToClipboard(displayValue.toString())}>
         <Copy className={iconClass} />
