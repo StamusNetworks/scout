@@ -120,8 +120,12 @@ export const ContextMenuContent = ({
         onClick={() =>
           dispatch(addQueryFilter({ key: query_key, value: value }))
         }
+        className="flex items-center justify-between"
       >
-        <Filter className={iconClass} /> Filter on value
+        <div className="flex items-center font-bold">
+          <Filter className={iconClass} /> Filter on value
+        </div>
+        <span className="text-muted-foreground text-xs">(left click)</span>
       </ContextMenuItem>
       <ContextMenuItem
         onClick={() =>
