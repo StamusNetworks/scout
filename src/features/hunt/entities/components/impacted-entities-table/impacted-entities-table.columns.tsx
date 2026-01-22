@@ -95,9 +95,7 @@ export const getColumns = ({
             />
           ),
           cell: ({ row }) => {
-            const kc = row.original.is_offender
-              ? row.original.kill_chain_offender
-              : row.original.kill_chain;
+            const kc = row.original.kill_chain;
             return (
               <KillchainTag
                 kc={kc}

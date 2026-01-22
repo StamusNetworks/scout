@@ -267,7 +267,10 @@ export const ThreatFamilyDefault = () => {
           familyId={familyId}
         />
       )}
-      <ImpactedEntitiesTable familyId={parseInt(familyId!)} />
+      <ImpactedEntitiesTable
+        familyId={parseInt(familyId!)}
+        familyClass={'doc'}
+      />
     </>
   );
 };
