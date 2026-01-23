@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Badge } from '@/common/design-system/atoms/ui/badge';
 import { Skeleton } from '@/common/design-system/atoms/ui/skeleton';
@@ -8,6 +10,7 @@ import {
   TooltipTrigger,
 } from '@/common/design-system/atoms/ui/tooltip';
 import { cn } from '@/common/lib/utils';
+import { routes } from '@/pages/routes.config';
 import { useAppSelector } from '@/store/store';
 
 import { EntityThreat } from '../../entities/model/impacted-entity.schema';
@@ -59,6 +62,7 @@ export const ThreatTag = ({
   is_offender?: boolean;
   className?: string;
 }) => {
+  const navigate = useNavigate();
   const isAfterStart = useAppSelector(
     selectIsAfterStart(
       'first_seen' in threat ? new Date(threat.first_seen) : new Date(0),
@@ -79,6 +83,15 @@ export const ThreatTag = ({
           <EventValue
             query_key="stamus.threat_name"
             value={threatDef.name}
+            className="cursor-pointer"
+            onClick={() =>
+              navigate(
+                routes.threats_coverage_threat.replace(
+                  ':threatId',
+                  threatDef.pk.toString(),
+                ),
+              )
+            }
           >
             <Badge
               variant={
