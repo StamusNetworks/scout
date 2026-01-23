@@ -5,10 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 
 import { mockNavigate } from '@/common/testing/mocks/hooks/use-navigate.mock';
 import { baseUrl, server } from '@/common/testing/mocks/server';
-import {
-  expectFiltersWithoutId,
-  renderWithProviders,
-} from '@/common/testing/test-utils';
+import { renderWithProviders } from '@/common/testing/test-utils';
 
 import { KillChainPhase } from '../../killchain';
 import {
@@ -79,7 +76,7 @@ describe('KillChainCounters', () => {
   });
 
   test('clicking on a KillChainCounters item dispatches filter and navigates', async () => {
-    const { store } = renderWithProviders(
+    renderWithProviders(
       <MemoryRouter>
         <KillChainCounters />
       </MemoryRouter>,
@@ -90,20 +87,13 @@ describe('KillChainCounters', () => {
     const reconItem = await screen.findByText('10');
     await userEvent.click(reconItem);
 
-    expectFiltersWithoutId(store).toEqual([
-      {
-        key: 'stamus.kill_chain',
-        value: 'reconnaissance',
-        is_negated: false,
-        is_suspended: false,
-        is_wildcarded: false,
-      },
-    ]);
-    expect(mockNavigate).toHaveBeenCalledWith('/explorer');
+    expect(mockNavigate).toHaveBeenCalledWith(
+      '/threats?killchain=reconnaissance',
+    );
   });
 
   test('clicking on a KillChainCountersByThreatId item dispatches two filters and navigates', async () => {
-    const { store } = renderWithProviders(
+    renderWithProviders(
       <MemoryRouter>
         <KillChainCountersByThreatId threatId="123" />
       </MemoryRouter>,
@@ -112,12 +102,13 @@ describe('KillChainCounters', () => {
     const reconItem = await screen.findByText('8');
     await userEvent.click(reconItem);
 
-    expect(mockNavigate).toHaveBeenCalledWith('/explorer');
-    expect(store.getState().filters.queryFilters.queryFilters).toHaveLength(2);
+    expect(mockNavigate).toHaveBeenCalledWith(
+      '/threats/coverage/threat/123?killchain=reconnaissance',
+    );
   });
 
   test('clicking on a KillChainCountersByFamilyId item dispatches two filters and navigates', async () => {
-    const { store } = renderWithProviders(
+    renderWithProviders(
       <MemoryRouter>
         <KillChainCountersByFamilyId familyId="1" />
       </MemoryRouter>,
@@ -126,23 +117,9 @@ describe('KillChainCounters', () => {
     const reconItem = await screen.findByText('10');
     await userEvent.click(reconItem);
 
-    expect(mockNavigate).toHaveBeenCalledWith('/explorer');
-    expectFiltersWithoutId(store).toEqual([
-      {
-        key: 'stamus.kill_chain',
-        value: 'reconnaissance',
-        is_negated: false,
-        is_suspended: false,
-        is_wildcarded: false,
-      },
-      {
-        key: 'stamus.family_name',
-        value: 'Test Family',
-        is_negated: false,
-        is_suspended: false,
-        is_wildcarded: false,
-      },
-    ]);
+    expect(mockNavigate).toHaveBeenCalledWith(
+      '/threats/coverage/family/1?killchain=reconnaissance',
+    );
   });
 });
 
