@@ -712,6 +712,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
     validationType: FilterValidationType.IP,
     toQFString: ({ value, negated }) =>
       `(${negated ? 'NOT ' : ''}(src_ip: "${value}" OR dest_ip: "${value}"))`,
+    convertible: ['stamus.asset', 'stamus.source'],
   },
   {
     label: 'DNS rdata',
@@ -1232,6 +1233,7 @@ export const QueryFilters: QueryFilterDefinition[] = [
     category: FilterCategory.EVENT,
     entity: FilterType.STAMUS_ASSET,
     type: 'ip',
+    convertible: ['ip'],
   },
   {
     label: 'Offender',
@@ -1240,6 +1242,7 @@ export const QueryFilters: QueryFilterDefinition[] = [
       'Threat actors and malicious sources identified by Stamus intelligence',
     category: FilterCategory.EVENT,
     entity: FilterType.STAMUS_ASSET,
+    convertible: ['ip'],
   },
   {
     label: 'Threat',
