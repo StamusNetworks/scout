@@ -1,5 +1,4 @@
 import { Swords } from 'lucide-react';
-import { isNil } from 'ramda';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -19,12 +18,12 @@ import { Hostname } from '@/features/analytics/hosts/components/host-details/hos
 import { Network } from '@/features/analytics/hosts/components/host-details/network';
 import { Roles } from '@/features/analytics/hosts/components/host-details/roles';
 import { Username } from '@/features/analytics/hosts/components/host-details/username';
-import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 import { killChainsConfig } from '@/features/hunt/killchain/killchain';
 
 import { Entity } from '../../model/entity';
 import { EntityThreatTagsListTemplate } from '../entities-threat-tags-list/entities-threat-tags-list';
+import { IpOrEntityEventValue } from '../ip-or-entity';
 import { ImpactedEntitiesTableActions } from './impacted-entities-table.actions';
 
 export const getColumns = ({
@@ -52,9 +51,9 @@ export const getColumns = ({
     ),
     cell: ({ row }) => (
       <Column className="gap-1">
-        <EventValue
-          query_key="stamus.asset"
-          value={row.original.value}
+        <IpOrEntityEventValue
+          entity={row.original.value}
+          offender={row.original.is_offender}
         />
         <Hostname
           host={row.original.value}
@@ -83,49 +82,31 @@ export const getColumns = ({
       );
     },
   },
-  ...(familyClass === 'doc'
-    ? ([
-        {
-          id: 'kill_chain',
-          accessorKey: 'kill_chain',
-          header: ({ column }) => (
-            <DataTableColumnHeader
-              column={column}
-              title="Kill Chain"
-            />
-          ),
-          cell: ({ row }) => {
-            const kc = row.original.kill_chain;
-            return (
-              <KillchainTag
-                kc={kc}
-                status={row.original.status}
-                onClick={() => setKillchain?.(kc)}
-              />
-            );
-          },
-        },
-      ] as CustomColumnDef<Entity>[])
-    : []),
+
   {
-    id: familyClass === 'doc' ? 'is_offender' : 'victim',
-    header: ({ column }) =>
-      familyClass === 'doc' ? null : (
-        <DataTableColumnHeader
-          column={column}
-          title="Victim"
-        />
-      ),
+    id: 'kill_chain',
+    accessorKey: 'kill_chain',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="Kill Chain"
+      />
+    ),
     cell: ({ row }) => {
-      const shouldDisplay =
-        familyClass === 'doc'
-          ? true
-          : row.original.is_offender
-            ? !isNil(row.original.kill_chain_offender) &&
-              row.original.kill_chain_offender !== 'pre_condition'
-            : !isNil(row.original.kill_chain) &&
-              row.original.kill_chain !== 'pre_condition';
-      return shouldDisplay ? (
+      const kc = row.original.kill_chain;
+      return (
+        <KillchainTag
+          kc={kc}
+          status={row.original.status}
+          onClick={() => setKillchain?.(kc)}
+        />
+      );
+    },
+  },
+  {
+    id: 'is_offender',
+    cell: ({ row }) => {
+      return (
         <Row className="justify-center">
           {row.original.is_offender ? (
             <TooltipProvider>
@@ -138,7 +119,7 @@ export const getColumns = ({
             </TooltipProvider>
           ) : null}
         </Row>
-      ) : null;
+      );
     },
   },
   ...(!threatId

@@ -21,6 +21,7 @@ import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
+import { isIP } from '@/common/lib/ips';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 import { ThreatTagById } from '@/features/hunt/threats/components/threat-tag';
 import { routes } from '@/pages/routes.config';
@@ -130,7 +131,7 @@ export const KillChainTagWithContext = ({ row }: { row: ThreatStatus }) => {
     <KillchainTag
       kc={row.is_offender ? row.kill_chain_offender : row.kill_chain}
       context={[
-        { es_key: 'stamus.asset', value: row.asset },
+        { es_key: isIP(row.asset) ? 'ip' : 'stamus.asset', value: row.asset },
         { es_key: 'stamus.threat_name', value: data?.name || '' },
       ]}
     />

@@ -7,7 +7,7 @@ export function compressIPv6(ip: string): string {
   if (typeof ip !== 'string' || ip.length === 0) {
     return ip;
   }
-  if (isIPv4(ip)) {
+  if (!isIPv6(ip)) {
     return ip;
   }
 

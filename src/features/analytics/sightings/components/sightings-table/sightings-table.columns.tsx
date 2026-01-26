@@ -10,6 +10,7 @@ import { Network } from '@/features/analytics/hosts/components/host-details/netw
 import { RoleBadge } from '@/features/analytics/hosts/components/host-details/roles';
 import { Username } from '@/features/analytics/hosts/components/host-details/username';
 import { EntityThreatTagsList } from '@/features/hunt/entities/components/entities-threat-tags-list/entities-threat-tags-list';
+import { IpOrEntityEventValue } from '@/features/hunt/entities/components/ip-or-entity';
 import { Event } from '@/features/hunt/events/model/event.schema';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 
@@ -107,9 +108,9 @@ export const allSightingsTableColumns: CustomColumnDef<Event>[] = [
     ),
     cell: ({ row }) => (
       <Column>
-        <EventValue
-          query_key="stamus.asset"
-          value={row.original.discovery.asset}
+        <IpOrEntityEventValue
+          entity={row.original.discovery.asset}
+          offender={false}
         />
         <Hostname
           host={row.original.discovery.asset}

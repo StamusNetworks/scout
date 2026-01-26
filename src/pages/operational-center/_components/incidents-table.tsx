@@ -32,7 +32,7 @@ import { isIP } from '@/common/lib/strings';
 import { Hostname } from '@/features/analytics/hosts/components/host-details/hostname';
 import { Network } from '@/features/analytics/hosts/components/host-details/network';
 import { Username } from '@/features/analytics/hosts/components/host-details/username';
-import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
+import { IpOrEntityEventValue } from '@/features/hunt/entities/components/ip-or-entity';
 import { replaceFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 import {
@@ -229,9 +229,9 @@ const threatStatusColumns: CustomColumnDef<ThreatStatus>[] = [
       />
     ),
     cell: ({ row }) => (
-      <EventValue
-        query_key="stamus.asset"
-        value={row.original.asset}
+      <IpOrEntityEventValue
+        entity={row.original.asset}
+        offender={row.original.is_offender}
       />
     ),
   },
