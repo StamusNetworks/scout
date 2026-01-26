@@ -492,11 +492,11 @@ describe('compressIPv6', () => {
   describe('compression of partial zero sequences', () => {
     it.each([
       {
-        input: '2001:db8:0:0:8a2e:370:7334',
+        input: '2001:db8:0:0:0:8a2e:370:7334',
         expected: '2001:db8::8a2e:370:7334',
       },
       {
-        input: '2001:0:0:8a2e:370:7334',
+        input: '2001:0:0:0:0:8a2e:370:7334',
         expected: '2001::8a2e:370:7334',
       },
       {
