@@ -418,7 +418,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
     label: 'Flow ID',
     key: 'flow_id',
     description:
-      'Unique identifier for the flow. Used to identify all related alerts and protocol-specific events.',
+      'Always unique value. Correlates the network protocol, alert, flow, file, anomaly logs and any network evidence from the same flow/session.',
     category: FilterCategory.EVENT,
   },
   {
@@ -431,7 +431,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
     label: 'Community ID',
     key: 'community_id',
     description:
-      'Unique identifier for the flow. Makes pivoting easier (https://github.com/corelight/community-id-spec)',
+      'Not always unique, this id that can be used to correlate to other systems.',
     category: FilterCategory.EVENT,
   },
   {
