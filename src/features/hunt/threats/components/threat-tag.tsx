@@ -76,6 +76,15 @@ export const ThreatTag = ({
   if (isLoadingDef) return <Skeleton className="h-4 w-full" />;
   if (!threatDef) return <span>-</span>;
 
+  const handleClick = () => {
+    const baseRoute =
+      threatDef.family_class === 'doc'
+        ? routes.threats_coverage_threat
+        : routes.policy_violations_coverage_threat;
+    const route = baseRoute.replace(':threatId', threatDef.pk.toString());
+    navigate(route);
+  };
+
   return (
     <TooltipProvider>
       <Tooltip>
@@ -84,14 +93,7 @@ export const ThreatTag = ({
             query_key="stamus.threat_name"
             value={threatDef.name}
             className="cursor-pointer"
-            onClick={() =>
-              navigate(
-                routes.threats_coverage_threat.replace(
-                  ':threatId',
-                  threatDef.pk.toString(),
-                ),
-              )
-            }
+            onClick={handleClick}
           >
             <Badge
               variant={
