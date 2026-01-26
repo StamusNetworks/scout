@@ -3,7 +3,7 @@ import { ScrollArea } from '@/common/design-system/atoms/ui/scroll-area';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetHostWithAlertsQuery } from '@/features/analytics/hosts/api/hosts.api';
 import { HostStats } from '@/features/analytics/hosts/components/host-summary/host-summary';
-import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
+import { IpOrEntityEventValue } from '@/features/hunt/entities/components/ip-or-entity';
 
 import { useGetThreatHistoryQuery } from '../../api/timeline.api';
 import { HostTimelineTemplate } from '../history-timeline/history-timeline';
@@ -29,9 +29,9 @@ export const TimelineHostDetails = ({ entity }: TimelineHostDetailsProps) => {
     <Column className="max-h-[80vh]">
       <Column className="px-6">
         <h2 className="mb-2 text-xl font-medium">
-          <EventValue
-            value={entity}
-            query_key="stamus.asset"
+          <IpOrEntityEventValue
+            entity={entity}
+            offender={false}
           />
         </h2>
         <HostStats

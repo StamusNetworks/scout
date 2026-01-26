@@ -7,6 +7,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/common/design-system/molecules/tooltip';
+import { compressIPv6 } from '@/common/lib/ips';
 import { cn } from '@/common/lib/utils';
 import { useThreat } from '@/features/hunt/threats/hooks/use-threat';
 
@@ -96,11 +97,11 @@ export const TimelineLateralMovement = ({
           </div>
         </TooltipTrigger>
         <TooltipContent>
-          <h2 className="text-sm font-bold">{victim}</h2>
+          <h2 className="text-sm font-bold">{compressIPv6(victim)}</h2>
           <p className="mb-0.5">{threat?.name}</p>
           <Grid className="grid-cols-[min-content_1fr] gap-x-1">
             <p>offender: </p>
-            <p>{offender}</p>
+            <p>{compressIPv6(offender)}</p>
           </Grid>
         </TooltipContent>
       </Tooltip>

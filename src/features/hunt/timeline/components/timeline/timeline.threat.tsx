@@ -9,6 +9,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/common/design-system/molecules/tooltip';
+import { compressIPv6 } from '@/common/lib/ips';
 import { useThreat } from '@/features/hunt/threats/hooks/use-threat';
 import { routes } from '@/pages/routes.config';
 
@@ -50,7 +51,7 @@ export const TimelineThreatB = ({
         </Badge>
       </TooltipTrigger>
       <TooltipContent className="max-w-60">
-        <h2 className="text-sm font-bold">{entity}</h2>
+        <h2 className="text-sm font-bold">{compressIPv6(entity)}</h2>
         <p>{threat?.name}</p>
         <Grid className="my-1 grid-cols-[min-content_1fr] gap-x-1">
           <p>from: </p>

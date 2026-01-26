@@ -11,6 +11,7 @@ import {
 import { cn } from '@/common/lib/utils';
 import { Hostname } from '@/features/analytics/hosts/components/host-details/hostname';
 import { Roles } from '@/features/analytics/hosts/components/host-details/roles';
+import { IpOrEntityEventValue } from '@/features/hunt/entities/components/ip-or-entity';
 
 import { TimelineProps } from '../../models/threat-history.model';
 import { useTimelineContext } from './timeline';
@@ -45,11 +46,11 @@ export const TimelineRow = ({
       >
         <Dialog>
           <DialogTrigger className="flex items-center">
-            <p
+            <IpOrEntityEventValue
+              entity={item.entity}
+              offender={false}
               className={cn('px-1 text-left text-xs', highlight && 'font-bold')}
-            >
-              {item.entity}
-            </p>
+            />
             <Info className="text-muted-foreground ml-1 h-5 w-4" />
           </DialogTrigger>
           <DialogContent className="max-w-4xl px-1 pb-1">
