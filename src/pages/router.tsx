@@ -240,7 +240,7 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                     index: true,
                     element: (
                       <PageBoundary key="threat-by-id-index">
-                        <ThreatByIdIndex />
+                        <ThreatByIdIndex familyClass="dopv" />
                       </PageBoundary>
                     ),
                   },
@@ -280,7 +280,7 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                     index: true,
                     element: (
                       <PageBoundary key="threat-family-default">
-                        <ThreatFamilyDefault />
+                        <ThreatFamilyDefault familyClass="dopv" />
                       </PageBoundary>
                     ),
                   },

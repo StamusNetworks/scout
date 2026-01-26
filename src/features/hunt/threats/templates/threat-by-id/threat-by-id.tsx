@@ -262,7 +262,11 @@ export const ThreatById = () => {
   );
 };
 
-export const ThreatByIdIndex = () => {
+export const ThreatByIdIndex = ({
+  familyClass = 'doc',
+}: {
+  familyClass?: 'doc' | 'dopv';
+}) => {
   const { threatId } = useParams();
   const { tenant } = useGlobalQueryParams(['tenant']);
   const { data: threat } = useGetThreatByIdQuery({
@@ -281,7 +285,7 @@ export const ThreatByIdIndex = () => {
       )}
       <ImpactedEntitiesTable
         threatId={threat.pk}
-        familyClass="doc"
+        familyClass={familyClass}
       />
     </Column>
   );

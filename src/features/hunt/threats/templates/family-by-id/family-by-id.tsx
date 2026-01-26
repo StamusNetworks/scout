@@ -248,7 +248,11 @@ export const ThreatFamilyById = () => {
   );
 };
 
-export const ThreatFamilyDefault = () => {
+export const ThreatFamilyDefault = ({
+  familyClass = 'doc',
+}: {
+  familyClass?: 'doc' | 'dopv';
+}) => {
   const { familyId } = useParams();
   const { data: family } = useGetThreatFamiliesQuery(
     {},
@@ -269,7 +273,7 @@ export const ThreatFamilyDefault = () => {
       )}
       <ImpactedEntitiesTable
         familyId={parseInt(familyId!)}
-        familyClass={'doc'}
+        familyClass={familyClass}
       />
     </>
   );
