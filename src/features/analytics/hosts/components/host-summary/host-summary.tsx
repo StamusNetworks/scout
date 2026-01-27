@@ -28,7 +28,7 @@ export const HostSummary = ({
 }) => (
   <Column>
     <Row className="mb-2 items-center gap-2">
-      {host && <InternalExternal external={host.host_id.in_home_net} />}
+      {host && <InternalExternal internal={host.host_id.in_home_net} />}
       <EventValue
         value={hostId || host?.ip || ''}
         query_key="ip"

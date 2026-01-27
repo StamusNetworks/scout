@@ -8,23 +8,23 @@ import {
 } from '@/common/design-system/atoms/ui/tooltip';
 
 export function InternalExternal({
-  external,
+  internal,
   className,
 }: {
-  external: boolean;
+  internal: boolean;
   className?: string;
 }) {
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger>
-          {external ? (
-            <Globe className={className} />
-          ) : (
+          {internal ? (
             <Building2 className={className} />
+          ) : (
+            <Globe className={className} />
           )}
         </TooltipTrigger>
-        <TooltipContent>{external ? 'External' : 'Internal'}</TooltipContent>
+        <TooltipContent>{internal ? 'Internal' : 'External'}</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );
