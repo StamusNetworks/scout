@@ -47,8 +47,6 @@ export const MetaView = ({ event }: { event: Event }) => {
     qfilter: `flow_id:${event.flow_id}`,
   });
 
-  console.log('ci');
-
   if (!flowEvents) return null;
 
   const source = enterprise ? (

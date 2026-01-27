@@ -67,7 +67,7 @@ export const EventByIdPage = () => {
     {
       ...params,
       start_date: 1,
-      qfilter: uuid ? `uuid:${uuid}` : `_id:${_id}`,
+      qfilter: uuid ? `uuid:"${uuid}"` : `_id:"${_id}"`,
       pageIndex: 0,
       pageSize: 1,
       stamus: true,
@@ -111,7 +111,7 @@ export const EventByIdPage = () => {
 
   return (
     <>
-      <OutletBreadcrumb>{event?.uuid}</OutletBreadcrumb>
+      <OutletBreadcrumb>{event?.uuid || event?._id}</OutletBreadcrumb>
       <DefaultPage title="Event details">
         {isLoadingEvent ? (
           <div>Loading...</div>
