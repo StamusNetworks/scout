@@ -20,8 +20,10 @@ export function IpOrEntityEventValue({
   return (
     <EventValue
       query_key={queryKey}
-      value={formattedEntity}
+      value={entity}
       className={className}
-    />
+    >
+      {formattedEntity}
+    </EventValue>
   );
 }
