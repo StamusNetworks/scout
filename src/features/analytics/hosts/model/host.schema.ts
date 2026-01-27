@@ -94,6 +94,7 @@ export const hostSchema = z.object({
       )
       .optional(),
     tenant: z.number(),
+    in_home_net: z.boolean(),
   }),
   hits: z.number(),
 });

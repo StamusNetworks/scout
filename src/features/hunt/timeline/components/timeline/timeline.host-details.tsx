@@ -1,8 +1,10 @@
 import { Column } from '@/common/design-system/atoms/layout/column';
+import { Row } from '@/common/design-system/atoms/layout/row';
 import { ScrollArea } from '@/common/design-system/atoms/ui/scroll-area';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetHostWithAlertsQuery } from '@/features/analytics/hosts/api/hosts.api';
 import { HostStats } from '@/features/analytics/hosts/components/host-summary/host-summary';
+import { InternalExternal } from '@/features/analytics/hosts/components/internal-external';
 import { IpOrEntityEventValue } from '@/features/hunt/entities/components/ip-or-entity';
 
 import { useGetThreatHistoryQuery } from '../../api/timeline.api';
@@ -28,12 +30,14 @@ export const TimelineHostDetails = ({ entity }: TimelineHostDetailsProps) => {
   return (
     <Column className="max-h-[80vh]">
       <Column className="px-6">
-        <h2 className="mb-2 text-xl font-medium">
+        <Row className="mb-2 items-center gap-2">
+          {host && <InternalExternal external={host.host_id.in_home_net} />}
           <IpOrEntityEventValue
             entity={entity}
             offender={false}
+            className="text-xl font-medium"
           />
-        </h2>
+        </Row>
         <HostStats
           host={host}
           className="mb-6 gap-y-2"
