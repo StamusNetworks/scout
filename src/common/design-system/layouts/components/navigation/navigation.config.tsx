@@ -4,6 +4,9 @@ import {
   ArrowDownUp,
   Binary,
   Biohazard,
+  ChefHat,
+  Eye,
+  Globe,
   Group,
   LaptopMinimal,
   LayoutDashboard,
@@ -22,7 +25,7 @@ import {
 import { getConfig } from '@/config';
 import { SystemSettings } from '@/features/user/settings/settings.model';
 
-import { type Submenu } from './navigation';
+import { MenuItem, type Submenu } from './navigation';
 
 export const defaultMenu = (
   routes: Record<string, string>,
@@ -168,7 +171,7 @@ export const defaultMenu = (
     ],
   },
   {
-    label: 'Administration',
+    label: 'Apps',
     children: [
       {
         key: 'management',
@@ -184,6 +187,31 @@ export const defaultMenu = (
         title: systemSettings.use_opensearch ? 'OpenSearch' : 'Kibana',
         icon: <ScanSearch />,
       },
+      {
+        key: 'cyber-chef',
+        type: 'external',
+        url: getConfig()?.apiUrl + systemSettings.cyberchef_url,
+        title: 'Cyber Chef',
+        icon: <ChefHat />,
+      },
+      ...(!enterprise
+        ? []
+        : ([
+            {
+              key: 'arkime',
+              type: 'external',
+              url: getConfig()?.apiUrl + systemSettings.arkime_url,
+              title: 'Arkime',
+              icon: <Globe />,
+            },
+            {
+              key: 'evebox',
+              type: 'external',
+              url: getConfig()?.apiUrl + systemSettings.evebox_url,
+              title: 'EveBox',
+              icon: <Eye />,
+            },
+          ] as MenuItem[])),
     ],
   },
 ];
