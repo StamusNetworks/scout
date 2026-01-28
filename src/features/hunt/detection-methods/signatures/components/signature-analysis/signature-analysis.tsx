@@ -1,10 +1,6 @@
-import { useState } from 'react';
-
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
-import { Button } from '@/common/design-system/atoms/ui/button';
 import { Separator } from '@/common/design-system/atoms/ui/separator';
-import { HtmlCodeDisplay } from '@/common/design-system/molecules/htmlCodeDisplay/htmlCodeDisplay';
 
 import { Rule } from '../../model/signature';
 import { Badge } from './components/badge';
@@ -14,8 +10,6 @@ import { MatchTemplate } from './components/matches/match';
 import { getRuleData } from './signature-analysis.utils';
 
 export const SignatureAnalysis = ({ rule }: { rule: Rule }) => {
-  const [showOriginal, setShowOriginal] = useState(false);
-
   if (!rule.analysis) return null;
 
   const {
@@ -189,21 +183,6 @@ export const SignatureAnalysis = ({ rule }: { rule: Rule }) => {
           ))}
         </Grid>
       )}
-      <Column className="gap-2">
-        <Button
-          onClick={() => setShowOriginal(!showOriginal)}
-          variant="secondary"
-          className="w-fit"
-        >
-          Show raw detection method
-        </Button>
-        {showOriginal && (
-          <HtmlCodeDisplay
-            key={rule.id}
-            innerHtml={rule.content_html}
-          />
-        )}
-      </Column>
     </Column>
   );
 };

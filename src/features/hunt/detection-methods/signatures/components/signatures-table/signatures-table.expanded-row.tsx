@@ -1,8 +1,11 @@
 import { Row as TanstackRow } from '@tanstack/react-table';
+import { useState } from 'react';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
+import { Button } from '@/common/design-system/atoms/ui/button';
+import { HtmlCodeDisplay } from '@/common/design-system/molecules/htmlCodeDisplay/htmlCodeDisplay';
 import {
   DataEntry,
   ValueListCard,
@@ -67,6 +70,7 @@ export const DetectionMethodExpandedRowTemplate = ({
       {detectionMethod.versions?.length > 0 && (
         <SignatureAnalysis rule={detectionMethod.versions[0]} />
       )}
+      <SignatureContent content={detectionMethod.versions[0].content_html} />
       <SignaturesTableTimeline sid={detectionMethod.pk} />
       <Grid className="grid-cols-4 gap-2">
         <ValueListCard
@@ -108,4 +112,20 @@ const useCardsStats = (sid: number) => {
       QFBuilder.createFilter('alert.signature_id', sid),
     ]),
   });
+};
+
+const SignatureContent = ({ content }: { content: string }) => {
+  const [showOriginal, setShowOriginal] = useState(false);
+  return (
+    <Column className="gap-2">
+      <Button
+        onClick={() => setShowOriginal(!showOriginal)}
+        variant="secondary"
+        className="w-fit"
+      >
+        Show raw detection method
+      </Button>
+      {showOriginal && <HtmlCodeDisplay innerHtml={content} />}
+    </Column>
+  );
 };
