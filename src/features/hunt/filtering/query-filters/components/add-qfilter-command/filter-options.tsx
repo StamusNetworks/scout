@@ -1,5 +1,6 @@
-import { toPairs, values } from 'ramda';
+import { toPairs } from 'ramda';
 import { useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import {
   CommandEmpty,
@@ -7,6 +8,7 @@ import {
   CommandItem,
 } from '@/common/design-system/atoms/ui/command';
 import { capitalizeAll } from '@/common/lib/strings';
+import { routes } from '@/pages/routes.config';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { FilterCategory } from '../../constants/query-filter.config';
@@ -20,6 +22,7 @@ import { setFilter } from './add-qfilter-command.slice';
 
 export const FilterOptions = () => {
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const { negated } = useAppSelector(selectFilterCommand);
 
   const filters = useQueryFiltersDefinitions();
@@ -38,6 +41,34 @@ export const FilterOptions = () => {
             : FilterCategory.EVENT),
       }));
   }, [filters, negated]);
+
+  const categories = useMemo(() => {
+    if (
+      location.pathname.includes(routes.attack_surface) ||
+      location.pathname.includes(routes.hosts)
+    ) {
+      return [
+        FilterCategory.HOST,
+        FilterCategory.EVENT,
+        FilterCategory.SIGNATURE,
+        FilterCategory.HISTORY,
+      ];
+    }
+    if (location.pathname.includes(routes.detection_methods)) {
+      return [
+        FilterCategory.SIGNATURE,
+        FilterCategory.EVENT,
+        FilterCategory.HOST,
+        FilterCategory.HISTORY,
+      ];
+    }
+    return [
+      FilterCategory.EVENT,
+      FilterCategory.HOST,
+      FilterCategory.SIGNATURE,
+      FilterCategory.HISTORY,
+    ];
+  }, [location.pathname]);
 
   return (
     <>
@@ -64,7 +95,7 @@ export const FilterOptions = () => {
           <span className="text-muted-foreground">es_filter</span>
         </CommandItem>
       </CommandGroup>
-      {values(FilterCategory).map((category) => (
+      {categories.map((category) => (
         <CommandGroup
           key={category}
           heading={`${capitalizeAll(category)} filters`}
