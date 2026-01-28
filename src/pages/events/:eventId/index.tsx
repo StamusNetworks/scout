@@ -20,6 +20,7 @@ import {
   EmptyHeader,
   EmptyMedia,
 } from '@/common/design-system/atoms/ui/empty';
+import { Tag } from '@/common/design-system/layouts/components/navigation/navigation';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import {
@@ -133,7 +134,10 @@ export const EventByIdPage = () => {
         ) : (
           <Tabs defaultValue="meta_view">
             <TabsList className="mb-2 flex-wrap gap-y-1">
-              <TabsTrigger value="meta_view">Meta view</TabsTrigger>
+              <TabsTrigger value="meta_view">
+                Meta view{' '}
+                <Tag className="ml-2 bg-lime-200 text-lime-900">Beta</Tag>
+              </TabsTrigger>
               <TabsTrigger value="synthetic_view">Synthetic view</TabsTrigger>
               <TabsTrigger value="json_view">JSON View</TabsTrigger>
               <TabsTrigger value="detection_method">

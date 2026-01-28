@@ -195,7 +195,7 @@ export const Navigation = ({ menu, className }: MenuProps) => {
   );
 };
 
-const Tag = ({ children, className, ...props }: BadgeProps) => (
+export const Tag = ({ children, className, ...props }: BadgeProps) => (
   <Badge
     className={cn('px-1 py-0 shadow-none', className)}
     {...props}
