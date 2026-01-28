@@ -19,7 +19,9 @@ import { EventValue } from '@/features/hunt/filtering/query-filters/components/e
 
 import { Event } from '../../model/event.schema';
 
-export const columns: CustomColumnDef<Event>[] = [
+export const getColumns = (
+  enterprise: boolean = true,
+): CustomColumnDef<Event>[] => [
   {
     id: 'event-expanded',
     cell: ({ row }) => <DataTableRowExpander row={row} />,
@@ -203,22 +205,26 @@ export const columns: CustomColumnDef<Event>[] = [
       </div>
     ),
   },
-  {
-    id: 'hostname_url',
-    visible: false,
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="Hostname/URL"
-      />
-    ),
-    cell: ({ row }) => (
-      <EventValue
-        query_key="hostname_info.url"
-        value={row.original.hostname_info?.url}
-      />
-    ),
-  },
+  ...(enterprise
+    ? ([
+        {
+          id: 'hostname_host',
+          visible: false,
+          header: ({ column }) => (
+            <DataTableColumnHeader
+              column={column}
+              title="Hostname host"
+            />
+          ),
+          cell: ({ row }) => (
+            <EventValue
+              query_key="hostname_info.host"
+              value={row.original.hostname_info?.host}
+            />
+          ),
+        },
+      ] as CustomColumnDef<Event>[])
+    : []),
   {
     id: 'lateral',
     visible: false,
@@ -252,6 +258,22 @@ export const columns: CustomColumnDef<Event>[] = [
     ),
   },
   {
+    id: 'http_url',
+    visible: false,
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="HTTP URL"
+      />
+    ),
+    cell: ({ row }) => (
+      <EventValue
+        query_key="http.url"
+        value={row.original.http?.url}
+      />
+    ),
+  },
+  {
     id: 'payload_printable',
     visible: false,
     header: ({ column }) => (
@@ -260,13 +282,38 @@ export const columns: CustomColumnDef<Event>[] = [
         title="Payload"
       />
     ),
-    cell: ({ row }) => (
-      <div className="flex">
-        <ScrollArea className="flex max-h-48 w-full max-w-[600px] overflow-clip text-xs wrap-anywhere">
-          <pre className="block">{row.original.payload_printable}</pre>
-        </ScrollArea>
-      </div>
+    cell: ({ row }) =>
+      row.original.payload_printable && (
+        <Scrollable string={row.original.payload_printable} />
+      ),
+  },
+  {
+    id: 'http_request',
+    visible: false,
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="HTTP Request"
+      />
     ),
+    cell: ({ row }) =>
+      row.original.http?.http_request_body_printable && (
+        <Scrollable string={row.original.http.http_request_body_printable} />
+      ),
+  },
+  {
+    id: 'http_response',
+    visible: false,
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="HTTP Response"
+      />
+    ),
+    cell: ({ row }) =>
+      row.original.http?.http_response_body_printable && (
+        <Scrollable string={row.original.http.http_response_body_printable} />
+      ),
   },
   {
     id: 'outlier',
@@ -316,3 +363,24 @@ export const exportColumns: ExportColumn<Event>[] = [
     value: (event) => event.alert?.category,
   },
 ];
+
+const Scrollable = ({
+  string,
+  className,
+}: {
+  string: string;
+  className?: string;
+}) => {
+  return (
+    <div className="flex">
+      <ScrollArea
+        className={cn(
+          'flex max-h-48 w-full max-w-[600px] overflow-clip text-xs wrap-anywhere',
+          className,
+        )}
+      >
+        <pre className="block">{string}</pre>
+      </ScrollArea>
+    </div>
+  );
+};

@@ -1,5 +1,6 @@
 import { Row } from '@tanstack/react-table';
 import { Binary } from 'lucide-react';
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { DataTable } from '@/common/design-system/molecules/data-table/data-table.tsx';
@@ -8,16 +9,19 @@ import { usePaginationUrlState } from '@/common/design-system/molecules/data-tab
 import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting.ts';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams.tsx';
+import { useFeatureFlags } from '@/common/lib/use-feature-flags.ts';
 import { routes } from '@/pages/routes.config.ts';
 
 import { useGetEventsQuery } from '../../api/events.api';
 import { Event } from '../../model/event.schema';
-import { columns, exportColumns } from './events.columns';
+import { exportColumns, getColumns } from './events.columns';
 import { ExpandedEventRow } from './events.expanded-row.tsx';
 
 const getRowId = (originalRow: Event) => originalRow._id;
 
 export const EventsTable = () => {
+  const { enterprise } = useFeatureFlags();
+  const columns = useMemo(() => getColumns(enterprise), [enterprise]);
   const {
     columnOrder,
     onColumnOrderChange,

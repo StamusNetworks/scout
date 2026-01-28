@@ -8,11 +8,11 @@ import { usePaginationUrlState } from '@/common/design-system/molecules/data-tab
 import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetEventsQuery } from '@/features/hunt/events/api/events.api';
-import { columns } from '@/features/hunt/events/components/events-table/events.columns';
+import { getColumns } from '@/features/hunt/events/components/events-table/events.columns';
 import { ExpandedEventRow } from '@/features/hunt/events/components/events-table/events.expanded-row';
 import { useGetCountsTimelineQuery } from '@/features/hunt/timeline/api/timeline.api';
 
-const tableCols = columns.filter((col) => col.id !== 'tag');
+const tableCols = getColumns(true).filter((col) => col.id !== 'tag');
 
 export const HostOutlierEvents = () => {
   const { hostId } = useParams();
