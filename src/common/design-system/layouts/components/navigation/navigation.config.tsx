@@ -194,7 +194,7 @@ export const defaultMenu = (
         title: 'Cyber Chef',
         icon: <ChefHat />,
       },
-      ...(!enterprise
+      ...(enterprise
         ? []
         : ([
             {
