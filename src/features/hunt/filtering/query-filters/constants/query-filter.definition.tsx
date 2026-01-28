@@ -367,6 +367,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
     description: 'Source IP addresses in network communications',
     category: FilterCategory.EVENT,
     entity: FilterType.IP,
+    type: 'ip',
   },
   {
     label: 'Destination IP',
@@ -374,6 +375,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
     description: 'Destination IP addresses in network communications',
     category: FilterCategory.EVENT,
     entity: FilterType.IP,
+    type: 'ip',
   },
   {
     label: 'Source Port',
