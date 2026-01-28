@@ -23,7 +23,7 @@ export const HostOutlierEvents = () => {
     ...params,
     ...pagination,
     ordering,
-    qfilter: `stamus.asset:"${hostId}" AND stamus_novel:true`,
+    qfilter: `(src_ip:"${hostId}" OR dest_ip:"${hostId}") AND stamus_novel:true`,
     stamus: true,
     alert: true,
     discovery: true,
@@ -31,7 +31,7 @@ export const HostOutlierEvents = () => {
 
   const { data: timelineData } = useGetCountsTimelineQuery({
     ...params,
-    qfilter: `stamus.asset:"${hostId}" AND stamus_novel:true`,
+    qfilter: `(src_ip:"${hostId}" OR dest_ip:"${hostId}") AND stamus_novel:true`,
     target: 'true',
     alert: true,
     discovery: true,
