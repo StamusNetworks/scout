@@ -55,6 +55,7 @@ import { RelatedStamusTab } from '@/features/hunt/events/components/related-even
 import { RelatedTftpTab } from '@/features/hunt/events/components/related-events/related-tftp/related-tftp';
 import { RelatedTlsTab } from '@/features/hunt/events/components/related-events/related-tls/related-tls';
 import { SyntheticView } from '@/features/hunt/events/components/synthetic-view/synthetic-view';
+import { routes } from '@/pages/routes.config';
 
 export const EventByIdPage = () => {
   const [_id] = useQueryState('_id', parseAsString);
@@ -112,6 +113,7 @@ export const EventByIdPage = () => {
 
   return (
     <>
+      <OutletBreadcrumb link={routes.events}>Events</OutletBreadcrumb>
       <OutletBreadcrumb>{event?.uuid || event?._id}</OutletBreadcrumb>
       <DefaultPage title="Event details">
         {isLoadingEvent ? (
