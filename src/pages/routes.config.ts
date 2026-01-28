@@ -62,7 +62,6 @@ export const routes = {
   investigations: '/investigations',
   explore: '/explore',
   deeplinks: '/deeplinks',
-  operations_history: '/operations-history',
   user_settings: '/user-settings',
   session_events: '/session-events',
   filter_sets: '/filter-sets',

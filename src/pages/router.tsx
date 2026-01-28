@@ -21,7 +21,6 @@ import { FiltersActionsList } from '@/pages/filter-actions';
 import { HostDetails } from '@/pages/hosts/[hostId]';
 import { InvestigationsPage } from '@/pages/investigations';
 import { OperationalCenter } from '@/pages/operational-center';
-import { OperationsHistory } from '@/pages/operations-history';
 import { ThreatsGraphPage } from '@/pages/threats/graph';
 
 import { Root } from '../app/root';
@@ -649,14 +648,6 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
             element: (
               <PageBoundary key="deeplinks">
                 <Deeplinks />
-              </PageBoundary>
-            ),
-          },
-          {
-            path: routes.operations_history,
-            element: (
-              <PageBoundary key="operations-history">
-                <OperationsHistory />
               </PageBoundary>
             ),
           },

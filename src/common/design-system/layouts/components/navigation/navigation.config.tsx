@@ -5,7 +5,6 @@ import {
   Binary,
   Biohazard,
   Group,
-  History,
   LaptopMinimal,
   LayoutDashboard,
   Link,
@@ -171,13 +170,6 @@ export const defaultMenu = (
   {
     label: 'Administration',
     children: [
-      {
-        key: 'operations-history',
-        type: 'link',
-        url: routes.operations_history,
-        title: 'Operations History',
-        icon: <History />,
-      },
       {
         key: 'management',
         type: 'external',
