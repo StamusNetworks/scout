@@ -8,9 +8,9 @@
     word-wrap: break-word;
     white-space: pre-wrap;
     color: #747276;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 1px;
+    background-color: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
     margin-bottom: 0;
 }
 

@@ -4,7 +4,7 @@ export const HtmlCodeDisplay = ({
   key,
   innerHtml,
 }: {
-  key: string | number;
+  key?: string | number;
   innerHtml: string;
 }) => {
   return (
