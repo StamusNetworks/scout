@@ -17,33 +17,41 @@ export const ExpandedRow = (type: 'doc' | 'dopv') => {
   const ImpactedEntitiesTableExpandedRow = ({ row }: { row: Row<Entity> }) => {
     return (
       <Tabs
-        defaultValue="timeline"
+        defaultValue={type === 'doc' ? 'timeline' : 'threats'}
         className="p-2"
       >
         <TabsList>
-          <TabsTrigger value="timeline">Timeline</TabsTrigger>
-          <TabsTrigger value="attacker_infrastructure">
-            Attacker infrastructure
-          </TabsTrigger>
-          <TabsTrigger value="insights">Host Insights</TabsTrigger>
+          {type === 'doc' && (
+            <TabsTrigger value="timeline">Timeline</TabsTrigger>
+          )}
+          {type === 'doc' && (
+            <TabsTrigger value="attacker_infrastructure">
+              Attacker infrastructure
+            </TabsTrigger>
+          )}
           <TabsTrigger value="threats">
             {type === 'doc' ? 'Threats' : 'Policy Violations'}
           </TabsTrigger>
+          <TabsTrigger value="insights">Host Insights</TabsTrigger>
         </TabsList>
-        <TabsContent value="timeline">
-          <ThreatsTimeline entity={row.original.value} />
-        </TabsContent>
-        <TabsContent value="attacker_infrastructure">
-          <AttackerInfrastructure entity={row.original.value} />
-        </TabsContent>
-        <TabsContent value="insights">
-          <HostInsightsBlocks hostId={row.original.value} />
-        </TabsContent>
+        {type === 'doc' && (
+          <TabsContent value="timeline">
+            <ThreatsTimeline entity={row.original.value} />
+          </TabsContent>
+        )}
+        {type === 'doc' && (
+          <TabsContent value="attacker_infrastructure">
+            <AttackerInfrastructure entity={row.original.value} />
+          </TabsContent>
+        )}
         <TabsContent value="threats">
           <ThreatsTable
             data={row.original.threats}
             type={type}
           />
+        </TabsContent>
+        <TabsContent value="insights">
+          <HostInsightsBlocks hostId={row.original.value} />
         </TabsContent>
       </Tabs>
     );
