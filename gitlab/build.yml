@@ -14,9 +14,8 @@ build-artifacts:
     paths:
       - dist
   rules:
-    - if: $CI_PIPELINE_SOURCE == "push"
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $UPSTREAM_NAME == "nightly_build"
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
 docker:
   stage: build
@@ -41,6 +40,6 @@ docker:
     - if: $UPSTREAM_NAME == "nightly_build"
       when: never
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
-      when: never
-    - if: $CI_COMMIT_BRANCH
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_BRANCH == "staging"
+    - if: $CI_COMMIT_BRANCH == "trunk"
