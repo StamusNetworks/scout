@@ -21,6 +21,7 @@ refresh-app-of-apps:
   rules:
     - if: $UPSTREAM_NAME == "nightly_build"
       when: never
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_COMMIT_BRANCH == "main"
     - if: $CI_COMMIT_BRANCH == "staging"
     - if: $CI_COMMIT_BRANCH == "trunk"
@@ -47,6 +48,7 @@ delete-env-from-app-of-apps:
   rules:
     - if: $UPSTREAM_NAME == "nightly_build"
       when: never
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_COMMIT_BRANCH == "main"
     - if: $CI_COMMIT_BRANCH == "staging"
     - if: $CI_COMMIT_BRANCH == "trunk"
