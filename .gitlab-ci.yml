@@ -12,15 +12,7 @@ stages:
 
 include:
   - local: gitlab/code-quality.yml
-    rules:
-    - if: $UPSTREAM_NAME != "nightly_build"
   - local: gitlab/unit-tests.yml
-    rules:
-    - if: $UPSTREAM_NAME != "nightly_build"
   - local: gitlab/build.yml
   - local: gitlab/e2fake.yml
-    rules:
-    - if: $UPSTREAM_NAME != "nightly_build"
   - local: gitlab/deploy.yml
-    rules:
-    - if: $UPSTREAM_NAME != "nightly_build"

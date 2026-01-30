@@ -5,6 +5,13 @@ linting:
     - npm i -g pnpm@9.15.2
     - pnpm install --frozen-lockfile
     - pnpm lint
+  rules:
+    - if: $UPSTREAM_NAME == "nightly_build"
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH
 
 typescript:
   stage: code-quality
@@ -13,3 +20,10 @@ typescript:
     - npm i -g pnpm@9.15.2
     - pnpm install --frozen-lockfile
     - pnpm check
+  rules:
+    - if: $UPSTREAM_NAME == "nightly_build"
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH
