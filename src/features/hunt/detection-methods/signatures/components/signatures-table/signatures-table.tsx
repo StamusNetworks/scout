@@ -38,7 +38,9 @@ export const SignaturesTable = () => {
     parseAsBoolean.withDefault(true),
   );
   const qfilters = useAppSelector(selectQueryFilters);
-  const sidFilter = qfilters.find((f) => f.key === 'alert.signature_id')?.value;
+  const sidFilter = qfilters
+    .filter((f) => !f.is_suspended)
+    .find((f) => f.key === 'alert.signature_id')?.value;
   const { qfilter, ...params } = useGlobalQueryParams([
     'tenant',
     'dates',

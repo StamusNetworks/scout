@@ -146,10 +146,15 @@ export const FiltersSideBar = () => {
       },
       [routes.detection_methods]: {
         enabled: ['outliers', 'events', 'tags', 'query_filters'],
-        filterTypes: [
-          FilterCategory.SIGNATURE,
-          ...(withAlerts ? [FilterCategory.EVENT] : []),
-        ],
+        filterTypes: [FilterCategory.SIGNATURE, FilterCategory.EVENT],
+        getIsInapplicable: (filter) => {
+          if (filter.key === 'alert.signature_id') return false;
+          const def = getFilterDef(filter.key);
+          return !withAlerts
+            ? def?.category !== FilterCategory.SIGNATURE
+            : def?.category !== FilterCategory.SIGNATURE &&
+                def?.category !== FilterCategory.EVENT;
+        },
       },
       [routes.filters_actions]: {
         enabled: ['outliers', 'events', 'tags', 'query_filters'],
