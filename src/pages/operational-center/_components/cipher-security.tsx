@@ -33,7 +33,7 @@ const chartConfig = {
   // },
   recommended: {
     label: 'Recommended',
-    color: 'var(--color-blue-500)',
+    color: 'var(--chart-1)',
   },
   insecure: {
     label: 'Insecure',

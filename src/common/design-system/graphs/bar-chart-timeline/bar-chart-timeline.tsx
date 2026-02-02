@@ -41,8 +41,6 @@ export const BarChartTimeline = ({
     return getTimelineData(data as CountsTimeline);
   }, [data]);
 
-  console.log(chart);
-
   return (
     <ChartContainer
       config={chart.chartConfig || {}}

@@ -173,7 +173,7 @@ export const Navigation = ({ menu, className }: MenuProps) => {
                             </span>
                             <Row>
                               {item.beta && (
-                                <Tag className="bg-lime-200 text-lime-900">
+                                <Tag className="bg-beta text-beta-foreground">
                                   Beta
                                 </Tag>
                               )}

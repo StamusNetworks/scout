@@ -38,16 +38,16 @@ const WorldMap = ({ data }: MapChartProps) => {
         graticule: '#e4e5e6',
         emptyCountry: '#d6d9db',
         border: '#fff',
-        rangeStart: '#b2b5ff',
-        rangeEnd: '#2f18ff',
+        rangeStart: '#0297a9',
+        rangeEnd: '#005792',
       }
     : {
         sphere: 'transparent',
         graticule: '#4c4c4c',
         emptyCountry: '#2d2b35',
         border: '#000',
-        rangeStart: '#212b61',
-        rangeEnd: '#2f18ff',
+        rangeStart: '#0297a9',
+        rangeEnd: '#005792',
       };
 
   const colorScale = scaleLinear()
