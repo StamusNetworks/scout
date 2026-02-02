@@ -21,10 +21,10 @@ export const HostsAPI = API.injectEndpoints({
     // QUERIES
     getHosts: builder.query<
       Paginated<Host>,
-      Pagination & Dates & Tenant & QFilter
+      Pagination & Dates & Tenant & QFilter & { withAlerts?: boolean }
     >({
-      query: (params) => ({
-        url: `/appliances/host_id/`,
+      query: ({ withAlerts, ...params }) => ({
+        url: `/appliances/host_id${withAlerts ? '_alerts' : ''}/`,
         method: 'GET',
         params: {
           highlight: 'true',

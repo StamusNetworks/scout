@@ -3,7 +3,7 @@ import { PaginationState } from '@tanstack/react-table';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams.tsx';
 import { useQFBuilder } from '@/features/hunt/filtering/query-filters/hooks/use-qf-builder.ts';
 
-import { useGetHostsQuery, useGetHostsWithAlertsQuery } from '../hosts.api.ts';
+import { useGetHostsQuery } from '../hosts.api.ts';
 
 export const useHostsList = ({
   withAlerts,
@@ -24,23 +24,18 @@ export const useHostsList = ({
     },
   );
 
-  // Call both hooks unconditionally to satisfy Rules of Hooks
-  const hostsWithAlertsResult = useGetHostsWithAlertsQuery({
-    ...params,
-    ...pagination,
-    ordering,
-  });
   const hostsResult = useGetHostsQuery({
     tenant: params.tenant,
     start_date: params.start_date,
     end_date: params.end_date,
     host_id_qfilter: params.host_id_qfilter,
+    qfilter: withAlerts ? params.qfilter : undefined,
     ordering,
+    withAlerts,
     ...pagination,
   });
 
-  // Return the appropriate result based on the condition
-  return withAlerts ? hostsWithAlertsResult : hostsResult;
+  return hostsResult;
 };
 
 export const getFilterExtension = (
