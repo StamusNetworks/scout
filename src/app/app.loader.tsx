@@ -13,6 +13,8 @@ import {
 } from '@/features/user/settings/settings.api';
 import { useAppDispatch } from '@/store/store';
 
+import { Error502, useDisplayError502 } from './502';
+
 export const SystemSettings = ({ children }: { children: React.ReactNode }) => {
   const { isLoading: systemSettingsLoading } = useGetSystemSettingsQuery(
     undefined,
@@ -50,8 +52,7 @@ export const AppLoader = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-      (error as any)?.status === 403 &&
+      (error as { status: number })?.status === 403 &&
       import.meta.env.VITE_APP_MODE !== 'development'
     ) {
       window.location.href =
@@ -62,6 +63,12 @@ export const AppLoader = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     dispatch(refreshRange());
   }, [dispatch]);
+
+  const displayError502 = useDisplayError502();
+
+  if (displayError502) {
+    return <Error502 />;
+  }
 
   return globalSettingsLoading ||
     tenantsListLoading ||

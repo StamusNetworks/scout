@@ -7,6 +7,7 @@ import {
 import { startsWithOneOf } from '@/common/lib/strings';
 import { getConfig } from '@/config';
 
+import { apiErrorToast } from './api.error';
 import { type RootState, RootStateWithAPI } from './store';
 
 const getCookieValue = (cookieName: string) => {
@@ -20,7 +21,7 @@ const getCookieValue = (cookieName: string) => {
     ?.split('=')[1];
 };
 
-const baseQuery: BaseQueryFn = (...baseQueryArgs) => {
+const baseQuery: BaseQueryFn = async (...baseQueryArgs) => {
   const [args, api] = baseQueryArgs;
   const state =
     (api.getState() as RootStateWithAPI) || ({} as RootStateWithAPI);
@@ -41,7 +42,7 @@ const baseQuery: BaseQueryFn = (...baseQueryArgs) => {
     ? '/'
     : '/rest/';
 
-  return fetchBaseQuery({
+  const result = await fetchBaseQuery({
     baseUrl: getConfig()?.apiUrl + urlPrefix,
     prepareHeaders: (headers, { getState }) => {
       headers.set(
@@ -65,6 +66,12 @@ const baseQuery: BaseQueryFn = (...baseQueryArgs) => {
     },
     credentials: 'include',
   })(...baseQueryArgs);
+
+  if ('error' in result && result.error) {
+    apiErrorToast({ args, error: result.error });
+  }
+
+  return result;
 };
 
 export const API = createApi({
