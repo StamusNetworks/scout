@@ -14,6 +14,7 @@ export const EntitiesForceGraph = ({
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const { data, isLoading } = useGetImpactedEntitiesQuery({
     ...params,
+    page_size: 1000000,
     family_class: familyClass,
   });
   if (isLoading)
