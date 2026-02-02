@@ -33,11 +33,17 @@ export const SignaturesAPI = API.injectEndpoints({
       }),
       providesTags: ['Reload'],
     }),
-    getSignature: builder.query<Signature, { pk: number }>({
+    getSignature: builder.query<Signature | undefined, { pk: number }>({
       query: ({ pk }) => ({
-        url: `/rules/rule/${pk}/`,
+        url: `/rules/rule/?sid=${pk}`,
         method: 'GET',
+        params: {
+          stamus: true,
+          discovery: true,
+          alert: true,
+        },
       }),
+      transformResponse: (data: Paginated<Signature>) => data.results?.[0],
     }),
     getSignatureRulesetsStatus: builder.query<
       SignatureStatus[],
