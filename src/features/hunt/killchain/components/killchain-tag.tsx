@@ -62,6 +62,8 @@ export const KillchainTag = ({
     [dispatch, context, killchain, navigate],
   );
 
+  if (killchain === 'pre_condition') return null;
+
   return (
     <EventValue
       query_key="stamus.kill_chain"
