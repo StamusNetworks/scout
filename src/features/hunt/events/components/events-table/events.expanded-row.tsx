@@ -11,6 +11,7 @@ import {
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/borderTabs';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { useGetSignatureQuery } from '@/features/hunt/detection-methods/signatures/api/signatures.api';
 
 import { useGetEventsFromFlowQuery } from '../../api/events.api';
 import { Event } from '../../model/event.schema';
@@ -69,6 +70,10 @@ export const ExpandedEventRow = ({ row }: { row: Row<Event> }) => {
   }, [flowEvents, flowEventsLoading]);
 
   const flowKeys = keys(flowEvents || {});
+
+  useGetSignatureQuery({
+    pk: row.original?.alert?.signature_id || 0,
+  });
 
   return (
     <Tabs

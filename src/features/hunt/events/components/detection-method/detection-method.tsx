@@ -1,28 +1,72 @@
-import { useMemo } from 'react';
+import { PencilRuler } from 'lucide-react';
 
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { useGetSignaturesQuery } from '@/features/hunt/detection-methods/signatures/api/signatures.api';
+import { Column } from '@/common/design-system/atoms/layout/column';
+import { Grid } from '@/common/design-system/atoms/layout/grid';
+import { Row } from '@/common/design-system/atoms/layout/row';
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+} from '@/common/design-system/atoms/ui/empty';
+import { Skeleton } from '@/common/design-system/atoms/ui/skeleton';
+import { useGetSignatureQuery } from '@/features/hunt/detection-methods/signatures/api/signatures.api';
 import { DetectionMethodExpandedRowTemplate } from '@/features/hunt/detection-methods/signatures/components/signatures-table/signatures-table.expanded-row';
-import { useQFBuilder } from '@/features/hunt/filtering/query-filters/hooks/use-qf-builder';
 
 export const DetectionMethodTab = ({ sid }: { sid: number }) => {
-  const QFBuilder = useQFBuilder();
-  const extendQfilter = useMemo(
-    () => [QFBuilder.createFilter('alert.signature_id', sid)],
-    [sid, QFBuilder],
-  );
-  const params = useGlobalQueryParams(['tenant', 'dates', 'qfilter'], {
-    extendQfilter,
+  const { data, isLoading } = useGetSignatureQuery({
+    pk: sid,
   });
 
-  const { data, isLoading } = useGetSignaturesQuery({
-    ...params,
-    ordering: '-hits',
-  });
+  if (isLoading)
+    return (
+      <Column className="gap-2">
+        <Row className="justify-end">
+          <Skeleton className="h-12 w-48" />
+        </Row>
+        <Grid className="grid-cols-3 gap-2">
+          <Skeleton className="h-60 w-full" />
+          <Skeleton className="h-60 w-full" />
+          <Skeleton className="h-60 w-full" />
+        </Grid>
+        <Skeleton className="h-12 w-48" />
+        <Skeleton className="h-80 w-full" />
+        <Grid className="grid-cols-4 gap-2">
+          <Skeleton className="h-48 w-full" />
+          <Skeleton className="h-48 w-full" />
+          <Skeleton className="h-48 w-full" />
+          <Skeleton className="h-48 w-full" />
+        </Grid>
+        <Grid className="grid-cols-12 gap-2">
+          <Skeleton className="h-9 w-full" />
+          <Skeleton className="h-9 w-full" />
+          <Skeleton className="h-9 w-full" />
+        </Grid>
+        <Skeleton className="h-9 w-64" />
+        <Grid className="grid-cols-6 gap-2">
+          <Skeleton className="h-9 w-full" />
+          <Skeleton className="h-9 w-full" />
+          <Skeleton className="h-9 w-full" />
+        </Grid>
+      </Column>
+    );
 
-  if (isLoading || !data?.results.length) return null;
+  if (!data)
+    return (
+      <Empty>
+        <EmptyMedia variant="icon">
+          <PencilRuler />
+        </EmptyMedia>
+        <EmptyContent>
+          <EmptyHeader>Detection method not found</EmptyHeader>
+          <EmptyDescription>
+            The detection method for this event was not found. The source /
+            ruleset might be missing
+          </EmptyDescription>
+        </EmptyContent>
+      </Empty>
+    );
 
-  return (
-    <DetectionMethodExpandedRowTemplate detectionMethod={data.results[0]} />
-  );
+  return <DetectionMethodExpandedRowTemplate detectionMethod={data} />;
 };

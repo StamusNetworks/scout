@@ -33,6 +33,12 @@ export const SignaturesAPI = API.injectEndpoints({
       }),
       providesTags: ['Reload'],
     }),
+    getSignature: builder.query<Signature, { pk: number }>({
+      query: ({ pk }) => ({
+        url: `/rules/rule/${pk}/`,
+        method: 'GET',
+      }),
+    }),
     getSignatureRulesetsStatus: builder.query<
       SignatureStatus[],
       { pk: number }
@@ -56,5 +62,8 @@ export const SignaturesAPI = API.injectEndpoints({
   }),
 });
 
-export const { useGetSignaturesQuery, useGetSignatureRulesetsStatusQuery } =
-  SignaturesAPI;
+export const {
+  useGetSignaturesQuery,
+  useGetSignatureRulesetsStatusQuery,
+  useGetSignatureQuery,
+} = SignaturesAPI;

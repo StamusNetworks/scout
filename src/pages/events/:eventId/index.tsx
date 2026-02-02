@@ -23,6 +23,7 @@ import {
 import { Tag } from '@/common/design-system/layouts/components/navigation/navigation';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { useGetSignatureQuery } from '@/features/hunt/detection-methods/signatures/api/signatures.api';
 import {
   useGetEventsFromFlowQuery,
   useGetEventsQuery,
@@ -110,6 +111,15 @@ export const EventByIdPage = () => {
   }, [flowEvents, flowEventsLoading]);
 
   const flowKeys = keys(flowEvents || {});
+
+  useGetSignatureQuery(
+    {
+      pk: event?.alert?.signature_id || 0,
+    },
+    {
+      skip: !event?.alert?.signature_id,
+    },
+  );
 
   return (
     <>
