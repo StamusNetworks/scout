@@ -8,6 +8,11 @@ import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Badge } from '@/common/design-system/atoms/ui/badge';
 import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/common/design-system/atoms/ui/popover';
+import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
@@ -206,49 +211,52 @@ const HostBlockExpandableRow = ({
   endDate,
   filterId,
 }: HostBlockRowProps) => {
-  const [expanded, setExpanded] = useState(false);
   return (
     <Column>
-      <Grid className="grid-cols-5 gap-2">
-        <Row
-          className="col-span-3 cursor-pointer gap-1"
-          onClick={() => setExpanded(!expanded)}
-        >
-          <Badge className="px-1.5 py-0.25">{item.prefix}</Badge>
-          <span className="overflow-hidden text-sm text-nowrap text-ellipsis">
-            {item.value}
-          </span>
-        </Row>
-        <div className="col-span-2">
-          <HostBlockBar
-            item={item}
-            startDate={startDate}
-            endDate={endDate}
-          />
-        </div>
-      </Grid>
-      {expanded && (
-        <Column>
-          {item.expandedItems?.map((child, index) => (
-            <Grid
-              className="grid-cols-4 gap-2"
-              key={index}
-            >
-              <div className="col-span-1 text-sm font-medium">{child.key}</div>
-              <div className="col-span-3 text-sm">
-                {['first_seen', 'last_seen'].includes(child.key) ? (
-                  format(new Date(child.value), 'yyyy-MM-dd HH:mm:ss')
-                ) : (
-                  <EventValue
-                    query_key={child.filter || filterId}
-                    value={child.value}
-                  />
-                )}
-              </div>
-            </Grid>
-          ))}
-        </Column>
-      )}
+      <Popover>
+        <Grid className="grid-cols-5 gap-2">
+          <PopoverTrigger asChild>
+            <Row className="col-span-3 cursor-pointer gap-1">
+              <Badge className="px-1.5 py-0.25">{item.prefix}</Badge>
+              <span className="overflow-hidden text-sm text-nowrap text-ellipsis">
+                {item.value}
+              </span>
+            </Row>
+          </PopoverTrigger>
+          <div className="col-span-2">
+            <HostBlockBar
+              item={item}
+              startDate={startDate}
+              endDate={endDate}
+            />
+          </div>
+        </Grid>
+        <PopoverContent className="flex min-w-128">
+          <Column className="w-full">
+            {item.expandedItems?.map((child, index) => (
+              <Grid
+                className="grid-cols-4"
+                key={index}
+              >
+                <div className="col-span-1 text-sm font-medium">
+                  {child.key}
+                </div>
+                <div className="col-span-3 text-sm">
+                  {['first_seen', 'last_seen'].includes(child.key) ? (
+                    format(new Date(child.value), 'yyyy-MM-dd HH:mm:ss')
+                  ) : (
+                    <EventValue
+                      query_key={child.filter || filterId}
+                      value={child.value}
+                      className="line-clamp-3 text-wrap wrap-break-word"
+                    />
+                  )}
+                </div>
+              </Grid>
+            ))}
+          </Column>
+        </PopoverContent>
+      </Popover>
     </Column>
   );
 };
