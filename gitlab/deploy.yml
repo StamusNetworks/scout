@@ -21,10 +21,9 @@ refresh-app-of-apps:
   rules:
     - if: $UPSTREAM_NAME == "nightly_build"
       when: never
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    - if: $CI_COMMIT_BRANCH == "main"
-    - if: $CI_COMMIT_BRANCH == "staging"
-    - if: $CI_COMMIT_BRANCH == "trunk"
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME !~ /^(main|staging|trunk)$/'
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH =~ /^(main|staging|trunk)$/'
+    - when: never
 
 delete-env-from-app-of-apps:
   stage: deploy
@@ -48,10 +47,9 @@ delete-env-from-app-of-apps:
   rules:
     - if: $UPSTREAM_NAME == "nightly_build"
       when: never
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    - if: $CI_COMMIT_BRANCH == "main"
-    - if: $CI_COMMIT_BRANCH == "staging"
-    - if: $CI_COMMIT_BRANCH == "trunk"
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME !~ /^(main|staging|trunk)$/'
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH =~ /^(main|staging|trunk)$/'
+    - when: never
 
 stamus-install-archive:
   stage: deploy
