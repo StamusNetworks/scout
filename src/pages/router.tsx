@@ -35,6 +35,7 @@ import { Sightings } from './analytics/sightings';
 import { SightingDetails } from './analytics/sightings/[id]';
 import { AttackSurfaceInventory } from './attack-surface/inventory';
 import { AttackSurfaceVisualisation } from './attack-surface/visualisation';
+import { Deeplink } from './deeplink';
 import { FilterSetsPage } from './filter-sets';
 import { HostsPage } from './hosts';
 import { HostBeaconing } from './hosts/[hostId]/beacons';
@@ -640,6 +641,14 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
             element: (
               <PageBoundary key="explore">
                 <ExplorePage />
+              </PageBoundary>
+            ),
+          },
+          {
+            path: routes.deeplink,
+            element: (
+              <PageBoundary key="deeplink">
+                <Deeplink />
               </PageBoundary>
             ),
           },

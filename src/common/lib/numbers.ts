@@ -41,3 +41,7 @@ export const formatBytes = (
   }
   return `${nbrText}B`;
 };
+
+export const isNumeric = (value: string) => {
+  return !isNaN(parseFloat(value)) && isFinite(Number(value));
+};

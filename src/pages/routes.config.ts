@@ -3,6 +3,7 @@ export const routes = {
   login: '/login',
   register: '/register',
   home: '/',
+  deeplink: '/deeplink',
   explorer: '/explorer',
   events: '/events',
   event: '/events/event',
