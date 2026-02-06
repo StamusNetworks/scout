@@ -33,6 +33,58 @@ export const EntitiesAPI = API.injectEndpoints({
       }),
       providesTags: ['Reload', 'Entities'],
     }),
+    getImpactedEntity: builder.query<
+      Entity | undefined,
+      Dates & Tenant & { asset: string }
+    >({
+      query: (params) => ({
+        url: `/appliances/threat/threats_per_asset/`,
+        method: 'GET',
+        params: buildQueryParams(params),
+      }),
+      transformResponse: (response: Paginated<Entity>) => {
+        if (!response.results.length) return undefined;
+        if (response.results.length === 1) return response.results[0];
+
+        const getKillChainStep = (
+          phase: keyof typeof killChainsConfig,
+        ): number =>
+          killChainsConfig[phase]?.kc_step ?? Number.NEGATIVE_INFINITY;
+        const getHighestKillChain = (
+          first: keyof typeof killChainsConfig,
+          second: keyof typeof killChainsConfig,
+        ) =>
+          getKillChainStep(first) >= getKillChainStep(second) ? first : second;
+        const getEarliestDate = (first: string, second: string) =>
+          new Date(first).getTime() <= new Date(second).getTime()
+            ? first
+            : second;
+        const getLatestDate = (first: string, second: string) =>
+          new Date(first).getTime() >= new Date(second).getTime()
+            ? first
+            : second;
+
+        return response.results.reduce((merged, current) => ({
+          ...merged,
+          first_seen: getEarliestDate(merged.first_seen, current.first_seen),
+          last_seen: getLatestDate(merged.last_seen, current.last_seen),
+          threats: [...merged.threats, ...current.threats],
+          kill_chain: getHighestKillChain(
+            merged.kill_chain,
+            current.kill_chain,
+          ),
+          kill_chain_offender: getHighestKillChain(
+            merged.kill_chain_offender,
+            current.kill_chain_offender,
+          ),
+          is_offender: merged.is_offender || current.is_offender,
+          status:
+            merged.status === 'new' || current.status === 'new'
+              ? 'new'
+              : 'fixed',
+        }));
+      },
+    }),
     getKillChainCounters: builder.query<
       { kill_chain: keyof typeof killChainsConfig; nb_assets: number }[],
       Dates & Tenant & { family_id?: string }
@@ -102,6 +154,7 @@ export const EntitiesAPI = API.injectEndpoints({
 });
 
 export const {
+  useGetImpactedEntityQuery,
   useGetImpactedEntitiesQuery,
   useGetKillChainCountersQuery,
   useGetKillChainCountersByThreatIdQuery,

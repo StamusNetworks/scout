@@ -42,7 +42,7 @@ export const HostSummary = ({
       <EntityThreatTagsListTemplate
         threats={entity.threats}
         maxThreats={4}
-        className="mb-2 items-center"
+        className="mb-2 flex-wrap items-center"
       />
     )}
     <HostStats host={host} />
