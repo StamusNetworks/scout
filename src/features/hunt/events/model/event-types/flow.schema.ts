@@ -1,20 +1,20 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const flowSchema = z.object({
-  src_ip: z.string().optional(),
-  src_port: z.number().optional(),
-  dest_ip: z.string().optional(),
-  dest_port: z.number().optional(),
+  src_ip: z.string(),
+  src_port: z.number(),
+  dest_ip: z.string(),
+  dest_port: z.number(),
   action: z.string().optional(),
   start: z.string(),
   end: z.string().optional(),
-  age: z.number(),
-  bytes_toserver: z.number(),
-  bytes_toclient: z.number(),
-  pkts_toserver: z.number(),
-  pkts_toclient: z.number(),
+  age: z.number().optional(),
+  bytes_toserver: z.number().optional(),
+  bytes_toclient: z.number().optional(),
+  pkts_toserver: z.number().optional(),
+  pkts_toclient: z.number().optional(),
   state: z.string(),
   reason: z.string().optional(),
   alerted: z.boolean(),
@@ -23,7 +23,8 @@ export const flowSchema = z.object({
   tx_cnt: z.number().optional(),
 });
 
-export const flowEventSchema = baseFlowEventSchema.extend({
+export const flowEventSchema = baseEventSchema.extend({
+  event_type: z.literal('flow'),
   flow: flowSchema,
 });
 

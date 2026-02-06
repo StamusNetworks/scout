@@ -1,4 +1,4 @@
-import { NfsEvent } from '../../../model/event-types/nfs.schema';
+import { NfsEvent } from '../../../model/app-proto/nfs.schema';
 import { RelatedTable } from '../related-table';
 import { relatedFlowColumns } from './related-nfs.columns';
 

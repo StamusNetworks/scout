@@ -4,7 +4,7 @@ import { DataTableRowExpander } from '@/common/design-system/molecules/data-tabl
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 
-import { HttpEvent } from '../../../model/event-types/http.schema';
+import { HttpEvent } from '../../../model/app-proto/http.schema';
 
 export const relatedHttpColumns: CustomColumnDef<HttpEvent>[] = [
   {

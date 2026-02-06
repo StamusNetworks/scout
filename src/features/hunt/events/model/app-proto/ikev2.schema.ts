@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const ikev2Schema = z.object({
   errors: z.number(),
@@ -15,7 +15,7 @@ export const ikev2Schema = z.object({
   version_minor: z.number(),
 });
 
-export const ikev2EventSchema = baseFlowEventSchema.extend({
+export const ikev2EventSchema = baseEventSchema.extend({
   ikev2: ikev2Schema,
 });
 

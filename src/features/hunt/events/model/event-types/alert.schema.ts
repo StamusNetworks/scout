@@ -1,12 +1,13 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const alertSchema = z.object({
   action: z.string().optional(),
   category: z.string().optional(),
   gid: z.number().optional(),
   lateral: z.string().optional(),
+  tag: z.string().optional(),
   metadata: z
     .object({
       mitre_tactic_name: z.array(z.string()).optional(),
@@ -23,21 +24,21 @@ export const alertSchema = z.object({
     .object({
       ip: z.string(),
       port: z.number(),
+      net_info: z.array(z.string()).optional(),
+      net_info_agg: z.string().optional(),
     })
     .optional(),
-  tag: z.string().optional(),
   target: z
     .object({
       ip: z.string(),
       port: z.number(),
     })
     .optional(),
+  xff: z.string().optional(),
 });
 
-export const flowAlertSchema = baseFlowEventSchema.extend({
+export const alertEventSchema = baseEventSchema.extend({
   event_type: z.literal('alert'),
-  direction: z.enum(['to_server', 'to_client']),
   alert: alertSchema,
 });
-
-export type FlowAlert = z.infer<typeof flowAlertSchema>;
+export type AlertEvent = z.infer<typeof alertEventSchema>;

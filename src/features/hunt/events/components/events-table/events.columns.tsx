@@ -80,9 +80,9 @@ export const getColumns = (
           value={row.original.alert?.signature}
           className="line-clamp-2 max-w-112 min-w-80 whitespace-break-spaces"
         />
-      ) : (
+      ) : row.original.event_type === 'stamus' ? (
         row.original.stamus?.threat_name
-      ),
+      ) : null,
   },
   {
     id: 'source',
@@ -250,12 +250,13 @@ export const getColumns = (
         title="TLS SNI"
       />
     ),
-    cell: ({ row }) => (
-      <EventValue
-        query_key="tls.sni"
-        value={row.original.tls?.sni}
-      />
-    ),
+    cell: ({ row }) =>
+      row.original.app_proto === 'tls' && (
+        <EventValue
+          query_key="tls.sni"
+          value={row.original.tls?.sni}
+        />
+      ),
   },
   {
     id: 'http_url',
@@ -266,12 +267,13 @@ export const getColumns = (
         title="HTTP URL"
       />
     ),
-    cell: ({ row }) => (
-      <EventValue
-        query_key="http.url"
-        value={row.original.http?.url}
-      />
-    ),
+    cell: ({ row }) =>
+      row.original.app_proto === 'http' && (
+        <EventValue
+          query_key="http.url"
+          value={row.original.http?.url}
+        />
+      ),
   },
   {
     id: 'payload_printable',
@@ -297,6 +299,7 @@ export const getColumns = (
       />
     ),
     cell: ({ row }) =>
+      row.original.app_proto === 'http' &&
       row.original.http?.http_request_body_printable && (
         <Scrollable string={row.original.http.http_request_body_printable} />
       ),
@@ -311,6 +314,7 @@ export const getColumns = (
       />
     ),
     cell: ({ row }) =>
+      row.original.app_proto === 'http' &&
       row.original.http?.http_response_body_printable && (
         <Scrollable string={row.original.http.http_response_body_printable} />
       ),
@@ -340,27 +344,30 @@ export const exportColumns: ExportColumn<Event>[] = [
   },
   {
     label: 'Method',
-    value: (event) => event.alert?.signature || event.stamus?.threat_name || '',
+    value: (event) =>
+      event.alert?.signature ||
+      (event.event_type === 'stamus' && event.stamus?.threat_name) ||
+      '',
   },
   {
     label: 'Source IP',
-    value: (event) => event.src_ip || event.flow?.src_ip,
+    value: (event) => event.src_ip || event.flow?.src_ip || '',
   },
   {
     label: 'Destination IP',
-    value: (event) => event.dest_ip || event.flow?.dest_ip,
+    value: (event) => event.dest_ip || event.flow?.dest_ip || '',
   },
   {
     label: 'Proto',
-    value: (event) => event.app_proto || event.proto,
+    value: (event) => event.app_proto || '',
   },
   {
     label: 'Probe',
-    value: (event) => event.host,
+    value: (event) => event.host || '',
   },
   {
     label: 'Category',
-    value: (event) => event.alert?.category,
+    value: (event) => event.alert?.category || '',
   },
 ];
 

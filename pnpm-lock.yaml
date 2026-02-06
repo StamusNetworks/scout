@@ -246,8 +246,8 @@ importers:
         specifier: ^4.2.0
         version: 4.5.0(rollup@4.53.5)(typescript@5.9.3)(vite@5.4.21(@types/node@20.19.27)(lightningcss@1.30.2))
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 4.2.1
+        version: 4.2.1
     devDependencies:
       '@commitlint/cli':
         specifier: ^19.8.0
@@ -6360,9 +6360,6 @@ packages:
     engines: {node: '>=18.0.0'}
     peerDependencies:
       zod: ^3.25.0 || ^4.0.0
-
-  zod@3.23.8:
-    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
 
   zod@4.2.1:
     resolution: {integrity: sha512-0wZ1IRqGGhMP76gLqz8EyfBXKk0J2qo2+H3fi4mcUP/KtTocoX08nmIAHl1Z2kJIZbZee8KOpBCSNPRgauucjw==}
@@ -12634,8 +12631,6 @@ snapshots:
   zod-validation-error@4.0.2(zod@4.2.1):
     dependencies:
       zod: 4.2.1
-
-  zod@3.23.8: {}
 
   zod@4.2.1: {}
 

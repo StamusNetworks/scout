@@ -22,30 +22,30 @@ import { RelatedSshTab } from '@/features/hunt/events/components/related-events/
 import { RelatedStamusTab } from '@/features/hunt/events/components/related-events/related-stamus/related-stamus';
 import { RelatedTftpTab } from '@/features/hunt/events/components/related-events/related-tftp/related-tftp';
 import { RelatedTlsTab } from '@/features/hunt/events/components/related-events/related-tls/related-tls';
-import { FlowAlert } from '@/features/hunt/events/model/event-types/alert.schema';
+import { DcerpcEvent } from '@/features/hunt/events/model/app-proto/dcerpc.schema';
+import { DhcpEvent } from '@/features/hunt/events/model/app-proto/dhcp.schema';
+import { DnsEvent } from '@/features/hunt/events/model/app-proto/dns.schema';
+import { FtpEvent } from '@/features/hunt/events/model/app-proto/ftp.schema';
+import { FtpDataEvent } from '@/features/hunt/events/model/app-proto/ftp_data.schema';
+import { HttpEvent } from '@/features/hunt/events/model/app-proto/http.schema';
+import { Krb5Event } from '@/features/hunt/events/model/app-proto/krb5.schema';
+import { MqttEvent } from '@/features/hunt/events/model/app-proto/mqtt.schema';
+import { NetflowEvent } from '@/features/hunt/events/model/app-proto/netflow.schema';
+import { NfsEvent } from '@/features/hunt/events/model/app-proto/nfs.schema';
+import { RdpEvent } from '@/features/hunt/events/model/app-proto/rdp.schema';
+import { RfbEvent } from '@/features/hunt/events/model/app-proto/rfb.schema';
+import { SipEvent } from '@/features/hunt/events/model/app-proto/sip.schema';
+import { SmbEvent } from '@/features/hunt/events/model/app-proto/smb.schema';
+import { SmtpEvent } from '@/features/hunt/events/model/app-proto/smtp.schema';
+import { SnmpEvent } from '@/features/hunt/events/model/app-proto/snmp.schema';
+import { SshEvent } from '@/features/hunt/events/model/app-proto/ssh.schema';
+import { TftpEvent } from '@/features/hunt/events/model/app-proto/tftp.schema';
+import { TlsEvent } from '@/features/hunt/events/model/app-proto/tls.schema';
+import { AlertEvent } from '@/features/hunt/events/model/event-types/alert.schema';
 import { Anomaly } from '@/features/hunt/events/model/event-types/anomaly.schema';
-import { DcerpcEvent } from '@/features/hunt/events/model/event-types/dcerpc.schema';
-import { DhcpEvent } from '@/features/hunt/events/model/event-types/dhcp.schema';
-import { DnsEvent } from '@/features/hunt/events/model/event-types/dns.schema';
 import { FileinfoEvent } from '@/features/hunt/events/model/event-types/fileinfo.schema';
 import { FlowEvent } from '@/features/hunt/events/model/event-types/flow.schema';
-import { FtpEvent } from '@/features/hunt/events/model/event-types/ftp.schema';
-import { FtpDataEvent } from '@/features/hunt/events/model/event-types/ftp_data.schema';
-import { HttpEvent } from '@/features/hunt/events/model/event-types/http.schema';
-import { Krb5Event } from '@/features/hunt/events/model/event-types/krb5.schema';
-import { MqttEvent } from '@/features/hunt/events/model/event-types/mqtt.schema';
-import { NetflowEvent } from '@/features/hunt/events/model/event-types/netflow.schema';
-import { NfsEvent } from '@/features/hunt/events/model/event-types/nfs.schema';
-import { RdpEvent } from '@/features/hunt/events/model/event-types/rdp.schema';
-import { RfbEvent } from '@/features/hunt/events/model/event-types/rfb.schema';
-import { SipEvent } from '@/features/hunt/events/model/event-types/sip.schema';
-import { SmbEvent } from '@/features/hunt/events/model/event-types/smb.schema';
-import { SmtpEvent } from '@/features/hunt/events/model/event-types/smtp.schema';
-import { SnmpEvent } from '@/features/hunt/events/model/event-types/snmp.schema';
-import { SshEvent } from '@/features/hunt/events/model/event-types/ssh.schema';
 import { StamusEvent } from '@/features/hunt/events/model/event-types/stamus.schema';
-import { TftpEvent } from '@/features/hunt/events/model/event-types/tftp.schema';
-import { TlsEvent } from '@/features/hunt/events/model/event-types/tls.schema';
 
 import { useGetSightingById } from '../../hooks/use-get-sighting-by-id';
 import { useGetSightingEventsTail } from '../../hooks/use-get-sighting-events-tail';
@@ -56,15 +56,15 @@ interface EventsStreamProps {
 export const EventsStream = ({ sightingId }: EventsStreamProps) => {
   const { data: sighting } = useGetSightingById(sightingId);
   const { data } = useGetSightingEventsTail({
-    key: sighting?.discovery.key,
-    value: sighting?.discovery.value,
+    key: sighting?.discovery?.key,
+    value: sighting?.discovery?.value,
     protocol: sighting?.app_proto,
   });
 
   switch (data?.results?.[0]?.event_type) {
     case 'alert':
       return (
-        <RelatedAlertsTab data={data?.results as unknown as FlowAlert[]} />
+        <RelatedAlertsTab data={data?.results as unknown as AlertEvent[]} />
       );
     case 'anomaly':
       return <RelatedAnomalyTab data={data?.results as unknown as Anomaly[]} />;

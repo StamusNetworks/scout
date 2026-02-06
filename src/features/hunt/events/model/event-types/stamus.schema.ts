@@ -1,9 +1,9 @@
 import { keys } from 'ramda';
-import { z } from 'zod';
+import z from 'zod';
 
 import { killChainsConfig } from '@/features/hunt/killchain/killchain';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 import { alertSchema } from './alert.schema';
 
 export const stamusSchema = z.object({
@@ -25,9 +25,8 @@ export const stamusSchema = z.object({
   family_name: z.string().optional(),
 });
 
-export const stamusEventSchema = baseFlowEventSchema.extend({
+export const stamusEventSchema = baseEventSchema.extend({
   event_type: z.literal('stamus'),
-  app_proto: z.literal('stamus'),
   stamus: stamusSchema,
   alert: alertSchema,
 });

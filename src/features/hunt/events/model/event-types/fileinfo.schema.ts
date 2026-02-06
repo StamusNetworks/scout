@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 // export const fileinfoSchema = z.object({
 //   start: z.number().optional(),
@@ -24,17 +24,17 @@ export const fileInfoSchema = z.object({
   mimetype: z.string(),
   gaps: z.boolean(),
   sha256: z.string(),
-  type: z.null(),
   tx_id: z.number(),
-  sid: z.array(z.unknown()),
+  sid: z.array(z.unknown()).optional(),
   state: z.string(),
   size: z.number(),
   stored: z.boolean(),
+  type: z.string().optional(),
 });
 
 export type EventFileInfo = z.infer<typeof fileInfoSchema>;
 
-export const fileinfoEventSchema = baseFlowEventSchema.extend({
+export const fileinfoEventSchema = baseEventSchema.extend({
   event_type: z.literal('fileinfo'),
   fileinfo: fileInfoSchema,
 });

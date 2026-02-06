@@ -9,12 +9,17 @@ import { ProtoColumn } from './flow.columns';
 describe('Flow Component', () => {
   const httpEvent = {
     _id: 'http-event-1',
+    '@timestamp': '2021-01-01T00:00:00.000Z',
+    dest_port: 80,
+    event_type: 'http',
+    src_port: 80,
+    timestamp: '2021-01-01T00:00:00.000Z',
     app_proto: 'http',
     http: {
       hostname: 'example.com',
       http_method: 'GET',
       url: '/index.html',
-      status: '200',
+      status: 200,
       http_user_agent: 'Mozilla/5.0',
     },
     proto: 'TCP',
@@ -229,7 +234,6 @@ describe('Flow Component', () => {
     const eventWithArrays = {
       _id: 'array-event',
       app_proto: 'custom',
-      proto: 'TCP',
       tags: ['tag1', 'tag2'],
       alert: {
         source: {

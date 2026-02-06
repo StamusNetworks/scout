@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const quicSchema = z.object({
   extensions: z.array(
@@ -27,7 +27,7 @@ export const quicSchema = z.object({
   version: z.string(),
 });
 
-export const quicEventSchema = baseFlowEventSchema.extend({
+export const quicEventSchema = baseEventSchema.extend({
   quic: quicSchema,
 });
 

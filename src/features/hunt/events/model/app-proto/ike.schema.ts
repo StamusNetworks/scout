@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const ikeSchema = z.object({
   exchange_type: z.number(),
@@ -35,7 +35,9 @@ export const ikeSchema = z.object({
   version_minor: z.number(),
 });
 
-export const ikeEventSchema = baseFlowEventSchema.extend({
+export const ikeEventSchema = baseEventSchema.extend({
+  app_proto: z.literal('ike'),
+  event_type: z.literal('ike'),
   ike: ikeSchema,
 });
 

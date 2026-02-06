@@ -1,5 +1,4 @@
 import { Column } from '@/common/design-system/atoms/layout/column';
-import { TlsTail } from '@/features/analytics/beaconing/models/tls-tail.model';
 import { Event } from '@/features/hunt/events/model/event.schema';
 
 import { DetectionAttributes } from './attributes';
@@ -13,7 +12,7 @@ export const ProtoFlow = ({
   methodType,
   columns,
 }: {
-  events: Event[] | TlsTail[];
+  events: Event[];
   methodType?: string;
   columns?: ProtoColumn[];
 }) => {

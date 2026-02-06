@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const rfbSchema = z.object({
   authentication: z.object({
@@ -46,7 +46,7 @@ export const rfbSchema = z.object({
   server_security_failure_reason: z.string().optional(),
 });
 
-export const rfbEventSchema = baseFlowEventSchema.extend({
+export const rfbEventSchema = baseEventSchema.extend({
   event_type: z.literal('rfb'),
   app_proto: z.literal('rfb'),
   rfb: rfbSchema,

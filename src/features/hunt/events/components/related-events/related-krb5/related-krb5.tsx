@@ -1,4 +1,4 @@
-import { Krb5Event } from '../../../model/event-types/krb5.schema';
+import { Krb5Event } from '../../../model/app-proto/krb5.schema';
 import { RelatedTable } from '../related-table';
 import { relatedFlowColumns } from './related-krb5.columns';
 

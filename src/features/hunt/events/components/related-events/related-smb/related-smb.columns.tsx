@@ -4,7 +4,7 @@ import { DataTableRowExpander } from '@/common/design-system/molecules/data-tabl
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 
-import { SmbEvent } from '../../../model/event-types/smb.schema';
+import { SmbEvent } from '../../../model/app-proto/smb.schema';
 
 export const relatedFlowColumns: CustomColumnDef<SmbEvent>[] = [
   {

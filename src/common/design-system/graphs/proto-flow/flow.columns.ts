@@ -1,7 +1,4 @@
-import { TlsTail } from '@/features/analytics/beaconing/models/tls-tail.model';
-import { SightingEvent } from '@/features/analytics/sightings/models/sighting-event.model';
 import { Event } from '@/features/hunt/events/model/event.schema';
-import { EventTail } from '@/features/hunt/events/model/event-tail.schema';
 
 export type ProtoColumn<T = unknown> = {
   title: string;
@@ -35,10 +32,7 @@ export const JA3Col: ProtoColumn<Event> = {
   missing: 'Missing hash',
 };
 
-const protoColumns: Record<
-  string,
-  ProtoColumn<Event | TlsTail | SightingEvent | EventTail>[]
-> = {
+const protoColumns: Record<string, ProtoColumn<Event>[]> = {
   default: [offenderCol],
 
   // Homoglyphs, etc.

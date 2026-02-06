@@ -1,4 +1,4 @@
-import { TlsEvent } from '../../../model/event-types/tls.schema';
+import { TlsEvent } from '../../../model/app-proto/tls.schema';
 import { RelatedTable } from '../related-table';
 import { relatedTlsColumns } from './related-tls.columns';
 

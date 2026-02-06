@@ -21,7 +21,7 @@ export const EventDetails = ({ event }: { event: Event }) => (
       value={
         <EventValue
           query_key="alert.signature"
-          value={event.alert.signature}
+          value={event.alert?.signature}
           className="mb-2 line-clamp-3 max-w-80 font-bold whitespace-normal"
         />
       }
@@ -31,7 +31,7 @@ export const EventDetails = ({ event }: { event: Event }) => (
       value={
         <EventValue
           query_key="alert.metadata.mitre_tactic_name"
-          value={event.alert.metadata?.mitre_tactic_name?.[0]}
+          value={event.alert?.metadata?.mitre_tactic_name?.[0]}
         />
       }
     />
@@ -40,7 +40,7 @@ export const EventDetails = ({ event }: { event: Event }) => (
       value={
         <EventValue
           query_key="alert.metadata.mitre_technique_name"
-          value={event.alert.metadata?.mitre_technique_name?.[0]}
+          value={event.alert?.metadata?.mitre_technique_name?.[0]}
         />
       }
     />

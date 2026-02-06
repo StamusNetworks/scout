@@ -1,4 +1,4 @@
-import { NetflowEvent } from '../../../model/event-types/netflow.schema';
+import { NetflowEvent } from '../../../model/app-proto/netflow.schema';
 import { RelatedTable } from '../related-table';
 import { relatedFlowColumns } from './related-netflow.columns';
 

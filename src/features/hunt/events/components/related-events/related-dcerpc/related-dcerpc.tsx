@@ -1,4 +1,4 @@
-import { DcerpcEvent } from '../../../model/event-types/dcerpc.schema';
+import { DcerpcEvent } from '../../../model/app-proto/dcerpc.schema';
 import { RelatedTable } from '../related-table';
 import { relatedFlowColumns } from './related-dcerpc.columns';
 

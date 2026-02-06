@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const sipSchema = z.object({
   method: z.string(),
@@ -9,8 +9,9 @@ export const sipSchema = z.object({
   version: z.string(),
 });
 
-export const sipEventSchema = baseFlowEventSchema.extend({
+export const sipEventSchema = baseEventSchema.extend({
   event_type: z.literal('sip'),
+  app_proto: z.literal('sip'),
   sip: sipSchema,
 });
 

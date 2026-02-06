@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const sshSchema = z.object({
   client: z
@@ -29,8 +29,9 @@ export const sshSchema = z.object({
     .optional(),
 });
 
-export const sshEventSchema = baseFlowEventSchema.extend({
+export const sshEventSchema = baseEventSchema.extend({
   event_type: z.literal('ssh'),
+  app_proto: z.literal('ssh'),
   ssh: sshSchema,
 });
 

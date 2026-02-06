@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const ftpSchema = z.object({
   command: z.string().optional(),
@@ -14,8 +14,9 @@ export const ftpSchema = z.object({
   reply_truncated: z.boolean().optional(),
 });
 
-export const ftpEventSchema = baseFlowEventSchema.extend({
+export const ftpEventSchema = baseEventSchema.extend({
   event_type: z.literal('ftp'),
+  app_proto: z.literal('ftp'),
   ftp: ftpSchema,
 });
 

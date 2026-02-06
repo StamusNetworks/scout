@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const tftpSchema = z.object({
   file: z.string(),
@@ -8,8 +8,9 @@ export const tftpSchema = z.object({
   packet: z.string(),
 });
 
-export const tftpEventSchema = baseFlowEventSchema.extend({
+export const tftpEventSchema = baseEventSchema.extend({
   event_type: z.literal('tftp'),
+  app_proto: z.literal('tftp'),
   tftp: tftpSchema,
 });
 

@@ -3,7 +3,7 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 
-import { RdpEvent } from '../../../model/event-types/rdp.schema';
+import { RdpEvent } from '../../../model/app-proto/rdp.schema';
 
 export const relatedFlowColumns: CustomColumnDef<RdpEvent>[] = [
   {

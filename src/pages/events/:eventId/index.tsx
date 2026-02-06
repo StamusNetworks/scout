@@ -193,9 +193,11 @@ export const EventByIdPage = () => {
               <JsonView data={event} />
             </TabsContent>
             <TabsContent value="pcap_file">pcap_file</TabsContent>
-            <TabsContent value="detection_method">
-              <DetectionMethodTab sid={event?.alert.signature_id} />
-            </TabsContent>
+            {event?.alert && (
+              <TabsContent value="detection_method">
+                <DetectionMethodTab sid={event.alert.signature_id} />
+              </TabsContent>
+            )}
             <TabsContent value="related-Alert">
               <RelatedAlertsTab data={flowEvents?.Alert} />
             </TabsContent>

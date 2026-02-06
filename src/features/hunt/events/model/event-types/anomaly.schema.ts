@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const anomalySchema = z.object({
   type: z.string(),
@@ -9,7 +9,7 @@ export const anomalySchema = z.object({
   layer: z.string(),
 });
 
-export const anomalyEventSchema = baseFlowEventSchema.extend({
+export const anomalyEventSchema = baseEventSchema.extend({
   event_type: z.literal('anomaly'),
   anomaly: anomalySchema,
 });

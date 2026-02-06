@@ -5,7 +5,6 @@ import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { formatMitreString, getMitreTechniqueUrl } from '@/common/lib/mitre';
 import { cn } from '@/common/lib/utils';
-import { TlsTail } from '@/features/analytics/beaconing/models/tls-tail.model';
 import { Event } from '@/features/hunt/events/model/event.schema';
 
 import { ProtoKey } from './proto-flow';
@@ -14,7 +13,7 @@ export const DetectionAttributes = ({
   eventsForProto,
   appProto,
 }: {
-  eventsForProto: (Event | TlsTail)[];
+  eventsForProto: Event[];
   appProto: ProtoKey;
 }) => {
   const timestamps = eventsForProto.map((e) => e['@timestamp']).sort();
@@ -45,10 +44,10 @@ export const DetectionAttributes = ({
             <ExternalLink
               to={`https://attack.mitre.org/tactics/${metadata.mitre_tactic_id}`}
             >
-              {formatMitreString(metadata.mitre_tactic_name)}
+              {formatMitreString(metadata.mitre_tactic_name[0])}
             </ExternalLink>
           ) : (
-            formatMitreString(metadata.mitre_tactic_name)
+            formatMitreString(metadata.mitre_tactic_name[0])
           )}
         </DetectionAttribute>
       )}
@@ -56,12 +55,12 @@ export const DetectionAttributes = ({
         <DetectionAttribute title="MITRE Technique Name">
           {metadata.mitre_technique_id ? (
             <ExternalLink
-              to={getMitreTechniqueUrl(metadata.mitre_technique_id)}
+              to={getMitreTechniqueUrl(metadata.mitre_technique_id[0])}
             >
-              {formatMitreString(metadata.mitre_technique_name)}
+              {formatMitreString(metadata.mitre_technique_name[0])}
             </ExternalLink>
           ) : (
-            formatMitreString(metadata.mitre_technique_name)
+            formatMitreString(metadata.mitre_technique_name[0])
           )}
         </DetectionAttribute>
       )}

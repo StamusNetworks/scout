@@ -4,7 +4,7 @@ import { DataTableRowExpander } from '@/common/design-system/molecules/data-tabl
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 
-import { Krb5Event } from '../../../model/event-types/krb5.schema';
+import { Krb5Event } from '../../../model/app-proto/krb5.schema';
 
 export const relatedFlowColumns: CustomColumnDef<Krb5Event>[] = [
   {

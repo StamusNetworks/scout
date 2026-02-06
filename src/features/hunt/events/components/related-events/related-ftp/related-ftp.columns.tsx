@@ -3,7 +3,7 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 
-import { FtpEvent } from '../../../model/event-types/ftp.schema';
+import { FtpEvent } from '../../../model/app-proto/ftp.schema';
 
 export const relatedFlowColumns: CustomColumnDef<FtpEvent>[] = [
   {

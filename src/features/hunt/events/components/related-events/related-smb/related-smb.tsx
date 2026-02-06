@@ -1,4 +1,4 @@
-import { SmbEvent } from '../../../model/event-types/smb.schema';
+import { SmbEvent } from '../../../model/app-proto/smb.schema';
 import { RelatedTable } from '../related-table';
 import { relatedFlowColumns } from './related-smb.columns';
 

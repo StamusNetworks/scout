@@ -4,7 +4,7 @@ import { DataTableRowExpander } from '@/common/design-system/molecules/data-tabl
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 
-import { TlsEvent } from '../../../model/event-types/tls.schema';
+import { TlsEvent } from '../../../model/app-proto/tls.schema';
 
 export const relatedTlsColumns: CustomColumnDef<TlsEvent>[] = [
   {

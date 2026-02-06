@@ -13,7 +13,7 @@ import { useFeatureFlags } from '@/common/lib/use-feature-flags.ts';
 import { routes } from '@/pages/routes.config.ts';
 
 import { useGetEventsQuery } from '../../api/events.api';
-import { Event } from '../../model/event.schema';
+import { Event } from '../../model/event.schema.ts';
 import { exportColumns, getColumns } from './events.columns';
 import { ExpandedEventRow } from './events.expanded-row.tsx';
 

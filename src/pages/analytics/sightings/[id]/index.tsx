@@ -37,12 +37,12 @@ export const SightingDetails = () => {
         stats={[
           {
             label:
-              (sighting?.discovery.key &&
+              (sighting?.discovery?.key &&
                 getFilterDef(sighting?.discovery.key)?.label) ??
               '',
             value: isFetching ? (
               <Spin />
-            ) : sighting?.discovery.key ? (
+            ) : sighting?.discovery?.key ? (
               <EventValue
                 query_key={sighting?.discovery.key}
                 value={sighting?.discovery.value}

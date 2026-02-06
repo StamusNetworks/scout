@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const tlsSchema = z.object({
   client: z
@@ -46,8 +46,9 @@ export const tlsSchema = z.object({
   alpn_tc: z.string().optional(),
 });
 
-export const tlsEventSchema = baseFlowEventSchema.extend({
+export const tlsEventSchema = baseEventSchema.extend({
   event_type: z.literal('tls'),
+  app_proto: z.literal('tls'),
   tls: tlsSchema,
 });
 

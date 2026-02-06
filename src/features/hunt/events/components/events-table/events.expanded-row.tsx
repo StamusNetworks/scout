@@ -84,7 +84,9 @@ export const ExpandedEventRow = ({ row }: { row: Row<Event> }) => {
         {/* Synthetic view */}
         <TabsTrigger value="synthetic_view">Synthetic view</TabsTrigger>
         <TabsTrigger value="json_view">JSON View</TabsTrigger>
-        <TabsTrigger value="detection_method">Detection Method</TabsTrigger>
+        {row.original.alert?.signature_id && (
+          <TabsTrigger value="detection_method">Detection Method</TabsTrigger>
+        )}
         {flowKeys.sort().map((key) => (
           <TabsTrigger
             key={key}
@@ -123,9 +125,11 @@ export const ExpandedEventRow = ({ row }: { row: Row<Event> }) => {
       <TabsContent value="pcap_file">
         {row.original.capture_file ? <Pcap event={row.original} /> : null}
       </TabsContent>
-      <TabsContent value="detection_method">
-        <DetectionMethodTab sid={row.original.alert.signature_id} />
-      </TabsContent>
+      {row.original.alert?.signature_id && (
+        <TabsContent value="detection_method">
+          <DetectionMethodTab sid={row.original.alert.signature_id} />
+        </TabsContent>
+      )}
       <TabsContent value="related-Alert">
         <RelatedAlertsTab data={flowEvents?.Alert} />
       </TabsContent>

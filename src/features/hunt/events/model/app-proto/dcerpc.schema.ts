@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const dcerpcSchema = z.object({
   activityuuid: z.string().optional(),
@@ -33,9 +33,9 @@ export const dcerpcSchema = z.object({
   seqnum: z.number().optional(),
 });
 
-export const dcerpcEventSchema = baseFlowEventSchema.extend({
+export const dcerpcEventSchema = baseEventSchema.extend({
   event_type: z.literal('dcerpc'),
+  app_proto: z.literal('dcerpc'),
   dcerpc: dcerpcSchema,
 });
-
 export type DcerpcEvent = z.infer<typeof dcerpcEventSchema>;

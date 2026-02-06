@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const krb5Schema = z.object({
   cname: z.string(),
@@ -15,8 +15,9 @@ export const krb5Schema = z.object({
   weak_encryption: z.boolean(),
 });
 
-export const krb5EventSchema = baseFlowEventSchema.extend({
+export const krb5EventSchema = baseEventSchema.extend({
   event_type: z.literal('krb5'),
+  app_proto: z.literal('krb5'),
   krb5: krb5Schema,
 });
 

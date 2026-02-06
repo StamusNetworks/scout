@@ -47,36 +47,6 @@ import { ThreatTagById } from '@/features/hunt/threats/components/threat-tag';
 import { CountsTimeline } from '@/features/hunt/timeline/models/counts-timeline.model';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
-type EventTail = Event & {
-  dns?: {
-    rrname?: string;
-    version?: number;
-    type?: string;
-    flags?: string;
-    id?: number;
-    rrtype?: string;
-    ra?: boolean;
-    qr?: boolean;
-    rcode?: string;
-    rd?: boolean;
-    authorities?: Array<{
-      rrname?: string;
-      rrtype?: string;
-      ttl?: number;
-      soa?: {
-        minimum?: number;
-        rname?: string;
-        serial?: number;
-        retry?: number;
-        mname?: string;
-        refresh?: number;
-        expire?: number;
-      };
-    }>;
-    opcode?: number;
-  };
-};
-
 export const TransactionsPage = () => {
   const [groupByFlow, setGroupByFlow] = useState(true);
   const [pagination, setPagination] = usePaginationUrlState(20);
@@ -111,20 +81,20 @@ export const TransactionsPage = () => {
               data: Object.values(
                 result?.data?.results?.reduce(
                   (acc, curr) => {
-                    if (acc[curr.flow_id]) {
-                      acc[curr.flow_id].push(curr);
+                    if (acc[curr.flow_id!]) {
+                      acc[curr.flow_id!].push(curr);
                     } else {
-                      acc[curr.flow_id] = [curr];
+                      acc[curr.flow_id!] = [curr];
                     }
                     return acc;
                   },
-                  {} as Record<string, EventTail[]>,
+                  {} as Record<string, Event[]>,
                 ) || {},
               ),
             }
           : { type: 'single', data: result?.data?.results ?? [] }) satisfies
-          | { type: 'single'; data: EventTail[] }
-          | { type: 'grouped'; data: EventTail[][] },
+          | { type: 'single'; data: Event[] }
+          | { type: 'grouped'; data: Event[][] },
       }),
     },
   );
@@ -181,7 +151,7 @@ export const TransactionsPage = () => {
   );
 };
 
-const List = ({ data }: { data: EventTail[] }) => (
+const List = ({ data }: { data: Event[] }) => (
   <Column className="gap-2">
     {data?.map((row, i) => (
       <Card
@@ -197,7 +167,7 @@ const List = ({ data }: { data: EventTail[] }) => (
   </Column>
 );
 
-const GroupedList = ({ data }: { data: EventTail[][] }) => (
+const GroupedList = ({ data }: { data: Event[][] }) => (
   <Column className="gap-2">
     {data?.map((flowIdEvents, i) => (
       <Card
@@ -215,7 +185,7 @@ const GroupedList = ({ data }: { data: EventTail[][] }) => (
   </Column>
 );
 
-export const TransactionCard = ({ row }: { row: EventTail }) => {
+export const TransactionCard = ({ row }: { row: Event }) => {
   const [open, setOpen] = useState(false);
   return (
     <CardContent className="p-0">
@@ -581,7 +551,7 @@ export const TransactionCard = ({ row }: { row: EventTail }) => {
   );
 };
 
-const ExpandedRow = ({ row }: { row: EventTail }) => {
+const ExpandedRow = ({ row }: { row: Event }) => {
   return (
     <Tabs defaultValue="synthetic_view">
       <TabsList>
@@ -592,7 +562,7 @@ const ExpandedRow = ({ row }: { row: EventTail }) => {
         <JsonView data={row} />
       </TabsContent>
       <TabsContent value="synthetic_view">
-        <SyntheticView event={row as unknown as EventTail} />
+        <SyntheticView event={row} />
       </TabsContent>
     </Tabs>
   );

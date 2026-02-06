@@ -56,7 +56,7 @@ export const FilterActionsAPI = API.injectEndpoints({
     }),
     updateFilterAction: builder.mutation<
       FilterAction,
-      { pk: number } & Partial<Omit<FilterAction, 'pk'>>
+      { pk: number } & Partial<Omit<FilterActionPayload, 'pk'>>
     >({
       query: ({ pk, ...body }) => ({
         url: `${ENDPOINTS.FILTER_ACTIONS.url}${pk}/`,

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const rdpSchema = z.object({
   channels: z.array(z.string()).optional(),
@@ -37,8 +37,9 @@ export const rdpSchema = z.object({
   x509_serials: z.array(z.string()).optional(),
 });
 
-export const rdpEventSchema = baseFlowEventSchema.extend({
+export const rdpEventSchema = baseEventSchema.extend({
   event_type: z.literal('rdp'),
+  app_proto: z.literal('rdp'),
   rdp: rdpSchema,
 });
 

@@ -1,4 +1,4 @@
-import { TftpEvent } from '../../../model/event-types/tftp.schema';
+import { TftpEvent } from '../../../model/app-proto/tftp.schema';
 import { RelatedTable } from '../related-table';
 import { relatedFlowColumns } from './related-tftp.columns';
 

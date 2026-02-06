@@ -7,7 +7,7 @@ import { TableCard } from '@/common/design-system/molecules/table-card';
 import { EventField } from '@/features/hunt/filtering/query-filters/components/event-field';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 
-import { Event } from '../../model/event.schema';
+import { type Event } from '../../model/event.schema';
 import { EventFileInfo } from '../../model/event-types/fileinfo.schema';
 import { getSyntheticView } from './synthetic-view.config';
 
@@ -68,10 +68,12 @@ export const SyntheticView = ({ event }: { event: Event }) => {
         title="Payload printable"
         value={event.payload_printable}
       />
-      <ScrollPreCard
-        title="HTTP Response"
-        value={event.http?.http_response_body_printable}
-      />
+      {event.app_proto === 'http' && (
+        <ScrollPreCard
+          title="HTTP Response"
+          value={event.http?.http_response_body_printable}
+        />
+      )}
       <ScrollPreCard
         title="HTTP Request"
         value={event.http?.http_request_body_printable}

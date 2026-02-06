@@ -1,4 +1,4 @@
-import { SshEvent } from '../../../model/event-types/ssh.schema';
+import { SshEvent } from '../../../model/app-proto/ssh.schema';
 import { RelatedTable } from '../related-table';
 import { relatedFlowColumns } from './related-ssh.columns';
 

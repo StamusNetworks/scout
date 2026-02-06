@@ -4,21 +4,21 @@ import { getDuration } from '@/common/lib/duration';
 import { formatBytes, formatNumber } from '@/common/lib/numbers';
 import { killChainsConfig } from '@/features/hunt/killchain/killchain';
 
-import { FlowAlert } from '../../model/event-types/alert.schema';
-import { DnsEvent } from '../../model/event-types/dns.schema';
+import { DnsEvent } from '../../model/app-proto/dns.schema';
+import { HttpEvent } from '../../model/app-proto/http.schema';
+import { SmbEvent } from '../../model/app-proto/smb.schema';
+import { TlsEvent } from '../../model/app-proto/tls.schema';
+import { AlertEvent } from '../../model/event-types/alert.schema';
 import { FileinfoEvent } from '../../model/event-types/fileinfo.schema';
 import { FlowEvent } from '../../model/event-types/flow.schema';
-import { HttpEvent } from '../../model/event-types/http.schema';
-import { SmbEvent } from '../../model/event-types/smb.schema';
 import { StamusEvent } from '../../model/event-types/stamus.schema';
-import { TlsEvent } from '../../model/event-types/tls.schema';
 import { FlowEvents } from '../../model/flowEvent.schema';
 
 type FlowEventArray = NonNullable<FlowEvents[keyof FlowEvents]>;
 type AnyFlowEvent = FlowEventArray[number];
 type AnyFlowEventWithTxId = AnyFlowEvent & { tx_id?: number };
 
-export type Direction = 'to_server' | 'to_client';
+export type Direction = 'to_server' | 'to_client' | undefined;
 
 export type MetaViewFlow = {
   start: string;
@@ -112,7 +112,7 @@ export type MetaViewAlertItem = {
   uuid: string | undefined;
   start: string;
   direction: Direction;
-  alert: FlowAlert;
+  alert: AlertEvent;
 };
 
 export type MetaViewStamusItem = {
@@ -148,7 +148,7 @@ export type MetaViewModel = {
 const isDefined = <T>(value: T | null | undefined): value is T =>
   value !== null && value !== undefined;
 
-const isFlowAlert = (event: AnyFlowEvent): event is FlowAlert =>
+const isFlowAlert = (event: AnyFlowEvent): event is AlertEvent =>
   event.event_type === 'alert';
 
 const isStamusEvent = (event: AnyFlowEvent): event is StamusEvent =>
@@ -271,10 +271,14 @@ const extractFlowData = (flow: FlowEvent['flow']): MetaViewFlow => ({
     ? getDuration(new Date(flow.start), new Date(flow.end)) ||
       flow.age + ' second'
     : undefined,
-  pkts_toserver: formatNumber(flow.pkts_toserver),
-  bytes_toserver: formatBytes(flow.bytes_toserver),
-  pkts_toclient: formatNumber(flow.pkts_toclient),
-  bytes_toclient: formatBytes(flow.bytes_toclient),
+  pkts_toserver: flow.pkts_toserver ? formatNumber(flow.pkts_toserver) : 'n/a',
+  bytes_toserver: flow.bytes_toserver
+    ? formatBytes(flow.bytes_toserver)
+    : 'n/a',
+  pkts_toclient: flow.pkts_toclient ? formatNumber(flow.pkts_toclient) : 'n/a',
+  bytes_toclient: flow.bytes_toclient
+    ? formatBytes(flow.bytes_toclient)
+    : 'n/a',
 });
 const extractHttpData = (event: HttpEvent): MetaViewHttp => ({
   host: event.http?.hostname,
@@ -309,7 +313,7 @@ const extractTlsData = (event: TlsEvent): MetaViewTls => ({
   version: event.tls?.version,
   subject: event.tls?.subject,
 });
-const extractAlertData = (event: FlowAlert): MetaViewAlert => ({
+const extractAlertData = (event: AlertEvent): MetaViewAlert => ({
   signature: event.alert?.signature,
   uuid: event.uuid,
 });

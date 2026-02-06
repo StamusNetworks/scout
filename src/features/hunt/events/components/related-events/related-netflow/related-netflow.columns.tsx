@@ -4,7 +4,7 @@ import { DataTableRowExpander } from '@/common/design-system/molecules/data-tabl
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { getDuration } from '@/common/lib/duration';
 
-import { NetflowEvent } from '../../../model/event-types/netflow.schema';
+import { NetflowEvent } from '../../../model/app-proto/netflow.schema';
 
 export const relatedFlowColumns: CustomColumnDef<NetflowEvent>[] = [
   {

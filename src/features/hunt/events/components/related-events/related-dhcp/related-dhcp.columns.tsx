@@ -5,7 +5,7 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 
-import { DhcpEvent } from '../../../model/event-types/dhcp.schema';
+import { DhcpEvent } from '../../../model/app-proto/dhcp.schema';
 
 export const relatedFlowColumns: CustomColumnDef<DhcpEvent>[] = [
   {

@@ -1,4 +1,4 @@
-import { HttpEvent } from '../../../model/event-types/http.schema';
+import { HttpEvent } from '../../../model/app-proto/http.schema';
 import { RelatedTable } from '../related-table';
 import { relatedHttpColumns } from './related-http.columns';
 

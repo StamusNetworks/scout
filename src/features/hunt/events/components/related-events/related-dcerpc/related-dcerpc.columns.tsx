@@ -3,7 +3,7 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 
-import { DcerpcEvent } from '../../../model/event-types/dcerpc.schema';
+import { DcerpcEvent } from '../../../model/app-proto/dcerpc.schema';
 
 export const relatedFlowColumns: CustomColumnDef<DcerpcEvent>[] = [
   {

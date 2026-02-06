@@ -3,7 +3,7 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 
-import { SnmpEvent } from '../../../model/event-types/snmp.schema';
+import { SnmpEvent } from '../../../model/app-proto/snmp.schema';
 
 export const relatedFlowColumns: CustomColumnDef<SnmpEvent>[] = [
   {

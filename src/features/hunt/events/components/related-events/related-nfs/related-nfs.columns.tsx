@@ -3,7 +3,7 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 
-import { NfsEvent } from '../../../model/event-types/nfs.schema';
+import { NfsEvent } from '../../../model/app-proto/nfs.schema';
 
 export const relatedFlowColumns: CustomColumnDef<NfsEvent>[] = [
   {

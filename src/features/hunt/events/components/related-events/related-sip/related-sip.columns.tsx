@@ -3,7 +3,7 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 
-import { SipEvent } from '../../../model/event-types/sip.schema';
+import { SipEvent } from '../../../model/app-proto/sip.schema';
 
 export const relatedFlowColumns: CustomColumnDef<SipEvent>[] = [
   {

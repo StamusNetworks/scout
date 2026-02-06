@@ -1,13 +1,13 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const ftpDataSchema = z.object({
   command: z.string(),
   filename: z.string(),
 });
 
-export const ftpDataEventSchema = baseFlowEventSchema.extend({
+export const ftpDataEventSchema = baseEventSchema.extend({
   event_type: z.literal('ftp_data'),
   ftp_data: ftpDataSchema,
 });

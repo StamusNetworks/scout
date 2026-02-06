@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const nfsRcpSchema = z.object({
   auth_type: z.string(),
@@ -8,7 +8,7 @@ export const nfsRcpSchema = z.object({
   xid: z.number(),
 });
 
-export const nfsRcpEventSchema = baseFlowEventSchema.extend({
+export const nfsRcpEventSchema = baseEventSchema.extend({
   nfs_rcp: nfsRcpSchema,
 });
 

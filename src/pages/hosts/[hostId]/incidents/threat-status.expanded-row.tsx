@@ -3,9 +3,9 @@ import { groupBy } from 'ramda';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { ProtoFlow } from '@/common/design-system/graphs/proto-flow/proto-flow';
+import { Event } from '@/features/hunt/events/model/event.schema';
 
 import { useGetEventsQuery } from '../../../../features/hunt/events/api/events.api';
-import { Event } from '../../../../features/hunt/events/model/event.schema';
 import { EventValue } from '../../../../features/hunt/filtering/query-filters/components/event-value/event-value';
 import { ThreatStatus } from '../../../../features/hunt/threats/model/threat-status.schema';
 
@@ -26,10 +26,11 @@ export const ThreatStatusExpandedRow = ({
   )(data?.results || []);
   const uniqueSignatures = data?.results.reduce(
     (acc, e) => {
-      if (acc.find((s) => s.signature_id === e.alert?.signature_id)) return acc;
+      if (!e.alert) return acc;
+      if (acc.some((s) => s.signature_id === e.alert?.signature_id)) return acc;
       return [...acc, e.alert];
     },
-    [] as Event['alert'][],
+    [] as NonNullable<Event['alert']>[],
   );
   return (
     <Column className="gap-4 p-2">

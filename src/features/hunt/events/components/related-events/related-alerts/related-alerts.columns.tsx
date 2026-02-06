@@ -5,9 +5,9 @@ import { DataTableRowExpander } from '@/common/design-system/molecules/data-tabl
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 
-import { FlowAlert } from '../../../model/event-types/alert.schema';
+import { AlertEvent } from '../../../model/event-types/alert.schema';
 
-export const relatedAlertsColumns: CustomColumnDef<FlowAlert>[] = [
+export const relatedAlertsColumns: CustomColumnDef<AlertEvent>[] = [
   {
     id: 'expander',
     cell: ({ row }) => <DataTableRowExpander row={row} />,

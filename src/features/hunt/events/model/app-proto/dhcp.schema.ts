@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const dhcpSchema = z.object({
   assigned_ip: z.string(),
@@ -24,9 +24,9 @@ export const dhcpSchema = z.object({
   vendor_class_identifier: z.string().optional(),
 });
 
-export const dhcpEventSchema = baseFlowEventSchema.extend({
+export const dhcpEventSchema = baseEventSchema.extend({
   event_type: z.literal('dhcp'),
+  app_proto: z.literal('dhcp'),
   dhcp: dhcpSchema,
 });
-
 export type DhcpEvent = z.infer<typeof dhcpEventSchema>;

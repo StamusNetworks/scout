@@ -24,8 +24,8 @@ export const SightingEventsCountsTimeline = ({
   const interval = Math.floor((end_date - start_date) / 24 / 1000);
   const { data: sighting } = useGetSightingById(sightingId);
   const qfilter = getSightingQfilter(
-    sighting?.discovery.key,
-    sighting?.discovery.value,
+    sighting?.discovery?.key,
+    sighting?.discovery?.value,
     sighting?.app_proto,
   );
   const { data: timeline } = useGetEventsTimelineQuery(

@@ -149,6 +149,11 @@ const useDownloadPcap = (event: Event) => {
       new Blob([JSON.stringify(event)], { type: 'application/json' }),
     );
 
+    if (!event.host) {
+      setError('Host is undefined');
+      return;
+    }
+
     try {
       setStep(1);
       await uploadAlertToProbe({

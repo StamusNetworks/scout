@@ -1,4 +1,4 @@
-import { DnsEvent } from '../../../model/event-types/dns.schema';
+import { DnsEvent } from '../../../model/app-proto/dns.schema';
 import { RelatedTable } from '../related-table';
 import { relatedFlowColumns } from './related-dns.columns';
 

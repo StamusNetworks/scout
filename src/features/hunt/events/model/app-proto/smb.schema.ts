@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const smbSchema = z.object({
   access: z.string().optional(),
@@ -123,10 +123,9 @@ export const smbSchema = z.object({
     .optional(),
 });
 
-export const smbEventSchema = baseFlowEventSchema.extend({
+export const smbEventSchema = baseEventSchema.extend({
   event_type: z.literal('smb'),
   app_proto: z.literal('smb'),
   smb: smbSchema,
 });
-
 export type SmbEvent = z.infer<typeof smbEventSchema>;

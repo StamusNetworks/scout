@@ -44,6 +44,7 @@ export const hostSightingTableColumns: CustomColumnDef<Event>[] = [
       />
     ),
     cell: ({ row }) =>
+      row.original.discovery &&
       row.original.discovery.asset_role?.length > 0 ? (
         <Row className="gap-1">
           {row.original.discovery.asset_role.map((role) => (
@@ -66,7 +67,7 @@ export const hostSightingTableColumns: CustomColumnDef<Event>[] = [
         title="Key"
       />
     ),
-    accessorFn: (row) => row.discovery.key,
+    accessorFn: (row) => row.discovery?.key || '',
     enableSorting: false,
   },
   {
@@ -77,12 +78,13 @@ export const hostSightingTableColumns: CustomColumnDef<Event>[] = [
         title="Value"
       />
     ),
-    cell: ({ row }) => (
-      <EventValue
-        query_key={row.original.discovery.key}
-        value={row.original.discovery.value}
-      />
-    ),
+    cell: ({ row }) =>
+      row.original.discovery && (
+        <EventValue
+          query_key={row.original.discovery.key}
+          value={row.original.discovery.value}
+        />
+      ),
   },
   {
     id: 'timestamp',
@@ -106,18 +108,19 @@ export const allSightingsTableColumns: CustomColumnDef<Event>[] = [
         title="Entity"
       />
     ),
-    cell: ({ row }) => (
-      <Column>
-        <IpOrEntityEventValue
-          entity={row.original.discovery.asset}
-          offender={false}
-        />
-        <Hostname
-          host={row.original.discovery.asset}
-          size="small"
-        />
-      </Column>
-    ),
+    cell: ({ row }) =>
+      row.original.discovery && (
+        <Column>
+          <IpOrEntityEventValue
+            entity={row.original.discovery.asset}
+            offender={false}
+          />
+          <Hostname
+            host={row.original.discovery.asset}
+            size="small"
+          />
+        </Column>
+      ),
   },
   {
     id: 'threats',
@@ -128,13 +131,14 @@ export const allSightingsTableColumns: CustomColumnDef<Event>[] = [
       />
     ),
     enableSorting: false,
-    cell: ({ row }) => (
-      <EntityThreatTagsList
-        className="max-w-72 flex-wrap"
-        entity={row.original.discovery.asset}
-        maxThreats={3}
-      />
-    ),
+    cell: ({ row }) =>
+      row.original.discovery && (
+        <EntityThreatTagsList
+          className="max-w-72 flex-wrap"
+          entity={row.original.discovery.asset}
+          maxThreats={3}
+        />
+      ),
   },
   {
     id: 'network_info',
@@ -144,12 +148,13 @@ export const allSightingsTableColumns: CustomColumnDef<Event>[] = [
         title="Network info"
       />
     ),
-    cell: ({ row }) => (
-      <Column>
-        <Network host={row.original.discovery.asset} />
-        <Username host={row.original.discovery.asset} />
-      </Column>
-    ),
+    cell: ({ row }) =>
+      row.original.discovery && (
+        <Column>
+          <Network host={row.original.discovery.asset} />
+          <Username host={row.original.discovery.asset} />
+        </Column>
+      ),
   },
   {
     id: 'discovered',
@@ -184,7 +189,7 @@ export const allSightingsTableColumns: CustomColumnDef<Event>[] = [
         title="Key"
       />
     ),
-    accessorFn: (row) => row.discovery.key,
+    accessorFn: (row) => row.discovery?.key || '',
     enableSorting: false,
   },
   {
@@ -195,13 +200,14 @@ export const allSightingsTableColumns: CustomColumnDef<Event>[] = [
         title="Value"
       />
     ),
-    cell: ({ row }) => (
-      <EventValue
-        query_key={row.original.discovery.key}
-        value={row.original.discovery.value}
-        className="line-clamp-4 max-w-128 break-all whitespace-pre-wrap"
-      />
-    ),
+    cell: ({ row }) =>
+      row.original.discovery && (
+        <EventValue
+          query_key={row.original.discovery.key}
+          value={row.original.discovery.value}
+          className="line-clamp-4 max-w-128 break-all whitespace-pre-wrap"
+        />
+      ),
     enableSorting: false,
   },
   {
@@ -212,7 +218,7 @@ export const allSightingsTableColumns: CustomColumnDef<Event>[] = [
 export const allSightingsExport: ExportColumn<Event>[] = [
   {
     label: 'Entity',
-    value: ({ discovery }) => discovery?.asset,
+    value: ({ discovery }) => discovery?.asset || '',
   },
   {
     label: 'Discovered',
@@ -220,14 +226,14 @@ export const allSightingsExport: ExportColumn<Event>[] = [
   },
   {
     label: 'Probe',
-    value: ({ host }) => host,
+    value: ({ host }) => host || '',
   },
   {
     label: 'Key',
-    value: ({ discovery }) => discovery?.key,
+    value: ({ discovery }) => discovery?.key || '',
   },
   {
     label: 'Value',
-    value: ({ discovery }) => discovery?.value,
+    value: ({ discovery }) => discovery?.value || '',
   },
 ];

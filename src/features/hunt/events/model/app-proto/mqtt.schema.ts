@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const mqttSchema = z.object({
   connack: z
@@ -96,8 +96,9 @@ export const mqttSchema = z.object({
     .optional(),
 });
 
-export const mqttEventSchema = baseFlowEventSchema.extend({
+export const mqttEventSchema = baseEventSchema.extend({
   event_type: z.literal('mqtt'),
+  app_proto: z.literal('mqtt'),
   mqtt: mqttSchema,
 });
 

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const nfsSchema = z.object({
   file_tx: z.boolean(),
@@ -12,8 +12,9 @@ export const nfsSchema = z.object({
   version: z.number(),
 });
 
-export const nfsEventSchema = baseFlowEventSchema.extend({
+export const nfsEventSchema = baseEventSchema.extend({
   event_type: z.literal('nfs'),
+  app_proto: z.literal('nfs'),
   nfs: nfsSchema,
 });
 

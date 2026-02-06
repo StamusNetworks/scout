@@ -7,10 +7,10 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/pillTabs';
-import { EventTail } from '@/features/hunt/events/model/event-tail.schema';
+import { Event } from '@/features/hunt/events/model/event.schema';
 
 interface EventsStreamExpandedRowProps {
-  row: Row<EventTail>;
+  row: Row<Event>;
 }
 export const EventsStreamExpandedRow = ({
   row,

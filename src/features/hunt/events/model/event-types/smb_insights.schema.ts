@@ -1,9 +1,10 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
-export const smbInsightsEventSchema = baseFlowEventSchema.extend({
+export const smbInsightsEventSchema = baseEventSchema.extend({
   event_type: z.literal('smb_insights'),
+  app_proto: z.literal('smb'),
   see_id: z.string().optional(),
   see_name: z.string().optional(),
   agent: z
@@ -35,14 +36,14 @@ export const smbInsightsEventSchema = baseFlowEventSchema.extend({
           .object({
             uniq: z.array(z.string()).optional(),
             count: z.number().optional(),
-            counters: z.record(z.number()).optional(),
+            counters: z.record(z.number(), z.string()).optional(),
           })
           .optional(),
         command: z
           .object({
             uniq: z.array(z.string()).optional(),
             count: z.number().optional(),
-            counters: z.record(z.number()).optional(),
+            counters: z.record(z.number(), z.string()).optional(),
           })
           .optional(),
         filename: z
@@ -61,7 +62,7 @@ export const smbInsightsEventSchema = baseFlowEventSchema.extend({
           .object({
             uniq: z.array(z.string()).optional(),
             count: z.number().optional(),
-            counters: z.record(z.number()).optional(),
+            counters: z.record(z.number(), z.string()).optional(),
           })
           .optional(),
         mime_type: z

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const snmpSchema = z.object({
   community: z.string().optional(),
@@ -13,8 +13,9 @@ export const snmpSchema = z.object({
   version: z.number(),
 });
 
-export const snmpEventSchema = baseFlowEventSchema.extend({
+export const snmpEventSchema = baseEventSchema.extend({
   event_type: z.literal('snmp'),
+  app_proto: z.literal('snmp'),
   snmp: snmpSchema,
 });
 

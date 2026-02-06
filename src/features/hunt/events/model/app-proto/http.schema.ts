@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const httpSchema = z.object({
   accept: z.string().optional(),
@@ -118,7 +118,8 @@ export const httpSchema = z.object({
     .optional(),
 });
 
-export const httpEventSchema = baseFlowEventSchema.extend({
+export const httpEventSchema = baseEventSchema.extend({
+  event_type: z.literal('http'),
   app_proto: z.literal('http'),
   http: httpSchema,
 });

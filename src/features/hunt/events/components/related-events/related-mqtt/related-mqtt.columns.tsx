@@ -3,7 +3,7 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 
-import { MqttEvent } from '../../../model/event-types/mqtt.schema';
+import { MqttEvent } from '../../../model/app-proto/mqtt.schema';
 
 export const relatedFlowColumns: CustomColumnDef<MqttEvent>[] = [
   {

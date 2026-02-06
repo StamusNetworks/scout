@@ -245,23 +245,21 @@ export const getSyntheticView = (row: Event): SyntheticViewProps[] => [
   {
     title: 'Detection method metadata',
     valid: (row) => row.event_type !== 'stamus' && row.event_type === 'alert',
-    items:
-      row.alert &&
-      Object.entries(row.alert?.metadata || {}).map((field) => {
-        const value =
-          field[1] === null
-            ? ''
-            : typeof field[1] === 'string'
-              ? field[1]
-              : field[1].join(', ');
-        const key = field[0] === null ? '' : field[0];
-        // Filter name in case of not yet defined filter in queryFiters.definitions.tsx
-        // const fieldName = key.length > 0 ? key[0].toUpperCase() + key.slice(1).replace('_', ' ') : '';
-        return {
-          key: `alert.metadata.${key}`,
-          value,
-        };
-      }),
+    items: Object.entries(row.alert?.metadata || {}).map((field) => {
+      const value =
+        field[1] === null
+          ? ''
+          : typeof field[1] === 'string'
+            ? field[1]
+            : field[1].join(', ');
+      const key = field[0] === null ? '' : field[0];
+      // Filter name in case of not yet defined filter in queryFiters.definitions.tsx
+      // const fieldName = key.length > 0 ? key[0].toUpperCase() + key.slice(1).replace('_', ' ') : '';
+      return {
+        key: `alert.metadata.${key}`,
+        value,
+      };
+    }),
   },
   {
     title: 'Stamus Method',

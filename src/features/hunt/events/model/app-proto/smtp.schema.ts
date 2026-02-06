@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseFlowEventSchema } from '../flowEvent.schema';
+import { baseEventSchema } from '../event.schema';
 
 export const smtpSchema = z.object({
   helo: z.string(),
@@ -8,8 +8,9 @@ export const smtpSchema = z.object({
   rcpt_to: z.array(z.string()).optional(),
 });
 
-export const smtpEventSchema = baseFlowEventSchema.extend({
+export const smtpEventSchema = baseEventSchema.extend({
   event_type: z.literal('smtp'),
+  app_proto: z.literal('smtp'),
   smtp: smtpSchema,
   email: z
     .object({
