@@ -89,6 +89,8 @@ export const ContextMenuContent = ({
       onClick={(e) => e.stopPropagation()} // When inside something with an onClick like a table row, prevents triggering it when clicking a menu option
       onCloseAutoFocus={(e) => e.preventDefault()} // When inside a tooltip, prevents reopening the tooltip when exiting the menu
       onFocus={(e) => e.preventDefault()} // When inside a toolip, prevents reopening the tooltip when hovering menu options
+      onPointerLeave={(e) => e.preventDefault()} // Prevent closing tooltip when nested bc losing focus
+      onMouseLeave={(e) => e.preventDefault()} // Prevent closing tooltip when nested bc losing focus
     >
       <ContextMenuLabel className="text-muted-foreground text-xs font-normal">
         {query_key}

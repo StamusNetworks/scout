@@ -57,7 +57,6 @@ export const EventValue = ({
   onClick?: () => void;
 }) => {
   const dispatch = useAppDispatch();
-
   const rawValue = value?.toString() || '';
   const isHostIp = rawValue ? isIP(rawValue) : false;
 
