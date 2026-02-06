@@ -1,3 +1,4 @@
+import { Tenant } from '@/common/fetching/fetching.types';
 import { API } from '@/store/api';
 
 import { EventTypes } from '../../query-filters/store/query-filters.slice';
@@ -7,7 +8,7 @@ export const DatesAPI = API.injectEndpoints({
     // QUERIES
     getAutoDateRange: builder.query<
       { min_timestamp: number; max_timestamp: number },
-      EventTypes | null
+      Tenant & Partial<EventTypes>
     >({
       query: (params) => ({
         url: '/rules/es/alerts_timerange/',
