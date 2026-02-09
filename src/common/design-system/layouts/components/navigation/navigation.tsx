@@ -1,4 +1,4 @@
-import { User } from 'lucide-react';
+import { ArrowLeft, User } from 'lucide-react';
 import { useCallback, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
@@ -188,7 +188,20 @@ export const Navigation = ({ menu, className }: MenuProps) => {
                 ))}
             </div>
           </div>
-          <Footer />
+          <Column className="gap-4">
+            <Button
+              variant="outline"
+              size="sm"
+              className="mx-2"
+              onClick={() =>
+                (window.location.href = getConfig()?.apiUrl + '/stamus')
+              }
+            >
+              <ArrowLeft className="size-4" />
+              Back to legacy UI
+            </Button>
+            <Footer />
+          </Column>
         </Column>
       </ScrollArea>
     </NavigationMenu>
@@ -208,7 +221,7 @@ const Footer = () => {
   const { data } = useGetCurrentUserQuery();
 
   return (
-    <Row className="mb-2 w-full items-center gap-3 px-4">
+    <Row className="mb-4 w-full items-center gap-3 px-4">
       <div className="border-primary/50 flex size-9 items-center justify-center rounded-full border">
         <User className="size-5" />
       </div>
