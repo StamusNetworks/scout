@@ -7,5 +7,8 @@ import { useGetAutoDateRangeQuery } from '../api/dates-filters.api';
 export const useAutoRange = () => {
   const params = useAppSelector(selectEventsTypesParams);
   const tenant = useAppSelector(selectTenant);
-  return useGetAutoDateRangeQuery({ ...params, tenant });
+  return useGetAutoDateRangeQuery(
+    { ...params, tenant },
+    { refetchOnMountOrArgChange: true },
+  );
 };
