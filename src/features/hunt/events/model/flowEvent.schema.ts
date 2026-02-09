@@ -1,30 +1,36 @@
 import { z } from 'zod';
 
-import { dcerpcEventSchema } from './app-proto/dcerpc.schema';
-import { dhcpEventSchema } from './app-proto/dhcp.schema';
-import { dnsEventSchema } from './app-proto/dns.schema';
-import { ftpEventSchema } from './app-proto/ftp.schema';
-import { ftpDataEventSchema } from './app-proto/ftp_data.schema';
-import { httpEventSchema } from './app-proto/http.schema';
-import { krb5EventSchema } from './app-proto/krb5.schema';
-import { mqttEventSchema } from './app-proto/mqtt.schema';
-import { netflowEventSchema } from './app-proto/netflow.schema';
-import { nfsEventSchema } from './app-proto/nfs.schema';
-import { rdpEventSchema } from './app-proto/rdp.schema';
-import { rfbEventSchema } from './app-proto/rfb.schema';
-import { sipEventSchema } from './app-proto/sip.schema';
-import { smbEventSchema } from './app-proto/smb.schema';
-import { smtpEventSchema } from './app-proto/smtp.schema';
-import { snmpEventSchema } from './app-proto/snmp.schema';
-import { sshEventSchema } from './app-proto/ssh.schema';
-import { tftpEventSchema } from './app-proto/tftp.schema';
-import { tlsEventSchema } from './app-proto/tls.schema';
-import { alertEventSchema } from './event-types/alert.schema';
-import { anomalyEventSchema } from './event-types/anomaly.schema';
-import { fileinfoEventSchema } from './event-types/fileinfo.schema';
-import { flowEventSchema } from './event-types/flow.schema';
-import { smbInsightsEventSchema } from './event-types/smb_insights.schema';
-import { stamusEventSchema } from './event-types/stamus.schema';
+import { DcerpcEvent, dcerpcEventSchema } from './app-proto/dcerpc.schema';
+import { DhcpEvent, dhcpEventSchema } from './app-proto/dhcp.schema';
+import { DnsEvent, dnsEventSchema } from './app-proto/dns.schema';
+import { FtpEvent, ftpEventSchema } from './app-proto/ftp.schema';
+import { FtpDataEvent, ftpDataEventSchema } from './app-proto/ftp_data.schema';
+import { HttpEvent, httpEventSchema } from './app-proto/http.schema';
+import { Krb5Event, krb5EventSchema } from './app-proto/krb5.schema';
+import { MqttEvent, mqttEventSchema } from './app-proto/mqtt.schema';
+import { NetflowEvent, netflowEventSchema } from './app-proto/netflow.schema';
+import { NfsEvent, nfsEventSchema } from './app-proto/nfs.schema';
+import { RdpEvent, rdpEventSchema } from './app-proto/rdp.schema';
+import { RfbEvent, rfbEventSchema } from './app-proto/rfb.schema';
+import { SipEvent, sipEventSchema } from './app-proto/sip.schema';
+import { SmbEvent, smbEventSchema } from './app-proto/smb.schema';
+import { SmtpEvent, smtpEventSchema } from './app-proto/smtp.schema';
+import { SnmpEvent, snmpEventSchema } from './app-proto/snmp.schema';
+import { SshEvent, sshEventSchema } from './app-proto/ssh.schema';
+import { TftpEvent, tftpEventSchema } from './app-proto/tftp.schema';
+import { TlsEvent, tlsEventSchema } from './app-proto/tls.schema';
+import { AlertEvent, alertEventSchema } from './event-types/alert.schema';
+import { Anomaly, anomalyEventSchema } from './event-types/anomaly.schema';
+import {
+  FileinfoEvent,
+  fileinfoEventSchema,
+} from './event-types/fileinfo.schema';
+import { FlowEvent, flowEventSchema } from './event-types/flow.schema';
+import {
+  SmbInsightsEvent,
+  smbInsightsEventSchema,
+} from './event-types/smb_insights.schema';
+import { StamusEvent, stamusEventSchema } from './event-types/stamus.schema';
 
 export const logEventSchema = z.object({
   file: z.object({
@@ -88,3 +94,30 @@ export const flowEventFileRetrieve = z.object({
 });
 
 export type FlowEventFileRetrieve = z.infer<typeof flowEventFileRetrieve>;
+
+export type RelatedEvent =
+  | AlertEvent
+  | Anomaly
+  | DcerpcEvent
+  | DhcpEvent
+  | DnsEvent
+  | FileinfoEvent
+  | FlowEvent
+  | FtpEvent
+  | FtpDataEvent
+  | HttpEvent
+  | Krb5Event
+  | MqttEvent
+  | NetflowEvent
+  | NfsEvent
+  | RdpEvent
+  | RfbEvent
+  | SipEvent
+  | SmbEvent
+  | SmbInsightsEvent
+  | SmtpEvent
+  | SnmpEvent
+  | SshEvent
+  | StamusEvent
+  | TftpEvent
+  | TlsEvent;

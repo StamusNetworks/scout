@@ -2,19 +2,12 @@ import { ArrowUpDown, HardDriveDownload, HardDriveUpload } from 'lucide-react';
 import { useState } from 'react';
 
 import { DefaultPage } from '@/common/design-system/atoms/default-page';
-import { JsonView } from '@/common/design-system/atoms/json-view';
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { Card, CardContent } from '@/common/design-system/atoms/ui/card';
 import { Label as UILabel } from '@/common/design-system/atoms/ui/label';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/common/design-system/atoms/ui/pillTabs';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { Switch } from '@/common/design-system/atoms/ui/switch';
 import { DateTime } from '@/common/design-system/entities/date-time';
@@ -32,7 +25,14 @@ import {
   useGetEventsTailQuery,
   useGetEventsTimelineQuery,
 } from '@/features/hunt/events/api/events.api';
-import { SyntheticView } from '@/features/hunt/events/components/synthetic-view/synthetic-view';
+import {
+  EventDetailTabs,
+  FilesTab,
+  JsonTab,
+  PcapTab,
+  RelatedEventsTabs,
+  SyntheticTab,
+} from '@/features/hunt/events/components/event-detail-tabs';
 import { Event } from '@/features/hunt/events/model/event.schema';
 import { setDates } from '@/features/hunt/filtering/dates-filters/dates-filters.slice';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
@@ -553,18 +553,17 @@ export const TransactionCard = ({ row }: { row: Event }) => {
 
 const ExpandedRow = ({ row }: { row: Event }) => {
   return (
-    <Tabs defaultValue="synthetic_view">
-      <TabsList>
-        <TabsTrigger value="synthetic_view">Synthetic View</TabsTrigger>
-        <TabsTrigger value="json">JSON</TabsTrigger>
-      </TabsList>
-      <TabsContent value="json">
-        <JsonView data={row} />
-      </TabsContent>
-      <TabsContent value="synthetic_view">
-        <SyntheticView event={row} />
-      </TabsContent>
-    </Tabs>
+    <EventDetailTabs
+      event={row}
+      variant="pill"
+      defaultTab="synthetic_view"
+    >
+      <SyntheticTab event={row} />
+      <JsonTab event={row} />
+      <RelatedEventsTabs />
+      <PcapTab event={row} />
+      <FilesTab />
+    </EventDetailTabs>
   );
 };
 
