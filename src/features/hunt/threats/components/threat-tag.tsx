@@ -1,14 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
+import { Row } from '@/common/design-system/atoms/layout/row';
 import { Badge } from '@/common/design-system/atoms/ui/badge';
-import { Skeleton } from '@/common/design-system/atoms/ui/skeleton';
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/common/design-system/atoms/ui/tooltip';
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/common/design-system/atoms/ui/hover-card';
+import { Skeleton } from '@/common/design-system/atoms/ui/skeleton';
+import { DateTime } from '@/common/design-system/entities/date-time';
 import { cn } from '@/common/lib/utils';
 import { routes } from '@/pages/routes.config';
 import { useAppSelector } from '@/store/store';
@@ -16,6 +17,7 @@ import { useAppSelector } from '@/store/store';
 import { EntityThreat } from '../../entities/model/impacted-entity.schema';
 import { selectIsAfterStart } from '../../filtering/dates-filters/dates-filters';
 import { EventValue } from '../../filtering/query-filters/components/event-value/event-value';
+import { KillchainTag } from '../../killchain/components/killchain-tag';
 import { useThreat } from '../hooks/use-threat';
 
 type ThreatWithoutLifecycle = Omit<
@@ -86,56 +88,67 @@ export const ThreatTag = ({
   };
 
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger>
-          <EventValue
-            query_key="stamus.threat_name"
-            value={threatDef.name}
-            className="cursor-pointer"
-            onClick={handleClick}
+    <HoverCard>
+      <HoverCardTrigger>
+        <EventValue
+          query_key="stamus.threat_name"
+          value={threatDef.name}
+          className="cursor-pointer"
+          onClick={handleClick}
+        >
+          <Badge
+            variant={
+              'status' in threat && threat.status === 'fixed'
+                ? 'muted'
+                : threat.kill_chain_offender > 0 || is_offender
+                  ? 'offender'
+                  : threatDef.family_class === 'dopv'
+                    ? 'policy_violation'
+                    : 'victim'
+            }
+            className={cn(className, 'font-medium')}
           >
-            <Badge
-              variant={
-                'status' in threat && threat.status === 'fixed'
-                  ? 'muted'
-                  : threat.kill_chain_offender > 0 || is_offender
-                    ? 'offender'
-                    : threatDef.family_class === 'dopv'
-                      ? 'policy_violation'
-                      : 'victim'
-              }
-              className={cn(className, 'font-medium')}
-            >
-              {startedInRange && <span className="mr-2 text-[0.5rem]">● </span>}
-              {threatDef.name}
-            </Badge>
-          </EventValue>
-        </TooltipTrigger>
-        <TooltipContent className="max-w-48">
-          <p className="mb-1 italic">
-            {threatDef?.family_class === 'doc'
-              ? 'Compromise'
-              : 'Policy Violation'}
-            {' - '}{' '}
-            {threat.kill_chain_offender > 0 || is_offender
-              ? 'Offender'
-              : 'Victim'}
-          </p>
-          <h3 className="mb-1 text-sm font-medium">{threatDef.name}</h3>
-          {isLoadingDef ? (
-            <Column className="gap-1">
-              <Skeleton className="h-3 w-full" />
-              <Skeleton className="h-3 w-full" />
-              <Skeleton className="h-3 w-full" />
-              <Skeleton className="h-3 w-full" />
-              <Skeleton className="h-3 w-24" />
+            {startedInRange && <span className="mr-2 text-[0.5rem]">● </span>}
+            {threatDef.name}
+          </Badge>
+        </EventValue>
+      </HoverCardTrigger>
+      <HoverCardContent
+        className="w-fit max-w-110 text-sm"
+        side="top"
+      >
+        <Row className="gap-3">
+          <h3 className="text-sm font-bold">{threatDef.name}</h3>
+          <KillchainTag kc={threat.kill_chain} />
+        </Row>
+        {'first_seen' in threat && 'last_seen' in threat && (
+          <Row className="my-2 gap-3">
+            <Column>
+              <p className="text-muted-foreground text-xs font-bold">
+                First seen
+              </p>
+              <DateTime date={threat.first_seen} />
             </Column>
-          ) : (
-            threatDef?.description
-          )}
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+            <Column>
+              <p className="text-muted-foreground text-xs font-bold">
+                Last seen
+              </p>
+              <DateTime date={threat.last_seen} />
+            </Column>
+          </Row>
+        )}
+        {isLoadingDef ? (
+          <Column className="gap-1">
+            <Skeleton className="h-3 w-full" />
+            <Skeleton className="h-3 w-full" />
+            <Skeleton className="h-3 w-full" />
+            <Skeleton className="h-3 w-full" />
+            <Skeleton className="h-3 w-24" />
+          </Column>
+        ) : (
+          <p>{threatDef?.description}</p>
+        )}
+      </HoverCardContent>
+    </HoverCard>
   );
 };
