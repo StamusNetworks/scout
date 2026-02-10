@@ -86,23 +86,7 @@ export const getSyntheticView = (row: Event): SyntheticViewProps[] => [
     title: 'DNS',
     span: 4,
     valid: (row) => !!row.dns,
-    items: [
-      {
-        key: 'dns.query',
-        value:
-          row.dns?.version === 2
-            ? row.dns?.query?.map((v) => [
-                { key: 'dns.query.rrname', value: v.rrname },
-                { key: 'dns.query.rrtype', value: v.rrtype },
-              ])
-            : row.dns?.version === 3
-              ? row.dns?.queries?.map((v) => [
-                  { key: 'dns.queries.rrname', value: v.rrname },
-                  { key: 'dns.queries.rrtype', value: v.rrtype },
-                ])
-              : [],
-      },
-    ],
+    items: getDnsData(row),
   },
 
   {
@@ -306,3 +290,55 @@ export const getSyntheticView = (row: Event): SyntheticViewProps[] => [
     ],
   },
 ];
+
+const getDnsData = (row: Event) => {
+  if (row.event_type === 'dns') {
+    return [
+      {
+        key: 'dns.rrname',
+        value: row.dns?.rrname,
+      },
+      {
+        key: 'dns.rrtype',
+        value: row.dns?.rrtype,
+      },
+      {
+        key: 'dns.type',
+        value: row.dns?.type,
+      },
+    ];
+  }
+
+  return [
+    {
+      key: 'dns.query',
+      value:
+        row.dns?.version === 2
+          ? row.dns?.query?.map((v) => [
+              { key: 'dns.query.rrname', value: v.rrname },
+              { key: 'dns.query.rrtype', value: v.rrtype },
+            ])
+          : row.dns?.version === 3
+            ? row.dns?.queries?.map((v) => [
+                { key: 'dns.queries.rrname', value: v.rrname },
+                { key: 'dns.queries.rrtype', value: v.rrtype },
+              ])
+            : [],
+    },
+    {
+      key: 'dns.answer',
+      value:
+        row.dns?.version === 2
+          ? row.dns?.answer?.map((v) => [
+              { key: 'dns.answer.rrname', value: v.rrname },
+              { key: 'dns.answer.rrtype', value: v.rrtype },
+            ])
+          : row.dns?.version === 3
+            ? row.dns?.answers?.map((v) => [
+                { key: 'dns.answers.rrname', value: v.rrname },
+                { key: 'dns.answers.rrtype', value: v.rrtype },
+              ])
+            : [],
+    },
+  ];
+};
