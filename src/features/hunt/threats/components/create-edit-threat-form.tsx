@@ -66,8 +66,10 @@ export const CreateEditThreatForm = ({
   const [createThreat] = useCreateThreatMutation();
   const [updateThreat] = useUpdateThreatMutation();
 
+  const defaultValues = getInitialValues(threat, isDoc);
+
   const form = useForm({
-    defaultValues: getInitialValues(threat, isDoc),
+    defaultValues,
     resolver: zodResolver(formSchema),
   });
 
@@ -75,8 +77,14 @@ export const CreateEditThreatForm = ({
 
   const handleSubmit = (data: z.infer<typeof formSchema>) => {
     const submitFn = isEditing
-      ? () => updateThreat({ ...data, pk: threat.pk })
-      : () => createThreat(data);
+      ? () =>
+          updateThreat({
+            ...data,
+            pk: threat.pk,
+            family_class: defaultValues.family_class,
+          })
+      : () =>
+          createThreat({ ...data, family_class: defaultValues.family_class });
     submitFn()
       .unwrap()
       .then(() => handleClose(data.name))
@@ -99,10 +107,10 @@ export const CreateEditThreatForm = ({
           render={({ field }) => (
             <FormItem>
               <RadioGroup
-                onChange={field.onChange}
-                defaultValue={field.value}
-                disabled={field.disabled}
+                onValueChange={field.onChange}
+                value={field.value}
                 className="flex space-x-4"
+                disabled={!isNil(isDoc)}
               >
                 <FormItem className="flex items-center space-y-0 space-x-2">
                   <FormControl>
