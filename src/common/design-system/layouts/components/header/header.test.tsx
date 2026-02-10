@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, test, vi } from 'vitest';
 
+import { BreadcrumbProvider } from '@/common/design-system/molecules/breadcrumbs';
 import { renderWithProviders } from '@/common/testing/test-utils';
 import * as ThreatsAPI from '@/features/hunt/threats/api/threats.api';
 import * as NewsAPI from '@/features/marketing/api/news.api';
@@ -34,7 +35,9 @@ describe('Header', () => {
     vi.spyOn(AppStore, 'useAppDispatch').mockReturnValue(dispatch);
     renderWithProviders(
       <MemoryRouter>
-        <Header />
+        <BreadcrumbProvider>
+          <Header />
+        </BreadcrumbProvider>
       </MemoryRouter>,
     );
 
@@ -46,7 +49,9 @@ describe('Header', () => {
     const useGetThreatsQuery = vi.spyOn(ThreatsAPI, 'useGetSTIThreatsQuery');
     renderWithProviders(
       <MemoryRouter>
-        <Header />
+        <BreadcrumbProvider>
+          <Header />
+        </BreadcrumbProvider>
       </MemoryRouter>,
       {
         preloadedState: {

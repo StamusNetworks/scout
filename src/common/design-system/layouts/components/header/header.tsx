@@ -13,10 +13,7 @@ import {
   NavigationMenuItem,
   NavigationMenuList,
 } from '@/common/design-system/atoms/ui/navigation-menu';
-import {
-  BreadcrumbsOutlet,
-  OutletBreadcrumb,
-} from '@/common/design-system/molecules/breadcrumbs';
+import { BreadcrumbsOutlet } from '@/common/design-system/molecules/breadcrumbs';
 import { getShortcutDisplay } from '@/common/lib/platform';
 import { NewsFeedModal } from '@/features/marketing/components/news-modal';
 import { disableHelp, selectHelpState } from '@/features/ui/help/help.slice';
@@ -45,11 +42,10 @@ export const Header = () => {
   }, [dispatch, highlightGlobalCommands]);
   return (
     <Row className="bg-primary-muted h-12 w-full shrink-0 items-center justify-between border-b px-2">
-      <Row className="items-center">
+      <Row className="min-w-0 flex-1 items-center">
         <NavigationToggler />
         <div className="bg-border mr-4 ml-2 h-4 w-px" />
         <BreadcrumbsOutlet />
-        <OutletBreadcrumb>Home</OutletBreadcrumb>
       </Row>
       <NavigationMenu className="z-20 px-0">
         <NavigationMenuList>

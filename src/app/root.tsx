@@ -18,6 +18,7 @@ import { Header } from '../common/design-system/layouts/components/header/header
 import { Modals } from '../common/design-system/layouts/components/modals';
 import { Navigation } from '../common/design-system/layouts/components/navigation';
 import { defaultMenu } from '../common/design-system/layouts/components/navigation/navigation.config';
+import { BreadcrumbProvider } from '../common/design-system/molecules/breadcrumbs';
 import { routes } from '../pages/routes.config';
 
 export const Root = () => {
@@ -69,27 +70,29 @@ export const Root = () => {
     <div className="relative flex h-screen w-screen max-w-screen">
       <Modals />
       <Navigation menu={menu} />
-      <div className="relative flex h-screen w-full flex-col overflow-hidden">
-        <Header />
-        <Row className="h-full gap-0 overflow-clip">
-          <div
-            id="expandable-portal-wrapper"
-            className="empty:hidden"
-          />
-          <div className="relative grow">
-            <Button
-              className={`absolute top-[6px] right-0 z-50 -translate-x-2`}
-              onClick={() => dispatch(setIsSidebarOpen(!isFiltersOpen))}
-              variant="ghost"
-              size="icon"
-            >
-              {isFiltersOpen ? <PanelRightClose /> : <PanelRightOpen />}
-            </Button>
-            <Outlet />
-          </div>
-          <FiltersSideBar />
-        </Row>
-      </div>
+      <BreadcrumbProvider>
+        <div className="relative flex h-screen w-full flex-col overflow-hidden">
+          <Header />
+          <Row className="h-full gap-0 overflow-clip">
+            <div
+              id="expandable-portal-wrapper"
+              className="empty:hidden"
+            />
+            <div className="relative grow">
+              <Button
+                className={`absolute top-[6px] right-0 z-50 -translate-x-2`}
+                onClick={() => dispatch(setIsSidebarOpen(!isFiltersOpen))}
+                variant="ghost"
+                size="icon"
+              >
+                {isFiltersOpen ? <PanelRightClose /> : <PanelRightOpen />}
+              </Button>
+              <Outlet />
+            </div>
+            <FiltersSideBar />
+          </Row>
+        </div>
+      </BreadcrumbProvider>
     </div>
   );
 };
