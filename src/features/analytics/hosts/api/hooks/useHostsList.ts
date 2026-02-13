@@ -32,6 +32,13 @@ export const useHostsList = ({
     qfilter: withAlerts ? params.qfilter : undefined,
     ordering,
     withAlerts,
+    ...(withAlerts
+      ? {
+          discovery: params.discovery,
+          alert: params.alert,
+          stamus: params.stamus,
+        }
+      : {}),
     ...pagination,
   });
 

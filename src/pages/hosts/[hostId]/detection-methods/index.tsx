@@ -21,6 +21,8 @@ export const HostDetectionMethods = () => {
       host_id_qfilter: `ip:"${hostId}"`,
       ordering: ordering ?? '-hits',
       hits_min: 1,
+      alert: true,
+      stamus: true,
     });
   return (
     <DataTable
