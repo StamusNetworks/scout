@@ -29,6 +29,7 @@ import {
   EventDetailTabs,
   FilesTab,
   JsonTab,
+  MetaViewTab,
   PcapTab,
   RelatedEventsTabs,
   SyntheticTab,
@@ -558,6 +559,7 @@ const ExpandedRow = ({ row }: { row: Event }) => {
       variant="pill"
       defaultTab="synthetic_view"
     >
+      <MetaViewTab event={row} />
       <SyntheticTab event={row} />
       <JsonTab event={row} />
       <RelatedEventsTabs />

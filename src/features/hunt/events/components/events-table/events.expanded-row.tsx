@@ -6,6 +6,7 @@ import {
   EventDetailTabs,
   FilesTab,
   JsonTab,
+  MetaViewTab,
   PcapTab,
   RelatedEventsTabs,
   SyntheticTab,
@@ -16,9 +17,10 @@ export const ExpandedEventRow = ({ row }: { row: Row<Event> }) => {
     <EventDetailTabs
       event={row.original}
       variant="border"
-      defaultTab="synthetic_view"
+      defaultTab="meta_view"
       className="p-2"
     >
+      <MetaViewTab event={row.original} />
       <SyntheticTab event={row.original} />
       <JsonTab event={row.original} />
       <DetectionMethodTab event={row.original} />

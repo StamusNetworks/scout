@@ -53,7 +53,7 @@ export const DetectionMethodExpandedRowTemplate = ({
     kill_chain_offender: 0,
   };
   return (
-    <Column className="bg-card gap-3 p-2">
+    <Column className="gap-3 p-2 text-sm">
       <Row className="justify-between">
         <div>
           {detectionMethod.method &&
