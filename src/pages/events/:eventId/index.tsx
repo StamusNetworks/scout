@@ -35,7 +35,9 @@ import {
 } from '@/features/hunt/events/components/event-detail-tabs';
 import { Event } from '@/features/hunt/events/model/event.schema';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
+import { selectDefaultEventDetailTab } from '@/features/ui/preferences/preferences.slice';
 import { routes } from '@/pages/routes.config';
+import { useAppSelector } from '@/store/store';
 
 export const EventByIdPage = () => {
   const [_id] = useQueryState('_id', parseAsString);
@@ -63,6 +65,7 @@ export const EventByIdPage = () => {
   const event = eventData?.results?.[0];
 
   const { enterprise } = useFeatureFlags();
+  const defaultTab = useAppSelector(selectDefaultEventDetailTab);
 
   const { data: sourceHost } = useGetHostWithAlertsQuery(
     {
@@ -165,7 +168,7 @@ export const EventByIdPage = () => {
             <EventDetailTabs
               event={event}
               variant="border"
-              defaultTab="meta_view"
+              defaultTab={defaultTab}
             >
               <MetaViewTab event={event} />
               <SyntheticTab event={event} />

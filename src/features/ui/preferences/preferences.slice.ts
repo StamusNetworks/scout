@@ -14,6 +14,7 @@ const initialState: PreferencesState = {
   exportAction: 'download',
   enabledActions: ['download-csv', 'copy-csv', 'copy-markdown'],
   autoOpenSidebarOnNavigation: true,
+  defaultEventDetailTab: 'meta_view',
 };
 
 type PreferencesState = {
@@ -23,6 +24,7 @@ type PreferencesState = {
   exportAction: keyof typeof actionTypes;
   enabledActions: ExportAction[];
   autoOpenSidebarOnNavigation: boolean;
+  defaultEventDetailTab: EventDetailDefaultTab;
 };
 
 export type ExportAction =
@@ -67,6 +69,12 @@ export const preferencesSlice = createSlice({
     setAutoOpenSidebarOnNavigation: (state, action: PayloadAction<boolean>) => {
       state.autoOpenSidebarOnNavigation = action.payload;
     },
+    setDefaultEventDetailTab: (
+      state,
+      action: PayloadAction<EventDetailDefaultTab>,
+    ) => {
+      state.defaultEventDetailTab = action.payload;
+    },
   },
 });
 
@@ -77,6 +85,7 @@ export const {
   setExportAction,
   toggleEnabledAction,
   setAutoOpenSidebarOnNavigation,
+  setDefaultEventDetailTab,
 } = preferencesSlice.actions;
 export const preferencesInitialState = initialState;
 
@@ -97,6 +106,22 @@ export const selectEnabledActions = (state: RootState) =>
 
 export const selectAutoOpenSidebarOnNavigation = (state: RootState) =>
   state.preferences.autoOpenSidebarOnNavigation;
+
+const validEventDetailTabs: EventDetailDefaultTab[] = [
+  'meta_view',
+  'synthetic_view',
+  'json_view',
+];
+
+export const selectDefaultEventDetailTab = (state: RootState) =>
+  validEventDetailTabs.includes(state.preferences.defaultEventDetailTab)
+    ? state.preferences.defaultEventDetailTab
+    : 'meta_view';
+
+export type EventDetailDefaultTab =
+  | 'meta_view'
+  | 'synthetic_view'
+  | 'json_view';
 
 export type TimeDisplay =
   | 'relative'

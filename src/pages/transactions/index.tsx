@@ -46,6 +46,7 @@ import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag
 import { killChainsConfig } from '@/features/hunt/killchain/killchain';
 import { ThreatTagById } from '@/features/hunt/threats/components/threat-tag';
 import { CountsTimeline } from '@/features/hunt/timeline/models/counts-timeline.model';
+import { selectDefaultEventDetailTab } from '@/features/ui/preferences/preferences.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 export const TransactionsPage = () => {
@@ -553,11 +554,12 @@ export const TransactionCard = ({ row }: { row: Event }) => {
 };
 
 const ExpandedRow = ({ row }: { row: Event }) => {
+  const defaultTab = useAppSelector(selectDefaultEventDetailTab);
   return (
     <EventDetailTabs
       event={row}
       variant="pill"
-      defaultTab="synthetic_view"
+      defaultTab={defaultTab}
     >
       <MetaViewTab event={row} />
       <SyntheticTab event={row} />
