@@ -26,6 +26,7 @@ import {
   SelectValue,
 } from '@/common/design-system/atoms/ui/select';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
+import { LuceneEditor } from '@/common/design-system/molecules/lucene-editor';
 import { useAppDispatch } from '@/store/store';
 
 import { FilterInputType } from '../../constants/query-filter.config';
@@ -133,7 +134,14 @@ export const EditFilterForm = ({
               <FormItem className="w-full">
                 <FormLabel>Value</FormLabel>
                 <FormControl>
-                  {config?.inputType === FilterInputType.NUMBER ? (
+                  {filter.key === 'es_filter' ? (
+                    <LuceneEditor
+                      value={String(field.value)}
+                      onChange={field.onChange}
+                      placeholder="e.g. alert.severity:1 AND src_ip:192.168.*"
+                      autoFocus
+                    />
+                  ) : config?.inputType === FilterInputType.NUMBER ? (
                     <Input
                       placeholder="Enter a number"
                       {...field}

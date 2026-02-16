@@ -1,5 +1,6 @@
 import {
   BookUp2,
+  Code,
   Filter,
   FilterX,
   LucideIcon,
@@ -95,6 +96,14 @@ export const useGlobalCommands = (): GlobalCommands[] => {
           shortcut: getShortcutDisplay('L'),
           action: () => {
             dispatch(setOpenModal('addFilterCommand'));
+          },
+        },
+        {
+          Icon: Code,
+          title: 'Add Custom ES Filter',
+          shortcut: getShortcutDisplay('O'),
+          action: () => {
+            dispatch(setOpenModal('addEsFilter'));
           },
         },
         {

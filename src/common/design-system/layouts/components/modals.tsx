@@ -2,6 +2,7 @@ import { CreateEditDeclarationModal } from '@/features/hunt/filter-actions/compo
 import { CreateEditSuppressModal } from '@/features/hunt/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.modal';
 import { CreateEditTagModal } from '@/features/hunt/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.modal';
 import { CreateEditThresholdModal } from '@/features/hunt/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.modal';
+import { AddEsFilterModal } from '@/features/hunt/filtering/query-filters/components/add-es-filter/add-es-filter.modal';
 import { AddQfilterCommand } from '@/features/hunt/filtering/query-filters/components/add-qfilter-command/add-qfilter-command';
 import { SaveFilterSetModal } from '@/features/hunt/filtering/query-filters/components/save-filterset/save-filterset.dialog';
 import { GlobalCommand } from '@/features/ui/global-command/global-command';
@@ -15,5 +16,6 @@ export const Modals = () => (
     <CreateEditThresholdModal />
     <CreateEditTagModal />
     <CreateEditDeclarationModal />
+    <AddEsFilterModal />
   </>
 );

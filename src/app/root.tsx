@@ -39,6 +39,10 @@ export const Root = () => {
           e.preventDefault();
           dispatch(setOpenModal('addFilterCommand'));
         }
+        if (e.key === 'o') {
+          e.preventDefault();
+          dispatch(setOpenModal('addEsFilter'));
+        }
       }
 
       // Only trigger '/' shortcut if not typing in an input field. document.activeElement is used to check the currently focused element.

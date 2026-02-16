@@ -83,6 +83,12 @@
     --doc-offender-foreground: var(--color-purple-700);
     --dopv: var(--color-yellow-500);
     --dopv-foreground: var(--color-yellow-600);
+
+    --syntax-1: var(--color-blue-800);
+    --syntax-2: var(--color-green-600);
+    --syntax-3: var(--color-orange-500);
+    --syntax-4: var(--color-purple-600);
+    --syntax-5: var(--color-pink-500);
   }
 
   .dark {
@@ -230,6 +236,12 @@
     --command_and_control-foreground: oklch(1 0.2763 313.94);
     --actions_on_objectives-foreground: oklch(1 0.2541 312.35);
     --doc-offender-foreground: var(--color-purple-400);
+
+    --syntax-1: var(--color-blue-300);
+    --syntax-2: var(--color-green-500);
+    --syntax-3: var(--color-orange-400);
+    --syntax-4: var(--color-purple-400);
+    --syntax-5: var(--color-pink-500);
   }
    
 }
@@ -306,4 +318,10 @@
   --color-dopv-foreground: var(--dopv-foreground);
   --color-doc-offender: var(--doc-offender);
   --color-doc-offender-foreground: var(--doc-offender-foreground);
+
+  --color-syntax-1: var(--syntax-1);
+  --color-syntax-2: var(--syntax-2);
+  --color-syntax-3: var(--syntax-3);
+  --color-syntax-4: var(--syntax-4);
+  --color-syntax-5: var(--syntax-5);
 }

@@ -31,7 +31,8 @@ export type Modal =
   | 'addSuppressFilterAction'
   | 'addThresholdFilterAction'
   | 'addDeclarationFilterAction'
-  | 'editFilterAction';
+  | 'editFilterAction'
+  | 'addEsFilter';
 
 type UIState = {
   theme: Theme;
