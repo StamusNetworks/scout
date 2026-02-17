@@ -7,7 +7,7 @@ import { Event } from '../../model/event.schema';
 import { EventDetailData } from './event-detail-tabs.types';
 
 export const useEventDetailData = (event: Event): EventDetailData => {
-  const params = useGlobalQueryParams(['tenant']);
+  const params = useGlobalQueryParams(['tenant', 'dates']);
 
   const { data: flowEvents, isLoading: flowEventsLoading } =
     useGetEventsFromFlowQuery(
