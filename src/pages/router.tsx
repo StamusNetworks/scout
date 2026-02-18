@@ -60,6 +60,7 @@ import { PolicyViolationsImpactedEntities } from './policy-violations/impacted-e
 import { UserSettingsPage } from './preferences';
 import { Routes, routes } from './routes.config';
 import { ThreatsPage } from './threats';
+import { ThreatsAttackFlowPage } from './threats/attack-flow';
 import { ThreatsCoveragePage } from './threats/coverage';
 import { ThreatFamilyByIdPage } from './threats/coverage/family';
 import { ThreatFamilyDetectionMethodsPage } from './threats/coverage/family/detection-methods';
@@ -147,6 +148,14 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                     element: (
                       <PageBoundary key="threats-coverage">
                         <ThreatsCoveragePage />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.threats_attack_flow,
+                    element: (
+                      <PageBoundary key="threats-attack-flow">
+                        <ThreatsAttackFlowPage />
                       </PageBoundary>
                     ),
                   },

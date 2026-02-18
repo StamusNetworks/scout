@@ -17,6 +17,7 @@ export const routes = {
   threats_timeline: '/threats/timeline',
   threats_graph: '/threats/entities-graph',
   threats_coverage: '/threats/coverage',
+  threats_attack_flow: '/threats/attack-flow',
   threats_coverage_family: '/threats/coverage/family/:familyId',
   threats_coverage_family_events: '/threats/coverage/family/:familyId/events',
   threats_coverage_family_detection_methods:

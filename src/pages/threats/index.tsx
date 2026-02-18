@@ -54,6 +54,9 @@ export const ThreatsPage = () => {
             <TabsTriggerLink value={routes.threats_coverage}>
               Coverage
             </TabsTriggerLink>
+            <TabsTriggerLink value={routes.threats_attack_flow}>
+              Attack Flow
+            </TabsTriggerLink>
           </TabsList>
         </Tabs>
         <div className="mt-2">
