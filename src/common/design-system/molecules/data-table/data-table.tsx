@@ -106,7 +106,7 @@ interface NewTable<TData> {
   columnOrder?: string[];
   onColumnOrderChange?: (order: Updater<string[]>) => void;
   // Components
-  toolBar?: React.ReactNode;
+  toolBar?: React.ReactNode | boolean;
   paginationbar?: boolean;
   Empty?: React.ReactNode;
   defaultPageSize?: number;
@@ -114,6 +114,7 @@ interface NewTable<TData> {
   exportColumns?: ExportColumn<TData>[];
   canReset?: boolean;
   onClickReset?: () => void;
+  reorder?: boolean;
 }
 
 export function DataTable<TData>({
@@ -148,6 +149,7 @@ export function DataTable<TData>({
   rowClickCursor = 'zoomin',
   exportColumns,
   canReset = false,
+  reorder = true,
   onClickReset,
 }: NewTable<TData>) {
   // Local state management
@@ -250,34 +252,36 @@ export function DataTable<TData>({
       className="space-y-2"
       data-testid="data-table"
     >
-      <RowComponent className="items-center justify-between gap-4">
-        <div>{toolBar}</div>
-        <RowComponent className="gap-2">
-          {exportColumns && (
-            <ExportButton
-              data={tableData.map((row) =>
-                exportColumns.map((col) => col.value(row)),
-              )}
-              headers={exportColumns.map((col) => col.label)}
-              className="h-8"
-            />
-          )}
-          <DataTableViewOptions table={table} />
-          {canReset && !!onClickReset && (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              className="hidden h-8 border-dashed lg:flex"
-              onClick={onClickReset}
-              aria-label="Reset table view"
-            >
-              <RotateCcw className="h-4 w-4" />
-              Reset
-            </Button>
-          )}
+      {toolBar !== false && (
+        <RowComponent className="items-center justify-between gap-4">
+          <div>{toolBar}</div>
+          <RowComponent className="gap-2">
+            {exportColumns && (
+              <ExportButton
+                data={tableData.map((row) =>
+                  exportColumns.map((col) => col.value(row)),
+                )}
+                headers={exportColumns.map((col) => col.label)}
+                className="h-8"
+              />
+            )}
+            <DataTableViewOptions table={table} />
+            {canReset && !!onClickReset && (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="hidden h-8 border-dashed lg:flex"
+                onClick={onClickReset}
+                aria-label="Reset table view"
+              >
+                <RotateCcw className="h-4 w-4" />
+                Reset
+              </Button>
+            )}
+          </RowComponent>
         </RowComponent>
-      </RowComponent>
+      )}
       <DndContext
         collisionDetection={closestCenter}
         modifiers={[restrictToHorizontalAxis]}
@@ -314,6 +318,7 @@ export function DataTable<TData>({
                         <DataTableHead
                           header={header}
                           key={header.id}
+                          reorder={reorder}
                         />
                       );
                     })}
@@ -423,8 +428,10 @@ const rowVariants = cva('', {
 
 const DataTableHead = <TData,>({
   header,
+  reorder,
 }: {
   header: Header<TData, unknown>;
+  reorder: boolean;
 }) => {
   const { attributes, isDragging, listeners, setNodeRef, transform } =
     useSortable({
@@ -447,7 +454,7 @@ const DataTableHead = <TData,>({
       style={style}
     >
       <RowComponent className="items-center gap-1">
-        {header.column.columnDef.meta?.canReorder !== false && (
+        {reorder && header.column.columnDef.meta?.canReorder !== false && (
           <button
             {...attributes}
             {...listeners}

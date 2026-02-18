@@ -69,6 +69,7 @@ import { ThreatByIdPage } from './threats/coverage/threat';
 import { ThreatByIdDetectionMethodsPage } from './threats/coverage/threat/detection-methods';
 import { ThreatByIdEventsPage } from './threats/coverage/threat/events';
 import { ThreatsImpactedEntities } from './threats/impacted-entities';
+import { ThreatsIncidentsPage } from './threats/incidents';
 import { ThreatsTimelinePage } from './threats/timeline';
 import { TransactionsPage } from './transactions';
 
@@ -103,7 +104,24 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                   {
                     index: true,
                     element: (
-                      <PageBoundary key="threats-root">
+                      <Navigate
+                        to={routes.threats_incidents}
+                        replace
+                      />
+                    ),
+                  },
+                  {
+                    path: routes.threats_incidents,
+                    element: (
+                      <PageBoundary key="threats-incidents">
+                        <ThreatsIncidentsPage />
+                      </PageBoundary>
+                    ),
+                  },
+                  {
+                    path: routes.threats_entities,
+                    element: (
+                      <PageBoundary key="threats-entities">
                         <ThreatsImpactedEntities />
                       </PageBoundary>
                     ),

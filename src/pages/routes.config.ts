@@ -12,6 +12,8 @@ export const routes = {
   detection_methods: '/detection-methods',
   detection_method: '/detection-methods/:detectionMethodId',
   threats: '/threats',
+  threats_incidents: '/threats/incidents',
+  threats_entities: '/threats/entities',
   threats_timeline: '/threats/timeline',
   threats_graph: '/threats/entities-graph',
   threats_coverage: '/threats/coverage',

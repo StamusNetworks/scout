@@ -59,6 +59,6 @@ export const RoleBadge = ({ role }: { role: string }) => (
     query_key="host_id.roles.name"
     value={role}
   >
-    <Badge variant="secondary">{getHostRole(role)}</Badge>
+    <Badge variant="discreet">{getHostRole(role)}</Badge>
   </EventValue>
 );
