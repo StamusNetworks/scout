@@ -58,7 +58,7 @@ export const SignaturesTable = () => {
   const toolBar = (
     <DataTableToolbar>
       <SwitchFilter
-        title="Apply event filters"
+        title="Apply event query filters"
         setValue={setApplyEventFilter}
         value={applyEventFilter}
       />

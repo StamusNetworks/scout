@@ -22,6 +22,6 @@ export const ExternalLink = ({
     )}
   >
     {children}
-    <ExternalLinkIcon className="-translate-y-0.5 text-inherit" />
+    <ExternalLinkIcon className="shrink-0 -translate-y-0.5 text-inherit" />
   </Link>
 );

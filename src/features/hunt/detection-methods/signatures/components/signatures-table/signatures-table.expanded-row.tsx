@@ -5,14 +5,13 @@ import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
+import { SwitchFilter } from '@/common/design-system/molecules/data-table/filters/switch-filter';
 import { HtmlCodeDisplay } from '@/common/design-system/molecules/htmlCodeDisplay/htmlCodeDisplay';
 import {
   DataEntry,
   ValueListCard,
 } from '@/common/design-system/molecules/value-list-card';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetDashboardFieldsQuery } from '@/features/hunt/dashboard/api/dashboard.api';
-import { useQFBuilder } from '@/features/hunt/filtering/query-filters/hooks/use-qf-builder';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 import { ThreatTag } from '@/features/hunt/threats/components/threat-tag';
 import { useThreat } from '@/features/hunt/threats/hooks/use-threat';
@@ -22,10 +21,11 @@ import { SignatureAnalysis } from '../signature-analysis';
 import { SignatureFlow } from '../signature-flow/signature-flow';
 import { SignatureRulesetStatus } from '../signature-ruleset-status/signature-ruleset-status';
 import { SignaturesTableTimeline } from '../signature-timeline';
+import { useSignatureDetailsParams } from './signatures-table.utils';
 
 type FieldStats = {
-  src_ip: DataEntry[];
-  dest_ip: DataEntry[];
+  'flow.src_ip': DataEntry[];
+  'flow.dest_ip': DataEntry[];
   'stamus.asset': DataEntry[];
   'stamus.source': DataEntry[];
 };
@@ -41,7 +41,9 @@ export const DetectionMethodExpandedRowTemplate = ({
 }: {
   detectionMethod: Signature;
 }) => {
-  const { data } = useCardsStats(detectionMethod.pk);
+  const [applyGlobalFilters, setApplyGlobalFilters] = useState(false);
+  const [showOriginal, setShowOriginal] = useState(false);
+  const { data } = useCardsStats(detectionMethod.pk, applyGlobalFilters);
   const formattedData = data as FieldStats;
   const { data: currentThreat } = useThreat(detectionMethod.method!.threat_id);
 
@@ -70,18 +72,45 @@ export const DetectionMethodExpandedRowTemplate = ({
       {detectionMethod.versions?.length > 0 && (
         <SignatureAnalysis rule={detectionMethod.versions[0]} />
       )}
-      <SignatureContent content={detectionMethod.versions[0].content_html} />
-      <SignaturesTableTimeline sid={detectionMethod.pk} />
+
+      <Row className="gap-4">
+        <Button
+          variant="outline"
+          onClick={() => setShowOriginal((prev) => !prev)}
+          size="sm"
+          className="w-24"
+        >
+          {!showOriginal ? 'Show' : 'Hide'} raw
+        </Button>
+        <SwitchFilter
+          value={applyGlobalFilters}
+          setValue={setApplyGlobalFilters}
+          title="Apply Global Filters"
+        />
+      </Row>
+      <SignatureContent
+        content={detectionMethod.versions[0].content_html}
+        open={showOriginal}
+      />
+      <SignatureFlow
+        sid={detectionMethod.pk}
+        methodType={detectionMethod.method?.method_type}
+        applyGlobalFilters={applyGlobalFilters}
+      />
+      <SignaturesTableTimeline
+        sid={detectionMethod.pk}
+        applyGlobalFilters={applyGlobalFilters}
+      />
       <Grid className="grid-cols-4 gap-2">
         <ValueListCard
           es_key="src_ip"
           title="Source IP"
-          data={formattedData?.src_ip}
+          data={formattedData?.['flow.src_ip']}
         />
         <ValueListCard
           es_key="dest_ip"
           title="Destination IP"
-          data={formattedData?.dest_ip}
+          data={formattedData?.['flow.dest_ip']}
         />
         <ValueListCard
           es_key="stamus.asset"
@@ -94,38 +123,22 @@ export const DetectionMethodExpandedRowTemplate = ({
           data={formattedData?.['stamus.source']}
         />
       </Grid>
-      <SignatureFlow
-        sid={detectionMethod.pk}
-        methodType={detectionMethod.method?.method_type}
-      />
     </Column>
   );
 };
 
-const useCardsStats = (sid: number) => {
-  const QFBuilder = useQFBuilder();
-  const params = useGlobalQueryParams(['tenant', 'dates', 'qfilter']);
+const useCardsStats = (sid: number, applyGlobalFilter: boolean) => {
+  const params = useSignatureDetailsParams(sid, applyGlobalFilter);
   return useGetDashboardFieldsQuery({
     ...params,
-    fields: 'src_ip,dest_ip,stamus.asset,stamus.source',
-    qfilter: QFBuilder.toQFString([
-      QFBuilder.createFilter('alert.signature_id', sid),
-    ]),
+    fields: 'flow.src_ip,flow.dest_ip,stamus.asset,stamus.source',
   });
 };
 
-const SignatureContent = ({ content }: { content: string }) => {
-  const [showOriginal, setShowOriginal] = useState(false);
-  return (
-    <Column className="gap-2">
-      <Button
-        onClick={() => setShowOriginal(!showOriginal)}
-        variant="secondary"
-        className="w-fit"
-      >
-        Show raw detection method
-      </Button>
-      {showOriginal && <HtmlCodeDisplay innerHtml={content} />}
-    </Column>
-  );
-};
+const SignatureContent = ({
+  open,
+  content,
+}: {
+  open: boolean;
+  content: string;
+}) => open && <HtmlCodeDisplay innerHtml={content} />;

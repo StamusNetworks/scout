@@ -1,7 +1,7 @@
 import { add, format } from 'date-fns';
 import { toPairs } from 'ramda';
 import * as React from 'react';
-import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 import {
   NameType,
   Payload,
@@ -52,6 +52,7 @@ export const BarChartTimeline = ({
         barGap={1}
       >
         <CartesianGrid vertical={false} />
+        <YAxis />
         <XAxis
           dataKey="time"
           tickMargin={8}

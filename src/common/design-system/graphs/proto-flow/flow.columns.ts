@@ -5,6 +5,7 @@ export type ProtoColumn<T = unknown> = {
   key: string;
   missing: string;
   valFunc?: (ev: T) => string | undefined;
+  aggField?: string;
 };
 
 const offenderCol = {

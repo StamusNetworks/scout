@@ -1,5 +1,7 @@
 import { pipe } from 'ramda';
 
+import { getMitreTacticUrl, getMitreTechniqueUrl } from '@/common/lib/mitre';
+
 import { Engine } from '../../model/analysis';
 import { Rule } from '../../model/signature';
 
@@ -69,6 +71,7 @@ const getSignatureMetadata = (rule: Rule) => {
           .join(' ')
           .replace(/Signature/i, 'Detection method'),
         value: formatReference(value, label),
+        link: getMetadataLink(label, value),
       }))
       .filter(
         ({ label }: { label: string }) =>
@@ -77,8 +80,8 @@ const getSignatureMetadata = (rule: Rule) => {
 
   return [
     ...metadata,
-    { label: 'created at', value: rule.created || 'unknown' },
-    { label: 'updated at', value: rule.updated || 'unknown' },
+    { label: 'created at', value: rule.created || 'unknown', link: undefined },
+    { label: 'updated at', value: rule.updated || 'unknown', link: undefined },
   ];
 };
 
@@ -90,7 +93,7 @@ const formatReference = (value: string, label: string) => {
   if (value.startsWith('http://')) return cleanValue;
   if (value.startsWith('https://')) return cleanValue;
   if (label.toLowerCase() === 'url') return `https://${cleanValue}`;
-  return cleanValue;
+  return cleanValue.replaceAll('_', ' ');
 };
 
 const getSignatureReferences = (raw: string) =>
@@ -229,4 +232,17 @@ function addSpaceAfterComma(string: string) {
 
 function formatString(string: string) {
   return pipe(trimOuterBrackets, addSpaceAfterComma)(string);
+}
+
+function getMetadataLink(label: string, value: string) {
+  if (value.startsWith('http') || value.startsWith('https')) return value;
+
+  switch (label) {
+    case 'mitre_technique_id':
+      return getMitreTechniqueUrl(value);
+    case 'mitre_tactic_id':
+      return getMitreTacticUrl(value);
+    default:
+      return undefined;
+  }
 }
