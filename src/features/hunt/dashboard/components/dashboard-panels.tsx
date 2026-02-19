@@ -90,7 +90,7 @@ export const DashboardPanel = ({
     return keys.every((key) => data?.[key].length === 0);
   }, [data, disabledKeys, config.items]);
 
-  if (!config || (hideEmptyPanels && emptyPanel)) return null;
+  if (!config) return null;
 
   return (
     <div
@@ -114,7 +114,9 @@ export const DashboardPanel = ({
           <DashboardKeysToggler panelId={panelId} />
         </ButtonGroup>
       </Row>
-      {!collapsed && <DashboardMosaic panelId={panelId} />}
+      {!collapsed && !(hideEmptyPanels && emptyPanel) && (
+        <DashboardMosaic panelId={panelId} />
+      )}
     </div>
   );
 };
