@@ -39,6 +39,7 @@ import {
   replaceFilters,
 } from '../../../store/query-filters.slice';
 import { enableTags } from '../../../use-cases/enable-tags';
+import { resolveEntityTypes } from '../../../utils/entity-validators';
 import { MitreTacticIdOption, MitreTechniqueIdOption } from './options/mitre';
 import { ThreatFamilyNameOption } from './options/threat-family-name';
 import { ThreatNameOptions } from './options/threat-name';
@@ -64,22 +65,26 @@ export const ContextMenuContent = ({
     pageSize: 1000000,
   });
   const filterDef = useQueryFilterDefinition(query_key);
+  const resolvedEntity = useMemo(
+    () => resolveEntityTypes(filterDef?.entity, value),
+    [filterDef?.entity, value],
+  );
   const deeplinks = useMemo(() => {
     if (!deeplinksData) return [];
     return deeplinksData.results.filter((deeplink) =>
       !deeplink.enabled
         ? false
         : deeplink.all ||
-          (filterDef?.entity &&
+          (resolvedEntity &&
             deeplink.entities
               .map((e) => e.name)
               .some((entity) =>
-                Array.isArray(filterDef.entity)
-                  ? filterDef.entity.includes(entity)
-                  : filterDef.entity === entity,
+                Array.isArray(resolvedEntity)
+                  ? resolvedEntity.includes(entity)
+                  : resolvedEntity === entity,
               )),
     );
-  }, [deeplinksData, filterDef]);
+  }, [deeplinksData, resolvedEntity]);
   const investigationStage = useAppSelector(selectInvestigationStage);
   const currentStage = useAppSelector(selectCurrentInvestigationStage);
   const { enterprise } = useFeatureFlags();
@@ -186,7 +191,11 @@ export const ContextMenuContent = ({
       )}
 
       {enterprise &&
-        filterDef?.type === 'ip' &&
+        (filterDef?.type === 'ip' ||
+          (resolvedEntity &&
+            (Array.isArray(resolvedEntity)
+              ? resolvedEntity.includes('IP')
+              : resolvedEntity === 'IP'))) &&
         isIP(value?.toString() || '') && (
           <ContextMenuItem asChild>
             <Link to={`${routes.hosts}/${value}`}>

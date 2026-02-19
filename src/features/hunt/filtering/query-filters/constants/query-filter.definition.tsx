@@ -472,7 +472,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
     key: 'http.hostname',
     description: 'Domain names accessed in HTTP requests',
     category: FilterCategory.EVENT,
-    entity: FilterType.HOSTNAME,
+    entity: [FilterType.IP, FilterType.DOMAIN],
   },
   {
     label: 'URL',
@@ -826,7 +826,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
     description:
       'Domain names specified in TLS Server Name Indication extension',
     category: FilterCategory.EVENT,
-    entity: FilterType.HOSTNAME,
+    entity: [FilterType.IP, FilterType.DOMAIN],
   },
   {
     key: 'http.http_refer_info.host',
@@ -847,7 +847,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
     label: 'Hostname Host',
     key: 'hostname_info.host',
     category: FilterCategory.EVENT,
-    entity: FilterType.HOSTNAME,
+    entity: [FilterType.IP, FilterType.DOMAIN],
   },
   {
     label: 'Command',
@@ -1043,7 +1043,7 @@ export const QueryFilters: QueryFilterDefinition[] = [
     label: 'Hostname',
     key: 'host_id.hostname.host',
     category: FilterCategory.HOST,
-    entity: FilterType.HOSTNAME,
+    entity: [FilterType.IP, FilterType.DOMAIN],
   },
   {
     label: 'Service Port',
@@ -1233,8 +1233,7 @@ export const QueryFilters: QueryFilterDefinition[] = [
     label: 'Entity',
     description: 'Entities identified by Stamus threat intelligence',
     category: FilterCategory.EVENT,
-    entity: FilterType.STAMUS_ASSET,
-    type: 'ip',
+    entity: [FilterType.IP, FilterType.EMAIL, FilterType.USERNAME],
     convertible: ['ip'],
   },
   {
@@ -1243,7 +1242,7 @@ export const QueryFilters: QueryFilterDefinition[] = [
     description:
       'Threat actors and malicious sources identified by Stamus intelligence',
     category: FilterCategory.EVENT,
-    entity: FilterType.STAMUS_ASSET,
+    entity: [FilterType.IP, FilterType.EMAIL, FilterType.USERNAME],
     convertible: ['ip'],
   },
   {
@@ -1302,6 +1301,7 @@ export const QueryFilters: QueryFilterDefinition[] = [
     key: 'discovery.asset',
     description: 'Network assets discovered through passive monitoring',
     category: FilterCategory.EVENT,
+    entity: [FilterType.IP, FilterType.EMAIL, FilterType.USERNAME],
   },
   {
     label: 'Sighting Entity Net',
@@ -1320,6 +1320,7 @@ export const QueryFilters: QueryFilterDefinition[] = [
     label: 'Sighting Value',
     description: 'Discovery attribute values corresponding to the keys',
     category: FilterCategory.EVENT,
+    entity: [FilterType.IP, FilterType.EMAIL, FilterType.DOMAIN],
   },
   {
     key: 'host_id.in_home_net',
@@ -1338,7 +1339,7 @@ export const QueryFilters: QueryFilterDefinition[] = [
     key: 'hostname_info.domain',
     description: 'Complete domain names including TLD',
     category: FilterCategory.EVENT,
-    entity: FilterType.HOSTNAME,
+    entity: [FilterType.IP, FilterType.DOMAIN],
   },
   {
     label: 'Host Subdomain',
