@@ -17,7 +17,7 @@ import { Roles } from '@/features/analytics/hosts/components/host-details/roles'
 import { Username } from '@/features/analytics/hosts/components/host-details/username';
 import { IpOrEntityEventValue } from '@/features/hunt/entities/components/ip-or-entity';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
-import { ThreatTagById } from '@/features/hunt/threats/components/threat-tag';
+import { ThreatTag } from '@/features/hunt/threats/components/threat-tag';
 import { useThreat } from '@/features/hunt/threats/hooks/use-threat';
 import { ThreatStatus } from '@/features/hunt/threats/model/threat-status.schema';
 
@@ -27,6 +27,7 @@ export const KillChainTagWithContext = ({ row }: { row: ThreatStatus }) => {
   return (
     <KillchainTag
       kc={row.is_offender ? row.kill_chain_offender : row.kill_chain}
+      status={row.status}
       context={[
         { es_key: 'stamus.asset', value: row.asset },
         { es_key: 'stamus.threat_name', value: data?.name || '' },
@@ -72,9 +73,13 @@ export const threatStatusColumnDefs: Record<
       />
     ),
     cell: ({ row }) => (
-      <ThreatTagById
-        threatId={row.original.threat_id}
+      <ThreatTag
+        threat_id={row.original.threat_id}
         is_offender={row.original.is_offender}
+        kill_chain={row.original.kill_chain}
+        first_seen={row.original.first_seen}
+        last_seen={row.original.last_seen}
+        status={row.original.status}
       />
     ),
   },

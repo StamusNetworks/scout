@@ -1,4 +1,5 @@
 import { Host } from '@/features/analytics/hosts/model/host';
+import { KillChainPhase } from '@/features/hunt/killchain/killchain';
 
 import { ThreatHistory } from '../../models/threat-history.model';
 
@@ -21,7 +22,7 @@ export interface ThreatHistoryItem extends BaseHistoryItem {
   type: 'threat';
   values: {
     threat_id: string;
-    kc_step: string;
+    kc_step: KillChainPhase;
     is_offender: boolean;
   };
 }

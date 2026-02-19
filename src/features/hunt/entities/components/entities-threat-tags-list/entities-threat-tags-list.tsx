@@ -65,7 +65,12 @@ export const EntityThreatTagsListTemplate = ({
         {threats.slice(0, maxThreats).map((threat) => (
           <ThreatTag
             key={threat.threat__threat_id}
-            threat={threat}
+            threat_id={threat.threat__threat_id}
+            kill_chain={threat.kill_chain}
+            is_offender={threat.kill_chain_offender > 0}
+            first_seen={threat.first_seen}
+            last_seen={threat.last_seen}
+            status={threat.status}
           />
         ))}
         <Popover>
@@ -83,7 +88,12 @@ export const EntityThreatTagsListTemplate = ({
             {threats.slice(maxThreats).map((threat) => (
               <ThreatTag
                 key={threat.threat__threat_id}
-                threat={threat}
+                threat_id={threat.threat__threat_id}
+                kill_chain={threat.kill_chain}
+                is_offender={threat.kill_chain_offender > 0}
+                first_seen={threat.first_seen}
+                last_seen={threat.last_seen}
+                status={threat.status}
               />
             ))}
           </PopoverContent>
@@ -93,7 +103,12 @@ export const EntityThreatTagsListTemplate = ({
       threats?.map((threat) => (
         <ThreatTag
           key={threat.threat__threat_id}
-          threat={threat}
+          threat_id={threat.threat__threat_id}
+          kill_chain={threat.kill_chain}
+          is_offender={threat.kill_chain_offender > 0}
+          first_seen={threat.first_seen}
+          last_seen={threat.last_seen}
+          status={threat.status}
         />
       ))
     )}

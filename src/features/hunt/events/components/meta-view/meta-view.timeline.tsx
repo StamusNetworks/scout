@@ -26,7 +26,7 @@ import { DateTime } from '@/common/design-system/entities/date-time';
 import { FormattedBadge } from '@/common/design-system/molecules/formatted-badge';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
-import { ThreatTagById } from '@/features/hunt/threats/components/threat-tag';
+import { ThreatTag } from '@/features/hunt/threats/components/threat-tag';
 
 import { Event } from '../../model/event.schema';
 import { getViewModel, type MetaViewItem } from './meta-view.data-preparation';
@@ -175,7 +175,7 @@ const TransactionContent = ({ transaction }: { transaction: MetaViewItem }) =>
             key={s.threat_id}
             className="gap-2"
           >
-            <ThreatTagById threatId={s.threat_id} />
+            <ThreatTag threat_id={s.threat_id} />
             <KillchainTag kc={s.kill_chain_offender || s.kill_chain} />
             <EventValue
               query_key="alert.signature"
@@ -226,7 +226,7 @@ const TransactionContent = ({ transaction }: { transaction: MetaViewItem }) =>
                 key={s.threat_id}
                 className="gap-2"
               >
-                <ThreatTagById threatId={s.threat_id} />
+                <ThreatTag threat_id={s.threat_id} />
                 <KillchainTag kc={s.kill_chain_offender || s.kill_chain} />
                 <EventValue
                   query_key="alert.signature"

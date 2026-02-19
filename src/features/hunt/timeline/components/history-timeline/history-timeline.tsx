@@ -11,15 +11,10 @@ import {
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
-import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { Host } from '@/features/analytics/hosts/model/host';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
-import {
-  KillChainPhase,
-  killChainsConfig,
-} from '@/features/hunt/killchain/killchain';
+import { KillChainPhase } from '@/features/hunt/killchain/killchain';
 import { ThreatTag } from '@/features/hunt/threats/components/threat-tag';
-import { useThreat } from '@/features/hunt/threats/hooks/use-threat';
 
 import { ThreatHistory } from '../../models/threat-history.model';
 import {
@@ -178,25 +173,12 @@ const TimelineServiceItem = ({ item }: { item: ServiceHistoryItem }) => {
 };
 
 const TimelineThreatItem = ({ item }: { item: ThreatHistoryItem }) => {
-  const { data: threat, isLoading } = useThreat(
-    parseInt(item.values.threat_id),
-  );
-
-  const formattedThreat = {
-    threat__threat_id: parseInt(item.values.threat_id),
-    threat__name: threat?.name || '',
-    threat__family__family_id: threat?.family || 0,
-    kill_chain:
-      killChainsConfig[item.values.kc_step as KillChainPhase].kc_step || 0,
-    kill_chain_offender: 0,
-  };
   return (
     <Row className="items-center gap-2">
-      {isLoading ? (
-        <Spin className="h-4 w-4 animate-spin" />
-      ) : (
-        <ThreatTag threat={formattedThreat} />
-      )}
+      <ThreatTag
+        threat_id={parseInt(item.values.threat_id)}
+        kill_chain={item.values.kc_step}
+      />
       <span className="text-sm"> detected in phase </span>
       <KillchainTag kc={item.values.kc_step as KillChainPhase} />
     </Row>

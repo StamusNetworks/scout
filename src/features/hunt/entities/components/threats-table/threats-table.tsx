@@ -68,7 +68,16 @@ const threatsColumns = (
   {
     id: type === 'doc' ? 'threat' : 'policy_violation',
     header: type === 'doc' ? 'Threat' : 'Policy Violation',
-    cell: ({ row }) => <ThreatTag threat={row.original} />,
+    cell: ({ row }) => (
+      <ThreatTag
+        threat_id={row.original.threat__threat_id}
+        kill_chain={row.original.kill_chain}
+        is_offender={row.original.kill_chain_offender > 0}
+        first_seen={row.original.first_seen}
+        last_seen={row.original.last_seen}
+        status={row.original.status}
+      />
+    ),
   },
   {
     id: 'first_seen',

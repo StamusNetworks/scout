@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { killChainPhaseSchema } from '../../entities/model/impacted-entity.schema';
 import { KillChainPhase } from '../../killchain/killchain';
 
 export const threatHistorySchema = z.object({
@@ -13,8 +14,8 @@ export const threatHistorySchema = z.object({
         history_type: z.literal('first_seen'),
         timestamp: z.string(),
         params: z.object({
-          step_kill_chain: z.string(),
-          step_kill_chain_offender: z.string().nullable(),
+          step_kill_chain: killChainPhaseSchema,
+          step_kill_chain_offender: killChainPhaseSchema.nullable(),
         }),
         threat_id: z.string(),
         is_offender: z.boolean(),
@@ -36,8 +37,8 @@ export const threatHistorySchema = z.object({
         timestamp: z.string(),
         threat_id: z.string(),
         is_offender: z.boolean(),
-        kc_step: z.string(),
-        kc_step_offender: z.string().nullable(),
+        kc_step: killChainPhaseSchema,
+        kc_step_offender: killChainPhaseSchema.nullable(),
       }),
       z.object({
         first_seen: z.string(),

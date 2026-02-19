@@ -23,7 +23,7 @@ import { DataTableRowExpander } from '@/common/design-system/molecules/data-tabl
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { isIP } from '@/common/lib/ips';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
-import { ThreatTagById } from '@/features/hunt/threats/components/threat-tag';
+import { ThreatTag } from '@/features/hunt/threats/components/threat-tag';
 import { routes } from '@/pages/routes.config';
 import { useAppDispatch } from '@/store/store';
 
@@ -69,9 +69,13 @@ export const threatStatusColumns: CustomColumnDef<ThreatStatus>[] = [
       />
     ),
     cell: ({ row }) => (
-      <ThreatTagById
-        threatId={row.original.threat_id}
+      <ThreatTag
+        threat_id={row.original.threat_id}
         is_offender={row.original.is_offender}
+        kill_chain={row.original.kill_chain}
+        first_seen={row.original.first_seen}
+        last_seen={row.original.last_seen}
+        status={row.original.status}
       />
     ),
   },
@@ -130,6 +134,7 @@ export const KillChainTagWithContext = ({ row }: { row: ThreatStatus }) => {
   return (
     <KillchainTag
       kc={row.is_offender ? row.kill_chain_offender : row.kill_chain}
+      status={row.status}
       context={[
         { es_key: isIP(row.asset) ? 'ip' : 'stamus.asset', value: row.asset },
         { es_key: 'stamus.threat_name', value: data?.name || '' },

@@ -14,68 +14,39 @@ import { cn } from '@/common/lib/utils';
 import { routes } from '@/pages/routes.config';
 import { useAppSelector } from '@/store/store';
 
-import { EntityThreat } from '../../entities/model/impacted-entity.schema';
 import { selectIsAfterStart } from '../../filtering/dates-filters/dates-filters';
 import { EventValue } from '../../filtering/query-filters/components/event-value/event-value';
 import { KillchainTag } from '../../killchain/components/killchain-tag';
+import { type KillChainPhase } from '../../killchain/killchain';
 import { useThreat } from '../hooks/use-threat';
 
-type ThreatWithoutLifecycle = Omit<
-  EntityThreat,
-  'status' | 'first_seen' | 'last_seen'
->;
-
-export const ThreatTagById = ({
-  threatId,
-  is_offender = false,
-}: {
-  threatId: number;
+interface ThreatTagProps {
+  threat_id: number;
+  kill_chain?: KillChainPhase | number;
   is_offender?: boolean;
-}) => {
-  const { data, isLoading } = useThreat(threatId);
-  if (isLoading) return <Skeleton className="h-4 w-full" />;
-  if (!data) return null;
-  const threatFallback: ThreatWithoutLifecycle = {
-    threat__threat_id: data.pk,
-    threat__name: data.name,
-    threat__family__family_id: data.family,
-    kill_chain: 0,
-    kill_chain_offender: 0,
-  };
-  return (
-    <ThreatTag
-      threat={threatFallback}
-      threatId={threatId}
-      is_offender={is_offender}
-    />
-  );
-};
+  first_seen?: string;
+  last_seen?: string;
+  status?: 'new' | 'fixed';
+  className?: string;
+}
 
 export const ThreatTag = ({
-  threat,
-  threatId,
+  threat_id,
+  kill_chain,
+  is_offender = false,
+  first_seen,
+  last_seen,
+  status,
   className,
-  is_offender,
-}: {
-  threatId?: number;
-  threat:
-    | EntityThreat
-    | Omit<EntityThreat, 'status' | 'first_seen' | 'last_seen'>;
-  is_offender?: boolean;
-  className?: string;
-}) => {
+}: ThreatTagProps) => {
   const navigate = useNavigate();
   const isAfterStart = useAppSelector(
-    selectIsAfterStart(
-      'first_seen' in threat ? new Date(threat.first_seen) : new Date(0),
-    ),
+    selectIsAfterStart(first_seen ? new Date(first_seen) : new Date(0)),
   );
-  const startedInRange = 'first_seen' in threat && isAfterStart;
+  const startedInRange = first_seen && isAfterStart;
 
-  const { data: threatDef, isLoading: isLoadingDef } = useThreat(
-    threatId || threat.threat__threat_id,
-  );
-  if (isLoadingDef) return <Skeleton className="h-4 w-full" />;
+  const { data: threatDef, isLoading } = useThreat(threat_id);
+  if (isLoading) return <Skeleton className="h-4 w-full" />;
   if (!threatDef) return <span>-</span>;
 
   const handleClick = () => {
@@ -98,9 +69,9 @@ export const ThreatTag = ({
         >
           <Badge
             variant={
-              'status' in threat && threat.status === 'fixed'
+              status === 'fixed'
                 ? 'muted'
-                : threat.kill_chain_offender > 0 || is_offender
+                : is_offender
                   ? 'offender'
                   : threatDef.family_class === 'dopv'
                     ? 'policy_violation'
@@ -114,40 +85,30 @@ export const ThreatTag = ({
         </EventValue>
       </HoverCardTrigger>
       <HoverCardContent
-        className="w-fit max-w-110 text-sm"
+        className="flex w-fit max-w-110 flex-col gap-2 text-sm"
         side="top"
       >
         <Row className="gap-3">
           <h3 className="text-sm font-bold">{threatDef.name}</h3>
-          <KillchainTag kc={threat.kill_chain} />
+          {kill_chain && <KillchainTag kc={kill_chain} />}
         </Row>
-        {'first_seen' in threat && 'last_seen' in threat && (
-          <Row className="my-2 gap-3">
+        {first_seen && last_seen && (
+          <Row className="gap-3">
             <Column>
               <p className="text-muted-foreground text-xs font-bold">
                 First seen
               </p>
-              <DateTime date={threat.first_seen} />
+              <DateTime date={first_seen} />
             </Column>
             <Column>
               <p className="text-muted-foreground text-xs font-bold">
                 Last seen
               </p>
-              <DateTime date={threat.last_seen} />
+              <DateTime date={last_seen} />
             </Column>
           </Row>
         )}
-        {isLoadingDef ? (
-          <Column className="gap-1">
-            <Skeleton className="h-3 w-full" />
-            <Skeleton className="h-3 w-full" />
-            <Skeleton className="h-3 w-full" />
-            <Skeleton className="h-3 w-full" />
-            <Skeleton className="h-3 w-24" />
-          </Column>
-        ) : (
-          <p>{threatDef?.description}</p>
-        )}
+        <p>{threatDef.description}</p>
       </HoverCardContent>
     </HoverCard>
   );

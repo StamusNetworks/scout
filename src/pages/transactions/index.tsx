@@ -44,7 +44,7 @@ import { useQFBuilder } from '@/features/hunt/filtering/query-filters/hooks/use-
 import { selectQueryFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.selector';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 import { killChainsConfig } from '@/features/hunt/killchain/killchain';
-import { ThreatTagById } from '@/features/hunt/threats/components/threat-tag';
+import { ThreatTag } from '@/features/hunt/threats/components/threat-tag';
 import { CountsTimeline } from '@/features/hunt/timeline/models/counts-timeline.model';
 import { selectDefaultEventDetailTab } from '@/features/ui/preferences/preferences.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
@@ -379,7 +379,7 @@ export const TransactionCard = ({ row }: { row: Event }) => {
         ) : row.event_type === 'stamus' ? (
           <Row className="gap-4">
             {row.stamus?.threat_id !== undefined && (
-              <ThreatTagById threatId={row.stamus.threat_id} />
+              <ThreatTag threat_id={row.stamus.threat_id} />
             )}
             {row.stamus?.kill_chain && (
               <KillchainTag

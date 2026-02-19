@@ -14,7 +14,6 @@ import {
 import { useGetDashboardFieldsQuery } from '@/features/hunt/dashboard/api/dashboard.api';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 import { ThreatTag } from '@/features/hunt/threats/components/threat-tag';
-import { useThreat } from '@/features/hunt/threats/hooks/use-threat';
 
 import { Signature } from '../../model/signature';
 import { SignatureAnalysis } from '../signature-analysis';
@@ -45,15 +44,7 @@ export const DetectionMethodExpandedRowTemplate = ({
   const [showOriginal, setShowOriginal] = useState(false);
   const { data } = useCardsStats(detectionMethod.pk, applyGlobalFilters);
   const formattedData = data as FieldStats;
-  const { data: currentThreat } = useThreat(detectionMethod.method!.threat_id);
 
-  const threat = {
-    threat__threat_id: currentThreat?.pk || 0,
-    threat__name: currentThreat?.name || '',
-    threat__family__family_id: currentThreat?.family || 0,
-    kill_chain: detectionMethod?.method?.kill_chain || 1,
-    kill_chain_offender: 0,
-  };
   return (
     <Column className="gap-3 p-2 text-sm">
       <Row className="justify-between">
@@ -61,8 +52,12 @@ export const DetectionMethodExpandedRowTemplate = ({
           {detectionMethod.method &&
             Object.keys(detectionMethod.method).length > 0 && (
               <Row className="mt-1 gap-2">
-                Method for <ThreatTag threat={threat} /> in stage{' '}
-                <KillchainTag kc={detectionMethod.method.kill_chain} />
+                Method for{' '}
+                <ThreatTag
+                  threat_id={detectionMethod.method!.threat_id}
+                  kill_chain={detectionMethod.method.kill_chain}
+                />{' '}
+                in stage <KillchainTag kc={detectionMethod.method.kill_chain} />
               </Row>
             )}
         </div>
