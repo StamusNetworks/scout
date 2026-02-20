@@ -11,6 +11,11 @@ import {
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/common/design-system/atoms/ui/popover';
 import { Host } from '@/features/analytics/hosts/model/host';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 import { KillChainPhase } from '@/features/hunt/killchain/killchain';
@@ -109,22 +114,44 @@ const TimelineItem = ({ item }: { item: HistoryItem }) => {
   }
 };
 
+const TimelineTitle = ({ children }: { children: React.ReactNode }) => (
+  <p className="text-sm [&+*]:mt-1">{children}</p>
+);
+
 const TimelineJa4Item = ({ item }: { item: Ja4HistoryItem }) => {
+  const [first, ...rest] = item.values ?? [];
   return (
     <Column>
-      <p className="text-sm">New TLS Agent detected</p>
+      <TimelineTitle>New TLS Agent detected</TimelineTitle>
       <p className="mb-1 text-xs">
         <span className="font-bold">JA4 hash: </span>
         {item.hash}
       </p>
-      {item.values?.map((value, i) => (
-        <p
-          key={i}
-          className="text-xs"
-        >
-          <span className="font-bold">JA4 agent:</span> {value}
+      {first && (
+        <p className="text-xs">
+          <span className="font-bold">JA4 agent:</span> {first}
         </p>
-      ))}
+      )}
+      {rest.length > 0 && (
+        <Popover>
+          <PopoverTrigger className="text-muted-foreground mt-1 cursor-pointer self-start text-xs">
+            View more ({rest.length})
+          </PopoverTrigger>
+          <PopoverContent
+            align="start"
+            className="w-fit max-w-128 space-y-1"
+          >
+            {rest.map((value, i) => (
+              <p
+                key={i}
+                className="text-xs"
+              >
+                <span className="font-bold">JA4 agent:</span> {value}
+              </p>
+            ))}
+          </PopoverContent>
+        </Popover>
+      )}
     </Column>
   );
 };
@@ -132,7 +159,7 @@ const TimelineJa4Item = ({ item }: { item: Ja4HistoryItem }) => {
 const TimelineUserAgentItem = ({ item }: { item: UserAgentHistoryItem }) => {
   return (
     <Column>
-      <p className="text-sm">New HTTP Agent detected</p>
+      <TimelineTitle>New HTTP Agent detected</TimelineTitle>
       <p className="mb-1 text-xs">{item.value}</p>
     </Column>
   );
@@ -141,7 +168,7 @@ const TimelineUserAgentItem = ({ item }: { item: UserAgentHistoryItem }) => {
 const TimelineUsernameItem = ({ item }: { item: UsernameHistoryItem }) => {
   return (
     <Column>
-      <p className="text-sm">New Username detected</p>
+      <TimelineTitle>New Username detected</TimelineTitle>
       <p className="mb-1 text-xs">{item.value}</p>
     </Column>
   );
@@ -150,7 +177,7 @@ const TimelineUsernameItem = ({ item }: { item: UsernameHistoryItem }) => {
 const TimelineHostnameItem = ({ item }: { item: HostnameHistoryItem }) => {
   return (
     <Column>
-      <p className="text-sm">New Hostname detected</p>
+      <TimelineTitle>New Hostname detected</TimelineTitle>
       <p className="mb-1 text-xs">{item.value}</p>
     </Column>
   );
@@ -159,7 +186,7 @@ const TimelineHostnameItem = ({ item }: { item: HostnameHistoryItem }) => {
 const TimelineServiceItem = ({ item }: { item: ServiceHistoryItem }) => {
   return (
     <Column>
-      <p className="text-sm">New Service seen</p>
+      <TimelineTitle>New Service seen</TimelineTitle>
       <p className="mb-1 text-xs">
         <span className="font-bold">{item.app_proto} </span>
         on port{' '}
