@@ -31,7 +31,7 @@ export const ThreatsTimeline = ({ entity: entity }: { entity?: string }) => {
 
   const { data, isLoading } = useGetThreatHistoryQuery({
     ...params,
-    // is_offender: false,
+    is_offender: false,
   });
   const { data: offendersData } = useGetOffendersQuery(params);
 
