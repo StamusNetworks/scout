@@ -16,6 +16,7 @@ build-artifacts:
   rules:
     - if: $UPSTREAM_NAME == "nightly_build"
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_TAG
 
 docker:
   stage: build
