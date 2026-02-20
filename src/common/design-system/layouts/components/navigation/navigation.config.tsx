@@ -19,6 +19,7 @@ import {
   Search,
   SquareKanban,
   WandSparkles,
+  Workflow,
   // Telescope,
 } from 'lucide-react';
 
@@ -103,6 +104,13 @@ export const defaultMenu = (
         url: routes.events,
         title: 'Detection Events',
         icon: <Binary />,
+      },
+      {
+        key: 'events-flow',
+        type: 'link',
+        url: routes.events_flow,
+        title: 'Events Flow',
+        icon: <Workflow />,
       },
       {
         key: 'session-events',

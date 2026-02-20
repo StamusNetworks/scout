@@ -142,6 +142,38 @@ export function transformAggToSankey(
 }
 
 /**
+ * Builds a nested ES terms aggregation for a Sankey flow chart.
+ * Columns are iterated in reverse to produce inside-out nested aggs.
+ */
+export function buildFlowAggQuery(
+  columns: ProtoColumn[],
+  fieldTypes?: ESFieldTypes,
+): Record<string, unknown> {
+  let aggs: Record<string, unknown> = {};
+  for (let i = columns.length - 1; i >= 0; i--) {
+    const col = columns[i];
+    const field = resolveAggField(col, fieldTypes);
+    const terms: Record<string, unknown> = { field, size: 100 };
+    const fieldType = fieldTypes?.[col.key]?.type;
+    if (fieldType && NUMERIC_FIELD_TYPES.has(fieldType)) {
+      terms.missing = NUMERIC_MISSING_SENTINEL;
+    } else if (col.missing) {
+      terms.missing = col.missing;
+    }
+    const colAgg: Record<string, unknown> = { terms };
+    if (Object.keys(aggs).length > 0) colAgg.aggs = aggs;
+    aggs = { [`col_${i}`]: colAgg };
+  }
+  return {
+    aggs: {
+      first_seen: { min: { field: '@timestamp' } },
+      last_seen: { max: { field: '@timestamp' } },
+      ...aggs,
+    },
+  };
+}
+
+/**
  * Returns the highest node count across all columns in the Sankey data.
  */
 export function getMaxNodesPerColumn(data: SankeyChartData): number {

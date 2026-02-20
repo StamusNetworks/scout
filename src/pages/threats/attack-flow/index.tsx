@@ -7,11 +7,8 @@ import {
 } from '@/common/design-system/atoms/ui/context-menu';
 import type { ProtoColumn } from '@/common/design-system/graphs/proto-flow/flow.columns';
 import {
-  type ESFieldTypes,
+  buildFlowAggQuery,
   getMaxNodesPerColumn,
-  NUMERIC_FIELD_TYPES,
-  NUMERIC_MISSING_SENTINEL,
-  resolveAggField,
   transformAggToSankey,
 } from '@/common/design-system/graphs/sankey/sankey.utils';
 import {
@@ -19,9 +16,9 @@ import {
   type SankeyNodeInfo,
 } from '@/common/design-system/graphs/sankey/sankey-chart';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { useGetEventsAggregationQuery } from '@/features/hunt/events/api/events.api';
 import { ContextMenuContent } from '@/features/hunt/filtering/query-filters/components/event-value/context-menu/context-menu.content';
 import { addQueryFilter } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
-import { useGetThreatsAttackFlowAggregationQuery } from '@/features/hunt/threats/api/threats-attack-flow.api';
 import { useGetESMappingQuery } from '@/features/user/settings/settings.api';
 import { useAppDispatch } from '@/store/store';
 
@@ -53,79 +50,22 @@ const ATTACK_FLOW_COLUMNS: ProtoColumn[] = [
   },
 ];
 
-function buildAttackFlowAggQuery(
-  columns: ProtoColumn[],
-  qfilter?: string,
-  tenant?: number,
-  fieldTypes?: ESFieldTypes,
-) {
-  const qfilterParts = [
-    'event_type:stamus AND NOT stamus.kill_chain:pre_condition',
-  ];
-  if (qfilter) {
-    qfilterParts.push(qfilter);
-  }
-  if (tenant) {
-    qfilterParts.push(`tenant:${tenant}`);
-  }
-
-  // Build nested aggs from innermost column to outermost
-  let aggs: Record<string, unknown> = {};
-  for (let i = columns.length - 1; i >= 0; i--) {
-    const col = columns[i];
-    const field = resolveAggField(col, fieldTypes);
-    const terms: Record<string, unknown> = {
-      field,
-      size: 100,
-    };
-    const fieldType = fieldTypes?.[col.key]?.type;
-    if (fieldType && NUMERIC_FIELD_TYPES.has(fieldType)) {
-      terms.missing = NUMERIC_MISSING_SENTINEL;
-    } else if (col.missing) {
-      terms.missing = col.missing;
-    }
-    const colAgg: Record<string, unknown> = { terms };
-    if (Object.keys(aggs).length > 0) {
-      colAgg.aggs = aggs;
-    }
-    aggs = { [`col_${i}`]: colAgg };
-  }
-
-  return {
-    index: 'logstash-*',
-    size: 0,
-    tenant,
-    qfilter: qfilterParts.join(' AND '),
-    aggs: {
-      aggs: {
-        first_seen: { min: { field: '@timestamp' } },
-        last_seen: { max: { field: '@timestamp' } },
-        ...aggs,
-      },
-    },
-  };
-}
-
 export const ThreatsAttackFlowPage = () => {
   const dispatch = useAppDispatch();
   const globalParams = useGlobalQueryParams(['dates', 'tenant', 'qfilter']);
   const { data: esMapping } = useGetESMappingQuery();
 
-  const body = useMemo(
-    () =>
-      buildAttackFlowAggQuery(
-        ATTACK_FLOW_COLUMNS,
-        undefined,
-        globalParams.tenant,
-        esMapping,
-      ),
-    [globalParams.tenant, esMapping],
+  const aggs = useMemo(
+    () => buildFlowAggQuery(ATTACK_FLOW_COLUMNS, esMapping),
+    [esMapping],
   );
 
-  const { data } = useGetThreatsAttackFlowAggregationQuery({
+  const { data } = useGetEventsAggregationQuery({
     start_date: globalParams.start_date,
     end_date: globalParams.end_date,
-    body,
+    qfilter: 'event_type:stamus AND NOT stamus.kill_chain:pre_condition',
+    tenant: globalParams.tenant,
+    aggs,
   });
 
   const sankeyData = useMemo(() => {

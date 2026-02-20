@@ -15,6 +15,7 @@ import { Deeplinks } from '@/pages/deeplinks';
 import { DetectionMethods } from '@/pages/detection-methods';
 import { Events } from '@/pages/events';
 import { EventByIdPage } from '@/pages/events/:eventId';
+import { EventsFlowPage } from '@/pages/events-flow';
 import { ExplorePage } from '@/pages/explore';
 import { Explorer } from '@/pages/explorer';
 import { FiltersActionsList } from '@/pages/filter-actions';
@@ -601,6 +602,14 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
             element: (
               <PageBoundary key="explorer">
                 <Explorer />
+              </PageBoundary>
+            ),
+          },
+          {
+            path: routes.events_flow,
+            element: (
+              <PageBoundary key="events-flow">
+                <EventsFlowPage />
               </PageBoundary>
             ),
           },

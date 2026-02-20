@@ -1,11 +1,21 @@
+import { Workflow } from 'lucide-react';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
+import { DefaultPage } from '@/common/design-system/atoms/default-page';
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import {
   ContextMenu,
   ContextMenuTrigger,
 } from '@/common/design-system/atoms/ui/context-menu';
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+} from '@/common/design-system/atoms/ui/empty';
+import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { DateTime } from '@/common/design-system/entities/date-time';
 import type { ProtoColumn } from '@/common/design-system/graphs/proto-flow/flow.columns';
 import protoColumns from '@/common/design-system/graphs/proto-flow/flow.columns';
@@ -20,34 +30,76 @@ import {
   SankeyChart,
   type SankeyNodeInfo,
 } from '@/common/design-system/graphs/sankey/sankey-chart';
+import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { usePageTitle } from '@/common/lib/use-page-title';
 import {
   useGetEventsAggregationQuery,
   useGetProtocolsFromEventsQuery,
 } from '@/features/hunt/events/api/events.api';
 import { ContextMenuContent } from '@/features/hunt/filtering/query-filters/components/event-value/context-menu/context-menu.content';
+import type { EventTypes } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
 import { addQueryFilter } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
 import { useGetESMappingQuery } from '@/features/user/settings/settings.api';
 import { useAppDispatch } from '@/store/store';
 
-import { useSignatureDetailsParams } from '../signatures-table/signatures-table.utils';
+function buildEventsFlowQfilter(
+  qfilter?: string,
+  eventTypes?: EventTypes | null,
+): string | undefined {
+  const parts: string[] = [];
+  if (qfilter) parts.push(qfilter);
 
-export const SignatureFlow = ({
-  sid,
-  methodType,
-  applyGlobalFilters,
-}: {
-  sid: number;
-  methodType?: string;
-  applyGlobalFilters: boolean;
-}) => {
-  const globalParams = useSignatureDetailsParams(sid, applyGlobalFilters);
+  if (eventTypes) {
+    const activeTypes = [
+      eventTypes.alert && 'event_type:alert',
+      eventTypes.stamus && 'event_type:stamus',
+      eventTypes.discovery && 'event_type:discovery',
+    ].filter(Boolean);
+    // Only restrict when a subset is active (all true = no restriction needed)
+    if (activeTypes.length > 0) {
+      parts.push(`(${activeTypes.join(' OR ')})`);
+    }
+  }
 
-  const protocolsQfilter = useMemo(() => {
-    const parts = [`alert.signature_id:${sid}`];
-    if (globalParams.qfilter) parts.push(globalParams.qfilter);
-    return parts.join(' AND ');
-  }, [sid, globalParams.qfilter]);
+  return parts.length ? parts.join(' AND ') : undefined;
+}
+
+export const EventsFlowPage = () => {
+  usePageTitle('Events Flow');
+
+  return (
+    <>
+      <OutletBreadcrumb>Events Flow</OutletBreadcrumb>
+      <DefaultPage
+        title="Events Flow"
+        description="Visualize event flows grouped by application protocol using Sankey charts, enabling deep exploration of network traffic patterns across all detection events."
+      >
+        <EventsFlow />
+      </DefaultPage>
+    </>
+  );
+};
+
+function EventsFlow() {
+  const globalParams = useGlobalQueryParams(['dates', 'qfilter', 'tenant']);
+
+  const eventTypes = useMemo(
+    () =>
+      globalParams.alert !== undefined
+        ? {
+            alert: globalParams.alert,
+            stamus: globalParams.stamus!,
+            discovery: globalParams.discovery!,
+          }
+        : null,
+    [globalParams.alert, globalParams.stamus, globalParams.discovery],
+  );
+
+  const protocolsQfilter = useMemo(
+    () => buildEventsFlowQfilter(globalParams.qfilter, eventTypes),
+    [globalParams.qfilter, eventTypes],
+  );
 
   const { data: protocols, isLoading } = useGetProtocolsFromEventsQuery({
     start_date: globalParams.start_date,
@@ -56,41 +108,61 @@ export const SignatureFlow = ({
     tenant: globalParams.tenant,
   });
 
-  if (isLoading) return null;
+  if (isLoading) {
+    return <Spin />;
+  }
+
+  if (!protocols?.length) {
+    return (
+      <Empty className="border md:py-32">
+        <EmptyMedia variant="icon">
+          <Workflow />
+        </EmptyMedia>
+        <EmptyContent>
+          <EmptyHeader>No events found</EmptyHeader>
+          <EmptyDescription>
+            Either there are no events or the filters are too restrictive.
+          </EmptyDescription>
+        </EmptyContent>
+      </Empty>
+    );
+  }
 
   return (
-    <>
-      {(protocols ?? []).map((appProto) => (
-        <SignatureFlowForProtocol
+    <Column className="gap-6">
+      {protocols.map((appProto) => (
+        <EventsFlowForProtocol
           key={appProto}
           appProto={appProto}
-          methodType={methodType}
           globalParams={globalParams}
+          eventTypes={eventTypes}
         />
       ))}
-    </>
+    </Column>
   );
-};
+}
 
-function SignatureFlowForProtocol({
+function EventsFlowForProtocol({
   appProto,
-  methodType,
   globalParams,
+  eventTypes,
 }: {
   appProto: string;
-  methodType?: string;
   globalParams: ReturnType<typeof useGlobalQueryParams>;
+  eventTypes: EventTypes | null;
 }) {
   const dispatch = useAppDispatch();
   const { data: esMapping } = useGetESMappingQuery();
 
   const columns = useMemo(() => {
-    const cols =
-      methodType === 'code'
-        ? protoColumns.code
-        : (protoColumns[appProto] ?? protoColumns.default);
+    const cols = protoColumns[appProto] ?? protoColumns.default;
     return cols as ProtoColumn[];
-  }, [appProto, methodType]);
+  }, [appProto]);
+
+  const enhancedQfilter = useMemo(
+    () => buildEventsFlowQfilter(globalParams.qfilter, eventTypes),
+    [globalParams.qfilter, eventTypes],
+  );
 
   const aggs = useMemo(
     () => buildFlowAggQuery(columns, esMapping),
@@ -100,20 +172,9 @@ function SignatureFlowForProtocol({
   const qfilter = useMemo(() => {
     const parts: string[] = [];
     if (appProto !== 'default') parts.push(`app_proto:${appProto}`);
-    if (globalParams.qfilter) parts.push(globalParams.qfilter);
-    const types = [];
-    if (globalParams.stamus) types.push('event_type:stamus');
-    if (globalParams.alert) types.push('event_type:alert');
-    if (globalParams.discovery) types.push('event_types.discovery');
-    parts.push(`(${types.join(' OR ')})`);
+    if (enhancedQfilter) parts.push(enhancedQfilter);
     return parts.join(' AND ') || undefined;
-  }, [
-    appProto,
-    globalParams.qfilter,
-    globalParams.stamus,
-    globalParams.alert,
-    globalParams.discovery,
-  ]);
+  }, [appProto, enhancedQfilter]);
 
   const { data } = useGetEventsAggregationQuery({
     start_date: globalParams.start_date,
@@ -138,7 +199,6 @@ function SignatureFlowForProtocol({
     return extractTimestamps(data.aggregations);
   }, [data]);
 
-  // Context menu state for right-click on Sankey nodes
   const pendingNodeRef = useRef<{
     query_key: string;
     value: string | number;

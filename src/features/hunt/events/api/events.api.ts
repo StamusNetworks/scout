@@ -169,6 +169,63 @@ export const EventsAPI = API.injectEndpoints({
         method: 'GET',
       }),
     }),
+    getProtocolsFromEvents: builder.query<
+      string[],
+      Dates & Tenant & { qfilter?: string }
+    >({
+      query: ({ qfilter, tenant, ...rest }) => {
+        const qfilterParts: string[] = [];
+        if (qfilter) qfilterParts.push(qfilter);
+        if (tenant !== undefined) qfilterParts.push(`tenant:${tenant}`);
+        return {
+          url: `/rules/es/search/`,
+          method: 'POST',
+          params: buildQueryParams(rest, { time_format: 'elastic' }),
+          body: {
+            index: 'logstash-*',
+            size: 0,
+            tenant,
+            qfilter: qfilterParts.join(' AND '),
+            aggs: {
+              aggs: {
+                protocols: {
+                  terms: { field: 'app_proto.keyword', size: 20 },
+                },
+              },
+            },
+          },
+        };
+      },
+      transformResponse: (data: {
+        aggregations: {
+          protocols: { buckets: { key: string; doc_count: number }[] };
+        };
+      }) => data.aggregations.protocols.buckets.map((b) => b.key),
+      providesTags: ['Reload'],
+    }),
+    getEventsAggregation: builder.query<
+      { aggregations: Record<string, unknown> },
+      Dates & Tenant & { qfilter?: string; aggs: Record<string, unknown> }
+    >({
+      query: ({ aggs, qfilter, tenant, ...rest }) => {
+        const qfilterParts: string[] = [];
+        if (qfilter) qfilterParts.push(qfilter);
+        if (tenant !== undefined) qfilterParts.push(`tenant:${tenant}`);
+        return {
+          url: `/rules/es/search/`,
+          method: 'POST',
+          params: buildQueryParams(rest, { time_format: 'elastic' }),
+          body: {
+            index: 'logstash-*',
+            size: 0,
+            tenant,
+            qfilter: qfilterParts.join(' AND '),
+            aggs,
+          },
+        };
+      },
+      providesTags: ['Reload'],
+    }),
   }),
 });
 
@@ -183,4 +240,6 @@ export const {
   useUploadAlertToProbeMutation,
   useRequestPcapExtractionMutation,
   useRequestPcapUploadMutation,
+  useGetProtocolsFromEventsQuery,
+  useGetEventsAggregationQuery,
 } = EventsAPI;

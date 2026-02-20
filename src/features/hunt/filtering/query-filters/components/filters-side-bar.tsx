@@ -144,6 +144,10 @@ export const FiltersSideBar = () => {
         enabled: ['outliers', 'events', 'tags', 'query_filters'],
         filterTypes: [FilterCategory.EVENT, FilterCategory.HOST],
       },
+      [routes.events_flow]: {
+        enabled: ['outliers', 'events', 'tags', 'query_filters'],
+        filterTypes: [FilterCategory.EVENT],
+      },
       [routes.detection_methods]: {
         enabled: ['outliers', 'events', 'tags', 'query_filters'],
         filterTypes: [FilterCategory.SIGNATURE, FilterCategory.EVENT],
