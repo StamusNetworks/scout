@@ -36,7 +36,7 @@ export const KillchainTag = ({
     killChainsConfig[killchain]?.name.toUpperCase();
 
   const defaultOnClick = useCallback(() => {
-    navigate(routes.threats + '?killchain=' + killchain);
+    navigate(routes.threats_entities + '?killchain=' + killchain);
   }, [navigate, killchain]);
 
   const contextMenuOptions = useMemo(
