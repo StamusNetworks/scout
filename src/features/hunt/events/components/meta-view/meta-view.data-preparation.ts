@@ -339,7 +339,7 @@ const extractDnsData = (event: DnsEvent): MetaViewDns => {
     id: event.dns.id,
     type: 'answer',
     rrtype: event.dns.rrtype,
-    answers: event.dns.answers.map((answer) => ({
+    answers: event.dns.answers?.map((answer) => ({
       rrname: answer.rrname,
       rrtype: answer.rrtype,
       ttl: answer.ttl,
