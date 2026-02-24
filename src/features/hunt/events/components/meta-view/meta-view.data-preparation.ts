@@ -268,9 +268,10 @@ const extractFlowData = (flow: FlowEvent['flow']): MetaViewFlow => ({
   start: flow.start,
   end: flow.end,
   duration: flow.end
-    ? getDuration(new Date(flow.start), new Date(flow.end)) ||
-      flow.age + ' second'
-    : undefined,
+    ? getDuration(new Date(flow.start), new Date(flow.end), {
+        precision: 4,
+      })
+    : 'Not finished',
   pkts_toserver: flow.pkts_toserver ? formatNumber(flow.pkts_toserver) : 'n/a',
   bytes_toserver: flow.bytes_toserver
     ? formatBytes(flow.bytes_toserver)

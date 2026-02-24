@@ -211,8 +211,11 @@ export const TransactionCard = ({ row }: { row: Event }) => {
                     ? getDuration(
                         new Date(row.flow.start),
                         new Date(row.flow.end),
-                      ) || 'less than a second'
-                    : 'less than a second'}
+                        {
+                          precision: 3,
+                        },
+                      )
+                    : 'Not finished'}
                   )
                 </Row>
               ) : (

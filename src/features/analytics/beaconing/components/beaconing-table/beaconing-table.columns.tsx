@@ -65,6 +65,7 @@ export const beaconingTableColumns: CustomColumnDef<BeaconingEvent>[] = [
       getDuration(
         new Date(row.beacon_report?.first_seen),
         new Date(row.beacon_report?.last_seen),
+        { precision: 3 },
       ),
     enableSorting: false,
   },

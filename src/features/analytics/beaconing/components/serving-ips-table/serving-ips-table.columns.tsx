@@ -85,6 +85,7 @@ export const servingIpsTableColumns: CustomColumnDef<BeaconingEvent>[] = [
       getDuration(
         new Date(row.beacon_report?.first_seen),
         new Date(row.beacon_report?.last_seen),
+        { precision: 3 },
       ),
     enableSorting: false,
   },
@@ -149,6 +150,7 @@ export const exportColumns: ExportColumn<BeaconingEvent>[] = [
       getDuration(
         new Date(beacon_report?.first_seen),
         new Date(beacon_report?.last_seen),
+        { precision: 3 },
       ),
   },
   {
