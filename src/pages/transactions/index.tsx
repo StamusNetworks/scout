@@ -257,7 +257,7 @@ export const TransactionCard = ({ row }: { row: Event }) => {
         </Column>
         <EventValue
           query_key="event_type"
-          value={'bittorrent'}
+          value={row.event_type}
         />
         {row.event_type === 'flow' ? (
           <Row className="items-center gap-4">
