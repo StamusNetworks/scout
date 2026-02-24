@@ -1,5 +1,6 @@
 import { screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
+import { NuqsAdapter } from 'nuqs/adapters/react-router/v6';
 import { MemoryRouter } from 'react-router-dom';
 
 import { BreadcrumbProvider } from '@/common/design-system/molecules/breadcrumbs';
@@ -11,9 +12,11 @@ import { VolumetryPage } from './index';
 const renderPage = () =>
   renderWithProviders(
     <MemoryRouter>
-      <BreadcrumbProvider>
-        <VolumetryPage />
-      </BreadcrumbProvider>
+      <NuqsAdapter>
+        <BreadcrumbProvider>
+          <VolumetryPage />
+        </BreadcrumbProvider>
+      </NuqsAdapter>
     </MemoryRouter>,
   );
 
@@ -35,15 +38,52 @@ const mockEventsCount = {
   doc_count: 523,
 };
 
-const mockCountsTimeline = {
-  from_date: 1700000000000,
-  to_date: 1700086400000,
-  interval: 3600000,
-  relevant: {
-    entries: [
-      { time: 1700000000000, count: 10 },
-      { time: 1700003600000, count: 25 },
-    ],
+const mockProbes = {
+  count: 1,
+  next: null,
+  previous: null,
+  results: [
+    {
+      appliance_id: 2,
+      name: 'SSProbe-1',
+      descr: 'Stamus Probe',
+      created_date: '2026-02-24T02:12:25.593266+01:00',
+      updated_date: '2026-02-24T03:59:15.015230+01:00',
+      address: '10.136.4.10',
+      port: 22,
+      last_seen: '2026-02-24T04:40:02.638155+01:00',
+      cores_count: 2,
+      cpu_model: 'GenuineIntel',
+      memory: 3915,
+      kernel: '6.1.0-43-amd64',
+      distribution: 'Debian GNU/Linux 12 (bookworm)',
+      app_is_up: false,
+      suri_running: true,
+      suri_last_seen: '2026-02-24T04:40:02.663656+01:00',
+    },
+  ],
+};
+
+const mockEventsTimeline = {
+  took: 5,
+  timed_out: false,
+  _shards: { total: 1, successful: 1, skipped: 0, failed: 0 },
+  hits: { total: { value: 100, relation: 'eq' }, max_score: null, hits: [] },
+  aggregations: {
+    date: {
+      buckets: [
+        {
+          key_as_string: '2026-02-24T00:00:00.000Z',
+          key: 1740355200000,
+          doc_count: 10,
+        },
+        {
+          key_as_string: '2026-02-24T01:00:00.000Z',
+          key: 1740358800000,
+          doc_count: 25,
+        },
+      ],
+    },
   },
 };
 
@@ -55,8 +95,11 @@ beforeEach(() => {
     http.get(baseUrl + '/rules/es/alerts_count', () =>
       HttpResponse.json(mockEventsCount),
     ),
-    http.get(baseUrl + '/rules/es/timeline/', () =>
-      HttpResponse.json(mockCountsTimeline),
+    http.get(baseUrl + '/appliances/probe/', () =>
+      HttpResponse.json(mockProbes),
+    ),
+    http.get(baseUrl + '/rules/es/events_timeline/', () =>
+      HttpResponse.json(mockEventsTimeline),
     ),
   );
 });
@@ -81,12 +124,16 @@ describe('VolumetryPage', () => {
     });
   });
 
-  it('renders the events timeline section', async () => {
+  it('renders the probe search and probe list', async () => {
     renderPage();
 
-    expect(screen.getByText('Events Timeline')).toBeInTheDocument();
-    expect(screen.getByText('Tags')).toBeInTheDocument();
-    expect(screen.getByText('Probes')).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText('Filter probes by name...'),
+    ).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText('SSProbe-1')).toBeInTheDocument();
+    });
   });
 
   it('displays page title and description', () => {

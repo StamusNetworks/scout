@@ -9,6 +9,7 @@ import { Tenant } from '../tenancy/tenancy.slice';
 import {
   GlobalSettings,
   NetworkDefinition,
+  Probe,
   SciriusContext,
   Source,
   SystemSettings,
@@ -85,6 +86,14 @@ export const SettingsAPI = API.injectEndpoints({
       }),
       providesTags: ['Reload'],
     }),
+    getProbes: builder.query<Probe[], void>({
+      query: () => ({
+        url: '/appliances/probe/?page_size=1000',
+        method: 'GET',
+      }),
+      transformResponse: (response: Paginated<Probe>) => response.results,
+      providesTags: ['Reload'],
+    }),
   }),
 });
 
@@ -95,4 +104,5 @@ export const {
   useGetESMappingQuery,
   useGetSciriusContextQuery,
   useGetSourcesQuery,
+  useGetProbesQuery,
 } = SettingsAPI;
