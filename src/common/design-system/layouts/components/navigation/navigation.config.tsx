@@ -2,6 +2,7 @@ import { GearIcon } from '@radix-ui/react-icons';
 import {
   Activity,
   ArrowDownUp,
+  BarChart3,
   Binary,
   Biohazard,
   ChefHat,
@@ -43,6 +44,14 @@ export const defaultMenu = (
         url: routes.operational_center,
         title: 'Operational Center',
         icon: <Activity />,
+        enterprise: true,
+      },
+      {
+        key: 'volumetry',
+        type: 'link',
+        url: routes.volumetry,
+        title: 'Volumetry',
+        icon: <BarChart3 />,
         enterprise: true,
       },
       {

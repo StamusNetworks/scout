@@ -23,6 +23,7 @@ import { HostDetails } from '@/pages/hosts/[hostId]';
 import { InvestigationsPage } from '@/pages/investigations';
 import { OperationalCenter } from '@/pages/operational-center';
 import { ThreatsGraphPage } from '@/pages/threats/graph';
+import { VolumetryPage } from '@/pages/volumetry';
 
 import { Root } from '../app/root';
 import { NotFound } from '../common/design-system/layouts/components/404';
@@ -92,6 +93,14 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                 element: (
                   <PageBoundary key="operational-center">
                     <OperationalCenter />
+                  </PageBoundary>
+                ),
+              },
+              {
+                path: routes.volumetry,
+                element: (
+                  <PageBoundary key="volumetry">
+                    <VolumetryPage />
                   </PageBoundary>
                 ),
               },

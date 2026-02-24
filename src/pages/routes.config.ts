@@ -70,6 +70,7 @@ export const routes = {
   user_settings: '/user-settings',
   session_events: '/session-events',
   filter_sets: '/filter-sets',
+  volumetry: '/volumetry',
 } as const;
 
 export type Routes = typeof routes;
