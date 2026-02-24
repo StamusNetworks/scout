@@ -191,7 +191,7 @@ export const TransactionCard = ({ row }: { row: Event }) => {
   const [open, setOpen] = useState(false);
   return (
     <CardContent className="p-0">
-      <Grid className="grid-cols-[1.25rem_2fr_3rem_3fr] items-center justify-between gap-4 text-sm">
+      <Grid className="grid-cols-[1.25rem_2fr_min-content_3fr] items-center justify-between gap-4 text-sm">
         <Button
           variant="outline"
           onClick={() => setOpen(!open)}
@@ -254,7 +254,7 @@ export const TransactionCard = ({ row }: { row: Event }) => {
         </Column>
         <EventValue
           query_key="event_type"
-          value={row.event_type}
+          value={'bittorrent'}
         />
         {row.event_type === 'flow' ? (
           <Row className="items-center gap-4">
