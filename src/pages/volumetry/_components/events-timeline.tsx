@@ -162,7 +162,7 @@ export const EventsTimeline = memo(function EventsTimeline({
               'text-muted-foreground text-xs shadow-sm backdrop-blur-sm',
             )}
           >
-            <Spin className="h-3 w-3" />
+            <Spin className="h-3 w-3 animate-spin" />
             <span>Loading…</span>
           </div>
         </div>
