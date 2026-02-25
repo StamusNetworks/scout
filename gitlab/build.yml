@@ -6,7 +6,7 @@ build-artifacts:
     - corepack enable
     - corepack prepare pnpm@10.26.0 --activate
     - pnpm install --frozen-lockfile
-    - pnpm run build --base=/preview/
+    - pnpm run build --base=/ui/
   artifacts:
     name: "frontend-dist-$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA"
     when: on_success
