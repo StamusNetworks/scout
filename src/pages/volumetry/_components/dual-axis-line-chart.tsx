@@ -1,6 +1,6 @@
 import { add, format } from 'date-fns';
 import * as React from 'react';
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts';
+import { CartesianGrid, Line, LineChart, XAxis } from 'recharts';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -10,68 +10,74 @@ import {
 } from '@/common/design-system/atoms/ui/chart';
 import { cn } from '@/common/lib/utils';
 
-export type DualAxisTimelineData = {
+export type TimelineSeries = {
+  key: string;
+  label: string;
+  color: string;
   data: { time: number; count: number }[];
   interval: number;
 };
 
-type DualAxisLineChartProps = {
-  leftSeries: DualAxisTimelineData;
-  rightSeries: DualAxisTimelineData;
-  leftLabel: string;
-  rightLabel: string;
-  leftColor: string;
-  rightColor: string;
+type MultiSeriesLineChartProps = {
+  series: TimelineSeries[];
   className?: string;
 };
 
-type MergedPoint = {
-  time: number;
-  left: number;
-  right: number;
-};
-
 function mergeTimelines(
-  left: { time: number; count: number }[],
-  right: { time: number; count: number }[],
-): MergedPoint[] {
-  const map = new Map<number, MergedPoint>();
-
-  for (const point of left) {
-    map.set(point.time, { time: point.time, left: point.count, right: 0 });
+  seriesList: TimelineSeries[],
+): Record<string, number>[] {
+  // Compute max per series for normalization
+  const maxByKey = new Map<string, number>();
+  for (const s of seriesList) {
+    let max = 0;
+    for (const point of s.data) {
+      if (point.count > max) max = point.count;
+    }
+    maxByKey.set(s.key, max);
   }
-  for (const point of right) {
-    const existing = map.get(point.time);
-    if (existing) {
-      existing.right = point.count;
-    } else {
-      map.set(point.time, { time: point.time, left: 0, right: point.count });
+
+  const map = new Map<number, Record<string, number>>();
+
+  for (const s of seriesList) {
+    const max = maxByKey.get(s.key) ?? 1;
+    for (const point of s.data) {
+      let entry = map.get(point.time);
+      if (!entry) {
+        entry = { time: point.time };
+        map.set(point.time, entry);
+      }
+      // Normalized value (0–1) for chart rendering
+      entry[s.key] = max > 0 ? point.count / max : 0;
+      // Raw value for tooltip display
+      entry[`${s.key}_raw`] = point.count;
+    }
+  }
+
+  // Fill missing keys with 0
+  const keys = seriesList.map((s) => s.key);
+  for (const entry of map.values()) {
+    for (const key of keys) {
+      if (!(key in entry)) {
+        entry[key] = 0;
+        entry[`${key}_raw`] = 0;
+      }
     }
   }
 
   return Array.from(map.values()).sort((a, b) => a.time - b.time);
 }
 
-export const DualAxisLineChart = ({
-  leftSeries,
-  rightSeries,
-  leftLabel,
-  rightLabel,
-  leftColor,
-  rightColor,
+export const MultiSeriesLineChart = ({
+  series,
   className,
-}: DualAxisLineChartProps) => {
-  const chartData = React.useMemo(
-    () => mergeTimelines(leftSeries.data, rightSeries.data),
-    [leftSeries.data, rightSeries.data],
+}: MultiSeriesLineChartProps) => {
+  const chartData = React.useMemo(() => mergeTimelines(series), [series]);
+
+  const interval = series.find((s) => s.interval > 0)?.interval ?? 0;
+
+  const chartConfig = Object.fromEntries(
+    series.map((s) => [s.key, { label: s.label, color: s.color }]),
   );
-
-  const interval = leftSeries.interval || rightSeries.interval;
-
-  const chartConfig = {
-    left: { label: leftLabel, color: leftColor },
-    right: { label: rightLabel, color: rightColor },
-  };
 
   return (
     <ChartContainer
@@ -102,72 +108,43 @@ export const DualAxisLineChart = ({
             );
           }}
         />
-        <YAxis
-          yAxisId="left"
-          tickFormatter={formatAxisValue}
-          width={50}
-        />
-        <YAxis
-          yAxisId="right"
-          orientation="right"
-          tickFormatter={formatAxisValue}
-          width={50}
-        />
         <ChartTooltip
           content={
-            <DualAxisTooltipContent
-              leftLabel={leftLabel}
-              rightLabel={rightLabel}
-              leftColor={leftColor}
-              rightColor={rightColor}
+            <MultiSeriesTooltipContent
+              series={series}
               interval={interval}
             />
           }
         />
-        <Line
-          yAxisId="left"
-          type="monotone"
-          dataKey="left"
-          stroke={leftColor}
-          strokeWidth={2}
-          dot={false}
-          name={leftLabel}
-        />
-        <Line
-          yAxisId="right"
-          type="monotone"
-          dataKey="right"
-          stroke={rightColor}
-          strokeWidth={2}
-          dot={false}
-          name={rightLabel}
-        />
+        {series.map((s) => (
+          <Line
+            key={s.key}
+            type="monotone"
+            dataKey={s.key}
+            stroke={s.color}
+            strokeWidth={2}
+            dot={false}
+            name={s.label}
+          />
+        ))}
       </LineChart>
     </ChartContainer>
   );
 };
 
-function formatAxisValue(value: number) {
-  if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
-  if (value >= 1_000) return `${(value / 1_000).toFixed(1)}K`;
-  return value.toString();
-}
-
-function DualAxisTooltipContent({
+function MultiSeriesTooltipContent({
   active,
   payload,
-  leftLabel,
-  rightLabel,
-  leftColor,
-  rightColor,
+  series,
   interval,
 }: {
   active?: boolean;
-  payload?: Array<{ value: number; dataKey: string; payload: MergedPoint }>;
-  leftLabel: string;
-  rightLabel: string;
-  leftColor: string;
-  rightColor: string;
+  payload?: Array<{
+    value: number;
+    dataKey: string;
+    payload: Record<string, number>;
+  }>;
+  series: TimelineSeries[];
   interval: number;
 }) {
   if (!active || !payload?.length) return null;
@@ -193,26 +170,21 @@ function DualAxisTooltipContent({
         </Row>
       </Column>
       <div className="grid gap-1">
-        <Row className="items-center gap-2">
-          <div
-            className="h-2.5 w-2.5 shrink-0 rounded-[2px]"
-            style={{ backgroundColor: leftColor }}
-          />
-          <span className="text-muted-foreground flex-1">{leftLabel}</span>
-          <span className="font-mono font-medium tabular-nums">
-            {point.left.toLocaleString()}
-          </span>
-        </Row>
-        <Row className="items-center gap-2">
-          <div
-            className="h-2.5 w-2.5 shrink-0 rounded-[2px]"
-            style={{ backgroundColor: rightColor }}
-          />
-          <span className="text-muted-foreground flex-1">{rightLabel}</span>
-          <span className="font-mono font-medium tabular-nums">
-            {point.right.toLocaleString()}
-          </span>
-        </Row>
+        {series.map((s) => (
+          <Row
+            key={s.key}
+            className="items-center gap-2"
+          >
+            <div
+              className="h-2.5 w-2.5 shrink-0 rounded-[2px]"
+              style={{ backgroundColor: s.color }}
+            />
+            <span className="text-muted-foreground flex-1">{s.label}</span>
+            <span className="font-mono font-medium tabular-nums">
+              {(point[`${s.key}_raw`] ?? 0).toLocaleString()}
+            </span>
+          </Row>
+        ))}
       </div>
     </div>
   );
