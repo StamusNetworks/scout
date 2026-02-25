@@ -1,4 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { NuqsAdapter } from 'nuqs/adapters/react-router/v6';
 import { MemoryRouter } from 'react-router-dom';
@@ -87,7 +88,19 @@ const mockEventsTimeline = {
   },
 };
 
-beforeEach(() => {
+const mockEmptyTimeline = {
+  took: 1,
+  timed_out: false,
+  _shards: { total: 1, successful: 1, skipped: 0, failed: 0 },
+  hits: { total: { value: 0, relation: 'eq' }, max_score: null, hits: [] },
+  aggregations: {
+    date: {
+      buckets: [],
+    },
+  },
+};
+
+const setupDefaultHandlers = () => {
   server.use(
     http.get(baseUrl + '/appliances/threat_family/global_stats', () =>
       HttpResponse.json(mockGlobalStats),
@@ -102,6 +115,10 @@ beforeEach(() => {
       HttpResponse.json(mockEventsTimeline),
     ),
   );
+};
+
+beforeEach(() => {
+  setupDefaultHandlers();
 });
 
 describe('VolumetryPage', () => {
@@ -145,5 +162,63 @@ describe('VolumetryPage', () => {
         'Overview of network data volume, transactions, and detection events over the selected time period.',
       ),
     ).toBeInTheDocument();
+  });
+
+  it('renders the series toggle bar with all series', () => {
+    renderPage();
+
+    expect(screen.getByText('Network Events')).toBeInTheDocument();
+    expect(screen.getByText('Flows')).toBeInTheDocument();
+    expect(screen.getByText('Alerts')).toBeInTheDocument();
+    expect(screen.getByText('Compromises')).toBeInTheDocument();
+    expect(screen.getByText('Policy Violations')).toBeInTheDocument();
+    expect(screen.getByText('Sightings')).toBeInTheDocument();
+    expect(screen.getByText('Outlier Events')).toBeInTheDocument();
+  });
+
+  it('toggles series visibility on click', async () => {
+    const user = userEvent.setup();
+    renderPage();
+
+    const networkEventsToggle = screen
+      .getByText('Network Events')
+      .closest('button')!;
+    expect(networkEventsToggle).toHaveAttribute('data-state', 'on');
+
+    const flowsToggle = screen.getByText('Flows').closest('button')!;
+    expect(flowsToggle).toHaveAttribute('data-state', 'off');
+
+    await user.click(flowsToggle);
+    expect(flowsToggle).toHaveAttribute('data-state', 'on');
+  });
+
+  it('shows error state when timeline API fails', async () => {
+    server.use(
+      http.get(baseUrl + '/rules/es/events_timeline/', () =>
+        HttpResponse.json(null, { status: 500 }),
+      ),
+    );
+
+    renderPage();
+
+    await waitFor(() => {
+      const errorMessages = screen.getAllByText('Failed to load timeline data');
+      expect(errorMessages.length).toBeGreaterThanOrEqual(1);
+    });
+  });
+
+  it('shows empty state when timeline returns no buckets', async () => {
+    server.use(
+      http.get(baseUrl + '/rules/es/events_timeline/', () =>
+        HttpResponse.json(mockEmptyTimeline),
+      ),
+    );
+
+    renderPage();
+
+    await waitFor(() => {
+      const emptyMessages = screen.getAllByText('No data for this time range');
+      expect(emptyMessages.length).toBeGreaterThanOrEqual(1);
+    });
   });
 });

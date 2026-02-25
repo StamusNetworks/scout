@@ -25,6 +25,7 @@ import { useGetProbesQuery } from '@/features/user/settings/settings.api';
 
 import { indicators } from '../operational-center/config';
 import { EventsTimeline } from './_components/events-timeline';
+import { SeriesToggleBar } from './_components/series-toggle-bar';
 
 const pageSize = 5;
 
@@ -70,6 +71,9 @@ export const VolumetryPage = () => {
             loading={eventsLoading}
           />
         </Grid>
+        <div className="mb-4">
+          <SeriesToggleBar />
+        </div>
         <div className="mb-6">
           <EventsTimeline className="h-[250px]" />
         </div>
@@ -159,7 +163,7 @@ const ProbeTimelineList = () => {
                   {probe.address}
                 </span>
               </Row>
-              <EventsTimeline qfilterPrefix={`host:${probe.name}`} />
+              <EventsTimeline qfilterPrefix={`host:"${probe.name}"`} />
             </Column>
           ))}
           <ComposablePagination
