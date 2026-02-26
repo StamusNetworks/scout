@@ -2,7 +2,10 @@ import { useMemo } from 'react';
 
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 
-import { useGetActiveThreatsQuery } from '../api/threats.api';
+import {
+  useGetActiveThreatsQuery,
+  useGetThreatFamiliesQuery,
+} from '../api/threats.api';
 import { CoverageBlockSkeleton } from '../components/coverage-block/coverage-block.skeleton';
 import { ThreatBlockView } from '../components/coverage-block/threat-block';
 import { ThreatGrid } from '../components/threat-grid';
@@ -19,6 +22,7 @@ export const ThreatsList = ({
   const { data: threats, isLoading: threatsLoading } = useThreats(
     familyClass === 'all' ? {} : { family_class: familyClass },
   );
+  const { data: families } = useGetThreatFamiliesQuery({});
   const filteredThreats = useMemo(() => {
     return threats.filter((threat) => {
       if (threat.name.toLowerCase().includes(searchInput.toLowerCase())) {
@@ -55,6 +59,7 @@ export const ThreatsList = ({
           name={threat.name}
           isActive={!!activeThreatData?.entities[threat.pk]}
           description={threat.description}
+          familyName={families?.entities[threat.family]?.name}
         />
       ))}
     </ThreatGrid>

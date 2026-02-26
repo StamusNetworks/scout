@@ -4,7 +4,10 @@ import { values } from 'ramda';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { sortBy } from '@/common/lib/sorting';
 
-import { useGetActiveThreatsQuery } from '../api/threats.api';
+import {
+  useGetActiveThreatsQuery,
+  useGetThreatFamiliesQuery,
+} from '../api/threats.api';
 import { ActiveThreatBlockView } from '../components/coverage-block/active-threat-block';
 import { CoverageBlockSkeleton } from '../components/coverage-block/coverage-block.skeleton';
 import { ThreatGrid } from '../components/threat-grid';
@@ -21,6 +24,7 @@ export const ActiveThreatsList = ({
 }) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const { data: threats, isLoading: threatsLoading } = useCombinedThreats();
+  const { data: families } = useGetThreatFamiliesQuery({});
   const { data: activeThreatIds, isLoading: activeThreatsLoading } =
     useGetActiveThreatsQuery(params, {
       selectFromResult: (result) => ({
@@ -48,17 +52,24 @@ export const ActiveThreatsList = ({
   if (!threats) return null;
   return (
     <ThreatGrid>
-      {activeThreatIds?.map((threat) => (
-        <ActiveThreatBlockView
-          key={threat.pk}
-          id={threat.pk}
-          name={threat.name}
-          tooltip={threat.description}
-          familyClass={threats.entities[threat.pk]?.family_class}
-          victims={threat.nb_assets?.nb_victim}
-          victimsNew={threat.nb_assets?.nb_new_victim}
-        />
-      ))}
+      {activeThreatIds?.map((threat) => {
+        const threatDetail = threats.entities[threat.pk];
+        const familyName = threatDetail?.family
+          ? families?.entities[threatDetail.family]?.name
+          : undefined;
+        return (
+          <ActiveThreatBlockView
+            key={threat.pk}
+            id={threat.pk}
+            name={threat.name}
+            description={threat.description}
+            familyName={familyName}
+            familyClass={threatDetail?.family_class ?? 'doc'}
+            victims={threat.nb_assets?.nb_victim}
+            victimsNew={threat.nb_assets?.nb_new_victim}
+          />
+        );
+      })}
     </ThreatGrid>
   );
 };

@@ -22,7 +22,7 @@ export const CoveragePage = ({
 }) => {
   const [entityOrFamily, setEntityOrFamily] = useQueryState(
     'show',
-    parseAsStringLiteral(['threat', 'family']).withDefault('family'),
+    parseAsStringLiteral(['threat', 'family']).withDefault('threat'),
   );
   const [search, setSearch] = useQueryState(
     'search',
@@ -41,8 +41,8 @@ export const CoveragePage = ({
       >
         <Row className="w-full gap-2">
           <TabsList className="flex w-fit">
-            <TabsTrigger value="family">Families</TabsTrigger>
             <TabsTrigger value="threat">{entity}s</TabsTrigger>
+            <TabsTrigger value="family">Families</TabsTrigger>
           </TabsList>
           <Row className="gap-3">
             <TextFilter

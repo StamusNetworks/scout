@@ -41,7 +41,7 @@ export const ActiveFamilyBlock = ({ id }: { id: number }) => {
   return (
     <ActiveFamilyBlockView
       id={id}
-      tooltip={familyData.description}
+      description={familyData.description}
       familyClass={familyData.klass}
       name={familyData.name}
       victims={
@@ -58,7 +58,7 @@ interface ActiveFamilyBlockProps {
   id: number;
   familyClass: 'doc' | 'dopv';
   name: string;
-  tooltip: string;
+  description: string;
   victims: number;
   activeThreats: number;
 }
@@ -67,7 +67,7 @@ export const ActiveFamilyBlockView = ({
   id,
   familyClass,
   name,
-  tooltip,
+  description,
   victims,
   activeThreats,
 }: ActiveFamilyBlockProps) => (
@@ -77,15 +77,17 @@ export const ActiveFamilyBlockView = ({
     familyClass={familyClass}
     name={name}
     isActive
-    tooltip={tooltip}
+    description={description}
   >
-    <CoverageBlockRow
-      label="Impacted entities"
-      value={victims}
-    />
-    <CoverageBlockRow
-      label="Active threats"
-      value={activeThreats}
-    />
+    <div className="flex items-center gap-4">
+      <CoverageBlockRow
+        label="Impacted entities"
+        value={victims}
+      />
+      <CoverageBlockRow
+        label="Active threats"
+        value={activeThreats}
+      />
+    </div>
   </CoverageBlock>
 );

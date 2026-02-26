@@ -1,6 +1,7 @@
 import { VariantProps } from 'class-variance-authority';
 import { Link } from 'react-router-dom';
 
+import { Row } from '@/common/design-system/atoms/layout/row';
 import { Markdown } from '@/common/design-system/atoms/markdown';
 import { Badge, badgeVariants } from '@/common/design-system/atoms/ui/badge';
 import {
@@ -9,12 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/common/design-system/atoms/ui/card';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/common/design-system/atoms/ui/tooltip';
 import { routes } from '@/pages/routes.config';
 
 const getLink = (
@@ -26,22 +21,25 @@ const getLink = (
     `${familyClass === 'doc' ? 'threats' : 'policy_violations'}_coverage_${link}`
   ].replace(link === 'family' ? ':familyId' : ':threatId', id.toString());
 };
+
 export const CoverageBlock = ({
   id,
-  tooltip,
+  description,
   children,
   link,
   familyClass,
   name,
   isActive,
+  badge,
 }: {
   id: number;
   isActive: boolean;
-  tooltip?: string;
-  children: React.ReactNode;
+  description?: string;
+  children?: React.ReactNode;
   link: 'family' | 'threat';
   familyClass: 'doc' | 'dopv';
   name: string;
+  badge?: string;
 }) => {
   return (
     <Link
@@ -52,27 +50,23 @@ export const CoverageBlock = ({
         className="h-full"
         variant={isActive ? (familyClass === 'doc' ? 'doc' : 'dopv') : 'base'}
       >
-        <CardHeader className="w-full flex-row items-center justify-between gap-2 space-y-0 p-4">
+        <CardHeader className="w-full flex-row items-center justify-between gap-2 space-y-0 p-4 pb-2">
           <CardTitle className="overflow-hidden text-ellipsis whitespace-nowrap">
             {name}
           </CardTitle>
-          {!!tooltip && (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <div className="bg-muted flex h-5 w-5 items-center justify-center rounded-full text-xs font-black select-none">
-                    ?
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent className="max-w-96">
-                  <Markdown content={tooltip} />
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+          {!!badge && (
+            <span className="text-muted-foreground shrink-0 text-xs">
+              {badge}
+            </span>
           )}
         </CardHeader>
         <CardContent className="space-y-1 p-4 pt-0 text-sm">
           {children}
+          {!!description && (
+            <p className="text-muted-foreground line-clamp-4 text-xs">
+              <Markdown content={description} />
+            </p>
+          )}
         </CardContent>
       </Card>
     </Link>
@@ -87,15 +81,15 @@ interface CoverageBlockRowProps extends VariantProps<typeof badgeVariants> {
 export const CoverageBlockRow = ({
   label,
   value,
-  variant,
+  variant = 'default',
 }: CoverageBlockRowProps) => (
-  <div className="flex items-center justify-between">
+  <Row className="items-center gap-2">
     <span className="text-xs">{label}</span>{' '}
     <Badge
-      className="w-fit rounded-full px-1.5 py-0.25 text-xs"
+      className="w-fit rounded-md px-1.5 py-0.25 text-xs"
       variant={variant}
     >
       {value}
     </Badge>
-  </div>
+  </Row>
 );

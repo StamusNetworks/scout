@@ -40,7 +40,7 @@ export const FamilyActiveThreats = ({ familyId }: { familyId: number }) => {
               id={threat.pk}
               familyClass={threats.entities[threat.pk]?.family_class}
               name={threat.name}
-              tooltip={threat.description}
+              description={threat.description}
               victims={threat.nb_assets?.nb_victim}
               victimsNew={threat.nb_assets?.nb_new_victim}
             />
