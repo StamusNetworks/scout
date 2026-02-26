@@ -61,6 +61,7 @@ import { PolicyViolationsGraphPage } from './policy-violations/graph';
 import { PolicyViolationsImpactedEntities } from './policy-violations/impacted-entities';
 import { UserSettingsPage } from './preferences';
 import { Routes, routes } from './routes.config';
+import { SharePage } from './share';
 import { ThreatsPage } from './threats';
 import { ThreatsAttackFlowPage } from './threats/attack-flow';
 import { ThreatsCoveragePage } from './threats/coverage';
@@ -694,6 +695,14 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
             element: (
               <PageBoundary key="deeplink">
                 <Deeplink />
+              </PageBoundary>
+            ),
+          },
+          {
+            path: routes.share,
+            element: (
+              <PageBoundary key="share">
+                <SharePage />
               </PageBoundary>
             ),
           },

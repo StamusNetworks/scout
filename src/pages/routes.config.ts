@@ -4,6 +4,7 @@ export const routes = {
   register: '/register',
   home: '/',
   deeplink: '/deeplink',
+  share: '/share',
   explorer: '/explorer',
   events_flow: '/events-flow',
   events: '/detection-events',

@@ -1,0 +1,259 @@
+import { describe, expect, test } from 'vitest';
+
+import {
+  buildShareableState,
+  buildShareUrl,
+  decodeShareableState,
+  encodeShareableState,
+  type ShareableState,
+} from './shareable-state';
+
+const FULL_STATE: ShareableState = {
+  route: '/hosts/42/incidents',
+  tenant: 4,
+  time: { type: 'from', duration: 30, unit: 'days' },
+  tags: {
+    alert: true,
+    stamus: true,
+    discovery: false,
+    relevant: true,
+    informational: false,
+    untagged: true,
+    novelty: false,
+  },
+  filters: [
+    { key: 'src_ip', value: '192.168.1.1' },
+    { key: 'msg', value: 'alert test', negated: true },
+    { key: 'alert.severity', value: 3, wildcarded: true },
+  ],
+};
+
+describe('encodeShareableState / decodeShareableState', () => {
+  test('roundtrips a full state', () => {
+    const encoded = encodeShareableState(FULL_STATE);
+    expect(typeof encoded).toBe('string');
+    expect(decodeShareableState(encoded)).toEqual(FULL_STATE);
+  });
+
+  test('roundtrips minimal state (no tenant, no filters)', () => {
+    const minimal: ShareableState = {
+      route: '/explorer',
+      time: { type: 'all' },
+      tags: {
+        alert: true,
+        stamus: true,
+        discovery: true,
+        relevant: true,
+        informational: true,
+        untagged: true,
+        novelty: false,
+      },
+      filters: [],
+    };
+    expect(decodeShareableState(encodeShareableState(minimal))).toEqual(
+      minimal,
+    );
+  });
+
+  test('produces URL-safe output (no +, /, =)', () => {
+    const encoded = encodeShareableState(FULL_STATE);
+    expect(encoded).not.toMatch(/[+/=]/);
+  });
+
+  test('returns null for invalid input', () => {
+    expect(decodeShareableState('')).toBeNull();
+    expect(decodeShareableState('not-valid-base64!!!')).toBeNull();
+    expect(decodeShareableState('dGVzdA')).toBeNull(); // valid base64 but not JSON ShareableState
+  });
+
+  test('handles auto time type', () => {
+    const state: ShareableState = {
+      ...FULL_STATE,
+      time: { type: 'auto' },
+    };
+    expect(decodeShareableState(encodeShareableState(state))).toEqual(state);
+  });
+
+  test('handles range time type', () => {
+    const state: ShareableState = {
+      ...FULL_STATE,
+      time: { type: 'range', start: 1700000000000, end: 1700100000000 },
+    };
+    expect(decodeShareableState(encodeShareableState(state))).toEqual(state);
+  });
+});
+
+// Mock types matching Redux state shapes
+const DATES_FROM = {
+  type: 'from' as const,
+  from_duration: 30,
+  from_unit: 'days' as const,
+  start_date: 1700000000000,
+  end_date: 1700100000000,
+};
+
+const DATES_RANGE = {
+  type: 'range' as const,
+  start_date: 1700000000000,
+  end_date: 1700100000000,
+  from_duration: undefined,
+  from_unit: undefined,
+};
+
+const DATES_AUTO = {
+  type: 'auto' as const,
+  start_date: 1700000000000,
+  end_date: 1700100000000,
+  from_duration: undefined,
+  from_unit: undefined,
+};
+
+const DATES_ALL = {
+  type: 'all' as const,
+  start_date: undefined,
+  end_date: undefined,
+  from_duration: undefined,
+  from_unit: undefined,
+};
+
+const TAG_FILTERS = {
+  alert: true,
+  stamus: true,
+  discovery: false,
+  relevant: true,
+  informational: false,
+  untagged: true,
+  novelty: false,
+};
+
+const QUERY_FILTERS = [
+  {
+    id: '1',
+    key: 'src_ip',
+    value: '192.168.1.1',
+    is_suspended: false,
+    is_negated: false,
+    is_wildcarded: false,
+  },
+  {
+    id: '2',
+    key: 'msg',
+    value: 'test',
+    is_suspended: true,
+    is_negated: true,
+    is_wildcarded: false,
+  },
+  {
+    id: '3',
+    key: 'alert.severity',
+    value: 3,
+    is_suspended: false,
+    is_negated: false,
+    is_wildcarded: true,
+  },
+];
+
+describe('buildShareableState', () => {
+  test('builds state with relative time', () => {
+    const result = buildShareableState(
+      '/hosts/42/incidents',
+      DATES_FROM,
+      QUERY_FILTERS,
+      TAG_FILTERS,
+      4,
+    );
+    expect(result).toEqual({
+      route: '/hosts/42/incidents',
+      tenant: 4,
+      time: { type: 'from', duration: 30, unit: 'days' },
+      tags: TAG_FILTERS,
+      filters: [
+        { key: 'src_ip', value: '192.168.1.1' },
+        { key: 'alert.severity', value: 3, wildcarded: true },
+      ],
+    });
+  });
+
+  test('excludes suspended filters', () => {
+    const result = buildShareableState(
+      '/explorer',
+      DATES_ALL,
+      QUERY_FILTERS,
+      TAG_FILTERS,
+      undefined,
+    );
+    expect(result.filters).toHaveLength(2);
+    expect(result.filters.find((f) => f.key === 'msg')).toBeUndefined();
+  });
+
+  test('omits tenant when undefined', () => {
+    const result = buildShareableState(
+      '/explorer',
+      DATES_ALL,
+      [],
+      TAG_FILTERS,
+      undefined,
+    );
+    expect(result.tenant).toBeUndefined();
+    expect('tenant' in result).toBe(false);
+  });
+
+  test('omits negated/wildcarded when false', () => {
+    const result = buildShareableState(
+      '/explorer',
+      DATES_ALL,
+      QUERY_FILTERS,
+      TAG_FILTERS,
+      undefined,
+    );
+    const srcIpFilter = result.filters.find((f) => f.key === 'src_ip')!;
+    expect('negated' in srcIpFilter).toBe(false);
+    expect('wildcarded' in srcIpFilter).toBe(false);
+  });
+
+  test('handles range time', () => {
+    const result = buildShareableState(
+      '/explorer',
+      DATES_RANGE,
+      [],
+      TAG_FILTERS,
+      undefined,
+    );
+    expect(result.time).toEqual({
+      type: 'range',
+      start: 1700000000000,
+      end: 1700100000000,
+    });
+  });
+
+  test('handles auto time', () => {
+    const result = buildShareableState(
+      '/explorer',
+      DATES_AUTO,
+      [],
+      TAG_FILTERS,
+      undefined,
+    );
+    expect(result.time).toEqual({ type: 'auto' });
+  });
+});
+
+describe('buildShareUrl', () => {
+  test('produces a valid share URL', () => {
+    const url = buildShareUrl(FULL_STATE, 'https://scout.app', '/');
+    expect(url).toMatch(/^https:\/\/scout\.app\/share\?s=.+$/);
+    // Roundtrip: decode the s param
+    const s = new URL(url).searchParams.get('s')!;
+    expect(decodeShareableState(s)).toEqual(FULL_STATE);
+  });
+
+  test('handles base path with trailing slash', () => {
+    const url = buildShareUrl(FULL_STATE, 'https://scout.app', '/app/');
+    expect(url).toMatch(/^https:\/\/scout\.app\/app\/share\?s=.+$/);
+  });
+
+  test('handles base path without trailing slash', () => {
+    const url = buildShareUrl(FULL_STATE, 'https://scout.app', '/app');
+    expect(url).toMatch(/^https:\/\/scout\.app\/app\/share\?s=.+$/);
+  });
+});

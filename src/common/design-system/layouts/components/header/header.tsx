@@ -30,6 +30,7 @@ import { useAppDispatch, useAppSelector } from '@/store/store';
 import { DatesPicker } from '../dates-picker';
 import { HelpMenu } from '../help-menu';
 import { ReloadButton } from '../reload-button';
+import { ShareButton } from './share-button';
 
 export const Header = () => {
   const dispatch = useAppDispatch();
@@ -52,6 +53,7 @@ export const Header = () => {
           <NavigationMenuItem>
             <ReloadButton />
           </NavigationMenuItem>
+
           <NavigationMenuItem>
             <DatesPicker />
           </NavigationMenuItem>
@@ -81,6 +83,9 @@ export const Header = () => {
           </NavigationMenuItem>
           <NavigationMenuItem>
             <PageContainerSelector />
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <ShareButton />
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
