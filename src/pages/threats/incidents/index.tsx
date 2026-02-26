@@ -19,6 +19,7 @@ import { usePaginationUrlState } from '@/common/design-system/molecules/data-tab
 import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { isIP } from '@/common/lib/strings';
+import { useGetImpactedEntitiesQuery } from '@/features/hunt/entities/api/entities.api';
 import { replaceFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
 import {
   KillChainKeysWithoutPolicies,
@@ -108,47 +109,74 @@ export const ThreatsIncidentsPage = () => {
           />
         </DataTableToolbar>
       }
-      Empty={
-        <Empty>
-          <EmptyMedia variant="icon">
-            <Biohazard />
-          </EmptyMedia>
-          <EmptyContent>
-            <EmptyHeader>No incidents during this period</EmptyHeader>
-            {killChain.length === 0 ||
-            killChain.length === KillChainKeysWithoutPolicies.length ? (
-              <>
-                <EmptyDescription className="max-w-full">
-                  Awesome, there are no incidents during this period ! You
-                  finally have time to go through the Policy Violations or do
-                  some hunting.
-                </EmptyDescription>
-                <Row className="gap-2">
-                  <Button
-                    variant="outline"
-                    asChild
-                  >
-                    <Link to={routes.policy_violations}>Policy Violations</Link>
-                  </Button>
-                  <Button asChild>
-                    <Link to={routes.explorer}>Go hunting</Link>
-                  </Button>
-                </Row>
-              </>
-            ) : (
-              <EmptyDescription>
-                You might be missing incidents for kill chains:{' '}
-                {KillChainKeysWithoutPolicies.filter(
-                  (kc) => !killChain.includes(kc),
-                )
-                  .map((kc) => killChainsConfig[kc].name)
-                  .join(', ')}
-              </EmptyDescription>
-            )}
-          </EmptyContent>
-        </Empty>
-      }
+      Empty={<IncidentsEmpty killChain={killChain} />}
       serverSide
     />
+  );
+};
+
+const IncidentsEmpty = ({ killChain }: { killChain: string[] }) => {
+  const params = useGlobalQueryParams(['tenant', 'dates']);
+  const { data: entitiesData } = useGetImpactedEntitiesQuery({
+    page: 1,
+    page_size: 1,
+    tenant: params.tenant,
+    start_date: params.start_date,
+    end_date: params.end_date,
+    family_class: 'doc',
+  });
+
+  const entityCount = entitiesData?.count ?? 0;
+  const hasFilters =
+    killChain.length > 0 &&
+    killChain.length !== KillChainKeysWithoutPolicies.length;
+
+  return (
+    <Empty>
+      <EmptyMedia variant="icon">
+        <Biohazard />
+      </EmptyMedia>
+      <EmptyContent>
+        <EmptyHeader>No incidents during this period</EmptyHeader>
+        {hasFilters ? (
+          <EmptyDescription>
+            You might be missing incidents for kill chains:{' '}
+            {KillChainKeysWithoutPolicies.filter(
+              (kc) => !killChain.includes(kc),
+            )
+              .map((kc) => killChainsConfig[kc].name)
+              .join(', ')}
+          </EmptyDescription>
+        ) : entityCount > 0 ? (
+          <>
+            <EmptyDescription className="max-w-full">
+              No incidents during this period, but there are {entityCount}{' '}
+              impacted entities. Review them to assess your exposure.
+            </EmptyDescription>
+            <Button asChild>
+              <Link to={routes.threats_entities}>View impacted entities</Link>
+            </Button>
+          </>
+        ) : (
+          <>
+            <EmptyDescription className="max-w-full">
+              Awesome, there are no incidents during this period ! You finally
+              have time to go through the Policy Violations or do some hunting.
+            </EmptyDescription>
+            <Row className="gap-2">
+              <Button
+                variant="outline"
+                asChild
+              >
+                <Link to={routes.policy_violations}>Policy Violations</Link>
+              </Button>
+              <Button asChild>
+                <Link to={routes.explorer}>Go hunting</Link>
+              </Button>
+            </Row>
+          </>
+        )}
+      </EmptyContent>
+    </Empty>
   );
 };
