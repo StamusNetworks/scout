@@ -45,71 +45,76 @@ export const EntitiesForceGraphComponent = ({
   }, []);
 
   return (
-    <ForceGraph3D
-      extraRenderers={extraRenderers}
-      ref={forceGraphRef}
-      graphData={data}
-      nodeAutoColorBy="group"
-      linkColor={() =>
-        isDark ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.3)'
-      }
-      backgroundColor={`${convertOklch(bgColor).hex}`}
-      width={width}
-      height={height}
-      cooldownTime={1000}
-      onEngineStop={() => {
-        if (!zoomed.current && forceGraphRef.current) {
-          forceGraphRef.current.zoomToFit(500, 25);
-          zoomed.current = true;
+    <div className="isolate">
+      <ForceGraph3D
+        extraRenderers={extraRenderers}
+        ref={forceGraphRef}
+        graphData={data}
+        nodeAutoColorBy="group"
+        linkColor={() =>
+          isDark ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.3)'
         }
-      }}
-      nodeThreeObject={(node) => {
-        const el = document.createElement('div');
-        el.textContent = node.value;
-        el.className = `node-label text-xs px-1 ${node.type === 'threat' ? 'text-doc bg-doc/20' : node.type === 'policy_violation' ? 'text-dopv-foreground bg-dopv/20' : 'text-foreground bg-foreground/20'}`;
+        backgroundColor={`${convertOklch(bgColor).hex}`}
+        width={width}
+        height={height}
+        cooldownTime={1000}
+        onEngineStop={() => {
+          if (!zoomed.current && forceGraphRef.current) {
+            forceGraphRef.current.zoomToFit(500, 25);
+            zoomed.current = true;
+          }
+        }}
+        nodeThreeObject={(node) => {
+          const el = document.createElement('div');
+          el.textContent = node.value;
+          el.className = `node-label text-xs px-1 ${node.type === 'threat' ? 'text-doc bg-doc/20' : node.type === 'policy_violation' ? 'text-dopv-foreground bg-dopv/20' : 'text-foreground bg-foreground/20'}`;
 
-        const nodeLabel = new CSS2DObject(el);
+          const nodeLabel = new CSS2DObject(el);
 
-        return nodeLabel;
-      }}
-      nodeThreeObjectExtend={true}
-      nodeVal={20}
-      nodeRelSize={3}
-      nodeColor={(node) => {
-        if (node.type === 'entity') {
-          return `${convertOklch(foregroundColor).hex}`;
-        }
-        if (node.type === 'policy_violation') {
-          return `${convertOklch(policyViolationColor).hex}`;
-        }
-        return `${convertOklch(destructiveColor).hex}`;
-      }}
-      nodeOpacity={0.2}
-      linkDirectionalParticles={2}
-      linkDirectionalParticleColor={'red'}
-      linkDirectionalParticleResolution={10}
-      nodeResolution={20}
-      onNodeClick={(node) => {
-        setSelectedNode(node);
-        const currentCameraPosition = forceGraphRef.current?.camera().position;
+          return nodeLabel;
+        }}
+        nodeThreeObjectExtend={true}
+        nodeVal={20}
+        nodeRelSize={3}
+        nodeColor={(node) => {
+          if (node.type === 'entity') {
+            return `${convertOklch(foregroundColor).hex}`;
+          }
+          if (node.type === 'policy_violation') {
+            return `${convertOklch(policyViolationColor).hex}`;
+          }
+          return `${convertOklch(destructiveColor).hex}`;
+        }}
+        nodeOpacity={0.2}
+        linkDirectionalParticles={2}
+        linkDirectionalParticleColor={'red'}
+        linkDirectionalParticleResolution={10}
+        nodeResolution={20}
+        onNodeClick={(node) => {
+          setSelectedNode(node);
+          const currentCameraPosition =
+            forceGraphRef.current?.camera().position;
 
-        const offset = new THREE.Vector3()
-          .subVectors(
-            currentCameraPosition!,
-            new THREE.Vector3(node.x, node.y, node.z),
-          )
-          .normalize()
-          .multiplyScalar(300);
-        const newCameraPosition = new THREE.Vector3(node.x, node.y, node.z).add(
-          offset,
-        );
+          const offset = new THREE.Vector3()
+            .subVectors(
+              currentCameraPosition!,
+              new THREE.Vector3(node.x, node.y, node.z),
+            )
+            .normalize()
+            .multiplyScalar(300);
+          const newCameraPosition = new THREE.Vector3(
+            node.x,
+            node.y,
+            node.z,
+          ).add(offset);
 
-        forceGraphRef.current?.cameraPosition(
-          newCameraPosition,
-          { x: node.x!, y: node.y!, z: node.z! },
-          500,
-        );
-      }}
-    />
+          forceGraphRef.current?.cameraPosition(
+            newCameraPosition,
+            { x: node.x!, y: node.y!, z: node.z! },
+            500,
+          );
+        }}
+      />
+    </div>
   );
 };
