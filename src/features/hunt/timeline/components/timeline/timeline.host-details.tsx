@@ -31,7 +31,9 @@ export const TimelineHostDetails = ({ entity }: TimelineHostDetailsProps) => {
     <Column className="max-h-[80vh]">
       <Column className="px-6">
         <Row className="mb-2 items-center gap-2">
-          {host && <InternalExternal internal={host.host_id.in_home_net} />}
+          {host?.host_id && (
+            <InternalExternal internal={host.host_id.in_home_net} />
+          )}
           <IpOrEntityEventValue
             entity={entity}
             offender={false}
