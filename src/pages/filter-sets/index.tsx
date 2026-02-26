@@ -33,10 +33,14 @@ import { CommandFilterSingle } from '@/common/design-system/molecules/data-table
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
+import { DeleteModal } from '@/common/design-system/molecules/delete-modal';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { cn } from '@/common/lib/utils';
-import { useGetFilterSetsQuery } from '@/features/hunt/filtering/query-filters/api/query-filter.api';
+import {
+  useDeleteFilterSetMutation,
+  useGetFilterSetsQuery,
+} from '@/features/hunt/filtering/query-filters/api/query-filter.api';
 import { openSaveFilterSetModal } from '@/features/hunt/filtering/query-filters/components/save-filterset/save-filterset.slice';
 import { filterSetPageConfig } from '@/features/hunt/filtering/query-filters/constants/query-filtersets';
 import {
@@ -264,16 +268,7 @@ const getColumns = (enterprise: boolean): CustomColumnDef<QueryFilterSet>[] => [
     header: '',
     cell: ({ row }) =>
       row.original.id < 1 ? null : (
-        <Button
-          onClick={(e) => {
-            e.stopPropagation();
-            console.log('delete');
-          }}
-          variant="outline"
-          size="icon-sm"
-        >
-          <Trash />
-        </Button>
+        <DeleteFilterSetCell filterSet={row.original} />
       ),
   },
 ];
@@ -334,5 +329,32 @@ export const Name = ({ filterSet }: { filterSet: QueryFilterSet }) => {
       {isSelected && <Check className="shrink-0" />}
       {filterSet.name}{' '}
     </Row>
+  );
+};
+
+const DeleteFilterSetCell = ({ filterSet }: { filterSet: QueryFilterSet }) => {
+  const [deleteFilterSet] = useDeleteFilterSetMutation();
+  return (
+    <div onClick={(e) => e.stopPropagation()}>
+      <DeleteModal
+        title={`Delete "${filterSet.name}"`}
+        description="Deleting a filter set is permanent and cannot be undone."
+        handleDelete={() =>
+          deleteFilterSet(filterSet.id)
+            .unwrap()
+            .then(() => undefined)
+        }
+        handleSuccess={() => toast.success('Filter set deleted successfully')}
+        trigger={
+          <Button
+            variant="outline"
+            size="icon-sm"
+            data-testid="delete-filter-set-trigger"
+          >
+            <Trash />
+          </Button>
+        }
+      />
+    </div>
   );
 };
