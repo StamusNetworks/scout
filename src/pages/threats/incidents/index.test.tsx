@@ -55,7 +55,7 @@ beforeEach(() => {
 });
 
 describe('ThreatsIncidentsPage - Empty state', () => {
-  it('shows impacted entities message and CTA when there are impacted entities', async () => {
+  it('shows plural impacted entities message when count > 1', async () => {
     server.use(
       http.get(baseUrl + '/appliances/threat/threats_per_asset/', () =>
         HttpResponse.json({
@@ -80,7 +80,34 @@ describe('ThreatsIncidentsPage - Empty state', () => {
     const entitiesLink = screen.getByRole('link', {
       name: /view impacted entities/i,
     });
-    expect(entitiesLink).toBeInTheDocument();
+    expect(entitiesLink).toHaveAttribute('href', '/threats/entities');
+  });
+
+  it('shows singular impacted entity message when count is 1', async () => {
+    server.use(
+      http.get(baseUrl + '/appliances/threat/threats_per_asset/', () =>
+        HttpResponse.json({
+          count: 1,
+          next: null,
+          previous: null,
+          results: [mockEntity],
+        }),
+      ),
+    );
+
+    renderPage();
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('No incidents during this period'),
+      ).toBeInTheDocument();
+    });
+
+    expect(screen.getByText(/1 impacted entity\b/)).toBeInTheDocument();
+
+    const entitiesLink = screen.getByRole('link', {
+      name: /view impacted entity/i,
+    });
     expect(entitiesLink).toHaveAttribute('href', '/threats/entities');
   });
 

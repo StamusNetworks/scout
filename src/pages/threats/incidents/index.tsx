@@ -150,11 +150,15 @@ const IncidentsEmpty = ({ killChain }: { killChain: string[] }) => {
         ) : entityCount > 0 ? (
           <>
             <EmptyDescription className="max-w-full">
-              No incidents during this period, but there are {entityCount}{' '}
-              impacted entities. Review them to assess your exposure.
+              No incidents during this period, but there{' '}
+              {entityCount === 1 ? 'is' : 'are'} {entityCount} impacted{' '}
+              {entityCount === 1 ? 'entity' : 'entities'}. Review{' '}
+              {entityCount === 1 ? 'it' : 'them'} to assess your exposure.
             </EmptyDescription>
             <Button asChild>
-              <Link to={routes.threats_entities}>View impacted entities</Link>
+              <Link to={routes.threats_entities}>
+                View impacted {entityCount === 1 ? 'entity' : 'entities'}
+              </Link>
             </Button>
           </>
         ) : (
