@@ -31,7 +31,7 @@ export const TimelineThreatB = ({
     <Tooltip>
       <TooltipTrigger className="z-10 h-full w-full">
         <Badge
-          className="rounded-fulls flex h-full w-full -translate-y-1 justify-normal px-0 py-0 text-left text-[0.7rem] whitespace-nowrap"
+          className="rounded-fulls flex h-full w-full justify-normal px-0 py-0 text-left text-[0.7rem] whitespace-nowrap"
           variant={
             type === 'offender'
               ? 'offender'

@@ -19,7 +19,7 @@ export const TimelineKCPhaseBadge = ({
 }: TimelineKCPhase & { entity: string }) => {
   return (
     <Tooltip>
-      <TooltipTrigger className="h-full w-full -translate-y-px">
+      <TooltipTrigger className="h-full w-full -translate-y-[2px]">
         <Badge
           className="block h-full rounded-none px-0"
           variant={kc_phase as KillChainPhase}

@@ -59,7 +59,7 @@ export const TimelineRow = ({
         </Dialog>
         <Row
           id={`${uniqueId}-${item.entity}-timeline-kc-phases`}
-          className="relative h-4 w-full overflow-hidden"
+          className="relative h-4 w-full overflow-x-clip"
         >
           {item.kc_phases.map((kc, i) => (
             <div
@@ -92,7 +92,7 @@ export const TimelineRow = ({
             className="grow-0 flex-wrap items-start justify-start"
           />
         </Column>
-        <Column className="gap-1 overflow-hidden">
+        <Column className="gap-1 overflow-x-clip">
           {item.threats.map((threat, i) => {
             return (
               <div
