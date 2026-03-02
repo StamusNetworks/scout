@@ -45,10 +45,11 @@ export const InventoryTable = ({
       inHomeNetwork,
     });
 
+  const { inHomeNetwork: _, ...apiParams } = queryParams;
   const { data, isFetching } = useGetHostsQuery({
-    ...queryParams,
+    ...apiParams,
     withAlerts: false,
-    ordering: queryParams.ordering ?? '-host_id.last_seen',
+    ordering: apiParams.ordering ?? '-host_id.last_seen',
   });
 
   return (
