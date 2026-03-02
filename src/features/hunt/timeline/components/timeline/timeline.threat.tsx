@@ -32,13 +32,19 @@ export const TimelineThreatB = ({
       <TooltipTrigger className="z-10 h-full w-full">
         <Badge
           className="rounded-fulls flex h-full w-full -translate-y-1 justify-normal px-0 py-0 text-left text-[0.7rem] whitespace-nowrap"
-          variant={type === 'doc' ? 'victim' : 'policy_violation'}
+          variant={
+            type === 'offender'
+              ? 'offender'
+              : type === 'dopv'
+                ? 'policy_violation'
+                : 'victim'
+          }
           id={`${uniqueId}-${entity}-${threat_id}`}
           onClick={() =>
             navigate(
-              (type === 'doc'
-                ? routes.threats_coverage_threat
-                : routes.policy_violations_coverage_threat
+              (type === 'dopv'
+                ? routes.policy_violations_coverage_threat
+                : routes.threats_coverage_threat
               ).replace(':threatId', threat_id),
             )
           }

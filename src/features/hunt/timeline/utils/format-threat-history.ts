@@ -2,22 +2,56 @@ import { KillChainPhase } from '../../killchain/killchain';
 import { OffendersData } from '../models/offenders.model';
 import {
   KCChange,
+  ThreatHistory,
   TimelineProps,
   TimelineThreat,
 } from '../models/threat-history.model';
-import { ThreatHistory } from '../models/threat-history.model';
 
 export const formatThreatHistory = (
   threatHistory: ThreatHistory[],
 ): Omit<TimelineProps, 'offenders' | 'lateralMovements'> => {
-  const entities = threatHistory.map((entity) => ({
-    entity: entity.asset,
-    threats: getThreats(entity.history),
-    kc_phases: getKCPhases(
-      entity.kc_change_history.slice(0, -2) as KCChange[],
-      entity.last_seen,
-    ),
-  }));
+  // Group entries by asset
+  const grouped = threatHistory.reduce(
+    (acc, entry) => {
+      if (!acc[entry.asset]) acc[entry.asset] = [];
+      acc[entry.asset].push(entry);
+      return acc;
+    },
+    {} as Record<string, ThreatHistory[]>,
+  );
+
+  const entities = Object.entries(grouped).map(([asset, entries]) => {
+    const victimEntry = entries.find((e) => !e.is_offender);
+    const offenderEntry = entries.find((e) => e.is_offender);
+
+    // Threats: combine victim and offender
+    const victimThreats = victimEntry ? getThreats(victimEntry.history) : [];
+    const offenderThreats = offenderEntry
+      ? getThreats(offenderEntry.history, true)
+      : [];
+
+    // KC phases: prefer victim, fallback to offender
+    const kc_phases = victimEntry
+      ? getKCPhases(
+          victimEntry.kc_change_history.slice(0, -2) as KCChange[],
+          victimEntry.last_seen,
+        )
+      : offenderEntry
+        ? getKCPhases(
+            offenderEntry.kc_change_history.slice(0, -2) as KCChange[],
+            offenderEntry.last_seen,
+            'kc_step_offender',
+          )
+        : [];
+
+    return {
+      entity: asset,
+      threats: [...victimThreats, ...offenderThreats].sort(
+        (a, b) => a.start_date - b.start_date,
+      ),
+      kc_phases,
+    };
+  });
 
   const start_date = Math.floor(
     Math.min(...threatHistory.map((tH) => new Date(tH.first_seen).getTime())),
@@ -33,7 +67,7 @@ export const formatThreatHistory = (
   };
 };
 
-const getThreats = (history: ThreatHistory['history']) =>
+const getThreats = (history: ThreatHistory['history'], isOffender = false) =>
   Object.values(
     history.reduce(
       (acc, curr) => {
@@ -42,9 +76,10 @@ const getThreats = (history: ThreatHistory['history']) =>
             threat_id: curr.threat_id,
             start_date: new Date(curr.timestamp).getTime(),
             end_date: new Date(curr.timestamp).getTime(),
-            type:
-              'step_kill_chain' in curr.params &&
-              curr.params.step_kill_chain === 'pre_condition'
+            type: isOffender
+              ? 'offender'
+              : 'step_kill_chain' in curr.params &&
+                  curr.params.step_kill_chain === 'pre_condition'
                 ? 'dopv'
                 : 'doc',
           };
@@ -58,18 +93,23 @@ const getThreats = (history: ThreatHistory['history']) =>
     ),
   );
 
-const getKCPhases = (kc_history: KCChange[], last_seen: string) =>
-  kc_history.map((item, index) => {
-    return {
-      kc_phase: item.kc_step as KillChainPhase,
-      start_date: new Date(item.timestamp).getTime(),
-      end_date: new Date(
-        index === kc_history.length - 1
-          ? last_seen
-          : kc_history[index + 1].timestamp,
-      ).getTime(),
-    };
-  });
+const getKCPhases = (
+  kc_history: KCChange[],
+  last_seen: string,
+  phaseKey: 'kc_step' | 'kc_step_offender' = 'kc_step',
+) => {
+  const filtered =
+    phaseKey === 'kc_step_offender'
+      ? kc_history.filter((item) => item[phaseKey] != null)
+      : kc_history;
+  return filtered.map((item, index) => ({
+    kc_phase: item[phaseKey] as KillChainPhase,
+    start_date: new Date(item.timestamp).getTime(),
+    end_date: new Date(
+      index === filtered.length - 1 ? last_seen : filtered[index + 1].timestamp,
+    ).getTime(),
+  }));
+};
 
 export const getOffenders = (
   offendersData: OffendersData,

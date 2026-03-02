@@ -29,16 +29,13 @@ export const MENU_WIDTH = 150;
 export const ThreatsTimeline = ({ entity: entity }: { entity?: string }) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
 
-  const { data, isLoading } = useGetThreatHistoryQuery({
-    ...params,
-    is_offender: false,
-  });
+  const { data, isLoading } = useGetThreatHistoryQuery(params);
   const { data: offendersData } = useGetOffendersQuery(params);
 
   const timelineProps = useMemo(() => {
     if (!data?.results.length || !offendersData) return null;
 
-    const internalEntities = data?.results.map((t) => t.asset);
+    const internalEntities = [...new Set(data?.results.map((t) => t.asset))];
 
     return {
       ...formatThreatHistory(data?.results),

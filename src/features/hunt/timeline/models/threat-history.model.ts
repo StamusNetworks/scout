@@ -67,7 +67,7 @@ export type TimelineThreat = {
   start_date: number;
   end_date: number;
   offender?: string;
-  type: 'doc' | 'dopv';
+  type: 'doc' | 'dopv' | 'offender';
 };
 
 export type TimelineKCPhase = {
