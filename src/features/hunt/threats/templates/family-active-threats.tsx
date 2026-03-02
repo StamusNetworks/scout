@@ -31,7 +31,10 @@ export const FamilyActiveThreats = ({ familyId }: { familyId: number }) => {
   if (!activeThreats?.ids.length || !threats) return null;
 
   return (
-    <ScrollArea className="mt-6 w-full overflow-auto pb-2.5">
+    <ScrollArea
+      type="always"
+      className="mt-6 w-full overflow-auto pb-2.5"
+    >
       <div className="p-1">
         <Row className="gap-4 [&_a]:w-64">
           {values(activeThreats.entities).map((threat) => (
