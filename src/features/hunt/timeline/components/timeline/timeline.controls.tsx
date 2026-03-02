@@ -52,7 +52,8 @@ export const TimelineControls = ({
         from_date + ((markerXOffset - MENU_WIDTH) / timelineWidth) * timeRange;
 
       // Calculate zoom factor based on wheel direction
-      const zoomFactor = event.deltaX < 0 ? 0.9 : 1.1; // Zoom out on scroll down, in on scroll up
+      const delta = event.deltaX || event.deltaY;
+      const zoomFactor = delta < 0 ? 0.9 : 1.1; // Zoom in on scroll up, out on scroll down
 
       // Calculate new dates centered on the marker position
       const newFromDate =
