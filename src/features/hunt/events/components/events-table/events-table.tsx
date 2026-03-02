@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { DataTable } from '@/common/design-system/molecules/data-table/data-table.tsx';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty.tsx';
-import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination.ts';
-import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting.ts';
+import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams.tsx';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags.ts';
@@ -34,20 +33,16 @@ export const EventsTable = () => {
     columns,
   });
   const navigate = useNavigate();
-  const [pagination, setPagination] = usePaginationUrlState();
-  const [sorting, setSorting, ordering] = useSortingUrlState();
   const params = useGlobalQueryParams([
     'tenant',
     'qfilter',
     'dates',
     'qfilterHost',
   ]);
+  const { queryParams, pagination, setPagination, sorting, setSorting } =
+    useServerTableState(params);
 
-  const { data, isFetching } = useGetEventsQuery({
-    ...params,
-    ...pagination,
-    ordering,
-  });
+  const { data, isFetching } = useGetEventsQuery(queryParams);
 
   const onRowClick = (row: Row<Event>) =>
     navigate(`${routes.event}?_id=${row.original._id}`);

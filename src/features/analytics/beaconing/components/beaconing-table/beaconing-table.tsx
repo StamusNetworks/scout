@@ -2,21 +2,18 @@ import { Radar } from 'lucide-react';
 
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
-import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
-import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting';
+import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 
 import { useGetBeaconingEventsQuery } from '../../api/beaconing.api';
 import { beaconingTableColumns } from './beaconing-table.columns';
 
 export const BeaconingTable = () => {
-  const [pagination, setPagination] = usePaginationUrlState();
-  const [sorting, setSorting, ordering] = useSortingUrlState();
   const params = useGlobalQueryParams(['tenant', 'dates']);
+  const { queryParams, pagination, setPagination, sorting, setSorting } =
+    useServerTableState(params);
   const { data, isLoading } = useGetBeaconingEventsQuery({
-    ...params,
-    ...pagination,
-    ordering,
+    ...queryParams,
     qfilter: 'beacon_report.document_type:agg_serving_ip',
   });
   return (

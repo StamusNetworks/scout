@@ -42,14 +42,12 @@ export const InventoryTable = ({
       start_date: globalParams.start_date,
       end_date: globalParams.end_date,
       host_id_qfilter: globalParams.host_id_qfilter,
-      inHomeNetwork,
     });
 
-  const { inHomeNetwork: _, ...apiParams } = queryParams;
   const { data, isFetching } = useGetHostsQuery({
-    ...apiParams,
+    ...queryParams,
     withAlerts: false,
-    ordering: apiParams.ordering ?? '-host_id.last_seen',
+    ordering: queryParams.ordering ?? '-host_id.last_seen',
   });
 
   return (

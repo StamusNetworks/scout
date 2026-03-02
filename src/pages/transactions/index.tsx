@@ -13,7 +13,7 @@ import { Switch } from '@/common/design-system/atoms/ui/switch';
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
-import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
+import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { Pagination } from '@/common/design-system/molecules/pagination';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { getDuration } from '@/common/lib/duration';
@@ -51,7 +51,6 @@ import { useAppDispatch, useAppSelector } from '@/store/store';
 
 export const TransactionsPage = () => {
   const [groupByFlow, setGroupByFlow] = useState(true);
-  const [pagination, setPagination] = usePaginationUrlState(20);
   const filters = useAppSelector(selectQueryFilters);
   const QFBuilder = useQFBuilder();
   const definitions = useQueryFiltersDefinitions();
@@ -67,39 +66,37 @@ export const TransactionsPage = () => {
 
   const qfString = `(flow_id:* AND NOT event_type:(alert OR stamus OR discovery)) ${qfilter ? `AND ${qfilter}` : ''}`;
 
-  const { data, totalCount, isFetching } = useGetEventsTailQuery(
-    {
-      ...params,
-      ...pagination,
-      qfilter: qfString,
-    },
-    {
-      selectFromResult: (result) => ({
-        ...result,
-        totalCount: result?.data?.count || 0,
-        data: (groupByFlow
-          ? {
-              type: 'grouped',
-              data: Object.values(
-                result?.data?.results?.reduce(
-                  (acc, curr) => {
-                    if (acc[curr.flow_id!]) {
-                      acc[curr.flow_id!].push(curr);
-                    } else {
-                      acc[curr.flow_id!] = [curr];
-                    }
-                    return acc;
-                  },
-                  {} as Record<string, Event[]>,
-                ) || {},
-              ),
-            }
-          : { type: 'single', data: result?.data?.results ?? [] }) satisfies
-          | { type: 'single'; data: Event[] }
-          | { type: 'grouped'; data: Event[][] },
-      }),
-    },
+  const { queryParams, pagination, setPagination } = useServerTableState(
+    { ...params, qfilter: qfString },
+    { defaultPageSize: 20 },
   );
+
+  const { data, totalCount, isFetching } = useGetEventsTailQuery(queryParams, {
+    selectFromResult: (result) => ({
+      ...result,
+      totalCount: result?.data?.count || 0,
+      data: (groupByFlow
+        ? {
+            type: 'grouped',
+            data: Object.values(
+              result?.data?.results?.reduce(
+                (acc, curr) => {
+                  if (acc[curr.flow_id!]) {
+                    acc[curr.flow_id!].push(curr);
+                  } else {
+                    acc[curr.flow_id!] = [curr];
+                  }
+                  return acc;
+                },
+                {} as Record<string, Event[]>,
+              ) || {},
+            ),
+          }
+        : { type: 'single', data: result?.data?.results ?? [] }) satisfies
+        | { type: 'single'; data: Event[] }
+        | { type: 'grouped'; data: Event[][] },
+    }),
+  });
   const pageCount = Math.ceil(totalCount / pagination.pageSize);
 
   return (

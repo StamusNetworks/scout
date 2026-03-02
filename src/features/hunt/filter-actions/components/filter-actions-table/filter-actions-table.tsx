@@ -1,5 +1,5 @@
 import { DataTable } from '@/common/design-system/molecules/data-table';
-import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
+import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 
 import { useGetFilterActionsQuery } from '../../api/filter-actions.api';
@@ -8,11 +8,9 @@ import { ExpandedFilterActionRow } from './filter-actions-table.expanded-row';
 
 export const FiltersActionsTable = () => {
   const params = useGlobalQueryParams(['tenant']);
-  const [pagination, setPagination] = usePaginationUrlState();
-  const { data, isFetching } = useGetFilterActionsQuery({
-    ...params,
-    ...pagination,
-  });
+  const { queryParams, pagination, setPagination } =
+    useServerTableState(params);
+  const { data, isFetching } = useGetFilterActionsQuery(queryParams);
   return (
     <DataTable
       data={data}

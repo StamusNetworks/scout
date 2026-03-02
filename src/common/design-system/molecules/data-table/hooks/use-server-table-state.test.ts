@@ -9,10 +9,9 @@ const wrapper = (searchParams?: string) =>
 
 describe('useServerTableState', () => {
   it('returns page 1 and empty sorting on initial render', () => {
-    const { result } = renderHook(
-      () => useServerTableState({ tenant: 1 }),
-      { wrapper: wrapper() },
-    );
+    const { result } = renderHook(() => useServerTableState({ tenant: 1 }), {
+      wrapper: wrapper(),
+    });
 
     expect(result.current.pagination).toEqual({ pageIndex: 0, pageSize: 10 });
     expect(result.current.sorting).toEqual([]);
@@ -91,10 +90,9 @@ describe('useServerTableState', () => {
   });
 
   it('resets page when sorting changes', () => {
-    const { result } = renderHook(
-      () => useServerTableState({ tenant: 1 }),
-      { wrapper: wrapper() },
-    );
+    const { result } = renderHook(() => useServerTableState({ tenant: 1 }), {
+      wrapper: wrapper(),
+    });
 
     act(() => {
       result.current.setPagination({ pageIndex: 2, pageSize: 10 });
@@ -110,29 +108,26 @@ describe('useServerTableState', () => {
   });
 
   it('includes ordering in queryParams when sorting is set', () => {
-    const { result } = renderHook(
-      () => useServerTableState({ tenant: 1 }),
-      { wrapper: wrapper('?sort=-timestamp') },
-    );
+    const { result } = renderHook(() => useServerTableState({ tenant: 1 }), {
+      wrapper: wrapper('?sort=-timestamp'),
+    });
 
     expect(result.current.queryParams.ordering).toBe('-timestamp');
     expect(result.current.sorting).toEqual([{ id: 'timestamp', desc: true }]);
   });
 
   it('omits ordering from queryParams when no sorting', () => {
-    const { result } = renderHook(
-      () => useServerTableState({ tenant: 1 }),
-      { wrapper: wrapper() },
-    );
+    const { result } = renderHook(() => useServerTableState({ tenant: 1 }), {
+      wrapper: wrapper(),
+    });
 
     expect(result.current.queryParams).not.toHaveProperty('ordering');
   });
 
   it('reads initial page and page_size from URL', () => {
-    const { result } = renderHook(
-      () => useServerTableState({ tenant: 1 }),
-      { wrapper: wrapper('?page=3&page_size=25') },
-    );
+    const { result } = renderHook(() => useServerTableState({ tenant: 1 }), {
+      wrapper: wrapper('?page=3&page_size=25'),
+    });
 
     expect(result.current.pagination).toEqual({ pageIndex: 2, pageSize: 25 });
     expect(result.current.queryParams.pageIndex).toBe(2);

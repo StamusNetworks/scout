@@ -15,8 +15,7 @@ import {
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableToolbar } from '@/common/design-system/molecules/data-table/data-table.toolbar';
 import { CommandFilterMultiple } from '@/common/design-system/molecules/data-table/filters/command-filter-multiple';
-import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
-import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting';
+import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { isIP } from '@/common/lib/strings';
 import { useGetImpactedEntitiesQuery } from '@/features/hunt/entities/api/entities.api';
@@ -46,18 +45,19 @@ const threatIncidentsColumns = [
 export const ThreatsIncidentsPage = () => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const [killChain, setKillChain] = useState<string[]>([]);
-  const [pagination, setPagination] = usePaginationUrlState();
-  const [sorting, setSorting, ordering] = useSortingUrlState();
+  const { queryParams, pagination, setPagination, sorting, setSorting } =
+    useServerTableState({
+      tenant: params.tenant,
+      first_seen__gte: params.start_date,
+      first_seen__lte: params.end_date,
+      kill_chain:
+        killChain.length === 0
+          ? KillChainKeysWithoutPolicies.join(',')
+          : killChain?.join(','),
+    });
   const { data, isFetching } = useGetThreatsStatusQuery({
-    ...pagination,
-    tenant: params.tenant,
-    ordering: ordering || '-first_seen',
-    first_seen__gte: params.start_date,
-    first_seen__lte: params.end_date,
-    kill_chain:
-      killChain.length === 0
-        ? KillChainKeysWithoutPolicies.join(',')
-        : killChain?.join(','),
+    ...queryParams,
+    ordering: queryParams.ordering || '-first_seen',
   });
   const threats = useThreats({});
 

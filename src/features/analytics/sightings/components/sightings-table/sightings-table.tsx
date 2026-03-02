@@ -9,8 +9,7 @@ import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data
 import { CommandFilterSingle } from '@/common/design-system/molecules/data-table/filters/command-filter-single';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
-import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
-import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting';
+import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { Event } from '@/features/hunt/events/model/event.schema';
 
@@ -25,8 +24,6 @@ export const SightingsTable = ({
   exportColumns?: ExportColumn<Event>[];
   onRowClick?: (row: Row<Event>) => void;
 }) => {
-  const [pagination, setPagination] = usePaginationUrlState();
-  const [sorting, setSorting, ordering] = useSortingUrlState();
   const [role, setRole] = useQueryState('role');
   const [search, setSearch] = useQueryState('value', { defaultValue: '' });
   const params = useGlobalQueryParams(['tenant', 'dates']);
@@ -45,12 +42,12 @@ export const SightingsTable = ({
     roleQfilter && searchQfilter
       ? `${roleQfilter} AND ${searchQfilter}`
       : roleQfilter || searchQfilter;
-  const { data, isFetching } = useGetSightingEventsQuery({
-    ...params,
-    ...pagination,
-    ...(qfilter && { qfilter }),
-    ordering,
-  });
+  const { queryParams, pagination, setPagination, sorting, setSorting } =
+    useServerTableState({
+      ...params,
+      ...(qfilter && { qfilter }),
+    });
+  const { data, isFetching } = useGetSightingEventsQuery(queryParams);
   const toolBar = (
     <DataTableToolbar>
       <TextFilter

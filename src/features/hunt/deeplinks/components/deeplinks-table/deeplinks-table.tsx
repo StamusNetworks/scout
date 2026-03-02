@@ -4,7 +4,7 @@ import { values } from 'ramda';
 import { DataTableToolbar } from '@/common/design-system/molecules/data-table/data-table.toolbar.tsx';
 import { DataTable } from '@/common/design-system/molecules/data-table/data-table.tsx';
 import { CommandFilterSingle } from '@/common/design-system/molecules/data-table/filters/command-filter-single.tsx';
-import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination.ts';
+import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { FilterType } from '@/features/hunt/filtering/query-filters/constants/query-filter.config.ts';
 
 import { useGetDeeplinksQuery } from '../../api/deeplinks.api.ts';
@@ -13,7 +13,6 @@ import { columns } from './deeplinks-table.columns.tsx';
 const booleanAsString = ['true', 'false'] as const;
 
 export const DeeplinksTable = () => {
-  const [pagination, setPagination] = usePaginationUrlState();
   const [entity, setEntity] = useQueryState(
     'entity',
     parseAsStringLiteral(values(FilterType)),
@@ -27,12 +26,13 @@ export const DeeplinksTable = () => {
     parseAsStringLiteral(booleanAsString),
   );
 
-  const { data, isLoading } = useGetDeeplinksQuery({
-    ...pagination,
+  const { queryParams, pagination, setPagination } = useServerTableState({
     entities__name: entity || undefined,
     user_defined: userDefined || undefined,
     enabled: enabled || undefined,
   });
+
+  const { data, isLoading } = useGetDeeplinksQuery(queryParams);
   return (
     <DataTable
       data={data}

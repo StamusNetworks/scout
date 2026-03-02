@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
-import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
-import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting';
+import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetThreatsStatusQuery } from '@/features/hunt/threats/api/threats.api';
 import { threatStatusColumns } from '@/pages/hosts/[hostId]/incidents/threat-status.columns';
@@ -17,13 +16,11 @@ const columns = threatStatusColumns
 export const HostIncidents = () => {
   const { hostId } = useParams();
   const params = useGlobalQueryParams(['tenant']);
-  const [pagination, setPagination] = usePaginationUrlState();
-  const [sorting, setSorting, ordering] = useSortingUrlState();
+  const { queryParams, pagination, setPagination, sorting, setSorting } =
+    useServerTableState(params);
   const { data, isFetching } = useGetThreatsStatusQuery({
-    ...params,
-    ...pagination,
+    ...queryParams,
     asset: hostId,
-    ordering,
   });
 
   return (

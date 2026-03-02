@@ -16,10 +16,8 @@ import { DataTableToolbar } from '@/common/design-system/molecules/data-table/da
 import { CommandFilterSingle } from '@/common/design-system/molecules/data-table/filters/command-filter-single';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
-import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
-import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting';
+import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { useResetPaginationOnError } from '@/common/lib/use-reset-pagination-on-error';
 import { routes } from '@/pages/routes.config';
 
 import { useGetImpactedEntitiesQuery } from '../../api/entities.api';
@@ -50,21 +48,18 @@ export const ImpactedEntitiesTable = ({
     'status',
     parseAsStringLiteral(['new', 'fixed', '']).withDefault(''),
   );
-  const [pagination, setPagination] = usePaginationUrlState();
-  const [sorting, setSorting, ordering] = useSortingUrlState();
+  const { queryParams, pagination, setPagination, sorting, setSorting } =
+    useServerTableState({
+      ...params,
+      threat_id: threatId,
+      family_id: familyId,
+      family_class: familyClass,
+      search,
+      kill_chain: killchain,
+      status,
+    });
   // QUERY
-  const { data, isFetching, error } = useGetImpactedEntitiesQuery({
-    ...params,
-    ...pagination,
-    ordering,
-    threat_id: threatId,
-    family_id: familyId,
-    family_class: familyClass,
-    search,
-    kill_chain: killchain,
-    status,
-  });
-  useResetPaginationOnError(error, setPagination);
+  const { data, isFetching } = useGetImpactedEntitiesQuery(queryParams);
 
   const columns = useMemo(
     () => getColumns({ threatId, familyClass, setKillchain }),

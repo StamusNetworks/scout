@@ -5,8 +5,7 @@ import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableToolbar } from '@/common/design-system/molecules/data-table/data-table.toolbar';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import { SwitchFilter } from '@/common/design-system/molecules/data-table/filters/switch-filter';
-import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
-import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting';
+import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { selectQueryFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.selector';
@@ -31,8 +30,6 @@ export const SignaturesTable = () => {
     tableId: 'detectionMethodsTable',
     columns: detectionMethodsColumns,
   });
-  const [pagination, setPagination] = usePaginationUrlState();
-  const [sorting, setSorting, ordering] = useSortingUrlState();
   const [applyEventFilter, setApplyEventFilter] = useQueryState(
     'with_alerts',
     parseAsBoolean.withDefault(true),
@@ -47,13 +44,16 @@ export const SignaturesTable = () => {
     'qfilter',
     'qfilterSignature',
   ]);
+  const { queryParams, pagination, setPagination, sorting, setSorting } =
+    useServerTableState({
+      ...params,
+      hits_min: applyEventFilter ? 1 : undefined,
+      ...(sidFilter && { sid: sidFilter }),
+      ...(applyEventFilter ? { qfilter } : {}),
+    });
   const { data, isFetching } = useGetSignaturesQuery({
-    hits_min: applyEventFilter ? 1 : undefined,
-    ...params,
-    ...pagination,
-    ...(sidFilter && { sid: sidFilter }),
-    ...(applyEventFilter ? { qfilter } : {}),
-    ordering: ordering ?? '-hits',
+    ...queryParams,
+    ordering: queryParams.ordering ?? '-hits',
   });
   const toolBar = (
     <DataTableToolbar>

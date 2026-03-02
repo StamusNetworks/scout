@@ -4,8 +4,7 @@ import { useParams } from 'react-router-dom';
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
-import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
-import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting';
+import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetEventsQuery } from '@/features/hunt/events/api/events.api';
 import { getColumns } from '@/features/hunt/events/components/events-table/events.columns';
@@ -17,12 +16,10 @@ const tableCols = getColumns(true).filter((col) => col.id !== 'tag');
 export const HostDetectionEvents = () => {
   const { hostId } = useParams();
   const params = useGlobalQueryParams(['tenant', 'dates']);
-  const [pagination, setPagination] = usePaginationUrlState();
-  const [sorting, setSorting, ordering] = useSortingUrlState();
+  const { queryParams, pagination, setPagination, sorting, setSorting } =
+    useServerTableState(params);
   const { data, isFetching } = useGetEventsQuery({
-    ...params,
-    ...pagination,
-    ordering,
+    ...queryParams,
     qfilter: `(src_ip:"${hostId}" OR dest_ip:"${hostId}")`,
     stamus: true,
     alert: true,
