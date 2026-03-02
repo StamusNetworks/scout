@@ -4,8 +4,10 @@ import type {
   SortingState,
   Updater,
 } from '@tanstack/react-table';
-import { createParser, parseAsInteger, useQueryState } from 'nuqs';
+import { parseAsInteger, useQueryState } from 'nuqs';
 import { useCallback, useMemo, useRef, useState } from 'react';
+
+import { parseAsSorting, serializeSorting } from './sorting-parser';
 
 export type ServerTableStateOptions = {
   defaultPageSize?: number;
@@ -142,15 +144,3 @@ function shallowEqual(
   if (keysA.length !== keysB.length) return false;
   return keysA.every((key) => Object.is(a[key], b[key]));
 }
-
-const serializeSorting = (sorting: SortingState) =>
-  sorting.map(({ id, desc }) => `${desc ? '-' : ''}${id}`).join(',');
-
-const parseAsSorting = createParser({
-  parse(value: string) {
-    return value
-      .split(',')
-      .map((v) => ({ id: v.replace('-', ''), desc: v[0] === '-' }));
-  },
-  serialize: serializeSorting,
-});

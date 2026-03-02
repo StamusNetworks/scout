@@ -1,12 +1,14 @@
 import { SortingState, Updater } from '@tanstack/react-table';
-import { createParser, useQueryState } from 'nuqs';
+import { useQueryState } from 'nuqs';
 import { useCallback, useMemo, useState } from 'react';
+
+import { parseAsSorting, serializeSorting } from './sorting-parser';
 
 // Local state version
 export const useSortingState = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   return useMemo(
-    () => [sorting, setSorting, serialize(sorting)],
+    () => [sorting, setSorting, serializeSorting(sorting)],
     [sorting, setSorting],
   );
 };
@@ -30,19 +32,11 @@ export const useSortingUrlState = (): [
     [sorting, setSorting],
   );
   return useMemo(
-    () => [sorting, handleSortingUpdate, serialize(sorting) || undefined],
+    () => [
+      sorting,
+      handleSortingUpdate,
+      serializeSorting(sorting) || undefined,
+    ],
     [sorting, handleSortingUpdate],
   );
 };
-
-const serialize = (sorting: SortingState) =>
-  sorting.map(({ id, desc }) => `${desc ? '-' : ''}${id}`).join(',');
-
-const parseAsSorting = createParser({
-  parse(value: string) {
-    return value
-      .split(',')
-      .map((v) => ({ id: v.replace('-', ''), desc: v[0] === '-' }));
-  },
-  serialize,
-});
