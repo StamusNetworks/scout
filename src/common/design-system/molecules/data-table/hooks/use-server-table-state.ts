@@ -29,7 +29,7 @@ export function useServerTableState<TParams extends Record<string, unknown>>(
 ): ServerTableState<TParams> {
   const defaultPageSize = options?.defaultPageSize ?? 10;
 
-  // URL-backed pagination — read initial values from URL
+  // URL state (syncs page/page_size to URL)
   const [urlPage, setUrlPage] = useQueryState(
     'page',
     parseAsInteger.withDefault(1),
@@ -39,14 +39,11 @@ export function useServerTableState<TParams extends Record<string, unknown>>(
     parseAsInteger.withDefault(defaultPageSize),
   );
 
-  // Local state initialized from URL, kept in sync via handlers
-  const [localPage, setLocalPage] = useState(urlPage);
-  const [localPageSize, setLocalPageSize] = useState(urlPageSize);
-
-  // Use the maximum of URL and local state on first render, local thereafter
-  // This ensures URL params are picked up on initial load
-  const page = localPage;
-  const pageSize = localPageSize;
+  // Local state drives rendering; URL state kept in sync via handlers.
+  // nuqs defers URL updates via startTransition, so local state ensures
+  // immediate, synchronous propagation for pagination reads and resets.
+  const [page, setPage] = useState(urlPage);
+  const [pageSize, setPageSize] = useState(urlPageSize);
 
   // URL-backed sorting
   const [sorting, setSortingRaw] = useQueryState(
@@ -70,7 +67,7 @@ export function useServerTableState<TParams extends Record<string, unknown>>(
     prevOrderingRef.current = ordering;
   }
   if (shouldReset) {
-    setLocalPage(1);
+    setPage(1);
     setUrlPage(1);
   }
 
@@ -83,9 +80,9 @@ export function useServerTableState<TParams extends Record<string, unknown>>(
       const prev = { pageIndex: effectivePage - 1, pageSize };
       const next = typeof updater === 'function' ? updater(prev) : updater;
       const newPage = next.pageIndex + 1;
-      setLocalPage(newPage);
-      setLocalPageSize(next.pageSize);
-      setUrlPage(newPage);
+      setPage(newPage);
+      setPageSize(next.pageSize);
+      setUrlPage(newPage, { history: 'push' });
       setUrlPageSize(next.pageSize);
     },
     [effectivePage, pageSize, setUrlPage, setUrlPageSize],
