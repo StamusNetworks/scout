@@ -75,7 +75,12 @@ export const ThreatsTimelineTemplate = ({
           victim,
           movements,
         }))
-        .filter((mov) => (entity ? mov.victim === entity : true)),
+        .filter((mov) =>
+          entity
+            ? mov.victim === entity ||
+              mov.movements.some((m) => m.offender_ip === entity)
+            : true,
+        ),
     [lateralMovements, entity],
   );
   return (
