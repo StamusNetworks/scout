@@ -97,7 +97,7 @@ export const Pagination = ({
           <span className="sr-only">Go to previous page</span>
           <ChevronLeftIcon className="h-4 w-4" />
         </Button>
-        {totalCount < 100 && (
+        {pageCount < 100 && (
           <Select
             value={pageIndex.toString()}
             onValueChange={(val) => onPageIndexChange(Number(val))}
@@ -274,7 +274,6 @@ export const PageSelector = () => {
     onPageIndexChange,
     isPreviousPage,
     isNextPage,
-    rowsCount,
   } = usePagination();
   return (
     <div className="flex items-center space-x-2">
@@ -298,7 +297,7 @@ export const PageSelector = () => {
         <span className="sr-only">Go to previous page</span>
         <ChevronLeftIcon className="h-4 w-4" />
       </Button>
-      {rowsCount < 100 && (
+      {pageCount < 100 && (
         <Select
           value={pageIndex.toString()}
           onValueChange={(val) => onPageIndexChange(Number(val))}
