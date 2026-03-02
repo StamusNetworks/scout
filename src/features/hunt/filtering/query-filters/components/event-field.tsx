@@ -14,7 +14,7 @@ import { EventValue } from './event-value/event-value';
 
 interface EventFieldProps {
   filterId: string;
-  value: string | number;
+  value: string | number | React.ReactNode;
 }
 
 const getFallbackLabel = (filterId: string) => {
@@ -37,15 +37,15 @@ export const EventField = ({ filterId, value }: EventFieldProps) => {
           )}
         </Tooltip>
       </TooltipProvider>
-      <div>
-        {value && (
-          <EventValue
-            value={value?.toString()}
-            query_key={filterId}
-            className="line-clamp-3 text-wrap break-all"
-          />
-        )}
-      </div>
+      {typeof value === 'string' || typeof value === 'number' ? (
+        <EventValue
+          value={value?.toString()}
+          query_key={filterId}
+          className="line-clamp-3 text-wrap break-all"
+        />
+      ) : (
+        value
+      )}
     </Grid>
   );
 };

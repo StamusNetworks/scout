@@ -26,7 +26,7 @@ export const SyntheticView = ({ event }: { event: Event }) => {
                     <EventField
                       key={key}
                       filterId={key}
-                      value={value?.toString()}
+                      value={value}
                     />
                   );
                 } else if (Array.isArray(value)) {

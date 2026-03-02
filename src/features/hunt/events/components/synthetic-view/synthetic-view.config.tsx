@@ -1,8 +1,12 @@
 import { keys } from 'ramda';
+import React from 'react';
+
+import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
+import { ThreatTag } from '@/features/hunt/threats/components/threat-tag';
 
 import { Event } from '../../model/event.schema';
 
-type SyntheticViewValue = string | number;
+type SyntheticViewValue = string | number | React.ReactNode;
 
 interface SyntheticViewItem {
   key: string;
@@ -28,58 +32,66 @@ export const getSyntheticView = (row: Event): SyntheticViewProps[] => [
     ],
   },
   {
-    title: 'IP and basic information',
+    title: 'Detection method metadata',
+    valid: (row) => row.event_type !== 'stamus' && row.event_type === 'alert',
+    items: Object.entries(row.alert?.metadata || {}).map((field) => {
+      const value =
+        field[1] === null
+          ? ''
+          : typeof field[1] === 'string'
+            ? field[1]
+            : field[1].join(', ');
+      const key = field[0] === null ? '' : field[0];
+      // Filter name in case of not yet defined filter in queryFiters.definitions.tsx
+      // const fieldName = key.length > 0 ? key[0].toUpperCase() + key.slice(1).replace('_', ' ') : '';
+      return {
+        key: `alert.metadata.${key}`,
+        value,
+      };
+    }),
+  },
+  {
+    title: 'Stamus Method',
+    valid: (row) => row.event_type === 'stamus',
     items: [
-      { key: 'net_info.src_agg', value: row.net_info?.src_agg },
-      { key: 'src_ip', value: row.src_ip },
-      { key: 'src_port', value: row.src_port },
-      { key: 'net_info.dest_agg', value: row.net_info?.dest_agg },
-      { key: 'dest_ip', value: row.dest_ip },
-      { key: 'dest_port', value: row.dest_port },
-      { key: 'alert.xff', value: row.alert?.xff },
-      { key: 'proto', value: row.proto },
-      { key: 'app_proto', value: row.app_proto },
-      { key: 'app_proto_orig', value: row.app_proto_orig },
-      { key: 'host', value: row.host },
+      { key: 'stamus.asset', value: row.stamus?.asset },
+      { key: 'stamus.source', value: row.stamus?.source },
+      { key: 'stamus.family_name', value: row.stamus?.family_name },
       {
-        key: 'vlan',
-        value: row.vlan?.map((v) => [{ key: 'vlan', value: v }]),
+        key: 'stamus.threat_name',
+        value: row.stamus?.threat_id ? (
+          <div className="overflow-hidden">
+            <ThreatTag threat_id={row.stamus?.threat_id} />
+          </div>
+        ) : (
+          row.stamus?.threat_name
+        ),
       },
+      {
+        key: 'stamus.kill_chain',
+        value: row.stamus?.kill_chain && (
+          <KillchainTag kc={row.stamus?.kill_chain} />
+        ),
+      },
+      { key: 'stamus.threat_id', value: row.stamus?.threat_id },
     ],
   },
   {
-    title: 'Tunnel',
-    valid: (row) => !!row.tunnel,
+    title: 'Sightings',
     items: [
-      { key: 'tunnel.src_ip', value: row.tunnel?.src_ip },
-      { key: 'tunnel.dest_ip', value: row.tunnel?.dest_ip },
-      { key: 'tunnel.proto', value: row.tunnel?.proto },
-      { key: 'tunnel.depth', value: row.tunnel?.depth },
-    ],
-  },
-  {
-    title: 'Enrichment',
-    items: [
-      { key: 'alert.source.ip', value: row.alert?.source?.ip },
-      { key: 'alert.source.port', value: row.alert?.source?.port },
-      { key: 'alert.target.ip', value: row.alert?.target?.ip },
-      { key: 'alert.target.port', value: row.alert?.target?.port },
-    ],
-  },
-  {
-    title: 'Flow',
-    items: [
-      { key: 'flow.start', value: row.flow?.start },
-      { key: 'flow.src_ip', value: row.flow?.src_ip },
-      { key: 'flow.dest_ip', value: row.flow?.dest_ip },
-      { key: 'flow.bytes_toserver', value: row.flow?.bytes_toserver },
-      { key: 'flow.bytes_toclient', value: row.flow?.bytes_toclient },
-      { key: 'flow.pkts_toserver', value: row.flow?.pkts_toserver },
-      { key: 'flow.pkts_toclient', value: row.flow?.pkts_toclient },
-      { key: 'flow.age', value: row.flow?.age },
-      { key: 'flow.tx_cnt', value: row.flow?.tx_cnt },
-      { key: 'flow_id', value: row.flow_id },
-      { key: 'community_id', value: row.community_id },
+      {
+        key: 'discovery.asset_role',
+        value: row.discovery?.asset_role?.map((value) => [
+          {
+            key: 'discovery.asset_role',
+            value,
+          },
+        ]),
+      },
+      { key: 'discovery.key', value: row.discovery?.key },
+      { key: 'discovery.asset', value: row.discovery?.asset },
+      { key: 'discovery.value', value: row.discovery?.value },
+      { key: 'discovery.asset_net', value: row.discovery?.asset_net },
     ],
   },
   {
@@ -87,22 +99,6 @@ export const getSyntheticView = (row: Event): SyntheticViewProps[] => [
     span: 4,
     valid: (row) => !!row.dns,
     items: getDnsData(row),
-  },
-
-  {
-    title: 'Geo IP',
-    items: [
-      { key: 'geoip.country_name', value: row.geoip?.country_name },
-      { key: 'geoip.country.iso_code', value: row.geoip?.country?.iso_code },
-      {
-        key: 'geoip.provider.autonomous_system_number',
-        value: row.geoip?.provider?.autonomous_system_number,
-      },
-      {
-        key: 'geoip.provider.autonomous_system_organization',
-        value: row.geoip?.provider?.autonomous_system_organization,
-      },
-    ],
   },
   {
     title: 'HTTP',
@@ -213,51 +209,6 @@ export const getSyntheticView = (row: Event): SyntheticViewProps[] => [
     ],
   },
   {
-    title: 'Ethernet',
-    items: [
-      {
-        key: 'ether.src_mac',
-        value: row.ether?.src_mac,
-      },
-      {
-        key: 'ether.dest_mac',
-        value: row.ether?.dest_mac,
-      },
-      { key: 'in_iface', value: row.in_iface },
-    ],
-  },
-  {
-    title: 'Detection method metadata',
-    valid: (row) => row.event_type !== 'stamus' && row.event_type === 'alert',
-    items: Object.entries(row.alert?.metadata || {}).map((field) => {
-      const value =
-        field[1] === null
-          ? ''
-          : typeof field[1] === 'string'
-            ? field[1]
-            : field[1].join(', ');
-      const key = field[0] === null ? '' : field[0];
-      // Filter name in case of not yet defined filter in queryFiters.definitions.tsx
-      // const fieldName = key.length > 0 ? key[0].toUpperCase() + key.slice(1).replace('_', ' ') : '';
-      return {
-        key: `alert.metadata.${key}`,
-        value,
-      };
-    }),
-  },
-  {
-    title: 'Stamus Method',
-    valid: (row) => row.event_type !== 'stamus' && row.event_type === 'alert',
-    items: [
-      { key: 'stamus.asset', value: row.stamus?.asset },
-      { key: 'stamus.source', value: row.stamus?.source },
-      { key: 'stamus.threat_name', value: row.stamus?.threat_name },
-      { key: 'stamus.family_name', value: row.stamus?.family_name },
-      { key: 'stamus.kill_chain', value: row.stamus?.kill_chain },
-      { key: 'stamus.threat_id', value: row.stamus?.threat_id },
-    ],
-  },
-  {
     title: 'SMB',
     valid: (row) => !!row.smb && keys(row.smb).length > 0,
     items: [
@@ -272,21 +223,87 @@ export const getSyntheticView = (row: Event): SyntheticViewProps[] => [
     ],
   },
   {
-    title: 'Sightings',
+    title: 'IP and basic information',
+    items: [
+      { key: 'net_info.src_agg', value: row.net_info?.src_agg },
+      { key: 'src_ip', value: row.src_ip },
+      { key: 'src_port', value: row.src_port },
+      { key: 'net_info.dest_agg', value: row.net_info?.dest_agg },
+      { key: 'dest_ip', value: row.dest_ip },
+      { key: 'dest_port', value: row.dest_port },
+      { key: 'alert.xff', value: row.alert?.xff },
+      { key: 'proto', value: row.proto },
+      { key: 'app_proto', value: row.app_proto },
+      { key: 'app_proto_orig', value: row.app_proto_orig },
+      { key: 'host', value: row.host },
+      {
+        key: 'vlan',
+        value: row.vlan?.map((v) => [{ key: 'vlan', value: v }]),
+      },
+    ],
+  },
+  {
+    title: 'Flow',
+    items: [
+      { key: 'flow.start', value: row.flow?.start },
+      { key: 'flow.src_ip', value: row.flow?.src_ip },
+      { key: 'flow.dest_ip', value: row.flow?.dest_ip },
+      { key: 'flow.bytes_toserver', value: row.flow?.bytes_toserver },
+      { key: 'flow.bytes_toclient', value: row.flow?.bytes_toclient },
+      { key: 'flow.pkts_toserver', value: row.flow?.pkts_toserver },
+      { key: 'flow.pkts_toclient', value: row.flow?.pkts_toclient },
+      { key: 'flow.age', value: row.flow?.age },
+      { key: 'flow.tx_cnt', value: row.flow?.tx_cnt },
+      { key: 'flow_id', value: row.flow_id },
+      { key: 'community_id', value: row.community_id },
+    ],
+  },
+  {
+    title: 'Geo IP',
+    items: [
+      { key: 'geoip.country_name', value: row.geoip?.country_name },
+      { key: 'geoip.country.iso_code', value: row.geoip?.country?.iso_code },
+      {
+        key: 'geoip.provider.autonomous_system_number',
+        value: row.geoip?.provider?.autonomous_system_number,
+      },
+      {
+        key: 'geoip.provider.autonomous_system_organization',
+        value: row.geoip?.provider?.autonomous_system_organization,
+      },
+    ],
+  },
+  {
+    title: 'Enrichment',
+    items: [
+      { key: 'alert.source.ip', value: row.alert?.source?.ip },
+      { key: 'alert.source.port', value: row.alert?.source?.port },
+      { key: 'alert.target.ip', value: row.alert?.target?.ip },
+      { key: 'alert.target.port', value: row.alert?.target?.port },
+    ],
+  },
+  {
+    title: 'Tunnel',
+    valid: (row) => !!row.tunnel,
+    items: [
+      { key: 'tunnel.src_ip', value: row.tunnel?.src_ip },
+      { key: 'tunnel.dest_ip', value: row.tunnel?.dest_ip },
+      { key: 'tunnel.proto', value: row.tunnel?.proto },
+      { key: 'tunnel.depth', value: row.tunnel?.depth },
+    ],
+  },
+  {
+    title: 'Ethernet',
     items: [
       {
-        key: 'discovery.asset_role',
-        value: row.discovery?.asset_role?.map((value) => [
-          {
-            key: 'discovery.asset_role',
-            value,
-          },
-        ]),
+        key: 'ether.src_mac',
+        value: row.ether?.src_mac,
       },
-      { key: 'discovery.key', value: row.discovery?.key },
-      { key: 'discovery.asset', value: row.discovery?.asset },
-      { key: 'discovery.value', value: row.discovery?.value },
-      { key: 'discovery.asset_net', value: row.discovery?.asset_net },
+      {
+        key: 'ether.dest_mac',
+        value: row.ether?.dest_mac,
+      },
+      { key: 'in_iface', value: row.in_iface },
     ],
   },
 ];
