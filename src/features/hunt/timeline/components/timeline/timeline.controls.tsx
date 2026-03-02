@@ -293,7 +293,7 @@ export const TimelineControls = ({
       )}
       {isDragging && (
         <div
-          className="border-primary/50 bg-primary/10 absolute top-0 z-40 h-full border"
+          className="border-primary/50 bg-primary/10 pointer-events-none absolute top-0 z-40 h-full border"
           style={{
             left: `${Math.min(dragStartX, dragEndX)}px`,
             width: `${Math.abs(dragEndX - dragStartX)}px`,

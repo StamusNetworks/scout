@@ -91,7 +91,7 @@ export const ThreatsTimelineTemplate = ({
         className={cn(
           'relative overflow-hidden',
           cursor === 'grabbing'
-            ? 'cursor-grabbing [&>*]:pointer-events-none'
+            ? 'cursor-grabbing *:pointer-events-none'
             : cursor === 'grab'
               ? 'cursor-grab'
               : 'cursor-default',
