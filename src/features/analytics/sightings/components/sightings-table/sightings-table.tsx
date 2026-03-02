@@ -56,7 +56,7 @@ export const SightingsTable = ({
       <TextFilter
         value={search}
         onChange={setSearch}
-        placeholder="Search by value"
+        placeholder="Search by discovered value"
       />
       <CommandFilterSingle
         title="Role"
