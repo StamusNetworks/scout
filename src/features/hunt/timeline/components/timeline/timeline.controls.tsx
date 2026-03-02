@@ -81,9 +81,22 @@ export const TimelineControls = ({
         event.preventDefault();
         setIsDragging(false);
         setIsPanning(false);
+        setCursor('default');
+      }
+      if (event.key === 'Shift' && isHovering && !isPanning) {
+        setCursor('grab');
       }
     },
-    [isDragging, isPanning],
+    [isDragging, isPanning, isHovering, setCursor],
+  );
+
+  const handleKeyUp = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === 'Shift' && !isPanning) {
+        setCursor('default');
+      }
+    },
+    [isPanning, setCursor],
   );
 
   const handleMouseMove = useCallback(
@@ -98,6 +111,12 @@ export const TimelineControls = ({
         setMarkerVisible(true);
         setMarkerXOffset(x);
         setIsHovering(true);
+
+        if (event.shiftKey && !isPanning) {
+          setCursor('grab');
+        } else if (!isPanning) {
+          setCursor('default');
+        }
 
         // Calculate timestamp for the marker position
         const timelineWidth = rect.width - MENU_WIDTH;
@@ -132,6 +151,7 @@ export const TimelineControls = ({
       to_date,
       setFromDate,
       setToDate,
+      setCursor,
       timelineRef,
     ],
   );
@@ -149,6 +169,7 @@ export const TimelineControls = ({
         if (event.shiftKey) {
           setIsPanning(true);
           setLastPanX(x);
+          setCursor('grabbing');
         } else {
           setIsDragging(true);
           setDragStartX(x);
@@ -156,7 +177,7 @@ export const TimelineControls = ({
         }
       }
     },
-    [timelineRef],
+    [timelineRef, setCursor],
   );
 
   const handleMouseUp = useCallback(() => {
@@ -185,6 +206,7 @@ export const TimelineControls = ({
 
     setIsDragging(false);
     setIsPanning(false);
+    setCursor('default');
   }, [
     isDragging,
     isPanning,
@@ -195,6 +217,7 @@ export const TimelineControls = ({
     setFromDate,
     setToDate,
     timelineRef,
+    setCursor,
   ]);
 
   const handleMouseLeave = useCallback(() => {
@@ -219,6 +242,7 @@ export const TimelineControls = ({
     element.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('keydown', handleZoomOut);
     window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
 
     return () => {
       element.removeEventListener('mousemove', handleMouseMove);
@@ -228,6 +252,7 @@ export const TimelineControls = ({
       element.removeEventListener('wheel', handleWheel);
       window.removeEventListener('keydown', handleZoomOut);
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
     };
   }, [
     handleMouseMove,
@@ -237,6 +262,7 @@ export const TimelineControls = ({
     handleWheel,
     handleZoomOut,
     handleKeyDown,
+    handleKeyUp,
     timelineRef,
   ]);
 
