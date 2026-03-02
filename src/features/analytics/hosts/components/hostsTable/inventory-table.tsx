@@ -1,13 +1,14 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { DataTable } from '@/common/design-system/molecules/data-table/data-table.tsx';
-import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination.ts';
-import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting.ts';
+import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences.ts';
+import { useGlobalQueryParams } from '@/common/fetching/useQueryParams.tsx';
+import { useQFBuilder } from '@/features/hunt/filtering/query-filters/hooks/use-qf-builder.ts';
 import { routes } from '@/pages/routes.config.ts';
 
-import { useHostsList } from '../../api/hooks/useHostsList.ts';
+import { getFilterExtension } from '../../api/hooks/useHostsList.ts';
+import { useGetHostsQuery } from '../../api/hosts.api.ts';
 import { columns, exportColumns } from './hostsTable.columns.tsx';
 import { HostsTableExpandedRow } from './hostsTable.expandedRow.tsx';
 
@@ -28,16 +29,26 @@ export const InventoryTable = ({
     columns,
   });
   const navigate = useNavigate();
-  const [pagination, setPagination] = usePaginationUrlState();
-  const [sorting, setSorting, ordering] = useSortingUrlState();
-  useEffect(() => {
-    setPagination((prev) => ({ ...prev, pageIndex: 0 }));
-  }, [inHomeNetwork]);
-  const { data, isFetching } = useHostsList({
-    pagination,
+
+  const QFBuilder = useQFBuilder();
+  const globalParams = useGlobalQueryParams(
+    ['tenant', 'dates', 'qfilter', 'qfilterHost'],
+    { extendQfilter: getFilterExtension(QFBuilder, inHomeNetwork) },
+  );
+
+  const { queryParams, pagination, setPagination, sorting, setSorting } =
+    useServerTableState({
+      tenant: globalParams.tenant,
+      start_date: globalParams.start_date,
+      end_date: globalParams.end_date,
+      host_id_qfilter: globalParams.host_id_qfilter,
+      inHomeNetwork,
+    });
+
+  const { data, isFetching } = useGetHostsQuery({
+    ...queryParams,
     withAlerts: false,
-    inHomeNetwork,
-    ordering: ordering ?? '-host_id.last_seen',
+    ordering: queryParams.ordering ?? '-host_id.last_seen',
   });
 
   return (
