@@ -9,7 +9,7 @@ import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { ThreatFamilyDefault } from '@/features/hunt/threats/templates/family-by-id/family-by-id';
 import { ThreatByIdIndex } from '@/features/hunt/threats/templates/threat-by-id/threat-by-id';
-import { Analytics } from '@/pages/analytics/analytics';
+import { BeaconingPage } from '@/pages/analytics/beaconing';
 import { AttackSurface } from '@/pages/attack-surface';
 import { Deeplinks } from '@/pages/deeplinks';
 import { DetectionMethods } from '@/pages/detection-methods';
@@ -48,7 +48,6 @@ import { HostInsights } from './hosts/[hostId]/insights';
 import { HostOutlierEvents } from './hosts/[hostId]/outlier-events';
 import { HostSightings } from './hosts/[hostId]/sightings';
 import { HostTimeline } from './hosts/[hostId]/timeline';
-import { PolicyViolationsPage } from './policy-violations';
 import { PolicyViolationsCoveragePage } from './policy-violations/coverage';
 import { PolicyViolationFamilyByIdPage } from './policy-violations/coverage/family';
 import { PolicyViolationFamilyDetectionMethodsPage } from './policy-violations/coverage/family/detection-methods';
@@ -59,11 +58,12 @@ import { PolicyViolationByIdDetectionMethods } from './policy-violations/coverag
 import { PolicyViolationByIdEventsPage } from './policy-violations/coverage/policy-violation/events';
 import { PolicyViolationsGraphPage } from './policy-violations/graph';
 import { PolicyViolationsImpactedEntities } from './policy-violations/impacted-entities';
+import { ViolationsPage } from './policy-violations/violations';
 import { UserSettingsPage } from './preferences';
 import { Routes, routes } from './routes.config';
 import { SharePage } from './share';
-import { ThreatsPage } from './threats';
 import { ThreatsAttackFlowPage } from './threats/attack-flow';
+import { CompromisesPage } from './threats/compromises';
 import { ThreatsCoveragePage } from './threats/coverage';
 import { ThreatFamilyByIdPage } from './threats/coverage/family';
 import { ThreatFamilyDetectionMethodsPage } from './threats/coverage/family/detection-methods';
@@ -106,38 +106,78 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                 ),
               },
               {
-                path: routes.threats,
+                path: '/threats',
                 element: (
-                  <PageBoundary key="threats">
-                    <ThreatsPage />
-                  </PageBoundary>
+                  <>
+                    <OutletBreadcrumb link={routes.threats_compromises}>
+                      Threats
+                    </OutletBreadcrumb>
+                    <Outlet />
+                  </>
                 ),
                 children: [
                   {
                     index: true,
                     element: (
                       <Navigate
-                        to={routes.threats_incidents}
+                        to={routes.threats_compromises_incidents}
                         replace
                       />
                     ),
                   },
+                  // Compromises (tab wrapper)
                   {
-                    path: routes.threats_incidents,
+                    path: routes.threats_compromises,
                     element: (
-                      <PageBoundary key="threats-incidents">
-                        <ThreatsIncidentsPage />
+                      <PageBoundary key="compromises">
+                        <CompromisesPage />
                       </PageBoundary>
                     ),
+                    children: [
+                      {
+                        index: true,
+                        element: (
+                          <Navigate
+                            to={routes.threats_compromises_incidents}
+                            replace
+                          />
+                        ),
+                      },
+                      {
+                        path: routes.threats_compromises_incidents,
+                        element: (
+                          <PageBoundary key="compromises-incidents">
+                            <ThreatsIncidentsPage />
+                          </PageBoundary>
+                        ),
+                      },
+                      {
+                        path: routes.threats_compromises_entities,
+                        element: (
+                          <PageBoundary key="compromises-entities">
+                            <ThreatsImpactedEntities />
+                          </PageBoundary>
+                        ),
+                      },
+                      {
+                        path: routes.threats_compromises_graph,
+                        element: (
+                          <PageBoundary key="compromises-graph">
+                            <ThreatsGraphPage />
+                          </PageBoundary>
+                        ),
+                      },
+                      {
+                        path: routes.threats_compromises_attack_flow,
+                        element: (
+                          <PageBoundary key="compromises-attack-flow">
+                            <ThreatsAttackFlowPage />
+                          </PageBoundary>
+                        ),
+                      },
+                    ],
                   },
-                  {
-                    path: routes.threats_entities,
-                    element: (
-                      <PageBoundary key="threats-entities">
-                        <ThreatsImpactedEntities />
-                      </PageBoundary>
-                    ),
-                  },
+                  // Timeline (standalone)
                   {
                     path: routes.threats_timeline,
                     element: (
@@ -146,14 +186,7 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                       </PageBoundary>
                     ),
                   },
-                  {
-                    path: routes.threats_graph,
-                    element: (
-                      <PageBoundary key="threats-graph">
-                        <ThreatsGraphPage />
-                      </PageBoundary>
-                    ),
-                  },
+                  // Coverage (standalone)
                   {
                     path: routes.threats_coverage,
                     element: (
@@ -162,12 +195,41 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                       </PageBoundary>
                     ),
                   },
+                  // Backward-compat redirects from old tab routes
+                  {
+                    path: routes.threats_incidents,
+                    element: (
+                      <Navigate
+                        to={routes.threats_compromises_incidents}
+                        replace
+                      />
+                    ),
+                  },
+                  {
+                    path: routes.threats_entities,
+                    element: (
+                      <Navigate
+                        to={routes.threats_compromises_entities}
+                        replace
+                      />
+                    ),
+                  },
+                  {
+                    path: routes.threats_graph,
+                    element: (
+                      <Navigate
+                        to={routes.threats_compromises_graph}
+                        replace
+                      />
+                    ),
+                  },
                   {
                     path: routes.threats_attack_flow,
                     element: (
-                      <PageBoundary key="threats-attack-flow">
-                        <ThreatsAttackFlowPage />
-                      </PageBoundary>
+                      <Navigate
+                        to={routes.threats_compromises_attack_flow}
+                        replace
+                      />
                     ),
                   },
                 ],
@@ -176,7 +238,7 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                 path: routes.threats_coverage_threat,
                 element: (
                   <PageBoundary key="threat-by-id">
-                    <OutletBreadcrumb link={routes.threats}>
+                    <OutletBreadcrumb link={routes.threats_compromises}>
                       Threats
                     </OutletBreadcrumb>
                     <OutletBreadcrumb link={routes.threats_coverage}>
@@ -216,7 +278,7 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                 path: routes.threats_coverage_family,
                 element: (
                   <PageBoundary key="threat-family-by-id">
-                    <OutletBreadcrumb link={routes.threats}>
+                    <OutletBreadcrumb link={routes.threats_compromises}>
                       Threats
                     </OutletBreadcrumb>
                     <OutletBreadcrumb link={routes.threats_coverage}>
@@ -264,7 +326,9 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                 path: routes.policy_violations_coverage_threat,
                 element: (
                   <PageBoundary key="threat-by-id">
-                    <OutletBreadcrumb link={routes.policy_violations}>
+                    <OutletBreadcrumb
+                      link={routes.policy_violations_violations}
+                    >
                       Policy Violations
                     </OutletBreadcrumb>
                     <OutletBreadcrumb link={routes.policy_violations_coverage}>
@@ -304,7 +368,9 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                 path: routes.policy_violations_coverage_family,
                 element: (
                   <PageBoundary key="threat-family-by-id">
-                    <OutletBreadcrumb link={routes.policy_violations}>
+                    <OutletBreadcrumb
+                      link={routes.policy_violations_violations}
+                    >
                       Policy Violations
                     </OutletBreadcrumb>
                     <OutletBreadcrumb link={routes.policy_violations_coverage}>
@@ -349,35 +415,71 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                 ],
               },
               {
-                path: routes.policy_violations,
+                path: '/policy-violations',
                 element: (
-                  <PageBoundary key="policy_violations">
-                    <PolicyViolationsPage />
-                  </PageBoundary>
+                  <>
+                    <OutletBreadcrumb
+                      link={routes.policy_violations_violations}
+                    >
+                      Policy Violations
+                    </OutletBreadcrumb>
+                    <Outlet />
+                  </>
                 ),
                 children: [
                   {
                     index: true,
                     element: (
-                      <PageBoundary key="policy_violations-root">
-                        <PolicyViolationsImpactedEntities />
-                      </PageBoundary>
+                      <Navigate
+                        to={routes.policy_violations_violations}
+                        replace
+                      />
                     ),
                   },
+                  // Violations (tab wrapper)
                   {
-                    path: routes.policy_violations_graph,
+                    path: routes.policy_violations_violations,
                     element: (
-                      <PageBoundary key="policy_violations-graph">
-                        <PolicyViolationsGraphPage />
+                      <PageBoundary key="violations">
+                        <ViolationsPage />
                       </PageBoundary>
                     ),
+                    children: [
+                      {
+                        index: true,
+                        element: (
+                          <PageBoundary key="violations-entities">
+                            <PolicyViolationsImpactedEntities />
+                          </PageBoundary>
+                        ),
+                      },
+                      {
+                        path: routes.policy_violations_violations_graph,
+                        element: (
+                          <PageBoundary key="violations-graph">
+                            <PolicyViolationsGraphPage />
+                          </PageBoundary>
+                        ),
+                      },
+                    ],
                   },
+                  // Coverage (standalone)
                   {
                     path: routes.policy_violations_coverage,
                     element: (
-                      <PageBoundary key="policy_violations-coverage">
+                      <PageBoundary key="pv-coverage">
                         <PolicyViolationsCoveragePage />
                       </PageBoundary>
+                    ),
+                  },
+                  // Backward-compat redirect
+                  {
+                    path: routes.policy_violations_graph,
+                    element: (
+                      <Navigate
+                        to={routes.policy_violations_violations_graph}
+                        replace
+                      />
                     ),
                   },
                 ],
@@ -395,16 +497,17 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                     index: true,
                     element: (
                       <Navigate
-                        to={routes.beaconing_ips}
+                        to={routes.analytics_beaconing_ips}
                         replace
                       />
                     ),
                   },
+                  // Beaconing (tab wrapper)
                   {
-                    path: routes.beaconing_ips,
+                    path: routes.analytics_beaconing,
                     element: (
                       <>
-                        <OutletBreadcrumb>Beaconing IPs</OutletBreadcrumb>
+                        <OutletBreadcrumb>Beaconing</OutletBreadcrumb>
                         <Outlet />
                       </>
                     ),
@@ -412,52 +515,73 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                       {
                         index: true,
                         element: (
-                          <Analytics>
-                            <PageBoundary key="beaconing-ips">
-                              <BeaconingIps />
-                            </PageBoundary>
-                          </Analytics>
+                          <Navigate
+                            to={routes.analytics_beaconing_ips}
+                            replace
+                          />
                         ),
                       },
                       {
-                        path: routes.beaconing_ips_details,
+                        path: routes.analytics_beaconing_ips,
                         element: (
-                          <PageBoundary key="beaconing-ip-details">
-                            <BeaconingIpDetails />
-                          </PageBoundary>
+                          <>
+                            <OutletBreadcrumb>IPs</OutletBreadcrumb>
+                            <Outlet />
+                          </>
                         ),
+                        children: [
+                          {
+                            index: true,
+                            element: (
+                              <BeaconingPage>
+                                <PageBoundary key="beaconing-ips">
+                                  <BeaconingIps />
+                                </PageBoundary>
+                              </BeaconingPage>
+                            ),
+                          },
+                          {
+                            path: routes.analytics_beaconing_ips_details,
+                            element: (
+                              <PageBoundary key="beaconing-ip-details">
+                                <BeaconingIpDetails />
+                              </PageBoundary>
+                            ),
+                          },
+                        ],
+                      },
+                      {
+                        path: routes.analytics_beaconing_ja3s,
+                        element: (
+                          <>
+                            <OutletBreadcrumb>JA3s</OutletBreadcrumb>
+                            <Outlet />
+                          </>
+                        ),
+                        children: [
+                          {
+                            index: true,
+                            element: (
+                              <BeaconingPage>
+                                <PageBoundary key="beaconing-ja3s">
+                                  <BeaconingJa3s />
+                                </PageBoundary>
+                              </BeaconingPage>
+                            ),
+                          },
+                          {
+                            path: routes.analytics_beaconing_ja3s_details,
+                            element: (
+                              <PageBoundary key="beaconing-ja3s-details">
+                                <BeaconingJa3sDetails />
+                              </PageBoundary>
+                            ),
+                          },
+                        ],
                       },
                     ],
                   },
-                  {
-                    path: routes.beaconing_ja3s,
-                    element: (
-                      <>
-                        <OutletBreadcrumb>Beaconing JA3s</OutletBreadcrumb>
-                        <Outlet />
-                      </>
-                    ),
-                    children: [
-                      {
-                        index: true,
-                        element: (
-                          <Analytics>
-                            <PageBoundary key="beaconing-ja3s">
-                              <BeaconingJa3s />
-                            </PageBoundary>
-                          </Analytics>
-                        ),
-                      },
-                      {
-                        path: routes.beaconing_ja3s_details,
-                        element: (
-                          <PageBoundary key="beaconing-ja3s-details">
-                            <BeaconingJa3sDetails />
-                          </PageBoundary>
-                        ),
-                      },
-                    ],
-                  },
+                  // Sightings (standalone)
                   {
                     path: routes.sightings,
                     element: (
@@ -470,11 +594,9 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                       {
                         index: true,
                         element: (
-                          <Analytics>
-                            <PageBoundary key="sightings">
-                              <Sightings />
-                            </PageBoundary>
-                          </Analytics>
+                          <PageBoundary key="sightings">
+                            <Sightings />
+                          </PageBoundary>
                         ),
                       },
                       {
@@ -486,6 +608,25 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                         ),
                       },
                     ],
+                  },
+                  // Backward-compat redirects
+                  {
+                    path: routes.beaconing_ips,
+                    element: (
+                      <Navigate
+                        to={routes.analytics_beaconing_ips}
+                        replace
+                      />
+                    ),
+                  },
+                  {
+                    path: routes.beaconing_ja3s,
+                    element: (
+                      <Navigate
+                        to={routes.analytics_beaconing_ja3s}
+                        replace
+                      />
+                    ),
                   },
                 ],
               },

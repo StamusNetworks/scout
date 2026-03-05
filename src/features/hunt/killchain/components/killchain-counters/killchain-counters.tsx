@@ -18,7 +18,7 @@ export const KillChainCounters = ({ className }: { className?: string }) => {
 
   const handleClick = useCallback(
     (killchain: keyof typeof killChainsConfig) => {
-      navigate(routes.threats_entities + '?killchain=' + killchain);
+      navigate(routes.threats_compromises_entities + '?killchain=' + killchain);
     },
     [navigate],
   );

@@ -156,7 +156,7 @@ const IncidentsEmpty = ({ killChain }: { killChain: string[] }) => {
               {entityCount === 1 ? 'it' : 'them'} to assess your exposure.
             </EmptyDescription>
             <Button asChild>
-              <Link to={routes.threats_entities}>
+              <Link to={routes.threats_compromises_entities}>
                 View impacted {entityCount === 1 ? 'entity' : 'entities'}
               </Link>
             </Button>

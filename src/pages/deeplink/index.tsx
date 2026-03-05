@@ -27,7 +27,7 @@ export const Deeplink = () => {
         : trimmedValue;
       dispatch(addQueryFilter({ key, value: typedValue }));
     });
-  }, []);
+  });
   return (
     <Navigate
       to={urls[params.get('page') as keyof typeof urls] ?? urls.dashboard}

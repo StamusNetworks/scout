@@ -88,7 +88,7 @@ describe('KillChainCounters', () => {
     await userEvent.click(reconItem);
 
     expect(mockNavigate).toHaveBeenCalledWith(
-      '/threats/entities?killchain=reconnaissance',
+      '/threats/compromises/entities?killchain=reconnaissance',
     );
   });
 

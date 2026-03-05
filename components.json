@@ -11,10 +11,10 @@
     "prefix": ""
   },
   "aliases": {
-    "components": "@/features/design-system/atoms",
-    "utils": "@/lib/utils",
-    "ui": "@features/design-system/atoms/ui",
-    "lib": "@/lib",
-    "hooks": "@/lib/hooks"
+    "components": "@/common/design-system/atoms",
+    "utils": "@/common/lib/utils",
+    "ui": "@/common/design-system/atoms/ui",
+    "lib": "@/common/lib",
+    "hooks": "@/common/lib"
   }
 }

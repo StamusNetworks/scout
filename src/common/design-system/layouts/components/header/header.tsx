@@ -1,9 +1,4 @@
-import {
-  ChevronRight,
-  GalleryHorizontal,
-  PanelLeftClose,
-  PanelLeftOpen,
-} from 'lucide-react';
+import { ChevronRight, GalleryHorizontal } from 'lucide-react';
 import { useCallback } from 'react';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -13,15 +8,14 @@ import {
   NavigationMenuItem,
   NavigationMenuList,
 } from '@/common/design-system/atoms/ui/navigation-menu';
+import { SidebarTrigger } from '@/common/design-system/atoms/ui/sidebar';
 import { BreadcrumbsOutlet } from '@/common/design-system/molecules/breadcrumbs';
 import { getShortcutDisplay } from '@/common/lib/platform';
 import { NewsFeedModal } from '@/features/marketing/components/news-modal';
 import { disableHelp, selectHelpState } from '@/features/ui/help/help.slice';
 import { ThemeSelector } from '@/features/ui/theming/themeSelector';
 import {
-  selectIsNavigationOpen,
   selectWithPageContainer,
-  setIsNavigationOpen,
   setOpenModal,
   setWithPageContainer,
 } from '@/features/ui/ui-state.slice';
@@ -44,7 +38,7 @@ export const Header = () => {
   return (
     <Row className="bg-primary-muted h-12 w-full shrink-0 items-center justify-between border-b px-2">
       <Row className="min-w-0 flex-1 items-center">
-        <NavigationToggler />
+        <SidebarTrigger />
         <div className="bg-border mr-4 ml-2 h-4 w-px" />
         <BreadcrumbsOutlet />
       </Row>
@@ -90,22 +84,6 @@ export const Header = () => {
         </NavigationMenuList>
       </NavigationMenu>
     </Row>
-  );
-};
-
-const NavigationToggler = () => {
-  const dispatch = useAppDispatch();
-  const isOpen = useAppSelector(selectIsNavigationOpen);
-  return (
-    <Button
-      onClick={() => {
-        dispatch(setIsNavigationOpen(!isOpen));
-      }}
-      variant="ghost"
-      size="icon"
-    >
-      {isOpen ? <PanelLeftClose /> : <PanelLeftOpen />}
-    </Button>
   );
 };
 

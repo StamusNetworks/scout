@@ -20,6 +20,11 @@ export const routes = {
   threats_graph: '/threats/entities-graph',
   threats_coverage: '/threats/coverage',
   threats_attack_flow: '/threats/attack-flow',
+  threats_compromises: '/threats/compromises',
+  threats_compromises_incidents: '/threats/compromises/incidents',
+  threats_compromises_entities: '/threats/compromises/entities',
+  threats_compromises_graph: '/threats/compromises/graph',
+  threats_compromises_attack_flow: '/threats/compromises/attack-flow',
   threats_coverage_family: '/threats/coverage/family/:familyId',
   threats_coverage_family_events: '/threats/coverage/family/:familyId/events',
   threats_coverage_family_detection_methods:
@@ -30,6 +35,8 @@ export const routes = {
   threats_coverage_threat_detection_methods:
     '/threats/coverage/threat/:threatId/detection-methods',
   policy_violations: '/policy-violations',
+  policy_violations_violations: '/policy-violations/violations',
+  policy_violations_violations_graph: '/policy-violations/violations/graph',
   policy_violations_timeline: '/policy-violations/timeline',
   policy_violations_graph: '/policy-violations/entities-graph',
   policy_violations_coverage: '/policy-violations/coverage',
@@ -48,6 +55,11 @@ export const routes = {
   policy_violations_coverage_threat_detection_methods:
     '/policy-violations/coverage/threat/:threatId/detection-methods',
   analytics: '/analytics',
+  analytics_beaconing: '/analytics/beaconing',
+  analytics_beaconing_ips: '/analytics/beaconing/ips',
+  analytics_beaconing_ips_details: '/analytics/beaconing/ips/:ip',
+  analytics_beaconing_ja3s: '/analytics/beaconing/ja3s',
+  analytics_beaconing_ja3s_details: '/analytics/beaconing/ja3s/:ja3s',
   beaconing_ips: '/analytics/beaconing-ips',
   beaconing_ips_details: '/analytics/beaconing-ips/:ip',
   beaconing_ja3s: '/analytics/beaconing-ja3s',

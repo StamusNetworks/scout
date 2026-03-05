@@ -34,7 +34,7 @@ export const ServingIpsTable = () => {
       onSortingChange={setSorting}
       onRowClick={(row) =>
         navigate(
-          routes.beaconing_ips_details.replace(
+          routes.analytics_beaconing_ips_details.replace(
             ':ip',
             row.original.beacon_report.value,
           ),

@@ -4,8 +4,7 @@ import {
   Filter,
   FilterX,
   LucideIcon,
-  PanelLeftClose,
-  PanelLeftOpen,
+  PanelLeft,
   PanelRightClose,
   PanelRightOpen,
   RefreshCw,
@@ -13,6 +12,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 
+import { useSidebar } from '@/common/design-system/atoms/ui/sidebar';
 import { getShortcutDisplay } from '@/common/lib/platform';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { getConfig } from '@/config';
@@ -24,9 +24,7 @@ import { selectQueryFilters } from '@/features/hunt/filtering/query-filters/stor
 import { clearQueryFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
 import { useUpdatePushRulesetMutation } from '@/features/hunt/rulesets/api/rulesets.api';
 import {
-  selectIsNavigationOpen,
   selectIsSidebarOpen,
-  setIsNavigationOpen,
   setIsSidebarOpen,
   setOpenModal,
 } from '@/features/ui/ui-state.slice';
@@ -49,7 +47,7 @@ export type GlobalCommands = {
 export const useGlobalCommands = (): GlobalCommands[] => {
   const dispatch = useAppDispatch();
   const filters = useAppSelector(selectQueryFilters);
-  const isNavigationOpen = useAppSelector(selectIsNavigationOpen);
+  const { toggleSidebar: toggleNavSidebar } = useSidebar();
   const isSidebarOpen = useAppSelector(selectIsSidebarOpen);
   const { enterprise } = useFeatureFlags();
   const [updatePushRuleset] = useUpdatePushRulesetMutation();
@@ -70,12 +68,12 @@ export const useGlobalCommands = (): GlobalCommands[] => {
           },
         },
         {
-          Icon: isNavigationOpen ? PanelLeftClose : PanelLeftOpen,
-          title: isNavigationOpen ? 'Close Navigation' : 'Open Navigation',
+          Icon: PanelLeft,
+          title: 'Toggle Navigation',
           action: () => {
-            dispatch(setIsNavigationOpen(!isNavigationOpen));
+            toggleNavSidebar();
           },
-          shortcut: getShortcutDisplay('D'),
+          shortcut: getShortcutDisplay('B'),
         },
         {
           Icon: isSidebarOpen ? PanelRightClose : PanelRightOpen,

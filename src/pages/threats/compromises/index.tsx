@@ -14,39 +14,41 @@ import {
 } from '@/common/design-system/atoms/ui/pillTabs';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
-import { IndicatorsDopv } from '@/features/hunt/operational-center/components/indicators/docdopv.indicators';
+import { IndicatorsDoc } from '@/features/hunt/operational-center/components/indicators/docdopv.indicators';
+import { routes } from '@/pages/routes.config';
 
-import { routes } from '../routes.config';
-
-export const PolicyViolationsPage = () => {
+export const CompromisesPage = () => {
   const { pathname } = useLocation();
   return (
     <Page>
-      <OutletBreadcrumb>Policy Violations</OutletBreadcrumb>
+      <OutletBreadcrumb>Compromises</OutletBreadcrumb>
       <TogglePageContainer>
         <PageHeader>
           <PageHeaderContent>
-            <PageTitle>Policy Violations</PageTitle>
+            <PageTitle>Compromises</PageTitle>
             <PageDescription>
               Gain a comprehensive, real-time overview of active and historical
-              Declaration of Policy Violations™ in your environment. Use
-              filtering to investigate policy violations, assess impact, explore
-              relationships, empowering confident security decision-making and
-              rapid remediation.
+              Declarations of Compromise™ in your environment. Use filtering and
+              visualization tools to investigate compromises, assess impact,
+              explore relationships, empowering confident security
+              decision-making and rapid incident response.
             </PageDescription>
           </PageHeaderContent>
-          <IndicatorsDopv />
+          <IndicatorsDoc />
         </PageHeader>
         <Tabs value={pathname}>
           <TabsList>
-            <TabsTriggerLink value={routes.policy_violations}>
+            <TabsTriggerLink value={routes.threats_compromises_incidents}>
+              Incidents
+            </TabsTriggerLink>
+            <TabsTriggerLink value={routes.threats_compromises_entities}>
               Entities
             </TabsTriggerLink>
-            <TabsTriggerLink value={routes.policy_violations_violations_graph}>
+            <TabsTriggerLink value={routes.threats_compromises_graph}>
               Graph
             </TabsTriggerLink>
-            <TabsTriggerLink value={routes.policy_violations_coverage}>
-              Coverage
+            <TabsTriggerLink value={routes.threats_compromises_attack_flow}>
+              Attack Flow
             </TabsTriggerLink>
           </TabsList>
         </Tabs>

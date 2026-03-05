@@ -39,22 +39,22 @@ export const ThreatsPage = () => {
         </PageHeader>
         <Tabs value={pathname}>
           <TabsList>
-            <TabsTriggerLink value={routes.threats_incidents}>
+            <TabsTriggerLink value={routes.threats_compromises_incidents}>
               Incidents
             </TabsTriggerLink>
-            <TabsTriggerLink value={routes.threats_entities}>
+            <TabsTriggerLink value={routes.threats_compromises_entities}>
               Entities
             </TabsTriggerLink>
             <TabsTriggerLink value={routes.threats_timeline}>
               Timeline
             </TabsTriggerLink>
-            <TabsTriggerLink value={routes.threats_graph}>
+            <TabsTriggerLink value={routes.threats_compromises_graph}>
               Graph
             </TabsTriggerLink>
             <TabsTriggerLink value={routes.threats_coverage}>
               Coverage
             </TabsTriggerLink>
-            <TabsTriggerLink value={routes.threats_attack_flow}>
+            <TabsTriggerLink value={routes.threats_compromises_attack_flow}>
               Attack Flow
             </TabsTriggerLink>
           </TabsList>

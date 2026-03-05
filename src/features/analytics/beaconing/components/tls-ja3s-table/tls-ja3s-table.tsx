@@ -31,7 +31,7 @@ export const JA3SHashTable = () => {
       onSortingChange={setSorting}
       onRowClick={(row) =>
         navigate(
-          routes.beaconing_ja3s_details.replace(
+          routes.analytics_beaconing_ja3s_details.replace(
             ':ja3s',
             row.original.beacon_report.value,
           ),

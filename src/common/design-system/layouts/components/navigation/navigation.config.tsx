@@ -27,7 +27,22 @@ import {
 import { getConfig } from '@/config';
 import { SystemSettings } from '@/features/user/settings/settings.model';
 
-import { MenuItem, type Submenu } from './navigation';
+export type MenuItem = {
+  key: string;
+  type: 'link' | 'external';
+  url: string;
+  title: string;
+  icon: React.ReactNode;
+  beta?: boolean;
+  enterprise?: boolean;
+  children?: MenuItem[];
+};
+
+export type Submenu = {
+  label: string;
+  enterprise?: boolean;
+  children: MenuItem[];
+};
 
 export const defaultMenu = (
   routes: Record<string, string>,
@@ -57,18 +72,62 @@ export const defaultMenu = (
       {
         key: 'threats',
         type: 'link',
-        url: routes.threats,
+        url: routes.threats_compromises,
         title: 'Threats',
         icon: <Biohazard />,
         enterprise: true,
+        children: [
+          {
+            key: 'threats-compromises',
+            type: 'link',
+            url: routes.threats_compromises,
+            title: 'Compromises',
+            icon: <Biohazard />,
+            enterprise: true,
+          },
+          {
+            key: 'threats-timeline',
+            type: 'link',
+            url: routes.threats_timeline,
+            title: 'Timeline',
+            icon: <Biohazard />,
+            enterprise: true,
+          },
+          {
+            key: 'threats-coverage',
+            type: 'link',
+            url: routes.threats_coverage,
+            title: 'Coverage',
+            icon: <Biohazard />,
+            enterprise: true,
+          },
+        ],
       },
       {
         key: 'policy-violations',
         type: 'link',
-        url: routes.policy_violations,
-        title: 'Policy Violations',
+        url: routes.policy_violations_violations,
+        title: 'Compliance',
         icon: <Scale />,
         enterprise: true,
+        children: [
+          {
+            key: 'pv-violations',
+            type: 'link',
+            url: routes.policy_violations_violations,
+            title: 'Policy Violations',
+            icon: <Scale />,
+            enterprise: true,
+          },
+          {
+            key: 'pv-coverage',
+            type: 'link',
+            url: routes.policy_violations_coverage,
+            title: 'Coverage',
+            icon: <Scale />,
+            enterprise: true,
+          },
+        ],
       },
       {
         key: 'attack-surface',
@@ -82,10 +141,28 @@ export const defaultMenu = (
       {
         key: 'analytics',
         type: 'link',
-        url: routes.analytics,
+        url: routes.analytics_beaconing,
         title: 'Analytics',
         icon: <Radar />,
         enterprise: true,
+        children: [
+          {
+            key: 'analytics-beaconing',
+            type: 'link',
+            url: routes.analytics_beaconing,
+            title: 'Beaconing',
+            icon: <Radar />,
+            enterprise: true,
+          },
+          {
+            key: 'analytics-sightings',
+            type: 'link',
+            url: routes.sightings,
+            title: 'Sightings',
+            icon: <Radar />,
+            enterprise: true,
+          },
+        ],
       },
       // {
       //   key: 'explore',

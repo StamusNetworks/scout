@@ -4,6 +4,10 @@ import { Outlet } from 'react-router-dom';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
+import {
+  SidebarInset,
+  SidebarProvider,
+} from '@/common/design-system/atoms/ui/sidebar';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { FiltersSideBar } from '@/features/hunt/filtering/query-filters/components/filters-side-bar';
 import {
@@ -16,7 +20,7 @@ import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { Header } from '../common/design-system/layouts/components/header/header';
 import { Modals } from '../common/design-system/layouts/components/modals';
-import { Navigation } from '../common/design-system/layouts/components/navigation';
+import { AppSidebar } from '../common/design-system/layouts/components/navigation/app-sidebar';
 import { defaultMenu } from '../common/design-system/layouts/components/navigation/navigation.config';
 import { BreadcrumbProvider } from '../common/design-system/molecules/breadcrumbs';
 import { routes } from '../pages/routes.config';
@@ -71,32 +75,34 @@ export const Root = () => {
   }, [systemSettings, enterprise]);
 
   return (
-    <div className="relative flex h-screen w-screen max-w-screen">
-      <Modals />
-      <Navigation menu={menu} />
-      <BreadcrumbProvider>
-        <div className="relative flex h-screen w-full flex-col overflow-hidden">
-          <Header />
-          <Row className="h-full gap-0 overflow-clip">
-            <div
-              id="expandable-portal-wrapper"
-              className="empty:hidden"
-            />
-            <div className="relative grow">
-              <Button
-                className={`absolute top-[6px] right-0 z-50 -translate-x-2`}
-                onClick={() => dispatch(setIsSidebarOpen(!isFiltersOpen))}
-                variant="ghost"
-                size="icon"
-              >
-                {isFiltersOpen ? <PanelRightClose /> : <PanelRightOpen />}
-              </Button>
-              <Outlet />
-            </div>
-            <FiltersSideBar />
-          </Row>
-        </div>
-      </BreadcrumbProvider>
-    </div>
+    <BreadcrumbProvider>
+      <SidebarProvider>
+        <Modals />
+        <AppSidebar menu={menu} />
+        <SidebarInset>
+          <div className="relative flex h-full flex-col overflow-hidden">
+            <Header />
+            <Row className="h-full gap-0 overflow-clip">
+              <div
+                id="expandable-portal-wrapper"
+                className="empty:hidden"
+              />
+              <div className="relative grow">
+                <Button
+                  className={`absolute top-[6px] right-0 z-50 -translate-x-2`}
+                  onClick={() => dispatch(setIsSidebarOpen(!isFiltersOpen))}
+                  variant="ghost"
+                  size="icon"
+                >
+                  {isFiltersOpen ? <PanelRightClose /> : <PanelRightOpen />}
+                </Button>
+                <Outlet />
+              </div>
+              <FiltersSideBar />
+            </Row>
+          </div>
+        </SidebarInset>
+      </SidebarProvider>
+    </BreadcrumbProvider>
   );
 };

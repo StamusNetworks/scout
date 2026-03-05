@@ -15,10 +15,9 @@ import {
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { IndicatorsDopv } from '@/features/hunt/operational-center/components/indicators/docdopv.indicators';
+import { routes } from '@/pages/routes.config';
 
-import { routes } from '../routes.config';
-
-export const PolicyViolationsPage = () => {
+export const ViolationsPage = () => {
   const { pathname } = useLocation();
   return (
     <Page>
@@ -39,14 +38,11 @@ export const PolicyViolationsPage = () => {
         </PageHeader>
         <Tabs value={pathname}>
           <TabsList>
-            <TabsTriggerLink value={routes.policy_violations}>
+            <TabsTriggerLink value={routes.policy_violations_violations}>
               Entities
             </TabsTriggerLink>
             <TabsTriggerLink value={routes.policy_violations_violations_graph}>
               Graph
-            </TabsTriggerLink>
-            <TabsTriggerLink value={routes.policy_violations_coverage}>
-              Coverage
             </TabsTriggerLink>
           </TabsList>
         </Tabs>

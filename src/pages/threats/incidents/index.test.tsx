@@ -80,7 +80,10 @@ describe('ThreatsIncidentsPage - Empty state', () => {
     const entitiesLink = screen.getByRole('link', {
       name: /view impacted entities/i,
     });
-    expect(entitiesLink).toHaveAttribute('href', '/threats/entities');
+    expect(entitiesLink).toHaveAttribute(
+      'href',
+      '/threats/compromises/entities',
+    );
   });
 
   it('shows singular impacted entity message when count is 1', async () => {
@@ -108,7 +111,10 @@ describe('ThreatsIncidentsPage - Empty state', () => {
     const entitiesLink = screen.getByRole('link', {
       name: /view impacted entity/i,
     });
-    expect(entitiesLink).toHaveAttribute('href', '/threats/entities');
+    expect(entitiesLink).toHaveAttribute(
+      'href',
+      '/threats/compromises/entities',
+    );
   });
 
   it('shows celebratory message when there are no impacted entities', async () => {

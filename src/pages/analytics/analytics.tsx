@@ -47,13 +47,13 @@ export const Analytics = ({ children }: { children: React.ReactNode }) => {
         <TabsList className="mb-2">
           <TabsTrigger
             value={
-              pathname === routes.beaconing_ips
-                ? routes.beaconing_ips
+              pathname === routes.analytics_beaconing_ips
+                ? routes.analytics_beaconing_ips
                 : routes.analytics
             }
             asChild
           >
-            <Link to={routes.beaconing_ips}>
+            <Link to={routes.analytics_beaconing_ips}>
               Beaconing IPs
               <TabsBadge
                 count={ipsData?.count || 0}
@@ -62,10 +62,10 @@ export const Analytics = ({ children }: { children: React.ReactNode }) => {
             </Link>
           </TabsTrigger>
           <TabsTrigger
-            value={routes.beaconing_ja3s}
+            value={routes.analytics_beaconing_ja3s}
             asChild
           >
-            <Link to={routes.beaconing_ja3s}>
+            <Link to={routes.analytics_beaconing_ja3s}>
               Beaconing JA3s
               <TabsBadge
                 count={ja3sData?.count || 0}

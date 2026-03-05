@@ -8,7 +8,6 @@ const initialState: UIState = {
   theme: (localStorage.getItem('theme') as Theme) || 'system',
   openModal: null,
   initialValues: null,
-  isNavigationOpen: true,
   isSidebarOpen: false,
   autoReloadInterval: 0,
   autoReloadStartDate: 0,
@@ -38,7 +37,6 @@ type UIState = {
   theme: Theme;
   openModal: null | Modal;
   initialValues: object | null;
-  isNavigationOpen: boolean;
   isSidebarOpen: boolean;
   autoReloadInterval: number;
   autoReloadStartDate: number;
@@ -61,9 +59,6 @@ export const uiStateSlice = createSlice({
         return;
       }
       state.openModal = action.payload;
-    },
-    setIsNavigationOpen: (state, action: PayloadAction<boolean>) => {
-      state.isNavigationOpen = action.payload;
     },
     setIsSidebarOpen: (state, action: PayloadAction<boolean>) => {
       state.isSidebarOpen = action.payload;
@@ -104,7 +99,6 @@ export const uiStateSlice = createSlice({
 export const {
   setTheme,
   setOpenModal,
-  setIsNavigationOpen,
   setIsSidebarOpen,
   setAutoReloadInterval,
   resetAutoReloadStartDate,
@@ -116,9 +110,6 @@ export const uiStateInitialState = initialState;
 
 export const selectIsModalOpen = (modal: Modal) => (state: RootState) =>
   state.uiState.openModal === modal;
-
-export const selectIsNavigationOpen = (state: RootState) =>
-  state.uiState.isNavigationOpen;
 
 export const selectAutoReloadInterval = (state: RootState) =>
   state.uiState.autoReloadInterval;
