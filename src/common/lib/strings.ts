@@ -42,3 +42,15 @@ export function decodeUnicodeEscapeSequence(str: string) {
 export function startsWithOneOf(str: string, prefixes: string[]) {
   return prefixes.some((prefix) => str.startsWith(prefix));
 }
+
+export function base64ToHex(base64: string) {
+  return atob(base64)
+    .split('')
+    .map((c) => c.charCodeAt(0).toString(16).padStart(2, '0'))
+    .join('');
+}
+
+export function base64ToUtf8(base64: string): string {
+  const bytes = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+  return new TextDecoder('utf-8', { fatal: false }).decode(bytes);
+}

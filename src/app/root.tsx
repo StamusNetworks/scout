@@ -79,7 +79,7 @@ export const Root = () => {
       <SidebarProvider>
         <Modals />
         <AppSidebar menu={menu} />
-        <SidebarInset>
+        <SidebarInset className="border">
           <div className="relative flex h-full flex-col overflow-hidden">
             <Header />
             <Row className="h-full gap-0 overflow-clip">

@@ -14,6 +14,7 @@ import {
   DropdownMenuContent,
   DropdownMenuIcon,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../atoms/ui/dropdown-menu';
 
@@ -26,6 +27,7 @@ export const TableCard = ({
   headers,
   dropdown = true,
   style,
+  extraDropdownItems,
 }: {
   title: string | React.ReactNode;
   Icon?: LucideIcon;
@@ -35,6 +37,7 @@ export const TableCard = ({
   data?: object[];
   headers?: string[];
   style?: React.CSSProperties;
+  extraDropdownItems?: React.ReactNode;
 }) => {
   const disabled = !data?.length;
   const handleDownload = () => {
@@ -75,6 +78,12 @@ export const TableCard = ({
                 >
                   <DropdownMenuIcon Icon={Download} /> Export
                 </DropdownMenuItem>
+                {extraDropdownItems && (
+                  <>
+                    <DropdownMenuSeparator />
+                    {extraDropdownItems}
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           )}

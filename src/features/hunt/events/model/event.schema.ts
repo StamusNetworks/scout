@@ -66,6 +66,7 @@ export const baseEventSchema = z.object({
   input: eventInputSchema.optional(),
   log: logEventSchema.optional(),
   net_info: netInfoSchema.optional(),
+  payload: z.string().optional(),
   payload_printable: z.string().optional(),
   proto: z.string().optional(),
   src_ip: z.string(),

@@ -9,6 +9,7 @@ import { EventValue } from '@/features/hunt/filtering/query-filters/components/e
 
 import { type Event } from '../../model/event.schema';
 import { EventFileInfo } from '../../model/event-types/fileinfo.schema';
+import { PayloadCard } from './payload-card';
 import { getSyntheticView } from './synthetic-view.config';
 
 export const SyntheticView = ({ event }: { event: Event }) => {
@@ -64,10 +65,14 @@ export const SyntheticView = ({ event }: { event: Event }) => {
           <FilesTable files={event.files} />
         </div>
       )}
-      <ScrollPreCard
-        title="Payload printable"
-        value={event.payload_printable}
-      />
+      {event.payload ? (
+        <PayloadCard base64={event.payload} />
+      ) : (
+        <ScrollPreCard
+          title="Payload printable"
+          value={event.payload_printable}
+        />
+      )}
       {event.app_proto === 'http' && (
         <ScrollPreCard
           title="HTTP Response"
