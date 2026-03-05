@@ -133,4 +133,25 @@ describe('useServerTableState', () => {
     expect(result.current.queryParams.pageIndex).toBe(2);
     expect(result.current.queryParams.pageSize).toBe(25);
   });
+
+  it('syncs local state from URL on browser back/forward navigation', () => {
+    const { result } = renderHook(() => useServerTableState({ tenant: 1 }), {
+      wrapper: wrapper(),
+    });
+
+    // Navigate to page 3
+    act(() => {
+      result.current.setPagination({ pageIndex: 2, pageSize: 10 });
+    });
+    expect(result.current.pagination.pageIndex).toBe(2);
+
+    // Simulate browser back button: URL reverts to previous page, popstate fires
+    window.history.replaceState({}, '', '?page=1');
+    act(() => {
+      window.dispatchEvent(new PopStateEvent('popstate'));
+    });
+
+    expect(result.current.pagination.pageIndex).toBe(0);
+    expect(result.current.queryParams.pageIndex).toBe(0);
+  });
 });

@@ -5,7 +5,7 @@ import type {
   Updater,
 } from '@tanstack/react-table';
 import { parseAsInteger, useQueryState } from 'nuqs';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { parseAsSorting, serializeSorting } from './sorting-parser';
 
@@ -46,6 +46,22 @@ export function useServerTableState<TParams extends Record<string, unknown>>(
   // immediate, synchronous propagation for pagination reads and resets.
   const [page, setPage] = useState(urlPage);
   const [pageSize, setPageSize] = useState(urlPageSize);
+
+  // --- Sync local state from URL on browser back/forward navigation ---
+  // popstate only fires on actual browser navigation (back/forward buttons),
+  // never on programmatic URL updates, so this cleanly distinguishes external
+  // navigation from nuqs internal state transitions.
+  useEffect(() => {
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      const p = params.get('page');
+      const ps = params.get('page_size');
+      setPage(p !== null ? Number(p) : 1);
+      setPageSize(ps !== null ? Number(ps) : defaultPageSize);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [defaultPageSize]);
 
   // URL-backed sorting
   const [sorting, setSortingRaw] = useQueryState(
