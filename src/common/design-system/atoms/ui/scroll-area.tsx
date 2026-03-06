@@ -10,11 +10,6 @@ const ScrollArea = React.forwardRef<
     viewportRef?: React.Ref<HTMLDivElement>;
   }
 >(({ className, children, viewportRef, ...props }, ref) => {
-  React.useEffect(() => {
-    document
-      .querySelector('div[data-radix-scroll-area-viewport] > div')
-      ?.setAttribute('style', '');
-  }, []);
   return (
     <ScrollAreaPrimitive.Root
       ref={ref}

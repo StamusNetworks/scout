@@ -305,6 +305,18 @@
   @apply [&_svg.lucide:not([class*='size-'])]:size-4
 }
 
+/*
+  Radix ScrollArea sets `display: table; min-width: 100%` as an inline style
+  on the viewport's content wrapper div. This causes a circular width dependency
+  in Chromium when a descendant uses `container-type: inline-size` (which implies
+  `contain: inline-size`), collapsing the layout. Override with !important to
+  ensure block layout in all browsers.
+*/
+[data-radix-scroll-area-viewport] > div {
+  display: block !important;
+  min-width: 0 !important;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
