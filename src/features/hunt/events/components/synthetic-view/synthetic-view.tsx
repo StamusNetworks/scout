@@ -73,16 +73,28 @@ export const SyntheticView = ({ event }: { event: Event }) => {
           value={event.payload_printable}
         />
       )}
-      {event.app_proto === 'http' && (
+      {event.http?.http_request_body ? (
+        <PayloadCard
+          title="HTTP Request"
+          base64={event.http.http_request_body}
+        />
+      ) : (
+        <ScrollPreCard
+          title="HTTP Request"
+          value={event.http?.http_request_body_printable}
+        />
+      )}
+      {event.http?.http_response_body ? (
+        <PayloadCard
+          title="HTTP Response"
+          base64={event.http.http_response_body}
+        />
+      ) : (
         <ScrollPreCard
           title="HTTP Response"
           value={event.http?.http_response_body_printable}
         />
       )}
-      <ScrollPreCard
-        title="HTTP Request"
-        value={event.http?.http_request_body_printable}
-      />
     </div>
   );
 };

@@ -16,7 +16,13 @@ import { PayloadVisualizer } from '@/common/design-system/molecules/payload-visu
 import { TableCard } from '@/common/design-system/molecules/table-card';
 import { base64ToHex, base64ToUtf8 } from '@/common/lib/strings';
 
-export const PayloadCard = ({ base64 }: { base64: string }) => {
+export const PayloadCard = ({
+  title = 'Payload',
+  base64,
+}: {
+  title?: string;
+  base64: string;
+}) => {
   const [open, setOpen] = useState(false);
   const utf8 = base64ToUtf8(base64);
   const hex = base64ToHex(base64);
@@ -24,7 +30,7 @@ export const PayloadCard = ({ base64 }: { base64: string }) => {
   return (
     <>
       <TableCard
-        title="Payload"
+        title={title}
         className="mt-2"
         data={[{ value: utf8 }]}
         headers={['Payload']}
