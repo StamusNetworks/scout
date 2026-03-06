@@ -11,6 +11,7 @@ import { CustomColumnDef } from '@/common/design-system/molecules/data-table/fil
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { esEscape } from '@/common/lib/strings';
 import { Event } from '@/features/hunt/events/model/event.schema';
 
 import { useGetSightingEventsQuery } from '../../api/sightings.api';
@@ -35,7 +36,7 @@ export const SightingsTable = ({
   const searchQfilter = search
     ? search
         .split(' ')
-        .map((s) => `discovery.value:*${s}*`)
+        .map((s) => `discovery.value:*${esEscape(s)}*`)
         .join(' AND ')
     : null;
   const qfilter =

@@ -1,6 +1,7 @@
 import Flow from '@/common/design-system/graphs/proto-flow/flow';
 import { FlowSkeleton } from '@/common/design-system/graphs/proto-flow/flow.skeleton';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { esEscape } from '@/common/lib/strings';
 
 import { useGetTlsTailQuery } from '../../api/beaconing.api';
 import { metadataColumns } from './beaconing-metadata.columns';
@@ -15,7 +16,7 @@ export const BeaconingMetadata = ({ value, type }: BeaconingMetadataProps) => {
     {
       ...params,
       pageSize: 10000,
-      qfilter: `${type === 'ja3s' ? 'tls.ja3s.hash' : `dest_ip.raw`}:${value}`,
+      qfilter: `${type === 'ja3s' ? 'tls.ja3s.hash' : `dest_ip.raw`}:${esEscape(value)}`,
     },
     {
       selectFromResult: (result) => ({

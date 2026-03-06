@@ -23,6 +23,7 @@ import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { isIP } from '@/common/lib/ips';
+import { esEscape } from '@/common/lib/strings';
 import { useGetBeaconingEventsQuery } from '@/features/analytics/beaconing/api/beaconing.api';
 import { useGetHostWithAlertsQuery } from '@/features/analytics/hosts/api/hosts.api';
 import { HostDetectionsRadar } from '@/features/analytics/hosts/components/host-detections-radar/host-detections-radar';
@@ -84,7 +85,7 @@ export const HostDetails = () => {
   const { data: detectionMethodsList, isLoading: isLoadingDetectionMethods } =
     useGetSignaturesQuery(
       {
-        host_id_qfilter: `ip:"${hostId}"`,
+        host_id_qfilter: `ip:"${esEscape(hostId ?? '')}"`,
         tenant: params.tenant,
         start_date: params.start_date,
         end_date: params.end_date,
@@ -102,7 +103,7 @@ export const HostDetails = () => {
         tenant: params.tenant,
         start_date: params.start_date,
         end_date: params.end_date,
-        qfilter: `beacon_report.assets:${hostId}`,
+        qfilter: `beacon_report.assets:${esEscape(hostId ?? '')}`,
         page: 1,
         page_size: 10,
       },
@@ -115,7 +116,7 @@ export const HostDetails = () => {
         tenant: params.tenant,
         start_date: params.start_date,
         end_date: params.end_date,
-        qfilter: `discovery.asset:${hostId}`,
+        qfilter: `discovery.asset:${esEscape(hostId ?? '')}`,
         page: 1,
         page_size: 10,
       },
@@ -128,7 +129,7 @@ export const HostDetails = () => {
         ...params,
         page: 1,
         page_size: 10,
-        qfilter: `(src_ip:"${hostId}" OR dest_ip:"${hostId}") AND stamus_novel:true`,
+        qfilter: `(src_ip:"${esEscape(hostId ?? '')}" OR dest_ip:"${esEscape(hostId ?? '')}") AND stamus_novel:true`,
         stamus: true,
         alert: true,
         discovery: true,
@@ -142,7 +143,7 @@ export const HostDetails = () => {
         ...params,
         page: 1,
         page_size: 10,
-        qfilter: `(src_ip:"${hostId}" OR dest_ip:"${hostId}")`,
+        qfilter: `(src_ip:"${esEscape(hostId ?? '')}" OR dest_ip:"${esEscape(hostId ?? '')}")`,
         stamus: true,
         alert: true,
         discovery: true,

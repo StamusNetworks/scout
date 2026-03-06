@@ -3,6 +3,7 @@ import { groupBy } from 'ramda';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { ProtoFlow } from '@/common/design-system/graphs/proto-flow/proto-flow';
+import { esEscape } from '@/common/lib/strings';
 import { Event } from '@/features/hunt/events/model/event.schema';
 
 import { useGetEventsQuery } from '../../../../features/hunt/events/api/events.api';
@@ -17,7 +18,7 @@ export const ThreatStatusExpandedRow = ({
   const { data } = useGetEventsQuery({
     start_date: new Date(row.original.first_seen).getTime(),
     end_date: new Date(row.original.last_seen).getTime(),
-    qfilter: `stamus.threat_id:${row.original.threat_id} AND (src_ip:${row.original.asset} OR dest_ip:${row.original.asset})`,
+    qfilter: `stamus.threat_id:${esEscape(String(row.original.threat_id))} AND (src_ip:${esEscape(row.original.asset)} OR dest_ip:${esEscape(row.original.asset)})`,
     stamus: true,
     alert: true,
   });

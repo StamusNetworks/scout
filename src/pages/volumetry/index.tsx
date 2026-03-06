@@ -17,6 +17,7 @@ import {
   PageSelector,
 } from '@/common/design-system/molecules/pagination';
 import { StatsCardHorizontal } from '@/common/design-system/molecules/stats-card-horizontal';
+import { esEscape } from '@/common/lib/strings';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { useGlobalStats } from '@/features/hunt/dashboard/api/hooks/useGlobalStats';
 import { useEventsCount } from '@/features/hunt/events/api/hooks/useEventsCount';
@@ -163,7 +164,9 @@ const ProbeTimelineList = () => {
                   {probe.address}
                 </span>
               </Row>
-              <EventsTimeline qfilterPrefix={`host:"${probe.name}"`} />
+              <EventsTimeline
+                qfilterPrefix={`host:"${esEscape(probe.name)}"`}
+              />
             </Column>
           ))}
           <ComposablePagination

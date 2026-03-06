@@ -1,6 +1,7 @@
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { usePaginationState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { esEscape } from '@/common/lib/strings';
 import { useGetHostsQuery } from '@/features/analytics/hosts/api/hosts.api';
 
 import { beaconingIpsTableColumns } from './beaconing-ips-table.columns';
@@ -15,7 +16,7 @@ export const BeaconingIPsTable = ({ ips }: BeaconingIpsTableProps) => {
     {
       ...params,
       ...pagination,
-      host_id_qfilter: ips?.map((ip) => `ip:${ip}`).join(' OR '),
+      host_id_qfilter: ips?.map((ip) => `ip:${esEscape(ip)}`).join(' OR '),
     },
     {
       skip: !ips,

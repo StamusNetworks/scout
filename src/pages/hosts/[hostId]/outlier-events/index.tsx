@@ -6,6 +6,7 @@ import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { esEscape } from '@/common/lib/strings';
 import { useGetEventsQuery } from '@/features/hunt/events/api/events.api';
 import { getColumns } from '@/features/hunt/events/components/events-table/events.columns';
 import { ExpandedEventRow } from '@/features/hunt/events/components/events-table/events.expanded-row';
@@ -20,7 +21,7 @@ export const HostOutlierEvents = () => {
     useServerTableState(params);
   const { data, isFetching } = useGetEventsQuery({
     ...queryParams,
-    qfilter: `(src_ip:"${hostId}" OR dest_ip:"${hostId}") AND stamus_novel:true`,
+    qfilter: `(src_ip:"${esEscape(hostId ?? '')}" OR dest_ip:"${esEscape(hostId ?? '')}") AND stamus_novel:true`,
     stamus: true,
     alert: true,
     discovery: true,
@@ -28,7 +29,7 @@ export const HostOutlierEvents = () => {
 
   const { data: timelineData } = useGetCountsTimelineQuery({
     ...params,
-    qfilter: `(src_ip:"${hostId}" OR dest_ip:"${hostId}") AND stamus_novel:true`,
+    qfilter: `(src_ip:"${esEscape(hostId ?? '')}" OR dest_ip:"${esEscape(hostId ?? '')}") AND stamus_novel:true`,
     target: 'true',
     alert: true,
     discovery: true,

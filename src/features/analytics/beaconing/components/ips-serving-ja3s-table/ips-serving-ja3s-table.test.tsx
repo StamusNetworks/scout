@@ -199,14 +199,14 @@ describe('IpsServingJa3sTable', () => {
         const url = new URL(request.url);
         const qfilter = url.searchParams.get('qfilter') || '';
 
-        if (qfilter.includes('ja3s-hash-123')) {
+        if (qfilter.includes('ja3s\\-hash\\-123')) {
           return HttpResponse.json({
             count: mockBeaconingEventsData1.length,
             next: null,
             previous: null,
             results: mockBeaconingEventsData1,
           });
-        } else if (qfilter.includes('ja3s-hash-456')) {
+        } else if (qfilter.includes('ja3s\\-hash\\-456')) {
           return HttpResponse.json({
             count: mockBeaconingEventsData2.length,
             next: null,

@@ -37,6 +37,7 @@ import { TextFilter } from '@/common/design-system/molecules/data-table/filters/
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { ValueListCard } from '@/common/design-system/molecules/value-list-card';
 import { Paginated } from '@/common/fetching/fetching.types';
+import { esEscape } from '@/common/lib/strings';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { setDates } from '@/features/hunt/filtering/dates-filters/dates-filters.slice';
 import { QueryFilterState } from '@/features/hunt/filtering/query-filters/model/query-filter';
@@ -290,7 +291,7 @@ const InvestigationHistoryItem = ({
           key: 'es_filter',
           value: stage.values
             .filter((v) => v.result === 'kept')
-            .map((v) => `${stage.key}:"${v.value}"`)
+            .map((v) => `${stage.key}:"${esEscape(v.value)}"`)
             .join(' OR '),
         }),
       );

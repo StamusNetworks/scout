@@ -8,6 +8,7 @@ import {
   Tenant,
 } from '@/common/fetching/fetching.types';
 import { Paginated, Pagination } from '@/common/fetching/fetching.types';
+import { esEscape } from '@/common/lib/strings';
 import { API } from '@/store/api';
 
 import { EventTypes } from '../../filtering/query-filters/store/query-filters.slice';
@@ -176,7 +177,8 @@ export const EventsAPI = API.injectEndpoints({
       query: ({ qfilter, tenant, ...rest }) => {
         const qfilterParts: string[] = [];
         if (qfilter) qfilterParts.push(qfilter);
-        if (tenant !== undefined) qfilterParts.push(`tenant:${tenant}`);
+        if (tenant !== undefined)
+          qfilterParts.push(`tenant:${esEscape(String(tenant))}`);
         return {
           url: `/rules/es/search/`,
           method: 'POST',
@@ -210,7 +212,8 @@ export const EventsAPI = API.injectEndpoints({
       query: ({ aggs, qfilter, tenant, ...rest }) => {
         const qfilterParts: string[] = [];
         if (qfilter) qfilterParts.push(qfilter);
-        if (tenant !== undefined) qfilterParts.push(`tenant:${tenant}`);
+        if (tenant !== undefined)
+          qfilterParts.push(`tenant:${esEscape(String(tenant))}`);
         return {
           url: `/rules/es/search/`,
           method: 'POST',

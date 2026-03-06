@@ -18,6 +18,7 @@ import {
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { esEscape } from '@/common/lib/strings';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useGetHostWithAlertsQuery } from '@/features/analytics/hosts/api/hosts.api';
 import { HostSummary } from '@/features/analytics/hosts/components/host-summary/host-summary';
@@ -51,7 +52,9 @@ export const EventByIdPage = () => {
     {
       ...params,
       start_date: 1,
-      qfilter: uuid ? `uuid:"${uuid}"` : `_id:"${_id}"`,
+      qfilter: uuid
+        ? `uuid:"${esEscape(uuid)}"`
+        : `_id:"${esEscape(_id ?? '')}"`,
       pageIndex: 0,
       pageSize: 1,
       stamus: true,

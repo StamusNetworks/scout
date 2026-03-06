@@ -1,4 +1,5 @@
 import { compressIPv6, isIPv6 } from '@/common/lib/ips';
+import { esEscape } from '@/common/lib/strings';
 import { KillChainStepsEnum } from '@/features/hunt/filtering/query-filters/constants/query-filter.config';
 
 import { AttackerInfrastructureAggregation } from './attacker-infrastructure.schema';
@@ -95,7 +96,7 @@ export const formatForcegraph = (
 export const getESParams = (entity: string) => ({
   index: 'logstash-stamus-*',
   size: 0,
-  qfilter: `stamus.asset:${entity} AND (NOT stamus.kill_chain.keyword: pre_condition)`,
+  qfilter: `stamus.asset:${esEscape(entity)} AND (NOT stamus.kill_chain.keyword: pre_condition)`,
   aggs: {
     aggs: {
       2: {

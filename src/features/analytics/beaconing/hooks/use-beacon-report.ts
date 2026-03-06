@@ -1,4 +1,5 @@
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { esEscape } from '@/common/lib/strings';
 
 import { useGetBeaconingEventsQuery } from '../api/beaconing.api';
 
@@ -9,7 +10,7 @@ export const useBeaconReport = (type: 'ja3s' | 'ip', value: string) => {
     {
       ...params,
       page_size: 1,
-      qfilter: `beacon_report.document_type:${doctype} AND beacon_report.value:${value}`,
+      qfilter: `beacon_report.document_type:${esEscape(doctype)} AND beacon_report.value:${esEscape(value)}`,
     },
     {
       selectFromResult: (result) => ({

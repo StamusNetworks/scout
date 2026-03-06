@@ -27,6 +27,7 @@ import {
 import { CommandFilterSingle } from '@/common/design-system/molecules/data-table/filters/command-filter-single';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { formatNumber } from '@/common/lib/numbers';
+import { esEscape } from '@/common/lib/strings';
 import {
   selectHostIDQFilter,
   selectQueryFilters,
@@ -96,7 +97,9 @@ export const NetworkTreeSunburst = () => {
     ...params,
     host_id_qfilter: [
       ...(qfilterHost ? [qfilterHost] : []),
-      ...(inHomeNet !== 'all' ? [`host_id.in_home_net: ${inHomeNet}`] : []),
+      ...(inHomeNet !== 'all'
+        ? [`host_id.in_home_net: ${esEscape(inHomeNet)}`]
+        : []),
     ].join(' AND '),
   });
   const treeData = useMemo(() => {

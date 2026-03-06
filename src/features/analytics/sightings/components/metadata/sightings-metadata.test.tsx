@@ -66,14 +66,14 @@ describe('SightingsMetadata', () => {
         const url = new URL(request.url);
         const qfilter = url.searchParams.get('qfilter') || '';
 
-        if (qfilter.includes('_id:http-sighting-1')) {
+        if (qfilter.includes('_id:http\\-sighting\\-1')) {
           return HttpResponse.json({
             count: 1,
             next: null,
             previous: null,
             results: [mockHttpSighting],
           });
-        } else if (qfilter.includes('_id:non-existent')) {
+        } else if (qfilter.includes('_id:non\\-existent')) {
           return HttpResponse.json({
             count: 0,
             next: null,

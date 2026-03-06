@@ -195,28 +195,28 @@ describe('SightingEventsTailFlow', () => {
         const url = new URL(request.url);
         const qfilter = url.searchParams.get('qfilter');
 
-        if (qfilter?.includes('_id:dns-sighting-1')) {
+        if (qfilter?.includes('_id:dns\\-sighting\\-1')) {
           return HttpResponse.json({
             count: 1,
             next: null,
             previous: null,
             results: [mockDnsSighting],
           });
-        } else if (qfilter?.includes('_id:http-sighting-1')) {
+        } else if (qfilter?.includes('_id:http\\-sighting\\-1')) {
           return HttpResponse.json({
             count: 1,
             next: null,
             previous: null,
             results: [mockHttpSighting],
           });
-        } else if (qfilter?.includes('_id:non-existent-sighting')) {
+        } else if (qfilter?.includes('_id:non\\-existent\\-sighting')) {
           return HttpResponse.json({
             count: 0,
             next: null,
             previous: null,
             results: [],
           });
-        } else if (qfilter?.includes('_id:invalid-sighting')) {
+        } else if (qfilter?.includes('_id:invalid\\-sighting')) {
           // Sighting without required fields
           return HttpResponse.json({
             count: 1,
@@ -252,7 +252,7 @@ describe('SightingEventsTailFlow', () => {
             results: mockDnsEventTails,
           });
         } else if (
-          qfilter?.includes('http.server.raw:"Apache/2.4.41"') &&
+          qfilter?.includes('http.server.raw:"Apache\\/2.4.41"') &&
           qfilter?.includes('event_type:"http"')
         ) {
           return HttpResponse.json({
@@ -311,7 +311,7 @@ describe('SightingEventsTailFlow', () => {
         const url = new URL(request.url);
         const qfilter = url.searchParams.get('qfilter');
 
-        if (qfilter?.includes('_id:empty-sighting')) {
+        if (qfilter?.includes('_id:empty\\-sighting')) {
           return HttpResponse.json({
             count: 1,
             next: null,

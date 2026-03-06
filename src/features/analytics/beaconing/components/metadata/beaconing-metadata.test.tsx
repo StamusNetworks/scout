@@ -236,7 +236,7 @@ describe('BeaconingMetadata', () => {
         const qfilter = url.searchParams.get('qfilter') || '';
 
         // Return different mock data based on the request query filter
-        if (qfilter.includes('tls.ja3s.hash:ja3s-hash-123')) {
+        if (qfilter.includes('tls.ja3s.hash:ja3s\\-hash\\-123')) {
           return HttpResponse.json({
             count: mockJA3STlsTailResponse.length,
             next: null,

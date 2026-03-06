@@ -5,6 +5,7 @@ import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { esEscape } from '@/common/lib/strings';
 import { useGetSightingEventsQuery } from '@/features/analytics/sightings/api/sightings.api';
 import { hostSightingTableColumns } from '@/features/analytics/sightings/components/sightings-table/sightings-table.columns';
 import { ExpandedEventRow } from '@/features/hunt/events/components/events-table/events.expanded-row';
@@ -17,7 +18,7 @@ export const HostSightings = () => {
   const { data: sightingsData, isFetching: isFetchingSightings } =
     useGetSightingEventsQuery({
       ...queryParams,
-      qfilter: `discovery.asset:${hostId}`,
+      qfilter: `discovery.asset:${esEscape(hostId ?? '')}`,
     });
   return (
     <DataTable

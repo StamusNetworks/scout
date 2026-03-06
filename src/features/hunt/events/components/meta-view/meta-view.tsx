@@ -1,4 +1,5 @@
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { esEscape } from '@/common/lib/strings';
 
 import { useGetEventsFromFlowQuery } from '../../api/events.api';
 import { Event } from '../../model/event.schema';
@@ -12,7 +13,7 @@ export const MetaView = ({ event }: { event: Event }) => {
     tenant: params.tenant,
     start_date: params.start_date,
     end_date: params.end_date,
-    qfilter: `flow_id:${event.flow_id}`,
+    qfilter: `flow_id:${esEscape(String(event.flow_id))}`,
   });
 
   if (!flowEvents) return null;

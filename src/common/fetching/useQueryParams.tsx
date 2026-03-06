@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { esEscape } from '@/common/lib/strings';
 import { useQFBuilder } from '@/features/hunt/filtering/query-filters/hooks/use-qf-builder';
 import { selectInvestigationFilter } from '@/features/hunt/investigation/investigation.slice';
 import { useAppSelector } from '@/store/store';
@@ -50,7 +51,9 @@ export const useGlobalQueryParams = (
         extension.push(
           QFBuilder.createFilter(
             'es_filter',
-            stage.values.map((v) => `${stage.key}:"${v}"`).join(' OR '),
+            stage.values
+              .map((v) => `${stage.key}:"${esEscape(v)}"`)
+              .join(' OR '),
           ),
         );
       });

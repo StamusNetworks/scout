@@ -1,4 +1,5 @@
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { esEscape } from '@/common/lib/strings';
 
 import { useGetHostsQuery } from '../api/hosts.api';
 
@@ -7,7 +8,7 @@ export const useGetHostInsights = (host: string, enabled = true) => {
   return useGetHostsQuery(
     {
       ...params,
-      host_id_qfilter: `ip:"${host}"`,
+      host_id_qfilter: `ip:"${esEscape(host)}"`,
     },
     {
       skip: !enabled,

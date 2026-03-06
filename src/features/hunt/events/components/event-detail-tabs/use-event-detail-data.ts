@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { esEscape } from '@/common/lib/strings';
 
 import { useGetEventsFromFlowQuery } from '../../api/events.api';
 import { Event } from '../../model/event.schema';
@@ -13,7 +14,7 @@ export const useEventDetailData = (event: Event): EventDetailData => {
     useGetEventsFromFlowQuery(
       {
         ...params,
-        qfilter: `flow_id:${event.flow_id}`,
+        qfilter: `flow_id:${esEscape(String(event.flow_id))}`,
       },
       {
         skip: !event.flow_id,

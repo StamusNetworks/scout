@@ -25,13 +25,13 @@ export function buildHostIdQFilter(
       const hostFilterName = filter.key;
 
       if (filter.key === 'host_id.ip') {
-        qfilterHost.push(`${fPrefix}ip:"${filter.value}"`);
+        qfilterHost.push(`${fPrefix}ip:"${esEscape(String(filter.value))}"`);
       } else if (filter.key.indexOf('host_id.roles.name') > -1) {
         if (filter.value === 'unclassified') {
           qfilterHost.push(`NOT host_id.roles.name: *`);
         } else {
           qfilterHost.push(
-            `${fPrefix}host_id.roles.name.raw:"${filter.value}"`,
+            `${fPrefix}host_id.roles.name.raw:"${esEscape(String(filter.value))}"`,
           );
         }
       } else if (hostFilterName.substr(hostFilterName.length - 4) === '.min') {
@@ -59,10 +59,7 @@ export function buildHostIdQFilter(
         const value = esEscape(filter.value.toString());
         qfilterHost.push(`${fPrefix}${hostFilterName}:${value}`);
       } else if (typeof filter.value === 'string' && !filter.is_wildcarded) {
-        const value = filter.value
-          .toString()
-          .replace(/\\/g, '\\\\')
-          .replace(/"/g, '\\"');
+        const value = esEscape(filter.value);
         qfilterHost.push(`${fPrefix}${hostFilterName}${fSuffix}:"${value}"`);
       } else {
         const value = esEscape(filter.value.toString());
