@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
+import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { setDates } from '@/features/hunt/filtering/dates-filters/dates-filters.slice';
 import { type DatesPayload } from '@/features/hunt/filtering/dates-filters/dates-filters.types';
 import {
@@ -51,6 +52,7 @@ export const SharePage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const { enterprise } = useFeatureFlags();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -58,14 +60,18 @@ export const SharePage = () => {
 
     if (!encoded) {
       toast.error('Invalid share link');
-      navigate(routes.explorer, { replace: true });
+      navigate(enterprise ? routes.operational_center : routes.explorer, {
+        replace: true,
+      });
       return;
     }
 
     const state = decodeShareableState(encoded);
     if (!state) {
       toast.error('Invalid share link');
-      navigate(routes.explorer, { replace: true });
+      navigate(enterprise ? routes.operational_center : routes.explorer, {
+        replace: true,
+      });
       return;
     }
 

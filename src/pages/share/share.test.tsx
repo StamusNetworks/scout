@@ -1,8 +1,7 @@
 import { MemoryRouter } from 'react-router-dom';
-import { describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
-import { withoutIds } from '@/common/testing/test-utils';
-import { renderWithProviders } from '@/common/testing/test-utils';
+import { renderWithProviders, withoutIds } from '@/common/testing/test-utils';
 import { selectDates } from '@/features/hunt/filtering/dates-filters/dates-filters';
 import { selectQueryFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.selector';
 import {
@@ -38,12 +37,15 @@ const SHARED_STATE: ShareableState = {
   ],
 };
 
-const renderSharePage = (search: string) =>
+const renderSharePage = (
+  search: string,
+  { preloadedState = initialState }: { preloadedState?: typeof initialState } = {},
+) =>
   renderWithProviders(
     <MemoryRouter initialEntries={[`/share${search}`]}>
       <SharePage />
     </MemoryRouter>,
-    { preloadedState: initialState },
+    { preloadedState },
   );
 
 describe('SharePage', () => {
@@ -92,13 +94,31 @@ describe('SharePage', () => {
     );
   });
 
-  test('navigates to explorer on missing s param', () => {
+  test('navigates to operational center on missing s param', () => {
     renderSharePage('');
+    expect(mockNavigate).toHaveBeenCalledWith('/operational-center', {
+      replace: true,
+    });
+  });
+
+  test('navigates to operational center on invalid s param', () => {
+    renderSharePage('?s=garbage!!!');
+    expect(mockNavigate).toHaveBeenCalledWith('/operational-center', {
+      replace: true,
+    });
+  });
+
+  test('navigates to explorer on missing s param in community mode', () => {
+    renderSharePage('', {
+      preloadedState: { ...initialState, settings: { enterprise: false } },
+    });
     expect(mockNavigate).toHaveBeenCalledWith('/explorer', { replace: true });
   });
 
-  test('navigates to explorer on invalid s param', () => {
-    renderSharePage('?s=garbage!!!');
+  test('navigates to explorer on invalid s param in community mode', () => {
+    renderSharePage('?s=garbage!!!', {
+      preloadedState: { ...initialState, settings: { enterprise: false } },
+    });
     expect(mockNavigate).toHaveBeenCalledWith('/explorer', { replace: true });
   });
 });
