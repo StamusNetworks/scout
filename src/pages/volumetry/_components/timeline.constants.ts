@@ -40,21 +40,21 @@ export const TIMELINE_SERIES: SeriesConfig[] = [
   {
     key: 'compromises',
     label: 'Compromises',
-    qfilter: 'event_type:stamus AND NOT kill_chain:pre_condition',
+    qfilter: 'event_type:stamus AND NOT stamus.kill_chain:pre_condition',
     color: 'var(--doc)',
     defaultEnabled: true,
   },
   {
     key: 'policyViolations',
     label: 'Policy Violations',
-    qfilter: 'event_type:stamus AND kill_chain:pre_condition',
+    qfilter: 'event_type:stamus AND stamus.kill_chain:pre_condition',
     color: 'var(--dopv)',
     defaultEnabled: false,
   },
   {
     key: 'sightings',
     label: 'Sightings',
-    qfilter: 'event_type:discovery',
+    qfilter: 'event_type:alert AND discovery:*',
     color: 'oklch(0.6196 0.1067 209.6)', // --chart-2
     defaultEnabled: false,
   },
