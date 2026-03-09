@@ -81,6 +81,14 @@ describe('encodeShareableState / decodeShareableState', () => {
     };
     expect(decodeShareableState(encodeShareableState(state))).toEqual(state);
   });
+
+  test('roundtrips a route with search params', () => {
+    const state: ShareableState = {
+      ...FULL_STATE,
+      route: '/hosts/42/incidents?page=3&sort=desc',
+    };
+    expect(decodeShareableState(encodeShareableState(state))).toEqual(state);
+  });
 });
 
 // Mock types matching Redux state shapes
@@ -235,6 +243,17 @@ describe('buildShareableState', () => {
       undefined,
     );
     expect(result.time).toEqual({ type: 'auto' });
+  });
+
+  test('includes search params in route', () => {
+    const result = buildShareableState(
+      '/hosts/42/incidents?page=3&sort=desc',
+      DATES_FROM,
+      QUERY_FILTERS,
+      TAG_FILTERS,
+      4,
+    );
+    expect(result.route).toBe('/hosts/42/incidents?page=3&sort=desc');
   });
 });
 

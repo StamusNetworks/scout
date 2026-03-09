@@ -23,7 +23,7 @@ export const ShareButton = () => {
 
   const handleClick = () => {
     const state = buildShareableState(
-      location.pathname,
+      location.pathname + window.location.search,
       dates,
       queryFilters,
       tagFilters,

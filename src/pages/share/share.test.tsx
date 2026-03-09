@@ -39,7 +39,9 @@ const SHARED_STATE: ShareableState = {
 
 const renderSharePage = (
   search: string,
-  { preloadedState = initialState }: { preloadedState?: typeof initialState } = {},
+  {
+    preloadedState = initialState,
+  }: { preloadedState?: typeof initialState } = {},
 ) =>
   renderWithProviders(
     <MemoryRouter initialEntries={[`/share${search}`]}>
@@ -120,5 +122,18 @@ describe('SharePage', () => {
       preloadedState: { ...initialState, settings: { enterprise: false } },
     });
     expect(mockNavigate).toHaveBeenCalledWith('/explorer', { replace: true });
+  });
+
+  test('preserves URL search params from shared route', async () => {
+    const sharedState: ShareableState = {
+      ...SHARED_STATE,
+      route: '/hosts/42/incidents?page=3&sort=desc',
+    };
+    const encoded = encodeShareableState(sharedState);
+    renderSharePage(`?s=${encoded}`);
+    expect(mockNavigate).toHaveBeenCalledWith(
+      '/hosts/42/incidents?page=3&sort=desc',
+      { replace: true },
+    );
   });
 });
