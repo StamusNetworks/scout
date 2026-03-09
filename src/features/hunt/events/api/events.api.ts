@@ -177,6 +177,9 @@ export const EventsAPI = API.injectEndpoints({
       query: ({ qfilter, tenant, ...rest }) => {
         const qfilterParts: string[] = [];
         if (qfilter) qfilterParts.push(qfilter);
+        qfilterParts.push(
+          '(event_type:alert OR event_type:discovery OR event_type:stamus)',
+        );
         if (tenant !== undefined)
           qfilterParts.push(`tenant:${esEscape(String(tenant))}`);
         return {
@@ -202,7 +205,12 @@ export const EventsAPI = API.injectEndpoints({
         aggregations: {
           protocols: { buckets: { key: string; doc_count: number }[] };
         };
-      }) => data.aggregations.protocols.buckets.map((b) => b.key),
+      }) => {
+        const blacklist = new Set(['failed', 'unknown']);
+        return data.aggregations.protocols.buckets
+          .map((b) => b.key)
+          .filter((key) => !blacklist.has(key));
+      },
       providesTags: ['Reload'],
     }),
     getEventsAggregation: builder.query<

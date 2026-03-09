@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
-import { Row } from '@/common/design-system/atoms/layout/row';
+import { StatsBlock } from '@/common/design-system/atoms/page-stats';
 import {
   ContextMenu,
   ContextMenuTrigger,
@@ -15,11 +15,16 @@ import {
   getMaxNodesPerColumn,
   transformAggToSankey,
 } from '@/common/design-system/graphs/sankey/sankey.utils';
-import { SankeyAttribute } from '@/common/design-system/graphs/sankey/sankey-attribute';
 import {
   SankeyChart,
   type SankeyNodeInfo,
 } from '@/common/design-system/graphs/sankey/sankey-chart';
+import {
+  TitleRow,
+  TitleRowEnd,
+  TitleRowStart,
+  TitleRowTitle,
+} from '@/common/design-system/graphs/sankey/sankey-title-row';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import {
   useGetEventsAggregationQuery,
@@ -104,7 +109,7 @@ function SignatureFlowForProtocol({
     const types = [];
     if (globalParams.stamus) types.push('event_type:stamus');
     if (globalParams.alert) types.push('event_type:alert');
-    if (globalParams.discovery) types.push('event_types.discovery');
+    if (globalParams.discovery) types.push('event_type:discovery');
     parts.push(`(${types.join(' OR ')})`);
     return parts.join(' AND ') || undefined;
   }, [
@@ -184,6 +189,27 @@ function SignatureFlowForProtocol({
 
   return (
     <Column>
+      <TitleRow>
+        <TitleRowStart>
+          <TitleRowTitle>
+            {appProto === 'default' ? 'Unknown' : appProto.toUpperCase()}
+          </TitleRowTitle>
+        </TitleRowStart>
+        <TitleRowEnd>
+          {timestamps.firstSeen && (
+            <StatsBlock
+              label="First seen"
+              value={<DateTime date={timestamps.firstSeen} />}
+            />
+          )}
+          {timestamps.lastSeen && (
+            <StatsBlock
+              label="Last seen"
+              value={<DateTime date={timestamps.lastSeen} />}
+            />
+          )}
+        </TitleRowEnd>
+      </TitleRow>
       <ContextMenu onOpenChange={handleOpenChange}>
         <ContextMenuTrigger asChild>
           <div>
@@ -203,21 +229,6 @@ function SignatureFlowForProtocol({
           />
         )}
       </ContextMenu>
-      <Row className="my-2 gap-2">
-        <SankeyAttribute title="App proto">
-          {appProto === 'default' ? 'unknown' : appProto.toUpperCase()}
-        </SankeyAttribute>
-        {timestamps.firstSeen && (
-          <SankeyAttribute title="First seen">
-            <DateTime date={timestamps.firstSeen} />
-          </SankeyAttribute>
-        )}
-        {timestamps.lastSeen && (
-          <SankeyAttribute title="Last seen">
-            <DateTime date={timestamps.lastSeen} />
-          </SankeyAttribute>
-        )}
-      </Row>
     </Column>
   );
 }
