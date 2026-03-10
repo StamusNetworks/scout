@@ -329,7 +329,7 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                     <OutletBreadcrumb
                       link={routes.policy_violations_violations}
                     >
-                      Policy Violations
+                      Compliance
                     </OutletBreadcrumb>
                     <OutletBreadcrumb link={routes.policy_violations_coverage}>
                       Coverage
@@ -371,7 +371,7 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                     <OutletBreadcrumb
                       link={routes.policy_violations_violations}
                     >
-                      Policy Violations
+                      Compliance
                     </OutletBreadcrumb>
                     <OutletBreadcrumb link={routes.policy_violations_coverage}>
                       Coverage
@@ -421,7 +421,7 @@ const createRouter = (routes: Record<keyof Routes, string>) =>
                     <OutletBreadcrumb
                       link={routes.policy_violations_violations}
                     >
-                      Policy Violations
+                      Compliance
                     </OutletBreadcrumb>
                     <Outlet />
                   </>

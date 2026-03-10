@@ -15,7 +15,7 @@ export const ThreatsCoveragePage = () => (
     <TogglePageContainer>
       <PageHeader>
         <PageHeaderContent>
-          <PageTitle>Threats Coverage</PageTitle>
+          <PageTitle>Coverage</PageTitle>
           <PageDescription>
             Review the coverage of threat detection methods and families in your
             environment.

@@ -15,7 +15,7 @@ export const ThreatsTimelinePage = () => (
     <TogglePageContainer>
       <PageHeader>
         <PageHeaderContent>
-          <PageTitle>Threats Timeline</PageTitle>
+          <PageTitle>Timeline</PageTitle>
           <PageDescription>
             Visualize threats activity over time to identify patterns and trends
             in your environment.

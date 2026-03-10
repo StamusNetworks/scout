@@ -15,7 +15,7 @@ export const PolicyViolationsCoveragePage = () => (
     <TogglePageContainer>
       <PageHeader>
         <PageHeaderContent>
-          <PageTitle>Policy Violations Coverage</PageTitle>
+          <PageTitle>Coverage</PageTitle>
           <PageDescription>
             Review the coverage of policy violation detection methods and
             families in your environment.

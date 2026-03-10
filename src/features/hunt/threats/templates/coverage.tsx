@@ -7,7 +7,6 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/pillTabs';
-import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
 import { ActiveFamiliesList } from '@/features/hunt/threats/templates/active-families-list';
 import { ActiveThreatsList } from '@/features/hunt/threats/templates/active-threats-list';
@@ -31,7 +30,6 @@ export const CoveragePage = ({
   const entity = familyClass === 'doc' ? 'Threat' : 'Policy Violation';
   return (
     <>
-      <OutletBreadcrumb>Coverage</OutletBreadcrumb>
       <Tabs
         className="p-1"
         value={entityOrFamily}
