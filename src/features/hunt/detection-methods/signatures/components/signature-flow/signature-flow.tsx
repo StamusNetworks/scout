@@ -109,7 +109,7 @@ function SignatureFlowForProtocol({
     const types = [];
     if (globalParams.stamus) types.push('event_type:stamus');
     if (globalParams.alert) types.push('event_type:alert');
-    if (globalParams.discovery) types.push('event_type:discovery');
+    if (globalParams.discovery) types.push('event_type:alert AND discovery:*');
     parts.push(`(${types.join(' OR ')})`);
     return parts.join(' AND ') || undefined;
   }, [
