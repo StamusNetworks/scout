@@ -1,6 +1,6 @@
 import { add, format } from 'date-fns';
 import * as React from 'react';
-import { CartesianGrid, Line, LineChart, XAxis } from 'recharts';
+import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -84,10 +84,33 @@ export const MultiSeriesLineChart = ({
       config={chartConfig}
       className={cn('aspect-auto h-[200px] w-full', className)}
     >
-      <LineChart
+      <AreaChart
         data={chartData}
         margin={{ left: 0, right: 0 }}
       >
+        <defs>
+          {series.map((s) => (
+            <linearGradient
+              key={s.key}
+              id={`gradient-${s.key}`}
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="1"
+            >
+              <stop
+                offset="0%"
+                stopColor={s.color}
+                stopOpacity={0.55}
+              />
+              <stop
+                offset="100%"
+                stopColor={s.color}
+                stopOpacity={0}
+              />
+            </linearGradient>
+          ))}
+        </defs>
         <CartesianGrid vertical={false} />
         <XAxis
           dataKey="time"
@@ -117,17 +140,18 @@ export const MultiSeriesLineChart = ({
           }
         />
         {series.map((s) => (
-          <Line
+          <Area
             key={s.key}
             type="monotone"
             dataKey={s.key}
             stroke={s.color}
-            strokeWidth={2}
+            strokeWidth={1}
+            fill={`url(#gradient-${s.key})`}
             dot={false}
             name={s.label}
           />
         ))}
-      </LineChart>
+      </AreaChart>
     </ChartContainer>
   );
 };
