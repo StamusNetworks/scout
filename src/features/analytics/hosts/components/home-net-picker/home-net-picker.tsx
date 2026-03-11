@@ -1,21 +1,19 @@
-import { parseAsStringLiteral, useQueryState } from 'nuqs';
-
 import {
   Tabs,
   TabsList,
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/pillTabs';
 
-export const HomeNetPicker = () => {
-  const [inHomeNet, setInHomeNet] = useQueryState(
-    'in_home_net',
-    parseAsStringLiteral(['true', 'false', 'all']).withDefault('all'),
-  );
-  console.log(inHomeNet);
+type HomeNetPickerProps = {
+  value: 'true' | 'false' | 'all';
+  onChange: (value: 'true' | 'false' | 'all') => void;
+};
+
+export const HomeNetPicker = ({ value, onChange }: HomeNetPickerProps) => {
   return (
     <Tabs
-      value={inHomeNet}
-      onValueChange={(value) => setInHomeNet(value as 'true' | 'false' | 'all')}
+      value={value}
+      onValueChange={(v) => onChange(v as 'true' | 'false' | 'all')}
     >
       <TabsList>
         <TabsTrigger value="true">Internal</TabsTrigger>
