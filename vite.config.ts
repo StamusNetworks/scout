@@ -1,7 +1,9 @@
 /// <reference types="vitest" />
 
 import tailwindcss from '@tailwindcss/vite';
-import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
+import { devtools } from '@tanstack/devtools-vite';
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
+import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
@@ -11,10 +13,10 @@ export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd(), '') };
   return defineConfig({
     plugins: [
-      TanStackRouterVite({
+      TanStackRouterDevtools(devtools()),
+      tanstackRouter({
+        target: 'react',
         autoCodeSplitting: true,
-        routesDirectory: './src/routes',
-        generatedRouteTree: './src/routeTree.gen.ts',
       }),
       react(),
       tailwindcss(),
