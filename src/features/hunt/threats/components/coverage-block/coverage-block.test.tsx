@@ -1,9 +1,11 @@
-import { createMemoryHistory, createRouter } from '@tanstack/react-router';
+import {
+  createMemoryHistory,
+  createRootRoute,
+  createRouter,
+} from '@tanstack/react-router';
 import { screen } from '@testing-library/react';
 
 import { renderWithProviders } from '@/common/testing/test-utils';
-import { routeTree } from '@/routeTree.gen';
-import { setupStore } from '@/store/store';
 
 import { ActiveThreatBlockView } from './active-threat-block';
 import { CoverageBlock } from './coverage-block';
@@ -11,14 +13,13 @@ import { ThreatBlockView } from './threat-block';
 
 const createTestRouter = () =>
   createRouter({
-    routeTree,
+    routeTree: createRootRoute(),
     history: createMemoryHistory({ initialEntries: ['/'] }),
-    context: { store: setupStore() },
   });
 
 describe('CoverageBlock', () => {
-  test('renders name', () => {
-    renderWithProviders(
+  test('renders name', async () => {
+    await renderWithProviders(
       <CoverageBlock
         id={1}
         link="threat"
@@ -31,8 +32,8 @@ describe('CoverageBlock', () => {
     expect(screen.getByText('Test Threat Name')).toBeInTheDocument();
   });
 
-  test('renders description when provided', () => {
-    renderWithProviders(
+  test('renders description when provided', async () => {
+    await renderWithProviders(
       <CoverageBlock
         id={1}
         link="threat"
@@ -48,8 +49,8 @@ describe('CoverageBlock', () => {
     ).toBeInTheDocument();
   });
 
-  test('renders badge when provided', () => {
-    renderWithProviders(
+  test('renders badge when provided', async () => {
+    await renderWithProviders(
       <CoverageBlock
         id={1}
         link="threat"
@@ -63,8 +64,8 @@ describe('CoverageBlock', () => {
     expect(screen.getByText('Malware Family')).toBeInTheDocument();
   });
 
-  test('does not render description when not provided', () => {
-    renderWithProviders(
+  test('does not render description when not provided', async () => {
+    await renderWithProviders(
       <CoverageBlock
         id={1}
         link="threat"
@@ -79,8 +80,8 @@ describe('CoverageBlock', () => {
     expect(screen.queryByText('description')).not.toBeInTheDocument();
   });
 
-  test('renders children', () => {
-    renderWithProviders(
+  test('renders children', async () => {
+    await renderWithProviders(
       <CoverageBlock
         id={1}
         link="threat"
@@ -97,8 +98,8 @@ describe('CoverageBlock', () => {
 });
 
 describe('ActiveThreatBlockView', () => {
-  test('renders threat name, description, and family name', () => {
-    renderWithProviders(
+  test('renders threat name, description, and family name', async () => {
+    await renderWithProviders(
       <ActiveThreatBlockView
         id={42}
         familyClass="doc"
@@ -117,8 +118,8 @@ describe('ActiveThreatBlockView', () => {
     expect(screen.getByText('Ransomware')).toBeInTheDocument();
   });
 
-  test('renders "New victims" and "Total victims" stats', () => {
-    renderWithProviders(
+  test('renders "New victims" and "Total victims" stats', async () => {
+    await renderWithProviders(
       <ActiveThreatBlockView
         id={42}
         familyClass="doc"
@@ -137,8 +138,8 @@ describe('ActiveThreatBlockView', () => {
 });
 
 describe('ThreatBlockView', () => {
-  test('renders threat name, description, and family name', () => {
-    renderWithProviders(
+  test('renders threat name, description, and family name', async () => {
+    await renderWithProviders(
       <ThreatBlockView
         id={99}
         familyClass="dopv"

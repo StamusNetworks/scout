@@ -1,4 +1,8 @@
-import { createMemoryHistory, createRouter } from '@tanstack/react-router';
+import {
+  createMemoryHistory,
+  createRootRoute,
+  createRouter,
+} from '@tanstack/react-router';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
@@ -6,14 +10,11 @@ import { http, HttpResponse } from 'msw';
 import { mockNavigate } from '@/common/testing/mocks/hooks/use-navigate.mock';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
-import { routeTree } from '@/routeTree.gen';
-import { setupStore } from '@/store/store';
 
 const createTestRouter = () =>
   createRouter({
-    routeTree,
+    routeTree: createRootRoute(),
     history: createMemoryHistory({ initialEntries: ['/'] }),
-    context: { store: setupStore() },
   });
 
 import { KillChainPhase } from '../../killchain';
@@ -85,7 +86,7 @@ describe('KillChainCounters', () => {
   });
 
   test('clicking on a KillChainCounters item dispatches filter and navigates', async () => {
-    renderWithProviders(<KillChainCounters />, {
+    await renderWithProviders(<KillChainCounters />, {
       router: createTestRouter(),
     });
 
@@ -100,7 +101,7 @@ describe('KillChainCounters', () => {
   });
 
   test('clicking on a KillChainCountersByThreatId item dispatches two filters and navigates', async () => {
-    renderWithProviders(<KillChainCountersByThreatId threatId="123" />, {
+    await renderWithProviders(<KillChainCountersByThreatId threatId="123" />, {
       router: createTestRouter(),
     });
 
@@ -113,7 +114,7 @@ describe('KillChainCounters', () => {
   });
 
   test('clicking on a KillChainCountersByFamilyId item dispatches two filters and navigates', async () => {
-    renderWithProviders(<KillChainCountersByFamilyId familyId="1" />, {
+    await renderWithProviders(<KillChainCountersByFamilyId familyId="1" />, {
       router: createTestRouter(),
     });
 

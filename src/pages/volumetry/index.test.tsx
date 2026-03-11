@@ -1,4 +1,8 @@
-import { createMemoryHistory, createRouter } from '@tanstack/react-router';
+import {
+  createMemoryHistory,
+  createRootRoute,
+  createRouter,
+} from '@tanstack/react-router';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
@@ -6,19 +10,16 @@ import { http, HttpResponse } from 'msw';
 import { BreadcrumbProvider } from '@/common/design-system/molecules/breadcrumbs';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
-import { routeTree } from '@/routeTree.gen';
-import { setupStore } from '@/store/store';
 
 import { VolumetryPage } from './index';
 
 const createTestRouter = () =>
   createRouter({
-    routeTree,
+    routeTree: createRootRoute(),
     history: createMemoryHistory({ initialEntries: ['/'] }),
-    context: { store: setupStore() },
   });
 
-const renderPage = () =>
+const renderPage = async () =>
   renderWithProviders(
     <BreadcrumbProvider>
       <VolumetryPage />
@@ -128,7 +129,7 @@ beforeEach(() => {
 
 describe('VolumetryPage', () => {
   it('renders stat cards with loaded data', async () => {
-    renderPage();
+    await renderPage();
 
     await waitFor(() => {
       expect(
@@ -147,7 +148,7 @@ describe('VolumetryPage', () => {
   });
 
   it('renders the probe search and probe list', async () => {
-    renderPage();
+    await renderPage();
 
     expect(
       screen.getByPlaceholderText('Filter probes by name...'),
@@ -158,8 +159,8 @@ describe('VolumetryPage', () => {
     });
   });
 
-  it('displays page title and description', () => {
-    renderPage();
+  it('displays page title and description', async () => {
+    await renderPage();
 
     expect(screen.getByText('Volumetry')).toBeInTheDocument();
     expect(
@@ -169,8 +170,8 @@ describe('VolumetryPage', () => {
     ).toBeInTheDocument();
   });
 
-  it('renders the series toggle bar with all series', () => {
-    renderPage();
+  it('renders the series toggle bar with all series', async () => {
+    await renderPage();
 
     expect(screen.getByText('Network Events')).toBeInTheDocument();
     expect(screen.getByText('Flows')).toBeInTheDocument();
@@ -183,7 +184,7 @@ describe('VolumetryPage', () => {
 
   it('toggles series visibility on click', async () => {
     const user = userEvent.setup();
-    renderPage();
+    await renderPage();
 
     const networkEventsToggle = screen
       .getByText('Network Events')
@@ -204,7 +205,7 @@ describe('VolumetryPage', () => {
       ),
     );
 
-    renderPage();
+    await renderPage();
 
     await waitFor(() => {
       const errorMessages = screen.getAllByText('Failed to load timeline data');
@@ -219,7 +220,7 @@ describe('VolumetryPage', () => {
       ),
     );
 
-    renderPage();
+    await renderPage();
 
     await waitFor(() => {
       const emptyMessages = screen.getAllByText('No data for this time range');

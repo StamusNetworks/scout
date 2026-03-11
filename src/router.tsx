@@ -1,6 +1,6 @@
 import { createRouter } from '@tanstack/react-router';
 
-import { store } from '@/store/store';
+import { store } from '@/store/store-instance';
 
 import { routeTree } from './routeTree.gen';
 

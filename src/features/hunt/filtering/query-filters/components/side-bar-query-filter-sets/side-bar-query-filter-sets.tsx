@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { AlertDialog } from '@/common/design-system/molecules/alert-dialog';
-import { store } from '@/store/store';
 import { RootState } from '@/store/store';
+import { store } from '@/store/store-instance';
 
 import {
   clearQueryFilterSets,

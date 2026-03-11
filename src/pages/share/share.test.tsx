@@ -1,4 +1,8 @@
-import { createMemoryHistory, createRouter } from '@tanstack/react-router';
+import {
+  createMemoryHistory,
+  createRootRoute,
+  createRouter,
+} from '@tanstack/react-router';
 import { beforeEach, describe, expect, test } from 'vitest';
 
 import { mockNavigate } from '@/common/testing/mocks/hooks/use-navigate.mock';
@@ -9,8 +13,6 @@ import {
   encodeShareableState,
   type ShareableState,
 } from '@/features/ui/share/shareable-state';
-import { routeTree } from '@/routeTree.gen';
-import { setupStore } from '@/store/store';
 import { initialState } from '@/store/store.init';
 
 import { SharePage } from './index';
@@ -34,22 +36,26 @@ const SHARED_STATE: ShareableState = {
   ],
 };
 
-const renderSharePage = (
+const renderSharePage = async (
   search: string,
   {
     preloadedState = initialState,
   }: { preloadedState?: typeof initialState } = {},
-) =>
-  renderWithProviders(<SharePage />, {
+) => {
+  // SharePage reads from window.location.search, so set the browser URL.
+  // happy-dom doesn't update location on pushState, so assign href directly.
+  window.location.href = `http://localhost/share${search}`;
+
+  return renderWithProviders(<SharePage />, {
     router: createRouter({
-      routeTree,
-      context: { store: setupStore() },
+      routeTree: createRootRoute(),
       history: createMemoryHistory({
         initialEntries: [`/share${search}`],
       }),
     }),
     preloadedState,
   });
+};
 
 describe('SharePage', () => {
   beforeEach(() => {
@@ -58,7 +64,7 @@ describe('SharePage', () => {
 
   test('decodes state and navigates to target route', async () => {
     const encoded = encodeShareableState(SHARED_STATE);
-    const { store } = renderSharePage(`?s=${encoded}`);
+    const { store } = await renderSharePage(`?s=${encoded}`);
     expect(mockNavigate).toHaveBeenCalledWith({
       to: SHARED_STATE.route,
       replace: true,
@@ -98,24 +104,24 @@ describe('SharePage', () => {
     );
   });
 
-  test('navigates to operational center on missing s param', () => {
-    renderSharePage('');
+  test('navigates to operational center on missing s param', async () => {
+    await renderSharePage('');
     expect(mockNavigate).toHaveBeenCalledWith({
       to: '/operational-center',
       replace: true,
     });
   });
 
-  test('navigates to operational center on invalid s param', () => {
-    renderSharePage('?s=garbage!!!');
+  test('navigates to operational center on invalid s param', async () => {
+    await renderSharePage('?s=garbage!!!');
     expect(mockNavigate).toHaveBeenCalledWith({
       to: '/operational-center',
       replace: true,
     });
   });
 
-  test('navigates to explorer on missing s param in community mode', () => {
-    renderSharePage('', {
+  test('navigates to explorer on missing s param in community mode', async () => {
+    await renderSharePage('', {
       preloadedState: { ...initialState, settings: { enterprise: false } },
     });
     expect(mockNavigate).toHaveBeenCalledWith({
@@ -124,8 +130,8 @@ describe('SharePage', () => {
     });
   });
 
-  test('navigates to explorer on invalid s param in community mode', () => {
-    renderSharePage('?s=garbage!!!', {
+  test('navigates to explorer on invalid s param in community mode', async () => {
+    await renderSharePage('?s=garbage!!!', {
       preloadedState: { ...initialState, settings: { enterprise: false } },
     });
     expect(mockNavigate).toHaveBeenCalledWith({
@@ -140,7 +146,7 @@ describe('SharePage', () => {
       route: '/hosts/42/incidents?page=3&sort=desc',
     };
     const encoded = encodeShareableState(sharedState);
-    renderSharePage(`?s=${encoded}`);
+    await renderSharePage(`?s=${encoded}`);
     expect(mockNavigate).toHaveBeenCalledWith({
       to: '/hosts/42/incidents?page=3&sort=desc',
       replace: true,

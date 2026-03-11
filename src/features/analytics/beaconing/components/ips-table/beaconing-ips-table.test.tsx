@@ -1,4 +1,8 @@
-import { createMemoryHistory, createRouter } from '@tanstack/react-router';
+import {
+  createMemoryHistory,
+  createRootRoute,
+  createRouter,
+} from '@tanstack/react-router';
 import { screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
 import { DeepPartial } from 'react-hook-form';
@@ -6,20 +10,17 @@ import { vi } from 'vitest';
 
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
-import { routeTree } from '@/routeTree.gen';
-import { setupStore } from '@/store/store';
-
-const createTestRouter = () =>
-  createRouter({
-    routeTree,
-    history: createMemoryHistory({ initialEntries: ['/'] }),
-    context: { store: setupStore() },
-  });
 import { Host } from '@/features/analytics/hosts/model/host';
 import { Entity } from '@/features/hunt/entities/model/entity';
 import { Threat } from '@/features/hunt/threats/model/threat.model';
 
 import { BeaconingIPsTable } from './beaconing-ips-table';
+
+const createTestRouter = () =>
+  createRouter({
+    routeTree: createRootRoute(),
+    history: createMemoryHistory({ initialEntries: ['/'] }),
+  });
 
 // Mock host data for testing
 const mockHostsData: DeepPartial<Host>[] = [
@@ -280,7 +281,7 @@ describe('BeaconingAssetsTable', () => {
   });
 
   test('should render hosts data after loading', async () => {
-    renderWithProviders(
+    await renderWithProviders(
       <BeaconingIPsTable ips={['192.168.1.1', '192.168.1.2']} />,
       { router: createTestRouter() },
     );
@@ -321,7 +322,7 @@ describe('BeaconingAssetsTable', () => {
   });
 
   test('should render data for a single IP', async () => {
-    renderWithProviders(<BeaconingIPsTable ips={['192.168.1.1']} />, {
+    await renderWithProviders(<BeaconingIPsTable ips={['192.168.1.1']} />, {
       router: createTestRouter(),
     });
 

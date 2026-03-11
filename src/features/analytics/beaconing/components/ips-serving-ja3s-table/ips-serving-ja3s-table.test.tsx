@@ -1,16 +1,10 @@
-import { createMemoryHistory, createRouter } from '@tanstack/react-router';
+import {
+  createMemoryHistory,
+  createRootRoute,
+  createRouter,
+} from '@tanstack/react-router';
 import { screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
-
-import { routeTree } from '@/routeTree.gen';
-import { setupStore } from '@/store/store';
-
-const createTestRouter = () =>
-  createRouter({
-    routeTree,
-    history: createMemoryHistory({ initialEntries: ['/'] }),
-    context: { store: setupStore() },
-  });
 import { vi } from 'vitest';
 
 import { baseUrl, server } from '@/common/testing/mocks/server';
@@ -18,6 +12,12 @@ import { renderWithProviders } from '@/common/testing/test-utils';
 
 import { BeaconingEvent } from '../../models/beaconing-event.model';
 import { IpsServingJa3sTable } from './ips-serving-ja3s-table';
+
+const createTestRouter = () =>
+  createRouter({
+    routeTree: createRootRoute(),
+    history: createMemoryHistory({ initialEntries: ['/'] }),
+  });
 
 // Mock data for testing different JA3S hash values
 const mockBeaconingEventsData1: Partial<BeaconingEvent>[] = [
@@ -236,7 +236,7 @@ describe('IpsServingJa3sTable', () => {
   });
 
   test('should render loading state when fetching data', async () => {
-    renderWithProviders(<IpsServingJa3sTable ja3s="ja3s-hash-123" />, {
+    await renderWithProviders(<IpsServingJa3sTable ja3s="ja3s-hash-123" />, {
       router: createTestRouter(),
     });
 
@@ -245,7 +245,7 @@ describe('IpsServingJa3sTable', () => {
   });
 
   test('should render IP data with ja3s-hash-123 after loading', async () => {
-    renderWithProviders(<IpsServingJa3sTable ja3s="ja3s-hash-123" />, {
+    await renderWithProviders(<IpsServingJa3sTable ja3s="ja3s-hash-123" />, {
       router: createTestRouter(),
     });
 
@@ -283,7 +283,7 @@ describe('IpsServingJa3sTable', () => {
   });
 
   test('should render IP data with ja3s-hash-456 after loading', async () => {
-    renderWithProviders(<IpsServingJa3sTable ja3s="ja3s-hash-456" />, {
+    await renderWithProviders(<IpsServingJa3sTable ja3s="ja3s-hash-456" />, {
       router: createTestRouter(),
     });
 

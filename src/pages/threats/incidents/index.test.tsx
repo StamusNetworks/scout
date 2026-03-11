@@ -1,20 +1,21 @@
-import { createMemoryHistory, createRouter } from '@tanstack/react-router';
+import {
+  createMemoryHistory,
+  createRootRoute,
+  createRouter,
+} from '@tanstack/react-router';
 import { screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
 
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
-import { routeTree } from '@/routeTree.gen';
-import { setupStore } from '@/store/store';
 import { initialState } from '@/store/store.init';
 
 import { ThreatsIncidentsPage } from './index';
 
 const createTestRouter = () =>
   createRouter({
-    routeTree,
+    routeTree: createRootRoute(),
     history: createMemoryHistory({ initialEntries: ['/threats/incidents'] }),
-    context: { store: setupStore() },
   });
 
 const emptyPaginated = { count: 0, next: null, previous: null, results: [] };
@@ -35,7 +36,7 @@ const mockEntity = {
   is_offender: false,
 };
 
-const renderPage = () =>
+const renderPage = async () =>
   renderWithProviders(<ThreatsIncidentsPage />, {
     router: createTestRouter(),
     preloadedState: {
@@ -69,7 +70,7 @@ describe('ThreatsIncidentsPage - Empty state', () => {
       ),
     );
 
-    renderPage();
+    await renderPage();
 
     await waitFor(() => {
       expect(
@@ -100,7 +101,7 @@ describe('ThreatsIncidentsPage - Empty state', () => {
       ),
     );
 
-    renderPage();
+    await renderPage();
 
     await waitFor(() => {
       expect(
@@ -126,7 +127,7 @@ describe('ThreatsIncidentsPage - Empty state', () => {
       ),
     );
 
-    renderPage();
+    await renderPage();
 
     await waitFor(() => {
       expect(

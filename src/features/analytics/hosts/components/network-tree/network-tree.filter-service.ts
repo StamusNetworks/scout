@@ -3,7 +3,7 @@ import {
   updateOrCreateByRole,
   updateQueryFilter,
 } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
-import { store } from '@/store/store';
+import { store } from '@/store/store-instance';
 
 export const NetworkTreeFilterService = {
   addFilter: (value: string) => {

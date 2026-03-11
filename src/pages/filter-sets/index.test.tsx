@@ -1,20 +1,21 @@
-import { createMemoryHistory, createRouter } from '@tanstack/react-router';
+import {
+  createMemoryHistory,
+  createRootRoute,
+  createRouter,
+} from '@tanstack/react-router';
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
-import { routeTree } from '@/routeTree.gen';
-import { setupStore } from '@/store/store';
 
 import { FilterSetsPage } from './index';
 
 const createTestRouter = () =>
   createRouter({
-    routeTree,
+    routeTree: createRootRoute(),
     history: createMemoryHistory({ initialEntries: ['/'] }),
-    context: { store: setupStore() },
   });
 
 const mockFilterSets = [
@@ -46,7 +47,7 @@ const mockFilterSets = [
   },
 ];
 
-const renderPage = () =>
+const renderPage = async () =>
   renderWithProviders(<FilterSetsPage />, {
     router: createTestRouter(),
   });
@@ -64,7 +65,7 @@ beforeEach(() => {
 
 describe('FilterSetsPage - Delete', () => {
   it('shows delete button for user-created filter sets', async () => {
-    renderPage();
+    await renderPage();
 
     await waitFor(() => {
       expect(screen.getByText('My Filter Set')).toBeInTheDocument();
@@ -75,7 +76,7 @@ describe('FilterSetsPage - Delete', () => {
 
   it('opens delete confirmation modal when clicking delete', async () => {
     const user = userEvent.setup();
-    renderPage();
+    await renderPage();
 
     await waitFor(() => {
       expect(screen.getByText('My Filter Set')).toBeInTheDocument();
@@ -103,7 +104,7 @@ describe('FilterSetsPage - Delete', () => {
     );
 
     const user = userEvent.setup();
-    renderPage();
+    await renderPage();
 
     await waitFor(() => {
       expect(screen.getByText('My Filter Set')).toBeInTheDocument();
@@ -128,7 +129,7 @@ describe('FilterSetsPage - Delete', () => {
 
   it('can cancel the delete modal', async () => {
     const user = userEvent.setup();
-    renderPage();
+    await renderPage();
 
     await waitFor(() => {
       expect(screen.getByText('My Filter Set')).toBeInTheDocument();

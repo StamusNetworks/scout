@@ -4,7 +4,7 @@ import {
   createRouter,
   RouterProvider,
 } from '@tanstack/react-router';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, test, vi } from 'vitest';
 
@@ -56,7 +56,12 @@ describe('Header', () => {
     const dispatch = vi.fn();
     vi.spyOn(AppStore, 'useAppDispatch').mockReturnValue(dispatch);
     const router = createTestRouter();
+    await router.load();
     renderWithProviders(<RouterProvider router={router} />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('reload-button')).toBeInTheDocument();
+    });
 
     await userEvent.click(screen.getByTestId('reload-button'));
 
@@ -65,6 +70,7 @@ describe('Header', () => {
   test('Should pre fetch the threats', async () => {
     const useGetThreatsQuery = vi.spyOn(ThreatsAPI, 'useGetSTIThreatsQuery');
     const router = createTestRouter();
+    await router.load();
     renderWithProviders(<RouterProvider router={router} />, {
       preloadedState: {
         ...initialState,
@@ -79,6 +85,8 @@ describe('Header', () => {
       },
     });
 
-    expect(useGetThreatsQuery).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(useGetThreatsQuery).toHaveBeenCalled();
+    });
   });
 });

@@ -20,8 +20,8 @@ import {
   selectAutoReloadStartDate,
   setAutoReloadInterval,
 } from '@/features/ui/ui-state.slice';
-import { store } from '@/store/store';
 import { useAppDispatch, useAppSelector } from '@/store/store';
+import { store } from '@/store/store-instance';
 
 import { Divider } from '../../atoms/ui/divider';
 import { Input } from '../../atoms/ui/input';

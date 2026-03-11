@@ -1,12 +1,15 @@
-import { createMemoryHistory, createRouter } from '@tanstack/react-router';
+import {
+  createMemoryHistory,
+  createRootRoute,
+  createRoute,
+  createRouter,
+} from '@tanstack/react-router';
 import { screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
 
 import { BreadcrumbProvider } from '@/common/design-system/molecules/breadcrumbs';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
-import { routeTree } from '@/routeTree.gen';
-import { setupStore } from '@/store/store';
 import { initialState } from '@/store/store.init';
 
 import { HostDetails } from './[hostId]/index';
@@ -34,19 +37,28 @@ beforeEach(() => {
   );
 });
 
-const renderPage = (hostId: string, multitenancy = false) =>
+const createTestRouter = (hostId: string) => {
+  const rootRoute = createRootRoute();
+  const hostsRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: 'hosts/$hostId',
+  });
+  const routeTree = rootRoute.addChildren([hostsRoute]);
+  return createRouter({
+    routeTree,
+    history: createMemoryHistory({
+      initialEntries: [`/hosts/${hostId}`],
+    }),
+  });
+};
+
+const renderPage = async (hostId: string, multitenancy = false) =>
   renderWithProviders(
     <BreadcrumbProvider>
       <HostDetails />
     </BreadcrumbProvider>,
     {
-      router: createRouter({
-        routeTree,
-        context: { store: setupStore() },
-        history: createMemoryHistory({
-          initialEntries: [`/hosts/${hostId}`],
-        }),
-      }),
+      router: createTestRouter(hostId),
       preloadedState: {
         ...initialState,
         filters: {
@@ -61,8 +73,8 @@ const renderPage = (hostId: string, multitenancy = false) =>
   );
 
 describe('HostDetails', () => {
-  it('shows invalid IP error for non-IP host IDs', () => {
-    renderPage('not-an-ip');
+  it('shows invalid IP error for non-IP host IDs', async () => {
+    await renderPage('not-an-ip');
 
     expect(screen.getByText('Invalid IP address')).toBeInTheDocument();
     expect(screen.getByText(/not-an-ip/)).toBeInTheDocument();
@@ -76,7 +88,7 @@ describe('HostDetails', () => {
       ),
     );
 
-    renderPage('10.0.0.1');
+    await renderPage('10.0.0.1');
 
     await waitFor(() => {
       expect(screen.getByText('Host not found')).toBeInTheDocument();
@@ -98,7 +110,7 @@ describe('HostDetails', () => {
       ),
     );
 
-    renderPage('10.0.0.1');
+    await renderPage('10.0.0.1');
 
     await waitFor(() => {
       expect(screen.getByText('Host not found')).toBeInTheDocument();
@@ -112,7 +124,7 @@ describe('HostDetails', () => {
       ),
     );
 
-    renderPage('10.0.0.1', true);
+    await renderPage('10.0.0.1', true);
 
     await waitFor(() => {
       expect(screen.getByText('Host not found')).toBeInTheDocument();

@@ -4,7 +4,7 @@ import {
   createRouter,
   RouterProvider,
 } from '@tanstack/react-router';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, test, vi } from 'vitest';
 
@@ -39,8 +39,15 @@ describe('ShareButton', () => {
 
   test('copies a share URL to clipboard on click', async () => {
     const router = createTestRouter('/detection-events');
+    await router.load();
     renderWithProviders(<RouterProvider router={router} />, {
       preloadedState: initialState,
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: /share/i }),
+      ).toBeInTheDocument();
     });
 
     await userEvent.click(screen.getByRole('button', { name: /share/i }));
@@ -52,8 +59,15 @@ describe('ShareButton', () => {
 
   test('includes current route path in the share URL', async () => {
     const router = createTestRouter('/hosts/42/incidents');
+    await router.load();
     renderWithProviders(<RouterProvider router={router} />, {
       preloadedState: initialState,
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: /share/i }),
+      ).toBeInTheDocument();
     });
 
     await userEvent.click(screen.getByRole('button', { name: /share/i }));

@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import { router } from '@/router';
-import { persistor, store } from '@/store/store';
+import { persistor, store } from '@/store/store-instance';
 
 import { Toaster } from '../common/design-system/atoms/ui/sonner';
 import { AppLoader, SystemSettings } from './app.loader';

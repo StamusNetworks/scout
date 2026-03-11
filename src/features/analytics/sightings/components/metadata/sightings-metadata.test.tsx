@@ -107,7 +107,7 @@ describe('SightingsMetadata', () => {
     expect(screen.getByText('Error.')).toBeInTheDocument();
   });
   test('should render HTTP sighting metadata correctly', async () => {
-    const { container } = renderWithProviders(
+    const { container } = await renderWithProviders(
       <SightingsMetadata sightingId="http-sighting-1" />,
     );
 

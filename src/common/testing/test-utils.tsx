@@ -2,6 +2,7 @@ import type { AnyRouter } from '@tanstack/react-router';
 import { RouterProvider } from '@tanstack/react-router';
 import type { RenderOptions } from '@testing-library/react';
 import { render } from '@testing-library/react';
+import { NuqsTestingAdapter } from 'nuqs/adapters/testing';
 import { PropsWithChildren, type ReactElement } from 'react';
 import { Provider } from 'react-redux';
 
@@ -14,7 +15,7 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   router?: AnyRouter;
 }
 
-export function renderWithProviders(
+export async function renderWithProviders(
   ui: ReactElement,
   extendedRenderOptions: ExtendedRenderOptions = {},
 ) {
@@ -25,17 +26,31 @@ export function renderWithProviders(
     ...renderOptions
   } = extendedRenderOptions;
 
+  if (router) {
+    // Inject test UI as the router's defaultComponent.
+    // Routes without their own component will render this.
+    router.options.defaultComponent = () => <>{ui}</>;
+
+    // Pre-load the router so RouterProvider renders synchronously
+    await router.load();
+
+    return {
+      store,
+      ...render(
+        <NuqsTestingAdapter>
+          <Provider store={store}>
+            <RouterProvider router={router} />
+          </Provider>
+        </NuqsTestingAdapter>,
+        renderOptions,
+      ),
+    };
+  }
+
   const Wrapper = ({ children }: PropsWithChildren) => (
-    <Provider store={store}>
-      {router ? (
-        <RouterProvider
-          router={router}
-          defaultComponent={() => <>{children}</>}
-        />
-      ) : (
-        children
-      )}
-    </Provider>
+    <NuqsTestingAdapter>
+      <Provider store={store}>{children}</Provider>
+    </NuqsTestingAdapter>
   );
 
   // Return an object with the store and all of RTL's query functions

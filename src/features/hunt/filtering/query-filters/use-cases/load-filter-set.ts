@@ -1,6 +1,6 @@
 import { toast } from 'sonner';
 
-import { store } from '@/store/store';
+import { store } from '@/store/store-instance';
 
 import {
   getFiltersFromFilterSet,
