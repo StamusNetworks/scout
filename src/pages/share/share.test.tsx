@@ -84,7 +84,7 @@ describe('SharePage', () => {
           key: 'msg',
           value: 'test',
           is_negated: true,
-          is_wildcarded: false,
+          is_wildcarded: true,
         }),
       ]),
     );
