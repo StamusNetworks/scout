@@ -80,36 +80,36 @@ function RootComponent() {
 
   return (
     <>
-    <BreadcrumbProvider>
-      <SidebarProvider>
-        <Modals />
-        <AppSidebar menu={menu} />
-        <SidebarInset className="border">
-          <div className="relative flex h-full flex-col overflow-hidden">
-            <Header />
-            <Row className="h-full gap-0 overflow-clip">
-              <div
-                id="expandable-portal-wrapper"
-                className="empty:hidden"
-              />
-              <div className="relative grow">
-                <Button
-                  className="absolute top-[6px] right-0 z-50 -translate-x-2"
-                  onClick={() => dispatch(setIsSidebarOpen(!isFiltersOpen))}
-                  variant="ghost"
-                  size="icon"
-                >
-                  {isFiltersOpen ? <PanelRightClose /> : <PanelRightOpen />}
-                </Button>
-                <Outlet />
-              </div>
-              <FiltersSideBar />
-            </Row>
-          </div>
-        </SidebarInset>
-      </SidebarProvider>
-    </BreadcrumbProvider>
-    <TanStackRouterDevtools position="bottom-right" />
+      <BreadcrumbProvider>
+        <SidebarProvider>
+          <Modals />
+          <AppSidebar menu={menu} />
+          <SidebarInset className="border">
+            <div className="relative flex h-full flex-col overflow-hidden">
+              <Header />
+              <Row className="h-full gap-0 overflow-clip">
+                <div
+                  id="expandable-portal-wrapper"
+                  className="empty:hidden"
+                />
+                <div className="relative grow">
+                  <Button
+                    className="absolute top-[6px] right-0 z-50 -translate-x-2"
+                    onClick={() => dispatch(setIsSidebarOpen(!isFiltersOpen))}
+                    variant="ghost"
+                    size="icon"
+                  >
+                    {isFiltersOpen ? <PanelRightClose /> : <PanelRightOpen />}
+                  </Button>
+                  <Outlet />
+                </div>
+                <FiltersSideBar />
+              </Row>
+            </div>
+          </SidebarInset>
+        </SidebarProvider>
+      </BreadcrumbProvider>
+      <TanStackRouterDevtools position="bottom-right" />
     </>
   );
 }
