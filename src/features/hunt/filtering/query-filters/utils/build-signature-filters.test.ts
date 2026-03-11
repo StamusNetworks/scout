@@ -2,7 +2,10 @@ import { QueryFilterState } from '../model/query-filter';
 import { buildSignatureFilters } from './build-signature-filters';
 
 const makeFilter = (
-  overrides: Partial<QueryFilterState> & { key: string; value: string | number },
+  overrides: Partial<QueryFilterState> & {
+    key: string;
+    value: string | number;
+  },
 ): QueryFilterState => ({
   id: '1',
   is_suspended: false,
