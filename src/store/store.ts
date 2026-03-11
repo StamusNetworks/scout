@@ -25,7 +25,6 @@ import { authSlice } from '@/features/user/auth/store/auth.slice';
 import { settingsSlice } from '@/features/user/settings/settings.slice';
 import { tenancySlice } from '@/features/user/tenancy/tenancy.slice';
 import { userSlice } from '@/features/user/user/user.slice';
-import { hostsPageStateSlice } from '@/pages/hosts/hosts-page-state.slice';
 
 import { API } from './api';
 
@@ -49,7 +48,6 @@ export const rootReducer = () =>
     }),
     pages: combineReducers({
       explorer: dashboardPageStateSlice.reducer,
-      hosts: hostsPageStateSlice.reducer,
     }),
     tablePreferences: tablePreferencesSlice.reducer,
     marketing: marketingStateSlice.reducer,

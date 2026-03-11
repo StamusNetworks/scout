@@ -19,7 +19,6 @@ import { authInitialState } from '@/features/user/auth/store/auth.slice';
 import { settingsInitialState } from '@/features/user/settings/settings.slice';
 import { tenancyInitialState } from '@/features/user/tenancy/tenancy.slice';
 import { userInitialState } from '@/features/user/user/user.slice';
-import { hostsPageInitialState } from '@/pages/hosts/hosts-page-state.slice';
 
 import { RootState } from './store';
 
@@ -35,7 +34,6 @@ export const initialState: Omit<RootState, 'API'> = {
   },
   pages: {
     explorer: dashboardPageStateInitialState,
-    hosts: hostsPageInitialState,
   },
   tablePreferences: tablePreferencesInitialState,
   uiState: uiStateInitialState,

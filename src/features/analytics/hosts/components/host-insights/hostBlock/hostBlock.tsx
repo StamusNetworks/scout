@@ -26,8 +26,8 @@ import {
 import { TableCard } from '@/common/design-system/molecules/table-card';
 import { selectDates } from '@/features/hunt/filtering/dates-filters/dates-filters';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
-import { selectSort } from '@/pages/hosts/hosts-page-state.slice';
-import { useAppSelector } from '@/store/store';
+
+import { useValuesSortParam } from '../use-values-sort-param';
 
 function formatForExport(data: HostBlockItem[] | undefined) {
   if (!data) return [];
@@ -53,7 +53,7 @@ export const HostBlock = ({
   type: 'default' | 'expandable';
   Icon?: LucideIcon;
 }) => {
-  const sort = useAppSelector(selectSort);
+  const [sort] = useValuesSortParam();
   const datesFilter = useSelector(selectDates);
   const [fallbackEndDate] = useState(() => Date.now());
   const start_date = datesFilter.start_date ?? 0;

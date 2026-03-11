@@ -1,26 +1,20 @@
 import { ListOrdered } from 'lucide-react';
 
 import { CommandFilterSingle } from '@/common/design-system/molecules/data-table/filters/command-filter-single';
-import {
-  HostsValuesSort,
-  selectSort,
-  setSort,
-} from '@/pages/hosts/hosts-page-state.slice';
-import { store } from '@/store/store';
-import { useAppSelector } from '@/store/store';
 
-const handleSetSort = (sort: HostsValuesSort) => {
-  store.dispatch(setSort(sort));
-};
+import {
+  type HostsValuesSort,
+  useValuesSortParam,
+} from './use-values-sort-param';
 
 export const HostValuesSort = () => {
-  const sort = useAppSelector(selectSort);
+  const [sort, setSort] = useValuesSortParam();
 
   return (
     <CommandFilterSingle
       title="Block values"
       value={sort}
-      onChange={(value) => handleSetSort(value as HostsValuesSort)}
+      onChange={(value) => setSort(value as HostsValuesSort)}
       options={[
         { label: 'First Seen Ascending', value: 'first-seen-asc' },
         { label: 'First Seen Descending', value: 'first-seen-desc' },
