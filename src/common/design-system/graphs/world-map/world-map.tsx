@@ -1,6 +1,6 @@
+import { useNavigate } from '@tanstack/react-router';
 import { scaleLinear } from 'd3-scale';
 import { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   ComposableMap,
   Geographies,
@@ -13,7 +13,6 @@ import {
 import { replaceFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
 import { useEnableTags } from '@/features/hunt/filtering/query-filters/use-cases/enable-tags';
 import { useTheme } from '@/features/ui/theming/useTheme';
-import { routes } from '@/pages/routes.config';
 import { useAppDispatch } from '@/store/store';
 
 import { Tooltip, TooltipContent } from '../../molecules/tooltip';
@@ -110,7 +109,7 @@ const WorldMap = ({ data }: MapChartProps) => {
                           setTooltipContent(null);
                         }}
                         onClick={() => {
-                          navigate(routes.explorer);
+                          navigate({ to: '/explorer' });
                           forceTags({
                             alert: false,
                             discovery: false,

@@ -1,5 +1,5 @@
+import { useLocation } from '@tanstack/react-router';
 import { Link } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 
 import { Button } from '@/common/design-system/atoms/ui/button';

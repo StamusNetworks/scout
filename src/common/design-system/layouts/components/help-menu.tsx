@@ -1,6 +1,5 @@
 import { format } from 'date-fns';
 import { BookMarked, BookOpenText, Info, InfoIcon } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Button } from '@/common/design-system/atoms/ui/button';
@@ -60,25 +59,27 @@ export const HelpMenu = () => {
         <DropdownMenuContent>
           {!enterprise && (
             <DropdownMenuItem asChild>
-              <Link
-                to="https://docs.clearndr.io"
+              <a
+                href="https://docs.clearndr.io"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center"
               >
                 <BookMarked className="mr-2" />
                 Clear NDR Documentation
-              </Link>
+              </a>
             </DropdownMenuItem>
           )}
           <DropdownMenuItem asChild>
-            <Link
-              to="https://docs.stamus-networks.com/42.0.0/index.html"
+            <a
+              href="https://docs.stamus-networks.com/42.0.0/index.html"
               target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center"
             >
               <BookMarked className="mr-2" />
               Documentation
-            </Link>
+            </a>
           </DropdownMenuItem>
           <DropdownMenuItem
             className="flex items-center"

@@ -1,6 +1,11 @@
+import {
+  createMemoryHistory,
+  createRootRoute,
+  createRouter,
+  RouterProvider,
+} from '@tanstack/react-router';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, test, vi } from 'vitest';
 
 import { SidebarProvider } from '@/common/design-system/atoms/ui/sidebar';
@@ -13,6 +18,22 @@ import * as AppStore from '@/store/store';
 import { initialState } from '@/store/store.init';
 
 import { Header } from './header';
+
+function createTestRouter() {
+  const rootRoute = createRootRoute({
+    component: () => (
+      <SidebarProvider>
+        <BreadcrumbProvider>
+          <Header />
+        </BreadcrumbProvider>
+      </SidebarProvider>
+    ),
+  });
+  return createRouter({
+    routeTree: rootRoute,
+    history: createMemoryHistory({ initialEntries: ['/'] }),
+  });
+}
 
 describe('Header', () => {
   beforeEach(() => {
@@ -34,15 +55,8 @@ describe('Header', () => {
   test('Should dispatch the API reload', async () => {
     const dispatch = vi.fn();
     vi.spyOn(AppStore, 'useAppDispatch').mockReturnValue(dispatch);
-    renderWithProviders(
-      <MemoryRouter>
-        <SidebarProvider>
-          <BreadcrumbProvider>
-            <Header />
-          </BreadcrumbProvider>
-        </SidebarProvider>
-      </MemoryRouter>,
-    );
+    const router = createTestRouter();
+    renderWithProviders(<RouterProvider router={router} />);
 
     await userEvent.click(screen.getByTestId('reload-button'));
 
@@ -50,28 +64,20 @@ describe('Header', () => {
   });
   test('Should pre fetch the threats', async () => {
     const useGetThreatsQuery = vi.spyOn(ThreatsAPI, 'useGetSTIThreatsQuery');
-    renderWithProviders(
-      <MemoryRouter>
-        <SidebarProvider>
-          <BreadcrumbProvider>
-            <Header />
-          </BreadcrumbProvider>
-        </SidebarProvider>
-      </MemoryRouter>,
-      {
-        preloadedState: {
-          ...initialState,
-          filters: {
-            ...initialState.filters,
-            tenancy: {
-              ...initialState.filters.tenancy,
-              multitenancy: true,
-              tenant: 4,
-            },
+    const router = createTestRouter();
+    renderWithProviders(<RouterProvider router={router} />, {
+      preloadedState: {
+        ...initialState,
+        filters: {
+          ...initialState.filters,
+          tenancy: {
+            ...initialState.filters.tenancy,
+            multitenancy: true,
+            tenant: 4,
           },
         },
       },
-    );
+    });
 
     expect(useGetThreatsQuery).toHaveBeenCalled();
   });

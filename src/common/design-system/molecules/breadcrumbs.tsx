@@ -1,3 +1,4 @@
+import { Link, useLocation } from '@tanstack/react-router';
 import {
   createContext,
   Fragment,
@@ -10,7 +11,6 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Link, useResolvedPath } from 'react-router-dom';
 
 import {
   Breadcrumb,
@@ -98,9 +98,9 @@ interface BreadcrumbProps extends PropsWithChildren {
 
 export const OutletBreadcrumb = ({ children, link }: BreadcrumbProps) => {
   const id = useId();
-  const match = useResolvedPath('');
+  const location = useLocation();
   const { register, unregister } = useBreadcrumbs();
-  const href = link || match.pathname;
+  const href = link || location.pathname;
 
   useEffect(() => {
     register(id, children, href);

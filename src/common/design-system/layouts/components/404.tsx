@@ -1,11 +1,9 @@
+import { useNavigate } from '@tanstack/react-router';
 import { Navigation, SearchX } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Container } from '@/common/design-system/atoms/layout/container';
 import { Button } from '@/common/design-system/atoms/ui/button';
-
-import { routes } from '../../../../pages/routes.config';
 
 export const NotFound = () => {
   const navigate = useNavigate();
@@ -22,7 +20,7 @@ export const NotFound = () => {
       </Column>
       <Button
         className="mt-2"
-        onClick={() => navigate(routes.operational_center)}
+        onClick={() => navigate({ to: '/operational-center' })}
       >
         <Navigation />
         Bring me home

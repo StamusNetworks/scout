@@ -1,10 +1,10 @@
+import { useRouter } from '@tanstack/react-router';
 import { ComponentType } from 'react';
 import {
   ErrorBoundary as ReactErrorBoundary,
   ErrorBoundaryProps,
   FallbackProps,
 } from 'react-error-boundary';
-import { useNavigate } from 'react-router-dom';
 
 import { Column } from './layout/column';
 import { Row } from './layout/row';
@@ -52,7 +52,7 @@ export function ErrorBoundary({
 }
 
 export function PageErrorFallback({ error }: { error: Error }) {
-  const navigate = useNavigate();
+  const router = useRouter();
   return (
     <div className="flex h-full items-center justify-center">
       <Column className="items-center">
@@ -60,7 +60,7 @@ export function PageErrorFallback({ error }: { error: Error }) {
         <pre className="mb-2 text-sm">{error.message}</pre>
         <Row className="gap-2">
           <Button
-            onClick={() => navigate(-1)}
+            onClick={() => router.history.back()}
             variant="secondary"
           >
             Go back

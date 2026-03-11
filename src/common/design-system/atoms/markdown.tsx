@@ -1,16 +1,15 @@
 import ReactMarkdown from 'react-markdown';
-import { Link } from 'react-router-dom';
 
 import { cn } from '@/common/lib/utils';
 
 const LinkRenderer = ({ href, children }: React.ComponentProps<'a'>) => (
-  <Link
-    to={href || ''}
+  <a
+    href={href || ''}
     target="_blank"
     rel="noopener noreferrer"
   >
     {children}
-  </Link>
+  </a>
 );
 
 export const Markdown = ({

@@ -1,7 +1,7 @@
 import { ChevronRightIcon, DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Slot } from '@radix-ui/react-slot';
+import { Link } from '@tanstack/react-router';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 
 import { cn } from '@/common/lib/utils';
 

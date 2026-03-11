@@ -1,6 +1,6 @@
 import * as TabsPrimitive from '@radix-ui/react-tabs';
+import { Link } from '@tanstack/react-router';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 
 import { cn } from '@/common/lib/utils';
 

@@ -1,5 +1,5 @@
+import { Link, useLocation, useNavigate } from '@tanstack/react-router';
 import { ArrowLeft, ChevronRight, User } from 'lucide-react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import logo from '@/assets/stamus_s.png';
 import { Column } from '@/common/design-system/atoms/layout/column';
@@ -46,7 +46,6 @@ import { getConfig } from '@/config';
 import { useGetCurrentUserQuery } from '@/features/user/auth/api/auth.api';
 import { selectTenancy } from '@/features/user/tenancy/tenancy.selector';
 import { setTenant, type Tenant } from '@/features/user/tenancy/tenancy.slice';
-import { routes } from '@/pages/routes.config';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import type { MenuItem, Submenu } from './navigation.config';
@@ -119,7 +118,7 @@ const SidebarHeaderContent = () => {
 
   return (
     <div className="flex flex-col gap-2">
-      <Link to={routes.home}>
+      <Link to="/">
         <Row className="mb-2 items-center gap-1">
           <img
             src={logo}
@@ -229,7 +228,7 @@ const FlatMenuItem = ({
     if (item.type === 'external') {
       window.open(item.url);
     } else {
-      navigate(item.url);
+      navigate({ to: item.url });
     }
   };
 

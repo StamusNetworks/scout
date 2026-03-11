@@ -1,5 +1,4 @@
 import { ExternalLinkIcon } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 import { cn } from '@/common/lib/utils';
 
@@ -12,8 +11,8 @@ export const ExternalLink = ({
   children?: React.ReactNode;
   className?: string;
 }) => (
-  <Link
-    to={to}
+  <a
+    href={to}
     target="_blank"
     rel="noopener noreferrer"
     className={cn(
@@ -23,5 +22,5 @@ export const ExternalLink = ({
   >
     {children}
     <ExternalLinkIcon className="shrink-0 -translate-y-0.5 text-inherit" />
-  </Link>
+  </a>
 );

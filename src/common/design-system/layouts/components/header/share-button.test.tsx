@@ -1,6 +1,11 @@
+import {
+  createMemoryHistory,
+  createRootRoute,
+  createRouter,
+  RouterProvider,
+} from '@tanstack/react-router';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, test, vi } from 'vitest';
 
 import { renderWithProviders } from '@/common/testing/test-utils';
@@ -17,18 +22,26 @@ Object.defineProperty(navigator, 'clipboard', {
   configurable: true,
 });
 
+function createTestRouter(initialPath: string) {
+  const rootRoute = createRootRoute({
+    component: () => <ShareButton />,
+  });
+  return createRouter({
+    routeTree: rootRoute,
+    history: createMemoryHistory({ initialEntries: [initialPath] }),
+  });
+}
+
 describe('ShareButton', () => {
   beforeEach(() => {
     writeText.mockClear();
   });
 
   test('copies a share URL to clipboard on click', async () => {
-    renderWithProviders(
-      <MemoryRouter initialEntries={['/detection-events']}>
-        <ShareButton />
-      </MemoryRouter>,
-      { preloadedState: initialState },
-    );
+    const router = createTestRouter('/detection-events');
+    renderWithProviders(<RouterProvider router={router} />, {
+      preloadedState: initialState,
+    });
 
     await userEvent.click(screen.getByRole('button', { name: /share/i }));
 
@@ -38,12 +51,10 @@ describe('ShareButton', () => {
   });
 
   test('includes current route path in the share URL', async () => {
-    renderWithProviders(
-      <MemoryRouter initialEntries={['/hosts/42/incidents']}>
-        <ShareButton />
-      </MemoryRouter>,
-      { preloadedState: initialState },
-    );
+    const router = createTestRouter('/hosts/42/incidents');
+    renderWithProviders(<RouterProvider router={router} />, {
+      preloadedState: initialState,
+    });
 
     await userEvent.click(screen.getByRole('button', { name: /share/i }));
 
