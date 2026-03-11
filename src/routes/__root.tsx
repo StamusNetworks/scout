@@ -8,12 +8,12 @@ import {
   SidebarInset,
   SidebarProvider,
 } from '@/common/design-system/atoms/ui/sidebar';
-import { useFeatureFlags } from '@/common/lib/use-feature-flags';
-import { BreadcrumbProvider } from '@/common/design-system/molecules/breadcrumbs';
 import { Header } from '@/common/design-system/layouts/components/header/header';
 import { Modals } from '@/common/design-system/layouts/components/modals';
 import { AppSidebar } from '@/common/design-system/layouts/components/navigation/app-sidebar';
 import { defaultMenu } from '@/common/design-system/layouts/components/navigation/navigation.config';
+import { BreadcrumbProvider } from '@/common/design-system/molecules/breadcrumbs';
+import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { FiltersSideBar } from '@/features/hunt/filtering/query-filters/components/filters-side-bar';
 import {
   selectIsSidebarOpen,

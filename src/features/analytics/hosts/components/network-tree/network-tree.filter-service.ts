@@ -1,9 +1,9 @@
-import { store } from '@/app/App';
 import { QueryFilterState } from '@/features/hunt/filtering/query-filters/model/query-filter';
 import {
   updateOrCreateByRole,
   updateQueryFilter,
 } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
+import { store } from '@/store/store';
 
 export const NetworkTreeFilterService = {
   addFilter: (value: string) => {

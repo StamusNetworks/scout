@@ -24,8 +24,8 @@ import { InvestigationsPage } from '@/pages/investigations';
 import { OperationalCenter } from '@/pages/operational-center';
 import { ThreatsGraphPage } from '@/pages/threats/graph';
 import { VolumetryPage } from '@/pages/volumetry';
+import { Route as RootRoute } from '@/routes/__root';
 
-import { Root } from '../app/root';
 import { NotFound } from '../common/design-system/layouts/components/404';
 import { Slash } from '../common/design-system/layouts/components/slash';
 import { OutletBreadcrumb } from '../common/design-system/molecules/breadcrumbs';
@@ -76,6 +76,8 @@ import { ThreatsImpactedEntities } from './threats/impacted-entities';
 import { ThreatsIncidentsPage } from './threats/incidents';
 import { ThreatsTimelinePage } from './threats/timeline';
 import { TransactionsPage } from './transactions';
+
+const Root = RootRoute.options.component as React.ComponentType;
 
 const createRouter = (routes: Record<keyof Routes, string>) =>
   createBrowserRouter(

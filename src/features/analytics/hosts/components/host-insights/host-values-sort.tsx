@@ -1,12 +1,12 @@
 import { ListOrdered } from 'lucide-react';
 
-import { store } from '@/app/App';
 import { CommandFilterSingle } from '@/common/design-system/molecules/data-table/filters/command-filter-single';
 import {
   HostsValuesSort,
   selectSort,
   setSort,
 } from '@/pages/hosts/hosts-page-state.slice';
+import { store } from '@/store/store';
 import { useAppSelector } from '@/store/store';
 
 const handleSetSort = (sort: HostsValuesSort) => {

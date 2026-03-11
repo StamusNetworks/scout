@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-import { store } from '@/app/App';
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { AlertDialog } from '@/common/design-system/molecules/alert-dialog';
+import { store } from '@/store/store';
 import { RootState } from '@/store/store';
 
 import {
