@@ -1,4 +1,5 @@
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { PanelRightClose, PanelRightOpen } from 'lucide-react';
 import { useEffect, useMemo } from 'react';
 
@@ -78,6 +79,7 @@ function RootComponent() {
   }, [systemSettings, enterprise]);
 
   return (
+    <>
     <BreadcrumbProvider>
       <SidebarProvider>
         <Modals />
@@ -107,5 +109,7 @@ function RootComponent() {
         </SidebarInset>
       </SidebarProvider>
     </BreadcrumbProvider>
+    <TanStackRouterDevtools position="bottom-right" />
+    </>
   );
 }
