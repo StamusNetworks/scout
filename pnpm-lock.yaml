@@ -239,9 +239,6 @@ importers:
       react-resizable-panels:
         specifier: ^2.0.21
         version: 2.1.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      react-router-dom:
-        specifier: ^6.24.0
-        version: 6.30.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       react-simple-maps:
         specifier: ^3.0.0
         version: 3.0.0(prop-types@15.8.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -8581,7 +8578,8 @@ snapshots:
       react: 19.2.3
       react-redux: 9.2.0(@types/react@19.2.7)(react@19.2.3)(redux@5.0.1)
 
-  '@remix-run/router@1.23.1': {}
+  '@remix-run/router@1.23.1':
+    optional: true
 
   '@rolldown/pluginutils@1.0.0-beta.27': {}
 
@@ -12859,11 +12857,13 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
       react-router: 6.30.2(react@19.2.3)
+    optional: true
 
   react-router@6.30.2(react@19.2.3):
     dependencies:
       '@remix-run/router': 1.23.1
       react: 19.2.3
+    optional: true
 
   react-simple-maps@3.0.0(prop-types@15.8.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
     dependencies:
