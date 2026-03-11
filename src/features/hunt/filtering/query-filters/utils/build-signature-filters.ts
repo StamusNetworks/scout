@@ -20,20 +20,29 @@ export const buildSignatureFilters = (
     .filter((f) => !f.is_suspended)
     .filter((f) => getFilterDef(f.key)?.category === FilterCategory.SIGNATURE);
 
+  const appendCommaSeparated = (existing: string | undefined, value: string) =>
+    existing ? `${existing},${value}` : value;
+
   const signatureParams = signatureFilters.reduce((acc, curr) => {
     switch (curr.key) {
       case 'content':
         if (curr.is_negated) {
-          acc.not_in_content = curr.value as string;
+          acc.not_in_content = appendCommaSeparated(
+            acc.not_in_content,
+            curr.value as string,
+          );
         } else {
-          acc.content = curr.value as string;
+          acc.content = appendCommaSeparated(acc.content, curr.value as string);
         }
         break;
       case 'msg':
         if (curr.is_negated) {
-          acc.not_in_msg = curr.value as string;
+          acc.not_in_msg = appendCommaSeparated(
+            acc.not_in_msg,
+            curr.value as string,
+          );
         } else {
-          acc.msg = curr.value as string;
+          acc.msg = appendCommaSeparated(acc.msg, curr.value as string);
         }
         break;
       case 'hits_min':

@@ -3,6 +3,34 @@ import { QueryFilterDefinition } from '../model/query-filter';
 import { QFBuilder } from './qf-builder';
 
 describe('QFilter Utils', () => {
+  describe('createFilter', () => {
+    it('should force is_wildcarded to true for msg filters', () => {
+      const { Builder } = init();
+      const filter = Builder.createFilter('msg', 'test');
+      expect(filter.is_wildcarded).toBe(true);
+    });
+
+    it('should force is_wildcarded to true for content filters', () => {
+      const { Builder } = init();
+      const filter = Builder.createFilter('content', 'test');
+      expect(filter.is_wildcarded).toBe(true);
+    });
+
+    it('should force is_wildcarded to true for msg even when explicitly set to false', () => {
+      const { Builder } = init();
+      const filter = Builder.createFilter('msg', 'test', {
+        is_wildcarded: false,
+      });
+      expect(filter.is_wildcarded).toBe(true);
+    });
+
+    it('should not force is_wildcarded for other keys', () => {
+      const { Builder } = init();
+      const filter = Builder.createFilter('src_ip', '192.168.1.1');
+      expect(filter.is_wildcarded).toBe(false);
+    });
+  });
+
   describe('Build Alert Tags', () => {
     it.each`
       untagged | informational | relevant | expected

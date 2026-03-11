@@ -55,6 +55,8 @@ export function QFBuilder(
     );
   }
 
+  const alwaysWildcarded = ['content', 'msg'];
+
   function createFilter(
     key: string,
     value: string | number,
@@ -72,7 +74,7 @@ export function QFBuilder(
       role: options?.role,
       is_suspended: options?.is_suspended ?? false,
       is_negated: options?.is_negated ?? false,
-      is_wildcarded: !!options?.is_wildcarded,
+      is_wildcarded: alwaysWildcarded.includes(key) || !!options?.is_wildcarded,
     };
   }
   return {
