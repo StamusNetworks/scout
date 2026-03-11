@@ -1,5 +1,5 @@
 import { CircleAlert, LaptopMinimal } from 'lucide-react';
-import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import { Link, Outlet, useLocation, useParams } from '@tanstack/react-router';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
 import {
@@ -36,11 +36,10 @@ import { useGetImpactedEntitiesQuery } from '@/features/hunt/entities/api/entiti
 import { useGetEventsQuery } from '@/features/hunt/events/api/events.api';
 import { useGetThreatsStatusQuery } from '@/features/hunt/threats/api/threats.api';
 import { selectTenancy } from '@/features/user/tenancy/tenancy.selector';
-import { routes } from '@/pages/routes.config';
 import { useAppSelector } from '@/store/store';
 
 export const HostDetails = () => {
-  const { hostId } = useParams();
+  const { hostId } = useParams({ strict: false }) as { hostId: string };
   const { pathname } = useLocation();
 
   const params = useGlobalQueryParams(['tenant', 'dates']);
@@ -154,7 +153,7 @@ export const HostDetails = () => {
   if (!isValidIp) {
     return (
       <>
-        <OutletBreadcrumb link={routes.hosts}>Hosts</OutletBreadcrumb>
+        <OutletBreadcrumb link="/hosts">Hosts</OutletBreadcrumb>
         <OutletBreadcrumb>{hostId}</OutletBreadcrumb>
         <div className="flex h-full items-center justify-center px-8">
           <Empty className="h-fit w-fit">
@@ -167,7 +166,7 @@ export const HostDetails = () => {
                 &quot;{hostId}&quot; is not a valid IP address.
               </EmptyDescription>
             </EmptyHeader>
-            <Link to={routes.hosts}>
+            <Link to="/hosts">
               <Button>Back to hosts</Button>
             </Link>
           </Empty>
@@ -187,7 +186,7 @@ export const HostDetails = () => {
   if (isErrorHost || !host?.host_id) {
     return (
       <>
-        <OutletBreadcrumb link={routes.hosts}>Hosts</OutletBreadcrumb>
+        <OutletBreadcrumb link="/hosts">Hosts</OutletBreadcrumb>
         <OutletBreadcrumb>{hostId}</OutletBreadcrumb>
         <div className="flex h-full items-center justify-center px-8">
           <Empty className="h-fit w-fit">
@@ -202,7 +201,7 @@ export const HostDetails = () => {
                   : 'This host does not exist. It may have been removed or the IP address is incorrect.'}
               </EmptyDescription>
             </EmptyHeader>
-            <Link to={routes.hosts}>
+            <Link to="/hosts">
               <Button>Back to hosts</Button>
             </Link>
           </Empty>
@@ -213,7 +212,7 @@ export const HostDetails = () => {
 
   return (
     <>
-      <OutletBreadcrumb link={routes.hosts}>Hosts</OutletBreadcrumb>
+      <OutletBreadcrumb link="/hosts">Hosts</OutletBreadcrumb>
       <OutletBreadcrumb>{hostId}</OutletBreadcrumb>
       <ScrollArea className="h-full w-full overflow-clip">
         <TogglePageContainer>
@@ -248,16 +247,16 @@ export const HostDetails = () => {
           <Tabs value={pathname}>
             <TabsList>
               <TabsTrigger
-                value={getUrl(routes.hosts_host, hostId!)}
+                value={`/hosts/${hostId}`}
                 asChild
               >
-                <Link to={getUrl(routes.hosts_host, hostId!)}>Insights</Link>
+                <Link to={`/hosts/${hostId}`}>Insights</Link>
               </TabsTrigger>
               <TabsTrigger
-                value={getUrl(routes.hosts_host_timeline, hostId!)}
+                value={`/hosts/${hostId}/timeline`}
                 asChild
               >
-                <Link to={getUrl(routes.hosts_host_timeline, hostId!)}>
+                <Link to={`/hosts/${hostId}/timeline`}>
                   Timeline
                 </Link>
               </TabsTrigger>
@@ -266,10 +265,10 @@ export const HostDetails = () => {
                 className="bg-foreground/10 dark:bg-foreground/15 mx-1 h-5"
               />
               <TabsTrigger
-                value={getUrl(routes.hosts_host_incidents, hostId!)}
+                value={`/hosts/${hostId}/incidents`}
                 asChild
               >
-                <Link to={getUrl(routes.hosts_host_incidents, hostId!)}>
+                <Link to={`/hosts/${hostId}/incidents`}>
                   Incidents{' '}
                   <TabsBadge
                     count={incidents?.count || 0}
@@ -278,10 +277,10 @@ export const HostDetails = () => {
                 </Link>
               </TabsTrigger>
               <TabsTrigger
-                value={getUrl(routes.hosts_host_detection_methods, hostId!)}
+                value={`/hosts/${hostId}/detection-methods`}
                 asChild
               >
-                <Link to={getUrl(routes.hosts_host_detection_methods, hostId!)}>
+                <Link to={`/hosts/${hostId}/detection-methods`}>
                   Detection Methods{' '}
                   <TabsBadge
                     count={detectionMethodsList?.count || 0}
@@ -290,10 +289,10 @@ export const HostDetails = () => {
                 </Link>
               </TabsTrigger>
               <TabsTrigger
-                value={getUrl(routes.hosts_host_outlierevents, hostId!)}
+                value={`/hosts/${hostId}/outlier-events`}
                 asChild
               >
-                <Link to={getUrl(routes.hosts_host_outlierevents, hostId!)}>
+                <Link to={`/hosts/${hostId}/outlier-events`}>
                   Outlier Events{' '}
                   <TabsBadge
                     count={outlierEventsData?.count || 0}
@@ -302,10 +301,10 @@ export const HostDetails = () => {
                 </Link>
               </TabsTrigger>
               <TabsTrigger
-                value={getUrl(routes.hosts_host_detectionevents, hostId!)}
+                value={`/hosts/${hostId}/detection-events`}
                 asChild
               >
-                <Link to={getUrl(routes.hosts_host_detectionevents, hostId!)}>
+                <Link to={`/hosts/${hostId}/detection-events`}>
                   Detection Events{' '}
                   <TabsBadge
                     count={detectionEventsData?.count || 0}
@@ -314,10 +313,10 @@ export const HostDetails = () => {
                 </Link>
               </TabsTrigger>
               <TabsTrigger
-                value={getUrl(routes.hosts_host_sightings, hostId!)}
+                value={`/hosts/${hostId}/sightings`}
                 asChild
               >
-                <Link to={getUrl(routes.hosts_host_sightings, hostId!)}>
+                <Link to={`/hosts/${hostId}/sightings`}>
                   Sightings{' '}
                   <TabsBadge
                     count={sightingsData?.count || 0}
@@ -326,10 +325,10 @@ export const HostDetails = () => {
                 </Link>
               </TabsTrigger>
               <TabsTrigger
-                value={getUrl(routes.hosts_host_beacons, hostId!)}
+                value={`/hosts/${hostId}/beacons`}
                 asChild
               >
-                <Link to={getUrl(routes.hosts_host_beacons, hostId!)}>
+                <Link to={`/hosts/${hostId}/beacons`}>
                   Beacons{' '}
                   <TabsBadge
                     count={beaconingData?.count || 0}
@@ -348,5 +347,3 @@ export const HostDetails = () => {
   );
 };
 
-const getUrl = (route: string, hostId: string) =>
-  route.replace(':hostId', hostId);

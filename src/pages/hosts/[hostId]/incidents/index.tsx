@@ -1,5 +1,5 @@
 import { Biohazard } from 'lucide-react';
-import { useParams } from 'react-router-dom';
+import { useParams } from '@tanstack/react-router';
 
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
@@ -14,7 +14,7 @@ const columns = threatStatusColumns
   .map((col) => ({ ...col, visible: true }));
 
 export const HostIncidents = () => {
-  const { hostId } = useParams();
+  const { hostId } = useParams({ strict: false }) as { hostId: string };
   const params = useGlobalQueryParams(['tenant']);
   const { queryParams, pagination, setPagination, sorting, setSorting } =
     useServerTableState(params);

@@ -1,6 +1,6 @@
 import { add, format } from 'date-fns';
 import { useCallback, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 import {
   NameType,
@@ -23,7 +23,6 @@ import { useGetEventsTimelineQuery } from '@/features/hunt/events/api/events.api
 import { setDates } from '@/features/hunt/filtering/dates-filters/dates-filters.slice';
 import { replaceFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
 import { enableTags } from '@/features/hunt/filtering/query-filters/use-cases/enable-tags';
-import { routes } from '@/pages/routes.config';
 import { useAppDispatch } from '@/store/store';
 
 const chartConfig = {
@@ -103,7 +102,7 @@ export const CipherSecurity = () => {
         }),
       );
       dispatch(replaceFilters([{ key: 'tls.cipher_security', value }]));
-      navigate(routes.session_events);
+      navigate({ to: '/session-events' });
     },
     [interval, dispatch, navigate],
   );

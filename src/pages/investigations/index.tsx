@@ -2,7 +2,7 @@ import { cva } from 'class-variance-authority';
 import { FileWarning, Search } from 'lucide-react';
 import { parseAsBoolean, useQueryState } from 'nuqs';
 import { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@tanstack/react-router';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -57,7 +57,6 @@ import { InvestigationState } from '@/features/hunt/investigation/investigation.
 import { InvestigationHistory } from '@/features/hunt/investigation/investigations-history.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
-import { routes } from '../routes.config';
 
 function useShowOnlyKept() {
   return useQueryState('only_kept', parseAsBoolean.withDefault(true));
@@ -119,7 +118,7 @@ const InvestigationHistoryList = () => {
           on a card options.
         </EmptyDescription>
         <EmptyContent>
-          <Link to={routes.explorer}>
+          <Link to="/explorer">
             <Button variant="default">Create your first investigation</Button>
           </Link>
         </EmptyContent>

@@ -1,10 +1,11 @@
+import { createMemoryHistory, createRouter } from '@tanstack/react-router';
 import { screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
 import { BreadcrumbProvider } from '@/common/design-system/molecules/breadcrumbs';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
+import { routeTree } from '@/routeTree.gen';
 import { initialState } from '@/store/store.init';
 
 import { HostDetails } from './[hostId]/index';
@@ -34,17 +35,16 @@ beforeEach(() => {
 
 const renderPage = (hostId: string, multitenancy = false) =>
   renderWithProviders(
-    <MemoryRouter initialEntries={[`/hosts/${hostId}`]}>
-      <BreadcrumbProvider>
-        <Routes>
-          <Route
-            path="/hosts/:hostId"
-            element={<HostDetails />}
-          />
-        </Routes>
-      </BreadcrumbProvider>
-    </MemoryRouter>,
+    <BreadcrumbProvider>
+      <HostDetails />
+    </BreadcrumbProvider>,
     {
+      router: createRouter({
+        routeTree,
+        history: createMemoryHistory({
+          initialEntries: [`/hosts/${hostId}`],
+        }),
+      }),
       preloadedState: {
         ...initialState,
         filters: {

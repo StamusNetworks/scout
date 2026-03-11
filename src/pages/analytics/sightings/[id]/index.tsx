@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from '@tanstack/react-router';
 
 import { DefaultPage } from '@/common/design-system/atoms/default-page';
 import { Column } from '@/common/design-system/atoms/layout/column';
@@ -26,7 +26,7 @@ import { EventValue } from '@/features/hunt/filtering/query-filters/components/e
 import { getFilterDef } from '@/features/hunt/filtering/query-filters/constants/query-filter.definition';
 
 export const SightingDetails = () => {
-  const { sightingId } = useParams();
+  const { sightingId } = useParams({ strict: false }) as { sightingId: string };
   const { data: sighting, isFetching } = useGetSightingById(sightingId!);
   return (
     <>

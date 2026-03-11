@@ -1,13 +1,19 @@
+import { createMemoryHistory, createRouter } from '@tanstack/react-router';
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
-import { NuqsAdapter } from 'nuqs/adapters/react-router/v6';
-import { MemoryRouter } from 'react-router-dom';
 
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
+import { routeTree } from '@/routeTree.gen';
 
 import { FilterSetsPage } from './index';
+
+const createTestRouter = () =>
+  createRouter({
+    routeTree,
+    history: createMemoryHistory({ initialEntries: ['/'] }),
+  });
 
 const mockFilterSets = [
   {
@@ -39,13 +45,9 @@ const mockFilterSets = [
 ];
 
 const renderPage = () =>
-  renderWithProviders(
-    <MemoryRouter>
-      <NuqsAdapter>
-        <FilterSetsPage />
-      </NuqsAdapter>
-    </MemoryRouter>,
-  );
+  renderWithProviders(<FilterSetsPage />, {
+    router: createTestRouter(),
+  });
 
 const getDeleteButtons = () =>
   screen.getAllByTestId('delete-filter-set-trigger');

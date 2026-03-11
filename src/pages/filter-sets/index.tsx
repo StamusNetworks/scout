@@ -3,7 +3,7 @@ import { Check, Group, Info, Plus, Trash, X } from 'lucide-react';
 import { parseAsString, parseAsStringLiteral, useQueryState } from 'nuqs';
 import { keys, values } from 'ramda';
 import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 import { toast } from 'sonner';
 
 import { Row } from '@/common/design-system/atoms/layout/row';

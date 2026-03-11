@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from '@tanstack/react-router';
 
 import {
   Page,
@@ -17,7 +17,6 @@ import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetBeaconingEventsQuery } from '@/features/analytics/beaconing/api/beaconing.api';
-import { routes } from '@/pages/routes.config';
 
 export const BeaconingPage = ({ children }: { children: React.ReactNode }) => {
   const pathname = useLocation().pathname;
@@ -54,13 +53,13 @@ export const BeaconingPage = ({ children }: { children: React.ReactNode }) => {
           <TabsList className="mb-2">
             <TabsTrigger
               value={
-                pathname === routes.analytics_beaconing_ips
-                  ? routes.analytics_beaconing_ips
-                  : routes.analytics_beaconing
+                pathname === '/analytics/beaconing/ips'
+                  ? '/analytics/beaconing/ips'
+                  : '/analytics/beaconing'
               }
               asChild
             >
-              <Link to={routes.analytics_beaconing_ips}>
+              <Link to="/analytics/beaconing/ips">
                 Beaconing IPs
                 <TabsBadge
                   count={ipsData?.count || 0}
@@ -69,10 +68,10 @@ export const BeaconingPage = ({ children }: { children: React.ReactNode }) => {
               </Link>
             </TabsTrigger>
             <TabsTrigger
-              value={routes.analytics_beaconing_ja3s}
+              value="/analytics/beaconing/ja3s"
               asChild
             >
-              <Link to={routes.analytics_beaconing_ja3s}>
+              <Link to="/analytics/beaconing/ja3s">
                 Beaconing JA3s
                 <TabsBadge
                   count={ja3sData?.count || 0}

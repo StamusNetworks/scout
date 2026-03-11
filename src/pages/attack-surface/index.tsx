@@ -1,4 +1,4 @@
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation } from '@tanstack/react-router';
 
 import { DefaultPage } from '@/common/design-system/atoms/default-page';
 import {
@@ -11,7 +11,6 @@ import { usePageTitle } from '@/common/lib/use-page-title';
 import { DiscoveredHosts } from '@/features/analytics/hosts/components/discovered-hosts/discovered-hosts';
 import { HomeNetPicker } from '@/features/analytics/hosts/components/home-net-picker/home-net-picker';
 
-import { routes } from '../routes.config';
 
 export const AttackSurface = () => {
   usePageTitle('Attack Surface');
@@ -28,16 +27,16 @@ export const AttackSurface = () => {
         <Tabs value={pathname}>
           <TabsList>
             <TabsTrigger
-              value={routes.attack_surface}
+              value="/attack-surface"
               asChild
             >
-              <Link to={routes.attack_surface}>Visualisation</Link>
+              <Link to="/attack-surface">Visualisation</Link>
             </TabsTrigger>
             <TabsTrigger
-              value={routes.attack_surface_inventory}
+              value="/attack-surface/inventory"
               asChild
             >
-              <Link to={routes.attack_surface_inventory}>Inventory</Link>
+              <Link to="/attack-surface/inventory">Inventory</Link>
             </TabsTrigger>
           </TabsList>
         </Tabs>

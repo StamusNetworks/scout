@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from '@tanstack/react-router';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
@@ -10,7 +10,7 @@ import { HostBlock } from '@/features/analytics/hosts/components/host-insights/h
 import { getBlocks } from '@/features/analytics/hosts/components/host-insights/hostBlock/hostBlock.config';
 
 export const HostInsights = () => {
-  const { hostId } = useParams();
+  const { hostId } = useParams({ strict: false }) as { hostId: string };
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const { data: host } = useGetHostWithAlertsQuery({
     entity: hostId || '',

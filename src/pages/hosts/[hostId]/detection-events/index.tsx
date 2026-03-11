@@ -1,5 +1,5 @@
 import { Binary } from 'lucide-react';
-import { useParams } from 'react-router-dom';
+import { useParams } from '@tanstack/react-router';
 
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
 import { DataTable } from '@/common/design-system/molecules/data-table';
@@ -15,7 +15,7 @@ import { useGetCountsTimelineQuery } from '@/features/hunt/timeline/api/timeline
 const tableCols = getColumns(true).filter((col) => col.id !== 'tag');
 
 export const HostDetectionEvents = () => {
-  const { hostId } = useParams();
+  const { hostId } = useParams({ strict: false }) as { hostId: string };
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const { queryParams, pagination, setPagination, sorting, setSorting } =
     useServerTableState(params);

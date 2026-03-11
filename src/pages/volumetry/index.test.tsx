@@ -1,24 +1,27 @@
+import { createMemoryHistory, createRouter } from '@tanstack/react-router';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
-import { NuqsAdapter } from 'nuqs/adapters/react-router/v6';
-import { MemoryRouter } from 'react-router-dom';
 
 import { BreadcrumbProvider } from '@/common/design-system/molecules/breadcrumbs';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
+import { routeTree } from '@/routeTree.gen';
 
 import { VolumetryPage } from './index';
 
+const createTestRouter = () =>
+  createRouter({
+    routeTree,
+    history: createMemoryHistory({ initialEntries: ['/'] }),
+  });
+
 const renderPage = () =>
   renderWithProviders(
-    <MemoryRouter>
-      <NuqsAdapter>
-        <BreadcrumbProvider>
-          <VolumetryPage />
-        </BreadcrumbProvider>
-      </NuqsAdapter>
-    </MemoryRouter>,
+    <BreadcrumbProvider>
+      <VolumetryPage />
+    </BreadcrumbProvider>,
+    { router: createTestRouter() },
   );
 
 const mockGlobalStats = {

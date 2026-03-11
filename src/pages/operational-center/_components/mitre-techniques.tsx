@@ -1,5 +1,5 @@
 import { Search } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 import { Label, Pie, PieChart } from 'recharts';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
@@ -30,7 +30,6 @@ import { useGetDashboardFieldsQuery } from '@/features/hunt/dashboard/api/dashbo
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 import { replaceFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
 import { enableTags } from '@/features/hunt/filtering/query-filters/use-cases/enable-tags';
-import { routes } from '@/pages/routes.config';
 import { useAppDispatch } from '@/store/store';
 
 export const MitreTechniques = () => {
@@ -86,7 +85,7 @@ export const MitreTechniques = () => {
         },
       ]),
     );
-    navigate(routes.explorer);
+    navigate({ to: '/explorer' });
   };
 
   if (isError) {

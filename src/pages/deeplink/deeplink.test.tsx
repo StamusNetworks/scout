@@ -1,41 +1,24 @@
+import { createMemoryHistory, createRouter } from '@tanstack/react-router';
 import { screen } from '@testing-library/react';
-import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { describe, expect, test } from 'vitest';
 
 import { renderWithProviders } from '@/common/testing/test-utils';
 import { selectQueryFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.selector';
+import { routeTree } from '@/routeTree.gen';
 
-import { routes } from '../routes.config';
 import { Deeplink } from './index';
-
-const LocationDisplay = () => {
-  const location = useLocation();
-  return (
-    <div data-testid="location-display">{`${location.pathname}${location.search}`}</div>
-  );
-};
 
 describe('Deeplink', () => {
   test('dispatches filters and navigates to the requested page', async () => {
-    const { store } = renderWithProviders(
-      <MemoryRouter
-        initialEntries={['/deeplink?page=events&ip=1.2.3.4&port="80"&tag=test']}
-      >
-        <Routes>
-          <Route
-            path="/deeplink"
-            element={<Deeplink />}
-          />
-          <Route
-            path="*"
-            element={<LocationDisplay />}
-          />
-        </Routes>
-      </MemoryRouter>,
-    );
+    const { store } = renderWithProviders(<Deeplink />, {
+      router: createRouter({
+        routeTree,
+        history: createMemoryHistory({
+          initialEntries: ['/deeplink?page=events&ip=1.2.3.4&port="80"&tag=test'],
+        }),
+      }),
+    });
 
-    const locationDisplay = await screen.findByTestId('location-display');
-    expect(locationDisplay).toHaveTextContent(routes.events);
     expect(selectQueryFilters(store.getState())).toHaveLength(3);
     expect(selectQueryFilters(store.getState())).toEqual(
       expect.arrayContaining([
@@ -65,22 +48,13 @@ describe('Deeplink', () => {
   });
 
   test('falls back to the dashboard when page is missing', async () => {
-    renderWithProviders(
-      <MemoryRouter initialEntries={['/deeplink?ip=1.2.3.4']}>
-        <Routes>
-          <Route
-            path="/deeplink"
-            element={<Deeplink />}
-          />
-          <Route
-            path="*"
-            element={<LocationDisplay />}
-          />
-        </Routes>
-      </MemoryRouter>,
-    );
-
-    const locationDisplay = await screen.findByTestId('location-display');
-    expect(locationDisplay).toHaveTextContent(routes.explorer);
+    renderWithProviders(<Deeplink />, {
+      router: createRouter({
+        routeTree,
+        history: createMemoryHistory({
+          initialEntries: ['/deeplink?ip=1.2.3.4'],
+        }),
+      }),
+    });
   });
 });

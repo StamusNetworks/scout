@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
@@ -8,7 +8,6 @@ import {
   updateTagFilters,
 } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
 import { useGetCountsTimelineQuery } from '@/features/hunt/timeline/api/timeline.api';
-import { routes } from '@/pages/routes.config';
 import { useAppDispatch } from '@/store/store';
 
 export const OutliersTimeline = () => {
@@ -43,7 +42,7 @@ export const OutliersTimeline = () => {
         end_date: bar.time + (data?.interval || 0),
       }),
     );
-    navigate(routes.explorer);
+    navigate({ to: '/explorer' });
   };
   if (isFetching) return <div>Loading...</div>;
   if (!data) return null;

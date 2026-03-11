@@ -6,7 +6,7 @@ import {
   Swords,
 } from 'lucide-react';
 import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
@@ -24,7 +24,6 @@ import { CustomColumnDef } from '@/common/design-system/molecules/data-table/fil
 import { isIP } from '@/common/lib/ips';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 import { ThreatTag } from '@/features/hunt/threats/components/threat-tag';
-import { routes } from '@/pages/routes.config';
 import { useAppDispatch } from '@/store/store';
 
 import { replaceFilters } from '../../../../features/hunt/filtering/query-filters/store/query-filters.slice';
@@ -155,7 +154,7 @@ export const ExploreButtons = ({ row }: { row: ThreatStatus }) => {
           { key: 'stamus.threat_name', value: data?.name || '' },
         ]),
       );
-      navigate(route);
+      navigate({ to: route });
     },
     [navigate, dispatch, row.asset, data?.name],
   );
@@ -165,7 +164,7 @@ export const ExploreButtons = ({ row }: { row: ThreatStatus }) => {
       <Button
         variant="outline"
         size="icon-sm"
-        onClick={() => handleClick(routes.explorer)}
+        onClick={() => handleClick('/explorer')}
         disabled={isLoading}
       >
         <LayoutDashboard />
@@ -173,7 +172,7 @@ export const ExploreButtons = ({ row }: { row: ThreatStatus }) => {
       <Button
         variant="outline"
         size="icon-sm"
-        onClick={() => handleClick(routes.events)}
+        onClick={() => handleClick('/detection-events')}
         disabled={isLoading}
       >
         <Binary />
@@ -181,7 +180,7 @@ export const ExploreButtons = ({ row }: { row: ThreatStatus }) => {
       <Button
         variant="outline"
         size="icon-sm"
-        onClick={() => handleClick(routes.detection_methods)}
+        onClick={() => handleClick('/detection-methods')}
         disabled={isLoading}
       >
         <PencilRuler />

@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from '@tanstack/react-router';
 
 import { DefaultPage } from '@/common/design-system/atoms/default-page';
 import {
@@ -11,7 +11,6 @@ import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetBeaconingEventsQuery } from '@/features/analytics/beaconing/api/beaconing.api';
 import { useGetSightingEventsQuery } from '@/features/analytics/sightings/api/sightings.api';
 
-import { routes } from '../routes.config';
 
 export const Analytics = ({ children }: { children: React.ReactNode }) => {
   const pathname = useLocation().pathname;
@@ -47,13 +46,13 @@ export const Analytics = ({ children }: { children: React.ReactNode }) => {
         <TabsList className="mb-2">
           <TabsTrigger
             value={
-              pathname === routes.analytics_beaconing_ips
-                ? routes.analytics_beaconing_ips
-                : routes.analytics
+              pathname === '/analytics/beaconing/ips'
+                ? '/analytics/beaconing/ips'
+                : '/analytics'
             }
             asChild
           >
-            <Link to={routes.analytics_beaconing_ips}>
+            <Link to="/analytics/beaconing/ips">
               Beaconing IPs
               <TabsBadge
                 count={ipsData?.count || 0}
@@ -62,10 +61,10 @@ export const Analytics = ({ children }: { children: React.ReactNode }) => {
             </Link>
           </TabsTrigger>
           <TabsTrigger
-            value={routes.analytics_beaconing_ja3s}
+            value="/analytics/beaconing/ja3s"
             asChild
           >
-            <Link to={routes.analytics_beaconing_ja3s}>
+            <Link to="/analytics/beaconing/ja3s">
               Beaconing JA3s
               <TabsBadge
                 count={ja3sData?.count || 0}
@@ -74,10 +73,10 @@ export const Analytics = ({ children }: { children: React.ReactNode }) => {
             </Link>
           </TabsTrigger>
           <TabsTrigger
-            value={routes.sightings}
+            value="/analytics/sightings"
             asChild
           >
-            <Link to={routes.sightings}>
+            <Link to="/analytics/sightings">
               Sightings
               <TabsBadge
                 count={sightingsData?.count || 0}

@@ -1,6 +1,6 @@
 import { Row as TanstackRow } from '@tanstack/react-table';
 import { Biohazard } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from '@tanstack/react-router';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
@@ -21,7 +21,6 @@ import { useGetThreatsStatusQuery } from '@/features/hunt/threats/api/threats.ap
 import { threatStatusColumnDefs } from '@/features/hunt/threats/components/threat-status-columns';
 import { useThreats } from '@/features/hunt/threats/hooks/use-threats';
 import { ThreatStatus } from '@/features/hunt/threats/model/threat-status.schema';
-import { routes } from '@/pages/routes.config';
 import { useAppDispatch } from '@/store/store';
 
 export const IndicidentsTable = () => {
@@ -42,9 +41,9 @@ export const IndicidentsTable = () => {
 
   const onRowClick = (row: TanstackRow<ThreatStatus>) => {
     if (isIP(row.original.asset)) {
-      navigate(
-        routes.hosts_host_timeline.replace(':hostId', row.original.asset),
-      );
+      navigate({
+        to: `/hosts/${row.original.asset}/timeline`,
+      });
     } else {
       dispatch(
         replaceFilters([
@@ -61,7 +60,7 @@ export const IndicidentsTable = () => {
           },
         ]),
       );
-      navigate(routes.explorer);
+      navigate({ to: '/explorer' });
     }
   };
   return (
@@ -89,10 +88,10 @@ export const IndicidentsTable = () => {
                 variant="outline"
                 asChild
               >
-                <Link to={routes.policy_violations}>Policy Violations</Link>
+                <Link to="/policy-violations">Policy Violations</Link>
               </Button>
               <Button asChild>
-                <Link to={routes.explorer}>Go hunting</Link>
+                <Link to="/explorer">Go hunting</Link>
               </Button>
             </Row>
           </EmptyContent>

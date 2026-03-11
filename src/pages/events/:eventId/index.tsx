@@ -1,6 +1,6 @@
 import { ArrowRight, Binary, MessageCircleWarning } from 'lucide-react';
 import { parseAsString, useQueryState } from 'nuqs';
-import { Link } from 'react-router-dom';
+import { Link } from '@tanstack/react-router';
 
 import { DefaultPage } from '@/common/design-system/atoms/default-page';
 import { Column } from '@/common/design-system/atoms/layout/column';
@@ -37,7 +37,6 @@ import {
 import { Event } from '@/features/hunt/events/model/event.schema';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 import { selectDefaultEventDetailTab } from '@/features/ui/preferences/preferences.slice';
-import { routes } from '@/pages/routes.config';
 import { useAppSelector } from '@/store/store';
 
 export const EventByIdPage = () => {
@@ -139,7 +138,7 @@ export const EventByIdPage = () => {
 
   return (
     <>
-      <OutletBreadcrumb link={routes.events}>Events</OutletBreadcrumb>
+      <OutletBreadcrumb link="/detection-events">Events</OutletBreadcrumb>
       <OutletBreadcrumb>{event?.uuid || event?._id}</OutletBreadcrumb>
       <DefaultPage title="Event details">
         {isLoadingEvent ? (

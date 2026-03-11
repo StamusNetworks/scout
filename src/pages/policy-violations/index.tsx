@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from '@tanstack/react-router';
 
 import {
   Page,
@@ -16,7 +16,6 @@ import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { IndicatorsDopv } from '@/features/hunt/operational-center/components/indicators/docdopv.indicators';
 
-import { routes } from '../routes.config';
 
 export const PolicyViolationsPage = () => {
   const { pathname } = useLocation();
@@ -39,13 +38,13 @@ export const PolicyViolationsPage = () => {
         </PageHeader>
         <Tabs value={pathname}>
           <TabsList>
-            <TabsTriggerLink value={routes.policy_violations}>
+            <TabsTriggerLink value="/policy-violations">
               Entities
             </TabsTriggerLink>
-            <TabsTriggerLink value={routes.policy_violations_violations_graph}>
+            <TabsTriggerLink value="/policy-violations/violations/graph">
               Graph
             </TabsTriggerLink>
-            <TabsTriggerLink value={routes.policy_violations_coverage}>
+            <TabsTriggerLink value="/policy-violations/coverage">
               Coverage
             </TabsTriggerLink>
           </TabsList>

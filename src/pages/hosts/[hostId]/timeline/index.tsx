@@ -1,5 +1,5 @@
 import { Biohazard, History } from 'lucide-react';
-import { useParams } from 'react-router-dom';
+import { useParams } from '@tanstack/react-router';
 
 import { BlockTitle } from '@/common/design-system/atoms/block';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
@@ -9,7 +9,7 @@ import { HostTimelineTemplate } from '@/features/hunt/timeline/components/histor
 import { ThreatsTimeline } from '@/features/hunt/timeline/components/timeline/timeline';
 
 export const HostTimeline = () => {
-  const { hostId } = useParams();
+  const { hostId } = useParams({ strict: false }) as { hostId: string };
   const params = useGlobalQueryParams(['tenant', 'dates']);
 
   const { data: host } = useGetHostWithAlertsQuery({

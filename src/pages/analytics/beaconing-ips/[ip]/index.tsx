@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from '@tanstack/react-router';
 
 import { DefaultPage } from '@/common/design-system/atoms/default-page';
 import { ExternalLink } from '@/common/design-system/atoms/external-link';
@@ -20,7 +20,7 @@ import { formatBeaconMetric } from '@/features/analytics/beaconing/utils/format-
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 
 export const BeaconingIpDetails = () => {
-  const { ip } = useParams();
+  const { ip } = useParams({ strict: false }) as { ip: string };
   const { reports } = useBeaconReport('ip', ip!);
   return (
     <>

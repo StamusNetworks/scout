@@ -1,6 +1,6 @@
 import { GitGraph, Lock, Rocket, ShieldAlert, Swords } from 'lucide-react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 
 import { BlockTitle } from '@/common/design-system/atoms/block';
 import { DefaultPage } from '@/common/design-system/atoms/default-page';
@@ -31,7 +31,6 @@ import { IndicatorsAppliancePreview } from '@/features/hunt/operational-center/c
 import { useGetCountsTimelineQuery } from '@/features/hunt/timeline/api/timeline.api';
 import { useAppDispatch } from '@/store/store';
 
-import { routes } from '../routes.config';
 import { CipherSecurity } from './_components/cipher-security';
 import { IndicidentsTable } from './_components/incidents-table';
 import { MitreTechniques } from './_components/mitre-techniques';
@@ -46,7 +45,7 @@ export const OperationalCenter = () => {
   const handleClickOutliers = () => {
     enableTags(dispatch, { novelty: true });
     dispatch(clearQueryFilters());
-    navigate(routes.explorer);
+    navigate({ to: '/explorer' });
   };
 
   return (

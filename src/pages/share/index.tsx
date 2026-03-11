@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from '@tanstack/react-router';
 import { toast } from 'sonner';
 
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
@@ -19,7 +19,6 @@ import {
 import { setTenant } from '@/features/user/tenancy/tenancy.slice';
 import { useAppDispatch } from '@/store/store';
 
-import { routes } from '../routes.config';
 
 const toDatesPayload = (time: ShareableTime): DatesPayload => {
   switch (time.type) {
@@ -60,7 +59,8 @@ export const SharePage = () => {
 
     if (!encoded) {
       toast.error('Invalid share link');
-      navigate(enterprise ? routes.operational_center : routes.explorer, {
+      navigate({
+        to: enterprise ? '/operational-center' : '/explorer',
         replace: true,
       });
       return;
@@ -69,7 +69,8 @@ export const SharePage = () => {
     const state = decodeShareableState(encoded);
     if (!state) {
       toast.error('Invalid share link');
-      navigate(enterprise ? routes.operational_center : routes.explorer, {
+      navigate({
+        to: enterprise ? '/operational-center' : '/explorer',
         replace: true,
       });
       return;
@@ -92,7 +93,7 @@ export const SharePage = () => {
       dispatch(replaceFilters(toFilterInputs(state.filters)));
     }
 
-    navigate(state.route, { replace: true });
+    navigate({ to: state.route, replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Run once on mount to hydrate state from URL
   }, []);
 

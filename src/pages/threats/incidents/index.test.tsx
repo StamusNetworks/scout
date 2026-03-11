@@ -1,13 +1,19 @@
+import { createMemoryHistory, createRouter } from '@tanstack/react-router';
 import { screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
-import { NuqsAdapter } from 'nuqs/adapters/react-router/v6';
-import { MemoryRouter } from 'react-router-dom';
 
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
+import { routeTree } from '@/routeTree.gen';
 import { initialState } from '@/store/store.init';
 
 import { ThreatsIncidentsPage } from './index';
+
+const createTestRouter = () =>
+  createRouter({
+    routeTree,
+    history: createMemoryHistory({ initialEntries: ['/threats/incidents'] }),
+  });
 
 const emptyPaginated = { count: 0, next: null, previous: null, results: [] };
 
@@ -28,18 +34,12 @@ const mockEntity = {
 };
 
 const renderPage = () =>
-  renderWithProviders(
-    <MemoryRouter initialEntries={['/threats/incidents']}>
-      <NuqsAdapter>
-        <ThreatsIncidentsPage />
-      </NuqsAdapter>
-    </MemoryRouter>,
-    {
-      preloadedState: {
-        ...initialState,
-      },
+  renderWithProviders(<ThreatsIncidentsPage />, {
+    router: createTestRouter(),
+    preloadedState: {
+      ...initialState,
     },
-  );
+  });
 
 beforeEach(() => {
   server.use(

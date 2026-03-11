@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from '@tanstack/react-router';
 
 import { DefaultPage } from '@/common/design-system/atoms/default-page';
 import { Column } from '@/common/design-system/atoms/layout/column';
@@ -19,7 +19,7 @@ import { formatBeaconMetric } from '@/features/analytics/beaconing/utils/format-
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 
 export const BeaconingJa3sDetails = () => {
-  const { ja3s } = useParams();
+  const { ja3s } = useParams({ strict: false }) as { ja3s: string };
   const { reports } = useBeaconReport('ja3s', ja3s!);
   return (
     <>

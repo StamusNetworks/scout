@@ -1,5 +1,5 @@
 import { Radar } from 'lucide-react';
-import { useParams } from 'react-router-dom';
+import { useParams } from '@tanstack/react-router';
 
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
@@ -11,7 +11,7 @@ import { hostSightingTableColumns } from '@/features/analytics/sightings/compone
 import { ExpandedEventRow } from '@/features/hunt/events/components/events-table/events.expanded-row';
 
 export const HostSightings = () => {
-  const { hostId } = useParams();
+  const { hostId } = useParams({ strict: false }) as { hostId: string };
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const { queryParams, pagination, setPagination, sorting, setSorting } =
     useServerTableState(params);

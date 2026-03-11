@@ -1,5 +1,5 @@
 import { PencilRuler } from 'lucide-react';
-import { useParams } from 'react-router-dom';
+import { useParams } from '@tanstack/react-router';
 
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
@@ -11,7 +11,7 @@ import { detectionMethodsColumns } from '@/features/hunt/detection-methods/signa
 import { DetectionMethodsExpandedRow } from '@/features/hunt/detection-methods/signatures/components/signatures-table/signatures-table.expanded-row';
 
 export const HostDetectionMethods = () => {
-  const { hostId } = useParams();
+  const { hostId } = useParams({ strict: false }) as { hostId: string };
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const { queryParams, pagination, setPagination, sorting, setSorting } =
     useServerTableState(params);

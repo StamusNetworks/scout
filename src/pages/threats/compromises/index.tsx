@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from '@tanstack/react-router';
 
 import {
   Page,
@@ -15,7 +15,6 @@ import {
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { IndicatorsDoc } from '@/features/hunt/operational-center/components/indicators/docdopv.indicators';
-import { routes } from '@/pages/routes.config';
 
 export const CompromisesPage = () => {
   const { pathname } = useLocation();
@@ -38,16 +37,16 @@ export const CompromisesPage = () => {
         </PageHeader>
         <Tabs value={pathname}>
           <TabsList>
-            <TabsTriggerLink value={routes.threats_compromises_incidents}>
+            <TabsTriggerLink value="/threats/compromises/incidents">
               Incidents
             </TabsTriggerLink>
-            <TabsTriggerLink value={routes.threats_compromises_entities}>
+            <TabsTriggerLink value="/threats/compromises/entities">
               Entities
             </TabsTriggerLink>
-            <TabsTriggerLink value={routes.threats_compromises_graph}>
+            <TabsTriggerLink value="/threats/compromises/graph">
               Graph
             </TabsTriggerLink>
-            <TabsTriggerLink value={routes.threats_compromises_attack_flow}>
+            <TabsTriggerLink value="/threats/compromises/attack-flow">
               Attack Flow
             </TabsTriggerLink>
           </TabsList>

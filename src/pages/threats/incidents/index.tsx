@@ -1,7 +1,7 @@
 import { Row as TanstackRow } from '@tanstack/react-table';
 import { Biohazard } from 'lucide-react';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from '@tanstack/react-router';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
@@ -29,7 +29,6 @@ import { useGetThreatsStatusQuery } from '@/features/hunt/threats/api/threats.ap
 import { threatStatusColumnDefs } from '@/features/hunt/threats/components/threat-status-columns';
 import { useThreats } from '@/features/hunt/threats/hooks/use-threats';
 import { ThreatStatus } from '@/features/hunt/threats/model/threat-status.schema';
-import { routes } from '@/pages/routes.config';
 import { useAppDispatch } from '@/store/store';
 
 const threatIncidentsColumns = [
@@ -66,9 +65,9 @@ export const ThreatsIncidentsPage = () => {
 
   const onRowClick = (row: TanstackRow<ThreatStatus>) => {
     if (isIP(row.original.asset)) {
-      navigate(
-        routes.hosts_host_timeline.replace(':hostId', row.original.asset),
-      );
+      navigate({
+        to: `/hosts/${row.original.asset}/timeline`,
+      });
     } else {
       dispatch(
         replaceFilters([
@@ -85,7 +84,7 @@ export const ThreatsIncidentsPage = () => {
           },
         ]),
       );
-      navigate(routes.explorer);
+      navigate({ to: '/explorer' });
     }
   };
 
@@ -156,7 +155,7 @@ const IncidentsEmpty = ({ killChain }: { killChain: string[] }) => {
               {entityCount === 1 ? 'it' : 'them'} to assess your exposure.
             </EmptyDescription>
             <Button asChild>
-              <Link to={routes.threats_compromises_entities}>
+              <Link to="/threats/compromises/entities">
                 View impacted {entityCount === 1 ? 'entity' : 'entities'}
               </Link>
             </Button>
@@ -172,10 +171,10 @@ const IncidentsEmpty = ({ killChain }: { killChain: string[] }) => {
                 variant="outline"
                 asChild
               >
-                <Link to={routes.policy_violations}>Policy Violations</Link>
+                <Link to="/policy-violations">Policy Violations</Link>
               </Button>
               <Button asChild>
-                <Link to={routes.explorer}>Go hunting</Link>
+                <Link to="/explorer">Go hunting</Link>
               </Button>
             </Row>
           </>
