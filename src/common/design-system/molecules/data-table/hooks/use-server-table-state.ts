@@ -4,13 +4,14 @@ import type {
   SortingState,
   Updater,
 } from '@tanstack/react-table';
-import { parseAsInteger, useQueryState } from 'nuqs';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 
-import { parseAsSorting, serializeSorting } from './sorting-parser';
+import { parseSorting, serializeSorting } from './sorting-parser';
 
-export type ServerTableStateOptions = {
-  defaultPageSize?: number;
+export type PaginationSearch = {
+  page: number;
+  page_size: number;
+  sort?: string;
 };
 
 export type ServerTableState<TParams> = {
@@ -25,52 +26,19 @@ export type ServerTableState<TParams> = {
   setSorting: OnChangeFn<SortingState>;
 };
 
-export function useServerTableState<TParams extends Record<string, unknown>>(
+export function useServerTableState<
+  TSearch extends PaginationSearch,
+  TParams extends Record<string, unknown>,
+>(
+  search: TSearch,
   params: TParams,
-  options?: ServerTableStateOptions,
+  navigate: (opts: { search: (prev: TSearch) => TSearch }) => void,
 ): ServerTableState<TParams> {
-  const defaultPageSize = options?.defaultPageSize ?? 10;
+  const { page, page_size, sort } = search;
+  const sorting = parseSorting(sort);
+  const ordering = serializeSorting(sorting);
 
-  // URL state (syncs page/page_size to URL)
-  const [urlPage, setUrlPage] = useQueryState(
-    'page',
-    parseAsInteger.withDefault(1),
-  );
-  const [urlPageSize, setUrlPageSize] = useQueryState(
-    'page_size',
-    parseAsInteger.withDefault(defaultPageSize),
-  );
-
-  // Local state drives rendering; URL state kept in sync via handlers.
-  // nuqs defers URL updates via startTransition, so local state ensures
-  // immediate, synchronous propagation for pagination reads and resets.
-  const [page, setPage] = useState(urlPage);
-  const [pageSize, setPageSize] = useState(urlPageSize);
-
-  // --- Sync local state from URL on browser back/forward navigation ---
-  // popstate only fires on actual browser navigation (back/forward buttons),
-  // never on programmatic URL updates, so this cleanly distinguishes external
-  // navigation from nuqs internal state transitions.
-  useEffect(() => {
-    const handlePopState = () => {
-      const params = new URLSearchParams(window.location.search);
-      const p = params.get('page');
-      const ps = params.get('page_size');
-      setPage(p !== null ? Number(p) : 1);
-      setPageSize(ps !== null ? Number(ps) : defaultPageSize);
-    };
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, [defaultPageSize]);
-
-  // URL-backed sorting
-  const [sorting, setSortingRaw] = useQueryState(
-    'sort',
-    parseAsSorting.withDefault([]),
-  );
-  const ordering = serializeSorting(sorting) || undefined;
-
-  // --- Synchronous page reset on param/ordering change ---
+  // --- Page reset on param change ---
   const prevParamsRef = useRef(params);
   const prevOrderingRef = useRef(ordering);
 
@@ -85,50 +53,52 @@ export function useServerTableState<TParams extends Record<string, unknown>>(
     prevOrderingRef.current = ordering;
   }
   if (shouldReset) {
-    setPage(1);
-    setUrlPage(1);
+    navigate({ search: (prev) => ({ ...prev, page: 1 }) });
   }
 
-  // Use page 1 immediately when reset is triggered
   const effectivePage = shouldReset ? 1 : page;
 
   // --- Handlers ---
   const handlePaginationUpdate = useCallback(
     (updater: Updater<PaginationState>) => {
-      const prev = { pageIndex: effectivePage - 1, pageSize };
+      const prev = { pageIndex: effectivePage - 1, pageSize: page_size };
       const next = typeof updater === 'function' ? updater(prev) : updater;
-      const newPage = next.pageIndex + 1;
-      setPage(newPage);
-      setPageSize(next.pageSize);
-      setUrlPage(newPage, { history: 'push' });
-      setUrlPageSize(next.pageSize);
+      navigate({
+        search: (s) => ({
+          ...s,
+          page: next.pageIndex + 1,
+          page_size: next.pageSize,
+        }),
+      });
     },
-    [effectivePage, pageSize, setUrlPage, setUrlPageSize],
+    [effectivePage, page_size, navigate],
   );
 
   const handleSortingUpdate: OnChangeFn<SortingState> = useCallback(
     (updater) => {
-      const prev = Array.isArray(sorting) ? sorting : [];
+      const prev = sorting;
       const next = typeof updater === 'function' ? updater(prev) : updater;
-      setSortingRaw(next);
+      navigate({
+        search: (s) => ({ ...s, sort: serializeSorting(next) }),
+      });
     },
-    [sorting, setSortingRaw],
+    [sorting, navigate],
   );
 
   const pagination = useMemo(
-    () => ({ pageIndex: effectivePage - 1, pageSize }),
-    [effectivePage, pageSize],
+    () => ({ pageIndex: effectivePage - 1, pageSize: page_size }),
+    [effectivePage, page_size],
   );
 
   const queryParams = useMemo(
     () => ({
       ...params,
       pageIndex: effectivePage - 1,
-      pageSize,
+      pageSize: page_size,
       ...(ordering !== undefined && { ordering }),
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- params is shallow-compared via ref
-    [effectivePage, pageSize, ordering, paramsChanged],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [effectivePage, page_size, ordering, paramsChanged],
   ) as TParams & { pageIndex: number; pageSize: number; ordering?: string };
 
   return useMemo(
@@ -139,13 +109,7 @@ export function useServerTableState<TParams extends Record<string, unknown>>(
       sorting,
       setSorting: handleSortingUpdate,
     }),
-    [
-      queryParams,
-      pagination,
-      handlePaginationUpdate,
-      sorting,
-      handleSortingUpdate,
-    ],
+    [queryParams, pagination, handlePaginationUpdate, sorting, handleSortingUpdate],
   );
 }
 

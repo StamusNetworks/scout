@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
-import { parseAsSorting, serializeSorting } from './sorting-parser';
+import { parseSorting, serializeSorting } from './sorting-parser';
 
 describe('serializeSorting', () => {
-  it('serializes empty sorting to empty string', () => {
-    expect(serializeSorting([])).toBe('');
+  it('serializes empty sorting to undefined', () => {
+    expect(serializeSorting([])).toBeUndefined();
   });
 
   it('serializes ascending sort', () => {
@@ -41,41 +41,45 @@ describe('serializeSorting', () => {
   });
 });
 
-describe('parseAsSorting', () => {
+describe('parseSorting', () => {
   it('parses ascending sort', () => {
-    expect(parseAsSorting.parse('timestamp')).toEqual([
+    expect(parseSorting('timestamp')).toEqual([
       { id: 'timestamp', desc: false },
     ]);
   });
 
   it('parses descending sort', () => {
-    expect(parseAsSorting.parse('-timestamp')).toEqual([
+    expect(parseSorting('-timestamp')).toEqual([
       { id: 'timestamp', desc: true },
     ]);
   });
 
   it('parses multi-column sort', () => {
-    expect(parseAsSorting.parse('-timestamp,severity')).toEqual([
+    expect(parseSorting('-timestamp,severity')).toEqual([
       { id: 'timestamp', desc: true },
       { id: 'severity', desc: false },
     ]);
   });
 
   it('parses hyphenated column id ascending', () => {
-    expect(parseAsSorting.parse('last-seen')).toEqual([
+    expect(parseSorting('last-seen')).toEqual([
       { id: 'last-seen', desc: false },
     ]);
   });
 
   it('parses hyphenated column id descending', () => {
-    expect(parseAsSorting.parse('-last-seen')).toEqual([
+    expect(parseSorting('-last-seen')).toEqual([
       { id: 'last-seen', desc: true },
     ]);
   });
 
+  it('returns empty array for undefined', () => {
+    expect(parseSorting(undefined)).toEqual([]);
+  });
+
   it('round-trips correctly', () => {
     const original = '-timestamp,last-seen,-host-id.services';
-    const parsed = parseAsSorting.parse(original)!;
-    expect(parseAsSorting.serialize(parsed)).toBe(original);
+    const parsed = parseSorting(original);
+    expect(serializeSorting(parsed)).toBe(original);
   });
 });

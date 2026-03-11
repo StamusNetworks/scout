@@ -1,8 +1,8 @@
-import { SortingState, Updater } from '@tanstack/react-table';
+import type { SortingState, Updater } from '@tanstack/react-table';
 import { useQueryState } from 'nuqs';
 import { useCallback, useMemo, useState } from 'react';
 
-import { parseAsSorting, serializeSorting } from './sorting-parser';
+import { parseSorting, serializeSorting } from './sorting-parser';
 
 // Local state version
 export const useSortingState = () => {
@@ -13,30 +13,26 @@ export const useSortingState = () => {
   );
 };
 
-// nuqs (URL state) version
+// nuqs (URL state) version — still uses nuqs for non-migrated pages
 export const useSortingUrlState = (): [
   SortingState,
   (updater: Updater<SortingState>) => void,
   string | undefined,
 ] => {
-  const [sorting, setSorting] = useQueryState(
-    'sort',
-    parseAsSorting.withDefault([]),
-  );
+  const [rawSort, setRawSort] = useQueryState('sort');
+  const sorting = parseSorting(rawSort ?? undefined);
+
   const handleSortingUpdate = useCallback(
     (updater: Updater<SortingState>) => {
-      const prev = Array.isArray(sorting) ? sorting : [];
+      const prev = sorting;
       const next = typeof updater === 'function' ? updater(prev) : updater;
-      setSorting(next);
+      setRawSort(serializeSorting(next) ?? null);
     },
-    [sorting, setSorting],
+    [sorting, setRawSort],
   );
+
   return useMemo(
-    () => [
-      sorting,
-      handleSortingUpdate,
-      serializeSorting(sorting) || undefined,
-    ],
+    () => [sorting, handleSortingUpdate, serializeSorting(sorting)],
     [sorting, handleSortingUpdate],
   );
 };
