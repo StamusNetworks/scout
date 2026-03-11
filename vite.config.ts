@@ -2,18 +2,17 @@
 
 import tailwindcss from '@tailwindcss/vite';
 import { devtools } from '@tanstack/devtools-vite';
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 
 // https://vitejs.dev/config/
-export default ({ mode }) => {
+export default ({ mode }: { mode: string }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd(), '') };
   return defineConfig({
     plugins: [
-      TanStackRouterDevtools(devtools()),
+      devtools(),
       tanstackRouter({
         target: 'react',
         autoCodeSplitting: true,
