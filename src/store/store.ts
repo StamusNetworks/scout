@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
-import { persistReducer } from 'redux-persist';
+import { persistReducer, persistStore } from 'redux-persist';
 import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage';
 
@@ -82,7 +82,8 @@ export function setupStore(preloadedState?: Partial<RootStateWithAPI>) {
   });
 }
 
-// export const store = setupStore();
+export const store = setupStore();
+export const persistor = persistStore(store);
 
 export type RootState = Omit<ReturnType<ReturnType<typeof rootReducer>>, 'API'>;
 export type RootStateWithAPI = ReturnType<ReturnType<typeof rootReducer>>;

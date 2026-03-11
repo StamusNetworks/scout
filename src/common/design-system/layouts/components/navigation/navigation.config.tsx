@@ -45,7 +45,6 @@ export type Submenu = {
 };
 
 export const defaultMenu = (
-  routes: Record<string, string>,
   systemSettings: SystemSettings,
   enterprise: boolean,
 ): Submenu[] => [
@@ -56,7 +55,7 @@ export const defaultMenu = (
       {
         key: 'operational-center',
         type: 'link',
-        url: routes.operational_center,
+        url: '/operational-center',
         title: 'Operational Center',
         icon: <Activity />,
         enterprise: true,
@@ -64,7 +63,7 @@ export const defaultMenu = (
       {
         key: 'volumetry',
         type: 'link',
-        url: routes.volumetry,
+        url: '/volumetry',
         title: 'Volumetry',
         icon: <BarChart3 />,
         enterprise: true,
@@ -72,7 +71,7 @@ export const defaultMenu = (
       {
         key: 'threats',
         type: 'link',
-        url: routes.threats_compromises,
+        url: '/threats/compromises',
         title: 'Threats',
         icon: <Biohazard />,
         enterprise: true,
@@ -80,7 +79,7 @@ export const defaultMenu = (
           {
             key: 'threats-compromises',
             type: 'link',
-            url: routes.threats_compromises,
+            url: '/threats/compromises',
             title: 'Compromises',
             icon: <Biohazard />,
             enterprise: true,
@@ -88,7 +87,7 @@ export const defaultMenu = (
           {
             key: 'threats-timeline',
             type: 'link',
-            url: routes.threats_timeline,
+            url: '/threats/timeline',
             title: 'Timeline',
             icon: <Biohazard />,
             enterprise: true,
@@ -96,7 +95,7 @@ export const defaultMenu = (
           {
             key: 'threats-coverage',
             type: 'link',
-            url: routes.threats_coverage,
+            url: '/threats/coverage',
             title: 'Coverage',
             icon: <Biohazard />,
             enterprise: true,
@@ -106,7 +105,7 @@ export const defaultMenu = (
       {
         key: 'policy-violations',
         type: 'link',
-        url: routes.policy_violations_violations,
+        url: '/policy-violations/violations',
         title: 'Compliance',
         icon: <Scale />,
         enterprise: true,
@@ -114,7 +113,7 @@ export const defaultMenu = (
           {
             key: 'pv-violations',
             type: 'link',
-            url: routes.policy_violations_violations,
+            url: '/policy-violations/violations',
             title: 'Policy Violations',
             icon: <Scale />,
             enterprise: true,
@@ -122,7 +121,7 @@ export const defaultMenu = (
           {
             key: 'pv-coverage',
             type: 'link',
-            url: routes.policy_violations_coverage,
+            url: '/policy-violations/coverage',
             title: 'Coverage',
             icon: <Scale />,
             enterprise: true,
@@ -132,7 +131,7 @@ export const defaultMenu = (
       {
         key: 'attack-surface',
         type: 'link',
-        url: routes.attack_surface,
+        url: '/attack-surface',
         title: 'Attack Surface',
         icon: <Network />,
         enterprise: true,
@@ -141,7 +140,7 @@ export const defaultMenu = (
       {
         key: 'analytics',
         type: 'link',
-        url: routes.analytics_beaconing,
+        url: '/analytics/beaconing',
         title: 'Analytics',
         icon: <Radar />,
         enterprise: true,
@@ -149,7 +148,7 @@ export const defaultMenu = (
           {
             key: 'analytics-beaconing',
             type: 'link',
-            url: routes.analytics_beaconing,
+            url: '/analytics/beaconing',
             title: 'Beaconing',
             icon: <Radar />,
             enterprise: true,
@@ -157,7 +156,7 @@ export const defaultMenu = (
           {
             key: 'analytics-sightings',
             type: 'link',
-            url: routes.sightings,
+            url: '/analytics/sightings',
             title: 'Sightings',
             icon: <Radar />,
             enterprise: true,
@@ -167,7 +166,7 @@ export const defaultMenu = (
       // {
       //   key: 'explore',
       //   type: 'link',
-      //   url: routes.explore,
+      //   url: '/explore',
       //   title: 'Explore',
       //   icon: <Telescope />,
       //   enterprise: true,
@@ -180,28 +179,28 @@ export const defaultMenu = (
       {
         key: 'explorer',
         type: 'link',
-        url: routes.explorer,
+        url: '/explorer',
         title: 'Explorer',
         icon: <LayoutDashboard />,
       },
       {
         key: 'events',
         type: 'link',
-        url: routes.events,
+        url: '/detection-events',
         title: 'Detection Events',
         icon: <Binary />,
       },
       {
         key: 'events-flow',
         type: 'link',
-        url: routes.events_flow,
+        url: '/events-flow',
         title: 'Events Flow',
         icon: <Workflow />,
       },
       {
         key: 'session-events',
         type: 'link',
-        url: routes.session_events,
+        url: '/session-events',
         title: 'Network Events',
         icon: <ArrowDownUp />,
       },
@@ -209,21 +208,21 @@ export const defaultMenu = (
         key: 'hosts',
         enterprise: true,
         type: 'link',
-        url: routes.hosts,
+        url: '/hosts',
         title: 'Hosts',
         icon: <LaptopMinimal />,
       },
       {
         key: 'detection_methods',
         type: 'link',
-        url: routes.detection_methods,
+        url: '/detection-methods',
         title: 'Detection Methods',
         icon: <PencilRuler />,
       },
       {
         key: 'investigations',
         type: 'link',
-        url: routes.investigations,
+        url: '/investigations',
         title: 'Investigations',
         icon: <Search />,
         beta: true,
@@ -231,14 +230,14 @@ export const defaultMenu = (
       {
         key: 'filter-sets',
         type: 'link',
-        url: routes.filter_sets,
+        url: '/filter-sets',
         title: 'Filter Sets',
         icon: <Group />,
       },
       {
         key: 'filters-actions',
         type: 'link',
-        url: routes.filters_actions,
+        url: '/filters-actions',
         title: 'Filter Actions',
         icon: <WandSparkles />,
       },
@@ -250,14 +249,14 @@ export const defaultMenu = (
       {
         key: 'deeplinks',
         type: 'link',
-        url: routes.deeplinks,
+        url: '/deeplinks',
         title: 'Deeplinks',
         icon: <Link />,
       },
       {
         key: 'user-preferences',
         type: 'link',
-        url: routes.user_settings,
+        url: '/user-settings',
         title: 'Preferences',
         icon: <GearIcon />,
         beta: true,
