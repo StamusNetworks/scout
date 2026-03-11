@@ -60,7 +60,7 @@ Uses `createRootRouteWithContext`. The current `Root` component (sidebar, header
 import { createRootRouteWithContext } from '@tanstack/react-router'
 
 interface RouterContext {
-  // Extensible for future needs (e.g., queryClient)
+  store: AppStore
 }
 
 export const Route = createRootRouteWithContext<RouterContext>()({
@@ -81,7 +81,8 @@ export const router = createRouter({
   defaultErrorComponent: DefaultCatchBoundary,
   defaultNotFoundComponent: NotFound,
   scrollRestoration: true,
-  context: {},
+  basepath: import.meta.env.BASE_URL || '/',
+  context: { store },
 })
 
 declare module '@tanstack/react-router' {
@@ -90,6 +91,13 @@ declare module '@tanstack/react-router' {
   }
 }
 ```
+
+#### New Dependencies
+
+- `@tanstack/zod-adapter` — for `zodValidator` used in `validateSearch`
+
+Already installed:
+- `@tanstack/react-router`, `@tanstack/router-plugin`, `@tanstack/react-router-devtools`
 
 #### Search Param Serialization
 
@@ -158,17 +166,19 @@ src/routes/
 │   │   ├── timeline.tsx
 │   │   ├── coverage/
 │   │   │   ├── index.tsx                   # coverage list
-│   │   │   ├── threat.$threatId/
-│   │   │   │   ├── route.tsx               # layout
-│   │   │   │   ├── index.tsx
-│   │   │   │   ├── events.tsx
-│   │   │   │   └── detection-methods.tsx
-│   │   │   └── family.$familyId/
-│   │   │       ├── route.tsx               # layout
-│   │   │       ├── index.tsx
-│   │   │       ├── threats.tsx
-│   │   │       ├── events.tsx
-│   │   │       └── detection-methods.tsx
+│   │   │   ├── threat/
+│   │   │   │   └── $threatId/
+│   │   │   │       ├── route.tsx           # layout
+│   │   │   │       ├── index.tsx
+│   │   │   │       ├── events.tsx
+│   │   │   │       └── detection-methods.tsx
+│   │   │   └── family/
+│   │   │       └── $familyId/
+│   │   │           ├── route.tsx           # layout
+│   │   │           ├── index.tsx
+│   │   │           ├── threats.tsx
+│   │   │           ├── events.tsx
+│   │   │           └── detection-methods.tsx
 │   ├── policy-violations/                  # Mirrors threats structure
 │   │   ├── route.tsx
 │   │   ├── index.tsx
@@ -178,17 +188,19 @@ src/routes/
 │   │   │   └── graph.tsx
 │   │   └── coverage/
 │   │       ├── index.tsx
-│   │       ├── threat.$threatId/
-│   │       │   ├── route.tsx
-│   │       │   ├── index.tsx
-│   │       │   ├── events.tsx
-│   │       │   └── detection-methods.tsx
-│   │       └── family.$familyId/
-│   │           ├── route.tsx
-│   │           ├── index.tsx
-│   │           ├── threats.tsx
-│   │           ├── events.tsx
-│   │           └── detection-methods.tsx
+│   │       ├── threat/
+│   │       │   └── $threatId/
+│   │       │       ├── route.tsx
+│   │       │       ├── index.tsx
+│   │       │       ├── events.tsx
+│   │       │       └── detection-methods.tsx
+│   │       └── family/
+│   │           └── $familyId/
+│   │               ├── route.tsx
+│   │               ├── index.tsx
+│   │               ├── threats.tsx
+│   │               ├── events.tsx
+│   │               └── detection-methods.tsx
 │   ├── analytics/
 │   │   ├── route.tsx                       # breadcrumb layout
 │   │   ├── index.tsx                       # redirect → beaconing/ips
@@ -231,11 +243,9 @@ src/routes/
 
 ```ts
 export const Route = createFileRoute('/_enterprise')({
-  beforeLoad: () => {
-    // Access feature flags — if not enterprise, redirect
-    // Note: since feature flags come from Redux, we'll use
-    // the store directly in beforeLoad rather than hooks
-    const state = store.getState()
+  beforeLoad: ({ context }) => {
+    // Access feature flags via store from router context
+    const state = context.store.getState()
     const enterprise = selectIsEnterprise(state)
     if (!enterprise) {
       throw redirect({ to: '/explorer' })
@@ -257,6 +267,8 @@ export const Route = createFileRoute('/_enterprise/threats/')({
 })
 ```
 
+**Important:** Redirect targets use URL paths (e.g., `/threats/compromises/incidents`), not route IDs. Pathless segments like `_enterprise` are stripped from URLs — never include them in `to:` targets. The generated route tree provides type checking for valid paths.
+
 ### 3. Hosts Page Refactoring (Proof of Concept)
 
 #### Search Params Schema
@@ -265,6 +277,7 @@ The hosts route declares its search params with zod validation:
 
 ```ts
 import { z } from 'zod'
+import { zodValidator } from '@tanstack/zod-adapter'
 
 const hostsSearchSchema = z.object({
   page: z.number().min(1).catch(1),
@@ -275,10 +288,12 @@ const hostsSearchSchema = z.object({
 })
 
 export const Route = createFileRoute('/_enterprise/hosts/')({
-  validateSearch: (search) => hostsSearchSchema.parse(search),
+  validateSearch: zodValidator(hostsSearchSchema),
   component: HostsRoute,
 })
 ```
+
+Note: `zodValidator` from `@tanstack/zod-adapter` provides correct input/output type inference for `Route.useSearch()`.
 
 #### Route as Orchestrator
 
@@ -299,6 +314,11 @@ function HostsRoute() {
     ordering: queryParams.ordering ?? (search.with_alerts ? '-hits' : '-host_id.last_seen'),
   })
 
+  // Conditionally include hitsColumn based on with_alerts
+  const columns = search.with_alerts
+    ? [...hostsColumns, hitsColumn]
+    : hostsColumns
+
   return (
     <DefaultPage
       title="Hosts"
@@ -313,7 +333,7 @@ function HostsRoute() {
       <HostsTable
         data={data}
         isLoading={isFetching}
-        columns={hostsColumns}
+        columns={columns}
         pagination={pagination}
         onPaginationChange={setPagination}
         sorting={sorting}
@@ -329,25 +349,29 @@ function HostsRoute() {
 The hook is rewritten to accept search params and a navigate function instead of using nuqs internally:
 
 ```ts
-type UseServerTableStateInput = {
+type PaginationSearch = {
   page: number
   page_size: number
   sort?: string
 }
 
-type UseServerTableStateOptions = {
-  navigate: (opts: { search: (prev: any) => any }) => void
+type UseServerTableStateOptions<TSearch extends PaginationSearch> = {
+  navigate: (opts: { search: (prev: TSearch) => TSearch }) => void
 }
 
-function useServerTableState(search: UseServerTableStateInput, options: UseServerTableStateOptions) {
+function useServerTableState<TSearch extends PaginationSearch>(
+  search: TSearch,
+  options: UseServerTableStateOptions<TSearch>,
+) {
   // Derives pagination/sorting from search params
   // Uses navigate({ search }) to update URL
-  // Resets page to 1 when params change
   // Returns { queryParams, pagination, setPagination, sorting, setSorting }
 }
 ```
 
 The hook no longer manages its own URL state — it reads from search params passed in and uses the provided navigate function to write updates. The dual local+URL state pattern from nuqs is no longer needed since TanStack Router's search params are synchronous.
+
+**Page reset on param change:** The existing `shallowEqual`/`prevParamsRef` logic that resets page to 1 when filter params change is preserved. This is inherent to table behavior (not nuqs-specific) — changing a filter while on page 5 must reset to page 1. The rewritten hook tracks the non-pagination subset of `search` via refs and calls `navigate({ search: (prev) => ({ ...prev, page: 1 }) })` when a change is detected.
 
 #### Column Definitions
 
@@ -379,7 +403,7 @@ export const hostsColumns = [
 
 #### HostsTable Becomes Presentational
 
-`HostsTable` no longer calls `useServerTableState`, `useGlobalQueryParams`, or `useGetHostsQuery`. It receives everything as props:
+`HostsTable` no longer calls `useServerTableState`, `useGlobalQueryParams`, or `useGetHostsQuery`. It receives data and table state as props. It still owns `useTablePreferences` internally (column order/visibility is Redux-backed UI state, not route concern) and renders `HostsTableExpandedRow` for row expansion.
 
 ```ts
 type HostsTableProps = {
@@ -393,7 +417,10 @@ type HostsTableProps = {
 }
 
 export function HostsTable(props: HostsTableProps) {
-  // Pure presentation — renders DataTable with the props
+  // Owns table preferences (column order/visibility) via useTablePreferences
+  // Owns row expansion (HostsTableExpandedRow)
+  // Owns toolbar, export columns
+  // Receives data + pagination/sorting from route
 }
 ```
 
@@ -415,13 +442,19 @@ export function HostsTable(props: HostsTableProps) {
 - `PageBoundary` error UI — reused as `defaultErrorComponent`
 - Breadcrumb system — adapted to TanStack Router
 
+#### Dead Code Cleanup
+
+- Remove `hostsPageStateSlice` from Redux store (sort state moves to URL search params)
+- Remove `usePaginationUrlState` and `useSortingUrlState` (replaced by `useServerTableState` rewrite)
+
 #### First Pass Scope
 
 - Full route tree migrated to file-based routing under `src/routes/`
 - All react-router-dom imports replaced with TanStack Router equivalents
+- Breadcrumbs system adapted (replace `useResolvedPath` and `Link` from react-router-dom)
 - Hosts page fully refactored (search params, column extraction, route-as-orchestrator)
 - All other pages: minimal changes — moved into route files, components stay as-is internally
-- `react-router-dom` fully removed
+- `react-router-dom` fully removed (requires breadcrumb migration in same pass)
 - `nuqs` stays until remaining pages are migrated (only hosts page stops using it)
 
 ## Migration Notes
@@ -440,8 +473,12 @@ export function HostsTable(props: HostsTableProps) {
 
 ### Breadcrumbs
 
-The current `OutletBreadcrumb` context-based system needs adaptation. Options:
-- Use TanStack Router's route `staticData` or route context to declare breadcrumb labels
-- Keep the existing context-based system but trigger it from route components
+The current `OutletBreadcrumb` context-based system imports `useResolvedPath` and `Link` from `react-router-dom`. These must be replaced in the same pass as the route tree migration to fully remove `react-router-dom`.
 
-This will be determined during implementation based on what fits cleanly.
+Approach: Keep the existing context-based registration pattern but replace `react-router-dom` internals:
+- Replace `useResolvedPath` — pass explicit `link` paths to breadcrumb registrations (already done in most usages)
+- Replace `Link` from react-router-dom with `Link` from `@tanstack/react-router`
+
+### Column Definitions
+
+Column definitions use the existing `CustomColumnDef<T>` pattern from the project's `DataTable` component, not `columnHelper.accessor()`. The extracted individual column consts must match whatever type `DataTable` expects. During implementation, check the actual column type and match it.
