@@ -6,6 +6,7 @@ import {
 import { screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
 
+import { BreadcrumbProvider } from '@/common/design-system/molecules/breadcrumbs';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
 import { initialState } from '@/store/store.init';
@@ -37,7 +38,7 @@ const mockEntity = {
 };
 
 const renderPage = async () =>
-  renderWithProviders(<ThreatsIncidentsPage />, {
+  renderWithProviders(<BreadcrumbProvider><ThreatsIncidentsPage /></BreadcrumbProvider>, {
     router: createTestRouter(),
     preloadedState: {
       ...initialState,
