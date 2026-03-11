@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-router';
 import {
   ArrowUpDown,
   Binary,
@@ -9,7 +10,6 @@ import {
 } from 'lucide-react';
 import { isNil, toPairs } from 'ramda';
 import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-router';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
@@ -309,7 +309,7 @@ function FilterSetHostsBadge({ filterSet }: { filterSet: QueryFilterSet }) {
   });
   const onClickHandler = () => {
     loadFilterSet(filterSet);
-    navigate({ to: '/hosts?with_alerts=false' });
+    navigate({ to: '/hosts' as string, search: { with_alerts: false } });
   };
   return (
     <FilterSetBadge
@@ -340,7 +340,10 @@ function FilterSetInternalHostsBadge({
   });
   const onClickHandler = () => {
     loadFilterSet(filterSet);
-    navigate({ to: '/hosts?with_alerts=false&in_home_net=true' });
+    navigate({
+      to: '/hosts' as string,
+      search: { with_alerts: false, in_home_net: 'true' },
+    });
   };
   return (
     <FilterSetBadge
@@ -369,7 +372,7 @@ function FilterSetInternalHostsWithEventsBadge({
   });
   const onClickHandler = () => {
     loadFilterSet(filterSet);
-    navigate({ to: '/hosts?in_home_net=true' });
+    navigate({ to: '/hosts' as string, search: { in_home_net: 'true' } });
   };
   return (
     <FilterSetBadge
@@ -395,7 +398,7 @@ function FilterSetHostsWithEventsBadge({
   });
   const onClickHandler = () => {
     loadFilterSet(filterSet);
-    navigate({ to: '/hosts' });
+    navigate({ to: '/hosts' as string });
   };
   return (
     <FilterSetBadge

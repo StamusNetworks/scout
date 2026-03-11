@@ -6,6 +6,7 @@ import { BreadcrumbProvider } from '@/common/design-system/molecules/breadcrumbs
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
 import { routeTree } from '@/routeTree.gen';
+import { setupStore } from '@/store/store';
 import { initialState } from '@/store/store.init';
 
 import { HostDetails } from './[hostId]/index';
@@ -41,6 +42,7 @@ const renderPage = (hostId: string, multitenancy = false) =>
     {
       router: createRouter({
         routeTree,
+        context: { store: setupStore() },
         history: createMemoryHistory({
           initialEntries: [`/hosts/${hostId}`],
         }),

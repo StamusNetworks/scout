@@ -1,3 +1,5 @@
+import type { AnyRouter } from '@tanstack/react-router';
+import { RouterProvider } from '@tanstack/react-router';
 import type { RenderOptions } from '@testing-library/react';
 import { render } from '@testing-library/react';
 import { PropsWithChildren, type ReactElement } from 'react';
@@ -9,6 +11,7 @@ import { AppStore, RootState, setupStore } from '@/store/store';
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: Partial<RootState>;
   store?: AppStore;
+  router?: AnyRouter;
 }
 
 export function renderWithProviders(
@@ -18,11 +21,21 @@ export function renderWithProviders(
   const {
     preloadedState = {},
     store = setupStore(preloadedState),
+    router,
     ...renderOptions
   } = extendedRenderOptions;
 
   const Wrapper = ({ children }: PropsWithChildren) => (
-    <Provider store={store}>{children}</Provider>
+    <Provider store={store}>
+      {router ? (
+        <RouterProvider
+          router={router}
+          defaultComponent={() => <>{children}</>}
+        />
+      ) : (
+        children
+      )}
+    </Provider>
   );
 
   // Return an object with the store and all of RTL's query functions

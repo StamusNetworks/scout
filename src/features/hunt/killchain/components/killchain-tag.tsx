@@ -1,6 +1,6 @@
+import { useNavigate } from '@tanstack/react-router';
 import { LayoutDashboard } from 'lucide-react';
 import { useCallback, useMemo } from 'react';
-import { useNavigate } from '@tanstack/react-router';
 
 import { Badge } from '@/common/design-system/atoms/ui/badge';
 import { ContextMenuItem } from '@/common/design-system/atoms/ui/context-menu';

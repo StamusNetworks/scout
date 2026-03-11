@@ -1,6 +1,6 @@
+import { Link, useNavigate } from '@tanstack/react-router';
 import { Row as TanstackRow } from '@tanstack/react-table';
 import { Biohazard } from 'lucide-react';
-import { Link, useNavigate } from '@tanstack/react-router';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';

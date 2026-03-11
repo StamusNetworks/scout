@@ -50,9 +50,7 @@ export const ThreatTag = ({
 
   const handleClick = () => {
     const base =
-      threatDef.family_class === 'doc'
-        ? '/threats'
-        : '/policy-violations';
+      threatDef.family_class === 'doc' ? '/threats' : '/policy-violations';
     navigate({ to: `${base}/coverage/threat/${threatDef.pk}` });
   };
 

@@ -1,5 +1,5 @@
+import { useNavigate } from '@tanstack/react-router';
 import { useEffect } from 'react';
-import { useLocation, useNavigate } from '@tanstack/react-router';
 import { toast } from 'sonner';
 
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
@@ -18,7 +18,6 @@ import {
 } from '@/features/ui/share/shareable-state';
 import { setTenant } from '@/features/user/tenancy/tenancy.slice';
 import { useAppDispatch } from '@/store/store';
-
 
 const toDatesPayload = (time: ShareableTime): DatesPayload => {
   switch (time.type) {
@@ -50,11 +49,10 @@ const toFilterInputs = (filters: ShareableState['filters']): FilterInput[] =>
 export const SharePage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const { enterprise } = useFeatureFlags();
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
+    const params = new URLSearchParams(window.location.search);
     const encoded = params.get('s');
 
     if (!encoded) {

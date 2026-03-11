@@ -5,6 +5,7 @@ import { http, HttpResponse } from 'msw';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
 import { routeTree } from '@/routeTree.gen';
+import { setupStore } from '@/store/store';
 import { initialState } from '@/store/store.init';
 
 import { ThreatsIncidentsPage } from './index';
@@ -13,6 +14,7 @@ const createTestRouter = () =>
   createRouter({
     routeTree,
     history: createMemoryHistory({ initialEntries: ['/threats/incidents'] }),
+    context: { store: setupStore() },
   });
 
 const emptyPaginated = { count: 0, next: null, previous: null, results: [] };

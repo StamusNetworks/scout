@@ -1,6 +1,6 @@
+import { Link } from '@tanstack/react-router';
 import { ArrowRight, Binary, MessageCircleWarning } from 'lucide-react';
 import { parseAsString, useQueryState } from 'nuqs';
-import { Link } from '@tanstack/react-router';
 
 import { DefaultPage } from '@/common/design-system/atoms/default-page';
 import { Column } from '@/common/design-system/atoms/layout/column';
@@ -151,7 +151,7 @@ export const EventByIdPage = () => {
             <EmptyHeader>No event id provided</EmptyHeader>
             <EmptyDescription className="flex flex-col gap-2">
               An event id is required to view an event.
-              <Link to="/events">
+              <Link to="/detection-events">
                 <Button>View events</Button>
               </Link>
             </EmptyDescription>

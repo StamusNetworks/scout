@@ -1,17 +1,19 @@
+import { createMemoryHistory, createRouter } from '@tanstack/react-router';
 import { screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
 import { DeepPartial } from 'react-hook-form';
-import { createMemoryHistory, createRouter } from '@tanstack/react-router';
 import { vi } from 'vitest';
 
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
 import { routeTree } from '@/routeTree.gen';
+import { setupStore } from '@/store/store';
 
 const createTestRouter = () =>
   createRouter({
     routeTree,
     history: createMemoryHistory({ initialEntries: ['/'] }),
+    context: { store: setupStore() },
   });
 import { Host } from '@/features/analytics/hosts/model/host';
 import { Entity } from '@/features/hunt/entities/model/entity';
@@ -319,10 +321,9 @@ describe('BeaconingAssetsTable', () => {
   });
 
   test('should render data for a single IP', async () => {
-    renderWithProviders(
-      <BeaconingIPsTable ips={['192.168.1.1']} />,
-      { router: createTestRouter() },
-    );
+    renderWithProviders(<BeaconingIPsTable ips={['192.168.1.1']} />, {
+      router: createTestRouter(),
+    });
 
     // Wait for data to load and ensure all threat tags have finished loading
     await waitFor(() => {

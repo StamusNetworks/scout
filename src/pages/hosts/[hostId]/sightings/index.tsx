@@ -1,5 +1,5 @@
-import { Radar } from 'lucide-react';
 import { useParams } from '@tanstack/react-router';
+import { Radar } from 'lucide-react';
 
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';

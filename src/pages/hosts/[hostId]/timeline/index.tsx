@@ -1,5 +1,5 @@
-import { Biohazard, History } from 'lucide-react';
 import { useParams } from '@tanstack/react-router';
+import { Biohazard, History } from 'lucide-react';
 
 import { BlockTitle } from '@/common/design-system/atoms/block';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';

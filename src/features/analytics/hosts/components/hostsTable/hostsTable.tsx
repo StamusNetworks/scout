@@ -9,8 +9,8 @@ import { LaptopMinimal } from 'lucide-react';
 
 import type { ExportColumn } from '@/common/design-system/molecules/data-table/data-table';
 import { DataTable } from '@/common/design-system/molecules/data-table/data-table';
-import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import { DataTableToolbar } from '@/common/design-system/molecules/data-table/data-table.toolbar';
+import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import type { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { SwitchFilter } from '@/common/design-system/molecules/data-table/filters/switch-filter';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';

@@ -1,7 +1,7 @@
+import { useNavigate } from '@tanstack/react-router';
 import { Row } from '@tanstack/react-table';
 import { Binary } from 'lucide-react';
 import { useMemo } from 'react';
-import { useNavigate } from '@tanstack/react-router';
 
 import { DataTable } from '@/common/design-system/molecules/data-table/data-table.tsx';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty.tsx';

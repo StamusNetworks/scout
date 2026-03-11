@@ -1,6 +1,6 @@
+import { useLocation } from '@tanstack/react-router';
 import { toPairs } from 'ramda';
 import { useMemo } from 'react';
-import { useLocation } from '@tanstack/react-router';
 
 import {
   CommandEmpty,

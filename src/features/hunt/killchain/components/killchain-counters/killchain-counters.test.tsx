@@ -7,11 +7,13 @@ import { mockNavigate } from '@/common/testing/mocks/hooks/use-navigate.mock';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
 import { routeTree } from '@/routeTree.gen';
+import { setupStore } from '@/store/store';
 
 const createTestRouter = () =>
   createRouter({
     routeTree,
     history: createMemoryHistory({ initialEntries: ['/'] }),
+    context: { store: setupStore() },
   });
 
 import { KillChainPhase } from '../../killchain';

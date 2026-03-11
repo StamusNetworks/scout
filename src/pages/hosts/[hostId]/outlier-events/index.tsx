@@ -1,5 +1,5 @@
-import { Binary } from 'lucide-react';
 import { useParams } from '@tanstack/react-router';
+import { Binary } from 'lucide-react';
 
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
 import { DataTable } from '@/common/design-system/molecules/data-table';

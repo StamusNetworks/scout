@@ -1,5 +1,5 @@
 import { createMemoryHistory, createRouter } from '@tanstack/react-router';
-import { beforeEach, describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test } from 'vitest';
 
 import { mockNavigate } from '@/common/testing/mocks/hooks/use-navigate.mock';
 import { renderWithProviders, withoutIds } from '@/common/testing/test-utils';
@@ -10,6 +10,7 @@ import {
   type ShareableState,
 } from '@/features/ui/share/shareable-state';
 import { routeTree } from '@/routeTree.gen';
+import { setupStore } from '@/store/store';
 import { initialState } from '@/store/store.init';
 
 import { SharePage } from './index';
@@ -42,6 +43,7 @@ const renderSharePage = (
   renderWithProviders(<SharePage />, {
     router: createRouter({
       routeTree,
+      context: { store: setupStore() },
       history: createMemoryHistory({
         initialEntries: [`/share${search}`],
       }),

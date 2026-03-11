@@ -11,7 +11,6 @@ import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetBeaconingEventsQuery } from '@/features/analytics/beaconing/api/beaconing.api';
 import { useGetSightingEventsQuery } from '@/features/analytics/sightings/api/sightings.api';
 
-
 export const Analytics = ({ children }: { children: React.ReactNode }) => {
   const pathname = useLocation().pathname;
   const params = useGlobalQueryParams(['tenant', 'dates']);

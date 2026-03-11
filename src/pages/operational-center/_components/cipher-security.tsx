@@ -1,6 +1,6 @@
+import { useNavigate } from '@tanstack/react-router';
 import { add, format } from 'date-fns';
 import { useCallback, useMemo } from 'react';
-import { useNavigate } from '@tanstack/react-router';
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 import {
   NameType,

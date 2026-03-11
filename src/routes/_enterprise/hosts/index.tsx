@@ -9,12 +9,12 @@ import { getFilterExtension } from '@/features/analytics/hosts/api/hooks/useHost
 import { useGetHostsQuery } from '@/features/analytics/hosts/api/hosts.api';
 import { DiscoveredHosts } from '@/features/analytics/hosts/components/discovered-hosts/discovered-hosts';
 import { HomeNetPicker } from '@/features/analytics/hosts/components/home-net-picker/home-net-picker';
+import { HostsTable } from '@/features/analytics/hosts/components/hostsTable/hostsTable';
 import {
   exportColumns,
   hitsColumn,
   hostsBaseColumns,
 } from '@/features/analytics/hosts/components/hostsTable/hostsTable.columns';
-import { HostsTable } from '@/features/analytics/hosts/components/hostsTable/hostsTable';
 import { useQFBuilder } from '@/features/hunt/filtering/query-filters/hooks/use-qf-builder';
 
 const hostsSearchSchema = z.object({

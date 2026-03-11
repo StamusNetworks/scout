@@ -6,6 +6,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { renderWithProviders } from '@/common/testing/test-utils';
 import { routeTree } from '@/routeTree.gen';
 import * as AppStore from '@/store/store';
+import { setupStore } from '@/store/store';
 
 import { addQueryFilter } from '../../store/query-filters.slice';
 import { EventValue } from './event-value';
@@ -14,6 +15,7 @@ const createTestRouter = () =>
   createRouter({
     routeTree,
     history: createMemoryHistory({ initialEntries: ['/'] }),
+    context: { store: setupStore() },
   });
 
 describe('Event Value', () => {

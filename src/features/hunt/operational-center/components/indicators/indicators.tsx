@@ -117,7 +117,10 @@ export const IndicatorsTemplate = ({
               value={globalStats?.nb_threats || 0}
               previousValue={previousGlobalStats?.nb_threats}
               onClick={() =>
-                navigate({ to: '/threats/coverage?show=threats' })
+                navigate({
+                  to: '/threats/coverage',
+                  search: { show: 'threats' },
+                })
               }
               loading={isGlobalLoading || isPreviousGlobalLoading}
             />
@@ -149,7 +152,10 @@ export const IndicatorsTemplate = ({
               value={globalStats?.nb_policies || 0}
               previousValue={previousGlobalStats?.nb_policies}
               onClick={() =>
-                navigate({ to: '/policy-violations/coverage?show=threats' })
+                navigate({
+                  to: '/policy-violations/coverage',
+                  search: { show: 'threats' },
+                })
               }
               loading={isGlobalLoading || isPreviousGlobalLoading}
             />

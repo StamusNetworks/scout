@@ -7,6 +7,8 @@ import type {
 import { useCallback, useMemo, useRef } from 'react';
 
 import { parseSorting, serializeSorting } from './sorting-parser';
+import { usePaginationUrlState } from './use-pagination';
+import { useSortingUrlState } from './use-sorting';
 
 export type PaginationSearch = {
   page: number;
@@ -26,7 +28,83 @@ export type ServerTableState<TParams> = {
   setSorting: OnChangeFn<SortingState>;
 };
 
+// Legacy overload (nuqs-based, for non-migrated pages)
+export function useServerTableState<TParams extends Record<string, unknown>>(
+  params: TParams,
+  options?: { defaultPageSize?: number },
+): ServerTableState<TParams>;
+
+// New overload (TanStack Router search params)
 export function useServerTableState<
+  TSearch extends PaginationSearch,
+  TParams extends Record<string, unknown>,
+>(
+  search: TSearch,
+  params: TParams,
+  navigate: (opts: { search: (prev: TSearch) => TSearch }) => void,
+): ServerTableState<TParams>;
+
+export function useServerTableState<TParams extends Record<string, unknown>>(
+  searchOrParams: Record<string, unknown>,
+  paramsOrOptions?: Record<string, unknown> | { defaultPageSize?: number },
+  navigate?: (opts: {
+    search: (prev: PaginationSearch) => PaginationSearch;
+  }) => void,
+): ServerTableState<TParams> {
+  /* eslint-disable react-hooks/rules-of-hooks -- branch is stable per call-site (arg count never changes between renders) */
+  // Detect which overload is being used based on the third argument
+  if (typeof navigate === 'function') {
+    // New 3-arg overload: (search, params, navigate)
+    return useServerTableStateRouter(
+      searchOrParams as PaginationSearch,
+      paramsOrOptions as TParams,
+      navigate,
+    );
+  }
+  // Legacy 1-2 arg overload: (params, options?)
+  const options = paramsOrOptions as { defaultPageSize?: number } | undefined;
+  return useServerTableStateLegacy(searchOrParams as TParams, options);
+  /* eslint-enable react-hooks/rules-of-hooks */
+}
+
+function useServerTableStateLegacy<TParams extends Record<string, unknown>>(
+  params: TParams,
+  options?: { defaultPageSize?: number },
+): ServerTableState<TParams> {
+  const [pagination, setPagination] = usePaginationUrlState(
+    options?.defaultPageSize,
+  );
+  const [sorting, setSorting, ordering] = useSortingUrlState();
+
+  const queryParams = useMemo(
+    () => ({
+      ...params,
+      pageIndex: pagination.pageIndex,
+      pageSize: pagination.pageSize,
+      ...(ordering !== undefined && { ordering }),
+    }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      pagination.pageIndex,
+      pagination.pageSize,
+      ordering,
+      ...Object.values(params),
+    ],
+  ) as TParams & { pageIndex: number; pageSize: number; ordering?: string };
+
+  return useMemo(
+    () => ({
+      queryParams,
+      pagination,
+      setPagination,
+      sorting,
+      setSorting,
+    }),
+    [queryParams, pagination, setPagination, sorting, setSorting],
+  );
+}
+
+function useServerTableStateRouter<
   TSearch extends PaginationSearch,
   TParams extends Record<string, unknown>,
 >(
@@ -109,7 +187,13 @@ export function useServerTableState<
       sorting,
       setSorting: handleSortingUpdate,
     }),
-    [queryParams, pagination, handlePaginationUpdate, sorting, handleSortingUpdate],
+    [
+      queryParams,
+      pagination,
+      handlePaginationUpdate,
+      sorting,
+      handleSortingUpdate,
+    ],
   );
 }
 

@@ -1,5 +1,5 @@
-import { CircleAlert, LaptopMinimal } from 'lucide-react';
 import { Link, Outlet, useLocation, useParams } from '@tanstack/react-router';
+import { CircleAlert, LaptopMinimal } from 'lucide-react';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
 import {
@@ -166,7 +166,7 @@ export const HostDetails = () => {
                 &quot;{hostId}&quot; is not a valid IP address.
               </EmptyDescription>
             </EmptyHeader>
-            <Link to="/hosts">
+            <Link to={'/hosts' as string}>
               <Button>Back to hosts</Button>
             </Link>
           </Empty>
@@ -201,7 +201,7 @@ export const HostDetails = () => {
                   : 'This host does not exist. It may have been removed or the IP address is incorrect.'}
               </EmptyDescription>
             </EmptyHeader>
-            <Link to="/hosts">
+            <Link to={'/hosts' as string}>
               <Button>Back to hosts</Button>
             </Link>
           </Empty>
@@ -250,13 +250,21 @@ export const HostDetails = () => {
                 value={`/hosts/${hostId}`}
                 asChild
               >
-                <Link to={`/hosts/${hostId}`}>Insights</Link>
+                <Link
+                  to="/hosts/$hostId"
+                  params={{ hostId }}
+                >
+                  Insights
+                </Link>
               </TabsTrigger>
               <TabsTrigger
                 value={`/hosts/${hostId}/timeline`}
                 asChild
               >
-                <Link to={`/hosts/${hostId}/timeline`}>
+                <Link
+                  to="/hosts/$hostId/timeline"
+                  params={{ hostId }}
+                >
                   Timeline
                 </Link>
               </TabsTrigger>
@@ -268,7 +276,10 @@ export const HostDetails = () => {
                 value={`/hosts/${hostId}/incidents`}
                 asChild
               >
-                <Link to={`/hosts/${hostId}/incidents`}>
+                <Link
+                  to="/hosts/$hostId/incidents"
+                  params={{ hostId }}
+                >
                   Incidents{' '}
                   <TabsBadge
                     count={incidents?.count || 0}
@@ -280,7 +291,10 @@ export const HostDetails = () => {
                 value={`/hosts/${hostId}/detection-methods`}
                 asChild
               >
-                <Link to={`/hosts/${hostId}/detection-methods`}>
+                <Link
+                  to="/hosts/$hostId/detection-methods"
+                  params={{ hostId }}
+                >
                   Detection Methods{' '}
                   <TabsBadge
                     count={detectionMethodsList?.count || 0}
@@ -292,7 +306,10 @@ export const HostDetails = () => {
                 value={`/hosts/${hostId}/outlier-events`}
                 asChild
               >
-                <Link to={`/hosts/${hostId}/outlier-events`}>
+                <Link
+                  to="/hosts/$hostId/outlier-events"
+                  params={{ hostId }}
+                >
                   Outlier Events{' '}
                   <TabsBadge
                     count={outlierEventsData?.count || 0}
@@ -304,7 +321,10 @@ export const HostDetails = () => {
                 value={`/hosts/${hostId}/detection-events`}
                 asChild
               >
-                <Link to={`/hosts/${hostId}/detection-events`}>
+                <Link
+                  to="/hosts/$hostId/detection-events"
+                  params={{ hostId }}
+                >
                   Detection Events{' '}
                   <TabsBadge
                     count={detectionEventsData?.count || 0}
@@ -316,7 +336,10 @@ export const HostDetails = () => {
                 value={`/hosts/${hostId}/sightings`}
                 asChild
               >
-                <Link to={`/hosts/${hostId}/sightings`}>
+                <Link
+                  to="/hosts/$hostId/sightings"
+                  params={{ hostId }}
+                >
                   Sightings{' '}
                   <TabsBadge
                     count={sightingsData?.count || 0}
@@ -328,7 +351,10 @@ export const HostDetails = () => {
                 value={`/hosts/${hostId}/beacons`}
                 asChild
               >
-                <Link to={`/hosts/${hostId}/beacons`}>
+                <Link
+                  to="/hosts/$hostId/beacons"
+                  params={{ hostId }}
+                >
                   Beacons{' '}
                   <TabsBadge
                     count={beaconingData?.count || 0}
@@ -346,4 +372,3 @@ export const HostDetails = () => {
     </>
   );
 };
-

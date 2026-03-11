@@ -1,3 +1,4 @@
+import { Link, useLocation, useNavigate } from '@tanstack/react-router';
 import {
   ArrowUpDown,
   Binary,
@@ -9,7 +10,6 @@ import {
   Search,
 } from 'lucide-react';
 import { useMemo } from 'react';
-import { Link, useLocation, useNavigate } from '@tanstack/react-router';
 
 import {
   ContextMenuContent as ContextMenuContentBase,
@@ -197,7 +197,10 @@ export const ContextMenuContent = ({
               : resolvedEntity === 'IP'))) &&
         isIP(value?.toString() || '') && (
           <ContextMenuItem asChild>
-            <Link to={`/hosts/${value}`}>
+            <Link
+              to="/hosts/$hostId"
+              params={{ hostId: String(value) }}
+            >
               <LaptopMinimal className={iconClass} />
               View Host details
             </Link>

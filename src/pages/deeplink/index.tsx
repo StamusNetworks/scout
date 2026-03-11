@@ -1,5 +1,5 @@
+import { Navigate } from '@tanstack/react-router';
 import { useEffect } from 'react';
-import { Navigate, useLocation } from '@tanstack/react-router';
 
 import { isNumeric } from '@/common/lib/numbers';
 import {
@@ -8,11 +8,9 @@ import {
 } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
 import { useAppDispatch } from '@/store/store';
 
-
 export const Deeplink = () => {
   const dispatch = useAppDispatch();
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
+  const params = new URLSearchParams(window.location.search);
   useEffect(() => {
     dispatch(clearQueryFilters());
     Array.from(params).forEach(([key, value]) => {

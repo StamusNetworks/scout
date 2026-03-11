@@ -1,11 +1,11 @@
-import { Binary, Info, LayoutDashboard, PlusCircle } from 'lucide-react';
-import { useState } from 'react';
 import {
   Outlet,
   useLocation,
   useNavigate,
   useParams,
 } from '@tanstack/react-router';
+import { Binary, Info, LayoutDashboard, PlusCircle } from 'lucide-react';
+import { useState } from 'react';
 
 import { DefaultPage } from '@/common/design-system/atoms/default-page';
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -74,7 +74,11 @@ const slugSuffix: Record<string, string> = {
   threats_coverage_family_threats: '/threats',
 };
 
-const getLink = (slug: string, familyClass: 'doc' | 'dopv', familyId: number) => {
+const getLink = (
+  slug: string,
+  familyClass: 'doc' | 'dopv',
+  familyId: number,
+) => {
   const base = familyClass === 'doc' ? '/threats' : '/policy-violations';
   return `${base}/coverage/family/${familyId}${slugSuffix[slug] ?? ''}`;
 };

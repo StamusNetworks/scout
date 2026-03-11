@@ -1,9 +1,9 @@
+import { useNavigate } from '@tanstack/react-router';
 import { RowSelectionState } from '@tanstack/react-table';
 import { Check, Group, Info, Plus, Trash, X } from 'lucide-react';
 import { parseAsString, parseAsStringLiteral, useQueryState } from 'nuqs';
 import { keys, values } from 'ramda';
 import { useMemo, useState } from 'react';
-import { useNavigate } from '@tanstack/react-router';
 import { toast } from 'sonner';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -279,12 +279,15 @@ const handleLoadFilterSet = (
 ) => {
   loadFilterSet(filterSet);
   const filters = getFiltersFromFilterSet(filterSet);
-  const suffix =
+  const route = filterSetPageConfig[filterSet.page].route;
+  const needsAlertFilter =
     filterSet.page === 'HOSTS_LIST' &&
-    filters?.some((filter) => !filter.id.startsWith('host_id.'))
-      ? ''
-      : '?with_alerts=false';
-  navigate(filterSetPageConfig[filterSet.page].route + suffix);
+    !filters?.some((filter) => !filter.id.startsWith('host_id.'));
+  if (needsAlertFilter && route === '/hosts') {
+    navigate({ to: '/hosts' as string, search: { with_alerts: false } });
+  } else {
+    navigate({ to: route as string });
+  }
 };
 
 const AddToDropdown = ({

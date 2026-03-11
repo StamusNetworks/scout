@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-router';
 import {
   Binary,
   Crosshair,
@@ -6,7 +7,6 @@ import {
   Swords,
 } from 'lucide-react';
 import { useCallback } from 'react';
-import { useNavigate } from '@tanstack/react-router';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';

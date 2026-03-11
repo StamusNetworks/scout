@@ -6,6 +6,7 @@ import { http, HttpResponse } from 'msw';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
 import { routeTree } from '@/routeTree.gen';
+import { setupStore } from '@/store/store';
 
 import { FilterSetsPage } from './index';
 
@@ -13,6 +14,7 @@ const createTestRouter = () =>
   createRouter({
     routeTree,
     history: createMemoryHistory({ initialEntries: ['/'] }),
+    context: { store: setupStore() },
   });
 
 const mockFilterSets = [

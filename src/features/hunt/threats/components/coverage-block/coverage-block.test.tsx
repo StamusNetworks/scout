@@ -3,6 +3,7 @@ import { screen } from '@testing-library/react';
 
 import { renderWithProviders } from '@/common/testing/test-utils';
 import { routeTree } from '@/routeTree.gen';
+import { setupStore } from '@/store/store';
 
 import { ActiveThreatBlockView } from './active-threat-block';
 import { CoverageBlock } from './coverage-block';
@@ -12,6 +13,7 @@ const createTestRouter = () =>
   createRouter({
     routeTree,
     history: createMemoryHistory({ initialEntries: ['/'] }),
+    context: { store: setupStore() },
   });
 
 describe('CoverageBlock', () => {

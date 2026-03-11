@@ -24,9 +24,7 @@ export const ThreatNameOptions = ({ threatName }: { threatName: string }) => {
         asChild
         disabled={!threat?.pk}
       >
-        <Link
-          to={getLink(threat?.family_class, 'threat', threat?.pk)}
-        >
+        <Link to={getLink(threat?.family_class, 'threat', threat?.pk)}>
           <Icon className={iconClass} />
           Go to {threat.family_class === 'doc'
             ? 'threat'
@@ -38,9 +36,7 @@ export const ThreatNameOptions = ({ threatName }: { threatName: string }) => {
         asChild
         disabled={!threat?.pk}
       >
-        <Link
-          to={getLink(threat?.family_class, 'family', threat?.family)}
-        >
+        <Link to={getLink(threat?.family_class, 'family', threat?.family)}>
           <Icon className={iconClass} />
           Go to family page
         </Link>

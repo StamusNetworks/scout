@@ -1,6 +1,6 @@
+import { useNavigate } from '@tanstack/react-router';
 import { GitGraph, Lock, Rocket, ShieldAlert, Swords } from 'lucide-react';
 import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-router';
 
 import { BlockTitle } from '@/common/design-system/atoms/block';
 import { DefaultPage } from '@/common/design-system/atoms/default-page';

@@ -1,7 +1,7 @@
+import { Link, useNavigate } from '@tanstack/react-router';
 import { Biohazard, Scale } from 'lucide-react';
 import { parseAsStringLiteral, useQueryState } from 'nuqs';
 import { useMemo } from 'react';
-import { Link, useNavigate } from '@tanstack/react-router';
 
 import { Button } from '@/common/design-system/atoms/ui/button';
 import {

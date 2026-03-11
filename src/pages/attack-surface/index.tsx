@@ -1,4 +1,5 @@
 import { Link, Outlet, useLocation } from '@tanstack/react-router';
+import { useState } from 'react';
 
 import { DefaultPage } from '@/common/design-system/atoms/default-page';
 import {
@@ -11,17 +12,22 @@ import { usePageTitle } from '@/common/lib/use-page-title';
 import { DiscoveredHosts } from '@/features/analytics/hosts/components/discovered-hosts/discovered-hosts';
 import { HomeNetPicker } from '@/features/analytics/hosts/components/home-net-picker/home-net-picker';
 
-
 export const AttackSurface = () => {
   usePageTitle('Attack Surface');
   const pathname = useLocation().pathname;
+  const [inHomeNet, setInHomeNet] = useState<'true' | 'false' | 'all'>('all');
   return (
     <>
       <OutletBreadcrumb>Attack Surface</OutletBreadcrumb>
       <DefaultPage
         title="Attack Surface"
-        description="Visualize and explore your network’s assets in real time. Gain context and discover insights to reduce risk, uncover hidden connections, and drive confident security decisions with seamless transitions between visual analytics and detailed inventory data."
-        actions={<HomeNetPicker />}
+        description="Visualize and explore your network's assets in real time. Gain context and discover insights to reduce risk, uncover hidden connections, and drive confident security decisions with seamless transitions between visual analytics and detailed inventory data."
+        actions={
+          <HomeNetPicker
+            value={inHomeNet}
+            onChange={setInHomeNet}
+          />
+        }
       >
         <DiscoveredHosts />
         <Tabs value={pathname}>

@@ -24,7 +24,11 @@ describe('useServerTableState', () => {
   it('reads page and page_size from search', () => {
     const navigate = vi.fn();
     const { result } = renderHook(() =>
-      useServerTableState({ page: 3, page_size: 25, sort: undefined }, { tenant: 1 }, navigate),
+      useServerTableState(
+        { page: 3, page_size: 25, sort: undefined },
+        { tenant: 1 },
+        navigate,
+      ),
     );
 
     expect(result.current.pagination).toEqual({ pageIndex: 2, pageSize: 25 });
@@ -57,7 +61,10 @@ describe('useServerTableState', () => {
     });
     // The navigate function should produce page: 1
     const searchFn = navigate.mock.calls[0][0].search;
-    expect(searchFn({ page: 3, page_size: 10 })).toEqual({ page: 1, page_size: 10 });
+    expect(searchFn({ page: 3, page_size: 10 })).toEqual({
+      page: 1,
+      page_size: 10,
+    });
   });
 
   it('does NOT reset page when params are value-equal', () => {
@@ -93,7 +100,10 @@ describe('useServerTableState', () => {
 
     expect(navigate).toHaveBeenCalledWith({ search: expect.any(Function) });
     const searchFn = navigate.mock.calls[0][0].search;
-    expect(searchFn({ page: 1, page_size: 10 })).toEqual({ page: 3, page_size: 10 });
+    expect(searchFn({ page: 1, page_size: 10 })).toEqual({
+      page: 3,
+      page_size: 10,
+    });
   });
 
   it('calls navigate with correct sorting update', () => {
@@ -118,7 +128,11 @@ describe('useServerTableState', () => {
   it('includes ordering in queryParams when sorting is set', () => {
     const navigate = vi.fn();
     const { result } = renderHook(() =>
-      useServerTableState({ page: 1, page_size: 10, sort: '-timestamp' }, { tenant: 1 }, navigate),
+      useServerTableState(
+        { page: 1, page_size: 10, sort: '-timestamp' },
+        { tenant: 1 },
+        navigate,
+      ),
     );
 
     expect(result.current.queryParams.ordering).toBe('-timestamp');

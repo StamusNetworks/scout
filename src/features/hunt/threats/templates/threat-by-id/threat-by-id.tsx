@@ -1,11 +1,11 @@
-import { Binary, Edit, LayoutDashboard, Trash } from 'lucide-react';
-import { useState } from 'react';
 import {
   Outlet,
   useLocation,
   useNavigate,
   useParams,
 } from '@tanstack/react-router';
+import { Binary, Edit, LayoutDashboard, Trash } from 'lucide-react';
+import { useState } from 'react';
 import { toast } from 'sonner';
 
 import { DefaultPage } from '@/common/design-system/atoms/default-page';

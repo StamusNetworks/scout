@@ -51,7 +51,9 @@ export const IndicatorsDocDopv = () => {
             {...indicators['doc-threats']}
             value={globalStats?.nb_threats || 0}
             previousValue={previousGlobalStats?.nb_threats}
-            onClick={() => navigate({ to: '/threats/coverage?show=threat' })}
+            onClick={() =>
+              navigate({ to: '/threats/coverage', search: { show: 'threat' } })
+            }
             loading={isGlobalLoading || isPreviousGlobalLoading}
           />
         </Row>
@@ -91,7 +93,10 @@ export const IndicatorsDocDopv = () => {
             value={globalStats?.nb_policies || 0}
             previousValue={previousGlobalStats?.nb_policies}
             onClick={() =>
-              navigate({ to: '/policy-violations/coverage?show=threat' })
+              navigate({
+                to: '/policy-violations/coverage',
+                search: { show: 'threat' },
+              })
             }
             loading={isGlobalLoading || isPreviousGlobalLoading}
           />
@@ -143,7 +148,9 @@ export const IndicatorsDoc = () => {
           {...indicators['doc-threats']}
           value={globalStats?.nb_threats || 0}
           previousValue={previousGlobalStats?.nb_threats}
-          onClick={() => navigate({ to: '/threats/coverage?show=threat' })}
+          onClick={() =>
+            navigate({ to: '/threats/coverage', search: { show: 'threat' } })
+          }
           loading={isGlobalLoading || isPreviousGlobalLoading}
         />
       </Row>
@@ -194,7 +201,10 @@ export const IndicatorsDopv = () => {
           value={globalStats?.nb_policies || 0}
           previousValue={previousGlobalStats?.nb_policies}
           onClick={() =>
-            navigate({ to: '/policy-violations/coverage?show=threat' })
+            navigate({
+              to: '/policy-violations/coverage',
+              search: { show: 'threat' },
+            })
           }
           loading={isGlobalLoading || isPreviousGlobalLoading}
         />

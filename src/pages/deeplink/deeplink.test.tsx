@@ -1,10 +1,10 @@
 import { createMemoryHistory, createRouter } from '@tanstack/react-router';
-import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 
 import { renderWithProviders } from '@/common/testing/test-utils';
 import { selectQueryFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.selector';
 import { routeTree } from '@/routeTree.gen';
+import { setupStore } from '@/store/store';
 
 import { Deeplink } from './index';
 
@@ -13,8 +13,11 @@ describe('Deeplink', () => {
     const { store } = renderWithProviders(<Deeplink />, {
       router: createRouter({
         routeTree,
+        context: { store: setupStore() },
         history: createMemoryHistory({
-          initialEntries: ['/deeplink?page=events&ip=1.2.3.4&port="80"&tag=test'],
+          initialEntries: [
+            '/deeplink?page=events&ip=1.2.3.4&port="80"&tag=test',
+          ],
         }),
       }),
     });
@@ -51,6 +54,7 @@ describe('Deeplink', () => {
     renderWithProviders(<Deeplink />, {
       router: createRouter({
         routeTree,
+        context: { store: setupStore() },
         history: createMemoryHistory({
           initialEntries: ['/deeplink?ip=1.2.3.4'],
         }),

@@ -16,7 +16,6 @@ import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { IndicatorsDoc } from '@/features/hunt/operational-center/components/indicators/docdopv.indicators';
 
-
 export const ThreatsPage = () => {
   const { pathname } = useLocation();
   return (

@@ -1,12 +1,15 @@
+import { createMemoryHistory, createRouter } from '@tanstack/react-router';
 import { screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
-import { createMemoryHistory, createRouter } from '@tanstack/react-router';
+
 import { routeTree } from '@/routeTree.gen';
+import { setupStore } from '@/store/store';
 
 const createTestRouter = () =>
   createRouter({
     routeTree,
     history: createMemoryHistory({ initialEntries: ['/'] }),
+    context: { store: setupStore() },
   });
 import { vi } from 'vitest';
 

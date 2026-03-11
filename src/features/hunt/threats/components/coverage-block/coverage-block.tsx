@@ -1,5 +1,5 @@
-import { VariantProps } from 'class-variance-authority';
 import { Link } from '@tanstack/react-router';
+import { VariantProps } from 'class-variance-authority';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Markdown } from '@/common/design-system/atoms/markdown';

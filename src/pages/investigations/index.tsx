@@ -1,8 +1,8 @@
+import { Link } from '@tanstack/react-router';
 import { cva } from 'class-variance-authority';
 import { FileWarning, Search } from 'lucide-react';
 import { parseAsBoolean, useQueryState } from 'nuqs';
 import { useMemo, useState } from 'react';
-import { Link } from '@tanstack/react-router';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -56,7 +56,6 @@ import { inventoryHistoryOptions } from '@/features/hunt/investigation/component
 import { InvestigationState } from '@/features/hunt/investigation/investigation.slice';
 import { InvestigationHistory } from '@/features/hunt/investigation/investigations-history.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
-
 
 function useShowOnlyKept() {
   return useQueryState('only_kept', parseAsBoolean.withDefault(true));
