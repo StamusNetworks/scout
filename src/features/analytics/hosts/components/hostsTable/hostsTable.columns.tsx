@@ -15,112 +15,131 @@ import { NetworkTemplate } from '../host-details/network';
 import { RolesTemplate } from '../host-details/roles';
 import { UsernameTemplate } from '../host-details/username';
 
-export const columns: CustomColumnDef<Host>[] = [
-  {
-    id: 'expander',
-    cell: ({ row }) => <DataTableRowExpander row={row} />,
-  },
-  {
-    id: 'host',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="Host"
+export const expanderColumn: CustomColumnDef<Host> = {
+  id: 'expander',
+  cell: ({ row }) => <DataTableRowExpander row={row} />,
+};
+
+export const hostColumn: CustomColumnDef<Host> = {
+  id: 'host',
+  header: ({ column }) => (
+    <DataTableColumnHeader
+      column={column}
+      title="Host"
+    />
+  ),
+  cell: ({ row }) => (
+    <Column className="gap-1">
+      <EventValue
+        query_key="ip"
+        value={row.original.ip}
       />
-    ),
-    cell: ({ row }) => (
-      <Column className="gap-1">
-        <EventValue
-          query_key="ip"
-          value={row.original.ip}
-        />
-        <HostnameTemplate
-          hostnames={row.original.host_id?.hostname}
-          size="small"
-        />
-      </Column>
-    ),
-  },
-  {
-    id: 'host_info',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="Usernames / Network"
+      <HostnameTemplate
+        hostnames={row.original.host_id?.hostname}
+        size="small"
       />
-    ),
-    cell: ({ row }) => (
-      <Column>
-        <UsernameTemplate usernames={row.original.host_id?.username} />
-        <NetworkTemplate networks={row.original.host_id?.net_info} />
-      </Column>
-    ),
-  },
-  {
-    id: 'roles',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="Roles"
-      />
-    ),
-    cell: ({ row }) => (
-      <RolesTemplate
-        roles={row.original.host_id?.roles}
-        className="flex-wrap"
-      />
-    ),
-  },
-  {
-    id: 'services_count',
-    accessorFn: (row) => row.host_id?.services_count,
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="Services"
-      />
-    ),
-  },
-  {
-    id: 'host_id.first_seen',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="First Seen"
-      />
-    ),
-    accessorKey: 'host_id.first_seen',
-    cell: ({ row }) => <DateTime date={row.original.host_id.first_seen} />,
-    meta: { viewLabel: 'First Seen' },
-  },
-  {
-    id: 'host_id.last_seen',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="Last Seen"
-      />
-    ),
-    accessorKey: 'host_id.last_seen',
-    cell: ({ row }) => <DateTime date={row.original.host_id.last_seen} />,
-    meta: { viewLabel: 'Last Seen' },
-  },
-  {
-    id: 'hits',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="Hits"
-      />
-    ),
-    cell: ({ row }: { row: Row<Host> }) => (
-      <FormattedBadge
-        variant="secondary"
-        value={row.original.hits || 0}
-      />
-    ),
-  },
+    </Column>
+  ),
+};
+
+export const hostInfoColumn: CustomColumnDef<Host> = {
+  id: 'host_info',
+  header: ({ column }) => (
+    <DataTableColumnHeader
+      column={column}
+      title="Usernames / Network"
+    />
+  ),
+  cell: ({ row }) => (
+    <Column>
+      <UsernameTemplate usernames={row.original.host_id?.username} />
+      <NetworkTemplate networks={row.original.host_id?.net_info} />
+    </Column>
+  ),
+};
+
+export const rolesColumn: CustomColumnDef<Host> = {
+  id: 'roles',
+  header: ({ column }) => (
+    <DataTableColumnHeader
+      column={column}
+      title="Roles"
+    />
+  ),
+  cell: ({ row }) => (
+    <RolesTemplate
+      roles={row.original.host_id?.roles}
+      className="flex-wrap"
+    />
+  ),
+};
+
+export const servicesCountColumn: CustomColumnDef<Host> = {
+  id: 'services_count',
+  accessorFn: (row) => row.host_id?.services_count,
+  header: ({ column }) => (
+    <DataTableColumnHeader
+      column={column}
+      title="Services"
+    />
+  ),
+};
+
+export const firstSeenColumn: CustomColumnDef<Host> = {
+  id: 'host_id.first_seen',
+  header: ({ column }) => (
+    <DataTableColumnHeader
+      column={column}
+      title="First Seen"
+    />
+  ),
+  accessorKey: 'host_id.first_seen',
+  cell: ({ row }) => <DateTime date={row.original.host_id.first_seen} />,
+  meta: { viewLabel: 'First Seen' },
+};
+
+export const lastSeenColumn: CustomColumnDef<Host> = {
+  id: 'host_id.last_seen',
+  header: ({ column }) => (
+    <DataTableColumnHeader
+      column={column}
+      title="Last Seen"
+    />
+  ),
+  accessorKey: 'host_id.last_seen',
+  cell: ({ row }) => <DateTime date={row.original.host_id.last_seen} />,
+  meta: { viewLabel: 'Last Seen' },
+};
+
+export const hitsColumn: CustomColumnDef<Host> = {
+  id: 'hits',
+  header: ({ column }) => (
+    <DataTableColumnHeader
+      column={column}
+      title="Hits"
+    />
+  ),
+  cell: ({ row }: { row: Row<Host> }) => (
+    <FormattedBadge
+      variant="secondary"
+      value={row.original.hits || 0}
+    />
+  ),
+};
+
+// Base columns (without hits — route adds it conditionally)
+export const hostsBaseColumns: CustomColumnDef<Host>[] = [
+  expanderColumn,
+  hostColumn,
+  hostInfoColumn,
+  rolesColumn,
+  servicesCountColumn,
+  firstSeenColumn,
+  lastSeenColumn,
 ];
+
+// Keep backward-compatible alias during migration
+export const columns = hostsBaseColumns;
 
 export const exportColumns: ExportColumn<Host>[] = [
   {
