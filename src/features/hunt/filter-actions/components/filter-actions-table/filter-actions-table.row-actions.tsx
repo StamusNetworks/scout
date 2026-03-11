@@ -105,7 +105,10 @@ export const FilterActionRowActions = ({
         addQueryFilter({
           key: filter.key,
           value: filter.value,
-          options: { is_negated: filter.operator === 'difference' },
+          options: {
+            is_negated: filter.operator === 'different',
+            is_wildcarded: !filter.full_string,
+          },
         }),
       );
     });
