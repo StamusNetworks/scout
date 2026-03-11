@@ -1,6 +1,6 @@
 import { toPairs } from 'ramda';
 import { useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from '@tanstack/react-router';
 
 import {
   CommandEmpty,
@@ -8,7 +8,6 @@ import {
   CommandItem,
 } from '@/common/design-system/atoms/ui/command';
 import { capitalizeAll } from '@/common/lib/strings';
-import { routes } from '@/pages/routes.config';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { FilterCategory } from '../../constants/query-filter.config';
@@ -44,8 +43,8 @@ export const FilterOptions = () => {
 
   const categories = useMemo(() => {
     if (
-      location.pathname.includes(routes.attack_surface) ||
-      location.pathname.includes(routes.hosts)
+      location.pathname.includes('/attack-surface') ||
+      location.pathname.includes('/hosts')
     ) {
       return [
         FilterCategory.HOST,
@@ -54,7 +53,7 @@ export const FilterOptions = () => {
         FilterCategory.HISTORY,
       ];
     }
-    if (location.pathname.includes(routes.detection_methods)) {
+    if (location.pathname.includes('/detection-methods')) {
       return [
         FilterCategory.SIGNATURE,
         FilterCategory.EVENT,

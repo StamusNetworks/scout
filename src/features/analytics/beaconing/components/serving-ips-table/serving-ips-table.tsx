@@ -1,11 +1,10 @@
 import { Radar } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { routes } from '@/pages/routes.config';
 
 import { useGetBeaconingEventsQuery } from '../../api/beaconing.api';
 import {
@@ -33,12 +32,9 @@ export const ServingIpsTable = () => {
       sorting={sorting}
       onSortingChange={setSorting}
       onRowClick={(row) =>
-        navigate(
-          routes.analytics_beaconing_ips_details.replace(
-            ':ip',
-            row.original.beacon_report.value,
-          ),
-        )
+        navigate({
+          to: `/analytics/beaconing/ips/${row.original.beacon_report.value}`,
+        })
       }
       exportColumns={exportColumns}
       Empty={

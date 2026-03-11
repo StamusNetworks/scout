@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -11,7 +11,6 @@ import {
 import { Skeleton } from '@/common/design-system/atoms/ui/skeleton';
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { cn } from '@/common/lib/utils';
-import { routes } from '@/pages/routes.config';
 import { useAppSelector } from '@/store/store';
 
 import { selectIsAfterStart } from '../../filtering/dates-filters/dates-filters';
@@ -50,12 +49,11 @@ export const ThreatTag = ({
   if (!threatDef) return <span>-</span>;
 
   const handleClick = () => {
-    const baseRoute =
+    const base =
       threatDef.family_class === 'doc'
-        ? routes.threats_coverage_threat
-        : routes.policy_violations_coverage_threat;
-    const route = baseRoute.replace(':threatId', threatDef.pk.toString());
-    navigate(route);
+        ? '/threats'
+        : '/policy-violations';
+    navigate({ to: `${base}/coverage/threat/${threatDef.pk}` });
   };
 
   return (

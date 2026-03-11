@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -7,7 +7,6 @@ import { StatsCardHorizontalContent } from '@/common/design-system/molecules/sta
 import { useGlobalStats } from '@/features/hunt/dashboard/api/hooks/useGlobalStats';
 import { usePreviousDates } from '@/features/hunt/filtering/dates-filters/use-previous-dates';
 import { indicators } from '@/pages/operational-center/config';
-import { routes } from '@/pages/routes.config';
 
 export const IndicatorsDocDopv = () => {
   const navigate = useNavigate();
@@ -37,14 +36,14 @@ export const IndicatorsDocDopv = () => {
             value={globalStats?.nb_discovered_threats}
             previousValue={previousGlobalStats?.nb_discovered_threats}
             loading={isGlobalLoading || isPreviousGlobalLoading}
-            onClick={() => navigate(routes.threats)}
+            onClick={() => navigate({ to: '/threats' })}
           />
           <div className="bg-border h-full w-px" />
           <StatsCardHorizontalContent
             {...indicators['doc-assets']}
             value={globalStats?.nb_assets_threat}
             previousValue={previousGlobalStats?.nb_assets_threat}
-            onClick={() => navigate(routes.threats)}
+            onClick={() => navigate({ to: '/threats' })}
             loading={isGlobalLoading || isPreviousGlobalLoading}
           />
           <div className="bg-border h-full w-px" />
@@ -52,7 +51,7 @@ export const IndicatorsDocDopv = () => {
             {...indicators['doc-threats']}
             value={globalStats?.nb_threats || 0}
             previousValue={previousGlobalStats?.nb_threats}
-            onClick={() => navigate(routes.threats_coverage + '?show=threat')}
+            onClick={() => navigate({ to: '/threats/coverage?show=threat' })}
             loading={isGlobalLoading || isPreviousGlobalLoading}
           />
         </Row>
@@ -76,14 +75,14 @@ export const IndicatorsDocDopv = () => {
             value={globalStats?.nb_discovered_policies || 0}
             previousValue={previousGlobalStats?.nb_discovered_policies}
             loading={isGlobalLoading || isPreviousGlobalLoading}
-            onClick={() => navigate(routes.policy_violations)}
+            onClick={() => navigate({ to: '/policy-violations' })}
           />
           <div className="bg-border h-full w-px" />
           <StatsCardHorizontalContent
             {...indicators['dopv-assets']}
             value={globalStats?.nb_assets_policy || 0}
             previousValue={previousGlobalStats?.nb_assets_policy}
-            onClick={() => navigate(routes.policy_violations)}
+            onClick={() => navigate({ to: '/policy-violations' })}
             loading={isGlobalLoading || isPreviousGlobalLoading}
           />
           <div className="bg-border h-full w-px" />
@@ -92,7 +91,7 @@ export const IndicatorsDocDopv = () => {
             value={globalStats?.nb_policies || 0}
             previousValue={previousGlobalStats?.nb_policies}
             onClick={() =>
-              navigate(routes.policy_violations_coverage + '?show=threat')
+              navigate({ to: '/policy-violations/coverage?show=threat' })
             }
             loading={isGlobalLoading || isPreviousGlobalLoading}
           />
@@ -129,14 +128,14 @@ export const IndicatorsDoc = () => {
           value={globalStats?.nb_discovered_threats}
           previousValue={previousGlobalStats?.nb_discovered_threats}
           loading={isGlobalLoading || isPreviousGlobalLoading}
-          onClick={() => navigate(routes.threats)}
+          onClick={() => navigate({ to: '/threats' })}
         />
         <div className="bg-border h-full w-px" />
         <StatsCardHorizontalContent
           {...indicators['doc-assets']}
           value={globalStats?.nb_assets_threat}
           previousValue={previousGlobalStats?.nb_assets_threat}
-          onClick={() => navigate(routes.threats)}
+          onClick={() => navigate({ to: '/threats' })}
           loading={isGlobalLoading || isPreviousGlobalLoading}
         />
         <div className="bg-border h-full w-px" />
@@ -144,7 +143,7 @@ export const IndicatorsDoc = () => {
           {...indicators['doc-threats']}
           value={globalStats?.nb_threats || 0}
           previousValue={previousGlobalStats?.nb_threats}
-          onClick={() => navigate(routes.threats_coverage + '?show=threat')}
+          onClick={() => navigate({ to: '/threats/coverage?show=threat' })}
           loading={isGlobalLoading || isPreviousGlobalLoading}
         />
       </Row>
@@ -179,14 +178,14 @@ export const IndicatorsDopv = () => {
           value={globalStats?.nb_discovered_policies || 0}
           previousValue={previousGlobalStats?.nb_discovered_policies}
           loading={isGlobalLoading || isPreviousGlobalLoading}
-          onClick={() => navigate(routes.policy_violations)}
+          onClick={() => navigate({ to: '/policy-violations' })}
         />
         <div className="bg-border h-full w-px" />
         <StatsCardHorizontalContent
           {...indicators['dopv-assets']}
           value={globalStats?.nb_assets_policy || 0}
           previousValue={previousGlobalStats?.nb_assets_policy}
-          onClick={() => navigate(routes.policy_violations)}
+          onClick={() => navigate({ to: '/policy-violations' })}
           loading={isGlobalLoading || isPreviousGlobalLoading}
         />
         <div className="bg-border h-full w-px" />
@@ -195,7 +194,7 @@ export const IndicatorsDopv = () => {
           value={globalStats?.nb_policies || 0}
           previousValue={previousGlobalStats?.nb_policies}
           onClick={() =>
-            navigate(routes.policy_violations_coverage + '?show=threat')
+            navigate({ to: '/policy-violations/coverage?show=threat' })
           }
           loading={isGlobalLoading || isPreviousGlobalLoading}
         />

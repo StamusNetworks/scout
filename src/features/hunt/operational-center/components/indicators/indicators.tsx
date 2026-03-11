@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -10,7 +10,6 @@ import { useEventsCount } from '@/features/hunt/events/api/hooks/useEventsCount'
 import { usePreviousDates } from '@/features/hunt/filtering/dates-filters/use-previous-dates';
 import { useGetSystemSettingsQuery } from '@/features/user/settings/settings.api';
 import { indicators } from '@/pages/operational-center/config';
-import { routes } from '@/pages/routes.config';
 
 export const Indicators = () => {
   const previousDates = usePreviousDates();
@@ -101,7 +100,7 @@ export const IndicatorsTemplate = ({
               {...indicators['doc-declarations']}
               value={globalStats?.nb_discovered_threats}
               previousValue={previousGlobalStats?.nb_discovered_threats}
-              onClick={() => navigate(routes.threats)}
+              onClick={() => navigate({ to: '/threats' })}
               loading={isGlobalLoading || isPreviousGlobalLoading}
             />
             <div className="bg-border h-full w-px" />
@@ -109,7 +108,7 @@ export const IndicatorsTemplate = ({
               {...indicators['doc-assets']}
               value={globalStats?.nb_assets_threat}
               previousValue={previousGlobalStats?.nb_assets_threat}
-              onClick={() => navigate(routes.threats)}
+              onClick={() => navigate({ to: '/threats' })}
               loading={isGlobalLoading || isPreviousGlobalLoading}
             />
             <div className="bg-border h-full w-px" />
@@ -118,7 +117,7 @@ export const IndicatorsTemplate = ({
               value={globalStats?.nb_threats || 0}
               previousValue={previousGlobalStats?.nb_threats}
               onClick={() =>
-                navigate(routes.threats_coverage + '?show=threats')
+                navigate({ to: '/threats/coverage?show=threats' })
               }
               loading={isGlobalLoading || isPreviousGlobalLoading}
             />
@@ -134,14 +133,14 @@ export const IndicatorsTemplate = ({
               value={globalStats?.nb_discovered_policies || 0}
               previousValue={previousGlobalStats?.nb_discovered_policies}
               loading={isGlobalLoading || isPreviousGlobalLoading}
-              onClick={() => navigate(routes.policy_violations)}
+              onClick={() => navigate({ to: '/policy-violations' })}
             />
             <div className="bg-border h-full w-px" />
             <StatsCardHorizontalContent
               {...indicators['dopv-assets']}
               value={globalStats?.nb_assets_policy || 0}
               previousValue={previousGlobalStats?.nb_assets_policy}
-              onClick={() => navigate(routes.policy_violations)}
+              onClick={() => navigate({ to: '/policy-violations' })}
               loading={isGlobalLoading || isPreviousGlobalLoading}
             />
             <div className="bg-border h-full w-px" />
@@ -150,7 +149,7 @@ export const IndicatorsTemplate = ({
               value={globalStats?.nb_policies || 0}
               previousValue={previousGlobalStats?.nb_policies}
               onClick={() =>
-                navigate(routes.policy_violations_coverage + '?show=threats')
+                navigate({ to: '/policy-violations/coverage?show=threats' })
               }
               loading={isGlobalLoading || isPreviousGlobalLoading}
             />

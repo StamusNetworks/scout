@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from '@tanstack/react-router';
 
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
@@ -9,7 +9,7 @@ import { DetectionMethodsExpandedRow } from '@/features/hunt/detection-methods/s
 import { useQFBuilder } from '@/features/hunt/filtering/query-filters/hooks/use-qf-builder';
 
 export const ThreatByIdDetectionMethods = () => {
-  const { threatId } = useParams();
+  const { threatId } = useParams({ strict: false }) as { threatId: string };
   const QFBuilder = useQFBuilder();
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const { queryParams, pagination, setPagination, sorting, setSorting } =

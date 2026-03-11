@@ -1,11 +1,10 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 
 import { DataTable } from '@/common/design-system/molecules/data-table/data-table.tsx';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences.ts';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams.tsx';
 import { useQFBuilder } from '@/features/hunt/filtering/query-filters/hooks/use-qf-builder.ts';
-import { routes } from '@/pages/routes.config.ts';
 
 import { getFilterExtension } from '../../api/hooks/useHostsList.ts';
 import { useGetHostsQuery } from '../../api/hosts.api.ts';
@@ -56,7 +55,7 @@ export const InventoryTable = ({
       isLoading={isFetching}
       columns={columns.filter((col) => col.id !== 'hits')}
       ExpandedRow={HostsTableExpandedRow}
-      onRowClick={(row) => navigate(`${routes.hosts}/${row.original.ip}`)}
+      onRowClick={(row) => navigate({ to: `/hosts/${row.original.ip}` })}
       pagination={pagination}
       onPaginationChange={setPagination}
       sorting={sorting}

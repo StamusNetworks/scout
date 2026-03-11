@@ -1,7 +1,7 @@
 import { Biohazard, Scale } from 'lucide-react';
 import { parseAsStringLiteral, useQueryState } from 'nuqs';
 import { useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from '@tanstack/react-router';
 
 import { Button } from '@/common/design-system/atoms/ui/button';
 import {
@@ -18,7 +18,6 @@ import { CustomColumnDef } from '@/common/design-system/molecules/data-table/fil
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { routes } from '@/pages/routes.config';
 
 import { useGetImpactedEntitiesQuery } from '../../api/entities.api';
 import { Entity } from '../../model/entity';
@@ -141,9 +140,9 @@ export const ImpactedEntitiesTable = ({
       toolBar={toolBar}
       ExpandedRow={ExpandedRow(familyClass || 'doc')}
       onRowClick={(row) =>
-        navigate(
-          routes.hosts_host_incidents.replace(':hostId', row.original.value),
-        )
+        navigate({
+          to: `/hosts/${row.original.value}/incidents`,
+        })
       }
       pagination={pagination}
       onPaginationChange={setPagination}
@@ -162,7 +161,7 @@ export const ImpactedEntitiesTable = ({
               filters or start hunting!
             </EmptyDescription>
             <Button asChild>
-              <Link to={routes.explorer}>Go hunting</Link>
+              <Link to="/explorer">Go hunting</Link>
             </Button>
           </EmptyContent>
         </Empty>

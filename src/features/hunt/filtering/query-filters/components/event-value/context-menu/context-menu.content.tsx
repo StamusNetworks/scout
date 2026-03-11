@@ -9,7 +9,7 @@ import {
   Search,
 } from 'lucide-react';
 import { useMemo } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from '@tanstack/react-router';
 
 import {
   ContextMenuContent as ContextMenuContentBase,
@@ -30,7 +30,6 @@ import {
   selectCurrentInvestigationStage,
   selectInvestigationStage,
 } from '@/features/hunt/investigation/investigation.slice';
-import { routes } from '@/pages/routes.config';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { useQueryFilterDefinition } from '../../../hooks/use-filters-definitions';
@@ -149,35 +148,35 @@ export const ContextMenuContent = ({
         Copy to clipboard
       </ContextMenuItem>
       <ContextMenuSeparator />
-      {!pathname.startsWith(routes.explorer) && (
+      {!pathname.startsWith('/explorer') && (
         <ContextMenuItem
           onClick={() => {
             enableTags(dispatch);
             dispatch(replaceFilters([{ key: query_key, value }]));
-            navigate(routes.explorer);
+            navigate({ to: '/explorer' });
           }}
         >
           <LayoutDashboard className={iconClass} />
           Explore
         </ContextMenuItem>
       )}
-      {!pathname.startsWith(routes.events) && (
+      {!pathname.startsWith('/detection-events') && (
         <ContextMenuItem
           onClick={() => {
             enableTags(dispatch);
             dispatch(replaceFilters([{ key: query_key, value }]));
-            navigate(routes.events);
+            navigate({ to: '/detection-events' });
           }}
         >
           <Binary className={iconClass} />
           See detection events
         </ContextMenuItem>
       )}
-      {!pathname.startsWith(routes.session_events) && (
+      {!pathname.startsWith('/session-events') && (
         <ContextMenuItem
           onClick={() => {
             dispatch(replaceFilters([{ key: query_key, value }]));
-            navigate(routes.session_events);
+            navigate({ to: '/session-events' });
           }}
           disabled={startsWithOneOf(query_key, [
             'alert.',
@@ -198,7 +197,7 @@ export const ContextMenuContent = ({
               : resolvedEntity === 'IP'))) &&
         isIP(value?.toString() || '') && (
           <ContextMenuItem asChild>
-            <Link to={`${routes.hosts}/${value}`}>
+            <Link to={`/hosts/${value}`}>
               <LaptopMinimal className={iconClass} />
               View Host details
             </Link>

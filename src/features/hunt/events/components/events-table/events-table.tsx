@@ -1,7 +1,7 @@
 import { Row } from '@tanstack/react-table';
 import { Binary } from 'lucide-react';
 import { useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 
 import { DataTable } from '@/common/design-system/molecules/data-table/data-table.tsx';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty.tsx';
@@ -9,7 +9,6 @@ import { useServerTableState } from '@/common/design-system/molecules/data-table
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams.tsx';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags.ts';
-import { routes } from '@/pages/routes.config.ts';
 
 import { useGetEventsQuery } from '../../api/events.api';
 import { Event } from '../../model/event.schema.ts';
@@ -45,7 +44,7 @@ export const EventsTable = () => {
   const { data, isFetching } = useGetEventsQuery(queryParams);
 
   const onRowClick = (row: Row<Event>) =>
-    navigate(`${routes.event}?_id=${row.original._id}`);
+    navigate({ to: `/detection-events/event?_id=${row.original._id}` });
 
   return (
     <DataTable

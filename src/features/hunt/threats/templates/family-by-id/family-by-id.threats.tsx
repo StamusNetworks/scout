@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from '@tanstack/react-router';
 
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
@@ -9,7 +9,7 @@ import { ThreatGrid } from '@/features/hunt/threats/components/threat-grid';
 import { useThreats } from '@/features/hunt/threats/hooks/use-threats';
 
 export const ThreatFamilyThreatsList = () => {
-  const { familyId } = useParams();
+  const { familyId } = useParams({ strict: false }) as { familyId: string };
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const { data: threats, isLoading } = useThreats({
     family_id: parseInt(familyId || ''),

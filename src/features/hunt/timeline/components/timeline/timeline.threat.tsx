@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Badge } from '@/common/design-system/atoms/ui/badge';
@@ -11,7 +11,6 @@ import {
 } from '@/common/design-system/molecules/tooltip';
 import { compressIPv6 } from '@/common/lib/ips';
 import { useThreat } from '@/features/hunt/threats/hooks/use-threat';
-import { routes } from '@/pages/routes.config';
 
 import { type TimelineThreat } from '../../models/threat-history.model';
 import { useTimelineContext } from './timeline';
@@ -41,12 +40,9 @@ export const TimelineThreatB = ({
           }
           id={`${uniqueId}-${entity}-${threat_id}`}
           onClick={() =>
-            navigate(
-              (type === 'dopv'
-                ? routes.policy_violations_coverage_threat
-                : routes.threats_coverage_threat
-              ).replace(':threatId', threat_id),
-            )
+            navigate({
+              to: `${type === 'dopv' ? '/policy-violations' : '/threats'}/coverage/threat/${threat_id}`,
+            })
           }
         >
           {isLoading ? (

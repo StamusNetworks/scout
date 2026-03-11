@@ -1,11 +1,10 @@
 import { LayoutDashboard } from 'lucide-react';
 import { useCallback, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 
 import { Badge } from '@/common/design-system/atoms/ui/badge';
 import { ContextMenuItem } from '@/common/design-system/atoms/ui/context-menu';
 import { cn } from '@/common/lib/utils';
-import { routes } from '@/pages/routes.config';
 import { useAppDispatch } from '@/store/store';
 
 import { EventValue } from '../../filtering/query-filters/components/event-value/event-value';
@@ -36,7 +35,7 @@ export const KillchainTag = ({
     killChainsConfig[killchain]?.name.toUpperCase();
 
   const defaultOnClick = useCallback(() => {
-    navigate(routes.threats_compromises_entities + '?killchain=' + killchain);
+    navigate({ to: '/threats/compromises/entities?killchain=' + killchain });
   }, [navigate, killchain]);
 
   const contextMenuOptions = useMemo(
@@ -53,7 +52,7 @@ export const KillchainTag = ({
               })) || []),
             ]),
           );
-          navigate(routes.explorer);
+          navigate({ to: '/explorer' });
         }}
       >
         <LayoutDashboard /> Explore with context

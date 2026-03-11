@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
@@ -20,7 +20,6 @@ import {
 } from '@/common/design-system/atoms/ui/form';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { useGetRulesetsQuery } from '@/features/hunt/rulesets/api/rulesets.api';
-import { routes } from '@/pages/routes.config';
 
 import { FilterInput } from '../../../../filtering/query-filters/components/filters-input';
 import {
@@ -85,7 +84,7 @@ export const CreateEditSuppressFilterActionForm = ({
       .unwrap()
       .then(() => {
         onClose?.();
-        navigate(routes.filters_actions);
+        navigate({ to: '/filters-actions' });
         toast.success(
           `Filter action ${edit ? 'updated' : 'created'} successfully`,
         );

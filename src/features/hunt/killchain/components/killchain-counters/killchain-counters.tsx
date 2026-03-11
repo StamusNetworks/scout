@@ -1,8 +1,7 @@
 import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { routes } from '@/pages/routes.config';
 
 import {
   useGetKillChainCountersByThreatIdQuery,
@@ -18,7 +17,7 @@ export const KillChainCounters = ({ className }: { className?: string }) => {
 
   const handleClick = useCallback(
     (killchain: keyof typeof killChainsConfig) => {
-      navigate(routes.threats_compromises_entities + '?killchain=' + killchain);
+      navigate({ to: '/threats/compromises/entities?killchain=' + killchain });
     },
     [navigate],
   );
@@ -50,11 +49,9 @@ export const KillChainCountersByThreatId = ({
 
   const handleClick = useCallback(
     (killchain: keyof typeof killChainsConfig) => {
-      navigate(
-        routes.threats_coverage_threat.replace(':threatId', threatId) +
-          '?killchain=' +
-          killchain,
-      );
+      navigate({
+        to: `/threats/coverage/threat/${threatId}?killchain=${killchain}`,
+      });
     },
     [threatId, navigate],
   );
@@ -85,11 +82,9 @@ export const KillChainCountersByFamilyId = ({
 
   const handleClick = useCallback(
     (killchain: keyof typeof killChainsConfig) => {
-      navigate(
-        routes.threats_coverage_family.replace(':familyId', familyId) +
-          '?killchain=' +
-          killchain,
-      );
+      navigate({
+        to: `/threats/coverage/family/${familyId}?killchain=${killchain}`,
+      });
     },
     [familyId, navigate],
   );

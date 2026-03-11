@@ -1,6 +1,11 @@
 import { Binary, Edit, LayoutDashboard, Trash } from 'lucide-react';
 import { useState } from 'react';
-import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import {
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+} from '@tanstack/react-router';
 import { toast } from 'sonner';
 
 import { DefaultPage } from '@/common/design-system/atoms/default-page';
@@ -39,14 +44,13 @@ import {
 } from '@/features/hunt/threats/api/threats.api';
 import { CreateEditThreatForm } from '@/features/hunt/threats/components/create-edit-threat-form';
 import { Threat } from '@/features/hunt/threats/model/threat.model';
-import { routes } from '@/pages/routes.config';
 import { useAppDispatch } from '@/store/store';
 
 import { useThreatDetectionMethods } from '../../hooks/use-threat-detection-methods';
 import { useThreatEvents } from '../../hooks/use-threat-events';
 
 const usePageThreatEvents = () => {
-  const { threatId } = useParams();
+  const { threatId } = useParams({ strict: false }) as { threatId: string };
   const [, , ordering] = useSortingUrlState();
   const [pagination] = usePaginationUrlState();
   return useThreatEvents({
@@ -56,7 +60,7 @@ const usePageThreatEvents = () => {
   });
 };
 const usePageThreatDetectionMethods = () => {
-  const { threatId } = useParams();
+  const { threatId } = useParams({ strict: false }) as { threatId: string };
   const [, , ordering] = useSortingUrlState();
   const [pagination] = usePaginationUrlState();
   return useThreatDetectionMethods({
@@ -66,20 +70,25 @@ const usePageThreatDetectionMethods = () => {
   });
 };
 
+const threatSlugSuffix: Record<string, string> = {
+  threats_coverage_threat: '',
+  threats_coverage_threat_detection_methods: '/detection-methods',
+  threats_coverage_threat_events: '/events',
+  threats_coverage_family: '',
+};
+
 const getLink = (
   slug: string,
   familyClass: 'doc' | 'dopv',
   id: number,
   link: 'family' | 'threat' = 'threat',
-) =>
-  routes[
-    (familyClass === 'doc'
-      ? slug
-      : slug.replace('threats', 'policy_violations')) as keyof typeof routes
-  ].replace(link === 'family' ? ':familyId' : ':threatId', id.toString());
+) => {
+  const base = familyClass === 'doc' ? '/threats' : '/policy-violations';
+  return `${base}/coverage/${link}/${id}${threatSlugSuffix[slug] ?? ''}`;
+};
 
 export const ThreatById = () => {
-  const { threatId } = useParams();
+  const { threatId } = useParams({ strict: false }) as { threatId: string };
   const pathname = useLocation().pathname;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -180,7 +189,7 @@ export const ThreatById = () => {
                     value: threat.name,
                   }),
                 );
-                navigate(routes.events);
+                navigate({ to: '/detection-events' });
               }}
               disabled={!QFBuilder}
             >
@@ -196,7 +205,7 @@ export const ThreatById = () => {
                     value: threat.name,
                   }),
                 );
-                navigate(routes.explorer);
+                navigate({ to: '/explorer' });
               }}
               disabled={!QFBuilder}
             >
@@ -267,7 +276,7 @@ export const ThreatByIdIndex = ({
 }: {
   familyClass?: 'doc' | 'dopv';
 }) => {
-  const { threatId } = useParams();
+  const { threatId } = useParams({ strict: false }) as { threatId: string };
   const { tenant } = useGlobalQueryParams(['tenant']);
   const { data: threat } = useGetThreatByIdQuery({
     tenant,
@@ -303,14 +312,14 @@ export const ThreatName = ({ threat }: { threat: Threat }) => {
   };
   const handleSuccess = () => {
     toast.success('Threat deleted successfully');
-    navigate(
-      getLink(
-        routes.threats_coverage_family,
+    navigate({
+      to: getLink(
+        'threats_coverage_family',
         threat.family_class,
         threat.family,
         'family',
       ),
-    );
+    });
   };
 
   return (

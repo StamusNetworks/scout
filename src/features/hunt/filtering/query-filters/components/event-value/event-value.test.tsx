@@ -1,25 +1,31 @@
+import { createMemoryHistory, createRouter } from '@tanstack/react-router';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, test, vi } from 'vitest';
 
 import { renderWithProviders } from '@/common/testing/test-utils';
+import { routeTree } from '@/routeTree.gen';
 import * as AppStore from '@/store/store';
 
 import { addQueryFilter } from '../../store/query-filters.slice';
 import { EventValue } from './event-value';
+
+const createTestRouter = () =>
+  createRouter({
+    routeTree,
+    history: createMemoryHistory({ initialEntries: ['/'] }),
+  });
 
 describe('Event Value', () => {
   test('Should dispatch the createFilter action', async () => {
     const dispatch = vi.fn();
     vi.spyOn(AppStore, 'useAppDispatch').mockReturnValue(dispatch);
     renderWithProviders(
-      <MemoryRouter>
-        <EventValue
-          query_key="src_ip"
-          value="10.0.0.1"
-        />
-      </MemoryRouter>,
+      <EventValue
+        query_key="src_ip"
+        value="10.0.0.1"
+      />,
+      { router: createTestRouter() },
     );
 
     await userEvent.click(screen.getByTestId('event-value'));

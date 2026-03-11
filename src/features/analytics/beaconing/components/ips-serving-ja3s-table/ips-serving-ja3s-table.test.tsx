@@ -1,6 +1,13 @@
 import { screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
-import { MemoryRouter } from 'react-router-dom';
+import { createMemoryHistory, createRouter } from '@tanstack/react-router';
+import { routeTree } from '@/routeTree.gen';
+
+const createTestRouter = () =>
+  createRouter({
+    routeTree,
+    history: createMemoryHistory({ initialEntries: ['/'] }),
+  });
 import { vi } from 'vitest';
 
 import { baseUrl, server } from '@/common/testing/mocks/server';
@@ -226,22 +233,18 @@ describe('IpsServingJa3sTable', () => {
   });
 
   test('should render loading state when fetching data', async () => {
-    renderWithProviders(
-      <MemoryRouter>
-        <IpsServingJa3sTable ja3s="ja3s-hash-123" />
-      </MemoryRouter>,
-    );
+    renderWithProviders(<IpsServingJa3sTable ja3s="ja3s-hash-123" />, {
+      router: createTestRouter(),
+    });
 
     // Verify loading state shows skeleton elements
     expect(screen.getAllByTestId(/skeleton/i).length).toBeGreaterThan(0);
   });
 
   test('should render IP data with ja3s-hash-123 after loading', async () => {
-    renderWithProviders(
-      <MemoryRouter>
-        <IpsServingJa3sTable ja3s="ja3s-hash-123" />
-      </MemoryRouter>,
-    );
+    renderWithProviders(<IpsServingJa3sTable ja3s="ja3s-hash-123" />, {
+      router: createTestRouter(),
+    });
 
     // Wait for data to load
     await waitFor(() => {
@@ -277,11 +280,9 @@ describe('IpsServingJa3sTable', () => {
   });
 
   test('should render IP data with ja3s-hash-456 after loading', async () => {
-    renderWithProviders(
-      <MemoryRouter>
-        <IpsServingJa3sTable ja3s="ja3s-hash-456" />
-      </MemoryRouter>,
-    );
+    renderWithProviders(<IpsServingJa3sTable ja3s="ja3s-hash-456" />, {
+      router: createTestRouter(),
+    });
 
     // Wait for data to load
     await waitFor(() => {

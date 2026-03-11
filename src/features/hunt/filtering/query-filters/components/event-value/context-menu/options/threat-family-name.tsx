@@ -1,11 +1,10 @@
+import { Link } from '@tanstack/react-router';
 import { Biohazard, Scale } from 'lucide-react';
 import { values } from 'ramda';
-import { Link } from 'react-router-dom';
 
 import { ContextMenuItem } from '@/common/design-system/atoms/ui/context-menu';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetThreatFamiliesQuery } from '@/features/hunt/threats/api/threats.api';
-import { routes } from '@/pages/routes.config';
 
 import { iconClass } from '../context-menu.content';
 
@@ -38,7 +37,7 @@ export const ThreatFamilyNameOption = ({
       disabled={!family?.pk}
       asChild
     >
-      <Link to={getLink('threats_coverage_family', family.klass, family.pk)}>
+      <Link to={getLink(family.klass, family.pk)}>
         <Icon className={iconClass} />
         Go to family page
       </Link>
@@ -46,9 +45,7 @@ export const ThreatFamilyNameOption = ({
   );
 };
 
-const getLink = (slug: string, familyClass: 'doc' | 'dopv', id: number) =>
-  routes[
-    (familyClass === 'doc'
-      ? slug
-      : slug.replace('threats', 'policy_violations')) as keyof typeof routes
-  ].replace(':familyId', id.toString());
+const getLink = (familyClass: 'doc' | 'dopv', id: number) =>
+  familyClass === 'doc'
+    ? `/threats/coverage/family/${id}`
+    : `/policy-violations/coverage/family/${id}`;

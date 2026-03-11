@@ -1,10 +1,9 @@
+import { Link } from '@tanstack/react-router';
 import { Biohazard, Scale } from 'lucide-react';
 import { useMemo } from 'react';
-import { Link } from 'react-router-dom';
 
 import { ContextMenuItem } from '@/common/design-system/atoms/ui/context-menu';
 import { useThreats } from '@/features/hunt/threats/hooks/use-threats';
-import { routes } from '@/pages/routes.config';
 
 import { iconClass } from '../context-menu.content';
 
@@ -26,12 +25,7 @@ export const ThreatNameOptions = ({ threatName }: { threatName: string }) => {
         disabled={!threat?.pk}
       >
         <Link
-          to={getLink(
-            'threats_coverage_threat',
-            threat?.family_class,
-            'threat',
-            threat?.pk,
-          )}
+          to={getLink(threat?.family_class, 'threat', threat?.pk)}
         >
           <Icon className={iconClass} />
           Go to {threat.family_class === 'doc'
@@ -45,12 +39,7 @@ export const ThreatNameOptions = ({ threatName }: { threatName: string }) => {
         disabled={!threat?.pk}
       >
         <Link
-          to={getLink(
-            'threats_coverage_family',
-            threat?.family_class,
-            'family',
-            threat?.family,
-          )}
+          to={getLink(threat?.family_class, 'family', threat?.family)}
         >
           <Icon className={iconClass} />
           Go to family page
@@ -61,13 +50,12 @@ export const ThreatNameOptions = ({ threatName }: { threatName: string }) => {
 };
 
 const getLink = (
-  slug: string,
   familyClass: 'doc' | 'dopv',
   link: 'family' | 'threat',
   id: number,
-) =>
-  routes[
-    (familyClass === 'doc'
-      ? slug
-      : slug.replace('threats', 'policy_violations')) as keyof typeof routes
-  ].replace(link === 'family' ? ':familyId' : ':threatId', id.toString());
+) => {
+  const base = familyClass === 'doc' ? '/threats' : '/policy-violations';
+  return link === 'family'
+    ? `${base}/coverage/family/${id}`
+    : `${base}/coverage/threat/${id}`;
+};

@@ -1,5 +1,5 @@
 import { VariantProps } from 'class-variance-authority';
-import { Link } from 'react-router-dom';
+import { Link } from '@tanstack/react-router';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Markdown } from '@/common/design-system/atoms/markdown';
@@ -10,16 +10,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/common/design-system/atoms/ui/card';
-import { routes } from '@/pages/routes.config';
-
 const getLink = (
   familyClass: 'doc' | 'dopv',
   link: 'family' | 'threat',
   id: number,
 ) => {
-  return routes[
-    `${familyClass === 'doc' ? 'threats' : 'policy_violations'}_coverage_${link}`
-  ].replace(link === 'family' ? ':familyId' : ':threatId', id.toString());
+  const base = familyClass === 'doc' ? '/threats' : '/policy-violations';
+  return `${base}/coverage/${link}/${id}`;
 };
 
 export const CoverageBlock = ({

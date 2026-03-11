@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { isNil, toPairs } from 'ramda';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
@@ -36,7 +36,6 @@ import {
   useGetEventsCountQuery,
   useGetEventsTailQuery,
 } from '@/features/hunt/events/api/events.api';
-import { routes } from '@/pages/routes.config';
 import { useAppSelector } from '@/store/store';
 
 import { filterSetPageConfig } from '../../constants/query-filtersets';
@@ -120,7 +119,7 @@ export const FilterSetsItem = ({
       filters?.some((filter) => !filter.id.startsWith('host_id.'))
         ? ''
         : '?with_alerts=false';
-    navigate(filterSetPageConfig[filterSet.page].route + suffix);
+    navigate({ to: filterSetPageConfig[filterSet.page].route + suffix });
   };
   const loaded = useIsLoadedFilterSet(filterSet.id);
   return (
@@ -258,7 +257,7 @@ function FilterSetEventsBadge({ filterSet }: { filterSet: QueryFilterSet }) {
   });
   const onClickHandler = () => {
     loadFilterSet(filterSet);
-    navigate(routes.events);
+    navigate({ to: '/detection-events' });
   };
   return (
     <FilterSetBadge
@@ -286,7 +285,7 @@ function FilterSetTransactionsBadge({
   });
   const onClickHandler = () => {
     loadFilterSet(filterSet);
-    navigate(routes.session_events);
+    navigate({ to: '/session-events' });
   };
   return (
     <FilterSetBadge
@@ -310,7 +309,7 @@ function FilterSetHostsBadge({ filterSet }: { filterSet: QueryFilterSet }) {
   });
   const onClickHandler = () => {
     loadFilterSet(filterSet);
-    navigate(routes.hosts + '?with_alerts=false');
+    navigate({ to: '/hosts?with_alerts=false' });
   };
   return (
     <FilterSetBadge
@@ -341,7 +340,7 @@ function FilterSetInternalHostsBadge({
   });
   const onClickHandler = () => {
     loadFilterSet(filterSet);
-    navigate(routes.hosts + '?with_alerts=false&in_home_net=true');
+    navigate({ to: '/hosts?with_alerts=false&in_home_net=true' });
   };
   return (
     <FilterSetBadge
@@ -370,7 +369,7 @@ function FilterSetInternalHostsWithEventsBadge({
   });
   const onClickHandler = () => {
     loadFilterSet(filterSet);
-    navigate(routes.hosts + '?in_home_net=true');
+    navigate({ to: '/hosts?in_home_net=true' });
   };
   return (
     <FilterSetBadge
@@ -396,7 +395,7 @@ function FilterSetHostsWithEventsBadge({
   });
   const onClickHandler = () => {
     loadFilterSet(filterSet);
-    navigate(routes.hosts);
+    navigate({ to: '/hosts' });
   };
   return (
     <FilterSetBadge
@@ -428,7 +427,7 @@ function FilterSetDetectionMethodsBadge({
   });
   const onClickHandler = () => {
     loadFilterSet(filterSet);
-    navigate(routes.detection_methods);
+    navigate({ to: '/detection-methods' });
   };
   return (
     <FilterSetBadge

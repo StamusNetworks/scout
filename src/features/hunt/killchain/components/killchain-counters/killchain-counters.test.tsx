@@ -1,11 +1,18 @@
+import { createMemoryHistory, createRouter } from '@tanstack/react-router';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
-import { MemoryRouter } from 'react-router-dom';
 
 import { mockNavigate } from '@/common/testing/mocks/hooks/use-navigate.mock';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
+import { routeTree } from '@/routeTree.gen';
+
+const createTestRouter = () =>
+  createRouter({
+    routeTree,
+    history: createMemoryHistory({ initialEntries: ['/'] }),
+  });
 
 import { KillChainPhase } from '../../killchain';
 import {
@@ -76,50 +83,44 @@ describe('KillChainCounters', () => {
   });
 
   test('clicking on a KillChainCounters item dispatches filter and navigates', async () => {
-    renderWithProviders(
-      <MemoryRouter>
-        <KillChainCounters />
-      </MemoryRouter>,
-    );
+    renderWithProviders(<KillChainCounters />, {
+      router: createTestRouter(),
+    });
 
     expect(screen.getAllByTestId('spin')).toHaveLength(7);
 
     const reconItem = await screen.findByText('10');
     await userEvent.click(reconItem);
 
-    expect(mockNavigate).toHaveBeenCalledWith(
-      '/threats/compromises/entities?killchain=reconnaissance',
-    );
+    expect(mockNavigate).toHaveBeenCalledWith({
+      to: '/threats/compromises/entities?killchain=reconnaissance',
+    });
   });
 
   test('clicking on a KillChainCountersByThreatId item dispatches two filters and navigates', async () => {
-    renderWithProviders(
-      <MemoryRouter>
-        <KillChainCountersByThreatId threatId="123" />
-      </MemoryRouter>,
-    );
+    renderWithProviders(<KillChainCountersByThreatId threatId="123" />, {
+      router: createTestRouter(),
+    });
 
     const reconItem = await screen.findByText('8');
     await userEvent.click(reconItem);
 
-    expect(mockNavigate).toHaveBeenCalledWith(
-      '/threats/coverage/threat/123?killchain=reconnaissance',
-    );
+    expect(mockNavigate).toHaveBeenCalledWith({
+      to: '/threats/coverage/threat/123?killchain=reconnaissance',
+    });
   });
 
   test('clicking on a KillChainCountersByFamilyId item dispatches two filters and navigates', async () => {
-    renderWithProviders(
-      <MemoryRouter>
-        <KillChainCountersByFamilyId familyId="1" />
-      </MemoryRouter>,
-    );
+    renderWithProviders(<KillChainCountersByFamilyId familyId="1" />, {
+      router: createTestRouter(),
+    });
 
     const reconItem = await screen.findByText('10');
     await userEvent.click(reconItem);
 
-    expect(mockNavigate).toHaveBeenCalledWith(
-      '/threats/coverage/family/1?killchain=reconnaissance',
-    );
+    expect(mockNavigate).toHaveBeenCalledWith({
+      to: '/threats/coverage/family/1?killchain=reconnaissance',
+    });
   });
 });
 

@@ -3,7 +3,7 @@ import { Edit, Plus } from 'lucide-react';
 import { values } from 'ramda';
 import { useEffect, useMemo, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
@@ -51,7 +51,6 @@ import {
 } from '@/features/hunt/killchain/killchain';
 import { useGetRulesetsQuery } from '@/features/hunt/rulesets/api/rulesets.api';
 import { useGetCustomThreatsQuery } from '@/features/hunt/threats/api/threats.api';
-import { routes } from '@/pages/routes.config';
 
 import { FilterInput } from '../../../../filtering/query-filters/components/filters-input';
 import { CreateEditThreatForm } from '../../../../threats/components/create-edit-threat-form';
@@ -205,7 +204,7 @@ export const CreateEditDeclarationFilterActionForm = ({
       .unwrap()
       .then(() => {
         onClose?.();
-        navigate(routes.filters_actions);
+        navigate({ to: '/filters-actions' });
         toast.success(
           `Filter Action ${edit ? 'updated' : 'created'} successfully`,
         );

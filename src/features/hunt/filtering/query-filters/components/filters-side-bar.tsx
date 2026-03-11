@@ -8,7 +8,7 @@ import {
 import { Reorder } from 'motion/react';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from '@tanstack/react-router';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -36,7 +36,6 @@ import {
   setOpenModal,
 } from '@/features/ui/ui-state.slice';
 import { selectIsEnterprise } from '@/features/user/settings/settings.slice';
-import { routes } from '@/pages/routes.config';
 import { useAppSelector } from '@/store/store';
 
 import { FilterCategory } from '../constants/query-filter.config';
@@ -115,23 +114,21 @@ export const FiltersSideBar = () => {
   const enterprise = useAppSelector(selectIsEnterprise);
   const [withAlerts] = useWithAlertsParam();
 
-  const sideBarConfigPerPage: Partial<
-    Record<(typeof routes)[keyof typeof routes], SideBarConfig>
-  > = useMemo(
+  const sideBarConfigPerPage: Partial<Record<string, SideBarConfig>> = useMemo(
     () => ({
-      [routes.explorer]: {
+      '/explorer': {
         enabled: ['outliers', 'events', 'tags', 'query_filters'],
         filterTypes: [FilterCategory.EVENT, FilterCategory.HOST],
       },
-      [routes.attack_surface]: {
+      '/attack-surface': {
         enabled: ['query_filters'],
         filterTypes: [FilterCategory.HOST],
       },
-      [routes.attack_surface_inventory]: {
+      '/attack-surface/inventory': {
         enabled: ['query_filters'],
         filterTypes: [FilterCategory.HOST],
       },
-      [routes.hosts]: {
+      '/hosts': {
         enabled: withAlerts
           ? ['outliers', 'events', 'tags', 'query_filters']
           : ['query_filters'],
@@ -140,15 +137,15 @@ export const FiltersSideBar = () => {
           ...(withAlerts ? [FilterCategory.EVENT] : []),
         ],
       },
-      [routes.events]: {
+      '/detection-events': {
         enabled: ['outliers', 'events', 'tags', 'query_filters'],
         filterTypes: [FilterCategory.EVENT, FilterCategory.HOST],
       },
-      [routes.events_flow]: {
+      '/events-flow': {
         enabled: ['outliers', 'events', 'tags', 'query_filters'],
         filterTypes: [FilterCategory.EVENT],
       },
-      [routes.detection_methods]: {
+      '/detection-methods': {
         enabled: ['outliers', 'events', 'tags', 'query_filters'],
         filterTypes: [FilterCategory.SIGNATURE, FilterCategory.EVENT],
         getIsInapplicable: (filter) => {
@@ -160,13 +157,13 @@ export const FiltersSideBar = () => {
                 def?.category !== FilterCategory.EVENT;
         },
       },
-      [routes.filters_actions]: {
+      '/filters-actions': {
         enabled: ['outliers', 'events', 'tags', 'query_filters'],
         filterTypes: [FilterCategory.EVENT, FilterCategory.SIGNATURE],
         getIsInapplicable: (filter) =>
           !filterActionSupportedFilters.includes(filter.key),
       },
-      [routes.filter_sets]: {
+      '/filter-sets': {
         enabled: ['outliers', 'events', 'tags', 'query_filters'],
         filterTypes: [
           FilterCategory.EVENT,
@@ -174,7 +171,7 @@ export const FiltersSideBar = () => {
           FilterCategory.HOST,
         ],
       },
-      [routes.session_events]: {
+      '/session-events': {
         enabled: ['query_filters'],
         filterTypes: [FilterCategory.EVENT],
         getIsInapplicable: (filter) =>
@@ -184,8 +181,7 @@ export const FiltersSideBar = () => {
     [withAlerts, filterActionSupportedFilters],
   );
 
-  const sideBarConfig =
-    sideBarConfigPerPage[pathname as (typeof routes)[keyof typeof routes]];
+  const sideBarConfig = sideBarConfigPerPage[pathname];
 
   useEffect(() => {
     if (!autoOpenSidebarOnNavigation) return;
@@ -461,12 +457,9 @@ export const FiltersSideBar = () => {
 const isEnabled = (
   pathname: string,
   feature: SidebarFeature,
-  sideBarConfigPerPage: Partial<
-    Record<(typeof routes)[keyof typeof routes], SideBarConfig>
-  >,
+  sideBarConfigPerPage: Partial<Record<string, SideBarConfig>>,
 ) => {
-  const config =
-    sideBarConfigPerPage[pathname as (typeof routes)[keyof typeof routes]];
+  const config = sideBarConfigPerPage[pathname];
   if (!config?.enabled) {
     return false;
   }

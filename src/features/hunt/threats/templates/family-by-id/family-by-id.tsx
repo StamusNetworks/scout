@@ -1,6 +1,11 @@
 import { Binary, Info, LayoutDashboard, PlusCircle } from 'lucide-react';
 import { useState } from 'react';
-import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import {
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+} from '@tanstack/react-router';
 
 import { DefaultPage } from '@/common/design-system/atoms/default-page';
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -35,14 +40,13 @@ import {
 import { CreateEditThreatForm } from '@/features/hunt/threats/components/create-edit-threat-form';
 import { ThreatFamily } from '@/features/hunt/threats/model/threat-family.model';
 import { FamilyActiveThreats } from '@/features/hunt/threats/templates/family-active-threats';
-import { routes } from '@/pages/routes.config';
 import { useAppDispatch } from '@/store/store';
 
 import { useFamilyDetectionMethods } from '../../hooks/use-family-detection-methods';
 import { useFamilyEvents } from '../../hooks/use-family-events';
 
 const usePageFamilyEvents = () => {
-  const { familyId } = useParams();
+  const { familyId } = useParams({ strict: false }) as { familyId: string };
   const [pagination] = usePaginationUrlState();
   const [, , ordering] = useSortingUrlState();
   return useFamilyEvents({
@@ -53,7 +57,7 @@ const usePageFamilyEvents = () => {
 };
 
 const usePageFamilyDetectionMethods = () => {
-  const { familyId } = useParams();
+  const { familyId } = useParams({ strict: false }) as { familyId: string };
   const [pagination] = usePaginationUrlState();
   const [, , ordering] = useSortingUrlState();
   return useFamilyDetectionMethods({
@@ -63,15 +67,20 @@ const usePageFamilyDetectionMethods = () => {
   });
 };
 
-const getLink = (slug: string, familyClass: 'doc' | 'dopv', familyId: number) =>
-  routes[
-    (familyClass === 'doc'
-      ? slug
-      : slug.replace('threats', 'policy_violations')) as keyof typeof routes
-  ].replace(':familyId', familyId.toString());
+const slugSuffix: Record<string, string> = {
+  threats_coverage_family: '',
+  threats_coverage_family_detection_methods: '/detection-methods',
+  threats_coverage_family_events: '/events',
+  threats_coverage_family_threats: '/threats',
+};
+
+const getLink = (slug: string, familyClass: 'doc' | 'dopv', familyId: number) => {
+  const base = familyClass === 'doc' ? '/threats' : '/policy-violations';
+  return `${base}/coverage/family/${familyId}${slugSuffix[slug] ?? ''}`;
+};
 
 export const ThreatFamilyById = () => {
-  const { familyId } = useParams();
+  const { familyId } = useParams({ strict: false }) as { familyId: string };
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -156,7 +165,7 @@ export const ThreatFamilyById = () => {
                     ),
                   ),
                 );
-                navigate(routes.events);
+                navigate({ to: '/detection-events' });
               }}
             >
               <Binary />
@@ -171,7 +180,7 @@ export const ThreatFamilyById = () => {
                     value: threatFamily.name,
                   }),
                 );
-                navigate(routes.explorer);
+                navigate({ to: '/explorer' });
               }}
             >
               <LayoutDashboard />
@@ -253,7 +262,7 @@ export const ThreatFamilyDefault = ({
 }: {
   familyClass?: 'doc' | 'dopv';
 }) => {
-  const { familyId } = useParams();
+  const { familyId } = useParams({ strict: false }) as { familyId: string };
   const { data: family } = useGetThreatFamiliesQuery(
     {},
     {
