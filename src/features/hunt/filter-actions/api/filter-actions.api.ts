@@ -31,7 +31,7 @@ export const FilterActionsAPI = API.injectEndpoints({
       Dates & Tenant & { pk: number }
     >({
       query: ({ pk, ...params }) => ({
-        url: `rules${ENDPOINTS.FILTER_ACTIONS_DATA.url}`,
+        url: `rules${ENDPOINTS.ES_FILTER_ACTIONS_DATA.url}`,
         method: 'GET',
         params: {
           ...buildQueryParams(params, { time_format: 'elastic' }),
