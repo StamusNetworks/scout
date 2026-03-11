@@ -38,12 +38,17 @@ const mockEntity = {
 };
 
 const renderPage = async () =>
-  renderWithProviders(<BreadcrumbProvider><ThreatsIncidentsPage /></BreadcrumbProvider>, {
-    router: createTestRouter(),
-    preloadedState: {
-      ...initialState,
+  renderWithProviders(
+    <BreadcrumbProvider>
+      <ThreatsIncidentsPage />
+    </BreadcrumbProvider>,
+    {
+      router: createTestRouter(),
+      preloadedState: {
+        ...initialState,
+      },
     },
-  });
+  );
 
 beforeEach(() => {
   server.use(
