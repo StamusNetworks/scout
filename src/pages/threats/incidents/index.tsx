@@ -12,6 +12,7 @@ import {
   EmptyHeader,
   EmptyMedia,
 } from '@/common/design-system/atoms/ui/empty';
+import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableToolbar } from '@/common/design-system/molecules/data-table/data-table.toolbar';
 import { CommandFilterMultiple } from '@/common/design-system/molecules/data-table/filters/command-filter-multiple';
@@ -89,28 +90,33 @@ export const ThreatsIncidentsPage = () => {
   };
 
   return (
-    <DataTable
-      data={data}
-      isLoading={isFetching}
-      columns={threatIncidentsColumns}
-      pagination={pagination}
-      onPaginationChange={setPagination}
-      onRowClick={onRowClick}
-      sorting={sorting}
-      onSortingChange={setSorting}
-      toolBar={
-        <DataTableToolbar>
-          <CommandFilterMultiple
-            title="Kill chain"
-            value={killChain}
-            onChange={setKillChain}
-            options={killChainWithoutPoliciesOptions}
-          />
-        </DataTableToolbar>
-      }
-      Empty={<IncidentsEmpty killChain={killChain} />}
-      serverSide
-    />
+    <>
+      <OutletBreadcrumb link="/threats/compromises/incidents">
+        Incidents
+      </OutletBreadcrumb>
+      <DataTable
+        data={data}
+        isLoading={isFetching}
+        columns={threatIncidentsColumns}
+        pagination={pagination}
+        onPaginationChange={setPagination}
+        onRowClick={onRowClick}
+        sorting={sorting}
+        onSortingChange={setSorting}
+        toolBar={
+          <DataTableToolbar>
+            <CommandFilterMultiple
+              title="Kill chain"
+              value={killChain}
+              onChange={setKillChain}
+              options={killChainWithoutPoliciesOptions}
+            />
+          </DataTableToolbar>
+        }
+        Empty={<IncidentsEmpty killChain={killChain} />}
+        serverSide
+      />
+    </>
   );
 };
 

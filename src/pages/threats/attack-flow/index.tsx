@@ -15,6 +15,7 @@ import {
   SankeyChart,
   type SankeyNodeInfo,
 } from '@/common/design-system/graphs/sankey/sankey-chart';
+import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetEventsAggregationQuery } from '@/features/hunt/events/api/events.api';
 import { ContextMenuContent } from '@/features/hunt/filtering/query-filters/components/event-value/context-menu/context-menu.content';
@@ -119,10 +120,18 @@ export const ThreatsAttackFlowPage = () => {
     }
   }, []);
 
-  if (!sankeyData.nodes.length) return null;
+  if (!sankeyData.nodes.length)
+    return (
+      <OutletBreadcrumb link="/threats/compromises/attack-flow">
+        Attack Flow
+      </OutletBreadcrumb>
+    );
 
   return (
     <Column>
+      <OutletBreadcrumb link="/threats/compromises/attack-flow">
+        Attack Flow
+      </OutletBreadcrumb>
       <ContextMenu onOpenChange={handleOpenChange}>
         <ContextMenuTrigger>
           <SankeyChart
