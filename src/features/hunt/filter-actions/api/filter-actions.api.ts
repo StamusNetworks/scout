@@ -19,10 +19,13 @@ export const FilterActionsAPI = API.injectEndpoints({
       Paginated<FilterAction>,
       Tenant & Pagination
     >({
-      query: () => ({
+      query: (params) => ({
         url: ENDPOINTS.FILTER_ACTIONS.url,
         method: 'GET',
-        params: { ordering: '-timestamp' },
+        params: {
+          ordering: '-timestamp',
+          ...buildQueryParams(params),
+        },
       }),
       providesTags: ['Reload', 'Filter Actions'],
     }),

@@ -204,7 +204,10 @@ export const CreateEditDeclarationFilterActionForm = ({
       .unwrap()
       .then(() => {
         onClose?.();
-        navigate({ to: '/filters-actions' });
+        navigate({
+          to: '/filters-actions',
+          search: { page: 1, page_size: 10 },
+        });
         toast.success(
           `Filter Action ${edit ? 'updated' : 'created'} successfully`,
         );

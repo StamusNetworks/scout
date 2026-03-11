@@ -84,7 +84,10 @@ export const CreateEditSuppressFilterActionForm = ({
       .unwrap()
       .then(() => {
         onClose?.();
-        navigate({ to: '/filters-actions' });
+        navigate({
+          to: '/filters-actions',
+          search: { page: 1, page_size: 10 },
+        });
         toast.success(
           `Filter action ${edit ? 'updated' : 'created'} successfully`,
         );
