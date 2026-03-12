@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
+import { OffendersData } from '../models/offenders.model';
 import { ThreatHistory } from '../models/threat-history.model';
-import { formatThreatHistory } from './format-threat-history';
+import { formatThreatHistory, getOffenders } from './format-threat-history';
 
 // --- Mock data factories ---
 
@@ -251,5 +252,83 @@ describe('formatThreatHistory', () => {
     expect(result.end_date).toBeGreaterThan(
       new Date('2024-01-02T00:00:00Z').getTime(),
     );
+  });
+});
+
+// --- getOffenders tests ---
+
+const makeOffendersData = (
+  buckets: OffendersData['res']['assets']['buckets'],
+): OffendersData => ({
+  res: {
+    assets: {
+      doc_count_error_upper_bound: 0,
+      sum_other_doc_count: 0,
+      buckets,
+    },
+  },
+});
+
+const makeAssetBucket = (
+  victim: string,
+  offenders: { key: string; threat_id: string }[],
+): OffendersData['res']['assets']['buckets'][number] => ({
+  key: victim,
+  doc_count: 1,
+  min_timestamp: { value: 0, value_as_string: '' },
+  max_timestamp: { value: 0, value_as_string: '' },
+  offenders: {
+    doc_count_error_upper_bound: 0,
+    sum_other_doc_count: 0,
+    buckets: offenders.map((o) => ({
+      key: o.key,
+      doc_count: 1,
+      threat_id: {
+        doc_count_error_upper_bound: 0,
+        sum_other_doc_count: 0,
+        buckets: [
+          {
+            key: o.threat_id,
+            doc_count: 1,
+            min_timestamp: { value: 0, value_as_string: '' },
+            max_timestamp: { value: 0, value_as_string: '' },
+          },
+        ],
+      },
+      min_timestamp: { value: 0, value_as_string: '' },
+      max_timestamp: { value: 0, value_as_string: '' },
+    })),
+  },
+});
+
+describe('getOffenders', () => {
+  it('returns lateral movements when both victim and offender are in entities', () => {
+    const data = makeOffendersData([
+      makeAssetBucket('10.0.0.1', [{ key: '10.0.0.2', threat_id: '42' }]),
+    ]);
+    const result = getOffenders(data, ['10.0.0.1', '10.0.0.2']);
+    expect(result['10.0.0.1']).toHaveLength(1);
+    expect(result['10.0.0.1'][0]).toEqual({
+      threat_id: '42',
+      offender_ip: '10.0.0.2',
+    });
+  });
+
+  it('excludes lateral movements when victim is not in entities (e.g. Lateral Scanning)', () => {
+    const data = makeOffendersData([
+      makeAssetBucket('unknown-victim', [{ key: '10.0.0.2', threat_id: '99' }]),
+    ]);
+    const result = getOffenders(data, ['10.0.0.2']);
+    expect(result['unknown-victim']).toBeUndefined();
+  });
+
+  it('excludes lateral movements when offender is not in entities', () => {
+    const data = makeOffendersData([
+      makeAssetBucket('10.0.0.1', [
+        { key: 'unknown-offender', threat_id: '99' },
+      ]),
+    ]);
+    const result = getOffenders(data, ['10.0.0.1']);
+    expect(result['10.0.0.1']).toHaveLength(0);
   });
 });

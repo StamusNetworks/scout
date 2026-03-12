@@ -117,6 +117,8 @@ export const getOffenders = (
 ) =>
   offendersData.res.assets?.buckets.reduce(
     (acc, curr) => {
+      // Skip victims not present in the timeline (e.g. Lateral Scanning has no victim row)
+      if (!entities.includes(curr.key)) return acc;
       if (!acc[curr.key]) {
         acc[curr.key] = [];
       }

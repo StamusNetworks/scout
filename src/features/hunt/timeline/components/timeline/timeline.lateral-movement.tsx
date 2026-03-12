@@ -29,7 +29,11 @@ export const TimelineLateralMovement = ({
   const { uniqueId, from_date, to_date } = useTimelineContext();
   const { data: threat } = useThreat(parseInt(threat_id));
 
-  const [position, setPosition] = useState({ x: 0, height: 0, y: 0 });
+  const [position, setPosition] = useState<{
+    x: number;
+    height: number;
+    y: number;
+  } | null>(null);
 
   useEffect(() => {
     const victimThreat = document.getElementById(
@@ -61,6 +65,8 @@ export const TimelineLateralMovement = ({
       y: yOffset,
     });
   }, [victim, offender, threat_id, timelineRef, from_date, to_date, uniqueId]);
+
+  if (!position) return null;
 
   return (
     <div
