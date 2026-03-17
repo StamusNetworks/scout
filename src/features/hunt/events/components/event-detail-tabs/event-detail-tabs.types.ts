@@ -1,24 +1,5 @@
-import { ReactNode } from 'react';
-
-import { EventFileInfo } from '../../model/event-types/fileinfo.schema';
-import { FlowEvents } from '../../model/flowEvent.schema';
-
-export interface TabConfig {
-  id: string;
-  label: ReactNode;
-  content: ReactNode;
-}
-
-export interface EventDetailData {
-  flowEvents: FlowEvents | undefined;
-  flowEventsLoading: boolean;
-  files: Array<EventFileInfo & { host: string }>;
-}
-
-export interface TabComponentType<P = object> {
-  (props: P): null;
-  tabConfig: (
-    props: P,
-    data: EventDetailData,
-  ) => TabConfig | TabConfig[] | null;
-}
+export type {
+  EventDetailData,
+  TabComponentType,
+  TabConfig,
+} from '@/features/events/common/event-detail/event-detail-tabs.types';
