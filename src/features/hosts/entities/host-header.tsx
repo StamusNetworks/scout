@@ -20,7 +20,7 @@ import { HostProfile } from '@/features/analytics/hosts/components/hostProfile/h
 import { getHostProfileChartData } from '@/features/analytics/hosts/components/hostProfile/hostProfile.utils';
 import { useGetSightingEventsQuery } from '@/features/analytics/sightings/api/sightings.api';
 import { useGetSignaturesQuery } from '@/features/hunt/detection-methods/signatures/api/signatures.api';
-import { useGetImpactedEntityQuery } from '@/features/hunt/entities/api/entities.api';
+import { useGetImpactedEntitiesQuery } from '@/features/hunt/entities/api/entities.api';
 import { useGetEventsQuery } from '@/features/hunt/events/api/events.api';
 import { useGetThreatsStatusQuery } from '@/features/hunt/threats/api/threats.api';
 
@@ -36,70 +36,92 @@ export const HostHeader = ({ hostId }: HostHeaderProps) => {
     data: host,
     isLoading: isLoadingHost,
     isError: isErrorHost,
-  } = useGetHostWithAlertsQuery({
-    entity: hostId,
-    tenant: params.tenant,
-  });
+  } = useGetHostWithAlertsQuery(
+    {
+      entity: hostId,
+      tenant: params.tenant,
+    },
+    { skip: !hostId },
+  );
 
   // ── Entity data (feeds HostSummary molecule — kill chain + threats) ─
-  const { data: entity } = useGetImpactedEntityQuery({
-    asset: hostId,
-    tenant: params.tenant,
-    start_date: params.start_date,
-    end_date: params.end_date,
-  });
+  const { data: assetsList } = useGetImpactedEntitiesQuery(
+    {
+      asset: hostId,
+      tenant: params.tenant,
+      start_date: params.start_date,
+      end_date: params.end_date,
+    },
+    { skip: !hostId },
+  );
+  const entity = assetsList?.results?.[0];
 
   // ── Incidents (feeds HostDetectionsRadar — victim / attacker) ─────
-  const { data: incidents } = useGetThreatsStatusQuery({
-    page: 1,
-    page_size: 10,
-    asset: hostId,
-    tenant: params.tenant,
-    ordering: undefined,
-  });
+  const { data: incidents } = useGetThreatsStatusQuery(
+    {
+      page: 1,
+      page_size: 10,
+      asset: hostId,
+      tenant: params.tenant,
+      ordering: undefined,
+    },
+    { skip: !hostId },
+  );
 
   // ── Detection methods count (feeds HostDetectionsRadar) ───────────
-  const { data: detectionMethodsList } = useGetSignaturesQuery({
-    host_id_qfilter: `ip:"${esEscape(hostId)}"`,
-    tenant: params.tenant,
-    start_date: params.start_date,
-    end_date: params.end_date,
-    hits_min: 1,
-    ordering: '-hits',
-    page: 1,
-    page_size: 10,
-  });
+  const { data: detectionMethodsList } = useGetSignaturesQuery(
+    {
+      host_id_qfilter: `ip:"${esEscape(hostId)}"`,
+      tenant: params.tenant,
+      start_date: params.start_date,
+      end_date: params.end_date,
+      hits_min: 1,
+      ordering: '-hits',
+      page: 1,
+      page_size: 10,
+    },
+    { skip: !hostId },
+  );
 
   // ── Beacons count (feeds HostDetectionsRadar) ─────────────────────
-  const { data: beaconingData } = useGetBeaconingEventsQuery({
-    tenant: params.tenant,
-    start_date: params.start_date,
-    end_date: params.end_date,
-    qfilter: `beacon_report.assets:${esEscape(hostId)}`,
-    page: 1,
-    page_size: 10,
-  });
+  const { data: beaconingData } = useGetBeaconingEventsQuery(
+    {
+      tenant: params.tenant,
+      start_date: params.start_date,
+      end_date: params.end_date,
+      qfilter: `beacon_report.assets:${esEscape(hostId)}`,
+      page: 1,
+      page_size: 10,
+    },
+    { skip: !hostId },
+  );
 
   // ── Sightings count (feeds HostDetectionsRadar) ───────────────────
-  const { data: sightingsData } = useGetSightingEventsQuery({
-    tenant: params.tenant,
-    start_date: params.start_date,
-    end_date: params.end_date,
-    qfilter: `discovery.asset:${esEscape(hostId)}`,
-    page: 1,
-    page_size: 10,
-  });
+  const { data: sightingsData } = useGetSightingEventsQuery(
+    {
+      tenant: params.tenant,
+      start_date: params.start_date,
+      end_date: params.end_date,
+      qfilter: `discovery.asset:${esEscape(hostId)}`,
+      page: 1,
+      page_size: 10,
+    },
+    { skip: !hostId },
+  );
 
   // ── Outlier events count (feeds HostDetectionsRadar) ──────────────
-  const { data: outlierEventsData } = useGetEventsQuery({
-    ...params,
-    page: 1,
-    page_size: 10,
-    qfilter: `(src_ip:"${esEscape(hostId)}" OR dest_ip:"${esEscape(hostId)}") AND stamus_novel:true`,
-    stamus: true,
-    alert: true,
-    discovery: true,
-  });
+  const { data: outlierEventsData } = useGetEventsQuery(
+    {
+      ...params,
+      page: 1,
+      page_size: 10,
+      qfilter: `(src_ip:"${esEscape(hostId)}" OR dest_ip:"${esEscape(hostId)}") AND stamus_novel:true`,
+      stamus: true,
+      alert: true,
+      discovery: true,
+    },
+    { skip: !hostId },
+  );
 
   // ── Loading state ─────────────────────────────────────────────────
   if (isLoadingHost) {
