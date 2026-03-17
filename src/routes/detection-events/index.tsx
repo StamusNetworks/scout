@@ -26,13 +26,6 @@ import { Table } from '@/common/design-system/molecules/table';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { usePageTitle } from '@/common/lib/use-page-title';
-import {
-  CATEGORY_COLUMN,
-  LATERAL_COLUMN,
-  METHOD_COLUMN,
-  OUTLIER_COLUMN,
-  TAG_COLUMN,
-} from '@/features/events/alerts/columns';
 import { useGetEventsQuery } from '@/features/events/common/api/events.api';
 import {
   DESTINATION_COLUMN,
@@ -42,15 +35,23 @@ import {
   PROTOCOL_COLUMN,
   SOURCE_COLUMN,
   TIMESTAMP_COLUMN,
-} from '@/features/events/common/columns';
+} from '@/features/events/common/events.table';
 import type { Event } from '@/features/events/common/model/event.schema';
+import {
+  CATEGORY_COLUMN,
+  EXPORT_COLUMNS,
+  LATERAL_COLUMN,
+  METHOD_COLUMN,
+  OUTLIER_COLUMN,
+  TAG_COLUMN,
+} from '@/features/events/detection-events/detection-events.table';
 import {
   HTTP_REQUEST_COLUMN,
   HTTP_RESPONSE_COLUMN,
   HTTP_URL_COLUMN,
   PAYLOAD_COLUMN,
   TLS_SNI_COLUMN,
-} from '@/features/events/protocol/columns';
+} from '@/features/events/network-events/network-events.table';
 import { EventsCounter } from '@/features/hunt/dashboard/components/events-counter';
 import { ExpandedEventRow } from '@/features/hunt/events/components/events-table/events.expanded-row';
 import { useTimeline } from '@/features/hunt/timeline/api/hooks/useTimeline';
@@ -72,39 +73,7 @@ export const Route = createFileRoute('/detection-events/')({
 
 // --- Export columns for CSV ---
 
-const exportColumns: { label: string; value: (event: Event) => string }[] = [
-  {
-    label: 'Timestamp',
-    value: (event) => event.timestamp,
-  },
-  {
-    label: 'Method',
-    value: (event) =>
-      event.alert?.signature ||
-      (event.event_type === 'stamus' && event.stamus?.threat_name) ||
-      '',
-  },
-  {
-    label: 'Source IP',
-    value: (event) => event.src_ip || event.flow?.src_ip || '',
-  },
-  {
-    label: 'Destination IP',
-    value: (event) => event.dest_ip || event.flow?.dest_ip || '',
-  },
-  {
-    label: 'Proto',
-    value: (event) => event.app_proto || '',
-  },
-  {
-    label: 'Probe',
-    value: (event) => event.host || '',
-  },
-  {
-    label: 'Category',
-    value: (event) => event.alert?.category || '',
-  },
-];
+const exportColumns = EXPORT_COLUMNS;
 
 // --- Build columns ---
 
@@ -258,7 +227,9 @@ function DetectionEventsPage() {
   // Row click navigates to event detail
   const onRowClick = useCallback(
     (row: TableRow<Event>) =>
-      tanstackNavigate({ to: `/detection-events/event?_id=${row.original._id}` }),
+      tanstackNavigate({
+        to: `/detection-events/event?_id=${row.original._id}`,
+      }),
     [tanstackNavigate],
   );
 

@@ -17,12 +17,6 @@ import { PaginationFooter } from '@/common/design-system/molecules/pagination-fo
 import { Table } from '@/common/design-system/molecules/table';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { esEscape } from '@/common/lib/strings';
-import {
-  CATEGORY_COLUMN,
-  LATERAL_COLUMN,
-  METHOD_COLUMN,
-  OUTLIER_COLUMN,
-} from '@/features/events/alerts/columns';
 import { useGetEventsQuery } from '@/features/events/common/api/events.api';
 import {
   DESTINATION_COLUMN,
@@ -32,15 +26,21 @@ import {
   PROTOCOL_COLUMN,
   SOURCE_COLUMN,
   TIMESTAMP_COLUMN,
-} from '@/features/events/common/columns';
+} from '@/features/events/common/events.table';
 import type { Event } from '@/features/events/common/model/event.schema';
+import {
+  CATEGORY_COLUMN,
+  LATERAL_COLUMN,
+  METHOD_COLUMN,
+  OUTLIER_COLUMN,
+} from '@/features/events/detection-events/detection-events.table';
 import {
   HTTP_REQUEST_COLUMN,
   HTTP_RESPONSE_COLUMN,
   HTTP_URL_COLUMN,
   PAYLOAD_COLUMN,
   TLS_SNI_COLUMN,
-} from '@/features/events/protocol/columns';
+} from '@/features/events/network-events/network-events.table';
 import { ExpandedEventRow } from '@/features/hunt/events/components/events-table/events.expanded-row';
 import { useGetCountsTimelineQuery } from '@/features/hunt/timeline/api/timeline.api';
 
