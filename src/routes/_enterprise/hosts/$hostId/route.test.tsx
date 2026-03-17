@@ -12,50 +12,30 @@ import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
 import { initialState } from '@/store/store.init';
 
-import { HostDetails } from './[hostId]/index';
+import { Route } from './route';
 
 const emptyPaginated = { count: 0, next: null, previous: null, results: [] };
 
-beforeEach(() => {
-  server.use(
-    http.get(baseUrl + '/appliances/entity/*', () =>
-      HttpResponse.json(emptyPaginated),
-    ),
-    http.get('*/api/v2/appliances/threat-status/', () =>
-      HttpResponse.json(emptyPaginated),
-    ),
-    http.get(baseUrl + '/rules/rule/', () => HttpResponse.json(emptyPaginated)),
-    http.get(baseUrl + '/appliances/es_beaconing_events/', () =>
-      HttpResponse.json(emptyPaginated),
-    ),
-    http.get(baseUrl + '/appliances/es_discovery_events/', () =>
-      HttpResponse.json(emptyPaginated),
-    ),
-    http.get(baseUrl + '/rules/es/alerts_tail', () =>
-      HttpResponse.json(emptyPaginated),
-    ),
-  );
-});
-
 const createTestRouter = (hostId: string) => {
   const rootRoute = createRootRoute();
-  const hostsRoute = createRoute({
+  const hostRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: 'hosts/$hostId',
   });
-  const routeTree = rootRoute.addChildren([hostsRoute]);
+  rootRoute.addChildren([hostRoute]);
   return createRouter({
-    routeTree,
+    routeTree: rootRoute,
     history: createMemoryHistory({
       initialEntries: [`/hosts/${hostId}`],
     }),
   });
 };
 
-const renderPage = async (hostId: string, multitenancy = false) =>
-  renderWithProviders(
+const renderPage = async (hostId: string, multitenancy = false) => {
+  const Component = Route.options.component!;
+  return renderWithProviders(
     <BreadcrumbProvider>
-      <HostDetails />
+      <Component />
     </BreadcrumbProvider>,
     {
       router: createTestRouter(hostId),
@@ -71,8 +51,33 @@ const renderPage = async (hostId: string, multitenancy = false) =>
       },
     },
   );
+};
 
-describe('HostDetails', () => {
+beforeEach(() => {
+  server.use(
+    http.get(baseUrl + '/appliances/host_id/*', () =>
+      HttpResponse.json(emptyPaginated),
+    ),
+    http.get('*/api/v2/appliances/threat-status/', () =>
+      HttpResponse.json(emptyPaginated),
+    ),
+    http.get(baseUrl + '/rules/rule/', () => HttpResponse.json(emptyPaginated)),
+    http.get(baseUrl + '/appliances/es_beaconing_events/', () =>
+      HttpResponse.json(emptyPaginated),
+    ),
+    http.get(baseUrl + '/appliances/es_discovery_events/', () =>
+      HttpResponse.json(emptyPaginated),
+    ),
+    http.get(baseUrl + '/rules/es/alerts_tail', () =>
+      HttpResponse.json(emptyPaginated),
+    ),
+    http.get(baseUrl + '/appliances/threat/threats_per_asset/', () =>
+      HttpResponse.json(emptyPaginated),
+    ),
+  );
+});
+
+describe('HostDetailsLayout', () => {
   it('shows invalid IP error for non-IP host IDs', async () => {
     await renderPage('not-an-ip');
 

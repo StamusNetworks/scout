@@ -3,6 +3,7 @@ import {
   Link,
   Outlet,
   useLocation,
+  useParams,
 } from '@tanstack/react-router';
 import { CircleAlert, LaptopMinimal } from 'lucide-react';
 
@@ -48,7 +49,7 @@ export const Route = createFileRoute('/_enterprise/hosts/$hostId')({
 });
 
 function HostDetailsLayout() {
-  const { hostId } = Route.useParams();
+  const { hostId } = useParams({ strict: false }) as { hostId: string };
   const { pathname } = useLocation();
 
   const params = useGlobalQueryParams(['tenant', 'dates']);
