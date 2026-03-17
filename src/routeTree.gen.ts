@@ -11,7 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UserSettingsRouteImport } from './routes/user-settings'
 import { Route as ShareRouteImport } from './routes/share'
-import { Route as SessionEventsRouteImport } from './routes/session-events'
+import { Route as NetworkEventsRouteImport } from './routes/network-events'
 import { Route as InvestigationsRouteImport } from './routes/investigations'
 import { Route as FiltersActionsRouteImport } from './routes/filters-actions'
 import { Route as FilterSetsRouteImport } from './routes/filter-sets'
@@ -100,9 +100,9 @@ const ShareRoute = ShareRouteImport.update({
   path: '/share',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SessionEventsRoute = SessionEventsRouteImport.update({
-  id: '/session-events',
-  path: '/session-events',
+const NetworkEventsRoute = NetworkEventsRouteImport.update({
+  id: '/network-events',
+  path: '/network-events',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InvestigationsRoute = InvestigationsRouteImport.update({
@@ -571,7 +571,7 @@ export interface FileRoutesByFullPath {
   '/filter-sets': typeof FilterSetsRoute
   '/filters-actions': typeof FiltersActionsRoute
   '/investigations': typeof InvestigationsRoute
-  '/session-events': typeof SessionEventsRoute
+  '/network-events': typeof NetworkEventsRoute
   '/share': typeof ShareRoute
   '/user-settings': typeof UserSettingsRoute
   '/analytics': typeof EnterpriseAnalyticsRouteRouteWithChildren
@@ -651,7 +651,7 @@ export interface FileRoutesByTo {
   '/filter-sets': typeof FilterSetsRoute
   '/filters-actions': typeof FiltersActionsRoute
   '/investigations': typeof InvestigationsRoute
-  '/session-events': typeof SessionEventsRoute
+  '/network-events': typeof NetworkEventsRoute
   '/share': typeof ShareRoute
   '/user-settings': typeof UserSettingsRoute
   '/operational-center': typeof EnterpriseOperationalCenterRoute
@@ -719,7 +719,7 @@ export interface FileRoutesById {
   '/filter-sets': typeof FilterSetsRoute
   '/filters-actions': typeof FiltersActionsRoute
   '/investigations': typeof InvestigationsRoute
-  '/session-events': typeof SessionEventsRoute
+  '/network-events': typeof NetworkEventsRoute
   '/share': typeof ShareRoute
   '/user-settings': typeof UserSettingsRoute
   '/_enterprise/analytics': typeof EnterpriseAnalyticsRouteRouteWithChildren
@@ -802,7 +802,7 @@ export interface FileRouteTypes {
     | '/filter-sets'
     | '/filters-actions'
     | '/investigations'
-    | '/session-events'
+    | '/network-events'
     | '/share'
     | '/user-settings'
     | '/analytics'
@@ -882,7 +882,7 @@ export interface FileRouteTypes {
     | '/filter-sets'
     | '/filters-actions'
     | '/investigations'
-    | '/session-events'
+    | '/network-events'
     | '/share'
     | '/user-settings'
     | '/operational-center'
@@ -949,7 +949,7 @@ export interface FileRouteTypes {
     | '/filter-sets'
     | '/filters-actions'
     | '/investigations'
-    | '/session-events'
+    | '/network-events'
     | '/share'
     | '/user-settings'
     | '/_enterprise/analytics'
@@ -1032,7 +1032,7 @@ export interface RootRouteChildren {
   FilterSetsRoute: typeof FilterSetsRoute
   FiltersActionsRoute: typeof FiltersActionsRoute
   InvestigationsRoute: typeof InvestigationsRoute
-  SessionEventsRoute: typeof SessionEventsRoute
+  NetworkEventsRoute: typeof NetworkEventsRoute
   ShareRoute: typeof ShareRoute
   UserSettingsRoute: typeof UserSettingsRoute
   DetectionMethodsDetectionMethodIdRoute: typeof DetectionMethodsDetectionMethodIdRoute
@@ -1055,11 +1055,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShareRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/session-events': {
-      id: '/session-events'
-      path: '/session-events'
-      fullPath: '/session-events'
-      preLoaderRoute: typeof SessionEventsRouteImport
+    '/network-events': {
+      id: '/network-events'
+      path: '/network-events'
+      fullPath: '/network-events'
+      preLoaderRoute: typeof NetworkEventsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/investigations': {
@@ -1988,7 +1988,7 @@ const rootRouteChildren: RootRouteChildren = {
   FilterSetsRoute: FilterSetsRoute,
   FiltersActionsRoute: FiltersActionsRoute,
   InvestigationsRoute: InvestigationsRoute,
-  SessionEventsRoute: SessionEventsRoute,
+  NetworkEventsRoute: NetworkEventsRoute,
   ShareRoute: ShareRoute,
   UserSettingsRoute: UserSettingsRoute,
   DetectionMethodsDetectionMethodIdRoute:

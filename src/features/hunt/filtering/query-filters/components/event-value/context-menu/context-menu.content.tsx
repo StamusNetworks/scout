@@ -172,11 +172,11 @@ export const ContextMenuContent = ({
           See detection events
         </ContextMenuItem>
       )}
-      {!pathname.startsWith('/session-events') && (
+      {!pathname.startsWith('/network-events') && (
         <ContextMenuItem
           onClick={() => {
             dispatch(replaceFilters([{ key: query_key, value }]));
-            navigate({ to: '/session-events' });
+            navigate({ to: '/network-events' });
           }}
           disabled={startsWithOneOf(query_key, [
             'alert.',

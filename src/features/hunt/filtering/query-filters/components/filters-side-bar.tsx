@@ -171,7 +171,7 @@ export const FiltersSideBar = () => {
           FilterCategory.HOST,
         ],
       },
-      '/session-events': {
+      '/network-events': {
         enabled: ['query_filters'],
         filterTypes: [FilterCategory.EVENT],
         getIsInapplicable: (filter) =>

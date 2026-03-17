@@ -198,9 +198,9 @@ export const defaultMenu = (
         icon: <Workflow />,
       },
       {
-        key: 'session-events',
+        key: 'network-events',
         type: 'link',
-        url: '/session-events',
+        url: '/network-events',
         title: 'Network Events',
         icon: <ArrowDownUp />,
       },

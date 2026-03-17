@@ -285,7 +285,7 @@ function FilterSetTransactionsBadge({
   });
   const onClickHandler = () => {
     loadFilterSet(filterSet);
-    navigate({ to: '/session-events' });
+    navigate({ to: '/network-events' });
   };
   return (
     <FilterSetBadge

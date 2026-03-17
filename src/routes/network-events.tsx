@@ -3,9 +3,9 @@ import { createFileRoute } from '@tanstack/react-router';
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { TransactionsPage } from '@/pages/transactions';
 
-export const Route = createFileRoute('/session-events')({
+export const Route = createFileRoute('/network-events')({
   component: () => (
-    <PageBoundary key="session-events">
+    <PageBoundary key="network-events">
       <TransactionsPage />
     </PageBoundary>
   ),

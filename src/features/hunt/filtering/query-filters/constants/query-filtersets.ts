@@ -32,8 +32,8 @@ export const filterSetPageConfig: Record<
     route: '/detection-methods',
   },
   SESSION_EVENTS: {
-    label: 'Session Events',
+    label: 'Network Events',
     icon: ArrowDownUp,
-    route: '/session-events',
+    route: '/network-events',
   },
 };
