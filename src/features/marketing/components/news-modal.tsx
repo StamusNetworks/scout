@@ -51,7 +51,7 @@ export const NewsFeedModal = () => {
           </VisuallyHidden>
           <VisuallyHidden>
             <DialogDescription>
-              News about the Clear NDR platform from our blog
+              News about the Clear NDR® platform from our blog
             </DialogDescription>
           </VisuallyHidden>
           <NewsFeed />

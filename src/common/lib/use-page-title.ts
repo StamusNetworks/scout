@@ -5,7 +5,7 @@ export const usePageTitle = (title: string, override?: boolean) => {
     if (override) {
       document.title = title;
     } else {
-      document.title = `Clear NDR - ${title}`;
+      document.title = `Clear NDR® - ${title}`;
     }
   }, [title, override]);
 };

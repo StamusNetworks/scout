@@ -129,7 +129,7 @@ const SidebarHeaderContent = () => {
             <>
               <span className="text-lg font-black">/</span>
               <span className="text-lg font-light tracking-wide">
-                Clear NDR
+                Clear NDR®
               </span>
             </>
           )}

@@ -66,7 +66,7 @@ export const HelpMenu = () => {
                 className="flex items-center"
               >
                 <BookMarked className="mr-2" />
-                Clear NDR Documentation
+                Clear NDR® Documentation
               </a>
             </DropdownMenuItem>
           )}
@@ -103,9 +103,9 @@ export const HelpMenu = () => {
         </DropdownMenuContent>
       </DropdownMenu>
       <DialogContent>
-        <DialogTitle>Clear NDR</DialogTitle>
+        <DialogTitle>Clear NDR®</DialogTitle>
         <DialogDescription>
-          Information about your Clear NDR installation.
+          Information about your Clear NDR® installation.
         </DialogDescription>
         <Column>
           <ul className="list-inside list-disc text-sm">

@@ -27,7 +27,7 @@ export const ViolationsPage = () => {
             <PageTitle>Policy Violations</PageTitle>
             <PageDescription>
               Gain a comprehensive, real-time overview of active and historical
-              Declaration of Policy Violations™ in your environment. Use
+              Declaration of Policy Violations® in your environment. Use
               filtering to investigate policy violations, assess impact, explore
               relationships, empowering confident security decision-making and
               rapid remediation.

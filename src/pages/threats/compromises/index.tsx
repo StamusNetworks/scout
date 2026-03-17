@@ -27,7 +27,7 @@ export const CompromisesPage = () => {
             <PageTitle>Compromises</PageTitle>
             <PageDescription>
               Gain a comprehensive, real-time overview of active and historical
-              Declarations of Compromise™ in your environment. Use filtering and
+              Declarations of Compromise® in your environment. Use filtering and
               visualization tools to investigate compromises, assess impact,
               explore relationships, empowering confident security
               decision-making and rapid incident response.
