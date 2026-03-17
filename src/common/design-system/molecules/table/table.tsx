@@ -55,7 +55,7 @@ import {
 } from '../../atoms/ui/empty';
 import { Skeleton } from '../../atoms/ui/skeleton';
 
-interface TableProps<TData> {
+export interface TableProps<TData> {
   data: TData[];
   columns: CustomColumnDef<TData>[];
   isLoading?: boolean;
