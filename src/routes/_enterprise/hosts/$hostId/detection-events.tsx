@@ -1,4 +1,8 @@
-import { createFileRoute, useParams } from '@tanstack/react-router';
+import {
+  createFileRoute,
+  useNavigate,
+  useParams,
+} from '@tanstack/react-router';
 import { Binary } from 'lucide-react';
 import { useMemo } from 'react';
 import { z } from 'zod';
@@ -92,11 +96,21 @@ function HostDetectionEventsTab() {
   // Global state from Redux
   const globals = useGlobalQueryParams(['tenant', 'dates']);
 
+  const search = Route.useSearch();
+  const tanstackNavigate = useNavigate();
+  const navigate = (opts: {
+    search: (prev: Record<string, unknown>) => Record<string, unknown>;
+    replace?: boolean;
+  }) => tanstackNavigate(opts as Parameters<typeof tanstackNavigate>[0]);
+
   // Page-level state from URL search params
   const { page, pageSize, sorting, setPage, setPageSize, onSortingChange } =
-    usePaginatedSearch(Route, {
-      resetOn: [globals.tenant, globals.start_date, globals.end_date],
-    });
+    usePaginatedSearch(
+      { search, navigate },
+      {
+        resetOn: [globals.tenant, globals.start_date, globals.end_date],
+      },
+    );
 
   // Build query params for the API
   const hostQfilter = `(src_ip:"${esEscape(hostId ?? '')}" OR dest_ip:"${esEscape(hostId ?? '')}")`;

@@ -3,21 +3,18 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { usePaginatedSearch } from './use-paginated-search';
 
-function makeRoute(search: Record<string, unknown>) {
+function makeParams(search: Record<string, unknown>) {
   const navigate = vi.fn();
-  const route = {
-    useSearch: () => search,
-    useNavigate: () => navigate,
-  };
-  return { route, navigate };
+  const params = { search, navigate };
+  return { params, navigate };
 }
 
 describe('usePaginatedSearch', () => {
   describe('reading from search params', () => {
     it('returns page and pageSize from search params', () => {
-      const { route } = makeRoute({ page: 3, page_size: 25 });
+      const { params } = makeParams({ page: 3, page_size: 25 });
       const { result } = renderHook(() =>
-        usePaginatedSearch(route, { resetOn: ['tenant-1'] }),
+        usePaginatedSearch(params, { resetOn: ['tenant-1'] }),
       );
 
       expect(result.current.page).toBe(3);
@@ -25,45 +22,45 @@ describe('usePaginatedSearch', () => {
     });
 
     it('defaults page to 1 when not present in search', () => {
-      const { route } = makeRoute({});
+      const { params } = makeParams({});
       const { result } = renderHook(() =>
-        usePaginatedSearch(route, { resetOn: [] }),
+        usePaginatedSearch(params, { resetOn: [] }),
       );
 
       expect(result.current.page).toBe(1);
     });
 
     it('defaults pageSize to 10 when not present in search', () => {
-      const { route } = makeRoute({});
+      const { params } = makeParams({});
       const { result } = renderHook(() =>
-        usePaginatedSearch(route, { resetOn: [] }),
+        usePaginatedSearch(params, { resetOn: [] }),
       );
 
       expect(result.current.pageSize).toBe(10);
     });
 
     it('uses custom defaultPageSize when provided', () => {
-      const { route } = makeRoute({});
+      const { params } = makeParams({});
       const { result } = renderHook(() =>
-        usePaginatedSearch(route, { resetOn: [], defaultPageSize: 50 }),
+        usePaginatedSearch(params, { resetOn: [], defaultPageSize: 50 }),
       );
 
       expect(result.current.pageSize).toBe(50);
     });
 
     it('parses sorting from sort string (descending)', () => {
-      const { route } = makeRoute({ sort: '-timestamp' });
+      const { params } = makeParams({ sort: '-timestamp' });
       const { result } = renderHook(() =>
-        usePaginatedSearch(route, { resetOn: [] }),
+        usePaginatedSearch(params, { resetOn: [] }),
       );
 
       expect(result.current.sorting).toEqual([{ id: 'timestamp', desc: true }]);
     });
 
     it('parses sorting from sort string (ascending)', () => {
-      const { route } = makeRoute({ sort: 'timestamp' });
+      const { params } = makeParams({ sort: 'timestamp' });
       const { result } = renderHook(() =>
-        usePaginatedSearch(route, { resetOn: [] }),
+        usePaginatedSearch(params, { resetOn: [] }),
       );
 
       expect(result.current.sorting).toEqual([
@@ -72,9 +69,9 @@ describe('usePaginatedSearch', () => {
     });
 
     it('returns empty sorting when sort is not present', () => {
-      const { route } = makeRoute({});
+      const { params } = makeParams({});
       const { result } = renderHook(() =>
-        usePaginatedSearch(route, { resetOn: [] }),
+        usePaginatedSearch(params, { resetOn: [] }),
       );
 
       expect(result.current.sorting).toEqual([]);
@@ -86,13 +83,10 @@ describe('usePaginatedSearch', () => {
       let resetOn = ['tenant-1'];
       const search: Record<string, unknown> = { page: 3, page_size: 10 };
       const navigate = vi.fn();
-      const route = {
-        useSearch: () => search,
-        useNavigate: () => navigate,
-      };
+      const params = { search, navigate };
 
       const { result, rerender } = renderHook(() =>
-        usePaginatedSearch(route, { resetOn }),
+        usePaginatedSearch(params, { resetOn }),
       );
 
       expect(result.current.page).toBe(3);
@@ -108,13 +102,10 @@ describe('usePaginatedSearch', () => {
       let resetOn = ['tenant-1'];
       const search: Record<string, unknown> = { page: 3, page_size: 10 };
       const navigate = vi.fn();
-      const route = {
-        useSearch: () => search,
-        useNavigate: () => navigate,
-      };
+      const params = { search, navigate };
 
       const { rerender } = renderHook(() =>
-        usePaginatedSearch(route, { resetOn }),
+        usePaginatedSearch(params, { resetOn }),
       );
 
       resetOn = ['tenant-2'];
@@ -134,13 +125,10 @@ describe('usePaginatedSearch', () => {
       let resetOn = ['tenant-1'];
       const search: Record<string, unknown> = { page: 1, page_size: 10 };
       const navigate = vi.fn();
-      const route = {
-        useSearch: () => search,
-        useNavigate: () => navigate,
-      };
+      const params = { search, navigate };
 
       const { rerender } = renderHook(() =>
-        usePaginatedSearch(route, { resetOn }),
+        usePaginatedSearch(params, { resetOn }),
       );
 
       resetOn = ['tenant-2'];
@@ -154,13 +142,10 @@ describe('usePaginatedSearch', () => {
       let resetOn = ['tenant-1', 'filter-abc'];
       const search: Record<string, unknown> = { page: 3, page_size: 10 };
       const navigate = vi.fn();
-      const route = {
-        useSearch: () => search,
-        useNavigate: () => navigate,
-      };
+      const params = { search, navigate };
 
       const { result, rerender } = renderHook(() =>
-        usePaginatedSearch(route, { resetOn }),
+        usePaginatedSearch(params, { resetOn }),
       );
 
       expect(result.current.page).toBe(3);
@@ -174,9 +159,9 @@ describe('usePaginatedSearch', () => {
     });
 
     it('does NOT reset page on first render', () => {
-      const { route, navigate } = makeRoute({ page: 5, page_size: 10 });
+      const { params, navigate } = makeParams({ page: 5, page_size: 10 });
       const { result } = renderHook(() =>
-        usePaginatedSearch(route, { resetOn: ['tenant-1'] }),
+        usePaginatedSearch(params, { resetOn: ['tenant-1'] }),
       );
 
       expect(result.current.page).toBe(5);
@@ -186,9 +171,9 @@ describe('usePaginatedSearch', () => {
 
   describe('setPage', () => {
     it('calls navigate with updated page', () => {
-      const { route, navigate } = makeRoute({ page: 1, page_size: 10 });
+      const { params, navigate } = makeParams({ page: 1, page_size: 10 });
       const { result } = renderHook(() =>
-        usePaginatedSearch(route, { resetOn: [] }),
+        usePaginatedSearch(params, { resetOn: [] }),
       );
 
       act(() => {
@@ -206,9 +191,9 @@ describe('usePaginatedSearch', () => {
 
   describe('setPageSize', () => {
     it('calls navigate with updated page_size and resets page to 1', () => {
-      const { route, navigate } = makeRoute({ page: 3, page_size: 10 });
+      const { params, navigate } = makeParams({ page: 3, page_size: 10 });
       const { result } = renderHook(() =>
-        usePaginatedSearch(route, { resetOn: [] }),
+        usePaginatedSearch(params, { resetOn: [] }),
       );
 
       act(() => {
@@ -226,9 +211,9 @@ describe('usePaginatedSearch', () => {
 
   describe('setSorting', () => {
     it('calls navigate with serialized sort and resets page to 1', () => {
-      const { route, navigate } = makeRoute({ page: 3, page_size: 10 });
+      const { params, navigate } = makeParams({ page: 3, page_size: 10 });
       const { result } = renderHook(() =>
-        usePaginatedSearch(route, { resetOn: [] }),
+        usePaginatedSearch(params, { resetOn: [] }),
       );
 
       act(() => {
@@ -245,13 +230,13 @@ describe('usePaginatedSearch', () => {
     });
 
     it('calls navigate with undefined sort when sorting is empty', () => {
-      const { route, navigate } = makeRoute({
+      const { params, navigate } = makeParams({
         page: 1,
         page_size: 10,
         sort: '-timestamp',
       });
       const { result } = renderHook(() =>
-        usePaginatedSearch(route, { resetOn: [] }),
+        usePaginatedSearch(params, { resetOn: [] }),
       );
 
       act(() => {

@@ -20,9 +20,9 @@ interface PaginatedSearchResult {
 }
 
 export function usePaginatedSearch(
-  route: {
-    useSearch: () => Record<string, unknown>;
-    useNavigate: () => (opts: {
+  params: {
+    search: Record<string, unknown>;
+    navigate: (opts: {
       search: (prev: Record<string, unknown>) => Record<string, unknown>;
       replace?: boolean;
     }) => void;
@@ -30,8 +30,7 @@ export function usePaginatedSearch(
   options: PaginatedSearchOptions,
 ): PaginatedSearchResult {
   const { resetOn, defaultPageSize = 10 } = options;
-  const search = route.useSearch();
-  const navigate = route.useNavigate();
+  const { search, navigate } = params;
   const prevDepsRef = useRef<unknown[]>(resetOn);
 
   // Shallow compare each element to detect dep changes

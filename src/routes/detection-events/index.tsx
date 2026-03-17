@@ -184,7 +184,12 @@ function DetectionEventsPage() {
   usePageTitle('Events');
 
   const { enterprise } = useFeatureFlags();
-  const navigate = useNavigate();
+  const search = Route.useSearch();
+  const tanstackNavigate = useNavigate();
+  const navigate = (opts: {
+    search: (prev: Record<string, unknown>) => Record<string, unknown>;
+    replace?: boolean;
+  }) => tanstackNavigate(opts as Parameters<typeof tanstackNavigate>[0]);
 
   // Global state from Redux
   const globals = useGlobalQueryParams([
@@ -196,15 +201,18 @@ function DetectionEventsPage() {
 
   // Page-level state from URL search params
   const { page, pageSize, sorting, setPage, setPageSize, onSortingChange } =
-    usePaginatedSearch(Route, {
-      resetOn: [
-        globals.tenant,
-        globals.start_date,
-        globals.end_date,
-        globals.qfilter,
-        globals.host_id_qfilter,
-      ],
-    });
+    usePaginatedSearch(
+      { search, navigate },
+      {
+        resetOn: [
+          globals.tenant,
+          globals.start_date,
+          globals.end_date,
+          globals.qfilter,
+          globals.host_id_qfilter,
+        ],
+      },
+    );
 
   // Build query params for the API
   const ordering = serializeSorting(sorting);
@@ -250,8 +258,8 @@ function DetectionEventsPage() {
   // Row click navigates to event detail
   const onRowClick = useCallback(
     (row: TableRow<Event>) =>
-      navigate({ to: `/detection-events/event?_id=${row.original._id}` }),
-    [navigate],
+      tanstackNavigate({ to: `/detection-events/event?_id=${row.original._id}` }),
+    [tanstackNavigate],
   );
 
   const results = data?.results ?? [];
