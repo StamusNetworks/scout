@@ -14,9 +14,7 @@ import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { EventsCounter } from '@/features/hunt/dashboard/components/events-counter';
 import { EventsTable } from '@/features/hunt/events/components/events-table/events-table';
-import { setDates } from '@/features/hunt/filtering/dates-filters/dates-filters.slice';
 import { useTimeline } from '@/features/hunt/timeline/api/hooks/useTimeline';
-import { useAppDispatch } from '@/store/store';
 
 export const Events = () => {
   usePageTitle('Events');
@@ -40,17 +38,6 @@ export const EventsCountTimeline = () => {
   const compChartTarget = enterprise ? chartTarget : false;
 
   const { data } = useTimeline(compChartTarget);
-
-  const dispatch = useAppDispatch();
-  const handleBarClick = (obj: { time: number }) => {
-    dispatch(
-      setDates({
-        type: 'range',
-        start_date: obj.time,
-        end_date: obj.time + (data?.interval || 0),
-      }),
-    );
-  };
 
   return (
     <Column>
@@ -78,7 +65,6 @@ export const EventsCountTimeline = () => {
         <BarChartTimeline
           data={data}
           className="h-[250px]"
-          onBarClick={handleBarClick}
         />
       )}
     </Column>

@@ -1,7 +1,6 @@
-import { useNavigate } from '@tanstack/react-router';
 import { add, format } from 'date-fns';
-import { useCallback, useMemo } from 'react';
-import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
+import { useMemo } from 'react';
+import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 import {
   NameType,
   Payload,
@@ -20,10 +19,6 @@ import {
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { cn } from '@/common/lib/utils';
 import { useGetEventsTimelineQuery } from '@/features/hunt/events/api/events.api';
-import { setDates } from '@/features/hunt/filtering/dates-filters/dates-filters.slice';
-import { replaceFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
-import { enableTags } from '@/features/hunt/filtering/query-filters/use-cases/enable-tags';
-import { useAppDispatch } from '@/store/store';
 
 const chartConfig = {
   // pre_condition: {
@@ -83,36 +78,68 @@ export const CipherSecurity = () => {
     }));
   }, [recommendedData, insecureData, degradedData]);
 
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
-  const handleClick = useCallback(
-    (
-      value: 'recommended' | 'insecure' | 'degraded',
-      payload: { time: number },
-    ) => {
-      enableTags(dispatch);
-      dispatch(
-        setDates({
-          type: 'range',
-          start_date: payload.time,
-          end_date: add(payload.time, {
-            seconds: interval,
-          }).getTime(),
-        }),
-      );
-      dispatch(replaceFilters([{ key: 'tls.cipher_security', value }]));
-      navigate({ to: '/session-events' });
-    },
-    [interval, dispatch, navigate],
-  );
-
   return (
     <ChartContainer
       config={chartConfig}
       className={cn('aspect-auto h-[250px] w-full')}
     >
-      <BarChart data={data}>
+      <AreaChart data={data}>
+        <defs>
+          <linearGradient
+            id="gradient-recommended"
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="1"
+          >
+            <stop
+              offset="0%"
+              stopColor="var(--color-recommended)"
+              stopOpacity={0.6}
+            />
+            <stop
+              offset="100%"
+              stopColor="var(--color-recommended)"
+              stopOpacity={0.05}
+            />
+          </linearGradient>
+          <linearGradient
+            id="gradient-degraded"
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="1"
+          >
+            <stop
+              offset="0%"
+              stopColor="var(--color-degraded)"
+              stopOpacity={0.6}
+            />
+            <stop
+              offset="100%"
+              stopColor="var(--color-degraded)"
+              stopOpacity={0.05}
+            />
+          </linearGradient>
+          <linearGradient
+            id="gradient-insecure"
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="1"
+          >
+            <stop
+              offset="0%"
+              stopColor="var(--color-insecure)"
+              stopOpacity={0.6}
+            />
+            <stop
+              offset="100%"
+              stopColor="var(--color-insecure)"
+              stopOpacity={0.05}
+            />
+          </linearGradient>
+        </defs>
         <CartesianGrid vertical={false} />
         <XAxis
           dataKey="time"
@@ -170,29 +197,38 @@ export const CipherSecurity = () => {
             />
           }
         />
-        <Bar
-          key={'recommended'}
-          stackId="a"
-          dataKey="recommended"
-          fill={`var(--color-recommended)`}
-          onClick={({ payload }) => handleClick('recommended', payload)}
-        />
-        <Bar
-          key={'degraded'}
-          stackId="a"
-          dataKey="degraded"
-          fill={`var(--color-degraded)`}
-          onClick={({ payload }) => handleClick('degraded', payload)}
-        />
-        <Bar
+        <Area
           key={'insecure'}
+          type="monotone"
           stackId="a"
           dataKey="insecure"
-          fill={`var(--color-insecure)`}
-          onClick={({ payload }) => handleClick('insecure', payload)}
+          fill="url(#gradient-insecure)"
+          stroke={`var(--color-insecure)`}
+          strokeWidth={1.5}
+          fillOpacity={1}
+        />
+        <Area
+          key={'degraded'}
+          type="monotone"
+          stackId="a"
+          dataKey="degraded"
+          fill="url(#gradient-degraded)"
+          stroke={`var(--color-degraded)`}
+          strokeWidth={1.5}
+          fillOpacity={1}
+        />
+        <Area
+          key={'recommended'}
+          type="monotone"
+          stackId="a"
+          dataKey="recommended"
+          fill="url(#gradient-recommended)"
+          stroke={`var(--color-recommended)`}
+          strokeWidth={1.5}
+          fillOpacity={1}
         />
         <ChartLegend content={<ChartLegendContent />} />
-      </BarChart>
+      </AreaChart>
     </ChartContainer>
   );
 };

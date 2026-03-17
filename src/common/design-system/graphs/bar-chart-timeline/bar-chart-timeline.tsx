@@ -1,7 +1,7 @@
 import { add, format } from 'date-fns';
 import { toPairs } from 'ramda';
 import * as React from 'react';
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 import {
   NameType,
   Payload,
@@ -23,11 +23,9 @@ import { getTimelineData } from './bar-chart-timeline.utils';
 export const BarChartTimeline = ({
   data,
   className,
-  onBarClick,
 }: {
   data: CountsTimeline;
   className?: string;
-  onBarClick?: (obj: { time: number }) => void;
 }) => {
   const chart = React.useMemo(() => {
     if (!data)
@@ -46,11 +44,34 @@ export const BarChartTimeline = ({
       config={chart.chartConfig || {}}
       className={cn('aspect-auto h-[250px] w-full', className)}
     >
-      <BarChart
+      <AreaChart
         accessibilityLayer
         data={chart.chartData}
-        barGap={1}
       >
+        <defs>
+          {typeof chart.chartData === 'object' &&
+            toPairs(chart.chartConfig).map(([key, value]) => (
+              <linearGradient
+                key={key}
+                id={`gradient-${key}`}
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="1"
+              >
+                <stop
+                  offset="0%"
+                  stopColor={value.color}
+                  stopOpacity={0.6}
+                />
+                <stop
+                  offset="100%"
+                  stopColor={value.color}
+                  stopOpacity={0.05}
+                />
+              </linearGradient>
+            ))}
+        </defs>
         <CartesianGrid vertical={false} />
         <YAxis />
         <XAxis
@@ -111,17 +132,18 @@ export const BarChartTimeline = ({
         />
         {typeof chart.chartData === 'object' &&
           toPairs(chart.chartConfig).map(([key, value]) => (
-            <Bar
+            <Area
               key={key}
+              type="monotone"
               dataKey={key}
-              fill={value.color}
-              radius={0}
+              fill={`url(#gradient-${key})`}
+              stroke={value.color}
+              strokeWidth={1.5}
+              fillOpacity={1}
               stackId="stack1"
-              /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-              onClick={onBarClick as any}
             />
           ))}
-      </BarChart>
+      </AreaChart>
     </ChartContainer>
   );
 };

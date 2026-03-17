@@ -35,7 +35,6 @@ import {
   SyntheticTab,
 } from '@/features/hunt/events/components/event-detail-tabs';
 import { Event } from '@/features/hunt/events/model/event.schema';
-import { setDates } from '@/features/hunt/filtering/dates-filters/dates-filters.slice';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 import { FilterLabel } from '@/features/hunt/filtering/query-filters/components/filter-label';
 import { FilterCategory } from '@/features/hunt/filtering/query-filters/constants/query-filter.config';
@@ -47,7 +46,7 @@ import { killChainsConfig } from '@/features/hunt/killchain/killchain';
 import { ThreatTag } from '@/features/hunt/threats/components/threat-tag';
 import { CountsTimeline } from '@/features/hunt/timeline/models/counts-timeline.model';
 import { selectDefaultEventDetailTab } from '@/features/ui/preferences/preferences.slice';
-import { useAppDispatch, useAppSelector } from '@/store/store';
+import { useAppSelector } from '@/store/store';
 
 export const TransactionsPage = () => {
   const [groupByFlow, setGroupByFlow] = useState(true);
@@ -601,22 +600,10 @@ export const EventsCountTimeline = ({ qfilter }: { qfilter: string }) => {
     },
   );
 
-  const dispatch = useAppDispatch();
-  const handleBarClick = (obj: { time: number }) => {
-    dispatch(
-      setDates({
-        type: 'range',
-        start_date: obj.time,
-        end_date: obj.time + (data?.interval || 0),
-      }),
-    );
-  };
-
   return (
     <BarChartTimeline
       data={data as unknown as CountsTimeline}
       className="h-[250px]"
-      onBarClick={handleBarClick}
     />
   );
 };
