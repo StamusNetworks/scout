@@ -8,7 +8,7 @@ import { Hostname } from '@/features/analytics/hosts/components/host-details/hos
 import { Network } from '@/features/analytics/hosts/components/host-details/network';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 
-import type { Event } from './model/event.schema';
+import type { Event } from './events.model';
 
 export const EXPANDER_COLUMN: CustomColumnDef<Event> = {
   id: 'event-expanded',

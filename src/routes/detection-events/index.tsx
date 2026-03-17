@@ -26,7 +26,8 @@ import { Table } from '@/common/design-system/molecules/table';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { usePageTitle } from '@/common/lib/use-page-title';
-import { useGetEventsQuery } from '@/features/events/common/api/events.api';
+import { useGetEventsQuery } from '@/features/events/common/events.api';
+import type { Event } from '@/features/events/common/events.model';
 import {
   DESTINATION_COLUMN,
   EXPANDER_COLUMN,
@@ -36,7 +37,6 @@ import {
   SOURCE_COLUMN,
   TIMESTAMP_COLUMN,
 } from '@/features/events/common/events.table';
-import type { Event } from '@/features/events/common/model/event.schema';
 import {
   CATEGORY_COLUMN,
   EXPORT_COLUMNS,

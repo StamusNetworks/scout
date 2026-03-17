@@ -17,7 +17,8 @@ import { PaginationFooter } from '@/common/design-system/molecules/pagination-fo
 import { Table } from '@/common/design-system/molecules/table';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { esEscape } from '@/common/lib/strings';
-import { useGetEventsQuery } from '@/features/events/common/api/events.api';
+import { useGetEventsQuery } from '@/features/events/common/events.api';
+import type { Event } from '@/features/events/common/events.model';
 import {
   DESTINATION_COLUMN,
   EXPANDER_COLUMN,
@@ -27,7 +28,6 @@ import {
   SOURCE_COLUMN,
   TIMESTAMP_COLUMN,
 } from '@/features/events/common/events.table';
-import type { Event } from '@/features/events/common/model/event.schema';
 import {
   CATEGORY_COLUMN,
   LATERAL_COLUMN,

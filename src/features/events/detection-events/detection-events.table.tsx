@@ -9,7 +9,7 @@ import type { CustomColumnDef } from '@/common/design-system/molecules/data-tabl
 import { cn } from '@/common/lib/utils';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 
-import type { Event } from '../common/model/event.schema';
+import type { Event } from '../common/events.model';
 
 export const TAG_COLUMN: CustomColumnDef<Event> = {
   id: 'tag',
