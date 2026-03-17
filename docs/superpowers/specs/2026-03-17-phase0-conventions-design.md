@@ -339,7 +339,13 @@ Where:
 
 This decouples entities from the router — they receive search/navigate as props and can be tested in isolation.
 
-The two existing routes (`/detection-events` and `/hosts/$hostId/detection-events`) are updated to the new signature.
+The `navigate` function should be `Route.useNavigate()` — the route-scoped version from TanStack Router. This is what the route calls and passes to the entity.
+
+The two existing routes (`/detection-events` and `/hosts/$hostId/detection-events`) are updated to the new signature. They currently call `usePaginatedSearch(Route, ...)` — change to `usePaginatedSearch({ search: Route.useSearch(), navigate: Route.useNavigate() }, ...)`.
+
+### Relationship to `useServerTableState`
+
+The existing `useServerTableState` hook (used by ~24 files) serves a similar purpose but with a different API (`pagination`/`setPagination` vs `page`/`setPage`). It is **not** refactored in Phase 0. Pages that currently use `useServerTableState` will be migrated to `usePaginatedSearch` when their feature is migrated in later phases. Both hooks coexist during the transition.
 
 ## Example Migration: `/detection-methods`
 
@@ -364,10 +370,20 @@ routes/detection-methods/
 └── index.tsx                       # thin orchestrator with Page/PageHeader + entity
 ```
 
+### Scope
+
+Phase 0 migrates only the **list page** (`/detection-methods` index). The detail page (`/detection-methods/$detectionMethodId`), signature analysis, signature flow, ruleset status, and other sub-components are migrated in Phase 4.
+
+The table entity must preserve all existing functionality from the current `SignaturesTable`:
+- All existing columns and filters (including `with_alerts` switch filter and `sid` filter from Redux query filters)
+- Expanded row component
+- Export columns
+- Column preferences persistence
+
 ### Migration Steps
 
 1. Create `features/detection-methods/` with model, API (re-exports initially), table definition
-2. Create the `DetectionMethodsTable` entity
+2. Create the `DetectionMethodsTable` entity preserving all existing table functionality
 3. Rewrite route as thin orchestrator using `Page`/`PageHeader`
 4. Delete `src/pages/detection-methods/`
 
