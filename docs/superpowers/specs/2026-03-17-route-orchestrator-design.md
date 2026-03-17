@@ -239,6 +239,18 @@ interface TableProps<T> {
 
 No toolbar. No pagination. No server-side hooks. Just renders rows.
 
+### Error Handling
+
+Routes use TanStack Router's built-in `errorComponent` option instead of the current `PageBoundary` wrapper:
+
+```ts
+export const Route = createFileRoute('/detection-events')({
+  validateSearch: searchSchema,
+  component: DetectionEventsPage,
+  errorComponent: RouteErrorBoundary,
+})
+```
+
 ### PaginationFooter
 
 A standalone dumb molecule in common.
