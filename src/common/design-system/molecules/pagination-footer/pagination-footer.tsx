@@ -22,7 +22,7 @@ export function PaginationFooter({
     <Pagination
       areSomeRowsSelected={false}
       selectedRowsCount={0}
-      rowsCount={Math.min(pageSize, total - pageIndex * pageSize)}
+      rowsCount={Math.max(0, Math.min(pageSize, total - pageIndex * pageSize))}
       totalCount={total}
       pageSize={pageSize}
       pageIndex={pageIndex}

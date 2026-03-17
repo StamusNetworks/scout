@@ -1,7 +1,6 @@
 import { createFileRoute, useParams } from '@tanstack/react-router';
-import { SortingState, Updater } from '@tanstack/react-table';
 import { Binary } from 'lucide-react';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { z } from 'zod';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
@@ -94,7 +93,7 @@ function HostDetectionEventsTab() {
   const globals = useGlobalQueryParams(['tenant', 'dates']);
 
   // Page-level state from URL search params
-  const { page, pageSize, sorting, setPage, setPageSize, setSorting } =
+  const { page, pageSize, sorting, setPage, setPageSize, onSortingChange } =
     usePaginatedSearch(Route, {
       resetOn: [globals.tenant, globals.start_date, globals.end_date],
     });
@@ -149,15 +148,6 @@ function HostDetectionEventsTab() {
     columns: COLUMNS,
   });
 
-  // Bridge setSorting for Table's onSortingChange (Updater<SortingState>)
-  const handleSortingChange = useCallback(
-    (updater: Updater<SortingState>) => {
-      const next = typeof updater === 'function' ? updater(sorting) : updater;
-      setSorting(next);
-    },
-    [sorting, setSorting],
-  );
-
   const results = data?.results ?? [];
   const total = data?.count ?? 0;
 
@@ -175,7 +165,7 @@ function HostDetectionEventsTab() {
         columns={COLUMNS}
         isLoading={isFetching}
         sorting={sorting}
-        onSortingChange={handleSortingChange}
+        onSortingChange={onSortingChange}
         columnVisibility={columnVisibility}
         onColumnVisibilityChange={onColumnVisibilityChange}
         columnOrder={columnOrder}

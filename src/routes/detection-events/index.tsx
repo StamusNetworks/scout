@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { Row as TableRow, SortingState, Updater } from '@tanstack/react-table';
+import { Row as TableRow } from '@tanstack/react-table';
 import { Binary, RotateCcw } from 'lucide-react';
 import { useCallback, useMemo, useState } from 'react';
 import { z } from 'zod';
@@ -195,7 +195,7 @@ function DetectionEventsPage() {
   ]);
 
   // Page-level state from URL search params
-  const { page, pageSize, sorting, setPage, setPageSize, setSorting } =
+  const { page, pageSize, sorting, setPage, setPageSize, onSortingChange } =
     usePaginatedSearch(Route, {
       resetOn: [
         globals.tenant,
@@ -247,15 +247,6 @@ function DetectionEventsPage() {
     columns,
   });
 
-  // Bridge setSorting for Table's onSortingChange (Updater<SortingState>)
-  const handleSortingChange = useCallback(
-    (updater: Updater<SortingState>) => {
-      const next = typeof updater === 'function' ? updater(sorting) : updater;
-      setSorting(next);
-    },
-    [sorting, setSorting],
-  );
-
   // Row click navigates to event detail
   const onRowClick = useCallback(
     (row: TableRow<Event>) =>
@@ -305,7 +296,7 @@ function DetectionEventsPage() {
           columns={columns}
           isLoading={isFetching}
           sorting={sorting}
-          onSortingChange={handleSortingChange}
+          onSortingChange={onSortingChange}
           columnVisibility={columnVisibility}
           onColumnVisibilityChange={onColumnVisibilityChange}
           columnOrder={columnOrder}

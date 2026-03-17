@@ -1,5 +1,5 @@
-import type { SortingState } from '@tanstack/react-table';
-import { useRef } from 'react';
+import type { SortingState, Updater } from '@tanstack/react-table';
+import { useCallback, useRef } from 'react';
 
 import { parseSorting, serializeSorting } from './sorting-parser';
 
@@ -15,6 +15,8 @@ interface PaginatedSearchResult {
   setPage: (page: number) => void;
   setPageSize: (pageSize: number) => void;
   setSorting: (sorting: SortingState) => void;
+  /** Accepts Updater<SortingState> — pass directly to Table's onSortingChange */
+  onSortingChange: (updater: Updater<SortingState>) => void;
 }
 
 export function usePaginatedSearch(
@@ -69,5 +71,23 @@ export function usePaginatedSearch(
     navigate({ search: (prev) => ({ ...prev, sort: serialized, page: 1 }) });
   };
 
-  return { page, pageSize, sorting, setPage, setPageSize, setSorting };
+  // Accepts Updater<SortingState> so it can be passed directly to Table's onSortingChange
+  const onSortingChange = useCallback(
+    (updater: Updater<SortingState>) => {
+      const next = typeof updater === 'function' ? updater(sorting) : updater;
+      setSorting(next);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [sorting],
+  );
+
+  return {
+    page,
+    pageSize,
+    sorting,
+    setPage,
+    setPageSize,
+    setSorting,
+    onSortingChange,
+  };
 }
