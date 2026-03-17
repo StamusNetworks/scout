@@ -1,5 +1,5 @@
+import { useNavigate } from '@tanstack/react-router';
 import { Search } from 'lucide-react';
-import { parseAsInteger, parseAsString, useQueryState } from 'nuqs';
 import { useEffect, useMemo, useState } from 'react';
 
 import { BlockTitle } from '@/common/design-system/atoms/block';
@@ -8,6 +8,11 @@ import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Input } from '@/common/design-system/atoms/ui/input';
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+} from '@/common/design-system/atoms/ui/pillTabs';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import {
@@ -23,8 +28,10 @@ import { useGlobalStats } from '@/features/hunt/dashboard/api/hooks/useGlobalSta
 import { useEventsCount } from '@/features/hunt/events/api/hooks/useEventsCount';
 import { usePreviousDates } from '@/features/hunt/filtering/dates-filters/use-previous-dates';
 import { useGetProbesQuery } from '@/features/user/settings/settings.api';
+import { Route } from '@/routes/_enterprise/volumetry';
 
 import { indicators } from '../operational-center/config';
+import { type ChartScale } from './_components/dual-axis-line-chart';
 import { EventsTimeline } from './_components/events-timeline';
 import { SeriesToggleBar } from './_components/series-toggle-bar';
 
@@ -32,6 +39,8 @@ const pageSize = 5;
 
 export const VolumetryPage = () => {
   usePageTitle('Volumetry');
+  const { scale } = Route.useSearch();
+  const navigate = useNavigate();
   const previousDates = usePreviousDates();
 
   const { data: globalStats, isFetching: isGlobalLoading } = useGlobalStats();
@@ -44,6 +53,14 @@ export const VolumetryPage = () => {
 
   const loading = isGlobalLoading || isPreviousGlobalLoading;
   const eventsLoading = isEventsLoading || isPreviousEventsLoading;
+
+  const handleScaleChange = (value: string) => {
+    navigate({
+      to: '.',
+      search: (prev) => ({ ...prev, scale: value as ChartScale }),
+      replace: true,
+    });
+  };
 
   return (
     <>
@@ -72,27 +89,54 @@ export const VolumetryPage = () => {
             loading={eventsLoading}
           />
         </Grid>
-        <div className="mb-4">
+        <Row className="mb-4 items-center justify-between">
           <SeriesToggleBar />
-        </div>
+          <Tabs
+            value={scale}
+            onValueChange={handleScaleChange}
+          >
+            <TabsList>
+              <TabsTrigger value="default">Default</TabsTrigger>
+              <TabsTrigger value="normalized">Normalized</TabsTrigger>
+              <TabsTrigger value="log">Logarithmic</TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </Row>
         <div className="mb-6">
-          <EventsTimeline className="h-[250px]" />
+          <EventsTimeline
+            scale={scale}
+            className="h-[250px]"
+          />
         </div>
-        <ProbeTimelineList />
+        <ProbeTimelineList scale={scale} />
       </DefaultPage>
     </>
   );
 };
 
-const ProbeTimelineList = () => {
-  const [search, setSearch] = useQueryState(
-    'probe_search',
-    parseAsString.withDefault(''),
-  );
-  const [page, setPage] = useQueryState(
-    'probe_page',
-    parseAsInteger.withDefault(1),
-  );
+const ProbeTimelineList = ({ scale }: { scale: ChartScale }) => {
+  const { probe_search: search = '', probe_page: page = 1 } = Route.useSearch();
+  const navigate = useNavigate();
+
+  const setSearch = (value: string | undefined) => {
+    navigate({
+      to: '.',
+      search: (prev) => ({
+        ...prev,
+        probe_search: value || undefined,
+        probe_page: 1,
+      }),
+      replace: true,
+    });
+  };
+
+  const setPage = (value: number) => {
+    navigate({
+      to: '.',
+      search: (prev) => ({ ...prev, probe_page: value }),
+      replace: true,
+    });
+  };
 
   const {
     data: probes,
@@ -122,11 +166,10 @@ const ProbeTimelineList = () => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setSearch(localSearch || null);
-      setPage(1);
+      setSearch(localSearch || undefined);
     }, 550);
     return () => clearTimeout(timeout);
-  }, [localSearch, setSearch, setPage]);
+  }, [localSearch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Column className="gap-4">
@@ -166,6 +209,7 @@ const ProbeTimelineList = () => {
               </Row>
               <EventsTimeline
                 qfilterPrefix={`host:"${esEscape(probe.name)}"`}
+                scale={scale}
               />
             </Column>
           ))}

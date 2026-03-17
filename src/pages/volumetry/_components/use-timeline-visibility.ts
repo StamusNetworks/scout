@@ -1,12 +1,26 @@
-import { parseAsArrayOf, parseAsString, useQueryState } from 'nuqs';
+import { useNavigate } from '@tanstack/react-router';
+import { useCallback } from 'react';
+
+import { Route } from '@/routes/_enterprise/volumetry';
 
 import { DEFAULT_ENABLED_SERIES, type SeriesKey } from './timeline.constants';
 
 export function useTimelineVisibility() {
-  const [enabledSeries, setEnabledSeries] = useQueryState(
-    'series',
-    parseAsArrayOf(parseAsString, ',').withDefault(DEFAULT_ENABLED_SERIES),
+  const { series } = Route.useSearch();
+  const navigate = useNavigate();
+
+  const enabledSeries: SeriesKey[] = series ?? DEFAULT_ENABLED_SERIES;
+
+  const setEnabledSeries = useCallback(
+    (value: SeriesKey[]) => {
+      navigate({
+        to: '.',
+        search: (prev) => ({ ...prev, series: value }),
+        replace: true,
+      });
+    },
+    [navigate],
   );
 
-  return [enabledSeries as SeriesKey[], setEnabledSeries] as const;
+  return [enabledSeries, setEnabledSeries] as const;
 }

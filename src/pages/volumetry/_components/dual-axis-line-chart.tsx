@@ -1,6 +1,6 @@
 import { add, format } from 'date-fns';
 import * as React from 'react';
-import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -18,22 +18,34 @@ export type TimelineSeries = {
   interval: number;
 };
 
+export type ChartScale = 'normalized' | 'log' | 'default';
+
 type MultiSeriesLineChartProps = {
   series: TimelineSeries[];
+  scale?: ChartScale;
   className?: string;
 };
 
+function formatLogTick(value: number): string {
+  if (value >= 1_000_000) return `${value / 1_000_000}M`;
+  if (value >= 1_000) return `${value / 1_000}K`;
+  return String(value);
+}
+
 function mergeTimelines(
   seriesList: TimelineSeries[],
+  scale: ChartScale,
 ): Record<string, number>[] {
-  // Compute max per series for normalization
+  // Compute max per series for normalized scale
   const maxByKey = new Map<string, number>();
-  for (const s of seriesList) {
-    let max = 0;
-    for (const point of s.data) {
-      if (point.count > max) max = point.count;
+  if (scale === 'normalized') {
+    for (const s of seriesList) {
+      let max = 0;
+      for (const point of s.data) {
+        if (point.count > max) max = point.count;
+      }
+      maxByKey.set(s.key, max);
     }
-    maxByKey.set(s.key, max);
   }
 
   const map = new Map<number, Record<string, number>>();
@@ -46,19 +58,27 @@ function mergeTimelines(
         entry = { time: point.time };
         map.set(point.time, entry);
       }
-      // Normalized value (0–1) for chart rendering
-      entry[s.key] = max > 0 ? point.count / max : 0;
+      if (scale === 'normalized') {
+        entry[s.key] = max > 0 ? point.count / max : 0;
+      } else if (scale === 'log') {
+        // Clamp to 1 so log scale can render a continuous line
+        entry[s.key] = Math.max(point.count, 1);
+      } else {
+        // default: raw values
+        entry[s.key] = point.count;
+      }
       // Raw value for tooltip display
       entry[`${s.key}_raw`] = point.count;
     }
   }
 
-  // Fill missing keys with 0
+  // Fill missing keys
+  const fillValue = scale === 'log' ? 1 : 0;
   const keys = seriesList.map((s) => s.key);
   for (const entry of map.values()) {
     for (const key of keys) {
       if (!(key in entry)) {
-        entry[key] = 0;
+        entry[key] = fillValue;
         entry[`${key}_raw`] = 0;
       }
     }
@@ -69,9 +89,13 @@ function mergeTimelines(
 
 export const MultiSeriesLineChart = ({
   series,
+  scale = 'log',
   className,
 }: MultiSeriesLineChartProps) => {
-  const chartData = React.useMemo(() => mergeTimelines(series), [series]);
+  const chartData = React.useMemo(
+    () => mergeTimelines(series, scale),
+    [series, scale],
+  );
 
   const interval = series.find((s) => s.interval > 0)?.interval ?? 0;
 
@@ -112,6 +136,25 @@ export const MultiSeriesLineChart = ({
           ))}
         </defs>
         <CartesianGrid vertical={false} />
+        {scale === 'log' && (
+          <YAxis
+            scale="log"
+            domain={[1, 'auto']}
+            allowDataOverflow
+            tickFormatter={formatLogTick}
+            width={50}
+            axisLine={false}
+            tickLine={false}
+          />
+        )}
+        {scale === 'default' && (
+          <YAxis
+            tickFormatter={formatLogTick}
+            width={50}
+            axisLine={false}
+            tickLine={false}
+          />
+        )}
         <XAxis
           dataKey="time"
           tickMargin={8}

@@ -1,6 +1,7 @@
 import {
   createMemoryHistory,
   createRootRoute,
+  createRoute,
   createRouter,
 } from '@tanstack/react-router';
 import { screen, waitFor } from '@testing-library/react';
@@ -10,14 +11,32 @@ import { http, HttpResponse } from 'msw';
 import { BreadcrumbProvider } from '@/common/design-system/molecules/breadcrumbs';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
+import {
+  type VolumetrySearch,
+  volumetrySearchSchema,
+} from '@/routes/_enterprise/volumetry';
 
 import { VolumetryPage } from './index';
 
-const createTestRouter = () =>
-  createRouter({
-    routeTree: createRootRoute(),
-    history: createMemoryHistory({ initialEntries: ['/'] }),
+const createTestRouter = () => {
+  const rootRoute = createRootRoute();
+  const enterpriseRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    id: '_enterprise',
   });
+  const volumetryRoute = createRoute({
+    getParentRoute: () => enterpriseRoute,
+    path: 'volumetry',
+    validateSearch: (raw): VolumetrySearch => volumetrySearchSchema.parse(raw),
+  });
+  const routeTree = rootRoute.addChildren([
+    enterpriseRoute.addChildren([volumetryRoute]),
+  ]);
+  return createRouter({
+    routeTree,
+    history: createMemoryHistory({ initialEntries: ['/volumetry'] }),
+  });
+};
 
 const renderPage = async () =>
   renderWithProviders(

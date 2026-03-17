@@ -6,6 +6,7 @@ import { cn } from '@/common/lib/utils';
 import { useGetEventsTimelineQuery } from '@/features/hunt/events/api/events.api';
 
 import {
+  type ChartScale,
   MultiSeriesLineChart,
   type TimelineSeries,
 } from './dual-axis-line-chart';
@@ -18,6 +19,7 @@ import { useTimelineVisibility } from './use-timeline-visibility';
 
 type EventsTimelineProps = {
   qfilterPrefix?: string;
+  scale?: ChartScale;
   className?: string;
 };
 
@@ -83,6 +85,7 @@ function useAllSeriesQueries(
 
 export const EventsTimeline = memo(function EventsTimeline({
   qfilterPrefix,
+  scale,
   className,
 }: EventsTimelineProps) {
   const params = useGlobalQueryParams(['tenant', 'dates']);
@@ -152,6 +155,7 @@ export const EventsTimeline = memo(function EventsTimeline({
     <div className="relative">
       <MultiSeriesLineChart
         series={series}
+        scale={scale}
         className={className}
       />
       {isFetching && (
