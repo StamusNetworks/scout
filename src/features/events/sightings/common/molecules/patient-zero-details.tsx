@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { DataTable } from '@/common/design-system/molecules/data-table';
-import { allSightingsTableColumns } from '@/features/analytics/sightings/components/sightings-table/sightings-table.columns';
+import { allSightingsTableColumns } from '@/features/events/sightings/use-cases/sightings-list/sightings-list.table';
 
 import { useGetSightingById } from '../hooks/use-get-sighting-by-id';
 

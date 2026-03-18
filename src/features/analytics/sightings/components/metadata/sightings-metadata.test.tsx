@@ -4,8 +4,7 @@ import { describe, expect, test } from 'vitest';
 
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
-
-import { SightingsMetadata } from './sightings-metadata';
+import { SightingsMetadata } from '@/features/events/sightings/common/molecules/sightings-metadata';
 
 // Mock sighting events for different protocols
 const mockHttpSighting = {

@@ -29,7 +29,7 @@ import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import {
   useGetEventsAggregationQuery,
   useGetProtocolsFromEventsQuery,
-} from '@/features/hunt/events/api/events.api';
+} from '@/features/events/common/events.api';
 import { ContextMenuContent } from '@/features/hunt/filtering/query-filters/components/event-value/context-menu/context-menu.content';
 import { addQueryFilter } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
 import { useGetESMappingQuery } from '@/features/user/settings/settings.api';

@@ -1,6 +1,6 @@
 import { Tag } from '@/common/design-system/layouts/components/navigation/navigation';
+import { Event } from '@/features/events/common/events.model';
 import { MetaView } from '@/features/hunt/events/components/meta-view/meta-view';
-import { Event } from '@/features/hunt/events/model/event.schema';
 
 import { TabComponentType } from '../event-detail-tabs.types';
 

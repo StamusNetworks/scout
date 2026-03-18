@@ -5,9 +5,11 @@ import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-
-import { useGetBeaconingEventsQuery } from '../../api/beaconing.api';
-import { exportColumns, tlsJ3ASTableColumns } from './tls-ja3s-table.columns';
+import {
+  exportColumns,
+  tlsJ3ASTableColumns,
+} from '@/features/events/beaconing/beaconing-ja3s/use-cases/ja3s-list/ja3s-list.table';
+import { useGetBeaconingEventsQuery } from '@/features/events/beaconing/common/beaconing.api';
 
 export const JA3SHashTable = () => {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseEventSchema } from '../event.schema';
+import { baseEventSchema } from '@/features/events/common/events.model';
 
 export const rdpSchema = z.object({
   channels: z.array(z.string()).optional(),

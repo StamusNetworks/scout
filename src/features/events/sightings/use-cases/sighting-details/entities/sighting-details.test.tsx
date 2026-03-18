@@ -8,7 +8,7 @@ import { http, HttpResponse } from 'msw';
 
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
-import { Event } from '@/features/hunt/events/model/event.schema';
+import { Event } from '@/features/events/common/events.model';
 
 import { SightingDetails } from './sighting-details';
 

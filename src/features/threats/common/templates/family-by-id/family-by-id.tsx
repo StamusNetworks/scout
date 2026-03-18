@@ -28,11 +28,11 @@ import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { ImpactedEntitiesTable } from '@/features/hunt/entities/components/impacted-entities-table/impacted-entities-table';
 import { useQFBuilder } from '@/features/hunt/filtering/query-filters/hooks/use-qf-builder';
 import { addQueryFilter } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
 import { enableTags } from '@/features/hunt/filtering/query-filters/use-cases/enable-tags';
 import { KillChainCountersByFamilyId } from '@/features/hunt/killchain/components/killchain-counters/killchain-counters';
+import { ImpactedEntitiesTable } from '@/features/threats/common/molecules/impacted-entities-table/impacted-entities-table';
 import { useAppDispatch } from '@/store/store';
 
 import { useFamilyDetectionMethods } from '../../hooks/use-family-detection-methods';

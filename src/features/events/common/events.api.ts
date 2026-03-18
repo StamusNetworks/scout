@@ -9,7 +9,7 @@ import {
 } from '@/common/fetching/fetching.types';
 import { Paginated, Pagination } from '@/common/fetching/fetching.types';
 import { esEscape } from '@/common/lib/strings';
-import { Event } from '@/features/hunt/events/model/event.schema';
+import { Event } from '@/features/events/common/events.model';
 import { EventsTimeline } from '@/features/hunt/events/model/events-timeline.schema';
 import {
   FlowEventFileRetrieve,

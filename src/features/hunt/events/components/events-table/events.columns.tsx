@@ -13,11 +13,10 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { cn } from '@/common/lib/utils';
-import { Hostname } from '@/features/analytics/hosts/components/host-details/hostname';
-import { Network } from '@/features/analytics/hosts/components/host-details/network';
+import { Event } from '@/features/events/common/events.model';
+import { Hostname } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
+import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
-
-import { Event } from '../../model/event.schema';
 
 export const getColumns = (
   enterprise: boolean = true,

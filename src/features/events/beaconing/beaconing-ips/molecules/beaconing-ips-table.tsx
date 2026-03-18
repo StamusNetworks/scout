@@ -6,17 +6,17 @@ import { CustomColumnDef } from '@/common/design-system/molecules/data-table/fil
 import { usePaginationState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { esEscape } from '@/common/lib/strings';
-import { useGetHostsQuery } from '@/features/analytics/hosts/api/hosts.api';
-import { HostnameTemplate } from '@/features/analytics/hosts/components/host-details/hostname';
-import { NetworkTemplate } from '@/features/analytics/hosts/components/host-details/network';
-import { UsernameTemplate } from '@/features/analytics/hosts/components/host-details/username';
 import {
   getHostRole,
   Host,
   HostRoles,
-} from '@/features/analytics/hosts/model/host';
-import { EntityThreatTagsList } from '@/features/hunt/entities/components/entities-threat-tags-list/entities-threat-tags-list';
+} from '@/features/host-insights/common/host.model';
+import { useGetHostsQuery } from '@/features/host-insights/common/host-insights.api';
+import { HostnameTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
+import { NetworkTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
+import { UsernameTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
+import { EntityThreatTagsList } from '@/features/threats/common/molecules/entities-threat-tags-list/entities-threat-tags-list';
 
 export const beaconingIpsTableColumns: CustomColumnDef<Host>[] = [
   {

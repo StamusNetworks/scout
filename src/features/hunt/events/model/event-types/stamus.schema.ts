@@ -1,9 +1,9 @@
 import { keys } from 'ramda';
 import z from 'zod';
 
+import { baseEventSchema } from '@/features/events/common/events.model';
 import { killChainsConfig } from '@/features/hunt/killchain/killchain';
 
-import { baseEventSchema } from '../event.schema';
 import { alertSchema } from './alert.schema';
 
 export const stamusSchema = z.object({

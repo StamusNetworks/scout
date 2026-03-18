@@ -1,7 +1,7 @@
 import { buildQueryParams } from '@/common/fetching/buildQueryParams';
 import { Dates, QFilter, Tenant } from '@/common/fetching/fetching.types';
 import { Paginated, Pagination } from '@/common/fetching/fetching.types';
-import { Event } from '@/features/hunt/events/model/event.schema';
+import { Event } from '@/features/events/common/events.model';
 import { API } from '@/store/api';
 
 export const SightingsAPI = API.injectEndpoints({

@@ -9,11 +9,11 @@ import { DateTime } from '@/common/design-system/entities/date-time';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { esEscape } from '@/common/lib/strings';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
-import { useGetHostWithAlertsQuery } from '@/features/analytics/hosts/api/hosts.api';
-import { HostSummary } from '@/features/analytics/hosts/components/host-summary/host-summary';
-import { useGetImpactedEntitiesQuery } from '@/features/hunt/entities/api/entities.api';
-import { Event } from '@/features/hunt/events/model/event.schema';
+import { Event } from '@/features/events/common/events.model';
+import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
+import { HostSummary } from '@/features/host-insights/use-cases/host-details/molecules/host-summary';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
+import { useGetImpactedEntitiesQuery } from '@/features/threats/common/entities.api';
 import { selectDefaultEventDetailTab } from '@/features/ui/preferences/preferences.slice';
 import { useAppSelector } from '@/store/store';
 

@@ -1,10 +1,9 @@
 import { keys } from 'ramda';
 import React from 'react';
 
+import { Event } from '@/features/events/common/events.model';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
-import { ThreatTag } from '@/features/hunt/threats/components/threat-tag';
-
-import { Event } from '../../model/event.schema';
+import { ThreatTag } from '@/features/threats/common/molecules/threat-tag';
 
 type SyntheticViewValue = string | number | React.ReactNode;
 

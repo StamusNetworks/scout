@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseEventSchema } from '../event.schema';
+import { baseEventSchema } from '@/features/events/common/events.model';
 
 export const nfsSchema = z.object({
   file_tx: z.boolean(),

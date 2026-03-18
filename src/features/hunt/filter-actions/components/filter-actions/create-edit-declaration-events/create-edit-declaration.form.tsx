@@ -50,10 +50,10 @@ import {
   killChainsConfig,
 } from '@/features/hunt/killchain/killchain';
 import { useGetRulesetsQuery } from '@/features/hunt/rulesets/api/rulesets.api';
-import { useGetCustomThreatsQuery } from '@/features/hunt/threats/api/threats.api';
+import { CreateEditThreatForm } from '@/features/threats/common/molecules/create-edit-threat-form';
+import { useGetCustomThreatsQuery } from '@/features/threats/common/threats.api';
 
 import { FilterInput } from '../../../../filtering/query-filters/components/filters-input';
-import { CreateEditThreatForm } from '../../../../threats/components/create-edit-threat-form';
 import {
   useCreateFilterActionMutation,
   useUpdateFilterActionMutation,

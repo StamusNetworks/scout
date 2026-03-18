@@ -4,9 +4,8 @@ import { vi } from 'vitest';
 
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
-
-import { TlsTail } from '../../models/tls-tail.model';
-import { BeaconingMetadata } from './beaconing-metadata';
+import { TlsTail } from '@/features/events/beaconing/common/beaconing-event.model';
+import { BeaconingMetadata } from '@/features/events/beaconing/common/molecules/beaconing-metadata';
 
 // Mock the Flow component to verify it receives the correct data
 vi.mock('@/common/design-system/graphs/proto-flow/flow', () => ({

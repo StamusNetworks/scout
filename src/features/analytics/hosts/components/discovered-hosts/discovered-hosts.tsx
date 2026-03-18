@@ -1,9 +1,9 @@
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { StatsCardHorizontal } from '@/common/design-system/molecules/stats-card-horizontal';
+import { useFetchHostsCounts } from '@/features/host-insights/use-cases/hosts-list/hosts-list.api';
 import { addQueryFilter } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
 import { AppDispatch, useAppDispatch } from '@/store/store';
 
-import { useFetchHostsCounts } from '../../api/hooks/useHostsCounts';
 import { useHomeNetParam } from '../home-net-picker/use-home-net-param';
 import { indicators } from './discovered-hosts.config';
 

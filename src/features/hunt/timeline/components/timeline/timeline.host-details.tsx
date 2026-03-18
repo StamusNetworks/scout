@@ -2,10 +2,10 @@ import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { ScrollArea } from '@/common/design-system/atoms/ui/scroll-area';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { useGetHostWithAlertsQuery } from '@/features/analytics/hosts/api/hosts.api';
-import { HostStats } from '@/features/analytics/hosts/components/host-summary/host-summary';
-import { InternalExternal } from '@/features/analytics/hosts/components/internal-external';
-import { IpOrEntityEventValue } from '@/features/hunt/entities/components/ip-or-entity';
+import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
+import { HostStats } from '@/features/host-insights/use-cases/host-details/molecules/host-summary';
+import { InternalExternal } from '@/features/host-insights/use-cases/host-details/molecules/internal-external';
+import { IpOrEntityEventValue } from '@/features/threats/common/molecules/ip-or-entity';
 
 import { useGetThreatHistoryQuery } from '../../api/timeline.api';
 import { HostTimelineTemplate } from '../history-timeline/history-timeline';

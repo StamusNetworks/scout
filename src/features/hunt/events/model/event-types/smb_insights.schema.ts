@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { baseEventSchema } from '../event.schema';
+import { baseEventSchema } from '@/features/events/common/events.model';
 
 export const smbInsightsEventSchema = baseEventSchema.extend({
   event_type: z.literal('smb_insights'),

@@ -7,7 +7,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/pillTabs';
-import { Event } from '@/features/hunt/events/model/event.schema';
+import { Event } from '@/features/events/common/events.model';
 
 interface EventsStreamExpandedRowProps {
   row: Row<Event>;

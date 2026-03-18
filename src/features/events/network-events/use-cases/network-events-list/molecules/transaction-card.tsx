@@ -7,8 +7,6 @@ import { Button } from '@/common/design-system/atoms/ui/button';
 import { CardContent } from '@/common/design-system/atoms/ui/card';
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { getDuration } from '@/common/lib/duration';
-import { Hostname } from '@/features/analytics/hosts/components/host-details/hostname';
-import { Network } from '@/features/analytics/hosts/components/host-details/network';
 import {
   EventDetailTabs,
   FilesTab,
@@ -19,10 +17,12 @@ import {
   SyntheticTab,
 } from '@/features/events/common/event-detail';
 import { Event } from '@/features/events/common/events.model';
+import { Hostname } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
+import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 import { killChainsConfig } from '@/features/hunt/killchain/killchain';
-import { ThreatTag } from '@/features/hunt/threats/components/threat-tag';
+import { ThreatTag } from '@/features/threats/common/molecules/threat-tag';
 import { selectDefaultEventDetailTab } from '@/features/ui/preferences/preferences.slice';
 import { useAppSelector } from '@/store/store';
 

@@ -1,5 +1,5 @@
+import { Event } from '@/features/events/common/events.model';
 import { Pcap } from '@/features/hunt/events/components/pcap/pcap';
-import { Event } from '@/features/hunt/events/model/event.schema';
 
 import { TabComponentType } from '../event-detail-tabs.types';
 

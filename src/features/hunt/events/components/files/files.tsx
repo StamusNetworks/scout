@@ -5,7 +5,7 @@ import { DataTable } from '@/common/design-system/molecules/data-table';
 import {
   useGetEventFilesInfoQuery,
   useLazyGetEventFileRetrieveQuery,
-} from '@/features/hunt/events/api/events.api';
+} from '@/features/events/common/events.api';
 
 import { EventFileInfo } from '../../model/event-types/fileinfo.schema';
 import { getColumns } from './files-columns';

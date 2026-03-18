@@ -17,10 +17,10 @@ import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { isIP } from '@/common/lib/strings';
 import { replaceFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
 import { KillChainKeysWithoutPolicies } from '@/features/hunt/killchain/killchain';
-import { useGetThreatsStatusQuery } from '@/features/hunt/threats/api/threats.api';
-import { threatStatusColumnDefs } from '@/features/hunt/threats/components/threat-status-columns';
-import { useThreats } from '@/features/hunt/threats/hooks/use-threats';
-import { ThreatStatus } from '@/features/hunt/threats/model/threat-status.schema';
+import { useThreats } from '@/features/threats/common/hooks/use-threats';
+import { threatStatusColumnDefs } from '@/features/threats/common/molecules/threat-status-columns';
+import { ThreatStatus } from '@/features/threats/common/threat-status.schema';
+import { useGetThreatsStatusQuery } from '@/features/threats/common/threats.api';
 import { useAppDispatch } from '@/store/store';
 
 export const IndicidentsTable = () => {

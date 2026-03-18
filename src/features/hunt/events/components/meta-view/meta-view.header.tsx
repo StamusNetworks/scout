@@ -5,9 +5,8 @@ import { Row } from '@/common/design-system/atoms/layout/row';
 import { StatsBlock } from '@/common/design-system/atoms/page-stats';
 import { Card } from '@/common/design-system/atoms/ui/card';
 import { DateTime } from '@/common/design-system/entities/date-time';
+import { Event } from '@/features/events/common/events.model';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
-
-import { Event } from '../../model/event.schema';
 
 export const EventDetails = ({ event }: { event: Event }) => (
   <Row className="mt-3 mb-4 gap-6">

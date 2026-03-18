@@ -12,13 +12,13 @@ import { Row } from '@/common/design-system/atoms/layout/row';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { esEscape } from '@/common/lib/strings';
-import { useGetBeaconingEventsQuery } from '@/features/analytics/beaconing/api/beaconing.api';
-import { useGetSightingEventsQuery } from '@/features/analytics/sightings/api/sightings.api';
+import { useGetBeaconingEventsQuery } from '@/features/events/beaconing/common/beaconing.api';
+import { useGetEventsQuery } from '@/features/events/common/events.api';
+import { useGetSightingEventsQuery } from '@/features/events/sightings/common/sightings.api';
 import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
 import { useGetSignaturesQuery } from '@/features/hunt/detection-methods/signatures/api/signatures.api';
-import { useGetImpactedEntitiesQuery } from '@/features/hunt/entities/api/entities.api';
-import { useGetEventsQuery } from '@/features/hunt/events/api/events.api';
-import { useGetThreatsStatusQuery } from '@/features/hunt/threats/api/threats.api';
+import { useGetImpactedEntitiesQuery } from '@/features/threats/common/entities.api';
+import { useGetThreatsStatusQuery } from '@/features/threats/common/threats.api';
 
 import { HostDetectionsRadar } from '../molecules/host-detections-radar';
 import { HostProfile } from '../molecules/host-profile';

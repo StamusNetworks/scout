@@ -2,8 +2,8 @@ import { useMemo } from 'react';
 
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { esEscape } from '@/common/lib/strings';
-import { useGetEventsFromFlowQuery } from '@/features/hunt/events/api/events.api';
-import { Event } from '@/features/hunt/events/model/event.schema';
+import { useGetEventsFromFlowQuery } from '@/features/events/common/events.api';
+import { Event } from '@/features/events/common/events.model';
 
 import { EventDetailData } from './event-detail-tabs.types';
 

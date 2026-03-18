@@ -9,9 +9,8 @@ import { vi } from 'vitest';
 
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
-
-import { BeaconingEvent } from '../../models/beaconing-event.model';
-import { IpsServingJa3sTable } from './ips-serving-ja3s-table';
+import { IpsServingJa3sTable } from '@/features/events/beaconing/beaconing-ja3s/use-cases/ja3s-details/molecules/ips-serving-ja3s-table';
+import { BeaconingEvent } from '@/features/events/beaconing/common/beaconing-event.model';
 
 const createTestRouter = () =>
   createRouter({

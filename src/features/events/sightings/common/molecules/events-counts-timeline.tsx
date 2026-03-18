@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { useGetEventsTimelineQuery } from '@/features/hunt/events/api/events.api';
+import { useGetEventsTimelineQuery } from '@/features/events/common/events.api';
 import { CountsTimeline } from '@/features/hunt/timeline/models/counts-timeline.model';
 
 import { useGetSightingById } from '../hooks/use-get-sighting-by-id';

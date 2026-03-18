@@ -4,7 +4,7 @@ import { values } from 'ramda';
 
 import { ContextMenuItem } from '@/common/design-system/atoms/ui/context-menu';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { useGetThreatFamiliesQuery } from '@/features/hunt/threats/api/threats.api';
+import { useGetThreatFamiliesQuery } from '@/features/threats/common/threats.api';
 
 import { iconClass } from '../context-menu.content';
 

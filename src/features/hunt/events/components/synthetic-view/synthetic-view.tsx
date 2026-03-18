@@ -4,10 +4,10 @@ import { ScrollArea } from '@/common/design-system/atoms/ui/scroll-area';
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { TableCard } from '@/common/design-system/molecules/table-card';
+import { type Event } from '@/features/events/common/events.model';
 import { EventField } from '@/features/hunt/filtering/query-filters/components/event-field';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 
-import { type Event } from '../../model/event.schema';
 import { EventFileInfo } from '../../model/event-types/fileinfo.schema';
 import { PayloadCard } from './payload-card';
 import { getSyntheticView } from './synthetic-view.config';

@@ -5,7 +5,7 @@ import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { formatMitreString, getMitreTechniqueUrl } from '@/common/lib/mitre';
 import { cn } from '@/common/lib/utils';
-import { Event } from '@/features/hunt/events/model/event.schema';
+import { Event } from '@/features/events/common/events.model';
 
 import { ProtoKey } from './proto-flow';
 

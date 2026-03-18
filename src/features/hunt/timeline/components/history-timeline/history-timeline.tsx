@@ -16,10 +16,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/common/design-system/atoms/ui/popover';
-import { Host } from '@/features/analytics/hosts/model/host';
+import { Host } from '@/features/host-insights/common/host.model';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 import { KillChainPhase } from '@/features/hunt/killchain/killchain';
-import { ThreatTag } from '@/features/hunt/threats/components/threat-tag';
+import { ThreatTag } from '@/features/threats/common/molecules/threat-tag';
 
 import { ThreatHistory } from '../../models/threat-history.model';
 import {

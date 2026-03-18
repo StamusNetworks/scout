@@ -1,4 +1,4 @@
-import { Event } from '@/features/hunt/events/model/event.schema';
+import { Event } from '@/features/events/common/events.model';
 
 export type ProtoColumn<T = unknown> = {
   title: string;

@@ -5,12 +5,11 @@ import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-
-import { useGetBeaconingEventsQuery } from '../../api/beaconing.api';
 import {
   exportColumns,
   servingIpsTableColumns,
-} from './serving-ips-table.columns';
+} from '@/features/events/beaconing/beaconing-ips/use-cases/ips-list/ips-list.table';
+import { useGetBeaconingEventsQuery } from '@/features/events/beaconing/common/beaconing.api';
 
 export const ServingIpsTable = () => {
   const navigate = useNavigate();

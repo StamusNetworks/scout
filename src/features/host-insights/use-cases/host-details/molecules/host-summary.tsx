@@ -5,11 +5,11 @@ import { StatsBlock } from '@/common/design-system/atoms/page-stats';
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { cn } from '@/common/lib/utils';
 import { Host } from '@/features/host-insights/common/host.model';
-import { EntityThreatTagsListTemplate } from '@/features/hunt/entities/components/entities-threat-tags-list/entities-threat-tags-list';
-import { Entity } from '@/features/hunt/entities/model/entity';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 import { KillChainPhase } from '@/features/hunt/killchain/killchain';
+import { Entity } from '@/features/threats/common/entity';
+import { EntityThreatTagsListTemplate } from '@/features/threats/common/molecules/entities-threat-tags-list/entities-threat-tags-list';
 
 import { HostnameTemplate } from './host-details/hostname';
 import { NetworkTemplate } from './host-details/network';

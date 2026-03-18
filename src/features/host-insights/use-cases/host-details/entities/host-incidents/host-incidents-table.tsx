@@ -7,7 +7,7 @@ import { serializeSorting } from '@/common/design-system/molecules/data-table/ho
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { useGetThreatsStatusQuery } from '@/features/hunt/threats/api/threats.api';
+import { useGetThreatsStatusQuery } from '@/features/threats/common/threats.api';
 
 import { threatStatusColumns } from './threat-status.columns';
 import { ThreatStatusExpandedRow } from './threat-status.expanded-row';

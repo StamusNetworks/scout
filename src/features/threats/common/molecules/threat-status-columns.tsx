@@ -11,14 +11,14 @@ import {
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
-import { Hostname } from '@/features/analytics/hosts/components/host-details/hostname';
-import { Network } from '@/features/analytics/hosts/components/host-details/network';
-import { Roles } from '@/features/analytics/hosts/components/host-details/roles';
-import { Username } from '@/features/analytics/hosts/components/host-details/username';
-import { IpOrEntityEventValue } from '@/features/hunt/entities/components/ip-or-entity';
+import { Hostname } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
+import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
+import { Roles } from '@/features/host-insights/use-cases/host-details/molecules/host-details/roles';
+import { Username } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 
 import { useThreat } from '../hooks/use-threat';
+import { IpOrEntityEventValue } from '../molecules/ip-or-entity';
 import { ThreatStatus } from '../threat-status.schema';
 import { ThreatTag } from './threat-tag';
 

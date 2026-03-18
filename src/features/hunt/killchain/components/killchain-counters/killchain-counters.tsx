@@ -2,12 +2,12 @@ import { useNavigate } from '@tanstack/react-router';
 import { useCallback } from 'react';
 
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-
 import {
   useGetKillChainCountersByThreatIdQuery,
   useGetKillChainCountersQuery,
-} from '../../../entities/api/entities.api';
-import { useKillChainCounters } from '../../../entities/api/hooks/useKillChainCounters';
+} from '@/features/threats/common/entities.api';
+import { useKillChainCounters } from '@/features/threats/common/hooks/useKillChainCounters';
+
 import { killChainsConfig } from '../../killchain';
 import { KillChainCountersTemplate } from './killchain-counters.template';
 

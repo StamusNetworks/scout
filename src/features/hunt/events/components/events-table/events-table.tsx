@@ -9,11 +9,11 @@ import { useServerTableState } from '@/common/design-system/molecules/data-table
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams.tsx';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags.ts';
+import { useGetEventsQuery } from '@/features/events/common/events.api';
+import { Event } from '@/features/events/common/events.model';
+import { ExpandedEventRow } from '@/features/events/common/molecules/expanded-event-row';
 
-import { useGetEventsQuery } from '../../api/events.api';
-import { Event } from '../../model/event.schema.ts';
 import { exportColumns, getColumns } from './events.columns';
-import { ExpandedEventRow } from './events.expanded-row.tsx';
 
 const getRowId = (originalRow: Event) => originalRow._id;
 

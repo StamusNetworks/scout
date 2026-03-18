@@ -15,10 +15,9 @@ import type { CustomColumnDef } from '@/common/design-system/molecules/data-tabl
 import { SwitchFilter } from '@/common/design-system/molecules/data-table/filters/switch-filter';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
 import type { Paginated } from '@/common/fetching/fetching.types';
-import type { Host } from '@/features/analytics/hosts/model/host';
-
-import { HostValuesSort } from '../host-insights/host-values-sort';
-import { HostsTableExpandedRow } from './hostsTable.expandedRow';
+import type { Host } from '@/features/host-insights/common/host.model';
+import { HostValuesSort } from '@/features/host-insights/use-cases/host-details/molecules/host-block/host-values-sort';
+import { HostsTableExpandedRow } from '@/features/host-insights/use-cases/host-details/molecules/hosts-table-expanded-row';
 
 type HostsTableProps = {
   data: Paginated<Host> | undefined;

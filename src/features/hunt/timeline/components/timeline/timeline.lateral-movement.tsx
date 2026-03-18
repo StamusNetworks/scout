@@ -9,7 +9,7 @@ import {
 } from '@/common/design-system/molecules/tooltip';
 import { compressIPv6 } from '@/common/lib/ips';
 import { cn } from '@/common/lib/utils';
-import { useThreat } from '@/features/hunt/threats/hooks/use-threat';
+import { useThreat } from '@/features/threats/common/hooks/use-threat';
 
 import { MENU_WIDTH, useTimelineContext } from './timeline';
 

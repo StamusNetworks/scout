@@ -10,7 +10,7 @@ import {
   TooltipTrigger,
 } from '@/common/design-system/molecules/tooltip';
 import { compressIPv6 } from '@/common/lib/ips';
-import { useThreat } from '@/features/hunt/threats/hooks/use-threat';
+import { useThreat } from '@/features/threats/common/hooks/use-threat';
 
 import { type TimelineThreat } from '../../models/threat-history.model';
 import { useTimelineContext } from './timeline';

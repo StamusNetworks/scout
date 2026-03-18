@@ -1,7 +1,7 @@
 import { PaginationState } from '@tanstack/react-table';
 
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { useGetEventsQuery } from '@/features/hunt/events/api/events.api';
+import { useGetEventsQuery } from '@/features/events/common/events.api';
 import { useQFBuilder } from '@/features/hunt/filtering/query-filters/hooks/use-qf-builder';
 
 interface UseThreatEventsParams {

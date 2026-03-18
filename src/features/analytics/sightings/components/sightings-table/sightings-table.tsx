@@ -12,9 +12,8 @@ import { TextFilter } from '@/common/design-system/molecules/data-table/filters/
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { esEscape } from '@/common/lib/strings';
-import { Event } from '@/features/hunt/events/model/event.schema';
-
-import { useGetSightingEventsQuery } from '../../api/sightings.api';
+import { Event } from '@/features/events/common/events.model';
+import { useGetSightingEventsQuery } from '@/features/events/sightings/common/sightings.api';
 
 export const SightingsTable = ({
   columns,

@@ -4,7 +4,6 @@ import { GitGraph, Lock, ShieldAlert, Swords } from 'lucide-react';
 import { BlockTitle } from '@/common/design-system/atoms/block';
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
-import { OffendersWorldMap } from '@/features/hunt/entities/components/offenders-world-map/offenders-world-map';
 import { clearQueryFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
 import { enableTags } from '@/features/hunt/filtering/query-filters/use-cases/enable-tags';
 import { KillChainCounters } from '@/features/hunt/killchain/components/killchain-counters/killchain-counters';
@@ -14,6 +13,7 @@ import { CipherSecurity } from '@/features/hunt/operational-center/entities/ciph
 import { IndicidentsTable } from '@/features/hunt/operational-center/entities/incidents-table';
 import { MitreTechniques } from '@/features/hunt/operational-center/entities/mitre-techniques';
 import { OutliersTimeline } from '@/features/hunt/operational-center/entities/outliers-timeline';
+import { OffendersWorldMap } from '@/features/threats/common/molecules/offenders-world-map/offenders-world-map';
 import { useAppDispatch } from '@/store/store';
 
 interface OperationalCenterViewProps {

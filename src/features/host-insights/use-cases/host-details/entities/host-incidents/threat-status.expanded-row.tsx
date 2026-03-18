@@ -4,10 +4,10 @@ import { groupBy } from 'ramda';
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { ProtoFlow } from '@/common/design-system/graphs/proto-flow/proto-flow';
 import { esEscape } from '@/common/lib/strings';
-import { useGetEventsQuery } from '@/features/hunt/events/api/events.api';
-import { Event } from '@/features/hunt/events/model/event.schema';
+import { useGetEventsQuery } from '@/features/events/common/events.api';
+import { Event } from '@/features/events/common/events.model';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
-import { ThreatStatus } from '@/features/hunt/threats/model/threat-status.schema';
+import { ThreatStatus } from '@/features/threats/common/threat-status.schema';
 
 export const ThreatStatusExpandedRow = ({
   row,

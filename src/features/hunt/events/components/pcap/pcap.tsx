@@ -23,13 +23,12 @@ import {
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { VisuallyHidden } from '@/common/design-system/atoms/ui/visually-hidden';
 import { cn } from '@/common/lib/utils';
-
 import {
   useRequestPcapExtractionMutation,
   useRequestPcapUploadMutation,
   useUploadAlertToProbeMutation,
-} from '../../api/events.api';
-import { Event } from '../../model/event.schema';
+} from '@/features/events/common/events.api';
+import { Event } from '@/features/events/common/events.model';
 
 const steps = {
   1: 'Send PCAP extraction request to probe',

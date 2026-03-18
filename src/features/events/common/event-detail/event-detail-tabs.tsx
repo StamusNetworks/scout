@@ -12,7 +12,7 @@ import {
   TabsList as PillTabsList,
   TabsTrigger as PillTabsTrigger,
 } from '@/common/design-system/atoms/ui/pillTabs';
-import { Event } from '@/features/hunt/events/model/event.schema';
+import { Event } from '@/features/events/common/events.model';
 
 import {
   EventDetailData,

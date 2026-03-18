@@ -3,9 +3,9 @@ import { useParams } from '@tanstack/react-router';
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { useGetEventsQuery } from '@/features/hunt/events/api/events.api';
+import { useGetEventsQuery } from '@/features/events/common/events.api';
+import { ExpandedEventRow } from '@/features/events/common/molecules/expanded-event-row';
 import { getColumns } from '@/features/hunt/events/components/events-table/events.columns';
-import { ExpandedEventRow } from '@/features/hunt/events/components/events-table/events.expanded-row';
 import { useQFBuilder } from '@/features/hunt/filtering/query-filters/hooks/use-qf-builder';
 
 const columns = getColumns(true);

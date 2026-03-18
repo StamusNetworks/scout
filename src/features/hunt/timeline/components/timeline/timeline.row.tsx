@@ -9,9 +9,9 @@ import {
   DialogTrigger,
 } from '@/common/design-system/atoms/ui/dialog';
 import { cn } from '@/common/lib/utils';
-import { Hostname } from '@/features/analytics/hosts/components/host-details/hostname';
-import { Roles } from '@/features/analytics/hosts/components/host-details/roles';
-import { IpOrEntityEventValue } from '@/features/hunt/entities/components/ip-or-entity';
+import { Hostname } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
+import { Roles } from '@/features/host-insights/use-cases/host-details/molecules/host-details/roles';
+import { IpOrEntityEventValue } from '@/features/threats/common/molecules/ip-or-entity';
 
 import { TimelineProps } from '../../models/threat-history.model';
 import { useTimelineContext } from './timeline';

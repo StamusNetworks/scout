@@ -1,5 +1,5 @@
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { useGetEventsTailQuery } from '@/features/hunt/events/api/events.api';
+import { useGetEventsTailQuery } from '@/features/events/common/events.api';
 
 import { getSightingQfilter } from '../utils/get-sighting-qfilter';
 

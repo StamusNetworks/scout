@@ -10,11 +10,10 @@ import { vi } from 'vitest';
 
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
-import { Host } from '@/features/analytics/hosts/model/host';
-import { Entity } from '@/features/hunt/entities/model/entity';
-import { Threat } from '@/features/hunt/threats/model/threat.model';
-
-import { BeaconingIPsTable } from './beaconing-ips-table';
+import { BeaconingIPsTable } from '@/features/events/beaconing/beaconing-ips/molecules/beaconing-ips-table';
+import { Host } from '@/features/host-insights/common/host.model';
+import { Entity } from '@/features/threats/common/entity';
+import { Threat } from '@/features/threats/common/threat.model';
 
 const createTestRouter = () =>
   createRouter({

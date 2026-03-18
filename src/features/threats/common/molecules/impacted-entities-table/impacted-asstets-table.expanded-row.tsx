@@ -6,7 +6,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/pillTabs';
-import { HostInsightsBlocks } from '@/features/analytics/hosts/components/host-insights/host-insights';
+import { HostInsightsBlocks } from '@/features/host-insights/use-cases/host-details/molecules/host-insights-blocks';
 import { ThreatsTimeline } from '@/features/hunt/timeline/components/timeline/timeline';
 
 import { Entity } from '../../entity';

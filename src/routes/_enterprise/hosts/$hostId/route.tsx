@@ -30,13 +30,13 @@ import { TogglePageContainer } from '@/common/design-system/molecules/toggle-con
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { isIP } from '@/common/lib/ips';
 import { esEscape } from '@/common/lib/strings';
-import { useGetBeaconingEventsQuery } from '@/features/analytics/beaconing/api/beaconing.api';
-import { useGetHostWithAlertsQuery } from '@/features/analytics/hosts/api/hosts.api';
-import { useGetSightingEventsQuery } from '@/features/analytics/sightings/api/sightings.api';
+import { useGetBeaconingEventsQuery } from '@/features/events/beaconing/common/beaconing.api';
+import { useGetEventsQuery } from '@/features/events/common/events.api';
+import { useGetSightingEventsQuery } from '@/features/events/sightings/common/sightings.api';
+import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
 import { HostHeader } from '@/features/host-insights/use-cases/host-details/entities/host-header';
 import { useGetSignaturesQuery } from '@/features/hunt/detection-methods/signatures/api/signatures.api';
-import { useGetEventsQuery } from '@/features/hunt/events/api/events.api';
-import { useGetThreatsStatusQuery } from '@/features/hunt/threats/api/threats.api';
+import { useGetThreatsStatusQuery } from '@/features/threats/common/threats.api';
 import { selectTenancy } from '@/features/user/tenancy/tenancy.selector';
 import { useAppSelector } from '@/store/store';
 

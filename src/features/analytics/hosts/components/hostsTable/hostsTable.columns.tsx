@@ -7,13 +7,12 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { FormattedBadge } from '@/common/design-system/molecules/formatted-badge';
-import { Host } from '@/features/analytics/hosts/model/host';
+import { Host } from '@/features/host-insights/common/host.model';
+import { HostnameTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
+import { NetworkTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
+import { RolesTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/roles';
+import { UsernameTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';
 import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
-
-import { HostnameTemplate } from '../host-details/hostname';
-import { NetworkTemplate } from '../host-details/network';
-import { RolesTemplate } from '../host-details/roles';
-import { UsernameTemplate } from '../host-details/username';
 
 export const expanderColumn: CustomColumnDef<Host> = {
   id: 'expander',

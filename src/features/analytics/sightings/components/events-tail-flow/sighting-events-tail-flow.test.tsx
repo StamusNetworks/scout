@@ -4,8 +4,7 @@ import { describe, expect, test } from 'vitest';
 
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
-
-import { SightingEventsTailFlow } from './sighting-events-tail-flow';
+import { SightingEventsTailFlow } from '@/features/events/sightings/common/molecules/events-tail-flow';
 
 // Mock sightings data
 const mockDnsSighting = {

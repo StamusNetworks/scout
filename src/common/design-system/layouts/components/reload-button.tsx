@@ -2,7 +2,7 @@ import { RefreshCw } from 'lucide-react';
 
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { cn } from '@/common/lib/utils';
-import { useGetSTIThreatsQuery } from '@/features/hunt/threats/api/threats.api';
+import { useGetSTIThreatsQuery } from '@/features/threats/common/threats.api';
 import { API } from '@/store/api';
 import { useAppDispatch } from '@/store/store';
 

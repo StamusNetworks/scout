@@ -4,10 +4,12 @@ import { vi } from 'vitest';
 
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
-
-import { BeaconingEvent } from '../../models/beaconing-event.model';
-import { ReportSummary } from './report-summary';
-import { beaconingColumns, JA3SColumns } from './report-summary.columns';
+import { BeaconingEvent } from '@/features/events/beaconing/common/beaconing-event.model';
+import { ReportSummary } from '@/features/events/beaconing/common/molecules/report-summary';
+import {
+  beaconingColumns,
+  JA3SColumns,
+} from '@/features/events/beaconing/common/molecules/report-summary';
 
 const mockJA3SReportResponse: Partial<BeaconingEvent>[] = [
   {

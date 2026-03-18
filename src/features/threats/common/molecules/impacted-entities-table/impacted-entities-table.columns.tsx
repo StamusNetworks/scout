@@ -14,10 +14,10 @@ import { ExportColumn } from '@/common/design-system/molecules/data-table/data-t
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
-import { Hostname } from '@/features/analytics/hosts/components/host-details/hostname';
-import { Network } from '@/features/analytics/hosts/components/host-details/network';
-import { Roles } from '@/features/analytics/hosts/components/host-details/roles';
-import { Username } from '@/features/analytics/hosts/components/host-details/username';
+import { Hostname } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
+import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
+import { Roles } from '@/features/host-insights/use-cases/host-details/molecules/host-details/roles';
+import { Username } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 import { killChainsConfig } from '@/features/hunt/killchain/killchain';
 

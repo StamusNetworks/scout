@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
 import * as Save from '@/common/lib/save';
-import { Event } from '@/features/hunt/events/model/event.schema';
+import { Event } from '@/features/events/common/events.model';
 
 import Flow from './flow';
 import { ProtoColumn } from './flow.columns';

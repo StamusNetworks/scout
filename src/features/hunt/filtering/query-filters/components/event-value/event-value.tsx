@@ -22,9 +22,9 @@ import {
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { compressIPv6, isIP, isIPv6 } from '@/common/lib/ips';
 import { cn } from '@/common/lib/utils';
-import { HostSummary } from '@/features/analytics/hosts/components/host-summary/host-summary';
-import { useGetHostInsights } from '@/features/analytics/hosts/hooks/use-get-host-insights';
-import { useGetImpactedEntityQuery } from '@/features/hunt/entities/api/entities.api';
+import { useGetHostInsights } from '@/features/host-insights/use-cases/host-details/hooks/use-get-host-insights';
+import { HostSummary } from '@/features/host-insights/use-cases/host-details/molecules/host-summary';
+import { useGetImpactedEntityQuery } from '@/features/threats/common/entities.api';
 import { useAppDispatch } from '@/store/store';
 
 import { getFilterDef } from '../../constants/query-filter.definition';

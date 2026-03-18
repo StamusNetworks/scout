@@ -3,7 +3,7 @@ import { memo, useMemo } from 'react';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { cn } from '@/common/lib/utils';
-import { useGetEventsTimelineQuery } from '@/features/hunt/events/api/events.api';
+import { useGetEventsTimelineQuery } from '@/features/events/common/events.api';
 
 import {
   type ChartScale,
