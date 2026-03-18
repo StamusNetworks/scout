@@ -1,7 +1,7 @@
 import { buildQueryParams } from '@/common/fetching/buildQueryParams';
 import { Dates, Tenant } from '@/common/fetching/fetching.types';
 import { Paginated, Pagination } from '@/common/fetching/fetching.types';
-import { killChainsConfig } from '@/features/hunt/killchain/killchain';
+import { killChainsConfig } from '@/features/threats/common/killchain/killchain';
 import { API } from '@/store/api';
 
 import { Entity } from './entity';

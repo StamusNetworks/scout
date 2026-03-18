@@ -2,7 +2,7 @@ import { keys } from 'ramda';
 import z from 'zod';
 
 import { baseEventSchema } from '@/features/events/common/events.model';
-import { killChainsConfig } from '@/features/hunt/killchain/killchain';
+import { killChainsConfig } from '@/features/threats/common/killchain/killchain';
 
 import { alertSchema } from './alert.schema';
 

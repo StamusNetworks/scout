@@ -18,8 +18,8 @@ import { Hostname } from '@/features/host-insights/use-cases/host-details/molecu
 import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 import { Roles } from '@/features/host-insights/use-cases/host-details/molecules/host-details/roles';
 import { Username } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';
-import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
-import { killChainsConfig } from '@/features/hunt/killchain/killchain';
+import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
+import { killChainsConfig } from '@/features/threats/common/killchain/killchain';
 
 import { Entity } from '../../entity';
 import { EntityThreatTagsListTemplate } from '../entities-threat-tags-list/entities-threat-tags-list';

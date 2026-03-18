@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { killChainSchema } from '@/features/hunt/killchain/killchain';
+import { killChainSchema } from '@/features/threats/common/killchain/killchain';
 
 export const threatStatusSchema = z.object({
   id: z.number(),

@@ -15,7 +15,7 @@ import { Hostname } from '@/features/host-insights/use-cases/host-details/molecu
 import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 import { Roles } from '@/features/host-insights/use-cases/host-details/molecules/host-details/roles';
 import { Username } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';
-import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
+import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
 
 import { useThreat } from '../hooks/use-threat';
 import { IpOrEntityEventValue } from '../molecules/ip-or-entity';

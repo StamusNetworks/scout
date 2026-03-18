@@ -44,13 +44,13 @@ import { DefaultField } from '@/common/design-system/molecules/default-field';
 import { Dates, QFilter, Tenant } from '@/common/fetching/fetching.types';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useUpdateEffect } from '@/common/lib/use-update-effect';
+import { useGetRulesetsQuery } from '@/features/detection-methods/rulesets.api';
 import { FilterInput } from '@/features/filtering/query-filters/components/filters-input';
 import {
   KillChainKeys,
   killChainSchema,
   killChainsConfig,
-} from '@/features/hunt/killchain/killchain';
-import { useGetRulesetsQuery } from '@/features/detection-methods/rulesets.api';
+} from '@/features/threats/common/killchain/killchain';
 import { CreateEditThreatForm } from '@/features/threats/common/molecules/create-edit-threat-form';
 import { useGetCustomThreatsQuery } from '@/features/threats/common/threats.api';
 

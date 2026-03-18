@@ -27,7 +27,7 @@ import {
   KillChainKeysWithoutPolicies,
   killChainsConfig,
   killChainWithoutPoliciesOptions,
-} from '@/features/hunt/killchain/killchain';
+} from '@/features/threats/common/killchain/killchain';
 import { useGetImpactedEntitiesQuery } from '@/features/threats/common/entities.api';
 import { useThreats } from '@/features/threats/common/hooks/use-threats';
 import { ThreatStatus } from '@/features/threats/common/threat-status.schema';

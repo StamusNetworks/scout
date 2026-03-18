@@ -1,5 +1,5 @@
 import { Host } from '@/features/host-insights/common/host.model';
-import { KillChainPhase } from '@/features/hunt/killchain/killchain';
+import { KillChainPhase } from '@/features/threats/common/killchain/killchain';
 
 import { ThreatHistory } from '../../models/threat-history.model';
 

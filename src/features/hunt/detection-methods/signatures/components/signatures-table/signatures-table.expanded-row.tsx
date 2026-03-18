@@ -12,7 +12,7 @@ import {
   ValueListCard,
 } from '@/common/design-system/molecules/value-list-card';
 import { useGetDashboardFieldsQuery } from '@/features/hunt/dashboard/api/dashboard.api';
-import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
+import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
 import { ThreatTag } from '@/features/threats/common/molecules/threat-tag';
 
 import { Signature } from '../../model/signature';

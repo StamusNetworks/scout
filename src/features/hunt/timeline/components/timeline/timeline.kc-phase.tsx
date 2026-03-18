@@ -8,7 +8,7 @@ import {
   TooltipTrigger,
 } from '@/common/design-system/molecules/tooltip';
 
-import { KillChainPhase, killChainsConfig } from '../../../killchain/killchain';
+import { KillChainPhase, killChainsConfig } from '@/features/threats/common/killchain/killchain';
 import { TimelineKCPhase } from '../../models/threat-history.model';
 
 export const TimelineKCPhaseBadge = ({

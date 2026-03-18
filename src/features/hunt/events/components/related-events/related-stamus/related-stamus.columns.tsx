@@ -3,8 +3,8 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
-import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
-import { KillChainPhase } from '@/features/hunt/killchain/killchain';
+import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
+import { KillChainPhase } from '@/features/threats/common/killchain/killchain';
 
 import { StamusEvent } from '../../../model/event-types/stamus.schema';
 

@@ -2,7 +2,7 @@ import { groupBy, toPairs } from 'ramda';
 
 import { getDuration } from '@/common/lib/duration';
 import { formatBytes, formatNumber } from '@/common/lib/numbers';
-import { killChainsConfig } from '@/features/hunt/killchain/killchain';
+import { killChainsConfig } from '@/features/threats/common/killchain/killchain';
 
 import { DnsEvent } from '../../model/app-proto/dns.schema';
 import { HttpEvent } from '../../model/app-proto/http.schema';

@@ -34,7 +34,7 @@ import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
 import { addQueryFilter } from '@/features/filtering/query-filters/store/query-filters.slice';
 import { enableTags } from '@/features/filtering/query-filters/use-cases/enable-tags';
-import { KillChainCountersByThreatId } from '@/features/hunt/killchain/components/killchain-counters/killchain-counters';
+import { KillChainCountersByThreatId } from '@/features/threats/common/killchain/components/killchain-counters/killchain-counters';
 import { ImpactedEntitiesTable } from '@/features/threats/common/molecules/impacted-entities-table/impacted-entities-table';
 import { useAppDispatch } from '@/store/store';
 

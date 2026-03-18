@@ -6,7 +6,7 @@ import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { clearQueryFilters } from '@/features/filtering/query-filters/store/query-filters.slice';
 import { enableTags } from '@/features/filtering/query-filters/use-cases/enable-tags';
-import { KillChainCounters } from '@/features/hunt/killchain/components/killchain-counters/killchain-counters';
+import { KillChainCounters } from '@/features/threats/common/killchain/components/killchain-counters/killchain-counters';
 import { IndicatorsDocDopv } from '@/features/hunt/operational-center/components/indicators/docdopv.indicators';
 import { IndicatorsAppliancePreview } from '@/features/hunt/operational-center/components/indicators/indicators.preview';
 import { CipherSecurity } from '@/features/hunt/operational-center/entities/cipher-security';
