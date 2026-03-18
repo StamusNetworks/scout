@@ -1,3 +1,1 @@
-export const formatBeaconMetric = (beaconMetric: number | undefined) => {
-  return Math.round((beaconMetric || 0) * 100);
-};
+export { formatBeaconMetric } from '@/features/events/beaconing/common/utils/format-beacon-metric';
