@@ -1,20 +1,4 @@
-import { parseAsStringLiteral, useQueryState } from 'nuqs';
-
-export type HostsValuesSort =
-  | 'first-seen-asc'
-  | 'first-seen-desc'
-  | 'last-seen-asc'
-  | 'last-seen-desc';
-
-const sortOptions: HostsValuesSort[] = [
-  'first-seen-asc',
-  'first-seen-desc',
-  'last-seen-asc',
-  'last-seen-desc',
-];
-
-export const useValuesSortParam = () =>
-  useQueryState(
-    'values_sort',
-    parseAsStringLiteral(sortOptions).withDefault('last-seen-desc'),
-  );
+export {
+  type HostsValuesSort,
+  useValuesSortParam,
+} from '@/features/host-insights/use-cases/host-details/molecules/host-block/use-values-sort-param';
