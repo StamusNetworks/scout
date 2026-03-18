@@ -1,6 +1,6 @@
 import { Dates, Tenant } from '@/common/fetching/fetching.types';
 import { Paginated, Pagination } from '@/common/fetching/fetching.types';
-import { Ruleset } from '@/features/hunt/rulesets/model/ruleset';
+import { Ruleset } from './ruleset.model';
 import { API } from '@/store/api';
 
 export type URLParams = Pagination & Tenant & Dates;

@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { getConfig } from '@/config';
-import { useUpdatePushRulesetMutation } from '@/features/hunt/rulesets/api/rulesets.api';
+import { useUpdatePushRulesetMutation } from '@/features/detection-methods/rulesets.api';
 
 export const UpdatePushRuleset = () => {
   const { enterprise } = useFeatureFlags();

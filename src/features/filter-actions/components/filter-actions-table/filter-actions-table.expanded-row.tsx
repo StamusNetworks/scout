@@ -12,7 +12,7 @@ import { TableCard } from '@/common/design-system/molecules/table-card';
 import { useGetFilterActionStatsQuery } from '@/features/filter-actions/api/filter-actions.api';
 import { FilterActionParameters } from '@/features/filter-actions/components/filter-actions-table/filter-actions-parameters';
 import { FilterAction } from '@/features/filter-actions/model/filter-action';
-import { useGetRulesetsQuery } from '@/features/hunt/rulesets/api/rulesets.api';
+import { useGetRulesetsQuery } from '@/features/detection-methods/rulesets.api';
 
 import { getRowFilters } from './filter-actions-table.columns';
 
