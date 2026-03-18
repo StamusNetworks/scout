@@ -134,7 +134,8 @@ Props-driven:
 ```ts
 interface EventsFlowForProtocolProps {
   appProto: string;
-  globalParams: { start_date; end_date; tenant; qfilter; alert; stamus; discovery };
+  globalParams: { start_date?: string; end_date?: string; tenant?: string; qfilter?: string };
+  eventTypes: { alert?: boolean; stamus?: boolean; discovery?: boolean } | null;
 }
 ```
 
@@ -200,7 +201,7 @@ function NetworkEventsPage() {
 }
 ```
 
-Note: No `usePaginatedSearch` needed here since there's no sorting and the page reset on global param change can be handled by the entity internally (it re-fetches when qfilter/dates change, and the first page of results is always valid for a card list).
+The route uses `usePaginatedSearch` at the route level for page reset on global param change (dates/tenant/qfilter), same as other paginated routes. Even though there's no sorting, pagination state must reset when globals change.
 
 ### `/events-flow` — Thin Orchestrator
 
