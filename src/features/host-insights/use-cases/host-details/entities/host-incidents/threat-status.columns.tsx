@@ -22,13 +22,12 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { isIP } from '@/common/lib/ips';
+import { replaceFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 import { ThreatTag } from '@/features/hunt/threats/components/threat-tag';
+import { useThreat } from '@/features/hunt/threats/hooks/use-threat';
+import { ThreatStatus } from '@/features/hunt/threats/model/threat-status.schema';
 import { useAppDispatch } from '@/store/store';
-
-import { replaceFilters } from '../../../../features/hunt/filtering/query-filters/store/query-filters.slice';
-import { useThreat } from '../../../../features/hunt/threats/hooks/use-threat';
-import { ThreatStatus } from '../../../../features/hunt/threats/model/threat-status.schema';
 
 export const threatStatusColumns: CustomColumnDef<ThreatStatus>[] = [
   {
