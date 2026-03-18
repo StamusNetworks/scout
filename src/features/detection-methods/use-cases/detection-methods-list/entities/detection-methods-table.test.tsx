@@ -49,23 +49,22 @@ const createTestRouter = () =>
     }),
   });
 
-const defaultSearch = {
+const defaultProps = {
   page: 1,
-  page_size: 10,
-  sort: '-hits',
-  with_alerts: true,
+  pageSize: 10,
+  sorting: [{ id: 'hits', desc: true }],
+  withAlerts: true,
+  onPageChange: vi.fn(),
+  onPageSizeChange: vi.fn(),
+  onSortingChange: vi.fn(),
+  onWithAlertsChange: vi.fn(),
 };
 
-const mockNavigate = vi.fn();
-
-const renderTable = async (overrides?: Partial<typeof defaultSearch>) => {
-  const search = { ...defaultSearch, ...overrides };
+const renderTable = async (overrides?: Partial<typeof defaultProps>) => {
+  const props = { ...defaultProps, ...overrides };
   return renderWithProviders(
     <BreadcrumbProvider>
-      <DetectionMethodsTable
-        search={search}
-        navigate={mockNavigate}
-      />
+      <DetectionMethodsTable {...props} />
     </BreadcrumbProvider>,
     {
       router: createTestRouter(),
@@ -75,7 +74,6 @@ const renderTable = async (overrides?: Partial<typeof defaultSearch>) => {
 };
 
 beforeEach(() => {
-  mockNavigate.mockClear();
   server.use(
     http.get(baseUrl + '/rules/rule/', () => HttpResponse.json(emptyPaginated)),
   );

@@ -1,4 +1,5 @@
 import { useNavigate } from '@tanstack/react-router';
+import type { SortingState, Updater } from '@tanstack/react-table';
 import { Row as TableRow } from '@tanstack/react-table';
 import { Binary, RotateCcw } from 'lucide-react';
 import { useCallback, useMemo } from 'react';
@@ -7,7 +8,6 @@ import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import { serializeSorting } from '@/common/design-system/molecules/data-table/hooks/sorting-parser';
-import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
 import { ExportButton } from '@/common/design-system/molecules/export-button';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
@@ -46,12 +46,13 @@ import {
 // --- Props ---
 
 interface DetectionEventsTableProps {
-  search: { page: number; page_size: number; sort: string };
-  navigate: (opts: {
-    search: (prev: Record<string, unknown>) => Record<string, unknown>;
-    replace?: boolean;
-  }) => void;
+  page: number;
+  pageSize: number;
+  sorting: SortingState;
   hostId?: string;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (pageSize: number) => void;
+  onSortingChange: (updater: Updater<SortingState>) => void;
 }
 
 // --- Columns ---
@@ -92,9 +93,13 @@ const getRowId = (originalRow: Event) => originalRow._id;
 // --- Component ---
 
 export function DetectionEventsTable({
-  search,
-  navigate,
+  page,
+  pageSize,
+  sorting,
   hostId,
+  onPageChange,
+  onPageSizeChange,
+  onSortingChange,
 }: DetectionEventsTableProps) {
   const { enterprise } = useFeatureFlags();
   const tanstackNavigate = useNavigate();
@@ -105,20 +110,6 @@ export function DetectionEventsTable({
       ? ['tenant', 'dates']
       : ['tenant', 'dates', 'qfilter', 'qfilterHost'],
   );
-
-  // Page-level state from URL search params
-  const resetOn = hostId
-    ? [globals.tenant, globals.start_date, globals.end_date]
-    : [
-        globals.tenant,
-        globals.start_date,
-        globals.end_date,
-        globals.qfilter,
-        globals.host_id_qfilter,
-      ];
-
-  const { page, pageSize, sorting, setPage, setPageSize, onSortingChange } =
-    usePaginatedSearch({ search, navigate }, { resetOn });
 
   // Build query params for the API
   const hostQfilter = hostId
@@ -234,8 +225,8 @@ export function DetectionEventsTable({
           page={page}
           pageSize={pageSize}
           total={total}
-          onPageChange={setPage}
-          onPageSizeChange={setPageSize}
+          onPageChange={onPageChange}
+          onPageSizeChange={onPageSizeChange}
         />
       )}
     </div>

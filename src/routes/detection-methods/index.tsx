@@ -11,6 +11,8 @@ import {
   PageTitle,
 } from '@/common/design-system/atoms/page';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
+import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
+import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { DetectionMethodsTable } from '@/features/detection-methods/use-cases/detection-methods-list/entities/detection-methods-table';
 
@@ -39,6 +41,16 @@ function DetectionMethodsPage() {
     replace?: boolean;
   }) => tanstackNavigate(opts as Parameters<typeof tanstackNavigate>[0]);
 
+  const globals = useGlobalQueryParams(['tenant', 'dates', 'qfilter']);
+
+  const { page, pageSize, sorting, setPage, setPageSize, onSortingChange } =
+    usePaginatedSearch(
+      { search, navigate },
+      {
+        resetOn: [globals.tenant, globals.start_date, globals.end_date],
+      },
+    );
+
   return (
     <>
       <OutletBreadcrumb>Detection Methods</OutletBreadcrumb>
@@ -56,8 +68,18 @@ function DetectionMethodsPage() {
             </PageHeaderContent>
           </PageHeader>
           <DetectionMethodsTable
-            search={search}
-            navigate={navigate}
+            page={page}
+            pageSize={pageSize}
+            sorting={sorting}
+            withAlerts={search.with_alerts}
+            onPageChange={setPage}
+            onPageSizeChange={setPageSize}
+            onSortingChange={onSortingChange}
+            onWithAlertsChange={(v) =>
+              navigate({
+                search: (prev) => ({ ...prev, with_alerts: v, page: 1 }),
+              })
+            }
           />
         </PageContainer>
       </Page>

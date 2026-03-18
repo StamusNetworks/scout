@@ -45,34 +45,27 @@ const createTestRouter = () =>
     }),
   });
 
-const defaultSearch = {
+const defaultProps = {
   page: 1,
-  page_size: 10,
-  sort: '-timestamp',
+  pageSize: 10,
+  sorting: [{ id: 'timestamp', desc: true }],
+  onPageChange: vi.fn(),
+  onPageSizeChange: vi.fn(),
+  onSortingChange: vi.fn(),
 };
 
-const mockNavigate = vi.fn();
-
 const renderTable = async (
-  overrides?: Partial<typeof defaultSearch>,
+  overrides?: Partial<typeof defaultProps>,
   hostId?: string,
 ) => {
-  const search = { ...defaultSearch, ...overrides };
-  return renderWithProviders(
-    <DetectionEventsTable
-      search={search}
-      navigate={mockNavigate}
-      hostId={hostId}
-    />,
-    {
-      router: createTestRouter(),
-      preloadedState: { ...initialState },
-    },
-  );
+  const props = { ...defaultProps, ...overrides, hostId };
+  return renderWithProviders(<DetectionEventsTable {...props} />, {
+    router: createTestRouter(),
+    preloadedState: { ...initialState },
+  });
 };
 
 beforeEach(() => {
-  mockNavigate.mockClear();
   server.use(
     http.get(baseUrl + '/rules/es/alerts_tail', () =>
       HttpResponse.json(emptyPaginated),

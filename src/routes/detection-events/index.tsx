@@ -11,6 +11,8 @@ import {
   PageHeaderContent,
   PageTitle,
 } from '@/common/design-system/atoms/page';
+import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
+import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { DetectionEventsTable } from '@/features/events/detection-events/entities/detection-events-table';
 import { EventsCounter } from '@/features/events/detection-events/entities/events-counter';
@@ -40,6 +42,27 @@ function DetectionEventsPage() {
     replace?: boolean;
   }) => tanstackNavigate(opts as Parameters<typeof tanstackNavigate>[0]);
 
+  const globals = useGlobalQueryParams([
+    'tenant',
+    'dates',
+    'qfilter',
+    'qfilterHost',
+  ]);
+
+  const { page, pageSize, sorting, setPage, setPageSize, onSortingChange } =
+    usePaginatedSearch(
+      { search, navigate },
+      {
+        resetOn: [
+          globals.tenant,
+          globals.start_date,
+          globals.end_date,
+          globals.qfilter,
+          globals.host_id_qfilter,
+        ],
+      },
+    );
+
   return (
     <Page>
       <PageContainer>
@@ -58,8 +81,12 @@ function DetectionEventsPage() {
           <EventsCounter />
         </Grid>
         <DetectionEventsTable
-          search={search}
-          navigate={navigate}
+          page={page}
+          pageSize={pageSize}
+          sorting={sorting}
+          onPageChange={setPage}
+          onPageSizeChange={setPageSize}
+          onSortingChange={onSortingChange}
         />
       </PageContainer>
     </Page>

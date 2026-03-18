@@ -2,6 +2,8 @@ import { createFileRoute, useParams } from '@tanstack/react-router';
 import { z } from 'zod';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
+import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
+import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { DetectionEventsTable } from '@/features/events/detection-events/entities/detection-events-table';
 import { EventsTimeline } from '@/features/events/detection-events/entities/events-timeline';
 
@@ -31,13 +33,27 @@ function HostDetectionEventsTab() {
     replace?: boolean;
   }) => tanstackNavigate(opts as Parameters<typeof tanstackNavigate>[0]);
 
+  const globals = useGlobalQueryParams(['tenant', 'dates']);
+
+  const { page, pageSize, sorting, setPage, setPageSize, onSortingChange } =
+    usePaginatedSearch(
+      { search, navigate },
+      {
+        resetOn: [globals.tenant, globals.start_date, globals.end_date],
+      },
+    );
+
   return (
     <>
       <EventsTimeline hostId={hostId} />
       <DetectionEventsTable
-        search={search}
-        navigate={navigate}
+        page={page}
+        pageSize={pageSize}
+        sorting={sorting}
         hostId={hostId}
+        onPageChange={setPage}
+        onPageSizeChange={setPageSize}
+        onSortingChange={onSortingChange}
       />
     </>
   );

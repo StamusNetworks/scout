@@ -1,3 +1,4 @@
+import type { SortingState, Updater } from '@tanstack/react-table';
 import { PencilRuler, RotateCcw } from 'lucide-react';
 import { useMemo } from 'react';
 
@@ -7,7 +8,6 @@ import { DataTableToolbar } from '@/common/design-system/molecules/data-table/da
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import { SwitchFilter } from '@/common/design-system/molecules/data-table/filters/switch-filter';
 import { serializeSorting } from '@/common/design-system/molecules/data-table/hooks/sorting-parser';
-import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
 import { ExportButton } from '@/common/design-system/molecules/export-button';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
@@ -23,21 +23,25 @@ import { selectQueryFilters } from '@/features/hunt/filtering/query-filters/stor
 import { useAppSelector } from '@/store/store';
 
 interface DetectionMethodsTableProps {
-  search: {
-    page: number;
-    page_size: number;
-    sort: string;
-    with_alerts: boolean;
-  };
-  navigate: (opts: {
-    search: (prev: Record<string, unknown>) => Record<string, unknown>;
-    replace?: boolean;
-  }) => void;
+  page: number;
+  pageSize: number;
+  sorting: SortingState;
+  withAlerts: boolean;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (pageSize: number) => void;
+  onSortingChange: (updater: Updater<SortingState>) => void;
+  onWithAlertsChange: (withAlerts: boolean) => void;
 }
 
 export function DetectionMethodsTable({
-  search,
-  navigate,
+  page,
+  pageSize,
+  sorting,
+  withAlerts,
+  onPageChange,
+  onPageSizeChange,
+  onSortingChange,
+  onWithAlertsChange,
 }: DetectionMethodsTableProps) {
   // Table column preferences
   const {
@@ -51,14 +55,6 @@ export function DetectionMethodsTable({
     tableId: 'detectionMethodsTable',
     columns: DETECTION_METHODS_COLUMNS,
   });
-
-  // with_alerts toggle from URL search params
-  const applyEventFilter = search.with_alerts;
-  const toggleApplyEventFilter = (checked: boolean) => {
-    navigate({
-      search: (prev) => ({ ...prev, with_alerts: checked, page: 1 }),
-    });
-  };
 
   // SID filter from Redux query filters
   const qfilters = useAppSelector(selectQueryFilters);
@@ -74,29 +70,14 @@ export function DetectionMethodsTable({
     'qfilterSignature',
   ]);
 
-  // Pagination / sorting from URL search params
-  const { page, pageSize, sorting, setPage, setPageSize, onSortingChange } =
-    usePaginatedSearch(
-      { search, navigate },
-      {
-        resetOn: [
-          globalParams.start_date,
-          globalParams.end_date,
-          globalParams.tenant,
-          qfilter,
-          sidFilter,
-        ],
-      },
-    );
-
   // Build query params
   const ordering = serializeSorting(sorting);
   const queryParams = useMemo(
     () => ({
       ...globalParams,
-      hits_min: applyEventFilter ? 1 : undefined,
+      hits_min: withAlerts ? 1 : undefined,
       ...(sidFilter && { sid: sidFilter }),
-      ...(applyEventFilter ? { qfilter } : {}),
+      ...(withAlerts ? { qfilter } : {}),
       pageIndex: page - 1,
       pageSize,
       ordering: ordering ?? '-hits',
@@ -106,7 +87,7 @@ export function DetectionMethodsTable({
       page,
       pageSize,
       ordering,
-      applyEventFilter,
+      withAlerts,
       sidFilter,
       globalParams.start_date,
       globalParams.end_date,
@@ -127,8 +108,8 @@ export function DetectionMethodsTable({
         <DataTableToolbar>
           <SwitchFilter
             title="Apply event query filters"
-            setValue={toggleApplyEventFilter}
-            value={applyEventFilter}
+            setValue={onWithAlertsChange}
+            value={withAlerts}
           />
         </DataTableToolbar>
 
@@ -181,8 +162,8 @@ export function DetectionMethodsTable({
           page={page}
           pageSize={pageSize}
           total={total}
-          onPageChange={setPage}
-          onPageSizeChange={setPageSize}
+          onPageChange={onPageChange}
+          onPageSizeChange={onPageSizeChange}
         />
       )}
     </div>
