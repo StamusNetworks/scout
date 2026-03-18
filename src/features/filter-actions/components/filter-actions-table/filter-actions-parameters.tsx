@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import { FilterAction } from '@/features/hunt/filter-actions/model/filter-action';
+import { FilterAction } from '@/features/filter-actions/model/filter-action';
 import { selectTenancy } from '@/features/user/tenancy/tenancy.selector';
 
 type KeyToDisplay = {

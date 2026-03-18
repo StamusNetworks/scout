@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { killChainSchema } from '../../killchain/killchain';
+import { killChainSchema } from '@/features/hunt/killchain/killchain';
 
 export const filterActionTargetType = z.enum(['ip', 'username', 'mail']);
 export const filterDefSchema = z.object({

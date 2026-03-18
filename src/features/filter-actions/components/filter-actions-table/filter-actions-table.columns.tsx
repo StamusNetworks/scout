@@ -1,7 +1,7 @@
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
-import { FilterAction } from '@/features/hunt/filter-actions/model/filter-action';
+import { FilterAction } from '@/features/filter-actions/model/filter-action';
 
 import { FilterActionRowActions } from './filter-actions-table.row-actions';
 

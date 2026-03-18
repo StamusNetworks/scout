@@ -11,10 +11,10 @@ import { saveFilterSetModalSlice } from '@/features/filtering/query-filters/comp
 import { queryFiltersSlice } from '@/features/filtering/query-filters/store/query-filters.slice';
 import { queryFiltersSetsSlice } from '@/features/filtering/query-filters/store/query-filters-sets.slice';
 import { dashboardPageStateSlice } from '@/features/hunt/dashboard/store/dashboard.slice';
-import { createEditDeclarationModalSlice } from '@/features/hunt/filter-actions/components/filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
-import { createEditSuppressModalSlice } from '@/features/hunt/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
-import { createEditTagModalSlice } from '@/features/hunt/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
-import { createEditThresholdModalSlice } from '@/features/hunt/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
+import { createEditDeclarationModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
+import { createEditSuppressModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
+import { createEditTagModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
+import { createEditThresholdModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
 import { investigationSlice } from '@/features/hunt/investigation/investigation.slice';
 import { investigationsHistorySlice } from '@/features/hunt/investigation/investigations-history.slice';
 import { marketingStateSlice } from '@/features/marketing/store/marketing.store';

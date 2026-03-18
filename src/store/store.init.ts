@@ -5,10 +5,10 @@ import { saveFilterSetModalInitialState } from '@/features/filtering/query-filte
 import { queryFiltersInitialState } from '@/features/filtering/query-filters/store/query-filters.slice';
 import { queryFiltersSetsInitialState } from '@/features/filtering/query-filters/store/query-filters-sets.slice';
 import { dashboardPageStateInitialState } from '@/features/hunt/dashboard/store/dashboard.slice';
-import { createEditDeclarationModalInitialState } from '@/features/hunt/filter-actions/components/filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
-import { createEditSuppressModalInitialState } from '@/features/hunt/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
-import { createEditTagModalInitialState } from '@/features/hunt/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
-import { createEditThresholdModalInitialState } from '@/features/hunt/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
+import { createEditDeclarationModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
+import { createEditSuppressModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
+import { createEditTagModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
+import { createEditThresholdModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
 import { investigationInitialState } from '@/features/hunt/investigation/investigation.slice';
 import { investigationsHistoryInitialState } from '@/features/hunt/investigation/investigations-history.slice';
 import { marketingStateInitialState } from '@/features/marketing/store/marketing.store';
