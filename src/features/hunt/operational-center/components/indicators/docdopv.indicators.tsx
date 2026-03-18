@@ -6,7 +6,7 @@ import { Card } from '@/common/design-system/atoms/ui/card';
 import { StatsCardHorizontalContent } from '@/common/design-system/molecules/stats-card-horizontal';
 import { useGlobalStats } from '@/features/hunt/dashboard/api/hooks/useGlobalStats';
 import { usePreviousDates } from '@/features/hunt/filtering/dates-filters/use-previous-dates';
-import { indicators } from '@/pages/operational-center/config';
+import { indicators } from '@/features/hunt/operational-center/config';
 
 export const IndicatorsDocDopv = () => {
   const navigate = useNavigate();

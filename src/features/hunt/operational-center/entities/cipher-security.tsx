@@ -21,10 +21,6 @@ import { cn } from '@/common/lib/utils';
 import { useGetEventsTimelineQuery } from '@/features/hunt/events/api/events.api';
 
 const chartConfig = {
-  // pre_condition: {
-  //   label: 'Policy Violation',
-  //   color: 'hsl(var(--pre-condition))',
-  // },
   recommended: {
     label: 'Recommended',
     color: 'var(--chart-1)',

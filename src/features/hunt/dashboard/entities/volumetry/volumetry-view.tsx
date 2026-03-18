@@ -3,7 +3,6 @@ import { Search } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 
 import { BlockTitle } from '@/common/design-system/atoms/block';
-import { DefaultPage } from '@/common/design-system/atoms/default-page';
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -14,7 +13,6 @@ import {
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/pillTabs';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
-import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import {
   ComposablePagination,
   ItemsCount,
@@ -23,22 +21,20 @@ import {
 } from '@/common/design-system/molecules/pagination';
 import { StatsCardHorizontal } from '@/common/design-system/molecules/stats-card-horizontal';
 import { esEscape } from '@/common/lib/strings';
-import { usePageTitle } from '@/common/lib/use-page-title';
 import { useGlobalStats } from '@/features/hunt/dashboard/api/hooks/useGlobalStats';
 import { useEventsCount } from '@/features/hunt/events/api/hooks/useEventsCount';
 import { usePreviousDates } from '@/features/hunt/filtering/dates-filters/use-previous-dates';
+import { indicators } from '@/features/hunt/operational-center/config';
 import { useGetProbesQuery } from '@/features/user/settings/settings.api';
 import { Route } from '@/routes/_enterprise/volumetry';
 
-import { indicators } from '../operational-center/config';
-import { type ChartScale } from './_components/dual-axis-line-chart';
-import { EventsTimeline } from './_components/events-timeline';
-import { SeriesToggleBar } from './_components/series-toggle-bar';
+import { type ChartScale } from './dual-axis-line-chart';
+import { EventsTimeline } from './events-timeline';
+import { SeriesToggleBar } from './series-toggle-bar';
 
 const pageSize = 5;
 
-export const VolumetryPage = () => {
-  usePageTitle('Volumetry');
+export const VolumetryView = () => {
   const { scale } = Route.useSearch();
   const navigate = useNavigate();
   const previousDates = usePreviousDates();
@@ -64,52 +60,46 @@ export const VolumetryPage = () => {
 
   return (
     <>
-      <OutletBreadcrumb>Volumetry</OutletBreadcrumb>
-      <DefaultPage
-        title="Volumetry"
-        description="Overview of network data volume, transactions, and detection events over the selected time period."
-      >
-        <Grid className="mb-6 grid-cols-1 gap-4 md:grid-cols-3">
-          <StatsCardHorizontal
-            {...indicators['analyzed-traffic']}
-            value={globalStats?.volumetry}
-            previousValue={previousGlobalStats?.volumetry}
-            loading={loading}
-          />
-          <StatsCardHorizontal
-            {...indicators['network-transactions']}
-            value={globalStats?.nb_events}
-            previousValue={previousGlobalStats?.nb_events}
-            loading={loading}
-          />
-          <StatsCardHorizontal
-            {...indicators.events}
-            value={eventsCount?.doc_count}
-            previousValue={previousEventsCount?.doc_count}
-            loading={eventsLoading}
-          />
-        </Grid>
-        <Row className="mb-4 items-center justify-between">
-          <SeriesToggleBar />
-          <Tabs
-            value={scale}
-            onValueChange={handleScaleChange}
-          >
-            <TabsList>
-              <TabsTrigger value="default">Default</TabsTrigger>
-              <TabsTrigger value="normalized">Normalized</TabsTrigger>
-              <TabsTrigger value="log">Logarithmic</TabsTrigger>
-            </TabsList>
-          </Tabs>
-        </Row>
-        <div className="mb-6">
-          <EventsTimeline
-            scale={scale}
-            className="h-[250px]"
-          />
-        </div>
-        <ProbeTimelineList scale={scale} />
-      </DefaultPage>
+      <Grid className="mb-6 grid-cols-1 gap-4 md:grid-cols-3">
+        <StatsCardHorizontal
+          {...indicators['analyzed-traffic']}
+          value={globalStats?.volumetry}
+          previousValue={previousGlobalStats?.volumetry}
+          loading={loading}
+        />
+        <StatsCardHorizontal
+          {...indicators['network-transactions']}
+          value={globalStats?.nb_events}
+          previousValue={previousGlobalStats?.nb_events}
+          loading={loading}
+        />
+        <StatsCardHorizontal
+          {...indicators.events}
+          value={eventsCount?.doc_count}
+          previousValue={previousEventsCount?.doc_count}
+          loading={eventsLoading}
+        />
+      </Grid>
+      <Row className="mb-4 items-center justify-between">
+        <SeriesToggleBar />
+        <Tabs
+          value={scale}
+          onValueChange={handleScaleChange}
+        >
+          <TabsList>
+            <TabsTrigger value="default">Default</TabsTrigger>
+            <TabsTrigger value="normalized">Normalized</TabsTrigger>
+            <TabsTrigger value="log">Logarithmic</TabsTrigger>
+          </TabsList>
+        </Tabs>
+      </Row>
+      <div className="mb-6">
+        <EventsTimeline
+          scale={scale}
+          className="h-[250px]"
+        />
+      </div>
+      <ProbeTimelineList scale={scale} />
     </>
   );
 };

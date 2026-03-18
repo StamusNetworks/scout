@@ -2,7 +2,17 @@ import { createFileRoute } from '@tanstack/react-router';
 import { z } from 'zod';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { VolumetryPage } from '@/pages/volumetry';
+import {
+  Page,
+  PageContainer,
+  PageDescription,
+  PageHeader,
+  PageHeaderContent,
+  PageTitle,
+} from '@/common/design-system/atoms/page';
+import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
+import { usePageTitle } from '@/common/lib/use-page-title';
+import { VolumetryView } from '@/features/hunt/dashboard/entities/volumetry/volumetry-view';
 
 const seriesKeySchema = z.enum([
   'networkEvents',
@@ -31,3 +41,27 @@ export const Route = createFileRoute('/_enterprise/volumetry')({
     </PageBoundary>
   ),
 });
+
+function VolumetryPage() {
+  usePageTitle('Volumetry');
+
+  return (
+    <>
+      <OutletBreadcrumb>Volumetry</OutletBreadcrumb>
+      <Page>
+        <PageContainer>
+          <PageHeader>
+            <PageHeaderContent>
+              <PageTitle>Volumetry</PageTitle>
+              <PageDescription>
+                Overview of network data volume, transactions, and detection
+                events over the selected time period.
+              </PageDescription>
+            </PageHeaderContent>
+          </PageHeader>
+          <VolumetryView />
+        </PageContainer>
+      </Page>
+    </>
+  );
+}

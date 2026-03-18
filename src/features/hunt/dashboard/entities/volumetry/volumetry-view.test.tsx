@@ -16,7 +16,7 @@ import {
   volumetrySearchSchema,
 } from '@/routes/_enterprise/volumetry';
 
-import { VolumetryPage } from './index';
+import { VolumetryView } from './volumetry-view';
 
 const createTestRouter = () => {
   const rootRoute = createRootRoute();
@@ -41,7 +41,7 @@ const createTestRouter = () => {
 const renderPage = async () =>
   renderWithProviders(
     <BreadcrumbProvider>
-      <VolumetryPage />
+      <VolumetryView />
     </BreadcrumbProvider>,
     { router: createTestRouter() },
   );
@@ -146,7 +146,7 @@ beforeEach(() => {
   setupDefaultHandlers();
 });
 
-describe('VolumetryPage', () => {
+describe('VolumetryView', () => {
   it('renders stat cards with loaded data', async () => {
     await renderPage();
 
@@ -176,17 +176,6 @@ describe('VolumetryPage', () => {
     await waitFor(() => {
       expect(screen.getByText('SSProbe-1')).toBeInTheDocument();
     });
-  });
-
-  it('displays page title and description', async () => {
-    await renderPage();
-
-    expect(screen.getByText('Volumetry')).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        'Overview of network data volume, transactions, and detection events over the selected time period.',
-      ),
-    ).toBeInTheDocument();
   });
 
   it('renders the series toggle bar with all series', async () => {

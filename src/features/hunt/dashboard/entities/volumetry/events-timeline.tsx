@@ -167,7 +167,7 @@ export const EventsTimeline = memo(function EventsTimeline({
             )}
           >
             <Spin className="h-3 w-3 animate-spin" />
-            <span>Loading…</span>
+            <span>Loading...</span>
           </div>
         </div>
       )}
