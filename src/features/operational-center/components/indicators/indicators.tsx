@@ -4,10 +4,10 @@ import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Card } from '@/common/design-system/atoms/ui/card';
 import { StatsCardHorizontalContent } from '@/common/design-system/molecules/stats-card-horizontal';
+import { useEventsCount } from '@/features/events/common/hooks/useEventsCount';
 import { GlobalStats } from '@/features/events/detection-events/use-cases/explorer/api/dashboard.api';
 import { useGlobalStats } from '@/features/events/detection-events/use-cases/explorer/api/hooks/useGlobalStats';
 import { usePreviousDates } from '@/features/filtering/dates-filters/use-previous-dates';
-import { useEventsCount } from '@/features/hunt/events/api/hooks/useEventsCount';
 import { indicators } from '@/features/operational-center/config';
 import { useGetSystemSettingsQuery } from '@/features/user/settings/settings.api';
 

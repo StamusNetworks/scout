@@ -1,0 +1,11 @@
+import { AlertEvent } from '@/features/events/common/model/event-types/alert.schema';
+
+import { RelatedTable } from '../related-table';
+import { relatedAlertsColumns } from './related-alerts.columns';
+
+export const RelatedAlertsTab = ({ data }: { data?: AlertEvent[] }) => (
+  <RelatedTable<AlertEvent>
+    columns={relatedAlertsColumns}
+    data={data || []}
+  />
+);

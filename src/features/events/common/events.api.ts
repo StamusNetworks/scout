@@ -10,13 +10,13 @@ import {
 import { Paginated, Pagination } from '@/common/fetching/fetching.types';
 import { esEscape } from '@/common/lib/strings';
 import { Event } from '@/features/events/common/events.model';
-import { EventTypes } from '@/features/filtering/query-filters/store/query-filters.slice';
-import { EventsTimeline } from '@/features/hunt/events/model/events-timeline.schema';
+import { EventsTimeline } from '@/features/events/common/model/events-timeline.schema';
 import {
   FlowEventFileRetrieve,
   FlowEventFileStatus,
   FlowEvents,
-} from '@/features/hunt/events/model/flowEvent.schema';
+} from '@/features/events/common/model/flowEvent.schema';
+import { EventTypes } from '@/features/filtering/query-filters/store/query-filters.slice';
 import { API } from '@/store/api';
 
 export const EventsAPI = API.injectEndpoints({

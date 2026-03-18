@@ -1,47 +1,47 @@
 import { z } from 'zod';
 
-import { dcerpcSchema } from '@/features/hunt/events/model/app-proto/dcerpc.schema';
-import { dhcpSchema } from '@/features/hunt/events/model/app-proto/dhcp.schema';
-import { dnsSchema } from '@/features/hunt/events/model/app-proto/dns.schema';
-import { ftpSchema } from '@/features/hunt/events/model/app-proto/ftp.schema';
-import { ftpDataSchema } from '@/features/hunt/events/model/app-proto/ftp_data.schema';
-import { httpSchema } from '@/features/hunt/events/model/app-proto/http.schema';
-import { ikeSchema } from '@/features/hunt/events/model/app-proto/ike.schema';
-import { ikev2Schema } from '@/features/hunt/events/model/app-proto/ikev2.schema';
-import { krb5Schema } from '@/features/hunt/events/model/app-proto/krb5.schema';
-import { mqttSchema } from '@/features/hunt/events/model/app-proto/mqtt.schema';
-import { netflowSchema } from '@/features/hunt/events/model/app-proto/netflow.schema';
-import { nfsSchema } from '@/features/hunt/events/model/app-proto/nfs.schema';
-import { nfsRcpSchema } from '@/features/hunt/events/model/app-proto/nfs_rcp.schema';
-import { quicSchema } from '@/features/hunt/events/model/app-proto/quic.schema';
-import { rdpSchema } from '@/features/hunt/events/model/app-proto/rdp.schema';
-import { rfbSchema } from '@/features/hunt/events/model/app-proto/rfb.schema';
-import { sipSchema } from '@/features/hunt/events/model/app-proto/sip.schema';
-import { smbSchema } from '@/features/hunt/events/model/app-proto/smb.schema';
-import { smtpSchema } from '@/features/hunt/events/model/app-proto/smtp.schema';
-import { snmpSchema } from '@/features/hunt/events/model/app-proto/snmp.schema';
-import { sshSchema } from '@/features/hunt/events/model/app-proto/ssh.schema';
-import { tftpSchema } from '@/features/hunt/events/model/app-proto/tftp.schema';
-import { tlsSchema } from '@/features/hunt/events/model/app-proto/tls.schema';
-import { etherSchema } from '@/features/hunt/events/model/enrichments/ether.schema';
-import { filesSchema } from '@/features/hunt/events/model/enrichments/files.schema';
-import { FQDNSchema } from '@/features/hunt/events/model/enrichments/FQDN.schema';
-import { geoipSchema } from '@/features/hunt/events/model/enrichments/geoip.schema';
-import { hostnameInfoSchema } from '@/features/hunt/events/model/enrichments/hostnameInfo.schema';
-import { netInfoSchema } from '@/features/hunt/events/model/enrichments/netInfo.schema';
-import { trafficSchema } from '@/features/hunt/events/model/enrichments/traffic.schema';
-import { alertSchema } from '@/features/hunt/events/model/event-types/alert.schema';
-import { anomalySchema } from '@/features/hunt/events/model/event-types/anomaly.schema';
-import { discoverySchema } from '@/features/hunt/events/model/event-types/discovery.schema';
-import { fileInfoSchema } from '@/features/hunt/events/model/event-types/fileinfo.schema';
-import { flowSchema } from '@/features/hunt/events/model/event-types/flow.schema';
-import { smbInsightsEventSchema } from '@/features/hunt/events/model/event-types/smb_insights.schema';
-import { stamusSchema } from '@/features/hunt/events/model/event-types/stamus.schema';
+import { dcerpcSchema } from '@/features/events/common/model/app-proto/dcerpc.schema';
+import { dhcpSchema } from '@/features/events/common/model/app-proto/dhcp.schema';
+import { dnsSchema } from '@/features/events/common/model/app-proto/dns.schema';
+import { ftpSchema } from '@/features/events/common/model/app-proto/ftp.schema';
+import { ftpDataSchema } from '@/features/events/common/model/app-proto/ftp_data.schema';
+import { httpSchema } from '@/features/events/common/model/app-proto/http.schema';
+import { ikeSchema } from '@/features/events/common/model/app-proto/ike.schema';
+import { ikev2Schema } from '@/features/events/common/model/app-proto/ikev2.schema';
+import { krb5Schema } from '@/features/events/common/model/app-proto/krb5.schema';
+import { mqttSchema } from '@/features/events/common/model/app-proto/mqtt.schema';
+import { netflowSchema } from '@/features/events/common/model/app-proto/netflow.schema';
+import { nfsSchema } from '@/features/events/common/model/app-proto/nfs.schema';
+import { nfsRcpSchema } from '@/features/events/common/model/app-proto/nfs_rcp.schema';
+import { quicSchema } from '@/features/events/common/model/app-proto/quic.schema';
+import { rdpSchema } from '@/features/events/common/model/app-proto/rdp.schema';
+import { rfbSchema } from '@/features/events/common/model/app-proto/rfb.schema';
+import { sipSchema } from '@/features/events/common/model/app-proto/sip.schema';
+import { smbSchema } from '@/features/events/common/model/app-proto/smb.schema';
+import { smtpSchema } from '@/features/events/common/model/app-proto/smtp.schema';
+import { snmpSchema } from '@/features/events/common/model/app-proto/snmp.schema';
+import { sshSchema } from '@/features/events/common/model/app-proto/ssh.schema';
+import { tftpSchema } from '@/features/events/common/model/app-proto/tftp.schema';
+import { tlsSchema } from '@/features/events/common/model/app-proto/tls.schema';
+import { etherSchema } from '@/features/events/common/model/enrichments/ether.schema';
+import { filesSchema } from '@/features/events/common/model/enrichments/files.schema';
+import { FQDNSchema } from '@/features/events/common/model/enrichments/FQDN.schema';
+import { geoipSchema } from '@/features/events/common/model/enrichments/geoip.schema';
+import { hostnameInfoSchema } from '@/features/events/common/model/enrichments/hostnameInfo.schema';
+import { netInfoSchema } from '@/features/events/common/model/enrichments/netInfo.schema';
+import { trafficSchema } from '@/features/events/common/model/enrichments/traffic.schema';
+import { alertSchema } from '@/features/events/common/model/event-types/alert.schema';
+import { anomalySchema } from '@/features/events/common/model/event-types/anomaly.schema';
+import { discoverySchema } from '@/features/events/common/model/event-types/discovery.schema';
+import { fileInfoSchema } from '@/features/events/common/model/event-types/fileinfo.schema';
+import { flowSchema } from '@/features/events/common/model/event-types/flow.schema';
+import { smbInsightsEventSchema } from '@/features/events/common/model/event-types/smb_insights.schema';
+import { stamusSchema } from '@/features/events/common/model/event-types/stamus.schema';
 import {
   eventAgentSchema,
   eventInputSchema,
   logEventSchema,
-} from '@/features/hunt/events/model/flowEvent.schema';
+} from '@/features/events/common/model/flowEvent.schema';
 
 export const baseEventSchema = z.object({
   _id: z.string(),

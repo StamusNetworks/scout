@@ -1,5 +1,5 @@
 import { TabsBadge } from '@/common/design-system/atoms/ui/borderTabs';
-import { Files } from '@/features/hunt/events/components/files/files';
+import { Files } from '@/features/events/common/molecules/files/files';
 
 import { TabComponentType } from '../event-detail-tabs.types';
 

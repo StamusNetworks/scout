@@ -23,13 +23,13 @@ import { CommandFilterMultiple } from '@/common/design-system/molecules/data-tab
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { isIP } from '@/common/lib/strings';
 import { replaceFilters } from '@/features/filtering/query-filters/store/query-filters.slice';
+import { useGetImpactedEntitiesQuery } from '@/features/threats/common/entities.api';
+import { useThreats } from '@/features/threats/common/hooks/use-threats';
 import {
   KillChainKeysWithoutPolicies,
   killChainsConfig,
   killChainWithoutPoliciesOptions,
 } from '@/features/threats/common/killchain/killchain';
-import { useGetImpactedEntitiesQuery } from '@/features/threats/common/entities.api';
-import { useThreats } from '@/features/threats/common/hooks/use-threats';
 import { ThreatStatus } from '@/features/threats/common/threat-status.schema';
 import { useGetThreatsStatusQuery } from '@/features/threats/common/threats.api';
 import { useAppDispatch } from '@/store/store';
