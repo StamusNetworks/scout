@@ -11,7 +11,7 @@ import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeli
 import { esEscape } from '@/common/lib/strings';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
-import { useTimeline } from '@/features/hunt/timeline/api/hooks/useTimeline';
+import { useTimeline } from '@/features/threats/compromises/use-cases/timeline/api/hooks/useTimeline';
 
 export interface EventsTimelineProps {
   hostId?: string;

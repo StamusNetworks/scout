@@ -26,7 +26,7 @@ import {
   METHOD_COLUMN,
   OUTLIER_COLUMN,
 } from '@/features/events/detection-events/detection-events.table';
-import { useGetCountsTimelineQuery } from '@/features/hunt/timeline/api/timeline.api';
+import { useGetCountsTimelineQuery } from '@/features/threats/compromises/use-cases/timeline/api/timeline.api';
 
 const outlierColumns = [
   EXPANDER_COLUMN,

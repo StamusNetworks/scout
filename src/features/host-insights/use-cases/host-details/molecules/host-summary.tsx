@@ -6,9 +6,9 @@ import { DateTime } from '@/common/design-system/entities/date-time';
 import { cn } from '@/common/lib/utils';
 import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
 import { Host } from '@/features/host-insights/common/host.model';
+import { Entity } from '@/features/threats/common/entity';
 import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
 import { KillChainPhase } from '@/features/threats/common/killchain/killchain';
-import { Entity } from '@/features/threats/common/entity';
 import { EntityThreatTagsListTemplate } from '@/features/threats/common/molecules/entities-threat-tags-list/entities-threat-tags-list';
 
 import { HostnameTemplate } from './host-details/hostname';

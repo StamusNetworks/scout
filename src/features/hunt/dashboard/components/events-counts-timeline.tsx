@@ -7,7 +7,7 @@ import {
 } from '@/common/design-system/atoms/ui/pillTabs';
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
-import { useTimeline } from '@/features/hunt/timeline/api/hooks/useTimeline';
+import { useTimeline } from '@/features/threats/compromises/use-cases/timeline/api/hooks/useTimeline';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { selectChartTarget } from '../store/dashboard.selectors';

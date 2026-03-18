@@ -57,14 +57,14 @@ import { FormattedBadge } from '@/common/design-system/molecules/formatted-badge
 import { downloadBlob, formatToCsv, saveToClipboard } from '@/common/lib/save';
 import { cn } from '@/common/lib/utils';
 import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
-import { useAppDispatch, useAppSelector } from '@/store/store';
-
 import {
   addFindingsKey,
   selectInvestigationStage,
   selectIsActiveFindings,
   startInvestigation,
 } from '@/features/investigation/investigation.slice';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+
 import { useDashboard } from '../api/hooks/useDashboard';
 import { useFieldsStats } from '../api/hooks/useFieldsStats';
 import { selectOrdering } from '../store/dashboard.selectors';

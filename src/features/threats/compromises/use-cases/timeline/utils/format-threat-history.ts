@@ -1,4 +1,5 @@
 import { KillChainPhase } from '@/features/threats/common/killchain/killchain';
+
 import { OffendersData } from '../models/offenders.model';
 import {
   KCChange,

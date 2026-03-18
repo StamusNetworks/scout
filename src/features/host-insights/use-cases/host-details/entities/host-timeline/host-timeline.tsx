@@ -4,9 +4,9 @@ import { BlockTitle } from '@/common/design-system/atoms/block';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
-import { useGetThreatHistoryQuery } from '@/features/hunt/timeline/api/timeline.api';
-import { HostTimelineTemplate } from '@/features/hunt/timeline/components/history-timeline/history-timeline';
-import { ThreatsTimeline } from '@/features/hunt/timeline/components/timeline/timeline';
+import { useGetThreatHistoryQuery } from '@/features/threats/compromises/use-cases/timeline/api/timeline.api';
+import { HostTimelineTemplate } from '@/features/threats/compromises/use-cases/timeline/components/history-timeline/history-timeline';
+import { ThreatsTimeline } from '@/features/threats/compromises/use-cases/timeline/components/timeline/timeline';
 
 export interface HostTimelineProps {
   hostId: string;

@@ -1,4 +1,4 @@
-import { CountsTimeline } from '@/features/hunt/timeline/models/counts-timeline.model';
+import { CountsTimeline } from '@/features/threats/compromises/use-cases/timeline/models/counts-timeline.model';
 
 export const getTimelineData = (res: CountsTimeline) => {
   // Server response is an object with keys: from_date, interval, and then a bunch of other keys which contain

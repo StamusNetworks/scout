@@ -7,7 +7,7 @@ import {
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/pillTabs';
 import { HostInsightsBlocks } from '@/features/host-insights/use-cases/host-details/molecules/host-insights-blocks';
-import { ThreatsTimeline } from '@/features/hunt/timeline/components/timeline/timeline';
+import { ThreatsTimeline } from '@/features/threats/compromises/use-cases/timeline/components/timeline/timeline';
 
 import { Entity } from '../../entity';
 import { AttackerInfrastructure } from '../attacker-infrastructure/attacker-infrastructure';

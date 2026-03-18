@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/common/design-system/atoms/ui/card';
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
-import { useGetCountsTimelineQuery } from '@/features/hunt/timeline/api/timeline.api';
+import { useGetCountsTimelineQuery } from '@/features/threats/compromises/use-cases/timeline/api/timeline.api';
 
 import { useSignatureDetailsParams } from './signatures-table/signatures-table.utils';
 

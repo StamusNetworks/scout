@@ -23,8 +23,8 @@ import { DataTableRowExpander } from '@/common/design-system/molecules/data-tabl
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { isIP } from '@/common/lib/ips';
 import { replaceFilters } from '@/features/filtering/query-filters/store/query-filters.slice';
-import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
 import { useThreat } from '@/features/threats/common/hooks/use-threat';
+import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
 import { ThreatTag } from '@/features/threats/common/molecules/threat-tag';
 import { ThreatStatus } from '@/features/threats/common/threat-status.schema';
 import { useAppDispatch } from '@/store/store';
