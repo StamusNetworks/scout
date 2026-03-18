@@ -1,1 +1,1 @@
-export { EventsCounter } from '@/features/hunt/dashboard/components/events-counter';
+export { EventsCounter } from '@/features/events/detection-events/use-cases/explorer/components/events-counter';

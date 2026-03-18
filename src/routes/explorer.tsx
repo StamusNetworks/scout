@@ -11,7 +11,7 @@ import {
 } from '@/common/design-system/atoms/page';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { usePageTitle } from '@/common/lib/use-page-title';
-import { ExplorerView } from '@/features/hunt/dashboard/entities/explorer-view';
+import { ExplorerView } from '@/features/events/detection-events/use-cases/explorer/explorer-view';
 
 export const Route = createFileRoute('/explorer')({
   component: () => (

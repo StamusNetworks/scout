@@ -5,7 +5,7 @@ import { Row } from '@/common/design-system/atoms/layout/row';
 import { Card } from '@/common/design-system/atoms/ui/card';
 import { StatsCardHorizontalContent } from '@/common/design-system/molecules/stats-card-horizontal';
 import { usePreviousDates } from '@/features/filtering/dates-filters/use-previous-dates';
-import { useGlobalStats } from '@/features/hunt/dashboard/api/hooks/useGlobalStats';
+import { useGlobalStats } from '@/features/events/detection-events/use-cases/explorer/api/hooks/useGlobalStats';
 import { indicators } from '@/features/hunt/operational-center/config';
 
 export const IndicatorsDocDopv = () => {

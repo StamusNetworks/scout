@@ -27,7 +27,7 @@ import {
   selectTagFilters,
 } from '@/features/filtering/query-filters/store/query-filters.selector';
 import { getFilterLabel } from '@/features/filtering/query-filters/utils/get-filter-label';
-import { useGetDashboardFieldsQuery } from '@/features/hunt/dashboard/api/dashboard.api';
+import { useGetDashboardFieldsQuery } from '@/features/events/detection-events/use-cases/explorer/api/dashboard.api';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import {

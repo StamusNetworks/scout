@@ -4,7 +4,7 @@ import { keys } from 'ramda';
 import {
   CEdashboard,
   dashboard,
-} from '@/features/hunt/dashboard/components/dashboard.config';
+} from '@/features/events/detection-events/use-cases/explorer/components/dashboard.config';
 import { RootState } from '@/store/store';
 
 const getPanelsOrdering = (enterprise: boolean) => {

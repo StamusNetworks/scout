@@ -12,7 +12,7 @@ import {
 } from '@/common/design-system/atoms/page';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { usePageTitle } from '@/common/lib/use-page-title';
-import { VolumetryView } from '@/features/hunt/dashboard/entities/volumetry/volumetry-view';
+import { VolumetryView } from '@/features/events/detection-events/use-cases/volumetry/volumetry-view';
 
 const seriesKeySchema = z.enum([
   'networkEvents',

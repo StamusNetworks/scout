@@ -6,7 +6,7 @@ import {
 } from '@/common/design-system/atoms/ui/command';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { formatNumber } from '@/common/lib/numbers';
-import { useGetDashboardFieldsQuery } from '@/features/hunt/dashboard/api/dashboard.api';
+import { useGetDashboardFieldsQuery } from '@/features/events/detection-events/use-cases/explorer/api/dashboard.api';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { FilterInputType } from '../../constants/query-filter.config';

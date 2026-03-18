@@ -8,7 +8,7 @@ import { addQfilterCommandInitialState } from '@/features/filtering/query-filter
 import { saveFilterSetModalInitialState } from '@/features/filtering/query-filters/components/save-filterset/save-filterset.slice';
 import { queryFiltersInitialState } from '@/features/filtering/query-filters/store/query-filters.slice';
 import { queryFiltersSetsInitialState } from '@/features/filtering/query-filters/store/query-filters-sets.slice';
-import { dashboardPageStateInitialState } from '@/features/hunt/dashboard/store/dashboard.slice';
+import { dashboardPageStateInitialState } from '@/features/events/detection-events/use-cases/explorer/store/dashboard.slice';
 import { investigationInitialState } from '@/features/investigation/investigation.slice';
 import { investigationsHistoryInitialState } from '@/features/investigation/investigations-history.slice';
 import { marketingStateInitialState } from '@/features/marketing/store/marketing.store';

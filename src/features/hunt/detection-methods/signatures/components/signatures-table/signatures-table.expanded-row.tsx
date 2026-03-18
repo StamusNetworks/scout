@@ -11,7 +11,7 @@ import {
   DataEntry,
   ValueListCard,
 } from '@/common/design-system/molecules/value-list-card';
-import { useGetDashboardFieldsQuery } from '@/features/hunt/dashboard/api/dashboard.api';
+import { useGetDashboardFieldsQuery } from '@/features/events/detection-events/use-cases/explorer/api/dashboard.api';
 import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
 import { ThreatTag } from '@/features/threats/common/molecules/threat-tag';
 
