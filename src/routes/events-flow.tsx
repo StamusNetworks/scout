@@ -1,7 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { EventsFlowPage } from '@/pages/events-flow';
+import {
+  Page,
+  PageContainer,
+  PageDescription,
+  PageHeader,
+  PageHeaderContent,
+  PageTitle,
+} from '@/common/design-system/atoms/page';
+import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
+import { usePageTitle } from '@/common/lib/use-page-title';
+import { EventsFlowView } from '@/features/events/use-cases/events-flow/entities/events-flow-view';
 
 export const Route = createFileRoute('/events-flow')({
   component: () => (
@@ -10,3 +20,28 @@ export const Route = createFileRoute('/events-flow')({
     </PageBoundary>
   ),
 });
+
+function EventsFlowPage() {
+  usePageTitle('Events Flow');
+
+  return (
+    <>
+      <OutletBreadcrumb>Events Flow</OutletBreadcrumb>
+      <Page>
+        <PageContainer>
+          <PageHeader>
+            <PageHeaderContent>
+              <PageTitle>Events Flow</PageTitle>
+              <PageDescription>
+                Visualize event flows grouped by application protocol using
+                Sankey charts, enabling deep exploration of network traffic
+                patterns across all detection events.
+              </PageDescription>
+            </PageHeaderContent>
+          </PageHeader>
+          <EventsFlowView />
+        </PageContainer>
+      </Page>
+    </>
+  );
+}
