@@ -1,14 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { ThreatByIdEventsPage } from '@/pages/threats/coverage/threat/events';
+import { ThreatByIdEvents } from '@/features/threats/common/templates/threat-by-id/threat-by-id.events';
 
 export const Route = createFileRoute(
   '/_enterprise/threats/coverage/threat/$threatId/events',
 )({
   component: () => (
     <PageBoundary key="threat-by-id-events">
-      <ThreatByIdEventsPage />
+      <ThreatByIdEvents />
     </PageBoundary>
   ),
 });
