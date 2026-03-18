@@ -47,12 +47,12 @@ import {
   updateTagFilters,
 } from '@/features/filtering/query-filters/store/query-filters.slice';
 import { getFilterLabel } from '@/features/filtering/query-filters/utils/get-filter-label';
-import { InvestigationParams } from '@/features/hunt/investigation/components/investigation-details/investigation-params';
-import { InvestigationResults } from '@/features/hunt/investigation/components/investigation-details/investigation-results';
-import { InvestigationStage } from '@/features/hunt/investigation/components/investigation-details/investigation-stage';
-import { inventoryHistoryOptions } from '@/features/hunt/investigation/components/ongoing-investigation/ongoing-investigation.save';
-import { InvestigationState } from '@/features/hunt/investigation/investigation.slice';
-import { InvestigationHistory } from '@/features/hunt/investigation/investigations-history.slice';
+import { InvestigationParams } from '@/features/investigation/components/investigation-details/investigation-params';
+import { InvestigationResults } from '@/features/investigation/components/investigation-details/investigation-results';
+import { InvestigationStage } from '@/features/investigation/components/investigation-details/investigation-stage';
+import { inventoryHistoryOptions } from '@/features/investigation/components/ongoing-investigation/ongoing-investigation.save';
+import { InvestigationState } from '@/features/investigation/investigation.slice';
+import { InvestigationHistory } from '@/features/investigation/investigations-history.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 function useShowOnlyKept() {

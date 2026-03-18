@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { esEscape } from '@/common/lib/strings';
 import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
-import { selectInvestigationFilter } from '@/features/hunt/investigation/investigation.slice';
+import { selectInvestigationFilter } from '@/features/investigation/investigation.slice';
 import { useAppSelector } from '@/store/store';
 
 import {

@@ -27,8 +27,8 @@ import { cn } from '@/common/lib/utils';
 import { useWithAlertsParam } from '@/features/analytics/hosts/components/hostsTable/use-with-alerts-param';
 import { FilterActionsDropdown } from '@/features/filter-actions/components/filter-actions/filter-actions.dropdown';
 import { useSupportedFilterActionsFilters } from '@/features/filter-actions/utils/get-supported-filters';
-import { Investigation } from '@/features/hunt/investigation/components/ongoing-investigation/ongoing-investigation';
-import { selectInvestigationStage } from '@/features/hunt/investigation/investigation.slice';
+import { Investigation } from '@/features/investigation/components/ongoing-investigation/ongoing-investigation';
+import { selectInvestigationStage } from '@/features/investigation/investigation.slice';
 import { selectAutoOpenSidebarOnNavigation } from '@/features/ui/preferences/preferences.slice';
 import {
   selectIsSidebarOpen,

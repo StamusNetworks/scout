@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-import { selectInvestigationFilter } from '@/features/hunt/investigation/investigation.slice';
+import { selectInvestigationFilter } from '@/features/investigation/investigation.slice';
 import { selectIsEnterprise } from '@/features/user/settings/settings.slice';
 import { RootState } from '@/store/store';
 

@@ -64,7 +64,7 @@ import {
   selectInvestigationStage,
   selectIsActiveFindings,
   startInvestigation,
-} from '../../investigation/investigation.slice';
+} from '@/features/investigation/investigation.slice';
 import { useDashboard } from '../api/hooks/useDashboard';
 import { useFieldsStats } from '../api/hooks/useFieldsStats';
 import { selectOrdering } from '../store/dashboard.selectors';

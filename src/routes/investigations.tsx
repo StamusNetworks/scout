@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { usePageTitle } from '@/common/lib/use-page-title';
-import { InvestigationsView } from '@/features/hunt/investigation/entities/investigations-view';
+import { InvestigationsView } from '@/features/investigation/entities/investigations-view';
 
 export const Route = createFileRoute('/investigations')({
   component: () => (

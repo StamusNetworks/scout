@@ -29,7 +29,7 @@ import {
   addEvidence,
   selectCurrentInvestigationStage,
   selectInvestigationStage,
-} from '@/features/hunt/investigation/investigation.slice';
+} from '@/features/investigation/investigation.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { useQueryFilterDefinition } from '../../../hooks/use-filters-definitions';
