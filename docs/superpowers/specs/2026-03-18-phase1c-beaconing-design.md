@@ -58,6 +58,9 @@ features/events/beaconing/
 - `components/ips-table/` → `beaconing-ips/molecules/beaconing-ips-table.tsx`
 - `components/ips-serving-ja3s-table/` → `beaconing-ja3s/use-cases/ja3s-details/` (only used in JA3S detail)
 
+**Move generic beaconing table:**
+- `components/beaconing-table/` → `common/molecules/beaconing-table.tsx` — generic beacon table used by the host beacons tab. This table stays as a molecule (props-driven) in common since it's shared across beaconing-ips and host-details contexts.
+
 **Make `features/analytics/beaconing/` re-export** from the new locations for backward compatibility during transition.
 
 ### Detail Page Entities
@@ -99,13 +102,15 @@ Both fetch data internally via `useGetBeaconingEventsQuery` with appropriate doc
 
 The current `BeaconingPage` layout wrapper (tabs + badge counts) moves into the beaconing route layout. The route at `/_enterprise/analytics/beaconing/ips/index.tsx` and `ja3s/index.tsx` currently compose `BeaconingPage` + content. In the new pattern:
 
-The parent route at `/_enterprise/analytics/beaconing/ips/route.tsx` (or a shared layout) renders tabs + badge counts + Outlet. The index routes render the table entities.
+The tab layout moves into `routes/_enterprise/analytics/beaconing/route.tsx`. This file currently only renders breadcrumbs + Outlet. It will be updated to render: Page/PageHeader with title "Beaconing", tabs (IPs / JA3S) with badge counts, and Outlet. The index routes render just the table entities inside this layout.
 
 ### `/analytics/beaconing` — Redirect
 
 Stays as redirect to `/analytics/beaconing/ips`.
 
 ### `/analytics/beaconing/ips` — Thin Orchestrator
+
+Zod search schema: `{ page: z.number().default(1), page_size: z.number().default(10), sort: z.string().default('-beacon_report.beacon_metric') }`
 
 ```tsx
 function BeaconingIpsPage() {
@@ -137,6 +142,8 @@ function BeaconingIpDetailPage() {
 ```
 
 ### `/analytics/beaconing/ja3s` — Same pattern as IPs
+
+Zod search schema: `{ page: z.number().default(1), page_size: z.number().default(10), sort: z.string().default('-beacon_report.beacon_metric') }`
 
 ### `/analytics/beaconing/ja3s/$ja3s` — Same pattern as IP detail
 
