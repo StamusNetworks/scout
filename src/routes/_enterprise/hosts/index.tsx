@@ -1,112 +1,99 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { z } from 'zod';
 
-import { DefaultPage } from '@/common/design-system/atoms/default-page';
-import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
-import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { getFilterExtension } from '@/features/analytics/hosts/api/hooks/useHostsList';
-import { useGetHostsQuery } from '@/features/analytics/hosts/api/hosts.api';
-import { DiscoveredHosts } from '@/features/analytics/hosts/components/discovered-hosts/discovered-hosts';
-import { HomeNetPicker } from '@/features/analytics/hosts/components/home-net-picker/home-net-picker';
-import { HostsTable } from '@/features/analytics/hosts/components/hostsTable/hostsTable';
+import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import {
-  exportColumns,
-  hitsColumn,
-  hostsBaseColumns,
-} from '@/features/analytics/hosts/components/hostsTable/hostsTable.columns';
-import { useQFBuilder } from '@/features/hunt/filtering/query-filters/hooks/use-qf-builder';
+  Page,
+  PageContainer,
+  PageDescription,
+  PageHeader,
+  PageHeaderContent,
+  PageTitle,
+} from '@/common/design-system/atoms/page';
+import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
+import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
+import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { usePageTitle } from '@/common/lib/use-page-title';
+import { HostsTable } from '@/features/host-insights/use-cases/hosts-list/entities/hosts-table';
 
-const hostsSearchSchema = z.object({
-  page: z.number().min(1).catch(1),
-  page_size: z.number().min(1).catch(10),
+const searchSchema = z.object({
+  page: z.number().min(1).default(1),
+  page_size: z.number().min(1).default(10),
   sort: z.string().optional(),
-  with_alerts: z.boolean().catch(true),
-  in_home_net: z.enum(['true', 'false', 'all']).catch('all'),
+  with_alerts: z.boolean().default(true),
+  in_home_net: z.enum(['true', 'false', 'all']).default('all'),
 });
-
-type HostsSearch = z.output<typeof hostsSearchSchema>;
 
 export const Route = createFileRoute('/_enterprise/hosts/')({
-  validateSearch: (raw): HostsSearch => hostsSearchSchema.parse(raw),
-  component: HostsRoute,
+  validateSearch: searchSchema,
+  component: () => (
+    <PageBoundary key="hosts">
+      <HostsPage />
+    </PageBoundary>
+  ),
 });
 
-function HostsRoute() {
+function HostsPage() {
+  usePageTitle('Hosts');
   const search = Route.useSearch();
-  const navigate = Route.useNavigate();
+  const tanstackNavigate = useNavigate();
+  const navigate = (opts: {
+    search: (prev: Record<string, unknown>) => Record<string, unknown>;
+    replace?: boolean;
+  }) => tanstackNavigate(opts as Parameters<typeof tanstackNavigate>[0]);
 
-  const QFBuilder = useQFBuilder();
-  const globalParams = useGlobalQueryParams(
-    ['tenant', 'dates', 'qfilter', 'qfilterHost'],
-    { extendQfilter: getFilterExtension(QFBuilder, search.in_home_net) },
-  );
+  const globals = useGlobalQueryParams(['tenant', 'dates']);
 
-  const apiParams = {
-    tenant: globalParams.tenant,
-    start_date: globalParams.start_date,
-    end_date: globalParams.end_date,
-    host_id_qfilter: globalParams.host_id_qfilter,
-    qfilter: search.with_alerts ? globalParams.qfilter : undefined,
-    withAlerts: search.with_alerts,
-    discovery: search.with_alerts ? globalParams.discovery : undefined,
-    alert: search.with_alerts ? globalParams.alert : undefined,
-    stamus: search.with_alerts ? globalParams.stamus : undefined,
-  };
-
-  const { queryParams, pagination, setPagination, sorting, setSorting } =
-    useServerTableState(search, apiParams, navigate);
-
-  const { data, isFetching } = useGetHostsQuery({
-    ...queryParams,
-    ordering:
-      queryParams.ordering ??
-      (search.with_alerts ? '-hits' : '-host_id.last_seen'),
-  });
-
-  const columns = search.with_alerts
-    ? [...hostsBaseColumns, hitsColumn]
-    : hostsBaseColumns;
-
-  const filteredExportColumns = exportColumns.filter((col) =>
-    search.with_alerts ? true : col.label !== 'Hits',
-  );
+  const { page, pageSize, sorting, setPage, setPageSize, onSortingChange } =
+    usePaginatedSearch(
+      { search, navigate },
+      {
+        resetOn: [globals.tenant, globals.start_date, globals.end_date],
+      },
+    );
 
   return (
     <>
       <OutletBreadcrumb link="/hosts">Hosts</OutletBreadcrumb>
-      <DefaultPage
-        title="Hosts"
-        actions={
-          <HomeNetPicker
-            value={search.in_home_net}
-            onChange={(value) =>
+      <Page>
+        <PageContainer>
+          <PageHeader>
+            <PageHeaderContent>
+              <PageTitle>Hosts</PageTitle>
+              <PageDescription>
+                Gain deep visibility into network assets, enriched with live
+                host indicators and actionable insights.
+              </PageDescription>
+            </PageHeaderContent>
+          </PageHeader>
+          <HostsTable
+            page={page}
+            pageSize={pageSize}
+            sorting={sorting}
+            withAlerts={search.with_alerts}
+            inHomeNet={search.in_home_net}
+            onPageChange={setPage}
+            onPageSizeChange={setPageSize}
+            onSortingChange={onSortingChange}
+            onWithAlertsChange={(v) =>
               navigate({
-                search: (prev) => ({ ...prev, in_home_net: value, page: 1 }),
+                search: (prev) => ({ ...prev, with_alerts: v, page: 1 }),
+              })
+            }
+            onInHomeNetChange={(v) =>
+              navigate({
+                search: (prev) => ({ ...prev, in_home_net: v, page: 1 }),
+              })
+            }
+            onRowClick={(hostId) =>
+              tanstackNavigate({
+                to: '/hosts/$hostId',
+                params: { hostId },
               })
             }
           />
-        }
-        description="Gain deep visibility into network assets, enriched with live host indicators and actionable insights."
-      >
-        <DiscoveredHosts />
-        <HostsTable
-          data={data}
-          isLoading={isFetching}
-          columns={columns}
-          exportColumns={filteredExportColumns}
-          pagination={pagination}
-          onPaginationChange={setPagination}
-          sorting={sorting}
-          onSortingChange={setSorting}
-          withAlerts={search.with_alerts}
-          onWithAlertsChange={(value) =>
-            navigate({
-              search: (prev) => ({ ...prev, with_alerts: value, page: 1 }),
-            })
-          }
-        />
-      </DefaultPage>
+        </PageContainer>
+      </Page>
     </>
   );
 }
