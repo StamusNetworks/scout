@@ -1,13 +1,12 @@
 import { Link, useNavigate } from '@tanstack/react-router';
 import type {
-  OnChangeFn,
   PaginationState,
   Row as TanstackRow,
   SortingState,
   Updater,
 } from '@tanstack/react-table';
 import { Biohazard } from 'lucide-react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
@@ -41,9 +40,9 @@ export interface IncidentsTableProps {
   page: number;
   pageSize: number;
   sorting: SortingState;
-  onPageChange: (updater: Updater<PaginationState>) => void;
-  onPageSizeChange: (updater: Updater<PaginationState>) => void;
-  onSortingChange: OnChangeFn<SortingState>;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (pageSize: number) => void;
+  onSortingChange: (updater: Updater<SortingState>) => void;
 }
 
 export const IncidentsTable = ({
@@ -109,10 +108,21 @@ export const IncidentsTable = ({
     pageSize,
   };
 
-  const handlePaginationChange = (updater: Updater<PaginationState>) => {
-    onPageChange(updater);
-    onPageSizeChange(updater);
-  };
+  const handlePaginationChange = useCallback(
+    (updater: Updater<PaginationState>) => {
+      const next =
+        typeof updater === 'function'
+          ? updater({ pageIndex: page - 1, pageSize })
+          : updater;
+      if (next.pageIndex !== page - 1) {
+        onPageChange(next.pageIndex + 1);
+      }
+      if (next.pageSize !== pageSize) {
+        onPageSizeChange(next.pageSize);
+      }
+    },
+    [page, pageSize, onPageChange, onPageSizeChange],
+  );
 
   return (
     <DataTable

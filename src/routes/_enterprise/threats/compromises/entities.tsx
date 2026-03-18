@@ -1,14 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { ThreatsImpactedEntities } from '@/pages/threats/impacted-entities';
+import { CompromisesEntities } from '@/features/threats/compromises/use-cases/entities/entities/compromises-entities';
 
 export const Route = createFileRoute(
   '/_enterprise/threats/compromises/entities',
 )({
   component: () => (
     <PageBoundary key="threats-entities">
-      <ThreatsImpactedEntities />
+      <CompromisesEntities />
     </PageBoundary>
   ),
 });
