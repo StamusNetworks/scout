@@ -8,7 +8,7 @@ import { describe, expect, test } from 'vitest';
 import { renderWithProviders } from '@/common/testing/test-utils';
 import { selectQueryFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.selector';
 
-import { Deeplink } from './index';
+import { Deeplink } from './deeplink';
 
 describe('Deeplink', () => {
   test('dispatches filters and navigates to the requested page', async () => {

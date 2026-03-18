@@ -15,7 +15,7 @@ import {
 } from '@/features/ui/share/shareable-state';
 import { initialState } from '@/store/store.init';
 
-import { SharePage } from './index';
+import { SharePage } from './share';
 
 const SHARED_STATE: ShareableState = {
   route: '/hosts/42/incidents',
