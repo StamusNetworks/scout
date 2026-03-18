@@ -22,8 +22,8 @@ import {
 } from '@/common/design-system/atoms/ui/dialog';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { usePageTitle } from '@/common/lib/use-page-title';
-import { DeeplinksForm } from '@/features/hunt/deeplinks/components/deeplinks-form/deeplinks-form';
-import { DeeplinksTable } from '@/features/hunt/deeplinks/components/deeplinks-table/deeplinks-table';
+import { DeeplinksForm } from '@/features/deeplinks/components/deeplinks-form/deeplinks-form';
+import { DeeplinksTable } from '@/features/deeplinks/components/deeplinks-table/deeplinks-table';
 
 export const Route = createFileRoute('/deeplinks')({
   component: () => (

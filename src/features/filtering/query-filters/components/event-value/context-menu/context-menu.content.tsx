@@ -24,7 +24,7 @@ import { isIP } from '@/common/lib/ips';
 import { saveToClipboard } from '@/common/lib/save';
 import { startsWithOneOf } from '@/common/lib/strings';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
-import { useGetDeeplinksQuery } from '@/features/hunt/deeplinks/api/deeplinks.api';
+import { useGetDeeplinksQuery } from '@/features/deeplinks/api/deeplinks.api';
 import {
   addEvidence,
   selectCurrentInvestigationStage,
