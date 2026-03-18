@@ -166,23 +166,34 @@ Note: beaconing and sightings are event sub-types and live under `features/event
 
 ### Thin Orchestrator Pattern
 
-Routes are **thin orchestrators**. They provide layout and delegate to feature components.
+Routes are **thin orchestrators**. They provide layout, read URL state, and pass **typed domain props and handlers** to feature entities.
 
 ```tsx
 const searchSchema = z.object({
   page: z.number().default(1),
   page_size: z.number().default(10),
   sort: z.string().default('-created'),
+  with_alerts: z.boolean().default(true),
 });
 
 export const Route = createFileRoute('/detection-methods/')({
   validateSearch: searchSchema,
-  component: DetectionMethodsPage,
+  component: () => (
+    <PageBoundary>
+      <DetectionMethodsPage />
+    </PageBoundary>
+  ),
 });
 
 function DetectionMethodsPage() {
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
+  const globals = useGlobalQueryParams(['tenant', 'dates', 'qfilter']);
+
+  const { page, pageSize, sorting, setPage, setPageSize, onSortingChange } =
+    usePaginatedSearch({ search, navigate }, {
+      resetOn: [globals.tenant, globals.start_date, globals.end_date],
+    });
 
   return (
     <Page>
@@ -193,7 +204,16 @@ function DetectionMethodsPage() {
             <PageDescription>Manage detection signatures</PageDescription>
           </PageHeaderContent>
         </PageHeader>
-        <DetectionMethodsTable search={search} navigate={navigate} />
+        <DetectionMethodsTable
+          page={page}
+          pageSize={pageSize}
+          sorting={sorting}
+          withAlerts={search.with_alerts}
+          onPageChange={setPage}
+          onPageSizeChange={setPageSize}
+          onSortingChange={onSortingChange}
+          onWithAlertsChange={(v) => navigate({ search: (prev) => ({ ...prev, with_alerts: v, page: 1 }) })}
+        />
       </PageContainer>
     </Page>
   );
@@ -204,8 +224,10 @@ function DetectionMethodsPage() {
 
 - Define Zod search schema (`validateSearch`)
 - Provide layout (`Page`, `PageContainer`, `PageHeader`, cards, modals)
-- Call feature atoms, molecules, entities
-- Pass route params and search params as props to entities
+- Read URL state via `Route.useSearch()` and `Route.useNavigate()`
+- Use `usePaginatedSearch` for pagination state with page-reset-on-global-change
+- Pass **typed domain props and handler callbacks** to entities
+- Be the **only layer that knows about URL state**
 
 Routes do **NOT**:
 - Fetch data
@@ -213,12 +235,19 @@ Routes do **NOT**:
 - Wire table state
 - Contain domain logic
 
-### Entity Responsibilities (Table Entities)
+### Entity Responsibilities
 
-- Receive `search` params and `navigate` function as props from route
+- Receive **typed domain props** (`page`, `pageSize`, `sorting`, `hostId`, `withAlerts`, etc.) and **handler callbacks** (`onPageChange`, `onPageSizeChange`, `onSortingChange`, etc.)
 - Own data fetching via RTK Query
 - Own toolbar rendering, table rendering, pagination
-- Use `usePaginatedSearch` internally with route-provided search/navigate
+- **Do NOT know about URL state** — they are agnostic of whether their state comes from URL params, `useState`, or any other source. This makes them reusable in modals, side panels, or any context.
+
+### `usePaginatedSearch` — Route-Level Utility
+
+`usePaginatedSearch` is used **at the route level**, not inside entities. It:
+1. Reads `page`, `page_size`, `sort` from search params
+2. Resets page synchronously when `resetOn` deps change
+3. Returns typed values and setters that the route passes to entities
 
 ### Page Components
 
@@ -240,7 +269,7 @@ Components available:
 - **Route search params (URL)**: `page`, `page_size`, `sort`, route-specific filters. Defined via Zod schema.
 - **Global state (Redux)**: `tenant`, `start_date`, `end_date`, `qfilter`. Read via `useGlobalQueryParams()`.
 
-Routes define the search schema. Entities receive search params as props and use `usePaginatedSearch` to bridge with global state.
+Routes read both URL and global state, then pass typed values to entities. Entities never access URL state directly.
 
 ### Error Handling
 
@@ -259,29 +288,31 @@ export const Route = createFileRoute('/detection-methods/')({
 
 ## Table Entity Pattern
 
-A table entity is a self-contained component that owns data fetching, toolbar, table, and pagination.
+A table entity owns data fetching, toolbar, table, and pagination. It receives **typed domain props and handlers** — it does not know about URL state.
 
 ```tsx
 // features/detection-methods/use-cases/detection-methods-list/entities/detection-methods-table.tsx
 
 interface DetectionMethodsTableProps {
-  search: { page: number; page_size: number; sort: string };
-  navigate: (opts: {
-    search: (prev: Record<string, unknown>) => Record<string, unknown>;
-    replace?: boolean;
-  }) => void;
+  page: number;
+  pageSize: number;
+  sorting: SortingState;
+  withAlerts: boolean;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (pageSize: number) => void;
+  onSortingChange: (updater: Updater<SortingState>) => void;
+  onWithAlertsChange: (withAlerts: boolean) => void;
 }
 
-export function DetectionMethodsTable({ search, navigate }: DetectionMethodsTableProps) {
+export function DetectionMethodsTable({
+  page, pageSize, sorting, withAlerts,
+  onPageChange, onPageSizeChange, onSortingChange, onWithAlertsChange,
+}: DetectionMethodsTableProps) {
   const globals = useGlobalQueryParams(['tenant', 'dates', 'qfilter']);
 
-  const { page, pageSize, sorting, setPage, setPageSize, onSortingChange } =
-    usePaginatedSearch({ search, navigate }, {
-      resetOn: [globals.tenant, globals.start_date, globals.end_date],
-    });
-
   const { data, isFetching } = useGetDetectionMethodsQuery({
-    page, page_size: pageSize, ...globals,
+    page, page_size: pageSize, ordering: serializeSorting(sorting), ...globals,
+    hits_min: withAlerts ? 1 : undefined,
   });
 
   const { columnOrder, columnVisibility, onColumnOrderChange, onColumnVisibilityChange } =
@@ -291,7 +322,7 @@ export function DetectionMethodsTable({ search, navigate }: DetectionMethodsTabl
     <>
       {/* Toolbar */}
       <div className="flex items-center gap-2">
-        <ColumnVisibilityToggle ... />
+        <SwitchFilter checked={withAlerts} onCheckedChange={onWithAlertsChange} />
         <ExportButton ... />
       </div>
       {/* Table */}
