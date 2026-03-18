@@ -1,14 +1,25 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { BeaconingJa3sDetails } from '@/pages/analytics/beaconing-ja3s/[ja3s]';
+import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
+import { BeaconingJa3sDetails } from '@/features/events/beaconing/beaconing-ja3s/use-cases/ja3s-details/entities/beaconing-ja3s-details';
 
 export const Route = createFileRoute(
   '/_enterprise/analytics/beaconing/ja3s/$ja3s',
 )({
   component: () => (
     <PageBoundary key="beaconing-ja3s-details">
-      <BeaconingJa3sDetails />
+      <BeaconingJa3sDetailPage />
     </PageBoundary>
   ),
 });
+
+function BeaconingJa3sDetailPage() {
+  const { ja3s } = Route.useParams();
+  return (
+    <>
+      <OutletBreadcrumb>{ja3s}</OutletBreadcrumb>
+      <BeaconingJa3sDetails ja3s={ja3s} />
+    </>
+  );
+}
