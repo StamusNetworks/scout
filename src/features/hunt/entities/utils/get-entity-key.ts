@@ -1,3 +1,1 @@
-export function getEntityKey(offender: boolean) {
-  return offender ? 'stamus.source' : 'stamus.asset';
-}
+export { getEntityKey } from '@/features/threats/common/utils/get-entity-key';

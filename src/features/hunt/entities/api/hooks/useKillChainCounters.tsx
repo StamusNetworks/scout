@@ -1,8 +1,1 @@
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-
-import { useGetKillChainCountersQuery } from '../entities.api';
-
-export const useKillChainCounters = () => {
-  const params = useGlobalQueryParams(['dates', 'tenant']);
-  return useGetKillChainCountersQuery(params);
-};
+export { useKillChainCounters } from '@/features/threats/common/hooks/useKillChainCounters';
