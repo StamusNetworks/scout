@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
-import { PolicyViolationFamilyByIdPage } from '@/pages/policy-violations/coverage/family';
+import { ThreatFamilyById } from '@/features/threats/common/templates/family-by-id/family-by-id';
 
 export const Route = createFileRoute(
   '/_enterprise/policy-violations/coverage/family/$familyId',
@@ -12,7 +12,7 @@ export const Route = createFileRoute(
       <OutletBreadcrumb link="/policy-violations/coverage">
         Coverage
       </OutletBreadcrumb>
-      <PolicyViolationFamilyByIdPage />
+      <ThreatFamilyById />
     </PageBoundary>
   ),
 });

@@ -1,14 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { PolicyViolationFamilyDetectionMethodsPage } from '@/pages/policy-violations/coverage/family/detection-methods';
+import { ThreatFamilyDetectionMethods } from '@/features/threats/common/templates/family-by-id/family-by-id.detection-methods';
 
 export const Route = createFileRoute(
   '/_enterprise/policy-violations/coverage/family/$familyId/detection-methods',
 )({
   component: () => (
     <PageBoundary key="pv-family-detection-methods">
-      <PolicyViolationFamilyDetectionMethodsPage />
+      <ThreatFamilyDetectionMethods />
     </PageBoundary>
   ),
 });
