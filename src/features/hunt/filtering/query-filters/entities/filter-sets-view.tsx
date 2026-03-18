@@ -73,7 +73,7 @@ const pageReverseMap = Object.fromEntries(
   Object.entries(filterSetPageConfig).map(([key, value]) => [value.label, key]),
 );
 
-export const FilterSetsPage = () => {
+export const FilterSetsView = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [pagination, setPagination] = usePaginationUrlState();

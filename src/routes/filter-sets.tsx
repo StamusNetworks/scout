@@ -1,7 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { FilterSetsPage } from '@/pages/filter-sets';
+import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
+import { usePageTitle } from '@/common/lib/use-page-title';
+import { FilterSetsView } from '@/features/hunt/filtering/query-filters/entities/filter-sets-view';
 
 export const Route = createFileRoute('/filter-sets')({
   component: () => (
@@ -10,3 +12,13 @@ export const Route = createFileRoute('/filter-sets')({
     </PageBoundary>
   ),
 });
+
+function FilterSetsPage() {
+  usePageTitle('Filter Sets');
+  return (
+    <>
+      <OutletBreadcrumb>Filter Sets</OutletBreadcrumb>
+      <FilterSetsView />
+    </>
+  );
+}

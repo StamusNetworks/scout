@@ -10,7 +10,7 @@ import { http, HttpResponse } from 'msw';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
 
-import { FilterSetsPage } from './index';
+import { FilterSetsView } from './filter-sets-view';
 
 const createTestRouter = () =>
   createRouter({
@@ -48,7 +48,7 @@ const mockFilterSets = [
 ];
 
 const renderPage = async () =>
-  renderWithProviders(<FilterSetsPage />, {
+  renderWithProviders(<FilterSetsView />, {
     router: createTestRouter(),
   });
 
@@ -63,7 +63,7 @@ beforeEach(() => {
   );
 });
 
-describe('FilterSetsPage - Delete', () => {
+describe('FilterSetsView - Delete', () => {
   it('shows delete button for user-created filter sets', async () => {
     await renderPage();
 

@@ -25,7 +25,6 @@ import {
 } from '@/common/design-system/atoms/ui/empty';
 import { Separator } from '@/common/design-system/atoms/ui/separator';
 import { DateTime } from '@/common/design-system/entities/date-time';
-import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
@@ -38,7 +37,6 @@ import { TogglePageContainer } from '@/common/design-system/molecules/toggle-con
 import { ValueListCard } from '@/common/design-system/molecules/value-list-card';
 import { Paginated } from '@/common/fetching/fetching.types';
 import { esEscape } from '@/common/lib/strings';
-import { usePageTitle } from '@/common/lib/use-page-title';
 import { setDates } from '@/features/hunt/filtering/dates-filters/dates-filters.slice';
 import { QueryFilterState } from '@/features/hunt/filtering/query-filters/model/query-filter';
 import {
@@ -61,35 +59,31 @@ function useShowOnlyKept() {
   return useQueryState('only_kept', parseAsBoolean.withDefault(true));
 }
 
-export const InvestigationsPage = () => {
-  usePageTitle('Investigations');
+export const InvestigationsView = () => {
   return (
-    <>
-      <OutletBreadcrumb>Investigations</OutletBreadcrumb>
-      <Page>
-        <TogglePageContainer>
-          <PageAlert
-            Icon={FileWarning}
-            title="Beta feature !"
-            description="This feature is in beta and is subject to change. Investigations are stored in the browser's local storage."
-            variant="default"
-          />
-          <PageHeader>
-            <PageHeaderContent>
-              <PageTitle>Investigations</PageTitle>
-              <PageDescription>
-                Investigations help you track and revisit your multi-step
-                hunting processes. This page lets you review and analyze prior
-                investigations—complete with results and initial context—to
-                accelerate incident analysis and make threat hunting more
-                structured and repeatable.
-              </PageDescription>
-            </PageHeaderContent>
-          </PageHeader>
-          <InvestigationHistoryList />
-        </TogglePageContainer>
-      </Page>
-    </>
+    <Page>
+      <TogglePageContainer>
+        <PageAlert
+          Icon={FileWarning}
+          title="Beta feature !"
+          description="This feature is in beta and is subject to change. Investigations are stored in the browser's local storage."
+          variant="default"
+        />
+        <PageHeader>
+          <PageHeaderContent>
+            <PageTitle>Investigations</PageTitle>
+            <PageDescription>
+              Investigations help you track and revisit your multi-step hunting
+              processes. This page lets you review and analyze prior
+              investigations--complete with results and initial context--to
+              accelerate incident analysis and make threat hunting more
+              structured and repeatable.
+            </PageDescription>
+          </PageHeaderContent>
+        </PageHeader>
+        <InvestigationHistoryList />
+      </TogglePageContainer>
+    </Page>
   );
 };
 
