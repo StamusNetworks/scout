@@ -1,8 +1,8 @@
 import { PaginationState } from '@tanstack/react-table';
 
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
 import { useGetSignaturesQuery } from '@/features/hunt/detection-methods/signatures/api/signatures.api';
-import { useQFBuilder } from '@/features/hunt/filtering/query-filters/hooks/use-qf-builder';
 
 interface UseThreatEventsParams {
   threatId: string;

@@ -6,7 +6,7 @@ import {
 import { describe, expect, test } from 'vitest';
 
 import { renderWithProviders } from '@/common/testing/test-utils';
-import { selectQueryFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.selector';
+import { selectQueryFilters } from '@/features/filtering/query-filters/store/query-filters.selector';
 
 import { Deeplink } from './deeplink';
 

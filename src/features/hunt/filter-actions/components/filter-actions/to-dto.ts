@@ -1,4 +1,4 @@
-import { QueryFilterState } from '@/features/hunt/filtering/query-filters/model/query-filter';
+import { QueryFilterState } from '@/features/filtering/query-filters/model/query-filter';
 
 const forceWildcard = ['content', 'msg'];
 

@@ -11,7 +11,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/common/design-system/atoms/ui/tooltip';
-import { selectQueryFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.selector';
+import { selectQueryFilters } from '@/features/filtering/query-filters/store/query-filters.selector';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { useTestAvailableActionsQuery } from '../../api/filter-actions.api';

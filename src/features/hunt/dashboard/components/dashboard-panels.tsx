@@ -18,9 +18,9 @@ import {
   TooltipTrigger,
 } from '@/common/design-system/atoms/ui/tooltip';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
+import { getFilterDef } from '@/features/filtering/query-filters/constants/query-filter.definition';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
-import { getFilterDef } from '../../filtering/query-filters/constants/query-filter.definition';
 import { useDashboard } from '../api/hooks/useDashboard';
 import {
   selectCanPanelMoveDown,

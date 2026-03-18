@@ -29,11 +29,11 @@ import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { formatNumber } from '@/common/lib/numbers';
 import { esEscape } from '@/common/lib/strings';
 import { NetworkTreeFilterService } from '@/features/analytics/hosts/components/network-tree/network-tree.filter-service';
-import { useGetNetworkTreeQuery } from '@/features/host-insights/common/host-insights.api';
 import {
   selectHostIDQFilter,
   selectQueryFilters,
-} from '@/features/hunt/filtering/query-filters/store/query-filters.selector';
+} from '@/features/filtering/query-filters/store/query-filters.selector';
+import { useGetNetworkTreeQuery } from '@/features/host-insights/common/host-insights.api';
 import { useAppSelector } from '@/store/store';
 
 export type TreeDataPayload = {

@@ -15,7 +15,7 @@ import { cn } from '@/common/lib/utils';
 import {
   isNegatable,
   isWildcardable,
-} from '@/features/hunt/filtering/query-filters/constants/query-filter.definition';
+} from '@/features/filtering/query-filters/constants/query-filter.definition';
 
 import { useQueryFilterDefinition } from '../hooks/use-filters-definitions';
 

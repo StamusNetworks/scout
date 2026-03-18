@@ -13,7 +13,7 @@ import { useBeaconReport } from '@/features/events/beaconing/common/hooks/use-be
 import { BeaconingMetadata } from '@/features/events/beaconing/common/molecules/beaconing-metadata';
 import { ReportSummary } from '@/features/events/beaconing/common/molecules/report-summary';
 import { formatBeaconMetric } from '@/features/events/beaconing/common/utils/format-beacon-metric';
-import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
+import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
 
 import { BeaconingIPsTable } from '../../../molecules/beaconing-ips-table';
 

@@ -1,21 +1,21 @@
 import { useMemo } from 'react';
 
 import { esEscape } from '@/common/lib/strings';
-import { useQFBuilder } from '@/features/hunt/filtering/query-filters/hooks/use-qf-builder';
+import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
 import { selectInvestigationFilter } from '@/features/hunt/investigation/investigation.slice';
 import { useAppSelector } from '@/store/store';
 
 import {
   computeDates,
   selectDates,
-} from '../../features/hunt/filtering/dates-filters/dates-filters';
-import { QueryFilterState } from '../../features/hunt/filtering/query-filters/model/query-filter';
+} from '../../features/filtering/dates-filters/dates-filters';
+import { QueryFilterState } from '../../features/filtering/query-filters/model/query-filter';
 import {
   selectEventsQfilter,
   selectHostIDQFilter,
   selectSignatureFilters,
-} from '../../features/hunt/filtering/query-filters/store/query-filters.selector';
-import { selectEventsTypesParams } from '../../features/hunt/filtering/query-filters/store/query-filters.selector';
+} from '../../features/filtering/query-filters/store/query-filters.selector';
+import { selectEventsTypesParams } from '../../features/filtering/query-filters/store/query-filters.selector';
 import { selectTenant } from '../../features/user/tenancy/tenancy.selector';
 
 type SubscribeKey =

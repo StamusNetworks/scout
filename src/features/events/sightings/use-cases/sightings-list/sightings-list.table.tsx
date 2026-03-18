@@ -7,11 +7,11 @@ import { DataTableRowExpander } from '@/common/design-system/molecules/data-tabl
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { Filter } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { Event } from '@/features/events/common/events.model';
+import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
 import { Hostname } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
 import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 import { RoleBadge } from '@/features/host-insights/use-cases/host-details/molecules/host-details/roles';
 import { Username } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';
-import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
 import { EntityThreatTagsList } from '@/features/threats/common/molecules/entities-threat-tags-list/entities-threat-tags-list';
 import { IpOrEntityEventValue } from '@/features/threats/common/molecules/ip-or-entity';
 

@@ -1,8 +1,8 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { DataEntry } from '@/common/design-system/molecules/value-list-card';
-import { QueryFilterState } from '@/features/hunt/filtering/query-filters/model/query-filter';
-import { TagFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
+import { QueryFilterState } from '@/features/filtering/query-filters/model/query-filter';
+import { TagFilters } from '@/features/filtering/query-filters/store/query-filters.slice';
 import { RootState } from '@/store/store';
 
 import {

@@ -6,7 +6,7 @@ import { Row } from '@/common/design-system/atoms/layout/row';
 import { Label as UILabel } from '@/common/design-system/atoms/ui/label';
 import { formatBytes, formatNumber } from '@/common/lib/numbers';
 import { Event } from '@/features/events/common/events.model';
-import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
+import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
 
 import { ProtocolLabel } from './protocol-label';
 

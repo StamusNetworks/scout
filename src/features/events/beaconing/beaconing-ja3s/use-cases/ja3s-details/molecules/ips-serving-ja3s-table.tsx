@@ -7,7 +7,7 @@ import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { esEscape } from '@/common/lib/strings';
 import { useGetBeaconingEventsQuery } from '@/features/events/beaconing/common/beaconing.api';
 import { BeaconingEvent } from '@/features/events/beaconing/common/beaconing-event.model';
-import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
+import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
 
 export const ipsServingJa3sTableColumns: CustomColumnDef<BeaconingEvent>[] = [
   {

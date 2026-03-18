@@ -5,10 +5,10 @@ import { useCallback, useMemo } from 'react';
 import { Badge } from '@/common/design-system/atoms/ui/badge';
 import { ContextMenuItem } from '@/common/design-system/atoms/ui/context-menu';
 import { cn } from '@/common/lib/utils';
+import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
+import { replaceFilters } from '@/features/filtering/query-filters/store/query-filters.slice';
 import { useAppDispatch } from '@/store/store';
 
-import { EventValue } from '../../filtering/query-filters/components/event-value/event-value';
-import { replaceFilters } from '../../filtering/query-filters/store/query-filters.slice';
 import { KillChainMap, killChainsConfig } from '../killchain';
 
 export const KillchainTag = ({

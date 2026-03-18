@@ -24,9 +24,9 @@ import {
   TitleRowTitle,
 } from '@/common/design-system/graphs/sankey/sankey-title-row';
 import { useGetEventsAggregationQuery } from '@/features/events/common/events.api';
-import { ContextMenuContent } from '@/features/hunt/filtering/query-filters/components/event-value/context-menu/context-menu.content';
-import type { EventTypes } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
-import { addQueryFilter } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
+import { ContextMenuContent } from '@/features/filtering/query-filters/components/event-value/context-menu/context-menu.content';
+import type { EventTypes } from '@/features/filtering/query-filters/store/query-filters.slice';
+import { addQueryFilter } from '@/features/filtering/query-filters/store/query-filters.slice';
 import { useGetESMappingQuery } from '@/features/user/settings/settings.api';
 import { useAppDispatch } from '@/store/store';
 

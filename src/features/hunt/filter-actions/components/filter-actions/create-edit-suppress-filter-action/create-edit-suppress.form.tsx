@@ -19,9 +19,9 @@ import {
   FormMessage,
 } from '@/common/design-system/atoms/ui/form';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
+import { FilterInput } from '@/features/filtering/query-filters/components/filters-input';
 import { useGetRulesetsQuery } from '@/features/hunt/rulesets/api/rulesets.api';
 
-import { FilterInput } from '../../../../filtering/query-filters/components/filters-input';
 import {
   useCreateFilterActionMutation,
   useUpdateFilterActionMutation,

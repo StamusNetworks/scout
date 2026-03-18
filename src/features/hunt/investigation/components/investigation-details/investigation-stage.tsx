@@ -5,11 +5,11 @@ import { Card } from '@/common/design-system/atoms/ui/card';
 import { Separator } from '@/common/design-system/atoms/ui/separator';
 import { LabelValue } from '@/common/design-system/molecules/label-value';
 import { cn } from '@/common/lib/utils';
-import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
+import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
 import {
   getFilterLabel,
   getFilterValue,
-} from '@/features/hunt/filtering/query-filters/utils/get-filter-label';
+} from '@/features/filtering/query-filters/utils/get-filter-label';
 
 import { InvestigationStage as InvestigationStageType } from '../../investigation.slice';
 import { valueVariants } from '../ongoing-investigation/ongoing-investigation.current';

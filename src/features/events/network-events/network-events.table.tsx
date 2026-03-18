@@ -1,6 +1,6 @@
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import type { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
-import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
+import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
 
 import { Scrollable } from '../common/atoms/scrollable';
 import type { Event } from '../common/events.model';

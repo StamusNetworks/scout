@@ -7,7 +7,7 @@ import { SNI } from '@/common/design-system/molecules/sni';
 import { getDuration } from '@/common/lib/duration';
 import { BeaconingEvent } from '@/features/events/beaconing/common/beaconing-event.model';
 import { formatBeaconMetric } from '@/features/events/beaconing/common/utils/format-beacon-metric';
-import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
+import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
 
 export const tlsJ3ASTableColumns: CustomColumnDef<BeaconingEvent>[] = [
   {

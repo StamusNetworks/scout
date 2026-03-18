@@ -37,16 +37,16 @@ import { TogglePageContainer } from '@/common/design-system/molecules/toggle-con
 import { ValueListCard } from '@/common/design-system/molecules/value-list-card';
 import { Paginated } from '@/common/fetching/fetching.types';
 import { esEscape } from '@/common/lib/strings';
-import { setDates } from '@/features/hunt/filtering/dates-filters/dates-filters.slice';
-import { QueryFilterState } from '@/features/hunt/filtering/query-filters/model/query-filter';
+import { setDates } from '@/features/filtering/dates-filters/dates-filters.slice';
+import { QueryFilterState } from '@/features/filtering/query-filters/model/query-filter';
 import {
   addQueryFilter,
   clearQueryFilters,
   replaceFilters,
   TagFilters,
   updateTagFilters,
-} from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
-import { getFilterLabel } from '@/features/hunt/filtering/query-filters/utils/get-filter-label';
+} from '@/features/filtering/query-filters/store/query-filters.slice';
+import { getFilterLabel } from '@/features/filtering/query-filters/utils/get-filter-label';
 import { InvestigationParams } from '@/features/hunt/investigation/components/investigation-details/investigation-params';
 import { InvestigationResults } from '@/features/hunt/investigation/components/investigation-details/investigation-results';
 import { InvestigationStage } from '@/features/hunt/investigation/components/investigation-details/investigation-stage';

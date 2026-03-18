@@ -22,7 +22,7 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { isIP } from '@/common/lib/ips';
-import { replaceFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
+import { replaceFilters } from '@/features/filtering/query-filters/store/query-filters.slice';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 import { useThreat } from '@/features/threats/common/hooks/use-threat';
 import { ThreatTag } from '@/features/threats/common/molecules/threat-tag';

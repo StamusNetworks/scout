@@ -1,11 +1,11 @@
 import { pipe, toPairs } from 'ramda';
 import { useMemo } from 'react';
 
-import { FilterCategory } from '../../filtering/query-filters/constants/query-filter.config';
-import { QueryFiltersRecord } from '../../filtering/query-filters/constants/query-filter.definition';
-import { useQueryFiltersDefinitions } from '../../filtering/query-filters/hooks/use-filters-definitions';
-import { QueryFilterDefinition } from '../../filtering/query-filters/model/query-filter';
-import { MixedQueryFilterDefinitions } from '../../filtering/query-filters/store/query-filters.selector';
+import { FilterCategory } from '@/features/filtering/query-filters/constants/query-filter.config';
+import { QueryFiltersRecord } from '@/features/filtering/query-filters/constants/query-filter.definition';
+import { useQueryFiltersDefinitions } from '@/features/filtering/query-filters/hooks/use-filters-definitions';
+import { QueryFilterDefinition } from '@/features/filtering/query-filters/model/query-filter';
+import { MixedQueryFilterDefinitions } from '@/features/filtering/query-filters/store/query-filters.selector';
 
 export const useSupportedFilterActionsFilters = () => {
   const filterDefs = useQueryFiltersDefinitions();

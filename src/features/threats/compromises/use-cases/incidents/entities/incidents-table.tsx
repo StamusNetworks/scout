@@ -22,7 +22,7 @@ import { DataTableToolbar } from '@/common/design-system/molecules/data-table/da
 import { CommandFilterMultiple } from '@/common/design-system/molecules/data-table/filters/command-filter-multiple';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { isIP } from '@/common/lib/strings';
-import { replaceFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
+import { replaceFilters } from '@/features/filtering/query-filters/store/query-filters.slice';
 import {
   KillChainKeysWithoutPolicies,
   killChainsConfig,

@@ -16,12 +16,12 @@ import { useSidebar } from '@/common/design-system/atoms/ui/sidebar';
 import { getShortcutDisplay } from '@/common/lib/platform';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { getConfig } from '@/config';
+import { selectQueryFilters } from '@/features/filtering/query-filters/store/query-filters.selector';
+import { clearQueryFilters } from '@/features/filtering/query-filters/store/query-filters.slice';
 import { openDeclarationModal } from '@/features/hunt/filter-actions/components/filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
 import { openSuppressModal } from '@/features/hunt/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
 import { openTagModal } from '@/features/hunt/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
 import { openThresholdModal } from '@/features/hunt/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
-import { selectQueryFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.selector';
-import { clearQueryFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
 import { useUpdatePushRulesetMutation } from '@/features/hunt/rulesets/api/rulesets.api';
 import {
   selectIsSidebarOpen,

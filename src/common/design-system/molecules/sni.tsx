@@ -1,4 +1,4 @@
-import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
+import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
 
 import { Row } from '../atoms/layout/row';
 import {

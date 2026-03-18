@@ -22,12 +22,12 @@ import {
   ValueListCard,
 } from '@/common/design-system/molecules/value-list-card';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { useGetDashboardFieldsQuery } from '@/features/hunt/dashboard/api/dashboard.api';
 import {
   selectQueryFilters,
   selectTagFilters,
-} from '@/features/hunt/filtering/query-filters/store/query-filters.selector';
-import { getFilterLabel } from '@/features/hunt/filtering/query-filters/utils/get-filter-label';
+} from '@/features/filtering/query-filters/store/query-filters.selector';
+import { getFilterLabel } from '@/features/filtering/query-filters/utils/get-filter-label';
+import { useGetDashboardFieldsQuery } from '@/features/hunt/dashboard/api/dashboard.api';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import {

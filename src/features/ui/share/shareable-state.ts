@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
-import { type DatesState } from '@/features/hunt/filtering/dates-filters/dates-filters.types';
-import { type QueryFilterState } from '@/features/hunt/filtering/query-filters/model/query-filter';
-import { type TagFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
+import { type DatesState } from '@/features/filtering/dates-filters/dates-filters.types';
+import { type QueryFilterState } from '@/features/filtering/query-filters/model/query-filter';
+import { type TagFilters } from '@/features/filtering/query-filters/store/query-filters.slice';
 
 const shareableFilterSchema = z.object({
   key: z.string(),

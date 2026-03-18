@@ -40,19 +40,19 @@ import { cn } from '@/common/lib/utils';
 import {
   useDeleteFilterSetMutation,
   useGetFilterSetsQuery,
-} from '@/features/hunt/filtering/query-filters/api/query-filter.api';
-import { openSaveFilterSetModal } from '@/features/hunt/filtering/query-filters/components/save-filterset/save-filterset.slice';
-import { filterSetPageConfig } from '@/features/hunt/filtering/query-filters/constants/query-filtersets';
+} from '@/features/filtering/query-filters/api/query-filter.api';
+import { openSaveFilterSetModal } from '@/features/filtering/query-filters/components/save-filterset/save-filterset.slice';
+import { filterSetPageConfig } from '@/features/filtering/query-filters/constants/query-filtersets';
 import {
   getFiltersFromFilterSet,
   QueryFilterSet,
-} from '@/features/hunt/filtering/query-filters/model/query-filterset.schema';
+} from '@/features/filtering/query-filters/model/query-filterset.schema';
 import {
   addQueryFilterSets,
   QueryFiltersKey,
   useIsLoadedFilterSet,
-} from '@/features/hunt/filtering/query-filters/store/query-filters-sets.slice';
-import { loadFilterSet } from '@/features/hunt/filtering/query-filters/use-cases/load-filter-set';
+} from '@/features/filtering/query-filters/store/query-filters-sets.slice';
+import { loadFilterSet } from '@/features/filtering/query-filters/use-cases/load-filter-set';
 import { disableHelp, useHelpState } from '@/features/ui/help/help.slice';
 import { useAppDispatch } from '@/store/store';
 

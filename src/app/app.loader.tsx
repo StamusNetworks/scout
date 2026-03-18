@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { getConfig } from '@/config';
-import { refreshRange } from '@/features/hunt/filtering/dates-filters/dates-filters.slice';
+import { refreshRange } from '@/features/filtering/dates-filters/dates-filters.slice';
 import { useAutoReload } from '@/features/ui/use-auto-reload';
 import { useSessionActivity } from '@/features/user/auth/hooks/use-session-activity';
 import {

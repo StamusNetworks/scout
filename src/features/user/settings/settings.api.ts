@@ -1,8 +1,8 @@
 import { toPairs } from 'ramda';
 
 import { Paginated } from '@/common/fetching/fetching.types';
-import { FilterCategory } from '@/features/hunt/filtering/query-filters/constants/query-filter.config';
-import { QueryFilterType } from '@/features/hunt/filtering/query-filters/model/query-filter';
+import { FilterCategory } from '@/features/filtering/query-filters/constants/query-filter.config';
+import { QueryFilterType } from '@/features/filtering/query-filters/model/query-filter';
 import { API } from '@/store/api';
 
 import { Tenant } from '../tenancy/tenancy.slice';

@@ -26,10 +26,10 @@ import {
 } from '@/common/design-system/molecules/pagination';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { formatNumber } from '@/common/lib/numbers';
+import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
+import { replaceFilters } from '@/features/filtering/query-filters/store/query-filters.slice';
+import { enableTags } from '@/features/filtering/query-filters/use-cases/enable-tags';
 import { useGetDashboardFieldsQuery } from '@/features/hunt/dashboard/api/dashboard.api';
-import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
-import { replaceFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
-import { enableTags } from '@/features/hunt/filtering/query-filters/use-cases/enable-tags';
 import { useAppDispatch } from '@/store/store';
 
 export const MitreTechniques = () => {

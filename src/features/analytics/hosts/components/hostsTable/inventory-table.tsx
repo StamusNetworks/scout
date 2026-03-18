@@ -4,10 +4,10 @@ import { DataTable } from '@/common/design-system/molecules/data-table/data-tabl
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences.ts';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams.tsx';
+import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder.ts';
 import { useGetHostsQuery } from '@/features/host-insights/common/host-insights.api';
 import { HostsTableExpandedRow } from '@/features/host-insights/use-cases/host-details/molecules/hosts-table-expanded-row';
 import { getFilterExtension } from '@/features/host-insights/use-cases/hosts-list/hosts-list.api';
-import { useQFBuilder } from '@/features/hunt/filtering/query-filters/hooks/use-qf-builder.ts';
 
 import { columns, exportColumns } from './hostsTable.columns.tsx';
 

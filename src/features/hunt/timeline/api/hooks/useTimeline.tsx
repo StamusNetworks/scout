@@ -1,5 +1,5 @@
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { QueryFilterState } from '@/features/hunt/filtering/query-filters/model/query-filter';
+import { QueryFilterState } from '@/features/filtering/query-filters/model/query-filter';
 
 import { useGetCountsTimelineQuery } from '../timeline.api';
 

@@ -11,8 +11,8 @@ import {
 import { Skeleton } from '@/common/design-system/atoms/ui/skeleton';
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { cn } from '@/common/lib/utils';
-import { selectIsAfterStart } from '@/features/hunt/filtering/dates-filters/dates-filters';
-import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
+import { selectIsAfterStart } from '@/features/filtering/dates-filters/dates-filters';
+import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
 import { KillchainTag } from '@/features/hunt/killchain/components/killchain-tag';
 import { type KillChainPhase } from '@/features/hunt/killchain/killchain';
 import { useAppSelector } from '@/store/store';

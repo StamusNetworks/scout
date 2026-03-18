@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '@/common/design-system/atoms/ui/card';
 import { downloadBlob, formatToCsv, saveToClipboard } from '@/common/lib/save';
-import { EventValue } from '@/features/hunt/filtering/query-filters/components/event-value/event-value';
+import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
 
 import {
   DropdownMenu,

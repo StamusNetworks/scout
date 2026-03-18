@@ -5,14 +5,14 @@ import { toast } from 'sonner';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
-import { setDates } from '@/features/hunt/filtering/dates-filters/dates-filters.slice';
-import { type DatesPayload } from '@/features/hunt/filtering/dates-filters/dates-filters.types';
+import { setDates } from '@/features/filtering/dates-filters/dates-filters.slice';
+import { type DatesPayload } from '@/features/filtering/dates-filters/dates-filters.types';
 import {
   reorderQueryFilters,
   replaceFilters,
   updateTagFilters,
-} from '@/features/hunt/filtering/query-filters/store/query-filters.slice';
-import { type FilterInput } from '@/features/hunt/filtering/query-filters/utils/filter-mapper';
+} from '@/features/filtering/query-filters/store/query-filters.slice';
+import { type FilterInput } from '@/features/filtering/query-filters/utils/filter-mapper';
 import {
   decodeShareableState,
   type ShareableState,

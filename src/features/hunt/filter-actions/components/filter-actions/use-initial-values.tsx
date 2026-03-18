@@ -1,9 +1,9 @@
 import { pipe } from 'ramda';
 import { useMemo } from 'react';
 
-import { useQFBuilder } from '@/features/hunt/filtering/query-filters/hooks/use-qf-builder';
-import { QueryFilterState } from '@/features/hunt/filtering/query-filters/model/query-filter';
-import { selectQueryFilters } from '@/features/hunt/filtering/query-filters/store/query-filters.selector';
+import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
+import { QueryFilterState } from '@/features/filtering/query-filters/model/query-filter';
+import { selectQueryFilters } from '@/features/filtering/query-filters/store/query-filters.selector';
 import { useAppSelector } from '@/store/store';
 
 import { useTestActionsQuery } from '../../api/filter-actions.api';
