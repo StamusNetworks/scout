@@ -4,9 +4,9 @@ import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Card } from '@/common/design-system/atoms/ui/card';
 import { StatsCardHorizontalContent } from '@/common/design-system/molecules/stats-card-horizontal';
-import { usePreviousDates } from '@/features/filtering/dates-filters/use-previous-dates';
 import { useGlobalStats } from '@/features/events/detection-events/use-cases/explorer/api/hooks/useGlobalStats';
-import { indicators } from '@/features/hunt/operational-center/config';
+import { usePreviousDates } from '@/features/filtering/dates-filters/use-previous-dates';
+import { indicators } from '@/features/operational-center/config';
 
 export const IndicatorsDocDopv = () => {
   const navigate = useNavigate();

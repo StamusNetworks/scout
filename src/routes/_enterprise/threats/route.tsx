@@ -15,7 +15,7 @@ import {
 } from '@/common/design-system/atoms/ui/pillTabs';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
-import { IndicatorsDoc } from '@/features/hunt/operational-center/components/indicators/docdopv.indicators';
+import { IndicatorsDoc } from '@/features/operational-center/components/indicators/docdopv.indicators';
 
 export const Route = createFileRoute('/_enterprise/threats')({
   component: () => (

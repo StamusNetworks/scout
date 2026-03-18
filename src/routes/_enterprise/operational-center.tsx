@@ -14,7 +14,7 @@ import {
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { usePageTitle } from '@/common/lib/use-page-title';
-import { OperationalCenterView } from '@/features/hunt/operational-center/entities/operational-center-view';
+import { OperationalCenterView } from '@/features/operational-center/entities/operational-center-view';
 
 export const Route = createFileRoute('/_enterprise/operational-center')({
   component: () => (

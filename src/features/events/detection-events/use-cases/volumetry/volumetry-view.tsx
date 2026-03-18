@@ -21,10 +21,10 @@ import {
 } from '@/common/design-system/molecules/pagination';
 import { StatsCardHorizontal } from '@/common/design-system/molecules/stats-card-horizontal';
 import { esEscape } from '@/common/lib/strings';
-import { usePreviousDates } from '@/features/filtering/dates-filters/use-previous-dates';
 import { useGlobalStats } from '@/features/events/detection-events/use-cases/explorer/api/hooks/useGlobalStats';
+import { usePreviousDates } from '@/features/filtering/dates-filters/use-previous-dates';
 import { useEventsCount } from '@/features/hunt/events/api/hooks/useEventsCount';
-import { indicators } from '@/features/hunt/operational-center/config';
+import { indicators } from '@/features/operational-center/config';
 import { useGetProbesQuery } from '@/features/user/settings/settings.api';
 import { Route } from '@/routes/_enterprise/volumetry';
 
