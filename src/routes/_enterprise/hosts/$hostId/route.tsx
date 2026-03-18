@@ -33,7 +33,7 @@ import { esEscape } from '@/common/lib/strings';
 import { useGetBeaconingEventsQuery } from '@/features/analytics/beaconing/api/beaconing.api';
 import { useGetHostWithAlertsQuery } from '@/features/analytics/hosts/api/hosts.api';
 import { useGetSightingEventsQuery } from '@/features/analytics/sightings/api/sightings.api';
-import { HostHeader } from '@/features/hosts/entities/host-header';
+import { HostHeader } from '@/features/host-insights/use-cases/host-details/entities/host-header';
 import { useGetSignaturesQuery } from '@/features/hunt/detection-methods/signatures/api/signatures.api';
 import { useGetEventsQuery } from '@/features/hunt/events/api/events.api';
 import { useGetThreatsStatusQuery } from '@/features/hunt/threats/api/threats.api';
