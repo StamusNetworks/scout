@@ -45,8 +45,6 @@ import {
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { cn } from '@/common/lib/utils';
 
-import { DataTableRowExpander } from '../data-table/data-table.row-expander';
-
 import { Row as RowComponent } from '../../atoms/layout/row';
 import { Checkbox } from '../../atoms/ui/checkbox';
 import {
@@ -56,6 +54,7 @@ import {
   EmptyMedia,
 } from '../../atoms/ui/empty';
 import { Skeleton } from '../../atoms/ui/skeleton';
+import { DataTableRowExpander } from '../data-table/data-table.row-expander';
 
 export interface TableProps<TData> {
   data: TData[];
@@ -135,8 +134,7 @@ export function Table<TData>({
       return ['expander', ...base];
     }
     return base;
-  }, [controlledColumnOrder, resolvedColumns, ExpandedRow],
-  );
+  }, [controlledColumnOrder, resolvedColumns, ExpandedRow]);
 
   const hasRowSelection =
     rowSelection !== undefined && onRowSelectionChange !== undefined;
