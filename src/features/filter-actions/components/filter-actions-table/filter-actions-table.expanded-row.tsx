@@ -9,10 +9,10 @@ import {
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/borderTabs';
 import { TableCard } from '@/common/design-system/molecules/table-card';
+import { useGetRulesetsQuery } from '@/features/detection-methods/rulesets.api';
 import { useGetFilterActionStatsQuery } from '@/features/filter-actions/api/filter-actions.api';
 import { FilterActionParameters } from '@/features/filter-actions/components/filter-actions-table/filter-actions-parameters';
 import { FilterAction } from '@/features/filter-actions/model/filter-action';
-import { useGetRulesetsQuery } from '@/features/detection-methods/rulesets.api';
 
 import { getRowFilters } from './filter-actions-table.columns';
 

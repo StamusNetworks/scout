@@ -24,9 +24,9 @@ import {
 } from '@/common/design-system/atoms/ui/tooltip';
 import { startsWithOneOf } from '@/common/lib/strings';
 import { cn } from '@/common/lib/utils';
-import { useWithAlertsParam } from '@/features/host-insights/common/hosts-table/use-with-alerts-param';
 import { FilterActionsDropdown } from '@/features/filter-actions/components/filter-actions/filter-actions.dropdown';
 import { useSupportedFilterActionsFilters } from '@/features/filter-actions/utils/get-supported-filters';
+import { useWithAlertsParam } from '@/features/host-insights/common/hosts-table/use-with-alerts-param';
 import { Investigation } from '@/features/investigation/components/ongoing-investigation/ongoing-investigation';
 import { selectInvestigationStage } from '@/features/investigation/investigation.slice';
 import { selectAutoOpenSidebarOnNavigation } from '@/features/ui/preferences/preferences.slice';

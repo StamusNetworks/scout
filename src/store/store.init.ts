@@ -1,4 +1,5 @@
 import { tablePreferencesInitialState } from '@/common/design-system/molecules/data-table/table-preferences.slice';
+import { dashboardPageStateInitialState } from '@/features/events/detection-events/use-cases/explorer/store/dashboard.slice';
 import { createEditDeclarationModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
 import { createEditSuppressModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
 import { createEditTagModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
@@ -8,7 +9,6 @@ import { addQfilterCommandInitialState } from '@/features/filtering/query-filter
 import { saveFilterSetModalInitialState } from '@/features/filtering/query-filters/components/save-filterset/save-filterset.slice';
 import { queryFiltersInitialState } from '@/features/filtering/query-filters/store/query-filters.slice';
 import { queryFiltersSetsInitialState } from '@/features/filtering/query-filters/store/query-filters-sets.slice';
-import { dashboardPageStateInitialState } from '@/features/events/detection-events/use-cases/explorer/store/dashboard.slice';
 import { investigationInitialState } from '@/features/investigation/investigation.slice';
 import { investigationsHistoryInitialState } from '@/features/investigation/investigations-history.slice';
 import { marketingStateInitialState } from '@/features/marketing/store/marketing.store';

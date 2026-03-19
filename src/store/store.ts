@@ -5,6 +5,7 @@ import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage';
 
 import { tablePreferencesSlice } from '@/common/design-system/molecules/data-table/table-preferences.slice';
+import { dashboardPageStateSlice } from '@/features/events/detection-events/use-cases/explorer/store/dashboard.slice';
 import { createEditDeclarationModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
 import { createEditSuppressModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
 import { createEditTagModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
@@ -14,7 +15,6 @@ import { addQfilterCommandSlice } from '@/features/filtering/query-filters/compo
 import { saveFilterSetModalSlice } from '@/features/filtering/query-filters/components/save-filterset/save-filterset.slice';
 import { queryFiltersSlice } from '@/features/filtering/query-filters/store/query-filters.slice';
 import { queryFiltersSetsSlice } from '@/features/filtering/query-filters/store/query-filters-sets.slice';
-import { dashboardPageStateSlice } from '@/features/events/detection-events/use-cases/explorer/store/dashboard.slice';
 import { investigationSlice } from '@/features/investigation/investigation.slice';
 import { investigationsHistorySlice } from '@/features/investigation/investigations-history.slice';
 import { marketingStateSlice } from '@/features/marketing/store/marketing.store';

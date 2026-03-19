@@ -1,8 +1,8 @@
 import { PaginationState } from '@tanstack/react-table';
 
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
 import { useGetSignaturesQuery } from '@/features/detection-methods/signatures/api/signatures.api';
+import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
 
 interface UseFamilyDetectionMethodsParams {
   familyId: string;

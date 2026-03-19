@@ -28,12 +28,12 @@ import { CommandFilterSingle } from '@/common/design-system/molecules/data-table
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { formatNumber } from '@/common/lib/numbers';
 import { esEscape } from '@/common/lib/strings';
-import { NetworkTreeFilterService } from '@/features/host-insights/common/network-tree/network-tree.filter-service';
 import {
   selectHostIDQFilter,
   selectQueryFilters,
 } from '@/features/filtering/query-filters/store/query-filters.selector';
 import { useGetNetworkTreeQuery } from '@/features/host-insights/common/host-insights.api';
+import { NetworkTreeFilterService } from '@/features/host-insights/common/network-tree/network-tree.filter-service';
 import { useAppSelector } from '@/store/store';
 
 export type TreeDataPayload = {
