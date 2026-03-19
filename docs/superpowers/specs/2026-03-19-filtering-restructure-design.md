@@ -27,31 +27,33 @@ src/features/filtering/
 ├── use-global-query-params.ts
 │
 ├── dates/
-│   ├── dates.model.ts
+│   ├── dates.model.ts                      # DatesState, DatesPayload, TimeUnit, UNITS_IN_MILLISECONDS
 │   ├── dates.repository.ts
 │   ├── dates.store.ts
-│   ├── dates.selectors.ts
-│   ├── dates.api.ts
-│   ├── dates.utils.ts
+│   ├── dates.selectors.ts                  # selectDates, computeDates, selectIsAfterStart
+│   ├── dates.api.ts                        # RTK Query: getAutoDateRange
+│   ├── dates.utils.ts                      # getPersistedDates, persistDates
 │   └── use-cases/
 │       ├── set-dates/
 │       │   └── set-dates.ts
-│       └── auto-range/
-│           └── use-auto-range.ts
+│       ├── auto-range/
+│       │   └── use-auto-range.ts
+│       └── previous-dates/
+│           └── use-previous-dates.ts       # usePreviousDates hook
 │
 ├── tenant/
-│   └── tenant.repository.ts
+│   └── tenant.repository.ts                # re-exports selectTenant from features/user/tenancy/
 │
 ├── filters/
 │   ├── tag-filters/
-│   │   ├── tag-filters.model.ts
+│   │   ├── tag-filters.model.ts            # TagFilters, AlertTags, EventTypes, Novelty
 │   │   ├── tag-filters.repository.ts
 │   │   └── use-cases/
 │   │       └── update-tag-filters/
 │   │           └── update-tag-filters.ts
 │   │
 │   └── query-filters/
-│       ├── query-filter.model.ts
+│       ├── query-filter.model.ts           # QueryFilterState, QueryFilterDefinition, PersistedFilter, etc.
 │       ├── query-filters.repository.ts
 │       ├── query-filters.store.ts
 │       ├── query-filters.icons.tsx
@@ -62,7 +64,9 @@ src/features/filtering/
 │       ├── utils/
 │       │   ├── qf-builder.ts
 │       │   ├── entity-validators.ts
-│       │   └── filter-mapper.ts
+│       │   ├── filter-mapper.ts            # FilterInput type
+│       │   ├── get-filter-label.ts         # getFilterLabel, getFilterValue
+│       │   └── suspension-rules.ts         # applySuspensionRules, applyDeduplication (extracted from slice)
 │       ├── hooks/
 │       │   ├── use-qf-builder.ts
 │       │   └── use-filters-definitions.ts
@@ -81,13 +85,19 @@ src/features/filtering/
 │           │   ├── update-filter.ts
 │           │   ├── edit-filter.modal.tsx
 │           │   ├── edit-qfilter-form.tsx
-│           │   └── filter-input.tsx
+│           │   └── filter-input.tsx         # FilterInput component (was filters-input.tsx)
 │           ├── delete-filter/
 │           │   └── delete-filter.ts
 │           ├── suspend-filter/
 │           │   └── suspend-filter.ts
 │           ├── clear-filters/
 │           │   └── clear-filters.ts
+│           ├── replace-filters/
+│           │   └── replace-filters.ts       # useReplaceFilters (11 consumers: share, investigation, etc.)
+│           ├── upsert-filter-by-role/
+│           │   └── upsert-filter-by-role.ts # useUpsertFilterByRole (NetworkTreeFilterService)
+│           ├── reorder-filters/
+│           │   └── reorder-filters.ts       # useReorderFilters (drag-and-drop in sidebar)
 │           ├── list-filters/
 │           │   ├── list-filters.ts
 │           │   ├── filters-sidebar.tsx
@@ -113,10 +123,10 @@ src/features/filtering/
 │               └── build-signature-filter.test.ts
 │
 └── filtersets/
-    ├── filterset.model.ts
+    ├── filterset.model.ts                   # QueryFilterSet, queryFilterSetCreatePayload, getTagsFromFilterSet, etc.
     ├── filtersets.repository.ts
     ├── filtersets.store.ts
-    ├── filtersets.api.ts
+    ├── filtersets.api.ts                    # RTK Query: getFilterSets, createFilterSet, deleteFilterSet
     └── use-cases/
         ├── load-filter-set/
         │   └── load-filter-set.ts
@@ -221,7 +231,7 @@ type FilterSetsRepository = {
   getLoadedId(): number | null;
   getFavorites(): QueryFilterSet[];
   getPinned(): QueryFilterSet[];
-  setLoadedId(id: number | null): void;
+  setLoadedId(id: number): void;
   addToCollection(key: 'favorites' | 'pinned', sets: QueryFilterSet[]): void;
   removeFromCollection(key: 'favorites' | 'pinned', id: number): void;
   clearCollection(key: 'favorites' | 'pinned'): void;
@@ -448,6 +458,57 @@ function useUpdateTagFilters(): {
 }
 ```
 
+### replace-filters
+
+Replaces all current filters with a new set. Used by URL share hydration, investigation, operational center, and others (11 consumers).
+
+```ts
+function useReplaceFilters(): (newFilters: FilterInput[] | QueryFilterState[]) => void {
+  const repo = useQueryFiltersRepository();
+  const qfBuilder = useQFBuilder();
+
+  return useCallback((newFilters) => {
+    const current = repo.getAll();
+    // Suspend all existing, then match or create new ones
+    const result = applyReplaceLogic(current, newFilters, qfBuilder);
+    repo.set(result);
+  }, [repo, qfBuilder]);
+}
+```
+
+The `applyReplaceLogic` pure function encapsulates the current `replaceFilters` reducer logic: suspend all existing filters, then for each new filter, either un-suspend a matching existing filter or create a new one.
+
+### upsert-filter-by-role
+
+Create or update a filter identified by its `role` field. Used by `NetworkTreeFilterService`.
+
+```ts
+function useUpsertFilterByRole(): (input: FilterInput) => void {
+  const repo = useQueryFiltersRepository();
+  const qfBuilder = useQFBuilder();
+
+  return useCallback((input) => {
+    const filters = repo.getAll();
+    const result = applyUpsertByRole(filters, input, qfBuilder);
+    repo.set(result);
+  }, [repo, qfBuilder]);
+}
+```
+
+### reorder-filters
+
+Drag-and-drop reordering of filters in the sidebar.
+
+```ts
+function useReorderFilters(): (reordered: QueryFilterState[]) => void {
+  const repo = useQueryFiltersRepository();
+
+  return useCallback((reordered) => {
+    repo.set(reordered);
+  }, [repo]);
+}
+```
+
 ### load-filter-set
 
 ```ts
@@ -471,6 +532,68 @@ function useLoadFilterSet(): (filterSet: QueryFilterSet) => void {
   }, [queryRepo, tagRepo, setsRepo]);
 }
 ```
+
+---
+
+## Design Decisions & Constraints
+
+### Loaded filter set ID reset
+
+Currently the `query-filters-sets` slice uses `extraReducers` to listen to 8 query-filter actions and reset `loaded = null`. In the new architecture, the simplified slice only has `setQueryFilters` and `clearQueryFilters`. The `filtersets.store.ts` slice keeps an `extraReducer` on `setQueryFilters` and `clearQueryFilters` to automatically reset `loaded = null`. This preserves the behavior without requiring every use-case to manually call `setsRepo.setLoadedId(null)`.
+
+```ts
+// filtersets.store.ts extraReducers:
+builder.addCase(setQueryFilters, (state) => { state.loaded = null; });
+builder.addCase(clearQueryFilters, (state) => { state.loaded = null; });
+builder.addCase(setTagFilters, (state) => { state.loaded = null; });
+```
+
+### Imperative (non-React) consumers
+
+Two consumers dispatch outside React component context:
+- `NetworkTreeFilterService` — uses `store.dispatch()` directly
+- Current `loadFilterSet` — uses `store.getState()` and `store.dispatch()`
+
+**Strategy:** These remain as imperative functions that import the simplified slice actions directly (`setQueryFilters`, `clearQueryFilters`). They bypass the repository/use-case hooks since they run outside React. When storage is later migrated to URL params, these will need to be refactored into React hooks. For now, they keep working via direct store access and the simplified slice actions.
+
+The `NetworkTreeFilterService` should extract the suspension + upsert logic into the same pure functions (`applyUpsertByRole`) used by the `useUpsertFilterByRole` hook, so the business logic is shared even though the storage access differs.
+
+### Enterprise vs CE filter definitions
+
+The current `selectTagFilters` returns `null` when not enterprise, and `selectQueryFiltersDefinitions` switches between `QueryFiltersRecord` and `CEQueryFiltersRecord`. This gating stays in the selectors/hooks layer (`use-filters-definitions.ts`, `use-qf-builder.ts`) — the repositories don't need to know about enterprise vs CE. The `useQFBuilder` hook already handles this correctly.
+
+### Stale closure constraint
+
+Repository methods returned via `useMemo` capture state at render time. Use-case services must call `repo.set()` once with the final computed state — never in a loop where intermediate updates would be lost. This matches the current pattern where each reducer produces one final state.
+
+### Toast side effects
+
+Toast calls (`toast.success(...)`) move from slice reducers into use-case services. A shared `showFilterToast(action, filter)` helper handles label lookup via `getFilterLabel` and consistent messaging:
+
+```ts
+function showFilterToast(action: 'added' | 'updated' | 'deleted', filter: { key: string; value: string | number }) {
+  const label = getFilterLabel(filter.key);
+  toast.success(`${label} filter ${action}`, { description: `value: ${filter.value}` });
+}
+```
+
+### Investigation filter injection in build-qfilter
+
+The `useBuildEventsQfilter` use-case must preserve the investigation stages logic from current `useGlobalQueryParams`:
+
+```ts
+// For each investigation stage, create es_filter entries with OR-joined values:
+investigation.stages.forEach((stage) => {
+  extension.push(
+    qfBuilder.createFilter(
+      'es_filter',
+      stage.values.map((v) => `${stage.key}:"${esEscape(v)}"`).join(' OR '),
+    ),
+  );
+});
+```
+
+The `extension` parameter also supports `string` type (concatenated with " AND ") for backward compatibility. Both variants must be preserved.
 
 ---
 
@@ -507,11 +630,23 @@ const queryFiltersSlice = createSlice({
 
 All the individual action creators (`addQueryFilter`, `updateQueryFilter`, `deleteQueryFilter`, `suspendQueryFilter`, etc.) are removed. The slice only exposes `setQueryFilters`, `clearQueryFilters`, and `setTagFilters`.
 
-The `loaded` reset (clearing loaded filter set ID on any filter change) moves to the use-case services that modify filters.
+### filtersets.store.ts
 
-### dates.store.ts and filtersets.store.ts
+Unchanged internally, plus `extraReducers` listening to the simplified query-filters actions to reset `loaded`:
 
-Unchanged internally — they're already simple enough. Just renamed/moved.
+```ts
+extraReducers: (builder) => {
+  builder.addCase(setQueryFilters, (state) => { state.loaded = null; });
+  builder.addCase(clearQueryFilters, (state) => { state.loaded = null; });
+  builder.addCase(setTagFilters, (state) => { state.loaded = null; });
+},
+```
+
+The `setLoadedFilterSetId` reducer accepts `PayloadAction<number>` (not `number | null`). The `loaded` field is only set to `null` automatically via `extraReducers`. The repository's `setLoadedId` type matches: `setLoadedId(id: number): void`.
+
+### dates.store.ts
+
+Unchanged internally. Just renamed/moved.
 
 ---
 
@@ -580,3 +715,16 @@ Each step should be independently committable and the app should work at every s
 - **Use-case services:** Test with `renderHook` + mocked repository hooks. This is the main win — business logic (suspension rules, dedup, wildcard enforcement) becomes testable without Redux setup
 - **Extracted pure functions:** Unit test `applySuspensionRules`, `applyDeduplication`, `applyToggleSuspension` directly
 - **Existing tests:** Move to new locations, update imports, verify they still pass
+
+### Test File Mapping
+
+| Current Location | New Location |
+|---|---|
+| `query-filters/store/query-filters.slice.test.ts` | Split: pure function tests → `utils/suspension-rules.test.ts`, store CRUD → `query-filters.store.test.ts` |
+| `query-filters/store/query-filters.selector.test.ts` | `query-filters/use-cases/build-qfilter/build-qfilter.test.ts` (selector logic moves to use-cases) |
+| `query-filters/components/add-qfilter-command/add-qfilter-command.slice.test.ts` | `query-filters/use-cases/create-filter/add-qfilter-command.slice.test.ts` |
+| `query-filters/utils/build-signature-filters.test.ts` | `query-filters/use-cases/build-signature-filter/build-signature-filter.test.ts` |
+| `query-filters/utils/entity-validators.test.ts` | `query-filters/utils/entity-validators.test.ts` (stays in utils) |
+| `query-filters/utils/qf-builder.test.ts` | `query-filters/utils/qf-builder.test.ts` (stays in utils) |
+| `query-filters/components/event-value/event-value.test.tsx` | `query-filters/use-cases/interactive-value/event-value.test.tsx` |
+| `query-filters/entities/filter-sets-view.test.tsx` | `filtersets/use-cases/list-filter-sets/filter-sets-view.test.tsx` |
