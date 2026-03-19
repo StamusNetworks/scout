@@ -23,7 +23,7 @@ import { StatsCardHorizontal } from '@/common/design-system/molecules/stats-card
 import { esEscape } from '@/common/lib/strings';
 import { useEventsCount } from '@/features/events/common/hooks/useEventsCount';
 import { useGlobalStats } from '@/features/events/detection-events/use-cases/explorer/api/hooks/useGlobalStats';
-import { usePreviousDates } from '@/features/filtering/dates-filters/use-previous-dates';
+import { usePreviousDates } from '@/features/filtering/dates/use-cases/previous-dates/use-previous-dates';
 import { indicators } from '@/features/operational-center/config';
 import { useGetProbesQuery } from '@/features/user/settings/settings.api';
 import { Route } from '@/routes/_enterprise/volumetry';

@@ -5,8 +5,8 @@ import { toast } from 'sonner';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
-import { setDates } from '@/features/filtering/dates-filters/dates-filters.slice';
-import { type DatesPayload } from '@/features/filtering/dates-filters/dates-filters.types';
+import { type DatesPayload } from '@/features/filtering/dates/dates.model';
+import { setDates } from '@/features/filtering/dates/dates.store';
 import {
   reorderQueryFilters,
   replaceFilters,

@@ -8,7 +8,7 @@ import { useAppSelector } from '@/store/store';
 import {
   computeDates,
   selectDates,
-} from '../../features/filtering/dates-filters/dates-filters';
+} from '../../features/filtering/dates/dates.selectors';
 import { QueryFilterState } from '../../features/filtering/query-filters/model/query-filter';
 import {
   selectEventsQfilter,

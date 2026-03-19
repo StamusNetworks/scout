@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { useAppSelector } from '@/store/store';
 
-import { computeDates, selectDates } from './dates-filters';
+import { computeDates, selectDates } from '../../dates.selectors';
 
 export const usePreviousDates = () => {
   const dates = useAppSelector(selectDates);

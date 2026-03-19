@@ -7,14 +7,14 @@ import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { DateTimeInput } from '@/common/design-system/atoms/ui/date-time-input';
 import { Label } from '@/common/design-system/atoms/ui/label';
-import { selectDates } from '@/features/filtering/dates-filters/dates-filters';
-import { setDates } from '@/features/filtering/dates-filters/dates-filters.slice';
 import {
   formatUnit,
   TimeUnit,
   units,
-} from '@/features/filtering/dates-filters/dates-filters.types';
-import { useAutoRange } from '@/features/filtering/dates-filters/hooks/use-auto-range';
+} from '@/features/filtering/dates/dates.model';
+import { selectDates } from '@/features/filtering/dates/dates.selectors';
+import { setDates } from '@/features/filtering/dates/dates.store';
+import { useAutoRange } from '@/features/filtering/dates/use-cases/auto-range/use-auto-range';
 import {
   selectAutoReloadInterval,
   selectAutoReloadStartDate,

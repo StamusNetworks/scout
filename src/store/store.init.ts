@@ -4,7 +4,7 @@ import { createEditDeclarationModalInitialState } from '@/features/filter-action
 import { createEditSuppressModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
 import { createEditTagModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
 import { createEditThresholdModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
-import { datesFiltersInitialState } from '@/features/filtering/dates-filters/dates-filters.slice';
+import { datesFiltersInitialState } from '@/features/filtering/dates/dates.store';
 import { addQfilterCommandInitialState } from '@/features/filtering/query-filters/components/add-qfilter-command/add-qfilter-command.slice';
 import { saveFilterSetModalInitialState } from '@/features/filtering/query-filters/components/save-filterset/save-filterset.slice';
 import { queryFiltersInitialState } from '@/features/filtering/query-filters/store/query-filters.slice';

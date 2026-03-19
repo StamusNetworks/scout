@@ -37,7 +37,7 @@ import { TogglePageContainer } from '@/common/design-system/molecules/toggle-con
 import { ValueListCard } from '@/common/design-system/molecules/value-list-card';
 import { Paginated } from '@/common/fetching/fetching.types';
 import { esEscape } from '@/common/lib/strings';
-import { setDates } from '@/features/filtering/dates-filters/dates-filters.slice';
+import { setDates } from '@/features/filtering/dates/dates.store';
 import { QueryFilterState } from '@/features/filtering/query-filters/model/query-filter';
 import {
   addQueryFilter,

@@ -1,7 +1,7 @@
 import { PaginationState } from '@tanstack/react-table';
 
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { selectDates } from '@/features/filtering/dates-filters/dates-filters';
+import { selectDates } from '@/features/filtering/dates/dates.selectors';
 import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
 import {
   getAggregationBody,

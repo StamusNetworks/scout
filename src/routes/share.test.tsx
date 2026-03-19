@@ -7,7 +7,7 @@ import { beforeEach, describe, expect, test } from 'vitest';
 
 import { mockNavigate } from '@/common/testing/mocks/hooks/use-navigate.mock';
 import { renderWithProviders, withoutIds } from '@/common/testing/test-utils';
-import { selectDates } from '@/features/filtering/dates-filters/dates-filters';
+import { selectDates } from '@/features/filtering/dates/dates.selectors';
 import { selectQueryFilters } from '@/features/filtering/query-filters/store/query-filters.selector';
 import {
   encodeShareableState,

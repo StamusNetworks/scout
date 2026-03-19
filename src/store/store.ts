@@ -10,7 +10,7 @@ import { createEditDeclarationModalSlice } from '@/features/filter-actions/compo
 import { createEditSuppressModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
 import { createEditTagModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
 import { createEditThresholdModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
-import { datesFiltersSlice } from '@/features/filtering/dates-filters/dates-filters.slice';
+import { datesFiltersSlice } from '@/features/filtering/dates/dates.store';
 import { addQfilterCommandSlice } from '@/features/filtering/query-filters/components/add-qfilter-command/add-qfilter-command.slice';
 import { saveFilterSetModalSlice } from '@/features/filtering/query-filters/components/save-filterset/save-filterset.slice';
 import { queryFiltersSlice } from '@/features/filtering/query-filters/store/query-filters.slice';

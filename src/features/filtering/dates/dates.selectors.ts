@@ -2,7 +2,7 @@ import { roundToNearestMinutes } from 'date-fns';
 
 import { RootState } from '@/store/store';
 
-import { DatesState } from './dates-filters.types';
+import { DatesState } from './dates.model';
 
 export const selectDates = (state: RootState) => state.filters.datesFilters;
 
