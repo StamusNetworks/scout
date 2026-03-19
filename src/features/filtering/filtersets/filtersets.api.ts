@@ -1,9 +1,6 @@
 import { API } from '@/store/api';
 
-import {
-  QueryFilterSet,
-  QueryFilterSetCreatePayload,
-} from '../model/query-filterset.schema';
+import { QueryFilterSet, QueryFilterSetCreatePayload } from './filterset.model';
 
 export type Tenant = {
   tenant?: string;

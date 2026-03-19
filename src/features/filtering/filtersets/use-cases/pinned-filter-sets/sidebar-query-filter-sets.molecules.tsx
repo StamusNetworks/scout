@@ -32,24 +32,27 @@ import {
   useGetEventsCountQuery,
   useGetEventsTailQuery,
 } from '@/features/events/common/events.api';
+import { useQueryFilterDefinition } from '@/features/filtering/query-filters/hooks/use-filters-definitions';
+import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
+import {
+  PersistedFilter,
+  QueryFilterState,
+} from '@/features/filtering/query-filters/model/query-filter';
+import { selectTagFilters } from '@/features/filtering/query-filters/store/query-filters.selector';
 import {
   useGetHostsQuery,
   useGetHostsWithAlertsQuery,
 } from '@/features/host-insights/common/host-insights.api';
 import { useAppSelector } from '@/store/store';
 
-import { filterSetPageConfig } from '../../constants/query-filtersets';
-import { useQueryFilterDefinition } from '../../hooks/use-filters-definitions';
-import { useQFBuilder } from '../../hooks/use-qf-builder';
-import { PersistedFilter, QueryFilterState } from '../../model/query-filter';
 import {
   getFiltersFromFilterSet,
   getTagsFromFilterSet,
   QueryFilterSet,
-} from '../../model/query-filterset.schema';
-import { selectTagFilters } from '../../store/query-filters.selector';
-import { useIsLoadedFilterSet } from '../../store/query-filters-sets.slice';
-import { loadFilterSet } from '../../use-cases/load-filter-set';
+} from '../../filterset.model';
+import { filterSetPageConfig } from '../../filtersets.constants';
+import { useIsLoadedFilterSet } from '../../filtersets.store';
+import { loadFilterSet } from '../load-filter-set/load-filter-set';
 
 export function FilterSetsHeader({
   children,

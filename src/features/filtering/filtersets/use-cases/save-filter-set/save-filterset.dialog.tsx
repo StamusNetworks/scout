@@ -3,10 +3,12 @@ import {
   DialogContent,
   DialogTitle,
 } from '@/common/design-system/atoms/ui/dialog';
+import {
+  selectQueryFilters,
+  selectTagFilters,
+} from '@/features/filtering/query-filters/store/query-filters.selector';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
-import { selectQueryFilters } from '../../store/query-filters.selector';
-import { selectTagFilters } from '../../store/query-filters.selector';
 import { SaveFilterSetForm } from './save-filterset.form';
 import {
   closeSaveFilterSetModal,

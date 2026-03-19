@@ -1,21 +1,21 @@
 import { toast } from 'sonner';
 
+import {
+  addQueryFilter,
+  clearQueryFilters,
+  updateTagFilters,
+} from '@/features/filtering/query-filters/store/query-filters.slice';
 import { store } from '@/store/store-instance';
 
 import {
   getFiltersFromFilterSet,
   getTagsFromFilterSet,
   QueryFilterSet,
-} from '../model/query-filterset.schema';
-import {
-  addQueryFilter,
-  clearQueryFilters,
-  updateTagFilters,
-} from '../store/query-filters.slice';
+} from '../../filterset.model';
 import {
   selectLoadedFilterSetId,
   setLoadedFilterSetId,
-} from '../store/query-filters-sets.slice';
+} from '../../filtersets.store';
 
 export const loadFilterSet = (filterSet: QueryFilterSet) => {
   const loadedFilterSetId = selectLoadedFilterSetId(store.getState());

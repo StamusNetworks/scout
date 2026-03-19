@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { AlertDialog } from '@/common/design-system/molecules/alert-dialog';
+import { SideBarHeader } from '@/features/filtering/query-filters/use-cases/list-filters/filters-sidebar';
 import { RootState } from '@/store/store';
 import { store } from '@/store/store-instance';
 
@@ -10,8 +11,7 @@ import {
   clearQueryFilterSets,
   removeQueryFilterSet,
   selectQueryFilterSets,
-} from '../../store/query-filters-sets.slice';
-import { SideBarHeader } from '../list-filters/filters-sidebar';
+} from '../../filtersets.store';
 import {
   FilterSetsClearButton,
   FilterSetsHeader,

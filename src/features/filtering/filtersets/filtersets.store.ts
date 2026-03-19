@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { RootState, useAppSelector } from '@/store/store';
-
-import { QueryFilterSet } from '../model/query-filterset.schema';
 import {
   addQueryFilter,
   clearQueryFilters,
@@ -13,7 +10,10 @@ import {
   updateOrCreateByRole,
   updateQueryFilter,
   updateTagFilters,
-} from './query-filters.slice';
+} from '@/features/filtering/query-filters/store/query-filters.slice';
+import { RootState, useAppSelector } from '@/store/store';
+
+import { QueryFilterSet } from './filterset.model';
 
 type QueryFiltersSetsState = {
   loaded: number | null;

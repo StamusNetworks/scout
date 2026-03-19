@@ -1,6 +1,9 @@
 import { z } from 'zod';
 
-import { PersistedFilter, qfilterDef } from './query-filter';
+import {
+  PersistedFilter,
+  qfilterDef,
+} from '@/features/filtering/query-filters/model/query-filter';
 
 export const persistedTagsSchema = z.object({
   stamus: z.boolean().optional(),

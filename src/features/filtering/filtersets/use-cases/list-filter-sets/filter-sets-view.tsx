@@ -38,21 +38,21 @@ import { TogglePageContainer } from '@/common/design-system/molecules/toggle-con
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { cn } from '@/common/lib/utils';
 import {
-  useDeleteFilterSetMutation,
-  useGetFilterSetsQuery,
-} from '@/features/filtering/query-filters/api/query-filter.api';
-import { filterSetPageConfig } from '@/features/filtering/query-filters/constants/query-filtersets';
-import {
   getFiltersFromFilterSet,
   QueryFilterSet,
-} from '@/features/filtering/query-filters/model/query-filterset.schema';
+} from '@/features/filtering/filtersets/filterset.model';
+import {
+  useDeleteFilterSetMutation,
+  useGetFilterSetsQuery,
+} from '@/features/filtering/filtersets/filtersets.api';
+import { filterSetPageConfig } from '@/features/filtering/filtersets/filtersets.constants';
 import {
   addQueryFilterSets,
   QueryFiltersKey,
   useIsLoadedFilterSet,
-} from '@/features/filtering/query-filters/store/query-filters-sets.slice';
-import { loadFilterSet } from '@/features/filtering/query-filters/use-cases/load-filter-set';
-import { openSaveFilterSetModal } from '@/features/filtering/query-filters/use-cases/save-filter-set/save-filterset.slice';
+} from '@/features/filtering/filtersets/filtersets.store';
+import { loadFilterSet } from '@/features/filtering/filtersets/use-cases/load-filter-set/load-filter-set';
+import { openSaveFilterSetModal } from '@/features/filtering/filtersets/use-cases/save-filter-set/save-filterset.slice';
 import { disableHelp, useHelpState } from '@/features/ui/help/help.slice';
 import { useAppDispatch } from '@/store/store';
 

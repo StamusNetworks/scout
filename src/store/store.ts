@@ -11,10 +11,10 @@ import { createEditSuppressModalSlice } from '@/features/filter-actions/componen
 import { createEditTagModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
 import { createEditThresholdModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
 import { datesFiltersSlice } from '@/features/filtering/dates/dates.store';
+import { queryFiltersSetsSlice } from '@/features/filtering/filtersets/filtersets.store';
+import { saveFilterSetModalSlice } from '@/features/filtering/filtersets/use-cases/save-filter-set/save-filterset.slice';
 import { queryFiltersSlice } from '@/features/filtering/query-filters/store/query-filters.slice';
-import { queryFiltersSetsSlice } from '@/features/filtering/query-filters/store/query-filters-sets.slice';
 import { addQfilterCommandSlice } from '@/features/filtering/query-filters/use-cases/create-filter/add-qfilter-command.slice';
-import { saveFilterSetModalSlice } from '@/features/filtering/query-filters/use-cases/save-filter-set/save-filterset.slice';
 import { investigationSlice } from '@/features/investigation/investigation.slice';
 import { investigationsHistorySlice } from '@/features/investigation/investigations-history.slice';
 import { marketingStateSlice } from '@/features/marketing/store/marketing.store';
