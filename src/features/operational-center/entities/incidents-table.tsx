@@ -15,13 +15,12 @@ import { DataTable } from '@/common/design-system/molecules/data-table';
 import { usePaginationState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { isIP } from '@/common/lib/strings';
-import { replaceFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
+import { useReplaceFilters } from '@/features/filtering/filters/query-filters/use-cases/replace-filters/replace-filters';
 import { useThreats } from '@/features/threats/common/hooks/use-threats';
 import { KillChainKeysWithoutPolicies } from '@/features/threats/common/killchain/killchain';
 import { threatStatusColumnDefs } from '@/features/threats/common/molecules/threat-status-columns';
 import { ThreatStatus } from '@/features/threats/common/threat-status.schema';
 import { useGetThreatsStatusQuery } from '@/features/threats/common/threats.api';
-import { useAppDispatch } from '@/store/store';
 
 export const IndicidentsTable = () => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
@@ -37,7 +36,7 @@ export const IndicidentsTable = () => {
   const threats = useThreats({});
 
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const replaceFilters = useReplaceFilters();
 
   const onRowClick = (row: TanstackRow<ThreatStatus>) => {
     if (isIP(row.original.asset)) {
@@ -45,21 +44,18 @@ export const IndicidentsTable = () => {
         to: `/hosts/${row.original.asset}/timeline`,
       });
     } else {
-      dispatch(
-        replaceFilters([
-          {
-            key: row.original.is_offender ? 'stamus.source' : 'stamus.asset',
-            value: row.original.asset,
-          },
-          {
-            key: 'stamus.threat_name',
-            value:
-              threats.data?.find(
-                (threat) => threat.pk === row.original.threat_id,
-              )?.name || '',
-          },
-        ]),
-      );
+      replaceFilters([
+        {
+          key: row.original.is_offender ? 'stamus.source' : 'stamus.asset',
+          value: row.original.asset,
+        },
+        {
+          key: 'stamus.threat_name',
+          value:
+            threats.data?.find((threat) => threat.pk === row.original.threat_id)
+              ?.name || '',
+        },
+      ]);
       navigate({ to: '/explorer' });
     }
   };

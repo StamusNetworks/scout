@@ -12,10 +12,11 @@ import { selectIsModalOpen, setOpenModal } from '@/features/ui/ui-state.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { useQueryFiltersDefinitions } from '../../hooks/use-filters-definitions';
-import { addQueryFilter } from '../../query-filters.store';
+import { useCreateFilter } from './create-filter';
 
 export const AddEsFilterModal = () => {
   const dispatch = useAppDispatch();
+  const createFilter = useCreateFilter();
   const isOpen = useAppSelector(selectIsModalOpen('addEsFilter'));
   const [query, setQuery] = useState('');
 
@@ -38,12 +39,10 @@ export const AddEsFilterModal = () => {
   const handleSubmit = () => {
     const trimmed = query.trim();
     if (!trimmed) return;
-    dispatch(
-      addQueryFilter({
-        key: 'es_filter',
-        value: trimmed,
-      }),
-    );
+    createFilter({
+      key: 'es_filter',
+      value: trimmed,
+    });
     dispatch(setOpenModal(null));
     setQuery('');
   };

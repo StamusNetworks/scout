@@ -27,7 +27,6 @@ import {
 } from '@/common/design-system/atoms/ui/select';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { LuceneEditor } from '@/common/design-system/molecules/lucene-editor';
-import { useAppDispatch } from '@/store/store';
 
 import { FilterInputType } from '../../constants/query-filter.config';
 import {
@@ -36,7 +35,7 @@ import {
 } from '../../constants/query-filter.definition';
 import { useQueryFilterDefinition } from '../../hooks/use-filters-definitions';
 import { QueryFilterState } from '../../query-filter.model';
-import { updateQueryFilter } from '../../query-filters.store';
+import { useUpdateFilter } from './update-filter';
 
 const formSchema = z
   .object({
@@ -77,7 +76,7 @@ export const EditFilterForm = ({
   filter: QueryFilterState;
   onClose?: () => void;
 }) => {
-  const dispatch = useAppDispatch();
+  const updateFilter = useUpdateFilter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: getDefaultValues(filter) as z.infer<typeof formSchema>,
@@ -94,12 +93,10 @@ export const EditFilterForm = ({
   }, [isWildcarded, form]);
 
   const handleSubmit = (data: z.infer<typeof formSchema>): void => {
-    dispatch(
-      updateQueryFilter({
-        ...data,
-        is_negated: negatable ? data.is_negated : false,
-      }),
-    );
+    updateFilter({
+      ...data,
+      is_negated: negatable ? data.is_negated : false,
+    });
     onClose?.();
   };
 

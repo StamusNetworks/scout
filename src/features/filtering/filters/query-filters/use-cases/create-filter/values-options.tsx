@@ -7,6 +7,7 @@ import {
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { formatNumber } from '@/common/lib/numbers';
 import { useGetDashboardFieldsQuery } from '@/features/events/detection-events/use-cases/explorer/api/dashboard.api';
+import { setOpenModal } from '@/features/ui/ui-state.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { FilterInputType } from '../../constants/query-filter.config';
@@ -14,9 +15,12 @@ import { useQueryFilterDefinition } from '../../hooks/use-filters-definitions';
 import { getFilterValue } from '../../utils/get-filter-label';
 import { handleSubmit } from './add-qfilter-command';
 import { selectFilterCommand } from './add-qfilter-command.selectors';
+import { useCreateFilter } from './create-filter';
 
 export const ValuesOptions = () => {
   const dispatch = useAppDispatch();
+  const createFilter = useCreateFilter();
+  const closeModal = () => dispatch(setOpenModal(null));
   const { filter, search, negated, wildcarded } =
     useAppSelector(selectFilterCommand);
   const filterDef = useQueryFilterDefinition(filter ?? '');
@@ -41,7 +45,8 @@ export const ValuesOptions = () => {
               value={search}
               onSelect={() =>
                 handleSubmit(
-                  dispatch,
+                  createFilter,
+                  closeModal,
                   filter!,
                   asStringOrNumber(search, filterDef),
                   !!negated,
@@ -63,7 +68,8 @@ export const ValuesOptions = () => {
                 value={value}
                 onSelect={() =>
                   handleSubmit(
-                    dispatch,
+                    createFilter,
+                    closeModal,
                     filter!,
                     value,
                     !!negated,
@@ -85,7 +91,8 @@ export const ValuesOptions = () => {
                 value={item.key + getFilterValue(filter!, item.key)}
                 onSelect={() =>
                   handleSubmit(
-                    dispatch,
+                    createFilter,
+                    closeModal,
                     filter!,
                     item.key,
                     !!negated,

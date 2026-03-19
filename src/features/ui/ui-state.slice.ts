@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from '@/store/store';
 
-import { addQueryFilter } from '../filtering/filters/query-filters/query-filters.store';
+import { setQueryFilters } from '../filtering/filters/query-filters/query-filters.store';
 
 const initialState: UIState = {
   theme: (localStorage.getItem('theme') as Theme) || 'system',
@@ -88,7 +88,7 @@ export const uiStateSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(addQueryFilter, (state) => {
+    builder.addCase(setQueryFilters, (state) => {
       if (state.autoOpenSidebarOnFilterAdd) {
         state.isSidebarOpen = true;
       }

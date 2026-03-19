@@ -10,10 +10,9 @@ import {
   ZoomableGroup,
 } from 'react-simple-maps';
 
-import { replaceFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
+import { useReplaceFilters } from '@/features/filtering/filters/query-filters/use-cases/replace-filters/replace-filters';
 import { useEnableTags } from '@/features/filtering/filters/tag-filters/use-cases/update-tag-filters/update-tag-filters';
 import { useTheme } from '@/features/ui/theming/useTheme';
-import { useAppDispatch } from '@/store/store';
 
 import { Tooltip, TooltipContent } from '../../molecules/tooltip';
 import { WorldCountriesMap } from './world-map.config';
@@ -23,7 +22,7 @@ interface MapChartProps {
 }
 const WorldMap = ({ data }: MapChartProps) => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const replaceFilters = useReplaceFilters();
   const forceTags = useEnableTags();
   const { isDark } = useTheme();
   const moving = useRef<boolean>(false);
@@ -115,11 +114,9 @@ const WorldMap = ({ data }: MapChartProps) => {
                             discovery: false,
                             stamus: true,
                           });
-                          dispatch(
-                            replaceFilters([
-                              { key: 'geoip.country.name', value: NAME },
-                            ]),
-                          );
+                          replaceFilters([
+                            { key: 'geoip.country.name', value: NAME },
+                          ]);
                         }}
                         style={{
                           default: {

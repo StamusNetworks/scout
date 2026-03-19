@@ -22,12 +22,11 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { isIP } from '@/common/lib/ips';
-import { replaceFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
+import { useReplaceFilters } from '@/features/filtering/filters/query-filters/use-cases/replace-filters/replace-filters';
 import { useThreat } from '@/features/threats/common/hooks/use-threat';
 import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
 import { ThreatTag } from '@/features/threats/common/molecules/threat-tag';
 import { ThreatStatus } from '@/features/threats/common/threat-status.schema';
-import { useAppDispatch } from '@/store/store';
 
 export const threatStatusColumns: CustomColumnDef<ThreatStatus>[] = [
   {
@@ -143,19 +142,17 @@ export const KillChainTagWithContext = ({ row }: { row: ThreatStatus }) => {
 
 export const ExploreButtons = ({ row }: { row: ThreatStatus }) => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const replaceFilters = useReplaceFilters();
   const { data, isLoading } = useThreat(row.threat_id);
   const handleClick = useCallback(
     (route: string) => {
-      dispatch(
-        replaceFilters([
-          { key: 'ip', value: row.asset },
-          { key: 'stamus.threat_name', value: data?.name || '' },
-        ]),
-      );
+      replaceFilters([
+        { key: 'ip', value: row.asset },
+        { key: 'stamus.threat_name', value: data?.name || '' },
+      ]);
       navigate({ to: route });
     },
-    [navigate, dispatch, row.asset, data?.name],
+    [navigate, replaceFilters, row.asset, data?.name],
   );
 
   return (

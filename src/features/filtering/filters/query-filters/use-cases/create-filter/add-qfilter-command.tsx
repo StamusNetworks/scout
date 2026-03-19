@@ -10,10 +10,10 @@ import {
 } from '@/common/design-system/atoms/ui/command';
 import { cn } from '@/common/lib/utils';
 import { selectIsModalOpen, setOpenModal } from '@/features/ui/ui-state.slice';
-import { AppDispatch, useAppDispatch, useAppSelector } from '@/store/store';
+import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { getFilterDef } from '../../constants/query-filter.definition';
-import { addQueryFilter } from '../../query-filters.store';
+import { FilterInput } from '../../utils/filter-mapper';
 import { selectFilterCommand } from './add-qfilter-command.selectors';
 import {
   resetCommand,
@@ -140,18 +140,17 @@ export const AddQfilterCommand = () => {
 };
 
 export const handleSubmit = (
-  dispatch: AppDispatch,
+  createFilter: (input: FilterInput) => void,
+  closeModal: () => void,
   key: string,
   value: string | number,
   negated: boolean,
   wildcarded: boolean,
 ) => {
-  dispatch(
-    addQueryFilter({
-      key: key!,
-      value: value,
-      options: { is_negated: negated, is_wildcarded: wildcarded },
-    }),
-    dispatch(setOpenModal(null)),
-  );
+  createFilter({
+    key: key!,
+    value: value,
+    options: { is_negated: negated, is_wildcarded: wildcarded },
+  });
+  closeModal();
 };

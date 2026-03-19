@@ -22,7 +22,7 @@ import { DataTableToolbar } from '@/common/design-system/molecules/data-table/da
 import { CommandFilterMultiple } from '@/common/design-system/molecules/data-table/filters/command-filter-multiple';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { isIP } from '@/common/lib/strings';
-import { replaceFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
+import { useReplaceFilters } from '@/features/filtering/filters/query-filters/use-cases/replace-filters/replace-filters';
 import { useGetImpactedEntitiesQuery } from '@/features/threats/common/entities.api';
 import { useThreats } from '@/features/threats/common/hooks/use-threats';
 import {
@@ -32,7 +32,6 @@ import {
 } from '@/features/threats/common/killchain/killchain';
 import { ThreatStatus } from '@/features/threats/common/threat-status.schema';
 import { useGetThreatsStatusQuery } from '@/features/threats/common/threats.api';
-import { useAppDispatch } from '@/store/store';
 
 import { threatIncidentsColumns } from '../incidents.table';
 
@@ -76,7 +75,7 @@ export const IncidentsTable = ({
   const threats = useThreats({});
 
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const replaceFilters = useReplaceFilters();
 
   const onRowClick = (row: TanstackRow<ThreatStatus>) => {
     if (isIP(row.original.asset)) {
@@ -84,21 +83,18 @@ export const IncidentsTable = ({
         to: `/hosts/${row.original.asset}/timeline`,
       });
     } else {
-      dispatch(
-        replaceFilters([
-          {
-            key: row.original.is_offender ? 'stamus.source' : 'stamus.asset',
-            value: row.original.asset,
-          },
-          {
-            key: 'stamus.threat_name',
-            value:
-              threats.data?.find(
-                (threat) => threat.pk === row.original.threat_id,
-              )?.name || '',
-          },
-        ]),
-      );
+      replaceFilters([
+        {
+          key: row.original.is_offender ? 'stamus.source' : 'stamus.asset',
+          value: row.original.asset,
+        },
+        {
+          key: 'stamus.threat_name',
+          value:
+            threats.data?.find((threat) => threat.pk === row.original.threat_id)
+              ?.name || '',
+        },
+      ]);
       navigate({ to: '/explorer' });
     }
   };

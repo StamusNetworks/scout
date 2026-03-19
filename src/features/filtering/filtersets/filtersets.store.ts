@@ -1,15 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import {
-  addQueryFilter,
   clearQueryFilters,
-  deleteQueryFilter,
-  replaceFilters,
-  suspendQueryFilter,
-  suspendQueryFilters,
-  updateOrCreateByRole,
-  updateQueryFilter,
-  updateTagFilters,
+  setQueryFilters,
+  setTagFilters,
 } from '@/features/filtering/filters/query-filters/query-filters.store';
 import { RootState, useAppSelector } from '@/store/store';
 
@@ -58,31 +52,13 @@ export const queryFiltersSetsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(addQueryFilter, (state) => {
-      state.loaded = null;
-    });
-    builder.addCase(suspendQueryFilter, (state) => {
+    builder.addCase(setQueryFilters, (state) => {
       state.loaded = null;
     });
     builder.addCase(clearQueryFilters, (state) => {
       state.loaded = null;
     });
-    builder.addCase(updateTagFilters, (state) => {
-      state.loaded = null;
-    });
-    builder.addCase(updateQueryFilter, (state) => {
-      state.loaded = null;
-    });
-    builder.addCase(deleteQueryFilter, (state) => {
-      state.loaded = null;
-    });
-    builder.addCase(replaceFilters, (state) => {
-      state.loaded = null;
-    });
-    builder.addCase(suspendQueryFilters, (state) => {
-      state.loaded = null;
-    });
-    builder.addCase(updateOrCreateByRole, (state) => {
+    builder.addCase(setTagFilters, (state) => {
       state.loaded = null;
     });
   },

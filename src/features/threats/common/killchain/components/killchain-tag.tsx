@@ -5,9 +5,8 @@ import { useCallback, useMemo } from 'react';
 import { Badge } from '@/common/design-system/atoms/ui/badge';
 import { ContextMenuItem } from '@/common/design-system/atoms/ui/context-menu';
 import { cn } from '@/common/lib/utils';
-import { replaceFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
 import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
-import { useAppDispatch } from '@/store/store';
+import { useReplaceFilters } from '@/features/filtering/filters/query-filters/use-cases/replace-filters/replace-filters';
 
 import { KillChainMap, killChainsConfig } from '../killchain';
 
@@ -24,7 +23,7 @@ export const KillchainTag = ({
   onClick?: () => void;
   context?: { es_key: string; value: string | number }[];
 }) => {
-  const dispatch = useAppDispatch();
+  const replaceFilters = useReplaceFilters();
   const navigate = useNavigate();
   const killchain =
     typeof kc === 'number'
@@ -43,22 +42,20 @@ export const KillchainTag = ({
       <ContextMenuItem
         key="explore-with-context"
         onClick={() => {
-          dispatch(
-            replaceFilters([
-              { key: 'stamus.kill_chain', value: killchain },
-              ...(context?.map(({ es_key, value }) => ({
-                key: es_key,
-                value,
-              })) || []),
-            ]),
-          );
+          replaceFilters([
+            { key: 'stamus.kill_chain', value: killchain },
+            ...(context?.map(({ es_key, value }) => ({
+              key: es_key,
+              value,
+            })) || []),
+          ]);
           navigate({ to: '/explorer' });
         }}
       >
         <LayoutDashboard /> Explore with context
       </ContextMenuItem>
     ),
-    [dispatch, context, killchain, navigate],
+    [replaceFilters, context, killchain, navigate],
   );
 
   if (killchain === 'pre_condition') return null;
