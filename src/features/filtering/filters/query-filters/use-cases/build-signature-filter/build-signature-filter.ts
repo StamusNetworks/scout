@@ -1,8 +1,10 @@
 import { keys } from 'ramda';
+import { useMemo } from 'react';
 
 import { FilterCategory } from '../../constants/query-filter.config';
 import { getFilterDef } from '../../constants/query-filter.definition';
 import { QueryFilterState } from '../../query-filter.model';
+import { useQueryFiltersRepository } from '../../query-filters.repository';
 
 type SignatureFilters = {
   content?: string;
@@ -59,3 +61,15 @@ export const buildSignatureFilters = (
 
   return keys(signatureParams).length > 0 ? signatureParams : undefined;
 };
+
+export function useBuildSignatureFilter(
+  extra?: QueryFilterState[],
+): SignatureFilters | undefined {
+  const repo = useQueryFiltersRepository();
+
+  return useMemo(() => {
+    const queryFilters = repo.getAll();
+    const filters = [...queryFilters, ...(extra || [])];
+    return buildSignatureFilters(filters);
+  }, [repo, extra]);
+}
