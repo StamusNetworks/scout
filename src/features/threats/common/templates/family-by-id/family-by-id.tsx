@@ -7,10 +7,18 @@ import {
 import { Binary, Info, LayoutDashboard, PlusCircle } from 'lucide-react';
 import { useState } from 'react';
 
-import { DefaultPage } from '@/common/design-system/atoms/default-page';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Markdown } from '@/common/design-system/atoms/markdown';
-import { PageTitle } from '@/common/design-system/atoms/page-header';
+import {
+  Page,
+  PageActions,
+  PageDescription,
+  PageHeader,
+  PageHeaderContent,
+  PageStat,
+  PageStats,
+  PageTitle,
+} from '@/common/design-system/atoms/page';
 import {
   Tabs,
   TabsBadge,
@@ -27,6 +35,7 @@ import { TabsTriggerLink } from '@/common/design-system/atoms/ui/pillTabs';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
 import { addQueryFilter } from '@/features/filtering/query-filters/store/query-filters.slice';
@@ -141,122 +150,133 @@ export const ThreatFamilyById = () => {
   return (
     <>
       <OutletBreadcrumb>{threatFamily.name}</OutletBreadcrumb>
-      <DefaultPage
-        title={
-          <Row className="items-center">
-            <ThreatFamilyName family={threatFamily} />
-            {(threatFamily.pk === 1 || threatFamily.pk === 25) && (
-              <Row className="bg-primary text-primary-foreground ml-3 w-fit rounded-md border px-2 py-1 text-xs">
-                <Info className="mr-2" />
-                Links might be broken in preview mode.
+      <Page>
+        <TogglePageContainer>
+          <PageHeader>
+            <PageHeaderContent>
+              <Row className="items-center">
+                <ThreatFamilyName family={threatFamily} />
+                {(threatFamily.pk === 1 || threatFamily.pk === 25) && (
+                  <Row className="bg-primary text-primary-foreground ml-3 w-fit rounded-md border px-2 py-1 text-xs">
+                    <Info className="mr-2" />
+                    Links might be broken in preview mode.
+                  </Row>
+                )}
               </Row>
-            )}
-          </Row>
-        }
-        description={<Markdown content={threatFamily.description} />}
-        stats={stats}
-        actions={
-          <Row className="gap-2">
-            <Button
-              variant="outline"
-              onClick={() => {
-                enableTags(dispatch);
-                dispatch(
-                  addQueryFilter(
-                    QFBuilder.createFilter(
-                      'stamus.family_name',
-                      threatFamily.name,
+              <PageDescription>
+                <Markdown content={threatFamily.description} />
+              </PageDescription>
+            </PageHeaderContent>
+            <PageActions>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  enableTags(dispatch);
+                  dispatch(
+                    addQueryFilter(
+                      QFBuilder.createFilter(
+                        'stamus.family_name',
+                        threatFamily.name,
+                      ),
                     ),
-                  ),
-                );
-                navigate({ to: '/detection-events' });
-              }}
-            >
-              <Binary />
-              See events
-            </Button>
-            <Button
-              onClick={() => {
-                enableTags(dispatch);
-                dispatch(
-                  addQueryFilter({
-                    key: 'stamus.family_name',
-                    value: threatFamily.name,
-                  }),
-                );
-                navigate({ to: '/explorer' });
-              }}
-            >
-              <LayoutDashboard />
-              Investigate
-            </Button>
-          </Row>
-        }
-      >
-        <FamilyActiveThreats familyId={parseInt(familyId!)} />
-        <Tabs
-          value={pathname}
-          className="mt-4"
-        >
-          <TabsList>
-            <TabsTriggerLink
-              value={getLink(
-                'threats_coverage_family',
-                threatFamily.klass,
-                threatFamily.pk,
-              )}
-            >
-              Entities
-              <TabsBadge
-                count={
-                  (activeThreatFamily?.nb_assets?.nb_victim || 0) +
-                  (activeThreatFamily?.nb_assets?.nb_offender || 0) -
-                  (activeThreatFamily?.nb_assets?.nb_both || 0)
-                }
-                isLoading={activeThreatFamilyLoading}
+                  );
+                  navigate({ to: '/detection-events' });
+                }}
+              >
+                <Binary />
+                See events
+              </Button>
+              <Button
+                onClick={() => {
+                  enableTags(dispatch);
+                  dispatch(
+                    addQueryFilter({
+                      key: 'stamus.family_name',
+                      value: threatFamily.name,
+                    }),
+                  );
+                  navigate({ to: '/explorer' });
+                }}
+              >
+                <LayoutDashboard />
+                Investigate
+              </Button>
+            </PageActions>
+          </PageHeader>
+          <PageStats>
+            {stats.map((s) => (
+              <PageStat
+                key={s.label}
+                label={s.label}
+                value={s.value}
               />
-            </TabsTriggerLink>
-            <TabsTriggerLink
-              value={getLink(
-                'threats_coverage_family_detection_methods',
-                threatFamily.klass,
-                threatFamily.pk,
-              )}
-            >
-              Detection Methods
-              <TabsBadge
-                count={familyDetectionMethods?.count || 0}
-                isLoading={familyDetectionMethodsLoading}
-              />
-            </TabsTriggerLink>
-            <TabsTriggerLink
-              value={getLink(
-                'threats_coverage_family_events',
-                threatFamily.klass,
-                threatFamily.pk,
-              )}
-            >
-              Events
-              <TabsBadge
-                count={familyEvents?.count || 0}
-                isLoading={familyEventsLoading}
-              />
-            </TabsTriggerLink>
-            <TabsTriggerLink
-              value={getLink(
-                'threats_coverage_family_threats',
-                threatFamily.klass,
-                threatFamily.pk,
-              )}
-            >
-              {threatFamily.klass === 'doc' ? 'Threats' : 'Policy Violations'}
-            </TabsTriggerLink>
-          </TabsList>
-          <div className="pt-4">
-            <Outlet />
-          </div>
-        </Tabs>
-      </DefaultPage>
+            ))}
+          </PageStats>
+          <FamilyActiveThreats familyId={parseInt(familyId!)} />
+          <Tabs
+            value={pathname}
+            className="mt-4"
+          >
+            <TabsList>
+              <TabsTriggerLink
+                value={getLink(
+                  'threats_coverage_family',
+                  threatFamily.klass,
+                  threatFamily.pk,
+                )}
+              >
+                Entities
+                <TabsBadge
+                  count={
+                    (activeThreatFamily?.nb_assets?.nb_victim || 0) +
+                    (activeThreatFamily?.nb_assets?.nb_offender || 0) -
+                    (activeThreatFamily?.nb_assets?.nb_both || 0)
+                  }
+                  isLoading={activeThreatFamilyLoading}
+                />
+              </TabsTriggerLink>
+              <TabsTriggerLink
+                value={getLink(
+                  'threats_coverage_family_detection_methods',
+                  threatFamily.klass,
+                  threatFamily.pk,
+                )}
+              >
+                Detection Methods
+                <TabsBadge
+                  count={familyDetectionMethods?.count || 0}
+                  isLoading={familyDetectionMethodsLoading}
+                />
+              </TabsTriggerLink>
+              <TabsTriggerLink
+                value={getLink(
+                  'threats_coverage_family_events',
+                  threatFamily.klass,
+                  threatFamily.pk,
+                )}
+              >
+                Events
+                <TabsBadge
+                  count={familyEvents?.count || 0}
+                  isLoading={familyEventsLoading}
+                />
+              </TabsTriggerLink>
+              <TabsTriggerLink
+                value={getLink(
+                  'threats_coverage_family_threats',
+                  threatFamily.klass,
+                  threatFamily.pk,
+                )}
+              >
+                {threatFamily.klass === 'doc' ? 'Threats' : 'Policy Violations'}
+              </TabsTriggerLink>
+            </TabsList>
+            <div className="pt-4">
+              <Outlet />
+            </div>
+          </Tabs>
+        </TogglePageContainer>
+      </Page>
     </>
   );
 };

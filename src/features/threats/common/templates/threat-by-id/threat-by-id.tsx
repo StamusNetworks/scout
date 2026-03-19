@@ -8,11 +8,19 @@ import { Binary, Edit, LayoutDashboard, Trash } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-import { DefaultPage } from '@/common/design-system/atoms/default-page';
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Markdown } from '@/common/design-system/atoms/markdown';
-import { PageTitle } from '@/common/design-system/atoms/page-header';
+import {
+  Page,
+  PageActions,
+  PageDescription,
+  PageHeader,
+  PageHeaderContent,
+  PageStat,
+  PageStats,
+  PageTitle,
+} from '@/common/design-system/atoms/page';
 import { TabsBadge } from '@/common/design-system/atoms/ui/borderTabs';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import {
@@ -30,6 +38,7 @@ import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting';
 import { DeleteModal } from '@/common/design-system/molecules/delete-modal';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
 import { addQueryFilter } from '@/features/filtering/query-filters/store/query-filters.slice';
@@ -167,106 +176,119 @@ export const ThreatById = () => {
       )}
 
       <OutletBreadcrumb>{threat.name}</OutletBreadcrumb>
-      <DefaultPage
-        title={
-          threat.user_defined ? <ThreatName threat={threat} /> : threat.name
-        }
-        description={
-          <Markdown
-            content={threat.description + ' ' + threat.additional_info}
-          />
-        }
-        stats={stats}
-        actions={
-          <Row className="gap-2">
-            <Button
-              variant="outline"
-              onClick={() => {
-                enableTags(dispatch);
-                dispatch(
-                  addQueryFilter({
-                    key: 'stamus.threat_name',
-                    value: threat.name,
-                  }),
-                );
-                navigate({ to: '/detection-events' });
-              }}
-              disabled={!QFBuilder}
-            >
-              <Binary />
-              See events
-            </Button>
-            <Button
-              onClick={() => {
-                enableTags(dispatch);
-                dispatch(
-                  addQueryFilter({
-                    key: 'stamus.threat_name',
-                    value: threat.name,
-                  }),
-                );
-                navigate({ to: '/explorer' });
-              }}
-              disabled={!QFBuilder}
-            >
-              <LayoutDashboard />
-              Investigate
-            </Button>
-          </Row>
-        }
-      >
-        <Tabs
-          value={pathname}
-          className="mt-8"
-        >
-          <TabsList>
-            <TabsTriggerLink
-              value={getLink(
-                'threats_coverage_threat',
-                threat.family_class,
-                threat.pk,
+      <Page>
+        <TogglePageContainer>
+          <PageHeader>
+            <PageHeaderContent>
+              {threat.user_defined ? (
+                <ThreatName threat={threat} />
+              ) : (
+                <PageTitle>{threat.name}</PageTitle>
               )}
-            >
-              Entities
-              <TabsBadge
-                count={
-                  (activeThreat?.nb_assets?.nb_victim || 0) +
-                  (activeThreat?.nb_assets?.nb_offender || 0) -
-                  (activeThreat?.nb_assets?.nb_both || 0)
-                }
-                isLoading={activeThreatLoading}
+              <PageDescription>
+                <Markdown
+                  content={threat.description + ' ' + threat.additional_info}
+                />
+              </PageDescription>
+            </PageHeaderContent>
+            <PageActions>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  enableTags(dispatch);
+                  dispatch(
+                    addQueryFilter({
+                      key: 'stamus.threat_name',
+                      value: threat.name,
+                    }),
+                  );
+                  navigate({ to: '/detection-events' });
+                }}
+                disabled={!QFBuilder}
+              >
+                <Binary />
+                See events
+              </Button>
+              <Button
+                onClick={() => {
+                  enableTags(dispatch);
+                  dispatch(
+                    addQueryFilter({
+                      key: 'stamus.threat_name',
+                      value: threat.name,
+                    }),
+                  );
+                  navigate({ to: '/explorer' });
+                }}
+                disabled={!QFBuilder}
+              >
+                <LayoutDashboard />
+                Investigate
+              </Button>
+            </PageActions>
+          </PageHeader>
+          <PageStats>
+            {stats.map((s) => (
+              <PageStat
+                key={s.label}
+                label={s.label}
+                value={s.value}
               />
-            </TabsTriggerLink>
-            <TabsTriggerLink
-              value={getLink(
-                'threats_coverage_threat_detection_methods',
-                threat.family_class,
-                threat.pk,
-              )}
-            >
-              Detection Methods
-              <TabsBadge
-                count={threatDetectionMethods?.count || 0}
-                isLoading={threatDetectionMethodsLoading}
-              />
-            </TabsTriggerLink>
-            <TabsTriggerLink
-              value={getLink(
-                'threats_coverage_threat_events',
-                threat.family_class,
-                threat.pk,
-              )}
-            >
-              Events
-              <TabsBadge
-                count={threatEvents?.count || 0}
-                isLoading={threatEventsLoading}
-              />
-            </TabsTriggerLink>
-          </TabsList>
-        </Tabs>
-        <Outlet />
-      </DefaultPage>
+            ))}
+          </PageStats>
+          <Tabs
+            value={pathname}
+            className="mt-8"
+          >
+            <TabsList>
+              <TabsTriggerLink
+                value={getLink(
+                  'threats_coverage_threat',
+                  threat.family_class,
+                  threat.pk,
+                )}
+              >
+                Entities
+                <TabsBadge
+                  count={
+                    (activeThreat?.nb_assets?.nb_victim || 0) +
+                    (activeThreat?.nb_assets?.nb_offender || 0) -
+                    (activeThreat?.nb_assets?.nb_both || 0)
+                  }
+                  isLoading={activeThreatLoading}
+                />
+              </TabsTriggerLink>
+              <TabsTriggerLink
+                value={getLink(
+                  'threats_coverage_threat_detection_methods',
+                  threat.family_class,
+                  threat.pk,
+                )}
+              >
+                Detection Methods
+                <TabsBadge
+                  count={threatDetectionMethods?.count || 0}
+                  isLoading={threatDetectionMethodsLoading}
+                />
+              </TabsTriggerLink>
+              <TabsTriggerLink
+                value={getLink(
+                  'threats_coverage_threat_events',
+                  threat.family_class,
+                  threat.pk,
+                )}
+              >
+                Events
+                <TabsBadge
+                  count={threatEvents?.count || 0}
+                  isLoading={threatEventsLoading}
+                />
+              </TabsTriggerLink>
+            </TabsList>
+          </Tabs>
+          <Outlet />
+        </TogglePageContainer>
+      </Page>
     </>
   );
 };
