@@ -129,9 +129,13 @@ export function Table<TData>({
     return [expanderColumn, ...columns];
   }, [columns, ExpandedRow]);
 
-  const columnOrder = React.useMemo(
-    () => controlledColumnOrder ?? resolvedColumns.map((col) => col.id),
-    [controlledColumnOrder, resolvedColumns],
+  const columnOrder = React.useMemo(() => {
+    const base = controlledColumnOrder ?? resolvedColumns.map((col) => col.id);
+    if (ExpandedRow && !base.includes('expander')) {
+      return ['expander', ...base];
+    }
+    return base;
+  }, [controlledColumnOrder, resolvedColumns, ExpandedRow],
   );
 
   const hasRowSelection =
