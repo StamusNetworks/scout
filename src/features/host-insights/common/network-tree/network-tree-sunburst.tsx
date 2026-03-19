@@ -25,13 +25,13 @@ import {
   type SunburstNode,
 } from '@/common/design-system/graphs/sunburst/sunburst';
 import { CommandFilterSingle } from '@/common/design-system/molecules/data-table/filters/command-filter-single';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { formatNumber } from '@/common/lib/numbers';
 import { esEscape } from '@/common/lib/strings';
 import {
   selectHostIDQFilter,
   selectQueryFilters,
 } from '@/features/filtering/filters/query-filters/query-filters.selectors';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useGetNetworkTreeQuery } from '@/features/host-insights/common/host-insights.api';
 import { useAppSelector } from '@/store/store';
 

@@ -16,9 +16,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/common/design-system/atoms/ui/chart';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { cn } from '@/common/lib/utils';
 import { useGetEventsTimelineQuery } from '@/features/events/common/events.api';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 const chartConfig = {
   recommended: {

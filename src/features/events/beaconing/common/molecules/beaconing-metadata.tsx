@@ -4,8 +4,8 @@ import {
   ProtoColumn,
 } from '@/common/design-system/graphs/proto-flow/flow.columns';
 import { FlowSkeleton } from '@/common/design-system/graphs/proto-flow/flow.skeleton';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { esEscape } from '@/common/lib/strings';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 import { useGetTlsTailQuery } from '../beaconing.api';
 import { TlsTail } from '../beaconing-event.model';

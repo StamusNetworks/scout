@@ -1,7 +1,7 @@
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
 
 import { HostValuesSort } from '../../molecules/host-block/host-values-sort';

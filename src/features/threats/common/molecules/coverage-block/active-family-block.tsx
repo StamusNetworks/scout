@@ -1,4 +1,4 @@
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 import {
   useGetActiveThreatFamiliesQuery,

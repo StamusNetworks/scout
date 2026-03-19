@@ -21,13 +21,13 @@ import {
   DataEntry,
   ValueListCard,
 } from '@/common/design-system/molecules/value-list-card';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetDashboardFieldsQuery } from '@/features/events/detection-events/use-cases/explorer/api/dashboard.api';
 import {
   selectQueryFilters,
   selectTagFilters,
 } from '@/features/filtering/filters/query-filters/query-filters.selectors';
 import { getFilterLabel } from '@/features/filtering/filters/query-filters/utils/get-filter-label';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import {

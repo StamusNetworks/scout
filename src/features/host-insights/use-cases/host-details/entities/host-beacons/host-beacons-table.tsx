@@ -6,10 +6,10 @@ import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data
 import { serializeSorting } from '@/common/design-system/molecules/data-table/hooks/sorting-parser';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { esEscape } from '@/common/lib/strings';
 import { useGetBeaconingEventsQuery } from '@/features/events/beaconing/common/beaconing.api';
 import { beaconingTableColumns } from '@/features/events/beaconing/common/molecules/beaconing-table';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 interface HostBeaconsTableProps {
   hostId: string;

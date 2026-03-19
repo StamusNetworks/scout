@@ -1,5 +1,5 @@
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { esEscape } from '@/common/lib/strings';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useGetHostsQuery } from '@/features/host-insights/common/host-insights.api';
 
 export const useGetHostInsights = (host: string, enabled = true) => {

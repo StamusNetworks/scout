@@ -36,9 +36,9 @@ import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useCreateFilter } from '@/features/filtering/filters/query-filters/use-cases/create-filter/create-filter';
 import { useEnableTags } from '@/features/filtering/filters/tag-filters/use-cases/update-tag-filters/update-tag-filters';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { KillChainCountersByFamilyId } from '@/features/threats/common/killchain/components/killchain-counters/killchain-counters';
 import { ImpactedEntitiesTable } from '@/features/threats/common/molecules/impacted-entities-table/impacted-entities-table';
 

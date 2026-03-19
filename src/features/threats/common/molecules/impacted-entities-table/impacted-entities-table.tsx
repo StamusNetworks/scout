@@ -17,7 +17,7 @@ import { CommandFilterSingle } from '@/common/design-system/molecules/data-table
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 import { useGetImpactedEntitiesQuery } from '../../entities.api';
 import { Entity } from '../../entity';

@@ -4,9 +4,9 @@ import { Badge } from '@/common/design-system/atoms/ui/badge';
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { usePaginationState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { esEscape } from '@/common/lib/strings';
 import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import {
   getHostRole,
   Host,

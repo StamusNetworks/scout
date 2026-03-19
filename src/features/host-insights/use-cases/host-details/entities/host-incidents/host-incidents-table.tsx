@@ -6,7 +6,7 @@ import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data
 import { serializeSorting } from '@/common/design-system/molecules/data-table/hooks/sorting-parser';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useGetThreatsStatusQuery } from '@/features/threats/common/threats.api';
 
 import { threatStatusColumns } from './threat-status.columns';

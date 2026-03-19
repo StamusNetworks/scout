@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { HostDetectionMethodsTable } from '@/features/host-insights/use-cases/host-details/entities/host-detection-methods/host-detection-methods-table';
 
 const searchSchema = z.object({

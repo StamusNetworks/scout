@@ -42,10 +42,10 @@ import { Separator } from '@/common/design-system/atoms/ui/separator';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { DefaultField } from '@/common/design-system/molecules/default-field';
 import { Dates, QFilter, Tenant } from '@/common/fetching/fetching.types';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useUpdateEffect } from '@/common/lib/use-update-effect';
 import { useGetRulesetsQuery } from '@/features/detection-methods/rulesets.api';
 import { FilterInput } from '@/features/filtering/filters/query-filters/use-cases/update-filter/filter-input';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import {
   KillChainKeys,
   killChainSchema,

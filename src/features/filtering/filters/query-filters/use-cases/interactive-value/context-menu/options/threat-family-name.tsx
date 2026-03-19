@@ -3,7 +3,7 @@ import { Biohazard, Scale } from 'lucide-react';
 import { values } from 'ramda';
 
 import { ContextMenuItem } from '@/common/design-system/atoms/ui/context-menu';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useGetThreatFamiliesQuery } from '@/features/threats/common/threats.api';
 
 import { iconClass } from '../context-menu.content';

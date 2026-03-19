@@ -2,9 +2,9 @@ import { Column } from '@/common/design-system/atoms/layout/column';
 import { ChartConfig } from '@/common/design-system/atoms/ui/chart';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { PieChart } from '@/common/design-system/graphs/pie-chart/pie-chart';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { formatNumber } from '@/common/lib/numbers';
 import { useGetEventsCountQuery } from '@/features/events/common/events.api';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 const chartConfig = {
   current: {

@@ -1,6 +1,6 @@
 import { PaginationState } from '@tanstack/react-table';
 
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 import { useGetImpactedEntitiesQuery } from '../entities.api';
 

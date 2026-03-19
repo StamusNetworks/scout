@@ -25,13 +25,13 @@ import {
   TitleRowStart,
   TitleRowTitle,
 } from '@/common/design-system/graphs/sankey/sankey-title-row';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import {
   useGetEventsAggregationQuery,
   useGetProtocolsFromEventsQuery,
 } from '@/features/events/common/events.api';
 import { useCreateFilter } from '@/features/filtering/filters/query-filters/use-cases/create-filter/create-filter';
 import { ContextMenuContent } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/context-menu/context-menu.content';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useGetESMappingQuery } from '@/features/user/settings/settings.api';
 
 import { useSignatureDetailsParams } from '../signatures-table/signatures-table.utils';

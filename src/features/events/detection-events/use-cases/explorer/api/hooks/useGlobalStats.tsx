@@ -1,5 +1,5 @@
 import { Dates } from '@/common/fetching/fetching.types';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 import { useGetGlobalStatsQuery } from '../dashboard.api';
 

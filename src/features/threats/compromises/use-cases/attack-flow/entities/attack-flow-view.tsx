@@ -15,10 +15,10 @@ import {
   SankeyChart,
   type SankeyNodeInfo,
 } from '@/common/design-system/graphs/sankey/sankey-chart';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetEventsAggregationQuery } from '@/features/events/common/events.api';
 import { useCreateFilter } from '@/features/filtering/filters/query-filters/use-cases/create-filter/create-filter';
 import { ContextMenuContent } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/context-menu/context-menu.content';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useGetESMappingQuery } from '@/features/user/settings/settings.api';
 
 const ATTACK_FLOW_COLUMNS: ProtoColumn[] = [

@@ -8,9 +8,9 @@ import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { Switch } from '@/common/design-system/atoms/ui/switch';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import { Pagination } from '@/common/design-system/molecules/pagination';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetEventsTailQuery } from '@/features/events/common/events.api';
 import { Event } from '@/features/events/common/events.model';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 import { useNetworkEventsQfilter } from '../../build-network-events-qfilter';
 import { TransactionCard } from '../molecules/transaction-card';

@@ -12,8 +12,8 @@ import {
 } from '@/common/design-system/atoms/page';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { usePageTitle } from '@/common/lib/use-page-title';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { HostsTable } from '@/features/host-insights/use-cases/hosts-list/entities/hosts-table';
 
 const searchSchema = z.object({

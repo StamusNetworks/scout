@@ -19,9 +19,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/common/design-system/atoms/ui/tooltip';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { compressIPv6, isIP, isIPv6 } from '@/common/lib/ips';
 import { cn } from '@/common/lib/utils';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useGetHostInsights } from '@/features/host-insights/use-cases/host-details/hooks/use-get-host-insights';
 import { HostSummary } from '@/features/host-insights/use-cases/host-details/molecules/host-summary';
 import { useGetImpactedEntityQuery } from '@/features/threats/common/entities.api';

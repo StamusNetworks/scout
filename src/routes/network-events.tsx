@@ -12,10 +12,10 @@ import {
   PageTitle,
 } from '@/common/design-system/atoms/page';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { NetworkEventsList } from '@/features/events/network-events/use-cases/network-events-list/entities/network-events-list';
 import { NetworkEventsTimeline } from '@/features/events/network-events/use-cases/network-events-timeline/entities/network-events-timeline';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 const searchSchema = z.object({
   page: z.number().default(1),

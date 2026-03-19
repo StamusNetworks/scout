@@ -12,7 +12,6 @@ import { useTablePreferences } from '@/common/design-system/molecules/data-table
 import { ExportButton } from '@/common/design-system/molecules/export-button';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetSignaturesQuery } from '@/features/detection-methods/detection-methods.api';
 import {
   DETECTION_METHODS_COLUMNS,
@@ -20,6 +19,7 @@ import {
 } from '@/features/detection-methods/detection-methods.table';
 import { DetectionMethodsExpandedRow } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.expanded-row';
 import { selectQueryFilters } from '@/features/filtering/filters/query-filters/query-filters.selectors';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useAppSelector } from '@/store/store';
 
 interface DetectionMethodsTableProps {

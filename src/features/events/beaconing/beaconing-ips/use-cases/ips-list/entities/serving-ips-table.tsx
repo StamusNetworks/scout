@@ -8,8 +8,8 @@ import { useTablePreferences } from '@/common/design-system/molecules/data-table
 import { ExportButton } from '@/common/design-system/molecules/export-button';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetBeaconingEventsQuery } from '@/features/events/beaconing/common/beaconing.api';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 import { exportColumns, servingIpsTableColumns } from '../ips-list.table';
 

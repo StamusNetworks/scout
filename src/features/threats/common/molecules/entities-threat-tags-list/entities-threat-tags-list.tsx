@@ -6,8 +6,8 @@ import {
   PopoverTrigger,
 } from '@/common/design-system/atoms/ui/popover';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { cn } from '@/common/lib/utils';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { ThreatTag } from '@/features/threats/common/molecules/threat-tag';
 
 import { useGetImpactedEntitiesQuery } from '../../entities.api';

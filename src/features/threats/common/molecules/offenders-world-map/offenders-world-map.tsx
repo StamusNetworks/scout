@@ -1,5 +1,5 @@
 import { WorldMap } from '@/common/design-system/graphs/world-map/world-map';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useGetWorldMapOffendersCountsQuery } from '@/features/threats/common/threats.api';
 
 export const OffendersWorldMap = () => {

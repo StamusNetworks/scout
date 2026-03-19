@@ -1,6 +1,6 @@
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { ExpandablePortalWrapper } from '@/common/design-system/molecules/expandable-portal-wrapper';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 import { useGetAttackerInfrastructureQuery } from '../../entities.api';
 import { AttackerInfrastructureForceGraph } from './attacker-infrastructure.force-graph';

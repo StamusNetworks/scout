@@ -1,8 +1,8 @@
 import { EntityState } from '@reduxjs/toolkit';
 import { values } from 'ramda';
 
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { sortBy } from '@/common/lib/sorting';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 import { ActiveThreatFamily } from '../active-threat-family.model';
 import { ActiveFamilyBlock } from '../molecules/coverage-block/active-family-block';

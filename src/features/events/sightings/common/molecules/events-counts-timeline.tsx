@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetEventsTimelineQuery } from '@/features/events/common/events.api';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { CountsTimeline } from '@/features/threats/compromises/use-cases/timeline/models/counts-timeline.model';
 
 import { useGetSightingById } from '../hooks/use-get-sighting-by-id';

@@ -1,5 +1,5 @@
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { esEscape } from '@/common/lib/strings';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 import { useGetSightingEventsQuery } from '../sightings.api';
 

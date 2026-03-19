@@ -1,7 +1,7 @@
 import { useNavigate } from '@tanstack/react-router';
 import { useCallback } from 'react';
 
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import {
   useGetKillChainCountersByThreatIdQuery,
   useGetKillChainCountersQuery,

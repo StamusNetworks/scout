@@ -24,12 +24,12 @@ import {
   ComposablePagination,
   PageSelector,
 } from '@/common/design-system/molecules/pagination';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { formatNumber } from '@/common/lib/numbers';
 import { useGetDashboardFieldsQuery } from '@/features/events/detection-events/use-cases/explorer/api/dashboard.api';
 import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
 import { useReplaceFilters } from '@/features/filtering/filters/query-filters/use-cases/replace-filters/replace-filters';
 import { useEnableTags } from '@/features/filtering/filters/tag-filters/use-cases/update-tag-filters/update-tag-filters';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 export const MitreTechniques = () => {
   const navigate = useNavigate();

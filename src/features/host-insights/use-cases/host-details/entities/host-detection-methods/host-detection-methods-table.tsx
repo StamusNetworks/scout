@@ -6,11 +6,11 @@ import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data
 import { serializeSorting } from '@/common/design-system/molecules/data-table/hooks/sorting-parser';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { esEscape } from '@/common/lib/strings';
 import { useGetSignaturesQuery } from '@/features/detection-methods/detection-methods.api';
 import { DETECTION_METHODS_COLUMNS } from '@/features/detection-methods/detection-methods.table';
 import { DetectionMethodsExpandedRow } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.expanded-row';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 interface HostDetectionMethodsTableProps {
   hostId: string;

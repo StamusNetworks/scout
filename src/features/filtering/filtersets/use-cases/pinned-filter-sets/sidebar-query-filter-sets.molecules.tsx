@@ -24,7 +24,6 @@ import {
   PopoverTrigger,
 } from '@/common/design-system/atoms/ui/popover';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { formatNumber } from '@/common/lib/numbers';
 import { capitalizeAll } from '@/common/lib/strings';
 import { useGetSignaturesQuery } from '@/features/detection-methods/signatures/api/signatures.api';
@@ -39,6 +38,7 @@ import {
   QueryFilterState,
 } from '@/features/filtering/filters/query-filters/query-filter.model';
 import { selectTagFilters } from '@/features/filtering/filters/query-filters/query-filters.selectors';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import {
   useGetHostsQuery,
   useGetHostsWithAlertsQuery,

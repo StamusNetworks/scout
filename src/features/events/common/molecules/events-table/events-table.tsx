@@ -7,7 +7,7 @@ import { DataTable } from '@/common/design-system/molecules/data-table/data-tabl
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty.tsx';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams.tsx';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags.ts';
 import { useGetEventsQuery } from '@/features/events/common/events.api';
 import { Event } from '@/features/events/common/events.model';

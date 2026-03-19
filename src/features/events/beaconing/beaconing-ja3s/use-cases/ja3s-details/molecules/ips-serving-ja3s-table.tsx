@@ -3,11 +3,11 @@ import { Country } from '@/common/design-system/atoms/flag';
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { usePaginationState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { esEscape } from '@/common/lib/strings';
 import { useGetBeaconingEventsQuery } from '@/features/events/beaconing/common/beaconing.api';
 import { BeaconingEvent } from '@/features/events/beaconing/common/beaconing-event.model';
 import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 export const ipsServingJa3sTableColumns: CustomColumnDef<BeaconingEvent>[] = [
   {

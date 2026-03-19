@@ -2,11 +2,11 @@ import { useParams } from '@tanstack/react-router';
 
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetSignaturesQuery } from '@/features/detection-methods/signatures/api/signatures.api';
 import { detectionMethodsColumns } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.columns';
 import { DetectionMethodsExpandedRow } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.expanded-row';
 import { useQFBuilder } from '@/features/filtering/filters/query-filters/hooks/use-qf-builder';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 export const ThreatByIdDetectionMethods = () => {
   const { threatId } = useParams({ strict: false }) as { threatId: string };

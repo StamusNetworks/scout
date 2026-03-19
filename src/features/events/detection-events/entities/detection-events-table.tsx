@@ -12,7 +12,6 @@ import { useTablePreferences } from '@/common/design-system/molecules/data-table
 import { ExportButton } from '@/common/design-system/molecules/export-button';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { esEscape } from '@/common/lib/strings';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useGetEventsQuery } from '@/features/events/common/events.api';
@@ -42,6 +41,7 @@ import {
   PAYLOAD_COLUMN,
   TLS_SNI_COLUMN,
 } from '@/features/events/network-events/network-events.table';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 // --- Props ---
 

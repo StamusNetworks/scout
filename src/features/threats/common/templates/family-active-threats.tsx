@@ -5,7 +5,7 @@ import {
   ScrollArea,
   ScrollBar,
 } from '@/common/design-system/atoms/ui/scroll-area';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 import { useCombinedThreats } from '../hooks/use-combined-threats';
 import { ActiveThreatBlockView } from '../molecules/coverage-block/active-threat-block';

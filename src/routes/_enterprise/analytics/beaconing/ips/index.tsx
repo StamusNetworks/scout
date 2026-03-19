@@ -3,8 +3,8 @@ import { z } from 'zod';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { ServingIpsTable } from '@/features/events/beaconing/beaconing-ips/use-cases/ips-list/entities/serving-ips-table';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 const searchSchema = z.object({
   page: z.number().default(1),

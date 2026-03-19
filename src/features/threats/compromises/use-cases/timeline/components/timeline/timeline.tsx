@@ -5,8 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { cn } from '@/common/lib/utils';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 import {
   useGetOffendersQuery,

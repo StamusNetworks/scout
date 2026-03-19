@@ -11,9 +11,9 @@ import { useTablePreferences } from '@/common/design-system/molecules/data-table
 import { ExportButton } from '@/common/design-system/molecules/export-button';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { esEscape } from '@/common/lib/strings';
 import { useGetSightingEventsQuery } from '@/features/events/sightings/common/sightings.api';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 import {
   allSightingsExport,

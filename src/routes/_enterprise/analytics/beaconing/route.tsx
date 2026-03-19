@@ -20,8 +20,8 @@ import {
 } from '@/common/design-system/atoms/ui/borderTabs';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
-import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetBeaconingEventsQuery } from '@/features/events/beaconing/common/beaconing.api';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
 export const Route = createFileRoute('/_enterprise/analytics/beaconing')({
   component: BeaconingLayout,
