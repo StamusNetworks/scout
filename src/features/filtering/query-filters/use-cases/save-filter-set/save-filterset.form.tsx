@@ -31,11 +31,11 @@ import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { Textarea } from '@/common/design-system/atoms/ui/textarea';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 
-import { useCreateFilterSetMutation } from '../../../query-filters/api/query-filter.api';
-import { FilterInput } from '../../../query-filters/components/filters-input';
-import { QueryFilterState } from '../../../query-filters/model/query-filter';
-import { TagFilters } from '../../../query-filters/store/query-filters.slice';
+import { useCreateFilterSetMutation } from '../../api/query-filter.api';
 import { filterSetPageConfig } from '../../constants/query-filtersets';
+import { QueryFilterState } from '../../model/query-filter';
+import { TagFilters } from '../../store/query-filters.slice';
+import { FilterInput } from '../update-filter/filter-input';
 
 const formSchema = z.object({
   name: z.string().min(1),

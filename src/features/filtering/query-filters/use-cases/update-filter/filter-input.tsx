@@ -17,7 +17,7 @@ import {
   isWildcardable,
 } from '@/features/filtering/query-filters/constants/query-filter.definition';
 
-import { useQueryFilterDefinition } from '../hooks/use-filters-definitions';
+import { useQueryFilterDefinition } from '../../hooks/use-filters-definitions';
 
 type FilterState = {
   key: string;

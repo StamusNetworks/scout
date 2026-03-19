@@ -2,9 +2,9 @@ import { CreateEditDeclarationModal } from '@/features/filter-actions/components
 import { CreateEditSuppressModal } from '@/features/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.modal';
 import { CreateEditTagModal } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.modal';
 import { CreateEditThresholdModal } from '@/features/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.modal';
-import { AddEsFilterModal } from '@/features/filtering/query-filters/components/add-es-filter/add-es-filter.modal';
-import { AddQfilterCommand } from '@/features/filtering/query-filters/components/add-qfilter-command/add-qfilter-command';
-import { SaveFilterSetModal } from '@/features/filtering/query-filters/components/save-filterset/save-filterset.dialog';
+import { AddEsFilterModal } from '@/features/filtering/query-filters/use-cases/create-filter/add-es-filter.modal';
+import { AddQfilterCommand } from '@/features/filtering/query-filters/use-cases/create-filter/add-qfilter-command';
+import { SaveFilterSetModal } from '@/features/filtering/query-filters/use-cases/save-filter-set/save-filterset.dialog';
 import { GlobalCommand } from '@/features/ui/global-command/global-command';
 
 export const Modals = () => (

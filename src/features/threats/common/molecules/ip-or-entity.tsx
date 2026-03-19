@@ -1,5 +1,5 @@
 import { compressIPv6, isIP, isIPv6 } from '@/common/lib/ips';
-import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
+import { EventValue } from '@/features/filtering/query-filters/use-cases/interactive-value/event-value';
 
 import { getEntityKey } from '../utils/get-entity-key';
 

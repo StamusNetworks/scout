@@ -40,13 +40,13 @@ import {
   useQueryFiltersDefinitions,
 } from '../../hooks/use-filters-definitions';
 import { QueryFilterState, shouldShowWildcard } from '../../model/query-filter';
+import { FilterIcons } from '../../query-filters.icons';
 import {
   deleteQueryFilter,
   suspendQueryFilter,
   updateQueryFilter,
 } from '../../store/query-filters.slice';
-import { EditFilterModal } from '../edit-qfilter/edit-filter.modal';
-import { FilterIcons } from '../query-filters.icons';
+import { EditFilterModal } from '../update-filter/edit-filter.modal';
 
 type SideBarQueryFilterProps = {
   filter: QueryFilterState;

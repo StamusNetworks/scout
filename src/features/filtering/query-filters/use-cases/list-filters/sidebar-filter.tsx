@@ -4,7 +4,7 @@ import { Checkbox } from '@/common/design-system/atoms/ui/checkbox';
 import { Switch } from '@/common/design-system/atoms/ui/switch';
 import { cn } from '@/common/lib/utils';
 
-import { TagFilters, updateTagFilters } from '../store/query-filters.slice';
+import { TagFilters, updateTagFilters } from '../../store/query-filters.slice';
 
 type SideBarFilterProps = {
   label: string;

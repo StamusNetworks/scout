@@ -20,7 +20,7 @@ import {
 } from '@/common/design-system/atoms/ui/form';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { useGetRulesetsQuery } from '@/features/detection-methods/rulesets.api';
-import { FilterInput } from '@/features/filtering/query-filters/components/filters-input';
+import { FilterInput } from '@/features/filtering/query-filters/use-cases/update-filter/filter-input';
 
 import {
   useCreateFilterActionMutation,

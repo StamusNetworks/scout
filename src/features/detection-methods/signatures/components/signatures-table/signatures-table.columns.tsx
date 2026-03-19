@@ -4,7 +4,7 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { formatNumber } from '@/common/lib/numbers';
-import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
+import { EventValue } from '@/features/filtering/query-filters/use-cases/interactive-value/event-value';
 
 import { Signature } from '../../model/signature';
 

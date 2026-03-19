@@ -4,7 +4,7 @@ import { Row } from '@/common/design-system/atoms/layout/row';
 import { StatsBlock } from '@/common/design-system/atoms/page-stats';
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { cn } from '@/common/lib/utils';
-import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
+import { EventValue } from '@/features/filtering/query-filters/use-cases/interactive-value/event-value';
 import { Host } from '@/features/host-insights/common/host.model';
 import { Entity } from '@/features/threats/common/entity';
 import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';

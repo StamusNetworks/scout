@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from '@/store/store';
 
-import { QueryFilterState } from '../../../query-filters/model/query-filter';
+import { QueryFilterState } from '../../model/query-filter';
 
 type SaveFilterSetModalState = {
   isOpen: boolean;

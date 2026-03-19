@@ -2,7 +2,7 @@ import { Row } from '@/common/design-system/atoms/layout/row';
 import { Badge } from '@/common/design-system/atoms/ui/badge';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { cn } from '@/common/lib/utils';
-import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
+import { EventValue } from '@/features/filtering/query-filters/use-cases/interactive-value/event-value';
 import { getHostRole, Host } from '@/features/host-insights/common/host.model';
 
 import { useGetHostInsights } from '../../hooks/use-get-host-insights';

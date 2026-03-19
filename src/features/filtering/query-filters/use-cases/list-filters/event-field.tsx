@@ -9,8 +9,8 @@ import {
 } from '@/common/design-system/atoms/ui/tooltip';
 import { capitalizeAll } from '@/common/lib/strings';
 
-import { getFilterDef } from '../constants/query-filter.definition';
-import { EventValue } from './event-value/event-value';
+import { getFilterDef } from '../../constants/query-filter.definition';
+import { EventValue } from '../interactive-value/event-value';
 
 interface EventFieldProps {
   filterId: string;

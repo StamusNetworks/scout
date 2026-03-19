@@ -41,7 +41,6 @@ import {
   useDeleteFilterSetMutation,
   useGetFilterSetsQuery,
 } from '@/features/filtering/query-filters/api/query-filter.api';
-import { openSaveFilterSetModal } from '@/features/filtering/query-filters/components/save-filterset/save-filterset.slice';
 import { filterSetPageConfig } from '@/features/filtering/query-filters/constants/query-filtersets';
 import {
   getFiltersFromFilterSet,
@@ -53,6 +52,7 @@ import {
   useIsLoadedFilterSet,
 } from '@/features/filtering/query-filters/store/query-filters-sets.slice';
 import { loadFilterSet } from '@/features/filtering/query-filters/use-cases/load-filter-set';
+import { openSaveFilterSetModal } from '@/features/filtering/query-filters/use-cases/save-filter-set/save-filterset.slice';
 import { disableHelp, useHelpState } from '@/features/ui/help/help.slice';
 import { useAppDispatch } from '@/store/store';
 

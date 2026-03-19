@@ -5,10 +5,10 @@ import { createEditSuppressModalInitialState } from '@/features/filter-actions/c
 import { createEditTagModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
 import { createEditThresholdModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
 import { datesFiltersInitialState } from '@/features/filtering/dates/dates.store';
-import { addQfilterCommandInitialState } from '@/features/filtering/query-filters/components/add-qfilter-command/add-qfilter-command.slice';
-import { saveFilterSetModalInitialState } from '@/features/filtering/query-filters/components/save-filterset/save-filterset.slice';
 import { queryFiltersInitialState } from '@/features/filtering/query-filters/store/query-filters.slice';
 import { queryFiltersSetsInitialState } from '@/features/filtering/query-filters/store/query-filters-sets.slice';
+import { addQfilterCommandInitialState } from '@/features/filtering/query-filters/use-cases/create-filter/add-qfilter-command.slice';
+import { saveFilterSetModalInitialState } from '@/features/filtering/query-filters/use-cases/save-filter-set/save-filterset.slice';
 import { investigationInitialState } from '@/features/investigation/investigation.slice';
 import { investigationsHistoryInitialState } from '@/features/investigation/investigations-history.slice';
 import { marketingStateInitialState } from '@/features/marketing/store/marketing.store';

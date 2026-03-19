@@ -38,25 +38,25 @@ import {
 import { selectIsEnterprise } from '@/features/user/settings/settings.slice';
 import { useAppSelector } from '@/store/store';
 
-import { FilterCategory } from '../constants/query-filter.config';
-import { getFilterDef } from '../constants/query-filter.definition';
-import { QueryFilterState } from '../model/query-filter';
-import { selectTagFilters } from '../store/query-filters.selector';
-import { selectQueryFilters } from '../store/query-filters.selector';
+import { FilterCategory } from '../../constants/query-filter.config';
+import { getFilterDef } from '../../constants/query-filter.definition';
+import { QueryFilterState } from '../../model/query-filter';
+import { selectTagFilters } from '../../store/query-filters.selector';
+import { selectQueryFilters } from '../../store/query-filters.selector';
 import {
   AlertTags,
   EventTypes,
   updateTagFilters,
-} from '../store/query-filters.slice';
+} from '../../store/query-filters.slice';
 import {
   clearQueryFilters,
   clearSuspendedFilters,
   reorderQueryFilters,
-} from '../store/query-filters.slice';
-import { openSaveFilterSetModal } from './save-filterset/save-filterset.slice';
-import { SideBarFilter } from './side-bar-filter';
-import { SidebarQueryFilter } from './side-bar-query-filter';
-import { SideBarQueryFilterSets } from './side-bar-query-filter-sets/side-bar-query-filter-sets';
+} from '../../store/query-filters.slice';
+import { SideBarQueryFilterSets } from '../pinned-filter-sets/sidebar-query-filter-sets';
+import { openSaveFilterSetModal } from '../save-filter-set/save-filterset.slice';
+import { SideBarFilter } from './sidebar-filter';
+import { SidebarQueryFilter } from './sidebar-query-filter';
 
 const eventsTypes = [
   {

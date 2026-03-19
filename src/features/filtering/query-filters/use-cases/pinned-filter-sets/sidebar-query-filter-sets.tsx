@@ -11,14 +11,14 @@ import {
   removeQueryFilterSet,
   selectQueryFilterSets,
 } from '../../store/query-filters-sets.slice';
-import { SideBarHeader } from '../filters-side-bar';
+import { SideBarHeader } from '../list-filters/filters-sidebar';
 import {
   FilterSetsClearButton,
   FilterSetsHeader,
   FilterSetsItem,
   FilterSetsItems,
   FilterSetsTitle,
-} from './side-bar-query-filter-sets.molecules';
+} from './sidebar-query-filter-sets.molecules';
 
 const handleClearFavorites = () => {
   store.dispatch(clearQueryFilterSets('favorites'));

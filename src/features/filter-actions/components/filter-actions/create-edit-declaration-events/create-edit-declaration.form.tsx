@@ -45,7 +45,7 @@ import { Dates, QFilter, Tenant } from '@/common/fetching/fetching.types';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useUpdateEffect } from '@/common/lib/use-update-effect';
 import { useGetRulesetsQuery } from '@/features/detection-methods/rulesets.api';
-import { FilterInput } from '@/features/filtering/query-filters/components/filters-input';
+import { FilterInput } from '@/features/filtering/query-filters/use-cases/update-filter/filter-input';
 import {
   KillChainKeys,
   killChainSchema,

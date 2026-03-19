@@ -5,8 +5,8 @@ import {
 } from '@/common/design-system/atoms/ui/dialog';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
-import { selectQueryFilters } from '../../../query-filters/store/query-filters.selector';
-import { selectTagFilters } from '../../../query-filters/store/query-filters.selector';
+import { selectQueryFilters } from '../../store/query-filters.selector';
+import { selectTagFilters } from '../../store/query-filters.selector';
 import { SaveFilterSetForm } from './save-filterset.form';
 import {
   closeSaveFilterSetModal,

@@ -5,7 +5,7 @@ import { Card } from '@/common/design-system/atoms/ui/card';
 import { Separator } from '@/common/design-system/atoms/ui/separator';
 import { LabelValue } from '@/common/design-system/molecules/label-value';
 import { cn } from '@/common/lib/utils';
-import { EventValue } from '@/features/filtering/query-filters/components/event-value/event-value';
+import { EventValue } from '@/features/filtering/query-filters/use-cases/interactive-value/event-value';
 import {
   getFilterLabel,
   getFilterValue,
