@@ -23,8 +23,8 @@ import {
 } from '@/common/design-system/atoms/ui/pillTabs';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { usePageTitle } from '@/common/lib/use-page-title';
-import { DiscoveredHosts } from '@/features/analytics/hosts/components/discovered-hosts/discovered-hosts';
-import { HomeNetPicker } from '@/features/analytics/hosts/components/home-net-picker/home-net-picker';
+import { DiscoveredHosts } from '@/features/host-insights/common/discovered-hosts/discovered-hosts';
+import { HomeNetPicker } from '@/features/host-insights/common/home-net-picker/home-net-picker';
 
 const searchSchema = z.object({
   in_home_net: z.enum(['true', 'false', 'all']).default('all'),

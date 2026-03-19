@@ -24,7 +24,7 @@ import {
 } from '@/common/design-system/atoms/ui/tooltip';
 import { startsWithOneOf } from '@/common/lib/strings';
 import { cn } from '@/common/lib/utils';
-import { useWithAlertsParam } from '@/features/analytics/hosts/components/hostsTable/use-with-alerts-param';
+import { useWithAlertsParam } from '@/features/host-insights/common/hosts-table/use-with-alerts-param';
 import { FilterActionsDropdown } from '@/features/filter-actions/components/filter-actions/filter-actions.dropdown';
 import { useSupportedFilterActionsFilters } from '@/features/filter-actions/utils/get-supported-filters';
 import { Investigation } from '@/features/investigation/components/ongoing-investigation/ongoing-investigation';

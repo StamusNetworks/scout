@@ -28,7 +28,7 @@ import { CommandFilterSingle } from '@/common/design-system/molecules/data-table
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { formatNumber } from '@/common/lib/numbers';
 import { esEscape } from '@/common/lib/strings';
-import { NetworkTreeFilterService } from '@/features/analytics/hosts/components/network-tree/network-tree.filter-service';
+import { NetworkTreeFilterService } from '@/features/host-insights/common/network-tree/network-tree.filter-service';
 import {
   selectHostIDQFilter,
   selectQueryFilters,

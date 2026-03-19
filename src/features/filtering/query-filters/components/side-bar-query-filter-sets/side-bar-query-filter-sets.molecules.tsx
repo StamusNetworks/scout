@@ -27,6 +27,7 @@ import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { formatNumber } from '@/common/lib/numbers';
 import { capitalizeAll } from '@/common/lib/strings';
+import { useGetSignaturesQuery } from '@/features/detection-methods/signatures/api/signatures.api';
 import {
   useGetEventsCountQuery,
   useGetEventsTailQuery,
@@ -35,7 +36,6 @@ import {
   useGetHostsQuery,
   useGetHostsWithAlertsQuery,
 } from '@/features/host-insights/common/host-insights.api';
-import { useGetSignaturesQuery } from '@/features/detection-methods/signatures/api/signatures.api';
 import { useAppSelector } from '@/store/store';
 
 import { filterSetPageConfig } from '../../constants/query-filtersets';

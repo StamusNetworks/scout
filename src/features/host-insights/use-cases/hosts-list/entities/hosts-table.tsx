@@ -12,8 +12,8 @@ import { useTablePreferences } from '@/common/design-system/molecules/data-table
 import { ExportButton } from '@/common/design-system/molecules/export-button';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
-import { DiscoveredHosts } from '@/features/analytics/hosts/components/discovered-hosts/discovered-hosts';
-import { HomeNetPicker } from '@/features/analytics/hosts/components/home-net-picker/home-net-picker';
+import { DiscoveredHosts } from '@/features/host-insights/common/discovered-hosts/discovered-hosts';
+import { HomeNetPicker } from '@/features/host-insights/common/home-net-picker/home-net-picker';
 import { HostsTableExpandedRow } from '@/features/host-insights/use-cases/host-details/molecules/hosts-table-expanded-row';
 
 import { useHostsList } from '../hosts-list.api';
