@@ -1,4 +1,4 @@
-import { EventTypes } from '../../features/filtering/query-filters/store/query-filters.slice';
+import { EventTypes } from '../../features/filtering/filters/query-filters/query-filters.store';
 
 export type Tenant = {
   tenant?: number;

@@ -11,8 +11,8 @@ import {
   reorderQueryFilters,
   replaceFilters,
   updateTagFilters,
-} from '@/features/filtering/query-filters/store/query-filters.slice';
-import { type FilterInput } from '@/features/filtering/query-filters/utils/filter-mapper';
+} from '@/features/filtering/filters/query-filters/query-filters.store';
+import { type FilterInput } from '@/features/filtering/filters/query-filters/utils/filter-mapper';
 import {
   decodeShareableState,
   type ShareableState,

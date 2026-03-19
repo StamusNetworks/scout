@@ -5,7 +5,7 @@ import { DataTableToolbar } from '@/common/design-system/molecules/data-table/da
 import { DataTable } from '@/common/design-system/molecules/data-table/data-table.tsx';
 import { CommandFilterSingle } from '@/common/design-system/molecules/data-table/filters/command-filter-single.tsx';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
-import { FilterType } from '@/features/filtering/query-filters/constants/query-filter.config.ts';
+import { FilterType } from '@/features/filtering/filters/query-filters/constants/query-filter.config.ts';
 
 import { useGetDeeplinksQuery } from '../../api/deeplinks.api.ts';
 import { columns } from './deeplinks-table.columns.tsx';

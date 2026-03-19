@@ -6,7 +6,7 @@ import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetSignaturesQuery } from '@/features/detection-methods/signatures/api/signatures.api';
 import { detectionMethodsColumns } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.columns';
 import { DetectionMethodsExpandedRow } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.expanded-row';
-import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
+import { useQFBuilder } from '@/features/filtering/filters/query-filters/hooks/use-qf-builder';
 
 export const ThreatByIdDetectionMethods = () => {
   const { threatId } = useParams({ strict: false }) as { threatId: string };

@@ -1,4 +1,4 @@
-import type { EventTypes } from '@/features/filtering/query-filters/store/query-filters.slice';
+import type { EventTypes } from '@/features/filtering/filters/query-filters/query-filters.store';
 
 export function buildEventsFlowQfilter(
   qfilter?: string,

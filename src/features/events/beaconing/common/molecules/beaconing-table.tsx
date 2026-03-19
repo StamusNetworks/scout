@@ -9,7 +9,7 @@ import { useServerTableState } from '@/common/design-system/molecules/data-table
 import { SNI } from '@/common/design-system/molecules/sni';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { getDuration } from '@/common/lib/duration';
-import { EventValue } from '@/features/filtering/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
 
 import { useGetBeaconingEventsQuery } from '../beaconing.api';
 import { BeaconingEvent } from '../beaconing-event.model';

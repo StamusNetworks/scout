@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { QueryFilterState } from '@/features/filtering/query-filters/model/query-filter';
+import { QueryFilterState } from '@/features/filtering/filters/query-filters/query-filter.model';
 import { RootState } from '@/store/store';
 
 type SaveFilterSetModalState = {

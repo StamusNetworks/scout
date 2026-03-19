@@ -6,7 +6,7 @@ import {
 import {
   selectQueryFilters,
   selectTagFilters,
-} from '@/features/filtering/query-filters/store/query-filters.selector';
+} from '@/features/filtering/filters/query-filters/query-filters.selectors';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { SaveFilterSetForm } from './save-filterset.form';

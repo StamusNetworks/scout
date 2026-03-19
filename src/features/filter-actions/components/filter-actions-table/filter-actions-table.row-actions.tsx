@@ -27,7 +27,7 @@ import { Spin } from '@/common/design-system/atoms/ui/spin';
 import {
   addQueryFilter,
   clearQueryFilters,
-} from '@/features/filtering/query-filters/store/query-filters.slice';
+} from '@/features/filtering/filters/query-filters/query-filters.store';
 import { useAppDispatch } from '@/store/store';
 
 import { useGetFilterActionsQuery } from '../../api/filter-actions.api';

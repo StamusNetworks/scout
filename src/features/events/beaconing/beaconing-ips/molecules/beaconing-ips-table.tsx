@@ -6,7 +6,7 @@ import { CustomColumnDef } from '@/common/design-system/molecules/data-table/fil
 import { usePaginationState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { esEscape } from '@/common/lib/strings';
-import { EventValue } from '@/features/filtering/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
 import {
   getHostRole,
   Host,

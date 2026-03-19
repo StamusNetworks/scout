@@ -32,13 +32,13 @@ import {
   useGetEventsCountQuery,
   useGetEventsTailQuery,
 } from '@/features/events/common/events.api';
-import { useQueryFilterDefinition } from '@/features/filtering/query-filters/hooks/use-filters-definitions';
-import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
+import { useQueryFilterDefinition } from '@/features/filtering/filters/query-filters/hooks/use-filters-definitions';
+import { useQFBuilder } from '@/features/filtering/filters/query-filters/hooks/use-qf-builder';
 import {
   PersistedFilter,
   QueryFilterState,
-} from '@/features/filtering/query-filters/model/query-filter';
-import { selectTagFilters } from '@/features/filtering/query-filters/store/query-filters.selector';
+} from '@/features/filtering/filters/query-filters/query-filter.model';
+import { selectTagFilters } from '@/features/filtering/filters/query-filters/query-filters.selectors';
 import {
   useGetHostsQuery,
   useGetHostsWithAlertsQuery,

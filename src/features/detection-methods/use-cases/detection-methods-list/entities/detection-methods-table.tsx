@@ -19,7 +19,7 @@ import {
   DETECTION_METHODS_EXPORT_COLUMNS,
 } from '@/features/detection-methods/detection-methods.table';
 import { DetectionMethodsExpandedRow } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.expanded-row';
-import { selectQueryFilters } from '@/features/filtering/query-filters/store/query-filters.selector';
+import { selectQueryFilters } from '@/features/filtering/filters/query-filters/query-filters.selectors';
 import { useAppSelector } from '@/store/store';
 
 interface DetectionMethodsTableProps {

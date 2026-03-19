@@ -7,7 +7,7 @@ import { DataTableRowExpander } from '@/common/design-system/molecules/data-tabl
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { Filter } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { Event } from '@/features/events/common/events.model';
-import { EventValue } from '@/features/filtering/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
 import { Hostname } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
 import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 import { RoleBadge } from '@/features/host-insights/use-cases/host-details/molecules/host-details/roles';

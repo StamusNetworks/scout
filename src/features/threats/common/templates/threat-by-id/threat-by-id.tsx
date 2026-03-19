@@ -40,9 +40,9 @@ import { useSortingUrlState } from '@/common/design-system/molecules/data-table/
 import { DeleteModal } from '@/common/design-system/molecules/delete-modal';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
+import { useQFBuilder } from '@/features/filtering/filters/query-filters/hooks/use-qf-builder';
+import { addQueryFilter } from '@/features/filtering/filters/query-filters/query-filters.store';
 import { enableTags } from '@/features/filtering/filters/tag-filters/use-cases/update-tag-filters/update-tag-filters';
-import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
-import { addQueryFilter } from '@/features/filtering/query-filters/store/query-filters.slice';
 import { KillChainCountersByThreatId } from '@/features/threats/common/killchain/components/killchain-counters/killchain-counters';
 import { ImpactedEntitiesTable } from '@/features/threats/common/molecules/impacted-entities-table/impacted-entities-table';
 import { useAppDispatch } from '@/store/store';

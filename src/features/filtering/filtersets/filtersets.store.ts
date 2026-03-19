@@ -10,7 +10,7 @@ import {
   updateOrCreateByRole,
   updateQueryFilter,
   updateTagFilters,
-} from '@/features/filtering/query-filters/store/query-filters.slice';
+} from '@/features/filtering/filters/query-filters/query-filters.store';
 import { RootState, useAppSelector } from '@/store/store';
 
 import { QueryFilterSet } from './filterset.model';

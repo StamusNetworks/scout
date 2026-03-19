@@ -1,4 +1,4 @@
-import { updateTagFilters } from '@/features/filtering/query-filters/store/query-filters.slice';
+import { updateTagFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
 import { useAppDispatch } from '@/store/store';
 
 import type { TagFilters } from '../../tag-filters.model';

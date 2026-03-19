@@ -1,5 +1,5 @@
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
+import { useQFBuilder } from '@/features/filtering/filters/query-filters/hooks/use-qf-builder';
 
 import { useGetDashboardFieldsQuery } from '../dashboard.api';
 

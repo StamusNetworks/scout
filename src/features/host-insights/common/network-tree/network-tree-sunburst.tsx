@@ -31,7 +31,7 @@ import { esEscape } from '@/common/lib/strings';
 import {
   selectHostIDQFilter,
   selectQueryFilters,
-} from '@/features/filtering/query-filters/store/query-filters.selector';
+} from '@/features/filtering/filters/query-filters/query-filters.selectors';
 import { useGetNetworkTreeQuery } from '@/features/host-insights/common/host-insights.api';
 import { useAppSelector } from '@/store/store';
 

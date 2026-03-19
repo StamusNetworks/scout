@@ -10,8 +10,8 @@ import {
   ZoomableGroup,
 } from 'react-simple-maps';
 
+import { replaceFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
 import { useEnableTags } from '@/features/filtering/filters/tag-filters/use-cases/update-tag-filters/update-tag-filters';
-import { replaceFilters } from '@/features/filtering/query-filters/store/query-filters.slice';
 import { useTheme } from '@/features/ui/theming/useTheme';
 import { useAppDispatch } from '@/store/store';
 

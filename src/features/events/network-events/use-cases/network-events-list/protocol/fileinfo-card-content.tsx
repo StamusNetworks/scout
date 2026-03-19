@@ -2,7 +2,7 @@ import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { formatBytes } from '@/common/lib/numbers';
 import { Event } from '@/features/events/common/events.model';
-import { EventValue } from '@/features/filtering/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
 
 import { ProtocolLabel } from './protocol-label';
 

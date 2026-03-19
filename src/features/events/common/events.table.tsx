@@ -4,7 +4,7 @@ import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import type { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
-import { EventValue } from '@/features/filtering/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
 import { Hostname } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
 import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 

@@ -1,6 +1,6 @@
 import { compressIPv6, isIPv6 } from '@/common/lib/ips';
 import { esEscape } from '@/common/lib/strings';
-import { KillChainStepsEnum } from '@/features/filtering/query-filters/constants/query-filter.config';
+import { KillChainStepsEnum } from '@/features/filtering/filters/query-filters/constants/query-filter.config';
 
 import { AttackerInfrastructureAggregation } from './attacker-infrastructure.schema';
 

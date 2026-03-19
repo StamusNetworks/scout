@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { esEscape } from '@/common/lib/strings';
-import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
+import { useQFBuilder } from '@/features/filtering/filters/query-filters/hooks/use-qf-builder';
 import { selectInvestigationFilter } from '@/features/investigation/investigation.slice';
 import { useAppSelector } from '@/store/store';
 
@@ -9,13 +9,13 @@ import {
   computeDates,
   selectDates,
 } from '../../features/filtering/dates/dates.selectors';
-import { QueryFilterState } from '../../features/filtering/query-filters/model/query-filter';
+import { QueryFilterState } from '../../features/filtering/filters/query-filters/query-filter.model';
 import {
   selectEventsQfilter,
   selectHostIDQFilter,
   selectSignatureFilters,
-} from '../../features/filtering/query-filters/store/query-filters.selector';
-import { selectEventsTypesParams } from '../../features/filtering/query-filters/store/query-filters.selector';
+} from '../../features/filtering/filters/query-filters/query-filters.selectors';
+import { selectEventsTypesParams } from '../../features/filtering/filters/query-filters/query-filters.selectors';
 import { selectTenant } from '../../features/user/tenancy/tenancy.selector';
 
 type SubscribeKey =

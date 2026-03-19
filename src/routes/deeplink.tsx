@@ -7,7 +7,7 @@ import { isNumeric } from '@/common/lib/numbers';
 import {
   addQueryFilter,
   clearQueryFilters,
-} from '@/features/filtering/query-filters/store/query-filters.slice';
+} from '@/features/filtering/filters/query-filters/query-filters.store';
 import { useAppDispatch } from '@/store/store';
 
 export const Route = createFileRoute('/deeplink')({

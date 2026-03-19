@@ -4,7 +4,7 @@ import {
   addQueryFilter,
   clearQueryFilters,
   updateTagFilters,
-} from '@/features/filtering/query-filters/store/query-filters.slice';
+} from '@/features/filtering/filters/query-filters/query-filters.store';
 import { store } from '@/store/store-instance';
 
 import {

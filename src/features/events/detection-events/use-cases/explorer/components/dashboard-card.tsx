@@ -56,7 +56,7 @@ import {
 import { FormattedBadge } from '@/common/design-system/molecules/formatted-badge';
 import { downloadBlob, formatToCsv, saveToClipboard } from '@/common/lib/save';
 import { cn } from '@/common/lib/utils';
-import { EventValue } from '@/features/filtering/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
 import {
   addFindingsKey,
   selectInvestigationStage,

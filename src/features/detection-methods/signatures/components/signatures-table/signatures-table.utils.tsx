@@ -2,7 +2,7 @@ import { parseAsBoolean, useQueryState } from 'nuqs';
 import { useMemo } from 'react';
 
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
+import { useQFBuilder } from '@/features/filtering/filters/query-filters/hooks/use-qf-builder';
 
 export const useApplyQfilterToSignatureDetails = () =>
   useQueryState('filter_details', parseAsBoolean.withDefault(false));

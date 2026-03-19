@@ -1,7 +1,7 @@
 import { selectTenant } from '@/features/user/tenancy/tenancy.selector';
 import { useAppSelector } from '@/store/store';
 
-import { selectEventsTypesParams } from '../../../query-filters/store/query-filters.selector';
+import { selectEventsTypesParams } from '../../../filters/query-filters/query-filters.selectors';
 import { useGetAutoDateRangeQuery } from '../../dates.api';
 
 export const useAutoRange = () => {

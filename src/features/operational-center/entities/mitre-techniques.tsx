@@ -27,9 +27,9 @@ import {
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { formatNumber } from '@/common/lib/numbers';
 import { useGetDashboardFieldsQuery } from '@/features/events/detection-events/use-cases/explorer/api/dashboard.api';
+import { replaceFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
+import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
 import { enableTags } from '@/features/filtering/filters/tag-filters/use-cases/update-tag-filters/update-tag-filters';
-import { replaceFilters } from '@/features/filtering/query-filters/store/query-filters.slice';
-import { EventValue } from '@/features/filtering/query-filters/use-cases/interactive-value/event-value';
 import { useAppDispatch } from '@/store/store';
 
 export const MitreTechniques = () => {

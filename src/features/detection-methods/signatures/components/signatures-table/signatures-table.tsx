@@ -8,7 +8,7 @@ import { SwitchFilter } from '@/common/design-system/molecules/data-table/filter
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
-import { selectQueryFilters } from '@/features/filtering/query-filters/store/query-filters.selector';
+import { selectQueryFilters } from '@/features/filtering/filters/query-filters/query-filters.selectors';
 import { useAppSelector } from '@/store/store';
 
 import { useGetSignaturesQuery } from '../../api/signatures.api';

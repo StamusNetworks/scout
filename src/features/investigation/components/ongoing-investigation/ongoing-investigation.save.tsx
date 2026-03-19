@@ -26,8 +26,8 @@ import { useGetDashboardFieldsQuery } from '@/features/events/detection-events/u
 import {
   selectQueryFilters,
   selectTagFilters,
-} from '@/features/filtering/query-filters/store/query-filters.selector';
-import { getFilterLabel } from '@/features/filtering/query-filters/utils/get-filter-label';
+} from '@/features/filtering/filters/query-filters/query-filters.selectors';
+import { getFilterLabel } from '@/features/filtering/filters/query-filters/utils/get-filter-label';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import {

@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { selectDates } from '@/features/filtering/dates/dates.selectors';
-import { selectQueryFilters } from '@/features/filtering/query-filters/store/query-filters.selector';
+import { selectQueryFilters } from '@/features/filtering/filters/query-filters/query-filters.selectors';
 import {
   buildShareableState,
   buildShareUrl,

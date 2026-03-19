@@ -25,7 +25,7 @@ import {
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { FormattedBadge } from '@/common/design-system/molecules/formatted-badge';
 import { Event } from '@/features/events/common/events.model';
-import { EventValue } from '@/features/filtering/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
 import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
 import { ThreatTag } from '@/features/threats/common/molecules/threat-tag';
 

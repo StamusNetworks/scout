@@ -1,7 +1,7 @@
 import { Tenant } from '@/common/fetching/fetching.types';
 import { API } from '@/store/api';
 
-import { EventTypes } from '../query-filters/store/query-filters.slice';
+import { EventTypes } from '../filters/query-filters/query-filters.store';
 
 export const DatesAPI = API.injectEndpoints({
   endpoints: (builder) => ({

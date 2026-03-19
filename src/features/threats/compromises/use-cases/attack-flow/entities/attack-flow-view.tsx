@@ -17,8 +17,8 @@ import {
 } from '@/common/design-system/graphs/sankey/sankey-chart';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetEventsAggregationQuery } from '@/features/events/common/events.api';
-import { addQueryFilter } from '@/features/filtering/query-filters/store/query-filters.slice';
-import { ContextMenuContent } from '@/features/filtering/query-filters/use-cases/interactive-value/context-menu/context-menu.content';
+import { addQueryFilter } from '@/features/filtering/filters/query-filters/query-filters.store';
+import { ContextMenuContent } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/context-menu/context-menu.content';
 import { useGetESMappingQuery } from '@/features/user/settings/settings.api';
 import { useAppDispatch } from '@/store/store';
 

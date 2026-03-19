@@ -6,7 +6,7 @@ import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetEventsQuery } from '@/features/events/common/events.api';
 import { getColumns } from '@/features/events/common/molecules/events-table/events.columns';
 import { ExpandedEventRow } from '@/features/events/common/molecules/expanded-event-row';
-import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
+import { useQFBuilder } from '@/features/filtering/filters/query-filters/hooks/use-qf-builder';
 
 const columns = getColumns(true);
 

@@ -10,7 +10,7 @@ import {
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
 import { esEscape } from '@/common/lib/strings';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
-import { useQFBuilder } from '@/features/filtering/query-filters/hooks/use-qf-builder';
+import { useQFBuilder } from '@/features/filtering/filters/query-filters/hooks/use-qf-builder';
 import { useTimeline } from '@/features/threats/compromises/use-cases/timeline/api/hooks/useTimeline';
 
 export interface EventsTimelineProps {

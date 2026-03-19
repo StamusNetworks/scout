@@ -6,7 +6,7 @@ import { ProtoFlow } from '@/common/design-system/graphs/proto-flow/proto-flow';
 import { esEscape } from '@/common/lib/strings';
 import { useGetEventsQuery } from '@/features/events/common/events.api';
 import { Event } from '@/features/events/common/events.model';
-import { EventValue } from '@/features/filtering/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
 import { ThreatStatus } from '@/features/threats/common/threat-status.schema';
 
 export const ThreatStatusExpandedRow = ({

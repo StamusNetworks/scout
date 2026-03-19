@@ -38,15 +38,15 @@ import { ValueListCard } from '@/common/design-system/molecules/value-list-card'
 import { Paginated } from '@/common/fetching/fetching.types';
 import { esEscape } from '@/common/lib/strings';
 import { setDates } from '@/features/filtering/dates/dates.store';
-import { QueryFilterState } from '@/features/filtering/query-filters/model/query-filter';
+import { QueryFilterState } from '@/features/filtering/filters/query-filters/query-filter.model';
 import {
   addQueryFilter,
   clearQueryFilters,
   replaceFilters,
   TagFilters,
   updateTagFilters,
-} from '@/features/filtering/query-filters/store/query-filters.slice';
-import { getFilterLabel } from '@/features/filtering/query-filters/utils/get-filter-label';
+} from '@/features/filtering/filters/query-filters/query-filters.store';
+import { getFilterLabel } from '@/features/filtering/filters/query-filters/utils/get-filter-label';
 import { InvestigationParams } from '@/features/investigation/components/investigation-details/investigation-params';
 import { InvestigationResults } from '@/features/investigation/components/investigation-details/investigation-results';
 import { InvestigationStage } from '@/features/investigation/components/investigation-details/investigation-stage';

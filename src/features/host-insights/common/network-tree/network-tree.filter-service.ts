@@ -1,8 +1,8 @@
-import { QueryFilterState } from '@/features/filtering/query-filters/model/query-filter';
+import { QueryFilterState } from '@/features/filtering/filters/query-filters/query-filter.model';
 import {
   updateOrCreateByRole,
   updateQueryFilter,
-} from '@/features/filtering/query-filters/store/query-filters.slice';
+} from '@/features/filtering/filters/query-filters/query-filters.store';
 import { store } from '@/store/store-instance';
 
 export const NetworkTreeFilterService = {

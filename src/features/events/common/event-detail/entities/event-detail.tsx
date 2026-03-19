@@ -10,7 +10,7 @@ import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { esEscape } from '@/common/lib/strings';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { Event } from '@/features/events/common/events.model';
-import { EventValue } from '@/features/filtering/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
 import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
 import { HostSummary } from '@/features/host-insights/use-cases/host-details/molecules/host-summary';
 import { useGetImpactedEntitiesQuery } from '@/features/threats/common/entities.api';

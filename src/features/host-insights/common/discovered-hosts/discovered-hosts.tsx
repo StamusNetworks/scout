@@ -1,6 +1,6 @@
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { StatsCardHorizontal } from '@/common/design-system/molecules/stats-card-horizontal';
-import { addQueryFilter } from '@/features/filtering/query-filters/store/query-filters.slice';
+import { addQueryFilter } from '@/features/filtering/filters/query-filters/query-filters.store';
 import { useFetchHostsCounts } from '@/features/host-insights/use-cases/hosts-list/hosts-list.api';
 import { AppDispatch, useAppDispatch } from '@/store/store';
 

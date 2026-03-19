@@ -7,7 +7,7 @@ import { cn } from '@/common/lib/utils';
 import {
   getFilterLabel,
   getFilterValue,
-} from '@/features/filtering/query-filters/utils/get-filter-label';
+} from '@/features/filtering/filters/query-filters/utils/get-filter-label';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import {
