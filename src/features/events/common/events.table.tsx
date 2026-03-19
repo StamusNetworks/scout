@@ -2,22 +2,12 @@ import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
-import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import type { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
 import { Hostname } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
 import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 
 import type { Event } from './events.model';
-
-export const EXPANDER_COLUMN: CustomColumnDef<Event> = {
-  id: 'event-expanded',
-  cell: ({ row }) => <DataTableRowExpander row={row} />,
-  enableHiding: false,
-  meta: {
-    canReorder: false,
-  },
-};
 
 export const TIMESTAMP_COLUMN: CustomColumnDef<Event> = {
   id: 'timestamp',

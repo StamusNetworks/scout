@@ -32,7 +32,7 @@ import {
 } from '@tanstack/react-table';
 import { cva } from 'class-variance-authority';
 import { GripVertical, Search } from 'lucide-react';
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, useState } from 'react';
 
 import {
   Table as TablePrimitive,
@@ -44,6 +44,8 @@ import {
 } from '@/common/design-system/atoms/ui/table';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { cn } from '@/common/lib/utils';
+
+import { DataTableRowExpander } from '../data-table/data-table.row-expander';
 
 import { Row as RowComponent } from '../../atoms/layout/row';
 import { Checkbox } from '../../atoms/ui/checkbox';
@@ -94,8 +96,8 @@ export function Table<TData>({
   onColumnVisibilityChange,
   rowSelection,
   onRowSelectionChange,
-  expanded,
-  onExpandedChange,
+  expanded: controlledExpanded,
+  onExpandedChange: controlledOnExpandedChange,
   columnOrder: controlledColumnOrder,
   onColumnOrderChange,
   ExpandedRow,
@@ -106,6 +108,8 @@ export function Table<TData>({
   rowClickCursor = 'zoomin',
   reorder = true,
 }: TableProps<TData>) {
+  const [internalExpanded, setInternalExpanded] = useState<ExpandedState>({});
+
   const tableData = React.useMemo(() => {
     if (isLoading) {
       return Array.from({ length: skeletonRows }).map(() => ({}) as TData);
@@ -113,9 +117,21 @@ export function Table<TData>({
     return data;
   }, [isLoading, data, skeletonRows]);
 
+  const resolvedColumns = React.useMemo(() => {
+    if (!ExpandedRow) return columns;
+
+    const expanderColumn: CustomColumnDef<TData> = {
+      id: 'expander',
+      cell: ({ row }) => <DataTableRowExpander row={row} />,
+      enableHiding: false,
+      meta: { canReorder: false },
+    };
+    return [expanderColumn, ...columns];
+  }, [columns, ExpandedRow]);
+
   const columnOrder = React.useMemo(
-    () => controlledColumnOrder ?? columns.map((col) => col.id),
-    [controlledColumnOrder, columns],
+    () => controlledColumnOrder ?? resolvedColumns.map((col) => col.id),
+    [controlledColumnOrder, resolvedColumns],
   );
 
   const hasRowSelection =
@@ -123,12 +139,12 @@ export function Table<TData>({
 
   const table = useReactTable({
     data: tableData,
-    columns,
+    columns: resolvedColumns,
     state: {
       sorting,
       columnVisibility,
       rowSelection: rowSelection ?? {},
-      expanded,
+      expanded: controlledExpanded ?? internalExpanded,
       columnOrder,
     },
     getRowId,
@@ -139,7 +155,7 @@ export function Table<TData>({
     onRowSelectionChange,
     onColumnVisibilityChange,
     onSortingChange,
-    onExpandedChange,
+    onExpandedChange: controlledOnExpandedChange ?? setInternalExpanded,
     onColumnOrderChange,
   });
 

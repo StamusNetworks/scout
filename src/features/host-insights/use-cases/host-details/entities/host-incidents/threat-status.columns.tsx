@@ -19,7 +19,6 @@ import {
 } from '@/common/design-system/atoms/ui/tooltip';
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
-import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { isIP } from '@/common/lib/ips';
 import { useReplaceFilters } from '@/features/filtering/filters/query-filters/use-cases/replace-filters/replace-filters';
@@ -29,14 +28,6 @@ import { ThreatTag } from '@/features/threats/common/molecules/threat-tag';
 import { ThreatStatus } from '@/features/threats/common/threat-status.schema';
 
 export const threatStatusColumns: CustomColumnDef<ThreatStatus>[] = [
-  {
-    id: 'event-expanded',
-    cell: ({ row }) => <DataTableRowExpander row={row} />,
-    enableHiding: false,
-    meta: {
-      canReorder: false,
-    },
-  },
   {
     id: 'first_seen',
     header: ({ column }) => (

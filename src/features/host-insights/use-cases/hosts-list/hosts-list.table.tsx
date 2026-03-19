@@ -4,7 +4,6 @@ import { Column } from '@/common/design-system/atoms/layout/column';
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { ExportColumn } from '@/common/design-system/molecules/data-table/data-table';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
-import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { FormattedBadge } from '@/common/design-system/molecules/formatted-badge';
 import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
@@ -13,11 +12,6 @@ import { HostnameTemplate } from '@/features/host-insights/use-cases/host-detail
 import { NetworkTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 import { RolesTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/roles';
 import { UsernameTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';
-
-export const EXPANDER_COLUMN: CustomColumnDef<Host> = {
-  id: 'expander',
-  cell: ({ row }) => <DataTableRowExpander row={row} />,
-};
 
 export const HOST_COLUMN: CustomColumnDef<Host> = {
   id: 'host',
@@ -127,7 +121,6 @@ export const HITS_COLUMN: CustomColumnDef<Host> = {
 };
 
 export const HOSTS_BASE_COLUMNS: CustomColumnDef<Host>[] = [
-  EXPANDER_COLUMN,
   HOST_COLUMN,
   HOST_INFO_COLUMN,
   ROLES_COLUMN,

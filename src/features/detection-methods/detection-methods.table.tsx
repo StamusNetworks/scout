@@ -1,7 +1,6 @@
 import { Badge } from '@/common/design-system/atoms/ui/badge';
 import { ExportColumn } from '@/common/design-system/molecules/data-table/data-table';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
-import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { formatNumber } from '@/common/lib/numbers';
 import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
@@ -9,11 +8,6 @@ import { EventValue } from '@/features/filtering/filters/query-filters/use-cases
 import { Signature } from './detection-method.model';
 
 export const DETECTION_METHODS_COLUMNS: CustomColumnDef<Signature>[] = [
-  {
-    id: 'sid-expanded',
-    cell: ({ row }) => <DataTableRowExpander row={row} />,
-    enableHiding: false,
-  },
   {
     id: 'sid',
     accessorKey: 'sid',

@@ -3,7 +3,6 @@ import { Row } from '@/common/design-system/atoms/layout/row';
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { ExportColumn } from '@/common/design-system/molecules/data-table/data-table';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
-import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { Filter } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { Event } from '@/features/events/common/events.model';
@@ -16,11 +15,6 @@ import { EntityThreatTagsList } from '@/features/threats/common/molecules/entiti
 import { IpOrEntityEventValue } from '@/features/threats/common/molecules/ip-or-entity';
 
 export const hostSightingTableColumns: CustomColumnDef<Event>[] = [
-  {
-    id: 'expander',
-    cell: ({ row }) => <DataTableRowExpander row={row} />,
-    enableHiding: false,
-  },
   {
     id: 'protocol',
     header: ({ column }) => (

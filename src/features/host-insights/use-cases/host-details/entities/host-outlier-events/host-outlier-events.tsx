@@ -12,7 +12,6 @@ import { useGetEventsQuery } from '@/features/events/common/events.api';
 import type { Event } from '@/features/events/common/events.model';
 import {
   DESTINATION_COLUMN,
-  EXPANDER_COLUMN,
   HOST_COLUMN,
   PROTOCOL_COLUMN,
   SOURCE_COLUMN,
@@ -29,7 +28,6 @@ import { useGlobalQueryParams } from '@/features/filtering/use-global-query-para
 import { useGetCountsTimelineQuery } from '@/features/threats/compromises/use-cases/timeline/api/timeline.api';
 
 const outlierColumns = [
-  EXPANDER_COLUMN,
   TIMESTAMP_COLUMN,
   METHOD_COLUMN,
   SOURCE_COLUMN,

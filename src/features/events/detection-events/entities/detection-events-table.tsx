@@ -18,7 +18,6 @@ import { useGetEventsQuery } from '@/features/events/common/events.api';
 import type { Event } from '@/features/events/common/events.model';
 import {
   DESTINATION_COLUMN,
-  EXPANDER_COLUMN,
   HOST_COLUMN,
   HOSTNAME_HOST_COLUMN,
   PROTOCOL_COLUMN,
@@ -60,7 +59,6 @@ interface DetectionEventsTableProps {
 function useColumns(enterprise: boolean, hostId?: string) {
   return useMemo(
     () => [
-      EXPANDER_COLUMN,
       ...(hostId ? [] : [TAG_COLUMN]),
       TIMESTAMP_COLUMN,
       METHOD_COLUMN,
