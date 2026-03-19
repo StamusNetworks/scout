@@ -1,12 +1,34 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
+import {
+  Page,
+  PageHeader,
+  PageHeaderContent,
+  PageTitle,
+} from '@/common/design-system/atoms/page';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { ThreatsTimelineView } from '@/features/threats/compromises/use-cases/timeline/entities/threats-timeline-view';
 
 export const Route = createFileRoute('/_enterprise/threats/timeline')({
   component: () => (
     <PageBoundary key="threats-timeline">
-      <ThreatsTimelineView />
+      <ThreatsTimelinePage />
     </PageBoundary>
   ),
 });
+
+function ThreatsTimelinePage() {
+  return (
+    <Page>
+      <TogglePageContainer>
+        <PageHeader>
+          <PageHeaderContent>
+            <PageTitle>Threats Timeline</PageTitle>
+          </PageHeaderContent>
+        </PageHeader>
+        <ThreatsTimelineView />
+      </TogglePageContainer>
+    </Page>
+  );
+}
