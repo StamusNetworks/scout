@@ -309,6 +309,18 @@ export const queryFiltersSlice = createSlice({
         }
       });
     },
+    setQueryFilters: (state, action: PayloadAction<QueryFilterState[]>) => {
+      state.queryFilters = action.payload;
+    },
+    setTagFilters: (state, action: PayloadAction<Partial<TagFilters>>) => {
+      toPairs(action.payload)
+        .filter((value) => !isNil(value))
+        .forEach(([key, value]) => {
+          if (!isNil(value)) {
+            state.tagFilters[key] = value;
+          }
+        });
+    },
     updateTagFilters: (state, action: PayloadAction<Partial<TagFilters>>) => {
       toPairs(action.payload)
         .filter((value) => !isNil(value))
@@ -376,6 +388,8 @@ export const {
   updateQueryFilter,
   reorderQueryFilters,
   replaceFilters,
+  setQueryFilters,
+  setTagFilters,
   updateTagFilters,
   suspendQueryFilters,
   updateOrCreateByRole,
