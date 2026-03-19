@@ -1,6 +1,7 @@
+import { updateTagFilters } from '@/features/filtering/query-filters/store/query-filters.slice';
 import { useAppDispatch } from '@/store/store';
 
-import { TagFilters, updateTagFilters } from '../store/query-filters.slice';
+import type { TagFilters } from '../../tag-filters.model';
 
 const defaultTags: TagFilters = {
   novelty: false,

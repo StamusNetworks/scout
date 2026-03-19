@@ -7,6 +7,7 @@ import { isNil, toPairs } from 'ramda';
 import { toast } from 'sonner';
 
 import { capitalizeAll, startsWithOneOf } from '@/common/lib/strings';
+import type { TagFilters } from '@/features/filtering/filters/tag-filters/tag-filters.model';
 import { SettingsAPI } from '@/features/user/settings/settings.api';
 
 import {
@@ -18,22 +19,14 @@ import { QueryFilterState, QueryFilterType } from '../model/query-filter';
 import { FilterInput } from '../utils/filter-mapper';
 import { QFBuilder } from '../utils/qf-builder';
 
-const blacklisted = ['agent', 'beaconing_statistics'];
+export type {
+  AlertTags,
+  EventTypes,
+  Novelty,
+  TagFilters,
+} from '@/features/filtering/filters/tag-filters/tag-filters.model';
 
-export type EventTypes = {
-  discovery: boolean;
-  stamus: boolean;
-  alert: boolean;
-};
-export type AlertTags = {
-  relevant: boolean;
-  untagged: boolean;
-  informational: boolean;
-};
-export type Novelty = {
-  novelty: boolean;
-};
-export type TagFilters = EventTypes & AlertTags & Novelty;
+const blacklisted = ['agent', 'beaconing_statistics'];
 
 type QueryFiltersSliceState = {
   queryFilters: QueryFilterState[];

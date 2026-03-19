@@ -25,6 +25,7 @@ import { saveToClipboard } from '@/common/lib/save';
 import { startsWithOneOf } from '@/common/lib/strings';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useGetDeeplinksQuery } from '@/features/deeplinks/api/deeplinks.api';
+import { enableTags } from '@/features/filtering/filters/tag-filters/use-cases/update-tag-filters/update-tag-filters';
 import {
   addEvidence,
   selectCurrentInvestigationStage,
@@ -37,7 +38,6 @@ import {
   addQueryFilter,
   replaceFilters,
 } from '../../../store/query-filters.slice';
-import { enableTags } from '../../../use-cases/enable-tags';
 import { resolveEntityTypes } from '../../../utils/entity-validators';
 import { MitreTacticIdOption, MitreTechniqueIdOption } from './options/mitre';
 import { ThreatFamilyNameOption } from './options/threat-family-name';
