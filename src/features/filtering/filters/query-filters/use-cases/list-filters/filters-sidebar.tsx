@@ -26,6 +26,7 @@ import { startsWithOneOf } from '@/common/lib/strings';
 import { cn } from '@/common/lib/utils';
 import { FilterActionsDropdown } from '@/features/filter-actions/components/filter-actions/filter-actions.dropdown';
 import { useSupportedFilterActionsFilters } from '@/features/filter-actions/utils/get-supported-filters';
+import { useTagFiltersRepository } from '@/features/filtering/filters/tag-filters/tag-filters.repository';
 import { SideBarQueryFilterSets } from '@/features/filtering/filtersets/use-cases/pinned-filter-sets/sidebar-query-filter-sets';
 import { openSaveFilterSetModal } from '@/features/filtering/filtersets/use-cases/save-filter-set/save-filterset.slice';
 import { useWithAlertsParam } from '@/features/host-insights/common/hosts-table/use-with-alerts-param';
@@ -45,16 +46,10 @@ import { getFilterDef } from '../../constants/query-filter.definition';
 import { QueryFilterState } from '../../query-filter.model';
 import { selectTagFilters } from '../../query-filters.selectors';
 import { selectQueryFilters } from '../../query-filters.selectors';
-import {
-  AlertTags,
-  EventTypes,
-  updateTagFilters,
-} from '../../query-filters.store';
-import {
-  clearQueryFilters,
-  clearSuspendedFilters,
-  reorderQueryFilters,
-} from '../../query-filters.store';
+import { AlertTags, EventTypes } from '../../query-filters.store';
+import { useClearFilters } from '../clear-filters/clear-filters';
+import { useReorderFilters } from '../reorder-filters/reorder-filters';
+import { useSuspendFilter } from '../suspend-filter/suspend-filter';
 import { SideBarFilter } from './sidebar-filter';
 import { SidebarQueryFilter } from './sidebar-query-filter';
 
@@ -113,6 +108,10 @@ export const FiltersSideBar = () => {
   );
   const enterprise = useAppSelector(selectIsEnterprise);
   const [withAlerts] = useWithAlertsParam();
+  const clearFilters = useClearFilters();
+  const reorderFilters = useReorderFilters();
+  const { clearSuspended } = useSuspendFilter();
+  const tagFiltersRepo = useTagFiltersRepository();
 
   const sideBarConfigPerPage: Partial<Record<string, SideBarConfig>> = useMemo(
     () => ({
@@ -254,7 +253,7 @@ export const FiltersSideBar = () => {
       key: 'clear-filters',
       label: 'Clear filters',
       render: (
-        <button onClick={() => dispatch(clearQueryFilters())}>
+        <button onClick={() => clearFilters()}>
           <SidebarActionIcon type={CircleX} />
         </button>
       ),
@@ -274,7 +273,6 @@ export const FiltersSideBar = () => {
                 <SideBarFilter
                   filter_key="novelty"
                   label="Outlier events"
-                  dispatch={dispatch}
                   checked={tagFilters.novelty}
                   disabled={
                     !sideBarConfig?.filterTypes.includes(
@@ -293,7 +291,6 @@ export const FiltersSideBar = () => {
                     key={f.key}
                     filter_key={f.key}
                     label={f.label}
-                    dispatch={dispatch}
                     checked={tagFilters[f.key]}
                     disabled={
                       !sideBarConfig?.filterTypes.includes(
@@ -322,9 +319,7 @@ export const FiltersSideBar = () => {
                     <Checkbox
                       checked={tagFilters[f.key]}
                       onCheckedChange={() =>
-                        dispatch(
-                          updateTagFilters({ [f.key]: !tagFilters[f.key] }),
-                        )
+                        tagFiltersRepo.set({ [f.key]: !tagFilters[f.key] })
                       }
                       disabled={
                         !sideBarConfig?.filterTypes.includes(
@@ -376,7 +371,7 @@ export const FiltersSideBar = () => {
                 axis="y"
                 values={queryFilters}
                 onReorder={(newFilters: QueryFilterState[]) => {
-                  dispatch(reorderQueryFilters(newFilters));
+                  reorderFilters(newFilters);
                 }}
               >
                 <SideBarSubHeader>Active filters</SideBarSubHeader>
@@ -417,7 +412,7 @@ export const FiltersSideBar = () => {
                     variant="ghost"
                     size="xs"
                     className="text-muted-foreground"
-                    onClick={() => dispatch(clearSuspendedFilters())}
+                    onClick={() => clearSuspended()}
                   >
                     Clear
                   </Button>

@@ -25,7 +25,7 @@ import { saveToClipboard } from '@/common/lib/save';
 import { startsWithOneOf } from '@/common/lib/strings';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useGetDeeplinksQuery } from '@/features/deeplinks/api/deeplinks.api';
-import { enableTags } from '@/features/filtering/filters/tag-filters/use-cases/update-tag-filters/update-tag-filters';
+import { useEnableTags } from '@/features/filtering/filters/tag-filters/use-cases/update-tag-filters/update-tag-filters';
 import {
   addEvidence,
   selectCurrentInvestigationStage,
@@ -34,8 +34,9 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { useQueryFilterDefinition } from '../../../hooks/use-filters-definitions';
-import { addQueryFilter, replaceFilters } from '../../../query-filters.store';
 import { resolveEntityTypes } from '../../../utils/entity-validators';
+import { useCreateFilter } from '../../create-filter/create-filter';
+import { useReplaceFilters } from '../../replace-filters/replace-filters';
 import { MitreTacticIdOption, MitreTechniqueIdOption } from './options/mitre';
 import { ThreatFamilyNameOption } from './options/threat-family-name';
 import { ThreatNameOptions } from './options/threat-name';
@@ -56,6 +57,9 @@ export const ContextMenuContent = ({
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const createFilter = useCreateFilter();
+  const replaceFilters = useReplaceFilters();
+  const enableTags = useEnableTags();
   const { data: deeplinksData } = useGetDeeplinksQuery({
     pageIndex: 0,
     pageSize: 1000000,
@@ -120,21 +124,17 @@ export const ContextMenuContent = ({
         </>
       )}
       <ContextMenuItem
-        onClick={() =>
-          dispatch(addQueryFilter({ key: query_key, value: value }))
-        }
+        onClick={() => createFilter({ key: query_key, value: value })}
       >
         <Filter className={iconClass} /> Add global filter
       </ContextMenuItem>
       <ContextMenuItem
         onClick={() =>
-          dispatch(
-            addQueryFilter({
-              key: query_key,
-              value,
-              options: { is_negated: true },
-            }),
-          )
+          createFilter({
+            key: query_key,
+            value,
+            options: { is_negated: true },
+          })
         }
       >
         <FilterX className={iconClass} />
@@ -148,8 +148,8 @@ export const ContextMenuContent = ({
       {!pathname.startsWith('/explorer') && (
         <ContextMenuItem
           onClick={() => {
-            enableTags(dispatch);
-            dispatch(replaceFilters([{ key: query_key, value }]));
+            enableTags();
+            replaceFilters([{ key: query_key, value }]);
             navigate({ to: '/explorer' });
           }}
         >
@@ -160,8 +160,8 @@ export const ContextMenuContent = ({
       {!pathname.startsWith('/detection-events') && (
         <ContextMenuItem
           onClick={() => {
-            enableTags(dispatch);
-            dispatch(replaceFilters([{ key: query_key, value }]));
+            enableTags();
+            replaceFilters([{ key: query_key, value }]);
             navigate({ to: '/detection-events' });
           }}
         >
@@ -172,7 +172,7 @@ export const ContextMenuContent = ({
       {!pathname.startsWith('/network-events') && (
         <ContextMenuItem
           onClick={() => {
-            dispatch(replaceFilters([{ key: query_key, value }]));
+            replaceFilters([{ key: query_key, value }]);
             navigate({ to: '/network-events' });
           }}
           disabled={startsWithOneOf(query_key, [

@@ -27,14 +27,14 @@ import {
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { formatNumber } from '@/common/lib/numbers';
 import { useGetDashboardFieldsQuery } from '@/features/events/detection-events/use-cases/explorer/api/dashboard.api';
-import { replaceFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
 import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
-import { enableTags } from '@/features/filtering/filters/tag-filters/use-cases/update-tag-filters/update-tag-filters';
-import { useAppDispatch } from '@/store/store';
+import { useReplaceFilters } from '@/features/filtering/filters/query-filters/use-cases/replace-filters/replace-filters';
+import { useEnableTags } from '@/features/filtering/filters/tag-filters/use-cases/update-tag-filters/update-tag-filters';
 
 export const MitreTechniques = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const replaceFilters = useReplaceFilters();
+  const enableTags = useEnableTags();
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const [pagination, setPagination] = usePaginationState();
   const { data, config, total, isError, isEmpty } = useGetDashboardFieldsQuery(
@@ -76,15 +76,13 @@ export const MitreTechniques = () => {
   );
 
   const handleClickMitreTechnique = (data: { name: string }) => {
-    enableTags(dispatch);
-    dispatch(
-      replaceFilters([
-        {
-          key: 'alert.metadata.mitre_technique_name',
-          value: data.name,
-        },
-      ]),
-    );
+    enableTags();
+    replaceFilters([
+      {
+        key: 'alert.metadata.mitre_technique_name',
+        value: data.name,
+      },
+    ]);
     navigate({ to: '/explorer' });
   };
 

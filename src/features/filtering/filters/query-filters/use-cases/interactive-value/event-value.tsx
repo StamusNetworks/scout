@@ -25,10 +25,9 @@ import { cn } from '@/common/lib/utils';
 import { useGetHostInsights } from '@/features/host-insights/use-cases/host-details/hooks/use-get-host-insights';
 import { HostSummary } from '@/features/host-insights/use-cases/host-details/molecules/host-summary';
 import { useGetImpactedEntityQuery } from '@/features/threats/common/entities.api';
-import { useAppDispatch } from '@/store/store';
 
 import { getFilterDef } from '../../constants/query-filter.definition';
-import { addQueryFilter } from '../../query-filters.store';
+import { useCreateFilter } from '../create-filter/create-filter';
 import { ContextMenuContent } from './context-menu/context-menu.content';
 
 const decode = (value: string) => {
@@ -56,7 +55,7 @@ export const EventValue = ({
   contextMenuOptions?: React.ReactNode;
   onClick?: () => void;
 }) => {
-  const dispatch = useAppDispatch();
+  const createFilter = useCreateFilter();
   const rawValue = value?.toString() || '';
   const isHostIp = rawValue ? isIP(rawValue) : false;
 
@@ -81,7 +80,7 @@ export const EventValue = ({
             if (onClick) {
               onClick();
             } else {
-              dispatch(addQueryFilter({ key: query_key, value }));
+              createFilter({ key: query_key, value });
             }
           }}
           className={cn(

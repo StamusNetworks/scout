@@ -25,10 +25,9 @@ import {
 } from '@/common/design-system/graphs/sankey/sankey-title-row';
 import { useGetEventsAggregationQuery } from '@/features/events/common/events.api';
 import type { EventTypes } from '@/features/filtering/filters/query-filters/query-filters.store';
-import { addQueryFilter } from '@/features/filtering/filters/query-filters/query-filters.store';
+import { useCreateFilter } from '@/features/filtering/filters/query-filters/use-cases/create-filter/create-filter';
 import { ContextMenuContent } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/context-menu/context-menu.content';
 import { useGetESMappingQuery } from '@/features/user/settings/settings.api';
-import { useAppDispatch } from '@/store/store';
 
 import { buildEventsFlowQfilter } from '../build-events-flow-qfilter';
 import type { ProtoColumn } from '../events-flow.columns';
@@ -50,7 +49,7 @@ export function EventsFlowForProtocol({
   globalParams,
   eventTypes,
 }: EventsFlowForProtocolProps) {
-  const dispatch = useAppDispatch();
+  const createFilter = useCreateFilter();
   const { data: esMapping } = useGetESMappingQuery();
 
   const columns = useMemo(() => {
@@ -111,14 +110,12 @@ export function EventsFlowForProtocol({
     (node: SankeyNodeInfo) => {
       const col = columns[node.columnIndex];
       if (node.name === 'N/A') {
-        dispatch(
-          addQueryFilter({ key: 'es_filter', value: `NOT ${col.key}:*` }),
-        );
+        createFilter({ key: 'es_filter', value: `NOT ${col.key}:*` });
       } else {
-        dispatch(addQueryFilter({ key: col.key, value: node.name }));
+        createFilter({ key: col.key, value: node.name });
       }
     },
-    [columns, dispatch],
+    [columns, createFilter],
   );
 
   const handleNodeRightClick = useCallback(

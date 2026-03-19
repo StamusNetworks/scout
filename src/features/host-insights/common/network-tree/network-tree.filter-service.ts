@@ -1,80 +1,57 @@
+import { QueryFiltersRecord } from '@/features/filtering/filters/query-filters/constants/query-filter.definition';
 import { QueryFilterState } from '@/features/filtering/filters/query-filters/query-filter.model';
-import {
-  updateOrCreateByRole,
-  updateQueryFilter,
-} from '@/features/filtering/filters/query-filters/query-filters.store';
+import { setQueryFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
+import { QFBuilder } from '@/features/filtering/filters/query-filters/utils/qf-builder';
+import { applyUpsertByRole } from '@/features/filtering/filters/query-filters/utils/suspension-rules';
 import { store } from '@/store/store-instance';
+
+const qfBuilder = QFBuilder(QueryFiltersRecord, 'raw');
 
 export const NetworkTreeFilterService = {
   addFilter: (value: string) => {
-    const netFilters = store
-      .getState()
-      .filters.queryFilters.queryFilters.filter(
-        (f: QueryFilterState) => f.key === 'host_id.net_info.agg',
-      );
-    netFilters
-      .filter(
-        (f: QueryFilterState) => !f.is_suspended && f.role !== 'attack_surface',
-      )
-      .forEach((f) => {
-        store.dispatch(updateQueryFilter({ ...f, is_suspended: true }));
-      });
-
-    if (value === 'Undefined Network') {
-      store.dispatch(
-        updateOrCreateByRole({
-          key: 'host_id.net_info.agg',
-          value: '*',
-          options: {
+    const filters = store.getState().filters.queryFilters.queryFilters;
+    let updated = filters.map((f: QueryFilterState) =>
+      f.key === 'host_id.net_info.agg' &&
+      !f.is_suspended &&
+      f.role !== 'attack_surface'
+        ? { ...f, is_suspended: true }
+        : f,
+    );
+    const newFilter =
+      value === 'Undefined Network'
+        ? qfBuilder.createFilter('host_id.net_info.agg', '*', {
             is_negated: true,
             is_wildcarded: true,
             is_suspended: false,
             role: 'attack_surface',
-          },
-        }),
-      );
-    } else {
-      store.dispatch(
-        updateOrCreateByRole({
-          key: 'host_id.net_info.agg',
-          value,
-          options: {
+          })
+        : qfBuilder.createFilter('host_id.net_info.agg', value, {
             is_negated: false,
             is_wildcarded: value.includes('*'),
             is_suspended: false,
             role: 'attack_surface',
-          },
-        }),
-      );
-    }
+          });
+    updated = applyUpsertByRole(updated, newFilter);
+    store.dispatch(setQueryFilters(updated));
   },
   clearFilter: () => {
-    const networkDefFilters = store
-      .getState()
-      .filters.queryFilters.queryFilters.filter(
-        (f: QueryFilterState) => f.key === 'host_id.net_info.agg',
-      );
-    networkDefFilters
-      .filter((f: QueryFilterState) => !f.is_suspended)
-      .forEach((f: QueryFilterState) => {
-        store.dispatch(
-          store.dispatch(updateQueryFilter({ ...f, is_suspended: true })),
-        );
-      });
+    const filters = store.getState().filters.queryFilters.queryFilters;
+    const updated = filters.map((f: QueryFilterState) =>
+      f.key === 'host_id.net_info.agg' && !f.is_suspended
+        ? { ...f, is_suspended: true }
+        : f,
+    );
+    store.dispatch(setQueryFilters(updated));
   },
   clearFilterNonAttackSurface: () => {
-    const networkDefFilters = store
-      .getState()
-      .filters.queryFilters.queryFilters.filter(
-        (f: QueryFilterState) =>
-          f.key === 'host_id.net_info.agg' && f.role !== 'attack_surface',
-      );
-    networkDefFilters
-      .filter((f: QueryFilterState) => !f.is_suspended)
-      .forEach((f: QueryFilterState) => {
-        store.dispatch(
-          store.dispatch(updateQueryFilter({ ...f, is_suspended: true })),
-        );
-      });
+    const filters = store.getState().filters.queryFilters.queryFilters;
+    const updated = filters.map((f: QueryFilterState) =>
+      f.key === 'host_id.net_info.agg' &&
+      f.role !== 'attack_surface' &&
+      !f.is_suspended
+        ? { ...f, is_suspended: true }
+        : f,
+    );
+    store.dispatch(setQueryFilters(updated));
   },
 };

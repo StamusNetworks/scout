@@ -4,8 +4,8 @@ import { GitGraph, Lock, ShieldAlert, Swords } from 'lucide-react';
 import { BlockTitle } from '@/common/design-system/atoms/block';
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
-import { clearQueryFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
-import { enableTags } from '@/features/filtering/filters/tag-filters/use-cases/update-tag-filters/update-tag-filters';
+import { useClearFilters } from '@/features/filtering/filters/query-filters/use-cases/clear-filters/clear-filters';
+import { useEnableTags } from '@/features/filtering/filters/tag-filters/use-cases/update-tag-filters/update-tag-filters';
 import { IndicatorsDocDopv } from '@/features/operational-center/components/indicators/docdopv.indicators';
 import { IndicatorsAppliancePreview } from '@/features/operational-center/components/indicators/indicators.preview';
 import { CipherSecurity } from '@/features/operational-center/entities/cipher-security';
@@ -14,8 +14,6 @@ import { MitreTechniques } from '@/features/operational-center/entities/mitre-te
 import { OutliersTimeline } from '@/features/operational-center/entities/outliers-timeline';
 import { KillChainCounters } from '@/features/threats/common/killchain/components/killchain-counters/killchain-counters';
 import { OffendersWorldMap } from '@/features/threats/common/molecules/offenders-world-map/offenders-world-map';
-import { useAppDispatch } from '@/store/store';
-
 interface OperationalCenterViewProps {
   enterprise: boolean;
 }
@@ -24,11 +22,12 @@ export const OperationalCenterView = ({
   enterprise,
 }: OperationalCenterViewProps) => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const clearFilters = useClearFilters();
+  const enableTags = useEnableTags();
 
   const handleClickOutliers = () => {
-    enableTags(dispatch, { novelty: true });
-    dispatch(clearQueryFilters());
+    enableTags({ novelty: true });
+    clearFilters();
     navigate({ to: '/explorer' });
   };
 

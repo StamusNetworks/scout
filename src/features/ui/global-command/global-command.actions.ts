@@ -22,7 +22,7 @@ import { openSuppressModal } from '@/features/filter-actions/components/filter-a
 import { openTagModal } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
 import { openThresholdModal } from '@/features/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
 import { selectQueryFilters } from '@/features/filtering/filters/query-filters/query-filters.selectors';
-import { clearQueryFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
+import { useClearFilters } from '@/features/filtering/filters/query-filters/use-cases/clear-filters/clear-filters';
 import {
   selectIsSidebarOpen,
   setIsSidebarOpen,
@@ -51,6 +51,7 @@ export const useGlobalCommands = (): GlobalCommands[] => {
   const isSidebarOpen = useAppSelector(selectIsSidebarOpen);
   const { enterprise } = useFeatureFlags();
   const [updatePushRuleset] = useUpdatePushRulesetMutation();
+  const clearFilters = useClearFilters();
   const handleUpdatePushRuleset = () => {
     updatePushRuleset({ enterprise })
       .unwrap()
@@ -108,7 +109,7 @@ export const useGlobalCommands = (): GlobalCommands[] => {
           Icon: FilterX,
           title: 'Clear filters',
           action: () => {
-            dispatch(clearQueryFilters());
+            clearFilters();
           },
         },
         {

@@ -7,12 +7,10 @@ import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { type DatesPayload } from '@/features/filtering/dates/dates.model';
 import { setDates } from '@/features/filtering/dates/dates.store';
-import {
-  reorderQueryFilters,
-  replaceFilters,
-  updateTagFilters,
-} from '@/features/filtering/filters/query-filters/query-filters.store';
+import { useReorderFilters } from '@/features/filtering/filters/query-filters/use-cases/reorder-filters/reorder-filters';
+import { useReplaceFilters } from '@/features/filtering/filters/query-filters/use-cases/replace-filters/replace-filters';
 import { type FilterInput } from '@/features/filtering/filters/query-filters/utils/filter-mapper';
+import { useTagFiltersRepository } from '@/features/filtering/filters/tag-filters/tag-filters.repository';
 import {
   decodeShareableState,
   type ShareableState,
@@ -60,6 +58,9 @@ function SharePage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { enterprise } = useFeatureFlags();
+  const reorderFilters = useReorderFilters();
+  const replaceFilters = useReplaceFilters();
+  const tagFiltersRepo = useTagFiltersRepository();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -93,12 +94,12 @@ function SharePage() {
     dispatch(setDates(toDatesPayload(state.time)));
 
     // Set tag filters
-    dispatch(updateTagFilters(state.tags));
+    tagFiltersRepo.set(state.tags);
 
     // Set query filters: clear silently (no toast) then replace
-    dispatch(reorderQueryFilters([]));
+    reorderFilters([]);
     if (state.filters.length > 0) {
-      dispatch(replaceFilters(toFilterInputs(state.filters)));
+      replaceFilters(toFilterInputs(state.filters));
     }
 
     navigate({ to: state.route, replace: true });

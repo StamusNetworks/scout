@@ -1,8 +1,7 @@
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { StatsCardHorizontal } from '@/common/design-system/molecules/stats-card-horizontal';
-import { addQueryFilter } from '@/features/filtering/filters/query-filters/query-filters.store';
+import { useCreateFilter } from '@/features/filtering/filters/query-filters/use-cases/create-filter/create-filter';
 import { useFetchHostsCounts } from '@/features/host-insights/use-cases/hosts-list/hosts-list.api';
-import { AppDispatch, useAppDispatch } from '@/store/store';
 
 import { useHomeNetParam } from '../home-net-picker/use-home-net-param';
 import { indicators } from './discovered-hosts.config';
@@ -10,11 +9,11 @@ import { indicators } from './discovered-hosts.config';
 export const DiscoveredHosts = () => {
   const [inHomeNetwork] = useHomeNetParam();
   const { data, isFetching } = useFetchHostsCounts({ inHomeNetwork });
-  const dispatch = useAppDispatch();
+  const createFilter = useCreateFilter();
   return (
     <DiscoveredHostsTemplate
       hostsCounts={data}
-      dispatch={dispatch}
+      createFilter={createFilter}
       isFetching={isFetching}
     />
   );
@@ -23,11 +22,11 @@ export const DiscoveredHosts = () => {
 export const DiscoveredHostsTemplate = ({
   hostsCounts,
   isFetching,
-  dispatch,
+  createFilter,
 }: {
   hostsCounts: Record<string, number> | undefined;
   isFetching: boolean;
-  dispatch: AppDispatch;
+  createFilter: ReturnType<typeof useCreateFilter>;
 }) => (
   <Grid className="mb-4 grid-cols-3 gap-2 2xl:grid-cols-6">
     <StatsCardHorizontal
@@ -40,9 +39,7 @@ export const DiscoveredHostsTemplate = ({
       value={hostsCounts?.hostsWithServicesCount || 0}
       loading={isFetching}
       onClick={() =>
-        dispatch(
-          addQueryFilter({ key: 'host_id.services_count.min', value: 1 }),
-        )
+        createFilter({ key: 'host_id.services_count.min', value: 1 })
       }
     />
     <StatsCardHorizontal
@@ -50,30 +47,24 @@ export const DiscoveredHostsTemplate = ({
       value={hostsCounts?.domainControllersCount || 0}
       loading={isFetching}
       onClick={() =>
-        dispatch(
-          addQueryFilter({
-            key: 'host_id.roles.name',
-            value: 'domain controller',
-          }),
-        )
+        createFilter({
+          key: 'host_id.roles.name',
+          value: 'domain controller',
+        })
       }
     />
     <StatsCardHorizontal
       {...indicators['dhcp-servers']}
       value={hostsCounts?.dhcpServersCount || 0}
       loading={isFetching}
-      onClick={() =>
-        dispatch(addQueryFilter({ key: 'host_id.roles.name', value: 'dhcp' }))
-      }
+      onClick={() => createFilter({ key: 'host_id.roles.name', value: 'dhcp' })}
     />
     <StatsCardHorizontal
       {...indicators['http-proxies']}
       value={hostsCounts?.httpProxiesCount || 0}
       loading={isFetching}
       onClick={() =>
-        dispatch(
-          addQueryFilter({ key: 'host_id.roles.name', value: 'http proxy' }),
-        )
+        createFilter({ key: 'host_id.roles.name', value: 'http proxy' })
       }
     />
     <StatsCardHorizontal
@@ -81,9 +72,7 @@ export const DiscoveredHostsTemplate = ({
       value={hostsCounts?.printersCount || 0}
       loading={isFetching}
       onClick={() =>
-        dispatch(
-          addQueryFilter({ key: 'host_id.roles.name', value: 'printer' }),
-        )
+        createFilter({ key: 'host_id.roles.name', value: 'printer' })
       }
     />
   </Grid>

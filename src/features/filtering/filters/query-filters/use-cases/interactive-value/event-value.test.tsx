@@ -5,12 +5,10 @@ import {
 } from '@tanstack/react-router';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, test, vi } from 'vitest';
+import { describe, expect, test } from 'vitest';
 
 import { renderWithProviders } from '@/common/testing/test-utils';
-import * as AppStore from '@/store/store';
 
-import { addQueryFilter } from '../../query-filters.store';
 import { EventValue } from './event-value';
 
 const createTestRouter = () =>
@@ -20,10 +18,8 @@ const createTestRouter = () =>
   });
 
 describe('Event Value', () => {
-  test('Should dispatch the createFilter action', async () => {
-    const dispatch = vi.fn();
-    vi.spyOn(AppStore, 'useAppDispatch').mockReturnValue(dispatch);
-    await renderWithProviders(
+  test('Should add a filter to the store when clicked', async () => {
+    const { store } = await renderWithProviders(
       <EventValue
         query_key="src_ip"
         value="10.0.0.1"
@@ -33,12 +29,13 @@ describe('Event Value', () => {
 
     await userEvent.click(screen.getByTestId('event-value'));
 
-    // Use expect.objectContaining to match the filter structure without relying on the specific ID
-    expect(dispatch).toHaveBeenCalledWith(
-      addQueryFilter({
-        key: 'src_ip',
-        value: '10.0.0.1',
-      }),
-    );
+    const filters = store.getState().filters.queryFilters.queryFilters;
+    expect(filters).toHaveLength(1);
+    expect(filters[0]).toMatchObject({
+      key: 'src_ip',
+      value: '10.0.0.1',
+      is_negated: false,
+      is_suspended: false,
+    });
   });
 });

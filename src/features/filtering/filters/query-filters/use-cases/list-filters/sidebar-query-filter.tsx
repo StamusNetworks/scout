@@ -9,7 +9,6 @@ import {
 } from 'lucide-react';
 import { isNil, toPairs } from 'ramda';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Badge } from '@/common/design-system/atoms/ui/badge';
@@ -41,12 +40,10 @@ import {
 } from '../../hooks/use-filters-definitions';
 import { QueryFilterState, shouldShowWildcard } from '../../query-filter.model';
 import { FilterIcons } from '../../query-filters.icons';
-import {
-  deleteQueryFilter,
-  suspendQueryFilter,
-  updateQueryFilter,
-} from '../../query-filters.store';
+import { useDeleteFilter } from '../delete-filter/delete-filter';
+import { useSuspendFilter } from '../suspend-filter/suspend-filter';
 import { EditFilterModal } from '../update-filter/edit-filter.modal';
+import { useUpdateFilter } from '../update-filter/update-filter';
 
 type SideBarQueryFilterProps = {
   filter: QueryFilterState;
@@ -76,7 +73,9 @@ export const SidebarQueryFilter = ({
   variant,
   className,
 }: SideBarQueryFilterProps) => {
-  const dispatch = useDispatch();
+  const deleteFilter = useDeleteFilter();
+  const { toggle: toggleSuspend } = useSuspendFilter();
+  const updateFilter = useUpdateFilter();
 
   const filterDefinition = useQueryFilterDefinition(filter.key);
   const filterGroup = useGetConvertibleFiltersDefinitions(filter.key);
@@ -101,7 +100,7 @@ export const SidebarQueryFilter = ({
           filterId={filter.key}
           Icon={filter.is_suspended ? CirclePlay : CirclePause}
           action={() => {
-            dispatch(suspendQueryFilter(filter.id));
+            toggleSuspend(filter.id);
           }}
           tooltip={`${filter.is_suspended ? 'Activate' : 'Suspend'} filter`}
         />
@@ -131,9 +130,7 @@ export const SidebarQueryFilter = ({
           <DropdownMenuContent className="p-2">
             <RadioGroup
               defaultValue={filter.key}
-              onValueChange={(value) =>
-                dispatch(updateQueryFilter({ ...filter, key: value }))
-              }
+              onValueChange={(value) => updateFilter({ ...filter, key: value })}
               className="space-y-1"
             >
               {filterGroup.map((f) => {
@@ -181,7 +178,7 @@ export const SidebarQueryFilter = ({
           filterId={filter.key}
           Icon={DeleteIcon}
           action={() => {
-            dispatch(deleteQueryFilter(filter.id));
+            deleteFilter(filter.id);
           }}
           tooltip="Delete filter"
         />

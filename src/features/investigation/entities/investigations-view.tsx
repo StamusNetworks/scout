@@ -39,14 +39,12 @@ import { Paginated } from '@/common/fetching/fetching.types';
 import { esEscape } from '@/common/lib/strings';
 import { setDates } from '@/features/filtering/dates/dates.store';
 import { QueryFilterState } from '@/features/filtering/filters/query-filters/query-filter.model';
-import {
-  addQueryFilter,
-  clearQueryFilters,
-  replaceFilters,
-  TagFilters,
-  updateTagFilters,
-} from '@/features/filtering/filters/query-filters/query-filters.store';
+import { TagFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
+import { useClearFilters } from '@/features/filtering/filters/query-filters/use-cases/clear-filters/clear-filters';
+import { useCreateFilter } from '@/features/filtering/filters/query-filters/use-cases/create-filter/create-filter';
+import { useReplaceFilters } from '@/features/filtering/filters/query-filters/use-cases/replace-filters/replace-filters';
 import { getFilterLabel } from '@/features/filtering/filters/query-filters/utils/get-filter-label';
+import { useTagFiltersRepository } from '@/features/filtering/filters/tag-filters/tag-filters.repository';
 import { InvestigationParams } from '@/features/investigation/components/investigation-details/investigation-params';
 import { InvestigationResults } from '@/features/investigation/components/investigation-details/investigation-results';
 import { InvestigationStage } from '@/features/investigation/components/investigation-details/investigation-stage';
@@ -253,6 +251,10 @@ const InvestigationHistoryItem = ({
 }) => {
   const dispatch = useAppDispatch();
   const [showOnlyKept] = useShowOnlyKept();
+  const clearFilters = useClearFilters();
+  const createFilter = useCreateFilter();
+  const replaceFilters = useReplaceFilters();
+  const tagFiltersRepo = useTagFiltersRepository();
 
   const handleLoadAsFilters = ({
     start_date,
@@ -267,7 +269,7 @@ const InvestigationHistoryItem = ({
     qfilter: QueryFilterState[];
     stages: InvestigationState['stages'];
   }) => {
-    dispatch(clearQueryFilters());
+    clearFilters();
     dispatch(
       setDates({
         type: 'range',
@@ -275,18 +277,16 @@ const InvestigationHistoryItem = ({
         end_date,
       }),
     );
-    if (tags) dispatch(updateTagFilters(tags));
-    dispatch(replaceFilters(qfilter));
+    if (tags) tagFiltersRepo.set(tags);
+    replaceFilters(qfilter);
     stages.forEach((stage) => {
-      dispatch(
-        addQueryFilter({
-          key: 'es_filter',
-          value: stage.values
-            .filter((v) => v.result === 'kept')
-            .map((v) => `${stage.key}:"${esEscape(v.value)}"`)
-            .join(' OR '),
-        }),
-      );
+      createFilter({
+        key: 'es_filter',
+        value: stage.values
+          .filter((v) => v.result === 'kept')
+          .map((v) => `${stage.key}:"${esEscape(v.value)}"`)
+          .join(' OR '),
+      });
     });
   };
   return (

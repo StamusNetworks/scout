@@ -30,10 +30,9 @@ import {
   useGetEventsAggregationQuery,
   useGetProtocolsFromEventsQuery,
 } from '@/features/events/common/events.api';
-import { addQueryFilter } from '@/features/filtering/filters/query-filters/query-filters.store';
+import { useCreateFilter } from '@/features/filtering/filters/query-filters/use-cases/create-filter/create-filter';
 import { ContextMenuContent } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/context-menu/context-menu.content';
 import { useGetESMappingQuery } from '@/features/user/settings/settings.api';
-import { useAppDispatch } from '@/store/store';
 
 import { useSignatureDetailsParams } from '../signatures-table/signatures-table.utils';
 
@@ -86,7 +85,7 @@ function SignatureFlowForProtocol({
   methodType?: string;
   globalParams: ReturnType<typeof useGlobalQueryParams>;
 }) {
-  const dispatch = useAppDispatch();
+  const createFilter = useCreateFilter();
   const { data: esMapping } = useGetESMappingQuery();
 
   const columns = useMemo(() => {
@@ -157,14 +156,12 @@ function SignatureFlowForProtocol({
     (node: SankeyNodeInfo) => {
       const col = columns[node.columnIndex];
       if (node.name === 'N/A') {
-        dispatch(
-          addQueryFilter({ key: 'es_filter', value: `NOT ${col.key}:*` }),
-        );
+        createFilter({ key: 'es_filter', value: `NOT ${col.key}:*` });
       } else {
-        dispatch(addQueryFilter({ key: col.key, value: node.name }));
+        createFilter({ key: col.key, value: node.name });
       }
     },
-    [columns, dispatch],
+    [columns, createFilter],
   );
 
   const handleNodeRightClick = useCallback(

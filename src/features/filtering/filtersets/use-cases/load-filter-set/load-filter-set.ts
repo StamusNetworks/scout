@@ -1,10 +1,11 @@
 import { toast } from 'sonner';
 
+import { QueryFiltersRecord } from '@/features/filtering/filters/query-filters/constants/query-filter.definition';
 import {
-  addQueryFilter,
-  clearQueryFilters,
-  updateTagFilters,
+  setQueryFilters,
+  setTagFilters,
 } from '@/features/filtering/filters/query-filters/query-filters.store';
+import { QFBuilder } from '@/features/filtering/filters/query-filters/utils/qf-builder';
 import { store } from '@/store/store-instance';
 
 import {
@@ -19,15 +20,13 @@ import {
 
 export const loadFilterSet = (filterSet: QueryFilterSet) => {
   const loadedFilterSetId = selectLoadedFilterSetId(store.getState());
-  if (loadedFilterSetId === filterSet.id) {
-    return;
-  }
+  if (loadedFilterSetId === filterSet.id) return;
 
-  store.dispatch(clearQueryFilters());
+  const qfBuilder = QFBuilder(QueryFiltersRecord, 'raw');
   const globalFilter = getTagsFromFilterSet(filterSet);
   if (globalFilter) {
     store.dispatch(
-      updateTagFilters({
+      setTagFilters({
         stamus: globalFilter.stamus,
         alert: globalFilter.alerts,
         discovery: globalFilter.sightings,
@@ -37,18 +36,15 @@ export const loadFilterSet = (filterSet: QueryFilterSet) => {
       }),
     );
   }
-  getFiltersFromFilterSet(filterSet)?.forEach((filter) => {
-    store.dispatch(
-      addQueryFilter({
-        key: filter.id,
-        value: filter.value as string,
-        options: {
-          is_wildcarded: filter.id === 'es_filter' ? false : !filter.fullString,
-          is_negated: filter.negated,
-        },
-      }),
-    );
-  });
+
+  const persistedFilters = getFiltersFromFilterSet(filterSet);
+  const newFilters = (persistedFilters ?? []).map((filter) =>
+    qfBuilder.createFilter(filter.id, filter.value as string, {
+      is_wildcarded: filter.id === 'es_filter' ? false : !filter.fullString,
+      is_negated: filter.negated,
+    }),
+  );
+  store.dispatch(setQueryFilters(newFilters));
   store.dispatch(setLoadedFilterSetId(filterSet.id));
   toast.success('Filterset applied');
 };

@@ -4,11 +4,8 @@ import { useEffect } from 'react';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { isNumeric } from '@/common/lib/numbers';
-import {
-  addQueryFilter,
-  clearQueryFilters,
-} from '@/features/filtering/filters/query-filters/query-filters.store';
-import { useAppDispatch } from '@/store/store';
+import { useClearFilters } from '@/features/filtering/filters/query-filters/use-cases/clear-filters/clear-filters';
+import { useCreateFilter } from '@/features/filtering/filters/query-filters/use-cases/create-filter/create-filter';
 
 export const Route = createFileRoute('/deeplink')({
   component: () => (
@@ -27,10 +24,11 @@ const urls = {
 };
 
 function DeeplinkPage() {
-  const dispatch = useAppDispatch();
+  const clearFilters = useClearFilters();
+  const createFilter = useCreateFilter();
   const params = new URLSearchParams(window.location.search);
   useEffect(() => {
-    dispatch(clearQueryFilters());
+    clearFilters();
     Array.from(params).forEach(([key, value]) => {
       if (key === 'page') return;
       const trimmedValue =
@@ -40,7 +38,7 @@ function DeeplinkPage() {
       const typedValue = isNumeric(trimmedValue)
         ? Number(trimmedValue)
         : trimmedValue;
-      dispatch(addQueryFilter({ key, value: typedValue }));
+      createFilter({ key, value: typedValue });
     });
   });
   return (

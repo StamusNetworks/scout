@@ -17,10 +17,9 @@ import {
 } from '@/common/design-system/graphs/sankey/sankey-chart';
 import { useGlobalQueryParams } from '@/common/fetching/useQueryParams';
 import { useGetEventsAggregationQuery } from '@/features/events/common/events.api';
-import { addQueryFilter } from '@/features/filtering/filters/query-filters/query-filters.store';
+import { useCreateFilter } from '@/features/filtering/filters/query-filters/use-cases/create-filter/create-filter';
 import { ContextMenuContent } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/context-menu/context-menu.content';
 import { useGetESMappingQuery } from '@/features/user/settings/settings.api';
-import { useAppDispatch } from '@/store/store';
 
 const ATTACK_FLOW_COLUMNS: ProtoColumn[] = [
   {
@@ -51,7 +50,7 @@ const ATTACK_FLOW_COLUMNS: ProtoColumn[] = [
 ];
 
 export const AttackFlowView = () => {
-  const dispatch = useAppDispatch();
+  const createFilter = useCreateFilter();
   const globalParams = useGlobalQueryParams(['dates', 'tenant', 'qfilter']);
   const { data: esMapping } = useGetESMappingQuery();
 
@@ -95,14 +94,12 @@ export const AttackFlowView = () => {
     (node: SankeyNodeInfo) => {
       const col = ATTACK_FLOW_COLUMNS[node.columnIndex];
       if (node.name === 'N/A') {
-        dispatch(
-          addQueryFilter({ key: 'es_filter', value: `NOT ${col.key}:*` }),
-        );
+        createFilter({ key: 'es_filter', value: `NOT ${col.key}:*` });
       } else {
-        dispatch(addQueryFilter({ key: col.key, value: node.name }));
+        createFilter({ key: col.key, value: node.name });
       }
     },
-    [dispatch],
+    [createFilter],
   );
 
   const handleNodeRightClick = useCallback((node: SankeyNodeInfo) => {

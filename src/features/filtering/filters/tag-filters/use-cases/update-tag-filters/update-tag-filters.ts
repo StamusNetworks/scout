@@ -1,5 +1,6 @@
-import { updateTagFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
-import { useAppDispatch } from '@/store/store';
+import { setTagFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
+import { useTagFiltersRepository } from '@/features/filtering/filters/tag-filters/tag-filters.repository';
+import { store } from '@/store/store-instance';
 
 import type { TagFilters } from '../../tag-filters.model';
 
@@ -13,12 +14,11 @@ const defaultTags: TagFilters = {
   untagged: true,
 };
 
-export const enableTags = (
-  dispatch: ReturnType<typeof useAppDispatch>,
-  tags: Partial<TagFilters> = {},
-) => dispatch(updateTagFilters({ ...defaultTags, ...tags }));
+export const enableTags = (tags: Partial<TagFilters> = {}) =>
+  store.dispatch(setTagFilters({ ...defaultTags, ...tags }));
 
 export const useEnableTags = () => {
-  const dispatch = useAppDispatch();
-  return (tags?: Partial<TagFilters>) => enableTags(dispatch, tags);
+  const tagFiltersRepo = useTagFiltersRepository();
+  return (tags?: Partial<TagFilters>) =>
+    tagFiltersRepo.set({ ...defaultTags, ...tags });
 };
