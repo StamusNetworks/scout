@@ -2,4 +2,4 @@ export {
   useGetSignatureQuery,
   useGetSignatureRulesetsStatusQuery,
   useGetSignaturesQuery,
-} from '@/features/hunt/detection-methods/signatures/api/signatures.api';
+} from '@/features/detection-methods/signatures/api/signatures.api';

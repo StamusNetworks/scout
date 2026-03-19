@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { Page, PageContainer } from '@/common/design-system/atoms/page';
-import { SignaturesTable } from '@/features/hunt/detection-methods/signatures/components/signatures-table/signatures-table';
+import { SignaturesTable } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table';
 
 export const Route = createFileRoute('/detection-methods/$detectionMethodId')({
   component: () => (

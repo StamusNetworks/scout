@@ -16,7 +16,7 @@ import { useGetBeaconingEventsQuery } from '@/features/events/beaconing/common/b
 import { useGetEventsQuery } from '@/features/events/common/events.api';
 import { useGetSightingEventsQuery } from '@/features/events/sightings/common/sightings.api';
 import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
-import { useGetSignaturesQuery } from '@/features/hunt/detection-methods/signatures/api/signatures.api';
+import { useGetSignaturesQuery } from '@/features/detection-methods/signatures/api/signatures.api';
 import { useGetImpactedEntitiesQuery } from '@/features/threats/common/entities.api';
 import { useGetThreatsStatusQuery } from '@/features/threats/common/threats.api';
 

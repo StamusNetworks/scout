@@ -1,7 +1,7 @@
 import { Skeleton } from '@/common/design-system/atoms/ui/skeleton';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
-import { Signature } from '@/features/hunt/detection-methods/signatures/model/signature';
+import { Signature } from '@/features/detection-methods/signatures/model/signature';
 
 export const skeletonColumns: CustomColumnDef<Signature>[] = [
   {

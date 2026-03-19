@@ -35,7 +35,7 @@ import { useGetEventsQuery } from '@/features/events/common/events.api';
 import { useGetSightingEventsQuery } from '@/features/events/sightings/common/sightings.api';
 import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
 import { HostHeader } from '@/features/host-insights/use-cases/host-details/entities/host-header';
-import { useGetSignaturesQuery } from '@/features/hunt/detection-methods/signatures/api/signatures.api';
+import { useGetSignaturesQuery } from '@/features/detection-methods/signatures/api/signatures.api';
 import { useGetThreatsStatusQuery } from '@/features/threats/common/threats.api';
 import { selectTenancy } from '@/features/user/tenancy/tenancy.selector';
 import { useAppSelector } from '@/store/store';

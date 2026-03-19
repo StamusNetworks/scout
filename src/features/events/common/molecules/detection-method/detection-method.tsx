@@ -11,8 +11,8 @@ import {
   EmptyMedia,
 } from '@/common/design-system/atoms/ui/empty';
 import { Skeleton } from '@/common/design-system/atoms/ui/skeleton';
-import { useGetSignatureQuery } from '@/features/hunt/detection-methods/signatures/api/signatures.api';
-import { DetectionMethodExpandedRowTemplate } from '@/features/hunt/detection-methods/signatures/components/signatures-table/signatures-table.expanded-row';
+import { useGetSignatureQuery } from '@/features/detection-methods/signatures/api/signatures.api';
+import { DetectionMethodExpandedRowTemplate } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.expanded-row';
 
 export const DetectionMethodTab = ({ sid }: { sid: number }) => {
   const { data, isLoading } = useGetSignatureQuery({

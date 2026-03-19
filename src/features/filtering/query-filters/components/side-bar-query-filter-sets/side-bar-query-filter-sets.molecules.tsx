@@ -35,7 +35,7 @@ import {
   useGetHostsQuery,
   useGetHostsWithAlertsQuery,
 } from '@/features/host-insights/common/host-insights.api';
-import { useGetSignaturesQuery } from '@/features/hunt/detection-methods/signatures/api/signatures.api';
+import { useGetSignaturesQuery } from '@/features/detection-methods/signatures/api/signatures.api';
 import { useAppSelector } from '@/store/store';
 
 import { filterSetPageConfig } from '../../constants/query-filtersets';
