@@ -10,7 +10,6 @@ import { useGlobalQueryParams } from '@/features/filtering/use-global-query-para
 import { useGetThreatsStatusQuery } from '@/features/threats/common/threats.api';
 
 import { threatStatusColumns } from './threat-status.columns';
-import { ThreatStatusExpandedRow } from './threat-status.expanded-row';
 
 const columns = threatStatusColumns
   .filter((col) => !['target', 'target_type'].includes(col.id!))
@@ -62,7 +61,6 @@ export function HostIncidentsTable({
         isLoading={isFetching}
         sorting={sorting}
         onSortingChange={onSortingChange}
-        ExpandedRow={ThreatStatusExpandedRow}
         Empty={
           <DataTableEmpty
             Icon={Biohazard}

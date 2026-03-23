@@ -244,6 +244,17 @@ function HostDetailsLayout() {
                   Timeline
                 </Link>
               </TabsTrigger>
+              <TabsTrigger
+                value={`/hosts/${hostId}/hunting-trail`}
+                asChild
+              >
+                <Link
+                  to="/hosts/$hostId/hunting-trail"
+                  params={{ hostId }}
+                >
+                  Hunting Trail
+                </Link>
+              </TabsTrigger>
               <Separator
                 orientation="vertical"
                 className="bg-foreground/10 dark:bg-foreground/15 mx-1 h-5"

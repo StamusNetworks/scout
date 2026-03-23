@@ -61,6 +61,7 @@ import { Route as EnterpriseHostsHostIdTimelineRouteImport } from './routes/_ent
 import { Route as EnterpriseHostsHostIdSightingsRouteImport } from './routes/_enterprise/hosts/$hostId/sightings'
 import { Route as EnterpriseHostsHostIdOutlierEventsRouteImport } from './routes/_enterprise/hosts/$hostId/outlier-events'
 import { Route as EnterpriseHostsHostIdIncidentsRouteImport } from './routes/_enterprise/hosts/$hostId/incidents'
+import { Route as EnterpriseHostsHostIdHuntingTrailRouteImport } from './routes/_enterprise/hosts/$hostId/hunting-trail'
 import { Route as EnterpriseHostsHostIdDetectionMethodsRouteImport } from './routes/_enterprise/hosts/$hostId/detection-methods'
 import { Route as EnterpriseHostsHostIdDetectionEventsRouteImport } from './routes/_enterprise/hosts/$hostId/detection-events'
 import { Route as EnterpriseHostsHostIdBeaconsRouteImport } from './routes/_enterprise/hosts/$hostId/beacons'
@@ -380,6 +381,12 @@ const EnterpriseHostsHostIdIncidentsRoute =
     path: '/incidents',
     getParentRoute: () => EnterpriseHostsHostIdRouteRoute,
   } as any)
+const EnterpriseHostsHostIdHuntingTrailRoute =
+  EnterpriseHostsHostIdHuntingTrailRouteImport.update({
+    id: '/hunting-trail',
+    path: '/hunting-trail',
+    getParentRoute: () => EnterpriseHostsHostIdRouteRoute,
+  } as any)
 const EnterpriseHostsHostIdDetectionMethodsRoute =
   EnterpriseHostsHostIdDetectionMethodsRouteImport.update({
     id: '/detection-methods',
@@ -602,6 +609,7 @@ export interface FileRoutesByFullPath {
   '/hosts/$hostId/beacons': typeof EnterpriseHostsHostIdBeaconsRoute
   '/hosts/$hostId/detection-events': typeof EnterpriseHostsHostIdDetectionEventsRoute
   '/hosts/$hostId/detection-methods': typeof EnterpriseHostsHostIdDetectionMethodsRoute
+  '/hosts/$hostId/hunting-trail': typeof EnterpriseHostsHostIdHuntingTrailRoute
   '/hosts/$hostId/incidents': typeof EnterpriseHostsHostIdIncidentsRoute
   '/hosts/$hostId/outlier-events': typeof EnterpriseHostsHostIdOutlierEventsRoute
   '/hosts/$hostId/sightings': typeof EnterpriseHostsHostIdSightingsRoute
@@ -671,6 +679,7 @@ export interface FileRoutesByTo {
   '/hosts/$hostId/beacons': typeof EnterpriseHostsHostIdBeaconsRoute
   '/hosts/$hostId/detection-events': typeof EnterpriseHostsHostIdDetectionEventsRoute
   '/hosts/$hostId/detection-methods': typeof EnterpriseHostsHostIdDetectionMethodsRoute
+  '/hosts/$hostId/hunting-trail': typeof EnterpriseHostsHostIdHuntingTrailRoute
   '/hosts/$hostId/incidents': typeof EnterpriseHostsHostIdIncidentsRoute
   '/hosts/$hostId/outlier-events': typeof EnterpriseHostsHostIdOutlierEventsRoute
   '/hosts/$hostId/sightings': typeof EnterpriseHostsHostIdSightingsRoute
@@ -750,6 +759,7 @@ export interface FileRoutesById {
   '/_enterprise/hosts/$hostId/beacons': typeof EnterpriseHostsHostIdBeaconsRoute
   '/_enterprise/hosts/$hostId/detection-events': typeof EnterpriseHostsHostIdDetectionEventsRoute
   '/_enterprise/hosts/$hostId/detection-methods': typeof EnterpriseHostsHostIdDetectionMethodsRoute
+  '/_enterprise/hosts/$hostId/hunting-trail': typeof EnterpriseHostsHostIdHuntingTrailRoute
   '/_enterprise/hosts/$hostId/incidents': typeof EnterpriseHostsHostIdIncidentsRoute
   '/_enterprise/hosts/$hostId/outlier-events': typeof EnterpriseHostsHostIdOutlierEventsRoute
   '/_enterprise/hosts/$hostId/sightings': typeof EnterpriseHostsHostIdSightingsRoute
@@ -833,6 +843,7 @@ export interface FileRouteTypes {
     | '/hosts/$hostId/beacons'
     | '/hosts/$hostId/detection-events'
     | '/hosts/$hostId/detection-methods'
+    | '/hosts/$hostId/hunting-trail'
     | '/hosts/$hostId/incidents'
     | '/hosts/$hostId/outlier-events'
     | '/hosts/$hostId/sightings'
@@ -902,6 +913,7 @@ export interface FileRouteTypes {
     | '/hosts/$hostId/beacons'
     | '/hosts/$hostId/detection-events'
     | '/hosts/$hostId/detection-methods'
+    | '/hosts/$hostId/hunting-trail'
     | '/hosts/$hostId/incidents'
     | '/hosts/$hostId/outlier-events'
     | '/hosts/$hostId/sightings'
@@ -980,6 +992,7 @@ export interface FileRouteTypes {
     | '/_enterprise/hosts/$hostId/beacons'
     | '/_enterprise/hosts/$hostId/detection-events'
     | '/_enterprise/hosts/$hostId/detection-methods'
+    | '/_enterprise/hosts/$hostId/hunting-trail'
     | '/_enterprise/hosts/$hostId/incidents'
     | '/_enterprise/hosts/$hostId/outlier-events'
     | '/_enterprise/hosts/$hostId/sightings'
@@ -1403,6 +1416,13 @@ declare module '@tanstack/react-router' {
       path: '/incidents'
       fullPath: '/hosts/$hostId/incidents'
       preLoaderRoute: typeof EnterpriseHostsHostIdIncidentsRouteImport
+      parentRoute: typeof EnterpriseHostsHostIdRouteRoute
+    }
+    '/_enterprise/hosts/$hostId/hunting-trail': {
+      id: '/_enterprise/hosts/$hostId/hunting-trail'
+      path: '/hunting-trail'
+      fullPath: '/hosts/$hostId/hunting-trail'
+      preLoaderRoute: typeof EnterpriseHostsHostIdHuntingTrailRouteImport
       parentRoute: typeof EnterpriseHostsHostIdRouteRoute
     }
     '/_enterprise/hosts/$hostId/detection-methods': {
@@ -1921,6 +1941,7 @@ interface EnterpriseHostsHostIdRouteRouteChildren {
   EnterpriseHostsHostIdBeaconsRoute: typeof EnterpriseHostsHostIdBeaconsRoute
   EnterpriseHostsHostIdDetectionEventsRoute: typeof EnterpriseHostsHostIdDetectionEventsRoute
   EnterpriseHostsHostIdDetectionMethodsRoute: typeof EnterpriseHostsHostIdDetectionMethodsRoute
+  EnterpriseHostsHostIdHuntingTrailRoute: typeof EnterpriseHostsHostIdHuntingTrailRoute
   EnterpriseHostsHostIdIncidentsRoute: typeof EnterpriseHostsHostIdIncidentsRoute
   EnterpriseHostsHostIdOutlierEventsRoute: typeof EnterpriseHostsHostIdOutlierEventsRoute
   EnterpriseHostsHostIdSightingsRoute: typeof EnterpriseHostsHostIdSightingsRoute
@@ -1935,6 +1956,8 @@ const EnterpriseHostsHostIdRouteRouteChildren: EnterpriseHostsHostIdRouteRouteCh
       EnterpriseHostsHostIdDetectionEventsRoute,
     EnterpriseHostsHostIdDetectionMethodsRoute:
       EnterpriseHostsHostIdDetectionMethodsRoute,
+    EnterpriseHostsHostIdHuntingTrailRoute:
+      EnterpriseHostsHostIdHuntingTrailRoute,
     EnterpriseHostsHostIdIncidentsRoute: EnterpriseHostsHostIdIncidentsRoute,
     EnterpriseHostsHostIdOutlierEventsRoute:
       EnterpriseHostsHostIdOutlierEventsRoute,

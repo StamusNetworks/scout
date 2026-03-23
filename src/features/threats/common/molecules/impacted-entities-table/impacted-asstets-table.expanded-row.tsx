@@ -6,7 +6,10 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/pillTabs';
+import { ScrollArea } from '@/common/design-system/atoms/ui/scroll-area';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { HostInsightsBlocks } from '@/features/host-insights/use-cases/host-details/molecules/host-insights-blocks';
+import { HuntingTrail } from '@/features/threats/compromises/use-cases/hunting-trail/entities/hunting-trail';
 import { ThreatsTimeline } from '@/features/threats/compromises/use-cases/timeline/components/timeline/timeline';
 
 import { Entity } from '../../entity';
@@ -15,6 +18,7 @@ import { ThreatsTable } from '../threats-table/threats-table';
 
 export const ExpandedRow = (type: 'doc' | 'dopv') => {
   const ImpactedEntitiesTableExpandedRow = ({ row }: { row: Row<Entity> }) => {
+    const { start_date, end_date } = useGlobalQueryParams(['dates']);
     return (
       <Tabs
         defaultValue={type === 'doc' ? 'timeline' : 'threats'}
@@ -23,6 +27,9 @@ export const ExpandedRow = (type: 'doc' | 'dopv') => {
         <TabsList>
           {type === 'doc' && (
             <TabsTrigger value="timeline">Timeline</TabsTrigger>
+          )}
+          {type === 'doc' && (
+            <TabsTrigger value="hunting-trail">Hunting Trail</TabsTrigger>
           )}
           {type === 'doc' && (
             <TabsTrigger value="attacker_infrastructure">
@@ -37,6 +44,17 @@ export const ExpandedRow = (type: 'doc' | 'dopv') => {
         {type === 'doc' && (
           <TabsContent value="timeline">
             <ThreatsTimeline entity={row.original.value} />
+          </TabsContent>
+        )}
+        {type === 'doc' && (
+          <TabsContent value="hunting-trail">
+            <ScrollArea className="max-h-[800px]">
+              <HuntingTrail
+                asset={row.original.value}
+                startDate={start_date}
+                endDate={end_date}
+              />
+            </ScrollArea>
           </TabsContent>
         )}
         {type === 'doc' && (
