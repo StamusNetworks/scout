@@ -30,7 +30,7 @@ export const HuntingTrailCard = ({ group }: { group: TimelineGroup }) => {
 
   return (
     <div className={`border-l-2 ${TYPE_COLOR[type]} bg-card overflow-hidden`}>
-      <Row className="bg-muted/40 border-border items-center gap-2 border-b px-3 py-2 text-xs">
+      <Row className="bg-muted/40 border-border items-center gap-2 border-t border-b px-3 py-2 text-xs">
         <span
           className={`font-bold tracking-wide uppercase ${TYPE_COLOR[type].split(' ')[1]}`}
         >

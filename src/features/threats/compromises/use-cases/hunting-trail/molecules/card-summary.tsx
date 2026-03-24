@@ -152,7 +152,7 @@ const SummaryColumn = ({ column }: { column: ColumnSummary }) => {
           </div>
         )}
       </div>
-      <div className="flex flex-col px-3 py-1">
+      <div className="flex flex-col gap-y-0.5 px-3 py-1">
         {visible.length === 0 ? (
           <span className="text-muted-foreground text-xs">—</span>
         ) : (
