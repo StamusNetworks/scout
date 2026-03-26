@@ -77,6 +77,7 @@ export const SyntheticView = ({ event }: { event: Event }) => {
         <PayloadCard
           title="HTTP Request"
           base64={event.http.http_request_body}
+          truncated={event.tags?.includes('http_request_body_truncated')}
         />
       ) : (
         <ScrollPreCard
@@ -88,6 +89,7 @@ export const SyntheticView = ({ event }: { event: Event }) => {
         <PayloadCard
           title="HTTP Response"
           base64={event.http.http_response_body}
+          truncated={event.tags?.includes('http_response_body_truncated')}
         />
       ) : (
         <ScrollPreCard

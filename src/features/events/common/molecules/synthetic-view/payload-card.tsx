@@ -19,9 +19,11 @@ import { base64ToHex, base64ToUtf8 } from '@/common/lib/strings';
 export const PayloadCard = ({
   title = 'Payload',
   base64,
+  truncated,
 }: {
   title?: string;
   base64: string;
+  truncated?: boolean;
 }) => {
   const [open, setOpen] = useState(false);
   const utf8 = base64ToUtf8(base64);
@@ -45,6 +47,11 @@ export const PayloadCard = ({
             <PayloadVisualizer hex={hex} />
           </ScrollArea>
         </div>
+        {truncated && (
+          <p className="text-muted-foreground mt-1 text-xs">
+            Content has been truncated
+          </p>
+        )}
       </TableCard>
 
       <Dialog
