@@ -196,4 +196,38 @@ describe('HuntingTrail', () => {
       expect(screen.getByText('domain-6.io')).toBeInTheDocument();
     });
   });
+
+  it('renders display tabs', async () => {
+    server.use(
+      http.get(baseUrl + '/rules/es/alerts_tail', ({ request }) => {
+        const url = new URL(request.url);
+        const qfilter = url.searchParams.get('qfilter') ?? '';
+        if (qfilter.includes('stamus.nrd')) {
+          return HttpResponse.json({
+            count: 1,
+            next: null,
+            previous: null,
+            results: [makeNrdEvent()],
+          });
+        }
+        return HttpResponse.json(emptyPaginated);
+      }),
+    );
+    await renderComponent();
+    await waitFor(() => {
+      expect(screen.getByRole('tablist')).toBeInTheDocument();
+      expect(
+        screen.getByRole('tab', { name: /aggregated timeline/i }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('tab', { name: /query aggregated/i }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('tab', { name: /purpose aggregated/i }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('tab', { name: /flow aggregated/i }),
+      ).toBeInTheDocument();
+    });
+  });
 });

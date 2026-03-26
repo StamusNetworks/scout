@@ -21,15 +21,39 @@ type ColumnDef = {
   getValue: (e: EventItem) => string | number | undefined;
 };
 
+const sigCol: ColumnDef = {
+  queryKey: 'alert.signature',
+  getValue: (e) => e.alert?.signature,
+};
+const srcCol: ColumnDef = { queryKey: 'flow.src_ip', getValue: displayIp };
+const destCol: ColumnDef = {
+  queryKey: 'flow.dest_ip',
+  getValue: displayDestIp,
+};
+const getDnsRrname = (e: EventItem) =>
+  e.dns?.rrname ??
+  e.dns?.query?.[0]?.rrname ??
+  e.dns?.queries?.[0]?.rrname ??
+  e.dns?.answer?.[0]?.rrname ??
+  e.dns?.answers?.[0]?.rrname;
+
+const dnsCol: ColumnDef = {
+  queryKey: 'dns.rrname',
+  getValue: getDnsRrname,
+};
+
+const alertCols: ColumnDef[] = [sigCol, srcCol, destCol];
+const dnsCols: ColumnDef[] = [dnsCol, srcCol, destCol, sigCol];
+
 const TYPE_COLUMNS: Record<TimelineEventType, ColumnDef[]> = {
   nrd: [
     {
       queryKey: 'hostname_info.domain',
       getValue: (e) => e.hostname_info?.domain,
     },
-    { queryKey: 'flow.src_ip', getValue: displayIp },
-    { queryKey: 'flow.dest_ip', getValue: displayDestIp },
-    { queryKey: 'alert.signature', getValue: (e) => e.alert?.signature },
+    srcCol,
+    destCol,
+    sigCol,
   ],
   sightings: [
     { queryKey: 'discovery.asset', getValue: (e) => e.discovery?.asset },
@@ -52,23 +76,53 @@ const TYPE_COLUMNS: Record<TimelineEventType, ColumnDef[]> = {
       queryKey: (e) => (e.fileinfo ? 'fileinfo.size' : 'files.size'),
       getValue: (e) => e.fileinfo?.size ?? e.files?.[0]?.size,
     },
-    { queryKey: 'flow.src_ip', getValue: displayIp },
-    { queryKey: 'flow.dest_ip', getValue: displayDestIp },
+    srcCol,
+    destCol,
   ],
   lateral: [
-    { queryKey: 'alert.signature', getValue: (e) => e.alert?.signature },
-    { queryKey: 'flow.src_ip', getValue: displayIp },
-    { queryKey: 'flow.dest_ip', getValue: displayDestIp },
+    sigCol,
+    srcCol,
+    destCol,
     { queryKey: 'alert.lateral', getValue: (e) => e.alert?.lateral },
   ],
-  hunting: [
-    { queryKey: 'alert.signature', getValue: (e) => e.alert?.signature },
-    { queryKey: 'flow.src_ip', getValue: displayIp },
-    { queryKey: 'flow.dest_ip', getValue: displayDestIp },
+  hunting: alertCols,
+  remoteAdmin: alertCols,
+  remoteRegistry: alertCols,
+  postExploit: alertCols,
+  ipDownload: alertCols,
+  rawProtocol: alertCols,
+  userEnum: alertCols,
+  powershell: alertCols,
+  newServers: alertCols,
+  smbSightings: alertCols,
+  torrent: alertCols,
+  smtpExe: alertCols,
+  base64Encoding: alertCols,
+  maliciousFilenames: alertCols,
+  suspiciousFilenames: alertCols,
+  longDomains: dnsCols,
+  shortDomains: dnsCols,
+  exeSightings: alertCols,
+  dynamicDns: dnsCols,
+  tor: alertCols,
+  publicDns: dnsCols,
+  smtpUnencrypted: alertCols,
+  base64Decoding: [
+    {
+      queryKey: 'payload_printable',
+      getValue: (e) => e.payload_printable,
+    },
+    srcCol,
+    destCol,
   ],
 };
 
-type UniqueValue = { value: string; count: number; queryKey: string };
+type UniqueValue = {
+  value: string;
+  rawValue: string | number;
+  count: number;
+  queryKey: string;
+};
 type ColumnSummary = {
   queryKey: string;
   label: string;
@@ -80,28 +134,31 @@ function summarizeColumns(
   events: EventItem[],
 ): ColumnSummary[] {
   return TYPE_COLUMNS[type].map((col) => {
-    const counts = new Map<string, { count: number; queryKey: string }>();
+    const counts = new Map<
+      string,
+      { rawValue: string | number; count: number; queryKey: string }
+    >();
     let resolvedKey = '';
     for (const event of events) {
       const raw = col.getValue(event);
-      const val = raw != null ? String(raw) : undefined;
-      if (!val) continue;
+      if (raw == null) continue;
+      const key = String(raw);
       const qk =
         typeof col.queryKey === 'function' ? col.queryKey(event) : col.queryKey;
       if (!resolvedKey) resolvedKey = qk;
-      const existing = counts.get(val);
+      const existing = counts.get(key);
       if (existing) {
         existing.count++;
       } else {
-        counts.set(val, { count: 1, queryKey: qk });
+        counts.set(key, { rawValue: raw, count: 1, queryKey: qk });
       }
     }
     if (!resolvedKey) {
       resolvedKey = typeof col.queryKey === 'function' ? '' : col.queryKey;
     }
     const values: UniqueValue[] = [];
-    for (const [value, { count, queryKey }] of counts) {
-      values.push({ value, count, queryKey });
+    for (const [value, { rawValue, count, queryKey }] of counts) {
+      values.push({ value, rawValue, count, queryKey });
     }
     values.sort((a, b) => b.count - a.count);
     return {
@@ -124,7 +181,7 @@ const SummaryColumn = ({ column }: { column: ColumnSummary }) => {
 
   return (
     <div className="flex min-w-0 flex-1 flex-col">
-      <div className="border-border flex h-7 items-center justify-between border-b px-3">
+      <div className="bg-muted/40 border-border flex h-7 items-center justify-between border-b px-3">
         <span className="text-muted-foreground text-xs font-medium">
           {column.label}{' '}
           <span className="text-muted-foreground/60">
@@ -156,14 +213,14 @@ const SummaryColumn = ({ column }: { column: ColumnSummary }) => {
         {visible.length === 0 ? (
           <span className="text-muted-foreground text-xs">—</span>
         ) : (
-          visible.map(({ value, count, queryKey }) => (
+          visible.map(({ value, rawValue, count, queryKey }) => (
             <div
               key={value}
               className="flex items-center justify-between gap-2"
             >
               <EventValue
                 query_key={queryKey}
-                value={value}
+                value={rawValue}
                 className="min-w-0 truncate text-xs"
               />
               <FormattedBadge

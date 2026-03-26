@@ -1,7 +1,15 @@
-import { Column } from '@/common/design-system/atoms/layout/column';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/common/design-system/atoms/ui/borderTabs';
 
 import { useHuntingTrail } from '../hooks/use-hunting-trail';
-import { HuntingTrailCard } from '../molecules/hunting-trail-card';
+import { AggregatedTimeline } from '../use-cases/aggregated-timeline';
+import { FlowAggregated } from '../use-cases/flow-aggregated';
+import { PurposeAggregated } from '../use-cases/purpose-aggregated';
+import { QueryAggregated } from '../use-cases/query-aggregated';
 
 interface HuntingTrailProps {
   asset: string;
@@ -14,7 +22,7 @@ export const HuntingTrail = ({
   startDate,
   endDate,
 }: HuntingTrailProps) => {
-  const { groups, isLoading, isError, isEmpty } = useHuntingTrail({
+  const { taggedEvents, isLoading, isError, isEmpty } = useHuntingTrail({
     asset,
     startDate,
     endDate,
@@ -50,13 +58,31 @@ export const HuntingTrail = ({
   }
 
   return (
-    <Column className="gap-2 p-2">
-      {groups.map((group, idx) => (
-        <HuntingTrailCard
-          key={`${group.type}-${group.startTime}-${idx}`}
-          group={group}
-        />
-      ))}
-    </Column>
+    <Tabs defaultValue="aggregated-timeline">
+      <div className="px-2 pt-2">
+        <TabsList>
+          <TabsTrigger value="aggregated-timeline">
+            Aggregated Timeline
+          </TabsTrigger>
+          <TabsTrigger value="query-aggregated">Query Aggregated</TabsTrigger>
+          <TabsTrigger value="purpose-aggregated">
+            Purpose Aggregated
+          </TabsTrigger>
+          <TabsTrigger value="flow-aggregated">Flow Aggregated</TabsTrigger>
+        </TabsList>
+      </div>
+      <TabsContent value="aggregated-timeline">
+        <AggregatedTimeline events={taggedEvents} />
+      </TabsContent>
+      <TabsContent value="query-aggregated">
+        <QueryAggregated events={taggedEvents} />
+      </TabsContent>
+      <TabsContent value="purpose-aggregated">
+        <PurposeAggregated events={taggedEvents} />
+      </TabsContent>
+      <TabsContent value="flow-aggregated">
+        <FlowAggregated events={taggedEvents} />
+      </TabsContent>
+    </Tabs>
   );
 };

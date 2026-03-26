@@ -57,8 +57,7 @@ describe('useHuntingTrail', () => {
   it('returns isLoading: true when any query is still loading', () => {
     mockUseGetEventsQuery
       .mockReturnValueOnce(loadingResult)
-      .mockReturnValueOnce(emptyResult)
-      .mockReturnValueOnce(emptyResult);
+      .mockReturnValue(emptyResult);
     mockUseGetEventsTailQuery.mockReturnValue(emptyResult);
     mockUseGetSightingEventsQuery.mockReturnValue(
       emptyResult as unknown as ReturnType<typeof useGetSightingEventsQuery>,
@@ -68,7 +67,7 @@ describe('useHuntingTrail', () => {
     expect(result.current.isEmpty).toBe(false);
   });
 
-  it('returns isError: true only when ALL 5 queries have failed', () => {
+  it('returns isError: true only when ALL queries have failed', () => {
     mockUseGetEventsQuery.mockReturnValue(errorResult);
     mockUseGetEventsTailQuery.mockReturnValue(errorResult);
     mockUseGetSightingEventsQuery.mockReturnValue(
@@ -82,8 +81,7 @@ describe('useHuntingTrail', () => {
   it('does not return isError: true when only some queries have failed', () => {
     mockUseGetEventsQuery
       .mockReturnValueOnce(errorResult)
-      .mockReturnValueOnce(emptyResult)
-      .mockReturnValueOnce(emptyResult);
+      .mockReturnValue(emptyResult);
     mockUseGetEventsTailQuery.mockReturnValue(emptyResult);
     mockUseGetSightingEventsQuery.mockReturnValue(
       emptyResult as unknown as ReturnType<typeof useGetSightingEventsQuery>,
@@ -111,14 +109,13 @@ describe('useHuntingTrail', () => {
     } as unknown as ReturnType<typeof useGetEventsQuery>;
     mockUseGetEventsQuery
       .mockReturnValueOnce(withResults)
-      .mockReturnValueOnce(emptyResult)
-      .mockReturnValueOnce(emptyResult);
+      .mockReturnValue(emptyResult);
     mockUseGetEventsTailQuery.mockReturnValue(emptyResult);
     mockUseGetSightingEventsQuery.mockReturnValue(
       emptyResult as unknown as ReturnType<typeof useGetSightingEventsQuery>,
     );
     const { result } = renderHook(() => useHuntingTrail(params));
     expect(result.current.isEmpty).toBe(false);
-    expect(result.current.groups.length).toBeGreaterThan(0);
+    expect(result.current.taggedEvents.length).toBeGreaterThan(0);
   });
 });

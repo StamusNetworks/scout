@@ -5,8 +5,7 @@ import {
 } from '@/features/events/common/events.api';
 import { useGetSightingEventsQuery } from '@/features/events/sightings/common/sightings.api';
 
-import { TaggedEvent } from '../hunting-trail.model';
-import { aggregateTimelineEvents } from '../utils/aggregate-timeline-events';
+import { TaggedEvent, TimelineEventType } from '../hunting-trail.model';
 
 interface UseHuntingTrailParams {
   asset: string;
@@ -20,78 +19,224 @@ export function useHuntingTrail({
   endDate,
 }: UseHuntingTrailParams) {
   const ipFilter = `src_ip:${esEscape(asset)} OR dest_ip:${esEscape(asset)}`;
+  const common = { start_date: startDate, end_date: endDate, page_size: 100 };
+  const alertParams = { ...common, alert: true as const };
+
+  // --- Alert queries (alerts_tail) ---
 
   const nrd = useGetEventsQuery({
+    ...alertParams,
     qfilter: `(${ipFilter}) AND metadata.flowbits:stamus.nrd*`,
-    start_date: startDate,
-    end_date: endDate,
-    page_size: 100,
-    alert: true,
-  });
-
-  const sightings = useGetSightingEventsQuery({
-    qfilter: `discovery.asset:${esEscape(asset)}`,
-    start_date: startDate,
-    end_date: endDate,
-    page_size: 100,
-  });
-
-  const file = useGetEventsTailQuery({
-    qfilter: `(${ipFilter}) AND (metadata.flowbits:stamus.file.identification OR metadata.flowbits:stamus.dga.smbfilename) AND event_type:fileinfo`,
-    start_date: startDate,
-    end_date: endDate,
-    page_size: 100,
-  });
-
-  const lateral = useGetEventsQuery({
-    qfilter: `(${ipFilter}) AND alert.lateral:* AND alert.metadata.source:smb_lateral AND alert.metadata.signature_severity:critical`,
-    start_date: startDate,
-    end_date: endDate,
-    page_size: 100,
-    alert: true,
   });
 
   const hunting = useGetEventsQuery({
+    ...alertParams,
     qfilter: `(${ipFilter}) AND alert.metadata.stamus_type:hunting`,
-    start_date: startDate,
-    end_date: endDate,
-    page_size: 100,
-    alert: true,
   });
 
-  const queries = [nrd, sightings, file, lateral, hunting];
-  const isLoading = queries.some((q) => q.isLoading);
-  const isError = queries.every((q) => q.isError);
+  const lateral = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND alert.lateral:* AND alert.metadata.source:smb_lateral AND alert.metadata.signature_severity:critical`,
+  });
+
+  const remoteAdmin = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND alert.metadata.lateral_function.keyword:OpenLocalMachine`,
+  });
+
+  const remoteRegistry = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND alert.metadata.lateral_function.keyword:OpenClassesRoot`,
+  });
+
+  const postExploit = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND alert.signature:*attack_response*`,
+  });
+
+  const ipDownload = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND alert.signature:*dotted* AND alert.signature:*quad* AND alert.signature:*request* AND alert.signature:*host*`,
+  });
+
+  const rawProtocol = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND alert.signature:*raw* AND alert.signature:*Hunt*`,
+  });
+
+  const userEnum = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND alert.signature:*EnumerateUsers* AND alert.metadata.provider.keyword:Stamus AND alert.metadata.source.keyword:smb_lateral`,
+  });
+
+  const powershell = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND alert.signature:*Powershell* AND alert.signature:*Hunt*`,
+  });
+
+  const newServers = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND alert.signature:Server AND metadata.flowbits:stamus.sightings`,
+  });
+
+  const smbSightings = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND alert.signature:SMB AND metadata.flowbits:stamus.sightings`,
+  });
+
+  const torrent = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND alert.signature:*torrent*`,
+  });
+
+  const smtpExe = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND alert.signature:SUSPICIOUS AND alert.signature:SMTP AND alert.signature:EXE`,
+  });
+
+  const base64Encoding = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND alert.signature:encoded AND alert.signature:*base64*`,
+  });
+
+  const maliciousFilenames = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND alert.signature:Observed AND alert.signature:Filename`,
+  });
+
+  const suspiciousFilenames = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND alert.signature:Suspicious AND alert.signature:Filename`,
+  });
+
+  const longDomains = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND (dns.query.rrname.keyword:/.{70}.*/) AND dns.query.rrtype:*`,
+  });
+
+  const shortDomains = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND (-dns.query.rrname.keyword:/.{10}.*/) AND dns.query.rrtype:*`,
+  });
+
+  const exeSightings = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND alert.signature:*exe* AND metadata.flowbits:stamus.sightings`,
+  });
+
+  const dynamicDns = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND alert.signature:*dns* AND alert.signature:*dynamic*`,
+  });
+
+  const tor = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND alert.signature:tor`,
+  });
+
+  const publicDns = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND NOT dest_ip:"10.0.0.0/8" AND NOT dest_ip:"192.168.0.0/16" AND NOT dest_ip:"172.16.0.0/12" AND dns.query.rrname:*`,
+  });
+
+  const smtpUnencrypted = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND app_proto:smtp`,
+  });
+
+  const base64Decoding = useGetEventsQuery({
+    ...alertParams,
+    qfilter: `(${ipFilter}) AND payload_printable:*base64_decode*`,
+  });
+
+  // --- Events tail query ---
+
+  const file = useGetEventsTailQuery({
+    ...common,
+    qfilter: `(${ipFilter}) AND (metadata.flowbits:stamus.file.identification OR metadata.flowbits:stamus.file.store OR metadata.flowbits:stamus.dga.smbfilename) AND event_type:fileinfo`,
+  });
+
+  // --- Sighting query ---
+
+  const sightings = useGetSightingEventsQuery({
+    ...common,
+    qfilter: `discovery.asset:${esEscape(asset)}`,
+  });
+
+  // --- Combine results ---
+
+  const allQueries = [
+    nrd,
+    sightings,
+    file,
+    lateral,
+    hunting,
+    remoteAdmin,
+    remoteRegistry,
+    postExploit,
+    ipDownload,
+    rawProtocol,
+    userEnum,
+    powershell,
+    newServers,
+    smbSightings,
+    torrent,
+    smtpExe,
+    base64Encoding,
+    maliciousFilenames,
+    suspiciousFilenames,
+    longDomains,
+    shortDomains,
+    exeSightings,
+    dynamicDns,
+    tor,
+    publicDns,
+    smtpUnencrypted,
+    base64Decoding,
+  ];
+  const isLoading = allQueries.some((q) => q.isLoading);
+  const isError = allQueries.every((q) => q.isError);
+
+  const tag = (
+    type: TimelineEventType,
+    results: { timestamp: string }[] | undefined,
+  ): TaggedEvent[] =>
+    (results ?? []).map((e) => ({ ...e, timelineType: type }) as TaggedEvent);
 
   const taggedEvents: TaggedEvent[] = [
-    ...(nrd.data?.results ?? []).map((e) => ({
-      ...e,
-      timelineType: 'nrd' as const,
-    })),
-    ...(sightings.data?.results ?? []).map((e) => ({
-      ...e,
-      timelineType: 'sightings' as const,
-    })),
-    ...(file.data?.results ?? []).map((e) => ({
-      ...e,
-      timelineType: 'file' as const,
-    })),
-    ...(lateral.data?.results ?? []).map((e) => ({
-      ...e,
-      timelineType: 'lateral' as const,
-    })),
-    ...(hunting.data?.results ?? []).map((e) => ({
-      ...e,
-      timelineType: 'hunting' as const,
-    })),
+    ...tag('nrd', nrd.data?.results),
+    ...tag('sightings', sightings.data?.results),
+    ...tag('file', file.data?.results),
+    ...tag('lateral', lateral.data?.results),
+    ...tag('hunting', hunting.data?.results),
+    ...tag('remoteAdmin', remoteAdmin.data?.results),
+    ...tag('remoteRegistry', remoteRegistry.data?.results),
+    ...tag('postExploit', postExploit.data?.results),
+    ...tag('ipDownload', ipDownload.data?.results),
+    ...tag('rawProtocol', rawProtocol.data?.results),
+    ...tag('userEnum', userEnum.data?.results),
+    ...tag('powershell', powershell.data?.results),
+    ...tag('newServers', newServers.data?.results),
+    ...tag('smbSightings', smbSightings.data?.results),
+    ...tag('torrent', torrent.data?.results),
+    ...tag('smtpExe', smtpExe.data?.results),
+    ...tag('base64Encoding', base64Encoding.data?.results),
+    ...tag('maliciousFilenames', maliciousFilenames.data?.results),
+    ...tag('suspiciousFilenames', suspiciousFilenames.data?.results),
+    ...tag('longDomains', longDomains.data?.results),
+    ...tag('shortDomains', shortDomains.data?.results),
+    ...tag('exeSightings', exeSightings.data?.results),
+    ...tag('dynamicDns', dynamicDns.data?.results),
+    ...tag('tor', tor.data?.results),
+    ...tag('publicDns', publicDns.data?.results),
+    ...tag('smtpUnencrypted', smtpUnencrypted.data?.results),
+    ...tag('base64Decoding', base64Decoding.data?.results),
   ];
 
-  const groups = aggregateTimelineEvents(taggedEvents);
-  console.log(groups);
   return {
-    groups,
+    taggedEvents,
     isLoading,
     isError,
-    isEmpty: !isLoading && groups.length === 0 && !isError,
+    isEmpty: !isLoading && taggedEvents.length === 0 && !isError,
   };
 }

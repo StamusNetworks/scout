@@ -1,14 +1,55 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { DateTime } from '@/common/design-system/entities/date-time';
 
-import { TimelineGroup, TYPE_COLOR, TYPE_LABEL } from '../hunting-trail.model';
-import { CardEventsTable } from './card-events-table';
-import { CardSummary } from './card-summary';
+import {
+  TaggedEvent,
+  TimelineEventType,
+  TYPE_COLOR,
+  TYPE_LABEL,
+} from '../hunting-trail.model';
+import { CardEventsTable } from '../molecules/card-events-table';
+import { CardSummary } from '../molecules/card-summary';
 
-export const HuntingTrailCard = ({ group }: { group: TimelineGroup }) => {
+// --- Transform ---
+
+type QueryGroup = {
+  type: TimelineEventType;
+  events: TaggedEvent[];
+  startTime: string;
+  endTime: string;
+};
+
+function groupByQuery(events: TaggedEvent[]): QueryGroup[] {
+  const map = new Map<TimelineEventType, TaggedEvent[]>();
+  for (const event of events) {
+    const list = map.get(event.timelineType);
+    if (list) {
+      list.push(event);
+    } else {
+      map.set(event.timelineType, [event]);
+    }
+  }
+
+  return Array.from(map.entries()).map(([type, evts]) => {
+    const sorted = evts.sort(
+      (a, b) =>
+        new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
+    );
+    return {
+      type,
+      events: sorted,
+      startTime: sorted[0].timestamp,
+      endTime: sorted[sorted.length - 1].timestamp,
+    };
+  });
+}
+
+// --- UI ---
+
+const QueryCard = ({ group }: { group: QueryGroup }) => {
   const [showEvents, setShowEvents] = useState(false);
   const { type, events } = group;
 
@@ -55,6 +96,21 @@ export const HuntingTrailCard = ({ group }: { group: TimelineGroup }) => {
           {showEvents ? 'Hide events' : 'Show events'}
         </Button>
       </div>
+    </div>
+  );
+};
+
+export const QueryAggregated = ({ events }: { events: TaggedEvent[] }) => {
+  const groups = useMemo(() => groupByQuery(events), [events]);
+
+  return (
+    <div className="flex flex-col gap-2 p-2">
+      {groups.map((group) => (
+        <QueryCard
+          key={group.type}
+          group={group}
+        />
+      ))}
     </div>
   );
 };
