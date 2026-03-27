@@ -1,7 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { Page, PageContainer } from '@/common/design-system/atoms/page';
+import { Page } from '@/common/design-system/atoms/page';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { SignaturesTable } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table';
 
 export const Route = createFileRoute('/detection-methods/$detectionMethodId')({
@@ -15,9 +16,9 @@ export const Route = createFileRoute('/detection-methods/$detectionMethodId')({
 function DetectionMethodDetailPage() {
   return (
     <Page>
-      <PageContainer>
+      <TogglePageContainer>
         <SignaturesTable />
-      </PageContainer>
+      </TogglePageContainer>
     </Page>
   );
 }

@@ -5,13 +5,13 @@ import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import {
   Page,
-  PageContainer,
   PageDescription,
   PageHeader,
   PageHeaderContent,
   PageTitle,
 } from '@/common/design-system/atoms/page';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { DetectionEventsTable } from '@/features/events/detection-events/entities/detection-events-table';
 import { EventsCounter } from '@/features/events/detection-events/entities/events-counter';
@@ -65,7 +65,7 @@ function DetectionEventsPage() {
 
   return (
     <Page>
-      <PageContainer>
+      <TogglePageContainer>
         <PageHeader>
           <PageHeaderContent>
             <PageTitle>Events</PageTitle>
@@ -88,7 +88,7 @@ function DetectionEventsPage() {
           onPageSizeChange={setPageSize}
           onSortingChange={onSortingChange}
         />
-      </PageContainer>
+      </TogglePageContainer>
     </Page>
   );
 }

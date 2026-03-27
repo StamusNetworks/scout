@@ -5,13 +5,13 @@ import { z } from 'zod';
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import {
   Page,
-  PageContainer,
   PageDescription,
   PageHeader,
   PageHeaderContent,
   PageTitle,
 } from '@/common/design-system/atoms/page';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { NetworkEventsList } from '@/features/events/network-events/use-cases/network-events-list/entities/network-events-list';
 import { NetworkEventsTimeline } from '@/features/events/network-events/use-cases/network-events-timeline/entities/network-events-timeline';
@@ -57,7 +57,7 @@ function NetworkEventsPage() {
 
   return (
     <Page>
-      <PageContainer>
+      <TogglePageContainer>
         <PageHeader>
           <PageHeaderContent>
             <PageTitle>Network Events</PageTitle>
@@ -84,7 +84,7 @@ function NetworkEventsPage() {
             })
           }
         />
-      </PageContainer>
+      </TogglePageContainer>
     </Page>
   );
 }

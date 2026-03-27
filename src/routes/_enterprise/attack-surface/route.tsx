@@ -10,7 +10,6 @@ import { z } from 'zod';
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import {
   Page,
-  PageContainer,
   PageDescription,
   PageHeader,
   PageHeaderContent,
@@ -22,6 +21,7 @@ import {
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/pillTabs';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { DiscoveredHosts } from '@/features/host-insights/common/discovered-hosts/discovered-hosts';
 import { HomeNetPicker } from '@/features/host-insights/common/home-net-picker/home-net-picker';
@@ -49,7 +49,7 @@ function AttackSurfaceLayout() {
     <>
       <OutletBreadcrumb>Attack Surface</OutletBreadcrumb>
       <Page>
-        <PageContainer>
+        <TogglePageContainer>
           <PageHeader>
             <PageHeaderContent>
               <PageTitle>Attack Surface</PageTitle>
@@ -103,7 +103,7 @@ function AttackSurfaceLayout() {
           <div className="mt-4">
             <Outlet />
           </div>
-        </PageContainer>
+        </TogglePageContainer>
       </Page>
     </>
   );

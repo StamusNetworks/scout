@@ -1,19 +1,11 @@
 import { Link } from '@tanstack/react-router';
 import { cva } from 'class-variance-authority';
-import { FileWarning, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { parseAsBoolean, useQueryState } from 'nuqs';
 import { useMemo, useState } from 'react';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
-import {
-  Page,
-  PageAlert,
-  PageDescription,
-  PageHeader,
-  PageHeaderContent,
-  PageTitle,
-} from '@/common/design-system/atoms/page';
 import { Badge } from '@/common/design-system/atoms/ui/badge';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import {
@@ -33,7 +25,6 @@ import { CommandFilterMultiple } from '@/common/design-system/molecules/data-tab
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { SwitchFilter } from '@/common/design-system/molecules/data-table/filters/switch-filter';
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
-import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { ValueListCard } from '@/common/design-system/molecules/value-list-card';
 import { Paginated } from '@/common/fetching/fetching.types';
 import { esEscape } from '@/common/lib/strings';
@@ -57,35 +48,7 @@ function useShowOnlyKept() {
   return useQueryState('only_kept', parseAsBoolean.withDefault(true));
 }
 
-export const InvestigationsView = () => {
-  return (
-    <Page>
-      <TogglePageContainer>
-        <PageAlert
-          Icon={FileWarning}
-          title="Beta feature !"
-          description="This feature is in beta and is subject to change. Investigations are stored in the browser's local storage."
-          variant="default"
-        />
-        <PageHeader>
-          <PageHeaderContent>
-            <PageTitle>Investigations</PageTitle>
-            <PageDescription>
-              Investigations help you track and revisit your multi-step hunting
-              processes. This page lets you review and analyze prior
-              investigations--complete with results and initial context--to
-              accelerate incident analysis and make threat hunting more
-              structured and repeatable.
-            </PageDescription>
-          </PageHeaderContent>
-        </PageHeader>
-        <InvestigationHistoryList />
-      </TogglePageContainer>
-    </Page>
-  );
-};
-
-const InvestigationHistoryList = () => {
+export const InvestigationHistoryList = () => {
   const investigationsHistory = useAppSelector(
     (state) => state.investigation.history.investigations,
   );

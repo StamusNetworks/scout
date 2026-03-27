@@ -4,13 +4,13 @@ import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { Column } from '@/common/design-system/atoms/layout/column';
 import {
   Page,
-  PageContainer,
   PageDescription,
   PageHeader,
   PageHeaderContent,
   PageTitle,
 } from '@/common/design-system/atoms/page';
 import { Separator } from '@/common/design-system/atoms/ui/separator';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { ColorBlindnessSelector } from '@/features/user/settings/components/color-blindness';
 import { DataDisplay } from '@/features/user/settings/components/data-display';
 import { DateTimeSelector } from '@/features/user/settings/components/date-time-format';
@@ -32,7 +32,7 @@ function UserSettingsPage() {
   const isEnterprise = useAppSelector(selectIsEnterprise);
   return (
     <Page>
-      <PageContainer>
+      <TogglePageContainer>
         <PageHeader>
           <PageHeaderContent>
             <PageTitle>User settings</PageTitle>
@@ -63,7 +63,7 @@ function UserSettingsPage() {
             <p className="absolute top-6 left-8 text-sm font-bold">Preview</p>
           </div>
         </Column>
-      </PageContainer>
+      </TogglePageContainer>
     </Page>
   );
 }

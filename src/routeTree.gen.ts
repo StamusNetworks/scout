@@ -16,7 +16,6 @@ import { Route as InvestigationsRouteImport } from './routes/investigations'
 import { Route as FiltersActionsRouteImport } from './routes/filters-actions'
 import { Route as FilterSetsRouteImport } from './routes/filter-sets'
 import { Route as ExplorerRouteImport } from './routes/explorer'
-import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as EventsFlowRouteImport } from './routes/events-flow'
 import { Route as DeeplinksRouteImport } from './routes/deeplinks'
 import { Route as DeeplinkRouteImport } from './routes/deeplink'
@@ -124,11 +123,6 @@ const FilterSetsRoute = FilterSetsRouteImport.update({
 const ExplorerRoute = ExplorerRouteImport.update({
   id: '/explorer',
   path: '/explorer',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ExploreRoute = ExploreRouteImport.update({
-  id: '/explore',
-  path: '/explore',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EventsFlowRoute = EventsFlowRouteImport.update({
@@ -573,7 +567,6 @@ export interface FileRoutesByFullPath {
   '/deeplink': typeof DeeplinkRoute
   '/deeplinks': typeof DeeplinksRoute
   '/events-flow': typeof EventsFlowRoute
-  '/explore': typeof ExploreRoute
   '/explorer': typeof ExplorerRoute
   '/filter-sets': typeof FilterSetsRoute
   '/filters-actions': typeof FiltersActionsRoute
@@ -654,7 +647,6 @@ export interface FileRoutesByTo {
   '/deeplink': typeof DeeplinkRoute
   '/deeplinks': typeof DeeplinksRoute
   '/events-flow': typeof EventsFlowRoute
-  '/explore': typeof ExploreRoute
   '/explorer': typeof ExplorerRoute
   '/filter-sets': typeof FilterSetsRoute
   '/filters-actions': typeof FiltersActionsRoute
@@ -723,7 +715,6 @@ export interface FileRoutesById {
   '/deeplink': typeof DeeplinkRoute
   '/deeplinks': typeof DeeplinksRoute
   '/events-flow': typeof EventsFlowRoute
-  '/explore': typeof ExploreRoute
   '/explorer': typeof ExplorerRoute
   '/filter-sets': typeof FilterSetsRoute
   '/filters-actions': typeof FiltersActionsRoute
@@ -807,7 +798,6 @@ export interface FileRouteTypes {
     | '/deeplink'
     | '/deeplinks'
     | '/events-flow'
-    | '/explore'
     | '/explorer'
     | '/filter-sets'
     | '/filters-actions'
@@ -888,7 +878,6 @@ export interface FileRouteTypes {
     | '/deeplink'
     | '/deeplinks'
     | '/events-flow'
-    | '/explore'
     | '/explorer'
     | '/filter-sets'
     | '/filters-actions'
@@ -956,7 +945,6 @@ export interface FileRouteTypes {
     | '/deeplink'
     | '/deeplinks'
     | '/events-flow'
-    | '/explore'
     | '/explorer'
     | '/filter-sets'
     | '/filters-actions'
@@ -1040,7 +1028,6 @@ export interface RootRouteChildren {
   DeeplinkRoute: typeof DeeplinkRoute
   DeeplinksRoute: typeof DeeplinksRoute
   EventsFlowRoute: typeof EventsFlowRoute
-  ExploreRoute: typeof ExploreRoute
   ExplorerRoute: typeof ExplorerRoute
   FilterSetsRoute: typeof FilterSetsRoute
   FiltersActionsRoute: typeof FiltersActionsRoute
@@ -1101,13 +1088,6 @@ declare module '@tanstack/react-router' {
       path: '/explorer'
       fullPath: '/explorer'
       preLoaderRoute: typeof ExplorerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/explore': {
-      id: '/explore'
-      path: '/explore'
-      fullPath: '/explore'
-      preLoaderRoute: typeof ExploreRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/events-flow': {
@@ -2006,7 +1986,6 @@ const rootRouteChildren: RootRouteChildren = {
   DeeplinkRoute: DeeplinkRoute,
   DeeplinksRoute: DeeplinksRoute,
   EventsFlowRoute: EventsFlowRoute,
-  ExploreRoute: ExploreRoute,
   ExplorerRoute: ExplorerRoute,
   FilterSetsRoute: FilterSetsRoute,
   FiltersActionsRoute: FiltersActionsRoute,

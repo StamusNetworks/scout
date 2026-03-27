@@ -4,7 +4,6 @@ import { z } from 'zod';
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import {
   Page,
-  PageContainer,
   PageDescription,
   PageHeader,
   PageHeaderContent,
@@ -12,6 +11,7 @@ import {
 } from '@/common/design-system/atoms/page';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { DetectionMethodsTable } from '@/features/detection-methods/use-cases/detection-methods-list/entities/detection-methods-table';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
@@ -55,7 +55,7 @@ function DetectionMethodsPage() {
     <>
       <OutletBreadcrumb>Detection Methods</OutletBreadcrumb>
       <Page>
-        <PageContainer>
+        <TogglePageContainer>
           <PageHeader>
             <PageHeaderContent>
               <PageTitle>Detection Methods</PageTitle>
@@ -81,7 +81,7 @@ function DetectionMethodsPage() {
               })
             }
           />
-        </PageContainer>
+        </TogglePageContainer>
       </Page>
     </>
   );

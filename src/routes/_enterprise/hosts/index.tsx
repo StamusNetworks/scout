@@ -4,7 +4,6 @@ import { z } from 'zod';
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import {
   Page,
-  PageContainer,
   PageDescription,
   PageHeader,
   PageHeaderContent,
@@ -12,6 +11,7 @@ import {
 } from '@/common/design-system/atoms/page';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { HostsTable } from '@/features/host-insights/use-cases/hosts-list/entities/hosts-table';
@@ -56,7 +56,7 @@ function HostsPage() {
     <>
       <OutletBreadcrumb link="/hosts">Hosts</OutletBreadcrumb>
       <Page>
-        <PageContainer>
+        <TogglePageContainer>
           <PageHeader>
             <PageHeaderContent>
               <PageTitle>Hosts</PageTitle>
@@ -92,7 +92,7 @@ function HostsPage() {
               })
             }
           />
-        </PageContainer>
+        </TogglePageContainer>
       </Page>
     </>
   );

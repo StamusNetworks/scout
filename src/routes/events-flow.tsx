@@ -3,13 +3,13 @@ import { createFileRoute } from '@tanstack/react-router';
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import {
   Page,
-  PageContainer,
   PageDescription,
   PageHeader,
   PageHeaderContent,
   PageTitle,
 } from '@/common/design-system/atoms/page';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { EventsFlowView } from '@/features/events/use-cases/events-flow/entities/events-flow-view';
 
@@ -28,7 +28,7 @@ function EventsFlowPage() {
     <>
       <OutletBreadcrumb>Events Flow</OutletBreadcrumb>
       <Page>
-        <PageContainer>
+        <TogglePageContainer>
           <PageHeader>
             <PageHeaderContent>
               <PageTitle>Events Flow</PageTitle>
@@ -40,7 +40,7 @@ function EventsFlowPage() {
             </PageHeaderContent>
           </PageHeader>
           <EventsFlowView />
-        </PageContainer>
+        </TogglePageContainer>
       </Page>
     </>
   );

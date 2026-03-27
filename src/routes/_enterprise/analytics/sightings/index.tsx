@@ -4,13 +4,13 @@ import { z } from 'zod';
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import {
   Page,
-  PageContainer,
   PageDescription,
   PageHeader,
   PageHeaderContent,
   PageTitle,
 } from '@/common/design-system/atoms/page';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { SightingsTable } from '@/features/events/sightings/use-cases/sightings-list/entities/sightings-table';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
@@ -51,7 +51,7 @@ function SightingsPage() {
 
   return (
     <Page>
-      <PageContainer>
+      <TogglePageContainer>
         <PageHeader>
           <PageHeaderContent>
             <PageTitle>Sightings</PageTitle>
@@ -75,7 +75,7 @@ function SightingsPage() {
             })
           }
         />
-      </PageContainer>
+      </TogglePageContainer>
     </Page>
   );
 }

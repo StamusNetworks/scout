@@ -7,7 +7,6 @@ import { Row } from '@/common/design-system/atoms/layout/row';
 import {
   Page,
   PageActions,
-  PageContainer,
   PageDescription,
   PageHeader,
   PageHeaderContent,
@@ -15,6 +14,7 @@ import {
 } from '@/common/design-system/atoms/page';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { FilterActionsDropdown } from '@/features/filter-actions/components/filter-actions/filter-actions.dropdown';
 import { FiltersActionsTable } from '@/features/filter-actions/components/filter-actions-table/filter-actions-table';
@@ -45,7 +45,7 @@ function FilterActionsPage() {
     <>
       <OutletBreadcrumb>Filter Actions</OutletBreadcrumb>
       <Page>
-        <PageContainer>
+        <TogglePageContainer>
           <PageHeader>
             <PageHeaderContent>
               <PageTitle>Filter Actions</PageTitle>
@@ -76,7 +76,7 @@ function FilterActionsPage() {
             </PageActions>
           </PageHeader>
           <FiltersActionsTable />
-        </PageContainer>
+        </TogglePageContainer>
       </Page>
     </>
   );

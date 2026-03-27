@@ -1,25 +1,12 @@
 import { useNavigate } from '@tanstack/react-router';
 import { RowSelectionState } from '@tanstack/react-table';
-import { Check, Group, Info, Plus, Trash, X } from 'lucide-react';
+import { Check, Plus, Trash } from 'lucide-react';
 import { parseAsString, parseAsStringLiteral, useQueryState } from 'nuqs';
 import { keys, values } from 'ramda';
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
-import {
-  Page,
-  PageActions,
-  PageDescription,
-  PageHeader,
-  PageHeaderContent,
-  PageTitle,
-} from '@/common/design-system/atoms/page';
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from '@/common/design-system/atoms/ui/alert';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import {
   DropdownMenu,
@@ -34,7 +21,6 @@ import { CustomColumnDef } from '@/common/design-system/molecules/data-table/fil
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
 import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { DeleteModal } from '@/common/design-system/molecules/delete-modal';
-import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { cn } from '@/common/lib/utils';
 import {
@@ -52,8 +38,6 @@ import {
   useIsLoadedFilterSet,
 } from '@/features/filtering/filtersets/filtersets.store';
 import { loadFilterSet } from '@/features/filtering/filtersets/use-cases/load-filter-set/load-filter-set';
-import { openSaveFilterSetModal } from '@/features/filtering/filtersets/use-cases/save-filter-set/save-filterset.slice';
-import { disableHelp, useHelpState } from '@/features/ui/help/help.slice';
 import { useAppDispatch } from '@/store/store';
 
 const typeMap = {
@@ -74,7 +58,6 @@ const pageReverseMap = Object.fromEntries(
 );
 
 export const FilterSetsView = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [pagination, setPagination] = usePaginationUrlState();
   const [search, setSearch] = useQueryState(
@@ -114,8 +97,6 @@ export const FilterSetsView = () => {
     };
   }, [data, search, type, page]);
 
-  const { showFilterSetsBackNavTip } = useHelpState();
-
   const { enterprise } = useFeatureFlags();
   const columns = getColumns(enterprise);
 
@@ -127,106 +108,65 @@ export const FilterSetsView = () => {
   );
 
   return (
-    <Page>
-      <TogglePageContainer>
-        {showFilterSetsBackNavTip && (
-          <Alert className="mb-4">
-            <Info />
-            <AlertTitle>Pro tip</AlertTitle>
-            <AlertDescription>
-              After loading a Filter Set, use your browser&apos;s back button to
-              come back to the Filter Sets page with preserved filters to cycle
-              through the list effortlessly.
-            </AlertDescription>
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              className="absolute top-2 right-2 size-7 pl-0!"
-              onClick={() => dispatch(disableHelp('showFilterSetsBackNavTip'))}
-            >
-              <X />
-            </Button>
-          </Alert>
-        )}
-        <PageHeader>
-          <PageHeaderContent>
-            <PageTitle>Filter Sets</PageTitle>
-            <PageDescription>
-              Filter Sets help streamline your investigations by providing
-              curated collections of filters, making it easier to rapidly
-              trigger hunts or explore specific areas of your network.
-              Effortlessly discover, manage, and create filter sets tailored to
-              your investigation needs.
-            </PageDescription>
-          </PageHeaderContent>
-          <PageActions>
-            <Button onClick={() => dispatch(openSaveFilterSetModal())}>
-              <Group />
-              Create Filter Set
-            </Button>
-          </PageActions>
-        </PageHeader>
-        <DataTable
-          data={filteredData}
-          isLoading={isLoading}
-          serverSide={false}
-          columns={columns}
-          defaultPageSize={20}
-          onRowClick={(row) => handleLoadFilterSet(row.original, navigate)}
-          rowClickCursor="pointer"
-          getRowId={(row) => row.id?.toString()}
-          rowSelection={selectedRows}
-          onRowSelectionChange={setSelectedRows}
-          pagination={pagination}
-          onPaginationChange={setPagination}
-          toolBar={
-            <DataTableToolbar>
-              <TextFilter
-                value={search}
-                onChange={setSearch}
-                placeholder="Search Filter Sets..."
-              />
-              <CommandFilterSingle
-                title="Page"
-                value={page}
-                onChange={setPage}
-                options={keys(filterSetPageConfig).map((key) => ({
-                  label: filterSetPageConfig[key].label,
-                  value: filterSetPageConfig[key].label,
-                }))}
-                canSearch={false}
-              />
-              <CommandFilterSingle
-                title="Type"
-                value={type}
-                onChange={setType as (value: string | null) => void}
-                options={[
-                  {
-                    label: 'Personal',
-                    value: 'private',
-                  },
-                  {
-                    label: 'Shared',
-                    value: 'global',
-                  },
-                  {
-                    label: 'Built-in',
-                    value: 'stamus',
-                  },
-                ]}
-                canSearch={false}
-              />
-              {values(selectedRows).length > 0 && (
-                <AddToDropdown
-                  filterSets={selectedFilterSets}
-                  onSuccess={() => setSelectedRows({})}
-                />
-              )}
-            </DataTableToolbar>
-          }
-        />
-      </TogglePageContainer>
-    </Page>
+    <DataTable
+      data={filteredData}
+      isLoading={isLoading}
+      serverSide={false}
+      columns={columns}
+      defaultPageSize={20}
+      onRowClick={(row) => handleLoadFilterSet(row.original, navigate)}
+      rowClickCursor="pointer"
+      getRowId={(row) => row.id?.toString()}
+      rowSelection={selectedRows}
+      onRowSelectionChange={setSelectedRows}
+      pagination={pagination}
+      onPaginationChange={setPagination}
+      toolBar={
+        <DataTableToolbar>
+          <TextFilter
+            value={search}
+            onChange={setSearch}
+            placeholder="Search Filter Sets..."
+          />
+          <CommandFilterSingle
+            title="Page"
+            value={page}
+            onChange={setPage}
+            options={keys(filterSetPageConfig).map((key) => ({
+              label: filterSetPageConfig[key].label,
+              value: filterSetPageConfig[key].label,
+            }))}
+            canSearch={false}
+          />
+          <CommandFilterSingle
+            title="Type"
+            value={type}
+            onChange={setType as (value: string | null) => void}
+            options={[
+              {
+                label: 'Personal',
+                value: 'private',
+              },
+              {
+                label: 'Shared',
+                value: 'global',
+              },
+              {
+                label: 'Built-in',
+                value: 'stamus',
+              },
+            ]}
+            canSearch={false}
+          />
+          {values(selectedRows).length > 0 && (
+            <AddToDropdown
+              filterSets={selectedFilterSets}
+              onSuccess={() => setSelectedRows({})}
+            />
+          )}
+        </DataTableToolbar>
+      }
+    />
   );
 };
 

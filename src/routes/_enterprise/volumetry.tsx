@@ -4,13 +4,13 @@ import { z } from 'zod';
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import {
   Page,
-  PageContainer,
   PageDescription,
   PageHeader,
   PageHeaderContent,
   PageTitle,
 } from '@/common/design-system/atoms/page';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { VolumetryView } from '@/features/events/detection-events/use-cases/volumetry/volumetry-view';
 
@@ -49,7 +49,7 @@ function VolumetryPage() {
     <>
       <OutletBreadcrumb>Volumetry</OutletBreadcrumb>
       <Page>
-        <PageContainer>
+        <TogglePageContainer>
           <PageHeader>
             <PageHeaderContent>
               <PageTitle>Volumetry</PageTitle>
@@ -60,7 +60,7 @@ function VolumetryPage() {
             </PageHeaderContent>
           </PageHeader>
           <VolumetryView />
-        </PageContainer>
+        </TogglePageContainer>
       </Page>
     </>
   );

@@ -5,13 +5,13 @@ import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import {
   Page,
   PageAlert,
-  PageContainer,
   PageDescription,
   PageHeader,
   PageHeaderContent,
   PageTitle,
 } from '@/common/design-system/atoms/page';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { OperationalCenterView } from '@/features/operational-center/entities/operational-center-view';
@@ -32,7 +32,7 @@ function OperationalCenterPage() {
     <>
       <OutletBreadcrumb>Operational Center</OutletBreadcrumb>
       <Page>
-        <PageContainer>
+        <TogglePageContainer>
           {!enterprise && (
             <PageAlert
               Icon={Rocket}
@@ -53,7 +53,7 @@ function OperationalCenterPage() {
             </PageHeaderContent>
           </PageHeader>
           <OperationalCenterView enterprise={enterprise} />
-        </PageContainer>
+        </TogglePageContainer>
       </Page>
     </>
   );

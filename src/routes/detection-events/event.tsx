@@ -2,7 +2,8 @@ import { createFileRoute } from '@tanstack/react-router';
 import { z } from 'zod';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { Page, PageContainer } from '@/common/design-system/atoms/page';
+import { Page } from '@/common/design-system/atoms/page';
+import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { EventDetail } from '@/features/events/common/event-detail/entities/event-detail';
 
 const searchSchema = z.object({
@@ -23,9 +24,9 @@ function EventDetailPage() {
 
   return (
     <Page>
-      <PageContainer>
+      <TogglePageContainer>
         <EventDetail eventId={_id} />
-      </PageContainer>
+      </TogglePageContainer>
     </Page>
   );
 }
