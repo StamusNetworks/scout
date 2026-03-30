@@ -27,7 +27,15 @@ export type TimelineEventType =
   | 'tor'
   | 'publicDns'
   | 'smtpUnencrypted'
-  | 'base64Decoding';
+  | 'base64Decoding'
+  | 'ssh'
+  | 'longerSsh'
+  | 'rdp'
+  | 'rfbVnc'
+  | 'biggerTcp'
+  | 'longerTcp'
+  | 'biggerUdp'
+  | 'longerUdp';
 
 export const TIMELINE_TYPE_PRIORITY: Record<TimelineEventType, number> = {
   nrd: 0,
@@ -57,6 +65,14 @@ export const TIMELINE_TYPE_PRIORITY: Record<TimelineEventType, number> = {
   publicDns: 24,
   smtpUnencrypted: 25,
   base64Decoding: 26,
+  ssh: 27,
+  longerSsh: 28,
+  rdp: 29,
+  rfbVnc: 30,
+  biggerTcp: 31,
+  longerTcp: 32,
+  biggerUdp: 33,
+  longerUdp: 34,
 };
 
 export type TaggedEvent = Event & { timelineType: TimelineEventType };
@@ -96,6 +112,14 @@ export const TYPE_LABEL: Record<TimelineEventType, string> = {
   publicDns: 'Public DNS Queries',
   smtpUnencrypted: 'SMTP Unencrypted',
   base64Decoding: 'Base64 Decoding',
+  ssh: 'SSH',
+  longerSsh: 'Longer SSH',
+  rdp: 'RDP',
+  rfbVnc: 'RFB/VNC',
+  biggerTcp: 'Bigger TCP',
+  longerTcp: 'Longer TCP',
+  biggerUdp: 'Bigger UDP',
+  longerUdp: 'Longer UDP',
 };
 
 export type TypeColorConfig = {
@@ -125,6 +149,7 @@ const PURPLE = color(
   'bg-purple-500/10',
 );
 const GREEN = color('border-green-500', 'text-green-400', 'bg-green-500/10');
+const BLUE = color('border-blue-500', 'text-blue-400', 'bg-blue-500/10');
 
 export const PURPOSE_GROUPS: {
   label: string;
@@ -168,6 +193,20 @@ export const PURPOSE_GROUPS: {
     types: ['sightings', 'newServers', 'smbSightings'],
   },
   { label: 'Hunting Signals', color: GREEN, types: ['hunting'] },
+  {
+    label: 'Network Sessions',
+    color: BLUE,
+    types: [
+      'ssh',
+      'longerSsh',
+      'rdp',
+      'rfbVnc',
+      'biggerTcp',
+      'longerTcp',
+      'biggerUdp',
+      'longerUdp',
+    ],
+  },
 ];
 
 export const TYPE_COLOR: Record<TimelineEventType, TypeColorConfig> =

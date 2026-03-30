@@ -42,8 +42,33 @@ const dnsCol: ColumnDef = {
   getValue: getDnsRrname,
 };
 
+const appProtoCol: ColumnDef = {
+  queryKey: 'app_proto',
+  getValue: (e) => e.app_proto,
+};
+const flowAgeCol: ColumnDef = {
+  queryKey: 'flow.age',
+  getValue: (e) => e.flow?.age,
+};
+const bytesToClientCol: ColumnDef = {
+  queryKey: 'flow.bytes_toclient',
+  getValue: (e) => e.flow?.bytes_toclient,
+};
+const bytesToServerCol: ColumnDef = {
+  queryKey: 'flow.bytes_toserver',
+  getValue: (e) => e.flow?.bytes_toserver,
+};
+
 const alertCols: ColumnDef[] = [sigCol, srcCol, destCol];
 const dnsCols: ColumnDef[] = [dnsCol, srcCol, destCol, sigCol];
+const sessionCols: ColumnDef[] = [srcCol, destCol, appProtoCol, flowAgeCol];
+const biggerSessionCols: ColumnDef[] = [
+  srcCol,
+  destCol,
+  bytesToClientCol,
+  bytesToServerCol,
+  flowAgeCol,
+];
 
 const TYPE_COLUMNS: Record<TimelineEventType, ColumnDef[]> = {
   nrd: [
@@ -115,6 +140,14 @@ const TYPE_COLUMNS: Record<TimelineEventType, ColumnDef[]> = {
     srcCol,
     destCol,
   ],
+  ssh: sessionCols,
+  longerSsh: sessionCols,
+  rdp: sessionCols,
+  rfbVnc: sessionCols,
+  biggerTcp: biggerSessionCols,
+  longerTcp: sessionCols,
+  biggerUdp: biggerSessionCols,
+  longerUdp: sessionCols,
 };
 
 type UniqueValue = {

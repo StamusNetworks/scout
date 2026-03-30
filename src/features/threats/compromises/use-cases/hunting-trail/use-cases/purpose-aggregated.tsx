@@ -70,6 +70,20 @@ const QUERY_DESCRIPTION: Record<TimelineEventType, string> = {
     'Unencrypted SMTP exposes email content, credentials, and attachments to network interception. It may also indicate misconfigured mail servers or downgrade attacks.',
   base64Decoding:
     'Base64 decoding functions in network payloads suggest execution of obfuscated malicious code — a hallmark of exploit kits, web shells, and fileless malware.',
+  ssh: 'SSH connections from or to this asset. SSH is commonly used for remote administration but can also be leveraged for tunneling, lateral movement, or unauthorized access.',
+  longerSsh:
+    'SSH sessions longer than 20 minutes may indicate interactive shell access, persistent tunnels, or long-running data transfers that warrant investigation.',
+  rdp: 'RDP connections from or to this asset. RDP is a frequent target for brute-force attacks and is commonly abused for lateral movement and unauthorized remote access.',
+  rfbVnc:
+    'RFB/VNC connections from or to this asset. VNC provides full remote desktop control and is often used by attackers after initial compromise for hands-on-keyboard access.',
+  biggerTcp:
+    'TCP connections transferring more than 10MB with bidirectional traffic may indicate large file transfers, data exfiltration, or bulk data staging.',
+  longerTcp:
+    'TCP sessions lasting longer than 20 minutes may indicate persistent C2 channels, long-running data exfiltration, or interactive remote access sessions.',
+  biggerUdp:
+    'UDP connections transferring more than 10MB with bidirectional traffic may indicate covert data exfiltration, DNS tunneling, or media streaming used to mask malicious activity.',
+  longerUdp:
+    'UDP sessions lasting longer than 20 minutes may indicate persistent tunnels, VPN connections, or long-running covert communication channels.',
 };
 
 // --- Transform ---

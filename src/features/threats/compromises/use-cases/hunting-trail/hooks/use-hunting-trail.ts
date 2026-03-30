@@ -149,11 +149,51 @@ export function useHuntingTrail({
     qfilter: `(${ipFilter}) AND payload_printable:*base64_decode*`,
   });
 
-  // --- Events tail query ---
+  // --- Events tail queries ---
 
   const file = useGetEventsTailQuery({
     ...common,
     qfilter: `(${ipFilter}) AND (metadata.flowbits:stamus.file.identification OR metadata.flowbits:stamus.file.store OR metadata.flowbits:stamus.dga.smbfilename) AND event_type:fileinfo`,
+  });
+
+  const ssh = useGetEventsTailQuery({
+    ...common,
+    qfilter: `(${ipFilter}) AND event_type.raw:"flow" AND app_proto.raw:"ssh"`,
+  });
+
+  const longerSsh = useGetEventsTailQuery({
+    ...common,
+    qfilter: `(${ipFilter}) AND event_type.raw:"flow" AND app_proto.raw:"ssh" AND (flow.age:>1200)`,
+  });
+
+  const rdp = useGetEventsTailQuery({
+    ...common,
+    qfilter: `(${ipFilter}) AND event_type.raw:"flow" AND app_proto.raw:"rdp"`,
+  });
+
+  const rfbVnc = useGetEventsTailQuery({
+    ...common,
+    qfilter: `(${ipFilter}) AND event_type.raw:"flow" AND app_proto.raw:"rfb"`,
+  });
+
+  const biggerTcp = useGetEventsTailQuery({
+    ...common,
+    qfilter: `(${ipFilter}) AND event_type.raw:"flow" AND proto.raw:"TCP" AND ((flow.bytes_toclient:>1000000 OR flow.bytes_toserver:>1000000) AND flow.bytes_toclient:>0 AND flow.bytes_toserver:>0)`,
+  });
+
+  const longerTcp = useGetEventsTailQuery({
+    ...common,
+    qfilter: `(${ipFilter}) AND event_type.raw:"flow" AND proto.raw:"TCP" AND (flow.age:>1200)`,
+  });
+
+  const biggerUdp = useGetEventsTailQuery({
+    ...common,
+    qfilter: `(${ipFilter}) AND event_type.raw:"flow" AND proto.raw:"UDP" AND ((flow.bytes_toclient:>1000000 OR flow.bytes_toserver:>1000000) AND flow.bytes_toclient:>0 AND flow.bytes_toserver:>0)`,
+  });
+
+  const longerUdp = useGetEventsTailQuery({
+    ...common,
+    qfilter: `(${ipFilter}) AND event_type.raw:"flow" AND proto.raw:"UDP" AND (flow.age:>1200)`,
   });
 
   // --- Sighting query ---
@@ -193,6 +233,14 @@ export function useHuntingTrail({
     publicDns,
     smtpUnencrypted,
     base64Decoding,
+    ssh,
+    longerSsh,
+    rdp,
+    rfbVnc,
+    biggerTcp,
+    longerTcp,
+    biggerUdp,
+    longerUdp,
   ];
   const isLoading = allQueries.some((q) => q.isLoading);
   const isError = allQueries.every((q) => q.isError);
@@ -231,6 +279,14 @@ export function useHuntingTrail({
     ...tag('publicDns', publicDns.data?.results),
     ...tag('smtpUnencrypted', smtpUnencrypted.data?.results),
     ...tag('base64Decoding', base64Decoding.data?.results),
+    ...tag('ssh', ssh.data?.results),
+    ...tag('longerSsh', longerSsh.data?.results),
+    ...tag('rdp', rdp.data?.results),
+    ...tag('rfbVnc', rfbVnc.data?.results),
+    ...tag('biggerTcp', biggerTcp.data?.results),
+    ...tag('longerTcp', longerTcp.data?.results),
+    ...tag('biggerUdp', biggerUdp.data?.results),
+    ...tag('longerUdp', longerUdp.data?.results),
   ];
 
   return {

@@ -48,8 +48,45 @@ const dnsCol: TableColumnDef = {
   getValue: getDnsRrname,
 };
 
+const appProtoCol: TableColumnDef = {
+  header: 'App Proto',
+  queryKey: 'app_proto',
+  getValue: (e) => e.app_proto,
+};
+const flowAgeCol: TableColumnDef = {
+  header: 'Duration (s)',
+  queryKey: 'flow.age',
+  getValue: (e) => e.flow?.age,
+  plain: true,
+};
+const bytesToClientCol: TableColumnDef = {
+  header: 'Bytes to Client',
+  queryKey: 'flow.bytes_toclient',
+  getValue: (e) => e.flow?.bytes_toclient,
+  plain: true,
+};
+const bytesToServerCol: TableColumnDef = {
+  header: 'Bytes to Server',
+  queryKey: 'flow.bytes_toserver',
+  getValue: (e) => e.flow?.bytes_toserver,
+  plain: true,
+};
+
 const alertCols: TableColumnDef[] = [sigCol, srcCol, destCol];
 const dnsCols: TableColumnDef[] = [dnsCol, srcCol, destCol, sigCol];
+const sessionCols: TableColumnDef[] = [
+  srcCol,
+  destCol,
+  appProtoCol,
+  flowAgeCol,
+];
+const biggerSessionCols: TableColumnDef[] = [
+  srcCol,
+  destCol,
+  bytesToClientCol,
+  bytesToServerCol,
+  flowAgeCol,
+];
 
 const TYPE_TABLE_COLUMNS: Record<TimelineEventType, TableColumnDef[]> = {
   nrd: [
@@ -140,6 +177,14 @@ const TYPE_TABLE_COLUMNS: Record<TimelineEventType, TableColumnDef[]> = {
     srcCol,
     destCol,
   ],
+  ssh: sessionCols,
+  longerSsh: sessionCols,
+  rdp: sessionCols,
+  rfbVnc: sessionCols,
+  biggerTcp: biggerSessionCols,
+  longerTcp: sessionCols,
+  biggerUdp: biggerSessionCols,
+  longerUdp: sessionCols,
 };
 
 export const CardEventsTable = ({
