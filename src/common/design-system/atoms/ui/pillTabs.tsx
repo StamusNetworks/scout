@@ -5,6 +5,12 @@ import * as React from 'react';
 import { cn } from '@/common/lib/utils';
 
 import { ring } from '../ring';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from './tooltip';
 
 const Tabs = TabsPrimitive.Root;
 
@@ -29,18 +35,36 @@ const TabsTrigger = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> & {
     className?: string;
+    tooltip?: string;
   }
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.Trigger
-    ref={ref}
-    className={cn(
-      ring,
-      'data-[state=active]:bg-background data-[state=active]:text-foreground inline-flex items-center justify-center rounded-md px-3 py-1 text-sm font-medium whitespace-nowrap transition-all disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm',
-      className,
-    )}
-    {...props}
-  />
-));
+>(({ className, tooltip, ...props }, ref) => {
+  const trigger = (
+    <TabsPrimitive.Trigger
+      ref={ref}
+      className={cn(
+        ring,
+        'data-[state=active]:bg-background data-[state=active]:text-foreground inline-flex items-center justify-center rounded-md px-3 py-1 text-sm font-medium whitespace-nowrap transition-all disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm',
+        className,
+      )}
+      {...props}
+    />
+  );
+
+  if (!tooltip) return trigger;
+
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <span>{trigger}</span>
+        </TooltipTrigger>
+        <TooltipContent className="max-w-[250px]">
+          <p>{tooltip}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+});
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 
 const TabsTriggerLink = React.forwardRef<

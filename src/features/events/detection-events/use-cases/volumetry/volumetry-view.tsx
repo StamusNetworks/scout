@@ -87,9 +87,24 @@ export const VolumetryView = () => {
           onValueChange={handleScaleChange}
         >
           <TabsList>
-            <TabsTrigger value="default">Default</TabsTrigger>
-            <TabsTrigger value="normalized">Normalized</TabsTrigger>
-            <TabsTrigger value="log">Logarithmic</TabsTrigger>
+            <TabsTrigger
+              value="default"
+              tooltip="All series share the same Y axis. Series with much larger values may compress smaller ones."
+            >
+              Default
+            </TabsTrigger>
+            <TabsTrigger
+              value="normalized"
+              tooltip="Each series is scaled independently to its own range, making trends comparable regardless of magnitude."
+            >
+              Normalized
+            </TabsTrigger>
+            <TabsTrigger
+              value="log"
+              tooltip="All series share a logarithmic Y axis. Large value differences become visible without compressing smaller values."
+            >
+              Logarithmic
+            </TabsTrigger>
           </TabsList>
         </Tabs>
       </Row>
