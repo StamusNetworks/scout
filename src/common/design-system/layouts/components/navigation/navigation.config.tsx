@@ -7,6 +7,7 @@ import {
   Biohazard,
   ChefHat,
   Eye,
+  Footprints,
   Globe,
   Group,
   LaptopMinimal,
@@ -211,6 +212,14 @@ export const defaultMenu = (
         url: '/hosts',
         title: 'Hosts',
         icon: <LaptopMinimal />,
+      },
+      {
+        key: 'hunting-trail',
+        type: 'link',
+        url: '/hunting-trail',
+        title: 'Hunting Trail',
+        icon: <Footprints />,
+        enterprise: true,
       },
       {
         key: 'detection_methods',
