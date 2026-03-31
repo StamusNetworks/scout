@@ -32,20 +32,15 @@ export const NetworkEventsList = ({
   onPageSizeChange,
   onGroupByFlowChange,
 }: NetworkEventsListProps) => {
-  const params = useGlobalQueryParams(['tenant', 'dates', 'qfilter']);
+  const params = useGlobalQueryParams(['tenant', 'dates']);
   const networkEventsQfilter = useNetworkEventsQfilter();
-
-  // Combine the global qfilter with the network events base filter
-  const qfilter = params.qfilter
-    ? `${networkEventsQfilter} AND ${params.qfilter}`
-    : networkEventsQfilter;
 
   const pageIndex = page - 1;
 
   const { data, totalCount, isFetching } = useGetEventsTailQuery(
     {
       ...params,
-      qfilter,
+      qfilter: networkEventsQfilter,
       ordering: '-timestamp',
       pageIndex,
       pageSize,
