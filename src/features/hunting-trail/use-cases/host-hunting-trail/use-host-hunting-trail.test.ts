@@ -16,7 +16,7 @@ import {
 import { makeNrdEvent } from '@/features/events/common/events.mocks';
 import { useGetSightingEventsQuery } from '@/features/events/sightings/common/sightings.api';
 
-import { useHuntingTrail } from './use-hunting-trail';
+import { useHostHuntingTrail } from './use-host-hunting-trail';
 
 const mockUseGetEventsQuery = vi.mocked(useGetEventsQuery);
 const mockUseGetEventsTailQuery = vi.mocked(useGetEventsTailQuery);
@@ -49,7 +49,7 @@ const errorResult = {
   isError: true,
 } as unknown as ReturnType<typeof useGetEventsQuery>;
 
-describe('useHuntingTrail', () => {
+describe('useHostHuntingTrail', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -62,7 +62,7 @@ describe('useHuntingTrail', () => {
     mockUseGetSightingEventsQuery.mockReturnValue(
       emptyResult as unknown as ReturnType<typeof useGetSightingEventsQuery>,
     );
-    const { result } = renderHook(() => useHuntingTrail(params));
+    const { result } = renderHook(() => useHostHuntingTrail(params));
     expect(result.current.isLoading).toBe(true);
     expect(result.current.isEmpty).toBe(false);
   });
@@ -73,7 +73,7 @@ describe('useHuntingTrail', () => {
     mockUseGetSightingEventsQuery.mockReturnValue(
       errorResult as unknown as ReturnType<typeof useGetSightingEventsQuery>,
     );
-    const { result } = renderHook(() => useHuntingTrail(params));
+    const { result } = renderHook(() => useHostHuntingTrail(params));
     expect(result.current.isError).toBe(true);
     expect(result.current.isEmpty).toBe(false);
   });
@@ -86,7 +86,7 @@ describe('useHuntingTrail', () => {
     mockUseGetSightingEventsQuery.mockReturnValue(
       emptyResult as unknown as ReturnType<typeof useGetSightingEventsQuery>,
     );
-    const { result } = renderHook(() => useHuntingTrail(params));
+    const { result } = renderHook(() => useHostHuntingTrail(params));
     expect(result.current.isError).toBe(false);
   });
 
@@ -96,7 +96,7 @@ describe('useHuntingTrail', () => {
     mockUseGetSightingEventsQuery.mockReturnValue(
       emptyResult as unknown as ReturnType<typeof useGetSightingEventsQuery>,
     );
-    const { result } = renderHook(() => useHuntingTrail(params));
+    const { result } = renderHook(() => useHostHuntingTrail(params));
     expect(result.current.isEmpty).toBe(true);
     expect(result.current.isLoading).toBe(false);
     expect(result.current.isError).toBe(false);
@@ -114,7 +114,7 @@ describe('useHuntingTrail', () => {
     mockUseGetSightingEventsQuery.mockReturnValue(
       emptyResult as unknown as ReturnType<typeof useGetSightingEventsQuery>,
     );
-    const { result } = renderHook(() => useHuntingTrail(params));
+    const { result } = renderHook(() => useHostHuntingTrail(params));
     expect(result.current.isEmpty).toBe(false);
     expect(result.current.taggedEvents.length).toBeGreaterThan(0);
   });

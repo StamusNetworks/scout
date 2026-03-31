@@ -25,9 +25,9 @@ import { TogglePageContainer } from '@/common/design-system/molecules/toggle-con
 import { formatNumber } from '@/common/lib/numbers';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
-import { useNetworkHuntingTrail } from '@/features/hunting-trail/hooks/use-network-hunting-trail';
 import { PURPOSE_SLUGS } from '@/features/hunting-trail/hunting-trail.model';
-import { NetworkHuntingTrailProvider } from '@/features/hunting-trail/network-hunting-trail-context';
+import { NetworkHuntingTrailProvider } from '@/features/hunting-trail/use-cases/network-hunting-trail/network-hunting-trail-context';
+import { useNetworkHuntingTrail } from '@/features/hunting-trail/use-cases/network-hunting-trail/use-network-hunting-trail';
 
 export const Route = createFileRoute('/_enterprise/hunting-trail')({
   component: () => (

@@ -1,8 +1,7 @@
 import { createFileRoute, useParams } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
-import { HuntingTrail } from '@/features/threats/compromises/use-cases/hunting-trail/entities/hunting-trail';
+import { HostHuntingTrail } from '@/features/host-insights/use-cases/host-details/entities/host-hunting-trail/host-hunting-trail';
 
 export const Route = createFileRoute(
   '/_enterprise/hosts/$hostId/hunting-trail',
@@ -16,12 +15,5 @@ export const Route = createFileRoute(
 
 function HostHuntingTrailTab() {
   const { hostId } = useParams({ strict: false }) as { hostId: string };
-  const { start_date, end_date } = useGlobalQueryParams(['dates']);
-  return (
-    <HuntingTrail
-      asset={hostId}
-      startDate={start_date}
-      endDate={end_date}
-    />
-  );
+  return <HostHuntingTrail hostId={hostId} />;
 }

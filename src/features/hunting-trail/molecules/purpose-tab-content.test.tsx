@@ -12,7 +12,7 @@ import {
   makeLateralEvent,
   makeNrdEvent,
 } from '@/features/events/common/events.mocks';
-import { PurposeGroupData } from '@/features/hunting-trail/hooks/use-network-hunting-trail';
+import { PurposeGroupData } from '@/features/hunting-trail/use-cases/network-hunting-trail/use-network-hunting-trail';
 
 import { PurposeTabContent } from './purpose-tab-content';
 

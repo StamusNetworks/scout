@@ -1,11 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { PurposeTabContent } from '@/features/hunting-trail/entities/purpose-tab-content';
 import {
   PURPOSE_SLUG_MAP,
   PurposeSlug,
 } from '@/features/hunting-trail/hunting-trail.model';
-import { useNetworkHuntingTrailContext } from '@/features/hunting-trail/network-hunting-trail-context';
+import { PurposeTabContent } from '@/features/hunting-trail/molecules/purpose-tab-content';
+import { useNetworkHuntingTrailContext } from '@/features/hunting-trail/use-cases/network-hunting-trail/network-hunting-trail-context';
 
 export const Route = createFileRoute('/_enterprise/hunting-trail/$purpose')({
   component: PurposePage,

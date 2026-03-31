@@ -1,21 +1,17 @@
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { PurposeAggregated } from '@/features/hunting-trail/molecules/purpose-aggregated';
 import { useHostHuntingTrail } from '@/features/hunting-trail/use-cases/host-hunting-trail/use-host-hunting-trail';
 
-interface HuntingTrailProps {
-  asset: string;
-  startDate: number | undefined;
-  endDate: number | undefined;
+export interface HostHuntingTrailProps {
+  hostId: string;
 }
 
-export const HuntingTrail = ({
-  asset,
-  startDate,
-  endDate,
-}: HuntingTrailProps) => {
+export function HostHuntingTrail({ hostId }: HostHuntingTrailProps) {
+  const { start_date, end_date } = useGlobalQueryParams(['dates']);
   const { taggedEvents, isLoading, isError, isEmpty } = useHostHuntingTrail({
-    asset,
-    startDate,
-    endDate,
+    asset: hostId,
+    startDate: start_date,
+    endDate: end_date,
   });
 
   if (isLoading) {
@@ -48,4 +44,4 @@ export const HuntingTrail = ({
   }
 
   return <PurposeAggregated events={taggedEvents} />;
-};
+}

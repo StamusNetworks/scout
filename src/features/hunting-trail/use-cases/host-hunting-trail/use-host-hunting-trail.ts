@@ -4,20 +4,22 @@ import {
   useGetEventsTailQuery,
 } from '@/features/events/common/events.api';
 import { useGetSightingEventsQuery } from '@/features/events/sightings/common/sightings.api';
+import {
+  TaggedEvent,
+  TimelineEventType,
+} from '@/features/hunting-trail/hunting-trail.model';
 
-import { TaggedEvent, TimelineEventType } from '../hunting-trail.model';
-
-interface UseHuntingTrailParams {
+interface UseHostHuntingTrailParams {
   asset: string;
   startDate: number | undefined;
   endDate: number | undefined;
 }
 
-export function useHuntingTrail({
+export function useHostHuntingTrail({
   asset,
   startDate,
   endDate,
-}: UseHuntingTrailParams) {
+}: UseHostHuntingTrailParams) {
   const ipFilter = `src_ip:${esEscape(asset)} OR dest_ip:${esEscape(asset)}`;
   const common = { start_date: startDate, end_date: endDate, page_size: 100 };
   const alertParams = { ...common, alert: true as const };
