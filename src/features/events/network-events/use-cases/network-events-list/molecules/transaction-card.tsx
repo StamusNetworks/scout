@@ -72,10 +72,17 @@ export const TransactionCard = ({ event }: { event: Event }) => {
           </Row>
           <Grid className="grid-cols-[1fr_2rem_1fr] items-center gap-2">
             <Column className="gap-1 truncate">
-              <EventValue
-                query_key="src_ip"
-                value={event.src_ip!}
-              />
+              <Row className="gap-1">
+                <EventValue
+                  query_key="src_ip"
+                  value={event.src_ip!}
+                />
+                <span>:</span>
+                <EventValue
+                  query_key="src_port"
+                  value={event.src_port!}
+                />
+              </Row>
               <Hostname
                 host={event.src_ip!}
                 size="small"
@@ -87,10 +94,17 @@ export const TransactionCard = ({ event }: { event: Event }) => {
             </Column>
             <span>{'->'}</span>
             <Column className="gap-1 truncate">
-              <EventValue
-                query_key="dest_ip"
-                value={event.dest_ip!}
-              />
+              <Row className="gap-1">
+                <EventValue
+                  query_key="dest_ip"
+                  value={event.dest_ip!}
+                />
+                <span>:</span>
+                <EventValue
+                  query_key="dest_port"
+                  value={event.dest_port!}
+                />
+              </Row>
               <Hostname
                 host={event.dest_ip!}
                 size="small"
