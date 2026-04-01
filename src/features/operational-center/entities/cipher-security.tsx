@@ -1,5 +1,5 @@
 import { add, format } from 'date-fns';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 import {
   NameType,
@@ -12,7 +12,6 @@ import { Row } from '@/common/design-system/atoms/layout/row';
 import {
   ChartContainer,
   ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from '@/common/design-system/atoms/ui/chart';
@@ -37,7 +36,56 @@ const chartConfig = {
 
 const RANGES_COUNT = 100;
 
+export function InteractiveLegendContent({
+  config,
+  hiddenSeries,
+  onToggle,
+}: {
+  config: Record<string, { label: string; color: string }>;
+  hiddenSeries: Set<string>;
+  onToggle: (dataKey: string) => void;
+}) {
+  return (
+    <div className="flex items-center justify-center gap-4 pt-3">
+      {Object.entries(config).map(([dataKey, { label, color }]) => {
+        const isHidden = hiddenSeries.has(dataKey);
+        return (
+          <button
+            key={dataKey}
+            type="button"
+            className={cn(
+              'flex cursor-pointer items-center gap-1.5 text-xs',
+              isHidden && 'opacity-40',
+            )}
+            onClick={() => onToggle(dataKey)}
+          >
+            <div
+              className="h-2 w-2 shrink-0 rounded-[2px]"
+              style={{ backgroundColor: color }}
+            />
+            {label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 export const CipherSecurity = () => {
+  const [hiddenSeries, setHiddenSeries] = useState<Set<string>>(new Set());
+
+  const toggleSeries = (dataKey: string) => {
+    setHiddenSeries((prev) => {
+      const next = new Set(prev);
+      if (next.has(dataKey)) {
+        next.delete(dataKey);
+      } else {
+        next.add(dataKey);
+      }
+      return next;
+    });
+  };
+
   const params = useGlobalQueryParams(['dates', 'tenant']);
   const interval = useMemo(
     () =>
@@ -193,37 +241,51 @@ export const CipherSecurity = () => {
             />
           }
         />
-        <Area
-          key={'insecure'}
-          type="monotone"
-          stackId="a"
-          dataKey="insecure"
-          fill="url(#gradient-insecure)"
-          stroke={`var(--color-insecure)`}
-          strokeWidth={1.5}
-          fillOpacity={1}
+        {!hiddenSeries.has('insecure') && (
+          <Area
+            key={'insecure'}
+            type="monotone"
+            stackId="a"
+            dataKey="insecure"
+            fill="url(#gradient-insecure)"
+            stroke={`var(--color-insecure)`}
+            strokeWidth={1.5}
+            fillOpacity={1}
+          />
+        )}
+        {!hiddenSeries.has('degraded') && (
+          <Area
+            key={'degraded'}
+            type="monotone"
+            stackId="a"
+            dataKey="degraded"
+            fill="url(#gradient-degraded)"
+            stroke={`var(--color-degraded)`}
+            strokeWidth={1.5}
+            fillOpacity={1}
+          />
+        )}
+        {!hiddenSeries.has('recommended') && (
+          <Area
+            key={'recommended'}
+            type="monotone"
+            stackId="a"
+            dataKey="recommended"
+            fill="url(#gradient-recommended)"
+            stroke={`var(--color-recommended)`}
+            strokeWidth={1.5}
+            fillOpacity={1}
+          />
+        )}
+        <ChartLegend
+          content={
+            <InteractiveLegendContent
+              config={chartConfig}
+              hiddenSeries={hiddenSeries}
+              onToggle={toggleSeries}
+            />
+          }
         />
-        <Area
-          key={'degraded'}
-          type="monotone"
-          stackId="a"
-          dataKey="degraded"
-          fill="url(#gradient-degraded)"
-          stroke={`var(--color-degraded)`}
-          strokeWidth={1.5}
-          fillOpacity={1}
-        />
-        <Area
-          key={'recommended'}
-          type="monotone"
-          stackId="a"
-          dataKey="recommended"
-          fill="url(#gradient-recommended)"
-          stroke={`var(--color-recommended)`}
-          strokeWidth={1.5}
-          fillOpacity={1}
-        />
-        <ChartLegend content={<ChartLegendContent />} />
       </AreaChart>
     </ChartContainer>
   );
