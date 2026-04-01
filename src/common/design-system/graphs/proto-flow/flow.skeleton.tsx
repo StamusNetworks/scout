@@ -7,7 +7,7 @@ interface FlowSkeletonProps<T = unknown> {
   columns?: ProtoColumn<T>[];
   rowCount: number;
 }
-export const FlowSkeleton = <T = unknown,>({
+export const FlowSkeleton = <T = unknown>({
   columns = defaultColumns,
   rowCount,
 }: FlowSkeletonProps<T>) => (

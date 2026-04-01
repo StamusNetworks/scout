@@ -3,8 +3,8 @@ import { Row } from '@tanstack/react-table';
 import { Binary } from 'lucide-react';
 import { useMemo } from 'react';
 
-import { DataTable } from '@/common/design-system/molecules/data-table/data-table.tsx';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty.tsx';
+import { DataTable } from '@/common/design-system/molecules/data-table/data-table.tsx';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags.ts';

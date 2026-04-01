@@ -115,12 +115,13 @@ export const buildShareableState = (
   tags: { ...tagFilters },
   filters: queryFilters
     .filter((f) => !f.is_suspended)
-    .map((f) => ({
-      key: f.key,
-      value: f.value,
-      ...(f.is_negated && { negated: true }),
-      ...(f.is_wildcarded && { wildcarded: true }),
-    })),
+    .map((f) =>
+      Object.assign(
+        { key: f.key, value: f.value },
+        f.is_negated && { negated: true },
+        f.is_wildcarded && { wildcarded: true },
+      ),
+    ),
 });
 
 export const buildShareUrl = (

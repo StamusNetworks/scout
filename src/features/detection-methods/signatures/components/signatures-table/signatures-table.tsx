@@ -2,8 +2,8 @@ import { PencilRuler } from 'lucide-react';
 import { parseAsBoolean, useQueryState } from 'nuqs';
 
 import { DataTable } from '@/common/design-system/molecules/data-table';
-import { DataTableToolbar } from '@/common/design-system/molecules/data-table/data-table.toolbar';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
+import { DataTableToolbar } from '@/common/design-system/molecules/data-table/data-table.toolbar';
 import { SwitchFilter } from '@/common/design-system/molecules/data-table/filters/switch-filter';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';

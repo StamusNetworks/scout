@@ -23,7 +23,7 @@ function buildQueryGroups(events: TaggedEvent[]): QueryGroup[] {
 
   const groups: QueryGroup[] = [];
   for (const [type, evts] of byType) {
-    const sorted = [...evts].sort(
+    const sorted = [...evts].toSorted(
       (a, b) =>
         new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
     );

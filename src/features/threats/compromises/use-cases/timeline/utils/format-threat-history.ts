@@ -47,7 +47,7 @@ export const formatThreatHistory = (
 
     return {
       entity: asset,
-      threats: [...victimThreats, ...offenderThreats].sort(
+      threats: [...victimThreats, ...offenderThreats].toSorted(
         (a, b) => a.start_date - b.start_date,
       ),
       kc_phases,

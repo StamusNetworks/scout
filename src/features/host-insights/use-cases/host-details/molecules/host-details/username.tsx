@@ -79,7 +79,7 @@ export const UsernameTemplate = ({
 const sortUsernames = (usernames: NonNullable<Host['host_id']['username']>) => {
   return usernames
     .filter((username) => username.user !== '$')
-    .sort(
+    .toSorted(
       (a, b) =>
         new Date(b.last_seen).getTime() - new Date(a.last_seen).getTime(),
     );

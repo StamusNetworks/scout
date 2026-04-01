@@ -21,7 +21,7 @@ export const useNewsFeed = () => {
         index === self.findIndex((t) => t.title === item.title),
     );
     const sortedFeed = uniqueFeed
-      .sort((a, b) =>
+      .toSorted((a, b) =>
         isBefore(new Date(a.pubDate), new Date(b.pubDate)) ? 1 : -1,
       )
       .map((news) => ({

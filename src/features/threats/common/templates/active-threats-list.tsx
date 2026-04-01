@@ -104,5 +104,5 @@ const getThreatIdsFromFilters = (
 
   return list
     .filter((threat) => threatIds.includes(threat.pk))
-    .sort(sortBy('name'));
+    .toSorted(sortBy('name'));
 };

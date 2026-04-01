@@ -37,13 +37,16 @@ const filterEventType = (
     ).includes(f.category),
   );
 
-const unsupportedFilters: (keyof typeof QueryFiltersRecord)[] = [
+const unsupportedFilters = new Set<keyof typeof QueryFiltersRecord>([
   'hits_min',
   'hits_max',
-];
+]);
 const removeUnsupportedFilters = (
   filters: { key: string; category: FilterCategory }[],
-) => filters.filter((f) => !unsupportedFilters.includes(f.key));
+) =>
+  filters.filter(
+    (f) => !unsupportedFilters.has(f.key as keyof typeof QueryFiltersRecord),
+  );
 
 const toArrayOfKeys = (filters: { key: string; category: FilterCategory }[]) =>
   filters.map((f) => f.key);

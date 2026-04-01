@@ -116,13 +116,11 @@ export const ENDPOINTS: Record<string, Endpoint> = {
   ALERTS_TAIL: {
     name: 'Fetch Elasticsearch alerts tail',
     url: '/rest/rules/es/alerts_tail/',
-    ...{
-      ...base_config,
-      ...pagination,
-      format: {
-        dates: 'start/end',
-        dates_zeroes: false,
-      },
+    ...base_config,
+    ...pagination,
+    format: {
+      dates: 'start/end',
+      dates_zeroes: false,
     },
   },
   FILTER_ACTIONS: {

@@ -8,12 +8,6 @@ import {
 } from '@/common/design-system/atoms/ui/context-menu';
 import { DateTime } from '@/common/design-system/entities/date-time';
 import {
-  buildFlowAggQuery,
-  extractTimestamps,
-  getMaxNodesPerColumn,
-  transformAggToSankey,
-} from '@/common/design-system/graphs/sankey/sankey.utils';
-import {
   SankeyChart,
   type SankeyNodeInfo,
 } from '@/common/design-system/graphs/sankey/sankey-chart';
@@ -23,6 +17,12 @@ import {
   TitleRowStart,
   TitleRowTitle,
 } from '@/common/design-system/graphs/sankey/sankey-title-row';
+import {
+  buildFlowAggQuery,
+  extractTimestamps,
+  getMaxNodesPerColumn,
+  transformAggToSankey,
+} from '@/common/design-system/graphs/sankey/sankey.utils';
 import { useGetEventsAggregationQuery } from '@/features/events/common/events.api';
 import type { EventTypes } from '@/features/filtering/filters/query-filters/query-filters.store';
 import { useCreateFilter } from '@/features/filtering/filters/query-filters/use-cases/create-filter/create-filter';

@@ -254,7 +254,7 @@ export function getViewModel(events: FlowEvents): MetaViewModel {
     flow: events.Flow?.[0]?.flow
       ? extractFlowData(events.Flow?.[0]?.flow)
       : undefined,
-    items: [...transactions, ...alerts, ...dnsAnswers, ...stamus].sort(
+    items: [...transactions, ...alerts, ...dnsAnswers, ...stamus].toSorted(
       (a, b) =>
         a.start && b.start
           ? new Date(a.start).getTime() - new Date(b.start).getTime()

@@ -7,12 +7,12 @@ import { usePaginationState } from '@/common/design-system/molecules/data-table/
 import { esEscape } from '@/common/lib/strings';
 import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGetHostsQuery } from '@/features/host-insights/common/host-insights.api';
 import {
   getHostRole,
   Host,
   HostRoles,
 } from '@/features/host-insights/common/host.model';
-import { useGetHostsQuery } from '@/features/host-insights/common/host-insights.api';
 import { HostnameTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
 import { NetworkTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 import { UsernameTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';

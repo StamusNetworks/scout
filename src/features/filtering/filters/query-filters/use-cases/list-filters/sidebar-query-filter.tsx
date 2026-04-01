@@ -306,8 +306,7 @@ const useGetConvertibleFiltersDefinitions = (id: string) => {
           .map(([key]) => key)
       : [];
 
-  return convertibleFilters.concat(sameTypeFilters).map((key) => ({
-    key,
-    ...filterDefs[key],
-  }));
+  return convertibleFilters
+    .concat(sameTypeFilters)
+    .map((key) => Object.assign({ key }, filterDefs[key]));
 };

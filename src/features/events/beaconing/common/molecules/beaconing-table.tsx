@@ -2,8 +2,8 @@ import { Radar } from 'lucide-react';
 
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTable } from '@/common/design-system/molecules/data-table';
-import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
+import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { SNI } from '@/common/design-system/molecules/sni';
@@ -11,8 +11,8 @@ import { getDuration } from '@/common/lib/duration';
 import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
-import { useGetBeaconingEventsQuery } from '../beaconing.api';
 import { BeaconingEvent } from '../beaconing-event.model';
+import { useGetBeaconingEventsQuery } from '../beaconing.api';
 
 // Columns
 

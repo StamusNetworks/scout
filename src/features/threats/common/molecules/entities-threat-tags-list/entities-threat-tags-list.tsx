@@ -19,7 +19,7 @@ interface EntityThreatTagsListProps {
   className?: string;
 }
 export const EntityThreatTagsList = ({
-  entity: entity,
+  entity,
   className,
   maxThreats,
 }: EntityThreatTagsListProps) => {

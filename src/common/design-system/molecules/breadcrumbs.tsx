@@ -173,7 +173,7 @@ export const BreadcrumbsOutlet = () => {
   const [collapsedCount, setCollapsedCount] = useState(0);
 
   const sortedItems = useMemo(
-    () => [...items].sort((a, b) => a.order - b.order),
+    () => [...items].toSorted((a, b) => a.order - b.order),
     [items],
   );
 

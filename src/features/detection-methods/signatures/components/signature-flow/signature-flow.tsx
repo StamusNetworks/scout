@@ -10,12 +10,6 @@ import { DateTime } from '@/common/design-system/entities/date-time';
 import type { ProtoColumn } from '@/common/design-system/graphs/proto-flow/flow.columns';
 import protoColumns from '@/common/design-system/graphs/proto-flow/flow.columns';
 import {
-  buildFlowAggQuery,
-  extractTimestamps,
-  getMaxNodesPerColumn,
-  transformAggToSankey,
-} from '@/common/design-system/graphs/sankey/sankey.utils';
-import {
   SankeyChart,
   type SankeyNodeInfo,
 } from '@/common/design-system/graphs/sankey/sankey-chart';
@@ -25,6 +19,12 @@ import {
   TitleRowStart,
   TitleRowTitle,
 } from '@/common/design-system/graphs/sankey/sankey-title-row';
+import {
+  buildFlowAggQuery,
+  extractTimestamps,
+  getMaxNodesPerColumn,
+  transformAggToSankey,
+} from '@/common/design-system/graphs/sankey/sankey.utils';
 import {
   useGetEventsAggregationQuery,
   useGetProtocolsFromEventsQuery,

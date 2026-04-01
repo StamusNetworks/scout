@@ -30,8 +30,10 @@ export const getTimelineData = (res: CountsTimeline) => {
 
   // Transform Record into an array of objects
   const data = Object.entries(ticks)
-    .map(([time, counts]) => ({ time: parseInt(time, 10), ...counts }))
-    .sort((a, b) => a.time - b.time);
+    .map(([time, counts]) =>
+      Object.assign({ time: parseInt(time, 10) }, counts),
+    )
+    .toSorted((a, b) => a.time - b.time);
 
   // Chart config (keys and colors)
   const chartConfig = dataKeys.reduce<

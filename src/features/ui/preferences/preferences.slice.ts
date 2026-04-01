@@ -107,14 +107,14 @@ export const selectEnabledActions = (state: RootState) =>
 export const selectAutoOpenSidebarOnNavigation = (state: RootState) =>
   state.preferences.autoOpenSidebarOnNavigation;
 
-const validEventDetailTabs: EventDetailDefaultTab[] = [
+const validEventDetailTabs = new Set<EventDetailDefaultTab>([
   'meta_view',
   'synthetic_view',
   'json_view',
-];
+]);
 
 export const selectDefaultEventDetailTab = (state: RootState) =>
-  validEventDetailTabs.includes(state.preferences.defaultEventDetailTab)
+  validEventDetailTabs.has(state.preferences.defaultEventDetailTab)
     ? state.preferences.defaultEventDetailTab
     : 'meta_view';
 

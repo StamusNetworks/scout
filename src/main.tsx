@@ -8,7 +8,6 @@ import './assets/fonts/Geist-Medium.ttf';
 import './assets/fonts/Geist-Regular.ttf';
 import './assets/fonts/Geist-SemiBold.ttf';
 import './assets/fonts/Geist-Thin.ttf';
-
 import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom/client';

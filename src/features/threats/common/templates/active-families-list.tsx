@@ -75,5 +75,5 @@ const getFamiliesFromFilters = (
       return false;
     });
   }
-  return list.sort(sortBy('name'));
+  return list.toSorted(sortBy('name'));
 };

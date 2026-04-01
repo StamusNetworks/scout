@@ -1,3 +1,4 @@
 pnpm run test:ci
+pnpm run fmt
 pnpm run lint --fix
 pnpm run check

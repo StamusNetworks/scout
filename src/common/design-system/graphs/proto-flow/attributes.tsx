@@ -16,7 +16,7 @@ export const DetectionAttributes = ({
   eventsForProto: Event[];
   appProto: ProtoKey;
 }) => {
-  const timestamps = eventsForProto.map((e) => e['@timestamp']).sort();
+  const timestamps = eventsForProto.map((e) => e['@timestamp']).toSorted();
   const minTimestamp = timestamps[0];
   const maxTimestamp = last(timestamps);
   const metadata =

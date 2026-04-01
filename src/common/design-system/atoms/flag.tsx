@@ -1,5 +1,4 @@
 import 'react-flagpack/dist/style.css';
-
 import { cn } from '@/common/lib/utils';
 
 import { Row } from './layout/row';

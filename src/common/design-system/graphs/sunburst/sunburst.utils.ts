@@ -22,7 +22,7 @@ export function findNodeByPath(
 ): d3.HierarchyRectangularNode<SunburstNode<any>> | null {
   if (!path || path === 'root') return root;
 
-  const pathParts = path.split('.').reverse();
+  const pathParts = path.split('.').toReversed();
   let current: d3.HierarchyRectangularNode<SunburstNode<any>> | null = root;
 
   for (const part of pathParts) {

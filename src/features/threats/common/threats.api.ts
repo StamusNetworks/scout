@@ -10,11 +10,11 @@ import {
 } from '@/common/fetching/fetching.types';
 import { API } from '@/store/api';
 
-import { ActiveThreat } from './active-threat.model';
 import { ActiveThreatFamily } from './active-threat-family.model';
-import { Threat, ThreatPayload } from './threat.model';
+import { ActiveThreat } from './active-threat.model';
 import { ThreatFamily } from './threat-family.model';
 import { ThreatStatus } from './threat-status.schema';
+import { Threat, ThreatPayload } from './threat.model';
 
 export type URLParams = Record<string, string>;
 

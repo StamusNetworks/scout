@@ -84,7 +84,7 @@ function mergeTimelines(
     }
   }
 
-  return Array.from(map.values()).sort((a, b) => a.time - b.time);
+  return Array.from(map.values()).toSorted((a, b) => a.time - b.time);
 }
 
 export const MultiSeriesLineChart = ({

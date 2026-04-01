@@ -78,7 +78,7 @@ export const HostnameTemplate = ({
 const sortHostnames = (hostnames: NonNullable<Host['host_id']['hostname']>) => {
   return hostnames
     .filter((hostname) => hostname.host !== '$')
-    .sort(
+    .toSorted(
       (a, b) =>
         new Date(b.last_seen).getTime() - new Date(a.last_seen).getTime(),
     );

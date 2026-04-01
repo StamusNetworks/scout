@@ -153,7 +153,7 @@ export const DeeplinksForm = ({
               <FormControl>
                 <MultiSelect
                   options={Object.values(FilterType)
-                    .sort()
+                    .toSorted()
                     .map((value) => ({
                       label: value,
                       value,

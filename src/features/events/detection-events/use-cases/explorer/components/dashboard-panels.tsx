@@ -36,9 +36,9 @@ import {
   movePanelUp,
   toggleCollapse,
 } from '../store/dashboard.slice';
-import { CEdashboard, dashboard, DashboardItem } from './dashboard.config';
 import { ValueListCard } from './dashboard-card';
 import { DashboardKeysToggler } from './dashboard-keys-toggler';
+import { CEdashboard, dashboard, DashboardItem } from './dashboard.config';
 
 export const DashboardPanels = () => {
   const dispatch = useAppDispatch();

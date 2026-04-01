@@ -18,7 +18,7 @@ export const ProtoFlow = ({
 }) => {
   const appProtos = [
     ...new Set(events.map((e) => e.app_proto || 'default')),
-  ].sort() as ProtoKey[];
+  ].toSorted() as ProtoKey[];
 
   return (
     <>

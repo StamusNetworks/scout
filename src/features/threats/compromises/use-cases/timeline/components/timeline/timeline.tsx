@@ -26,7 +26,7 @@ import { TimelineZoomToFit } from './timeline.zoomToFit';
 
 export const MENU_WIDTH = 150;
 
-export const ThreatsTimeline = ({ entity: entity }: { entity?: string }) => {
+export const ThreatsTimeline = ({ entity }: { entity?: string }) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
 
   const { data, isLoading } = useGetThreatHistoryQuery(params);

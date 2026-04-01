@@ -4,7 +4,7 @@ import type { QueryFilterState } from '../query-filter.model';
  * Keys that allow multiple active (non-suspended) filters simultaneously.
  * Filters with these keys skip sibling suspension entirely.
  */
-const AUTHORIZE_MULTIPLE_FILTERS = ['msg', 'es_filter', 'ip', 'port'];
+const AUTHORIZE_MULTIPLE_FILTERS = new Set(['msg', 'es_filter', 'ip', 'port']);
 
 type FieldTypes = Record<string, { type: string }> | undefined;
 
@@ -38,7 +38,7 @@ function applySiblingSuspension(
   if (
     trigger.is_negated ||
     siblings.length === 0 ||
-    AUTHORIZE_MULTIPLE_FILTERS.includes(trigger.key)
+    AUTHORIZE_MULTIPLE_FILTERS.has(trigger.key)
   ) {
     return filters;
   }

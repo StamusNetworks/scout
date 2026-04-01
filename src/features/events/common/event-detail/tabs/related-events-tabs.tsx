@@ -68,7 +68,7 @@ export const RelatedEventsTabs: TabComponentType = () => null;
 RelatedEventsTabs.tabConfig = (_props, { flowEvents, flowEventsLoading }) => {
   const flowKeys = keys(flowEvents || {}) as (keyof FlowEvents)[];
 
-  return flowKeys.sort().reduce<TabConfig[]>((tabs, key) => {
+  return flowKeys.toSorted().reduce<TabConfig[]>((tabs, key) => {
     const config = PROTOCOL_REGISTRY[key];
     if (!config) return tabs;
 

@@ -183,7 +183,7 @@ export const NetworkTreeSunburst = ({
                       ...child,
                       aggregatedCounts: aggregateCountsForTooltip(child),
                     }))
-                    .sort((a, b) => {
+                    .toSorted((a, b) => {
                       const key = options.find((o) => o.value === count)?.key;
                       return (
                         b.aggregatedCounts[
@@ -271,7 +271,7 @@ export function findNodeByPath(
   if (!root) return undefined;
   if (!path || path === 'root') return root;
 
-  const pathParts = path.split('.').reverse();
+  const pathParts = path.split('.').toReversed();
   let current: TreeData = root;
 
   for (const part of pathParts) {
@@ -313,7 +313,7 @@ function computeTree(data: Node[], count: string): TreeData {
 
   // Process each node in the data array
   data.forEach((node) => {
-    const pathParts = node.key.split('.').reverse();
+    const pathParts = node.key.split('.').toReversed();
     let currentPath = '';
 
     // Build the tree structure level by level

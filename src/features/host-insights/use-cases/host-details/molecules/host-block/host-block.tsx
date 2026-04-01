@@ -62,7 +62,7 @@ export const HostBlock = ({
 
   const sortedData = useMemo(() => {
     const copy = [...(data || [])];
-    return copy.sort((a, b) => {
+    return copy.toSorted((a, b) => {
       switch (sort) {
         case 'first-seen-asc':
           return a.first_seen - b.first_seen;

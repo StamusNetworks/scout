@@ -41,11 +41,11 @@ export const SideBarQueryFilterSets = () => {
     selectQueryFilterSets(state, 'pinned'),
   );
   const sortedFavorites = useMemo(
-    () => [...favorites].sort((a, b) => a.name.localeCompare(b.name)),
+    () => [...favorites].toSorted((a, b) => a.name.localeCompare(b.name)),
     [favorites],
   );
   const sortedPinned = useMemo(
-    () => [...pinned].sort((a, b) => a.name.localeCompare(b.name)),
+    () => [...pinned].toSorted((a, b) => a.name.localeCompare(b.name)),
     [pinned],
   );
   return (

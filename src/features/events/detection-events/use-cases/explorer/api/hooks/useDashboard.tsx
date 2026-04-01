@@ -15,8 +15,7 @@ export const useDashboard = () => {
   const { enterprise } = useFeatureFlags();
   return useFieldsStats(
     Object.values(enterprise ? dashboard : CEdashboard)
-      .map((panel) => panel.items.map((i) => `${prefix}${i.i}`))
-      .flat()
+      .flatMap((panel) => panel.items.map((i) => `${prefix}${i.i}`))
       .join(','),
     { page_size: pageSize },
   );

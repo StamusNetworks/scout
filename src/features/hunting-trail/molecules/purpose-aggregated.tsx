@@ -37,7 +37,7 @@ function groupByPurpose(events: TaggedEvent[]): PurposeGroup[] {
     for (const type of types) {
       const evts = byType.get(type);
       if (!evts || evts.length === 0) continue;
-      const sorted = [...evts].sort(
+      const sorted = [...evts].toSorted(
         (a, b) =>
           new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
       );

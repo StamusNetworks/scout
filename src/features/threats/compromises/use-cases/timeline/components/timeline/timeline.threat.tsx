@@ -19,7 +19,7 @@ export const TimelineThreatB = ({
   threat_id,
   start_date,
   end_date,
-  entity: entity,
+  entity,
   type,
 }: TimelineThreat & { entity: string; index: number }) => {
   const { uniqueId } = useTimelineContext();

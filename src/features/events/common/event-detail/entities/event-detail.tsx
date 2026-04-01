@@ -17,7 +17,6 @@ import { useGetImpactedEntitiesQuery } from '@/features/threats/common/entities.
 import { selectDefaultEventDetailTab } from '@/features/ui/preferences/preferences.slice';
 import { useAppSelector } from '@/store/store';
 
-import { useGetEventsQuery } from '../../events.api';
 import {
   DetectionMethodTab,
   EventDetailTabs,
@@ -28,6 +27,7 @@ import {
   RelatedEventsTabs,
   SyntheticTab,
 } from '..';
+import { useGetEventsQuery } from '../../events.api';
 
 interface EventDetailProps {
   eventId: string;

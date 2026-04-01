@@ -55,7 +55,7 @@ export function QFBuilder(
     );
   }
 
-  const alwaysWildcarded = ['content', 'msg'];
+  const alwaysWildcarded = new Set(['content', 'msg']);
 
   function createFilter(
     key: string,
@@ -74,7 +74,7 @@ export function QFBuilder(
       role: options?.role,
       is_suspended: options?.is_suspended ?? false,
       is_negated: options?.is_negated ?? false,
-      is_wildcarded: alwaysWildcarded.includes(key) || !!options?.is_wildcarded,
+      is_wildcarded: alwaysWildcarded.has(key) || !!options?.is_wildcarded,
     };
   }
   return {

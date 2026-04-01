@@ -1,6 +1,5 @@
 import '../global.css';
 import '@/common/design-system/molecules/htmlCodeDisplay/pygments.css';
-
 import { RouterProvider } from '@tanstack/react-router';
 import { NuqsAdapter } from 'nuqs/adapters/tanstack-router';
 import { Provider } from 'react-redux';

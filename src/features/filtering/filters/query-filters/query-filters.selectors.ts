@@ -196,16 +196,14 @@ export const selectEventsQfilter = (
       const novelty = options?.tags ? tags?.novelty : false;
       if (typeof filterExtension === 'string') {
         const filterString = Builder?.toQFString(
-          [
-            ...queryFilters
-              .filter(
-                (f) =>
-                  getFilterDef(f.key)?.category === FilterCategory.EVENT ||
-                  (getFilterDef(f.key) === undefined &&
-                    !f.key.startsWith('host_id.')),
-              )
-              .filter((f) => f.is_suspended !== true),
-          ],
+          queryFilters
+            .filter(
+              (f) =>
+                getFilterDef(f.key)?.category === FilterCategory.EVENT ||
+                (getFilterDef(f.key) === undefined &&
+                  !f.key.startsWith('host_id.')),
+            )
+            .filter((f) => f.is_suspended !== true),
           options.tags ? tags : undefined,
           novelty,
         );

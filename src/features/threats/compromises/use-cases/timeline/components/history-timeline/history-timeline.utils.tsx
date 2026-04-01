@@ -139,27 +139,25 @@ export const formatServiceHistory = (
   services: Host['host_id']['services'] | undefined,
 ): ServiceHistoryItem[] => {
   if (!services) return [];
-  return services
-    .map(({ proto, port, values }) =>
-      values.map((value) => {
-        const { app_proto, first_seen, http } = value;
-        const { tls, ssh } = value as typeof value & {
-          tls?: TLSServiceHistoryItem['tls'];
-          ssh?: SSHServiceHistoryItem['ssh'];
-        };
-        return {
-          proto,
-          port,
-          timestamp: new Date(first_seen).getTime(),
-          type: 'service',
-          app_proto,
-          ...(http && { http }),
-          ...(tls && { tls }),
-          ...(ssh && { ssh }),
-        } as ServiceHistoryItem;
-      }),
-    )
-    .flat();
+  return services.flatMap(({ proto, port, values }) =>
+    values.map((value) => {
+      const { app_proto, first_seen, http } = value;
+      const { tls, ssh } = value as typeof value & {
+        tls?: TLSServiceHistoryItem['tls'];
+        ssh?: SSHServiceHistoryItem['ssh'];
+      };
+      return {
+        proto,
+        port,
+        timestamp: new Date(first_seen).getTime(),
+        type: 'service',
+        app_proto,
+        ...(http && { http }),
+        ...(tls && { tls }),
+        ...(ssh && { ssh }),
+      } as ServiceHistoryItem;
+    }),
+  );
 };
 
 export const computeHistory = ({

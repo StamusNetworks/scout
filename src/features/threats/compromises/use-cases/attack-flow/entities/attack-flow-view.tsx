@@ -7,14 +7,14 @@ import {
 } from '@/common/design-system/atoms/ui/context-menu';
 import type { ProtoColumn } from '@/common/design-system/graphs/proto-flow/flow.columns';
 import {
+  SankeyChart,
+  type SankeyNodeInfo,
+} from '@/common/design-system/graphs/sankey/sankey-chart';
+import {
   buildFlowAggQuery,
   getMaxNodesPerColumn,
   transformAggToSankey,
 } from '@/common/design-system/graphs/sankey/sankey.utils';
-import {
-  SankeyChart,
-  type SankeyNodeInfo,
-} from '@/common/design-system/graphs/sankey/sankey-chart';
 import { useGetEventsAggregationQuery } from '@/features/events/common/events.api';
 import { useCreateFilter } from '@/features/filtering/filters/query-filters/use-cases/create-filter/create-filter';
 import { ContextMenuContent } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/context-menu/context-menu.content';

@@ -15,6 +15,7 @@
 Always run before considering work done:
 
 ```sh
+pnpm run fmt
 pnpm run lint --fix
 pnpm run check
 ```

@@ -97,7 +97,7 @@ export const NetworkTemplate = ({
 const sortNetworks = (networks: NonNullable<Host['host_id']['net_info']>) => {
   return networks
     .filter((network) => network.agg !== '$')
-    .sort(
+    .toSorted(
       (a, b) =>
         new Date(b.last_seen).getTime() - new Date(a.last_seen).getTime(),
     );

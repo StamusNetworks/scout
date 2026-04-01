@@ -7,8 +7,8 @@ import { FlowSkeleton } from '@/common/design-system/graphs/proto-flow/flow.skel
 import { esEscape } from '@/common/lib/strings';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 
-import { useGetTlsTailQuery } from '../beaconing.api';
 import { TlsTail } from '../beaconing-event.model';
+import { useGetTlsTailQuery } from '../beaconing.api';
 
 // Columns
 
