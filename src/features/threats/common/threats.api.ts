@@ -9,6 +9,7 @@ import {
   Tenant,
 } from '@/common/fetching/fetching.types';
 import { API } from '@/store/api';
+import { applyOptimisticUpdateToAllCacheEntries } from '@/store/utils';
 
 import { ActiveThreatFamily } from './active-threat-family.model';
 import { ActiveThreat } from './active-threat.model';
@@ -155,6 +156,28 @@ export const ThreatsAPI = API.injectEndpoints({
         method: 'POST',
         body: threat,
       }),
+      async onQueryStarted(_arg, { dispatch, getState, queryFulfilled }) {
+        try {
+          const { data: createdThreat } = await queryFulfilled;
+          const cachedArgs = ThreatsAPI.util.selectCachedArgsForQuery(
+            getState(),
+            'getCustomThreats',
+          );
+          cachedArgs.forEach((params: Tenant) => {
+            dispatch(
+              ThreatsAPI.util.updateQueryData(
+                'getCustomThreats',
+                params,
+                (draft) => {
+                  customThreatsAdapter.upsertOne(draft, createdThreat);
+                },
+              ),
+            );
+          });
+        } catch {
+          // No undo needed — insert only happens on success
+        }
+      },
       invalidatesTags: ['CustomThreats'],
     }),
     updateThreat: builder.mutation<Threat, ThreatPayload & { pk: number }>({
@@ -163,6 +186,16 @@ export const ThreatsAPI = API.injectEndpoints({
         method: 'PATCH',
         body: threat,
       }),
+      async onQueryStarted({ pk, ...patch }, api) {
+        applyOptimisticUpdateToAllCacheEntries<
+          ReturnType<typeof customThreatsAdapter.getInitialState>
+        >(api, ThreatsAPI, 'getCustomThreats', (draft) => {
+          customThreatsAdapter.updateOne(draft, {
+            id: pk,
+            changes: patch,
+          });
+        });
+      },
       invalidatesTags: ['CustomThreats'],
     }),
     deleteThreat: builder.mutation<void, number>({

@@ -158,6 +158,7 @@ export const CreateEditDeclarationFilterActionForm = ({
       form.setValue('kill_chain', 'pre_condition');
       form.setValue('threat', '');
     }
+    setPendingThreat(null);
   }, [form, isDoc]);
 
   const { data: threatOptions } = useGetCustomThreatsQuery(
@@ -222,20 +223,18 @@ export const CreateEditDeclarationFilterActionForm = ({
   const [threatModal, setThreatModal] = useState<'create' | 'edit' | null>(
     null,
   );
-  // Necessary to create a temporary SelectItem
-  // Otherwise, the Select component will set back the value to '' because the option does not exist before the API response
-  const [threatResult, setThreatResult] = useState<string | null>(
-    filterAction?.options.threat || null,
-  );
+  const [pendingThreat, setPendingThreat] = useState<string | null>(null);
   const handleCustomThreatMutationSuccess = (threat: string) => {
-    setThreatResult(threat);
+    setPendingThreat(threat);
     setThreatModal(null);
   };
+  // Auto-select once the option appears in the cache-filtered list
   useEffect(() => {
-    if (threatResult) {
-      form.setValue('threat', threatResult);
+    if (pendingThreat && threatOptions?.some((t) => t.name === pendingThreat)) {
+      form.setValue('threat', pendingThreat);
+      setPendingThreat(null);
     }
-  }, [form, threatResult]);
+  }, [form, pendingThreat, threatOptions]);
 
   const victimType = form.watch('target_type');
   useUpdateEffect(() => {
@@ -346,14 +345,6 @@ export const CreateEditDeclarationFilterActionForm = ({
                             {threat.name}
                           </SelectItem>
                         ))}
-                        {threatResult &&
-                          !threatOptions
-                            ?.map((opt) => opt.name)
-                            .includes(threatResult) && (
-                            <SelectItem value={threatResult}>
-                              {threatResult}
-                            </SelectItem>
-                          )}
                       </SelectContent>
                     </Select>
                   </FormControl>
