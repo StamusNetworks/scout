@@ -187,6 +187,8 @@ const TYPE_TABLE_COLUMNS: Record<TimelineEventType, TableColumnDef[]> = {
   longerTcp: sessionCols,
   biggerUdp: biggerSessionCols,
   longerUdp: sessionCols,
+  biggerIcmp: biggerSessionCols,
+  longerIcmp: sessionCols,
 };
 
 export const CardEventsTable = ({

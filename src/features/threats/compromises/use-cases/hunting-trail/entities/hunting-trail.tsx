@@ -12,7 +12,7 @@ export const HuntingTrail = ({
   startDate,
   endDate,
 }: HuntingTrailProps) => {
-  const { taggedEvents, isLoading, isError, isEmpty } = useHostHuntingTrail({
+  const { groups, isLoading, isError, isEmpty } = useHostHuntingTrail({
     asset,
     startDate,
     endDate,
@@ -47,5 +47,5 @@ export const HuntingTrail = ({
     );
   }
 
-  return <PurposeAggregated events={taggedEvents} />;
+  return <PurposeAggregated groups={groups} />;
 };

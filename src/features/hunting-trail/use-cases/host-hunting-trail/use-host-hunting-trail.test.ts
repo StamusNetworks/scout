@@ -116,6 +116,8 @@ describe('useHostHuntingTrail', () => {
     );
     const { result } = renderHook(() => useHostHuntingTrail(params));
     expect(result.current.isEmpty).toBe(false);
-    expect(result.current.taggedEvents.length).toBeGreaterThan(0);
+    expect(Object.values(result.current.groups).some((g) => g.count > 0)).toBe(
+      true,
+    );
   });
 });

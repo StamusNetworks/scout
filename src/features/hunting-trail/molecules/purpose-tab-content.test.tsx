@@ -12,7 +12,7 @@ import {
   makeLateralEvent,
   makeNrdEvent,
 } from '@/features/events/common/events.mocks';
-import { PurposeGroupData } from '@/features/hunting-trail/use-cases/network-hunting-trail/use-network-hunting-trail';
+import { PurposeGroupData } from '@/features/hunting-trail/hunting-trail.model';
 
 import { PurposeTabContent } from './purpose-tab-content';
 
@@ -69,7 +69,7 @@ describe('PurposeTabContent', () => {
     );
     expect(screen.getByText('NRD')).toBeInTheDocument();
     expect(
-      screen.getByText(/newly registered domains are disproportionately used/i),
+      screen.getByText(/newly registered domains detection in tls sni/i),
     ).toBeInTheDocument();
   });
 

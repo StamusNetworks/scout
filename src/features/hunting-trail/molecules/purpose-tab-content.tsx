@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import {
+  PurposeGroupData,
   TaggedEvent,
   TimelineEventType,
 } from '@/features/hunting-trail/hunting-trail.model';
@@ -8,7 +9,6 @@ import {
   QueryCard,
   QueryGroup,
 } from '@/features/hunting-trail/molecules/query-card';
-import { PurposeGroupData } from '@/features/hunting-trail/use-cases/network-hunting-trail/use-network-hunting-trail';
 
 function buildQueryGroups(events: TaggedEvent[]): QueryGroup[] {
   const byType = new Map<TimelineEventType, TaggedEvent[]>();

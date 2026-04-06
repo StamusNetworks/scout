@@ -150,6 +150,8 @@ const TYPE_COLUMNS: Record<TimelineEventType, ColumnDef[]> = {
   longerTcp: sessionCols,
   biggerUdp: biggerSessionCols,
   longerUdp: sessionCols,
+  biggerIcmp: biggerSessionCols,
+  longerIcmp: sessionCols,
 };
 
 type UniqueValue = {

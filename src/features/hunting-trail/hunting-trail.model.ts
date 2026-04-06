@@ -35,7 +35,9 @@ export type TimelineEventType =
   | 'biggerTcp'
   | 'longerTcp'
   | 'biggerUdp'
-  | 'longerUdp';
+  | 'longerUdp'
+  | 'biggerIcmp'
+  | 'longerIcmp';
 
 export const TIMELINE_TYPE_PRIORITY: Record<TimelineEventType, number> = {
   nrd: 0,
@@ -73,6 +75,8 @@ export const TIMELINE_TYPE_PRIORITY: Record<TimelineEventType, number> = {
   longerTcp: 32,
   biggerUdp: 33,
   longerUdp: 34,
+  biggerIcmp: 35,
+  longerIcmp: 36,
 };
 
 export type TaggedEvent = Event & { timelineType: TimelineEventType };
@@ -120,6 +124,8 @@ export const TYPE_LABEL: Record<TimelineEventType, string> = {
   longerTcp: 'Longer TCP',
   biggerUdp: 'Bigger UDP',
   longerUdp: 'Longer UDP',
+  biggerIcmp: 'Bigger ICMP',
+  longerIcmp: 'Longer ICMP',
 };
 
 export type TypeColorConfig = {
@@ -205,6 +211,8 @@ export const PURPOSE_GROUPS: {
       'longerTcp',
       'biggerUdp',
       'longerUdp',
+      'biggerIcmp',
+      'longerIcmp',
     ],
   },
 ];
@@ -238,6 +246,13 @@ export const PURPOSE_SLUG_MAP: Record<
   'sightings-discovery': PURPOSE_GROUPS[5],
   'hunting-signals': PURPOSE_GROUPS[6],
   'network-sessions': PURPOSE_GROUPS[7],
+};
+
+export type PurposeGroupData = {
+  events: TaggedEvent[];
+  count: number;
+  isLoading: boolean;
+  isError: boolean;
 };
 
 export const PURPOSE_SLUGS: { slug: PurposeSlug; label: string }[] = [

@@ -5,9 +5,17 @@ import {
 } from '@/features/events/common/events.api';
 import { useGetSightingEventsQuery } from '@/features/events/sightings/common/sightings.api';
 import {
+  PURPOSE_SLUG_MAP,
+  PURPOSE_SLUGS,
+  PurposeGroupData,
+  PurposeSlug,
   TaggedEvent,
   TimelineEventType,
 } from '@/features/hunting-trail/hunting-trail.model';
+import {
+  ALERT_QFILTERS,
+  EVENTS_TAIL_QFILTERS,
+} from '@/features/hunting-trail/hunting-trail.queries';
 
 interface UseHostHuntingTrailParams {
   asset: string;
@@ -21,181 +29,191 @@ export function useHostHuntingTrail({
   endDate,
 }: UseHostHuntingTrailParams) {
   const ipFilter = `src_ip:${esEscape(asset)} OR dest_ip:${esEscape(asset)}`;
-  const common = { start_date: startDate, end_date: endDate, page_size: 100 };
+  const common = { start_date: startDate, end_date: endDate, page_size: 10000 };
   const alertParams = { ...common, alert: true as const };
 
   // --- Alert queries (alerts_tail) ---
 
   const nrd = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND metadata.flowbits:stamus.nrd*`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.nrd}`,
   });
 
   const hunting = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND alert.metadata.stamus_type:hunting`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.hunting}`,
   });
 
   const lateral = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND alert.lateral:* AND alert.metadata.source:smb_lateral AND alert.metadata.signature_severity:critical`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.lateral}`,
   });
 
   const remoteAdmin = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND alert.metadata.lateral_function.keyword:OpenLocalMachine`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.remoteAdmin}`,
   });
 
   const remoteRegistry = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND alert.metadata.lateral_function.keyword:OpenClassesRoot`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.remoteRegistry}`,
   });
 
   const postExploit = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND alert.signature:*attack_response*`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.postExploit}`,
   });
 
   const ipDownload = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND alert.signature:*dotted* AND alert.signature:*quad* AND alert.signature:*request* AND alert.signature:*host*`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.ipDownload}`,
   });
 
   const rawProtocol = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND alert.signature:*raw* AND alert.signature:*Hunt*`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.rawProtocol}`,
   });
 
   const userEnum = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND alert.signature:*EnumerateUsers* AND alert.metadata.provider.keyword:Stamus AND alert.metadata.source.keyword:smb_lateral`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.userEnum}`,
   });
 
   const powershell = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND alert.signature:*Powershell* AND alert.signature:*Hunt*`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.powershell}`,
   });
 
   const newServers = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND alert.signature:Server AND metadata.flowbits:stamus.sightings`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.newServers}`,
   });
 
   const smbSightings = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND alert.signature:SMB AND metadata.flowbits:stamus.sightings`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.smbSightings}`,
   });
 
   const torrent = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND alert.signature:*torrent*`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.torrent}`,
   });
 
   const smtpExe = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND alert.signature:SUSPICIOUS AND alert.signature:SMTP AND alert.signature:EXE`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.smtpExe}`,
   });
 
   const base64Encoding = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND alert.signature:encoded AND alert.signature:*base64*`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.base64Encoding}`,
   });
 
   const maliciousFilenames = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND alert.signature:Observed AND alert.signature:Filename`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.maliciousFilenames}`,
   });
 
   const suspiciousFilenames = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND alert.signature:Suspicious AND alert.signature:Filename`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.suspiciousFilenames}`,
   });
 
   const longDomains = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND (dns.query.rrname.keyword:/.{70}.*/) AND dns.query.rrtype:*`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.longDomains}`,
   });
 
   const shortDomains = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND (-dns.query.rrname.keyword:/.{10}.*/) AND dns.query.rrtype:*`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.shortDomains}`,
   });
 
   const exeSightings = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND alert.signature:*exe* AND metadata.flowbits:stamus.sightings`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.exeSightings}`,
   });
 
   const dynamicDns = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND alert.signature:*dns* AND alert.signature:*dynamic*`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.dynamicDns}`,
   });
 
   const tor = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND alert.signature:tor`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.tor}`,
   });
 
   const publicDns = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND NOT dest_ip:"10.0.0.0/8" AND NOT dest_ip:"192.168.0.0/16" AND NOT dest_ip:"172.16.0.0/12" AND dns.query.rrname:*`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.publicDns}`,
   });
 
   const smtpUnencrypted = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND app_proto:smtp`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.smtpUnencrypted}`,
   });
 
   const base64Decoding = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(${ipFilter}) AND payload_printable:*base64_decode*`,
+    qfilter: `(${ipFilter}) AND ${ALERT_QFILTERS.base64Decoding}`,
   });
 
   // --- Events tail queries ---
 
   const file = useGetEventsTailQuery({
     ...common,
-    qfilter: `(${ipFilter}) AND (metadata.flowbits:stamus.file.identification OR metadata.flowbits:stamus.file.store OR metadata.flowbits:stamus.dga.smbfilename) AND event_type:fileinfo`,
+    qfilter: `(${ipFilter}) AND ${EVENTS_TAIL_QFILTERS.file}`,
   });
 
   const ssh = useGetEventsTailQuery({
     ...common,
-    qfilter: `(${ipFilter}) AND event_type.raw:"flow" AND app_proto.raw:"ssh"`,
+    qfilter: `(${ipFilter}) AND ${EVENTS_TAIL_QFILTERS.ssh}`,
   });
 
   const longerSsh = useGetEventsTailQuery({
     ...common,
-    qfilter: `(${ipFilter}) AND event_type.raw:"flow" AND app_proto.raw:"ssh" AND (flow.age:>1200)`,
+    qfilter: `(${ipFilter}) AND ${EVENTS_TAIL_QFILTERS.longerSsh}`,
   });
 
   const rdp = useGetEventsTailQuery({
     ...common,
-    qfilter: `(${ipFilter}) AND event_type.raw:"flow" AND app_proto.raw:"rdp"`,
+    qfilter: `(${ipFilter}) AND ${EVENTS_TAIL_QFILTERS.rdp}`,
   });
 
   const rfbVnc = useGetEventsTailQuery({
     ...common,
-    qfilter: `(${ipFilter}) AND event_type.raw:"flow" AND app_proto.raw:"rfb"`,
+    qfilter: `(${ipFilter}) AND ${EVENTS_TAIL_QFILTERS.rfbVnc}`,
   });
 
   const biggerTcp = useGetEventsTailQuery({
     ...common,
-    qfilter: `(${ipFilter}) AND event_type.raw:"flow" AND proto.raw:"TCP" AND ((flow.bytes_toclient:>1000000 OR flow.bytes_toserver:>1000000) AND flow.bytes_toclient:>0 AND flow.bytes_toserver:>0)`,
+    qfilter: `(${ipFilter}) AND ${EVENTS_TAIL_QFILTERS.biggerTcp}`,
   });
 
   const longerTcp = useGetEventsTailQuery({
     ...common,
-    qfilter: `(${ipFilter}) AND event_type.raw:"flow" AND proto.raw:"TCP" AND (flow.age:>1200)`,
+    qfilter: `(${ipFilter}) AND ${EVENTS_TAIL_QFILTERS.longerTcp}`,
   });
 
   const biggerUdp = useGetEventsTailQuery({
     ...common,
-    qfilter: `(${ipFilter}) AND event_type.raw:"flow" AND proto.raw:"UDP" AND ((flow.bytes_toclient:>1000000 OR flow.bytes_toserver:>1000000) AND flow.bytes_toclient:>0 AND flow.bytes_toserver:>0)`,
+    qfilter: `(${ipFilter}) AND ${EVENTS_TAIL_QFILTERS.biggerUdp}`,
   });
 
   const longerUdp = useGetEventsTailQuery({
     ...common,
-    qfilter: `(${ipFilter}) AND event_type.raw:"flow" AND proto.raw:"UDP" AND (flow.age:>1200)`,
+    qfilter: `(${ipFilter}) AND ${EVENTS_TAIL_QFILTERS.longerUdp}`,
+  });
+
+  const biggerIcmp = useGetEventsTailQuery({
+    ...common,
+    qfilter: `(${ipFilter}) AND ${EVENTS_TAIL_QFILTERS.biggerIcmp}`,
+  });
+
+  const longerIcmp = useGetEventsTailQuery({
+    ...common,
+    qfilter: `(${ipFilter}) AND ${EVENTS_TAIL_QFILTERS.longerIcmp}`,
   });
 
   // --- Sighting query ---
@@ -205,14 +223,19 @@ export function useHostHuntingTrail({
     qfilter: `discovery.asset:${esEscape(asset)}`,
   });
 
-  // --- Combine results ---
+  // --- Build query results map ---
 
-  const allQueries = [
+  // We need a minimal common shape for the query result map
+  type QueryResult = {
+    data?: { results?: { timestamp: string }[] };
+    isLoading: boolean;
+    isError: boolean;
+  };
+
+  const queryResults: Record<TimelineEventType, QueryResult> = {
     nrd,
-    sightings,
-    file,
-    lateral,
     hunting,
+    lateral,
     remoteAdmin,
     remoteRegistry,
     postExploit,
@@ -235,6 +258,7 @@ export function useHostHuntingTrail({
     publicDns,
     smtpUnencrypted,
     base64Decoding,
+    file,
     ssh,
     longerSsh,
     rdp,
@@ -243,58 +267,45 @@ export function useHostHuntingTrail({
     longerTcp,
     biggerUdp,
     longerUdp,
-  ];
+    biggerIcmp,
+    longerIcmp,
+    sightings,
+  };
+
+  // --- Group by purpose ---
+
+  const allQueries = Object.values(queryResults);
   const isLoading = allQueries.some((q) => q.isLoading);
   const isError = allQueries.every((q) => q.isError);
 
-  const tag = (
-    type: TimelineEventType,
-    results: { timestamp: string }[] | undefined,
-  ): TaggedEvent[] =>
-    (results ?? []).map((e) => ({ ...e, timelineType: type }) as TaggedEvent);
+  const groups = Object.fromEntries(
+    PURPOSE_SLUGS.map(({ slug }) => {
+      const purposeGroup = PURPOSE_SLUG_MAP[slug];
+      const queries = purposeGroup.types.map((t) => queryResults[t]);
+      const groupLoading = queries.some((q) => q.isLoading);
+      const groupError = queries.length > 0 && queries.every((q) => q.isError);
 
-  const taggedEvents: TaggedEvent[] = [
-    ...tag('nrd', nrd.data?.results),
-    ...tag('sightings', sightings.data?.results),
-    ...tag('file', file.data?.results),
-    ...tag('lateral', lateral.data?.results),
-    ...tag('hunting', hunting.data?.results),
-    ...tag('remoteAdmin', remoteAdmin.data?.results),
-    ...tag('remoteRegistry', remoteRegistry.data?.results),
-    ...tag('postExploit', postExploit.data?.results),
-    ...tag('ipDownload', ipDownload.data?.results),
-    ...tag('rawProtocol', rawProtocol.data?.results),
-    ...tag('userEnum', userEnum.data?.results),
-    ...tag('powershell', powershell.data?.results),
-    ...tag('newServers', newServers.data?.results),
-    ...tag('smbSightings', smbSightings.data?.results),
-    ...tag('torrent', torrent.data?.results),
-    ...tag('smtpExe', smtpExe.data?.results),
-    ...tag('base64Encoding', base64Encoding.data?.results),
-    ...tag('maliciousFilenames', maliciousFilenames.data?.results),
-    ...tag('suspiciousFilenames', suspiciousFilenames.data?.results),
-    ...tag('longDomains', longDomains.data?.results),
-    ...tag('shortDomains', shortDomains.data?.results),
-    ...tag('exeSightings', exeSightings.data?.results),
-    ...tag('dynamicDns', dynamicDns.data?.results),
-    ...tag('tor', tor.data?.results),
-    ...tag('publicDns', publicDns.data?.results),
-    ...tag('smtpUnencrypted', smtpUnencrypted.data?.results),
-    ...tag('base64Decoding', base64Decoding.data?.results),
-    ...tag('ssh', ssh.data?.results),
-    ...tag('longerSsh', longerSsh.data?.results),
-    ...tag('rdp', rdp.data?.results),
-    ...tag('rfbVnc', rfbVnc.data?.results),
-    ...tag('biggerTcp', biggerTcp.data?.results),
-    ...tag('longerTcp', longerTcp.data?.results),
-    ...tag('biggerUdp', biggerUdp.data?.results),
-    ...tag('longerUdp', longerUdp.data?.results),
-  ];
+      const events: TaggedEvent[] = purposeGroup.types.flatMap((type) => {
+        const results = queryResults[type].data?.results ?? [];
+        return results.map(
+          (e) => ({ ...e, timelineType: type }) as TaggedEvent,
+        );
+      });
 
-  return {
-    taggedEvents,
-    isLoading,
-    isError,
-    isEmpty: !isLoading && taggedEvents.length === 0 && !isError,
-  };
+      return [
+        slug,
+        {
+          events,
+          count: events.length,
+          isLoading: groupLoading,
+          isError: groupError,
+        },
+      ];
+    }),
+  ) as Record<PurposeSlug, PurposeGroupData>;
+
+  const isEmpty =
+    !isLoading && !isError && Object.values(groups).every((g) => g.count === 0);
+
+  return { groups, isLoading, isError, isEmpty };
 }

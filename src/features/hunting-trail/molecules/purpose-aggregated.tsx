@@ -2,7 +2,10 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 import {
-  PURPOSE_GROUPS,
+  PURPOSE_SLUG_MAP,
+  PURPOSE_SLUGS,
+  PurposeGroupData,
+  PurposeSlug,
   TaggedEvent,
   TimelineEventType,
   TypeColorConfig,
@@ -21,22 +24,22 @@ type PurposeGroup = {
   totalEvents: number;
 };
 
-function groupByPurpose(events: TaggedEvent[]): PurposeGroup[] {
-  const byType = new Map<TimelineEventType, TaggedEvent[]>();
-  for (const event of events) {
-    const list = byType.get(event.timelineType);
-    if (list) {
-      list.push(event);
-    } else {
-      byType.set(event.timelineType, [event]);
-    }
-  }
+function buildPurposeGroups(
+  groups: Record<PurposeSlug, PurposeGroupData>,
+): PurposeGroup[] {
+  return PURPOSE_SLUGS.map(({ slug }) => {
+    const { label, color } = PURPOSE_SLUG_MAP[slug];
+    const groupData = groups[slug];
 
-  return PURPOSE_GROUPS.map(({ label, color, types }) => {
+    const byType = new Map<TimelineEventType, TaggedEvent[]>();
+    for (const event of groupData.events) {
+      const list = byType.get(event.timelineType);
+      if (list) list.push(event);
+      else byType.set(event.timelineType, [event]);
+    }
+
     const queryGroups: QueryGroup[] = [];
-    for (const type of types) {
-      const evts = byType.get(type);
-      if (!evts || evts.length === 0) continue;
+    for (const [type, evts] of byType) {
       const sorted = [...evts].toSorted(
         (a, b) =>
           new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
@@ -48,12 +51,8 @@ function groupByPurpose(events: TaggedEvent[]): PurposeGroup[] {
         endTime: sorted[sorted.length - 1].timestamp,
       });
     }
-    return {
-      label,
-      color,
-      queryGroups,
-      totalEvents: queryGroups.reduce((sum, g) => sum + g.events.length, 0),
-    };
+
+    return { label, color, queryGroups, totalEvents: groupData.count };
   }).filter((g) => g.queryGroups.length > 0);
 }
 
@@ -97,12 +96,16 @@ const PurposeSection = ({ group }: { group: PurposeGroup }) => {
   );
 };
 
-export const PurposeAggregated = ({ events }: { events: TaggedEvent[] }) => {
-  const groups = useMemo(() => groupByPurpose(events), [events]);
+export const PurposeAggregated = ({
+  groups,
+}: {
+  groups: Record<PurposeSlug, PurposeGroupData>;
+}) => {
+  const purposeGroups = useMemo(() => buildPurposeGroups(groups), [groups]);
 
   return (
     <div className="flex flex-col gap-1 p-2">
-      {groups.map((group) => (
+      {purposeGroups.map((group) => (
         <PurposeSection
           key={group.label}
           group={group}

@@ -1,7 +1,9 @@
 import { createContext, useContext } from 'react';
 
-import { PurposeSlug } from '@/features/hunting-trail/hunting-trail.model';
-import { PurposeGroupData } from '@/features/hunting-trail/use-cases/network-hunting-trail/use-network-hunting-trail';
+import {
+  PurposeGroupData,
+  PurposeSlug,
+} from '@/features/hunting-trail/hunting-trail.model';
 
 type NetworkHuntingTrailContextValue = {
   groups: Record<PurposeSlug, PurposeGroupData>;

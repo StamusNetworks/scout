@@ -5,202 +5,210 @@ import {
 import {
   PURPOSE_SLUG_MAP,
   PURPOSE_SLUGS,
+  PurposeGroupData,
   PurposeSlug,
   TaggedEvent,
   TimelineEventType,
 } from '@/features/hunting-trail/hunting-trail.model';
+import {
+  ALERT_QFILTERS,
+  EVENTS_TAIL_QFILTERS,
+} from '@/features/hunting-trail/hunting-trail.queries';
 
 interface UseNetworkHuntingTrailParams {
   startDate: number | undefined;
   endDate: number | undefined;
 }
 
-export type PurposeGroupData = {
-  events: TaggedEvent[];
-  count: number;
-  isLoading: boolean;
-  isError: boolean;
-};
-
 export function useNetworkHuntingTrail({
   startDate,
   endDate,
 }: UseNetworkHuntingTrailParams) {
-  const common = { start_date: startDate, end_date: endDate, page_size: 100 };
+  const common = { start_date: startDate, end_date: endDate, page_size: 10000 };
   const alertParams = { ...common, alert: true as const };
 
   // --- Alert queries (25) ---
 
   const nrd = useGetEventsQuery({
     ...alertParams,
-    qfilter: `metadata.flowbits:stamus.nrd*`,
+    qfilter: ALERT_QFILTERS.nrd,
   });
 
   const hunting = useGetEventsQuery({
     ...alertParams,
-    qfilter: `alert.metadata.stamus_type:hunting`,
+    qfilter: ALERT_QFILTERS.hunting,
   });
 
   const lateral = useGetEventsQuery({
     ...alertParams,
-    qfilter: `alert.lateral:* AND alert.metadata.source:smb_lateral AND alert.metadata.signature_severity:critical`,
+    qfilter: ALERT_QFILTERS.lateral,
   });
 
   const remoteAdmin = useGetEventsQuery({
     ...alertParams,
-    qfilter: `alert.metadata.lateral_function.keyword:OpenLocalMachine`,
+    qfilter: ALERT_QFILTERS.remoteAdmin,
   });
 
   const remoteRegistry = useGetEventsQuery({
     ...alertParams,
-    qfilter: `alert.metadata.lateral_function.keyword:OpenClassesRoot`,
+    qfilter: ALERT_QFILTERS.remoteRegistry,
   });
 
   const postExploit = useGetEventsQuery({
     ...alertParams,
-    qfilter: `alert.signature:*attack_response*`,
+    qfilter: ALERT_QFILTERS.postExploit,
   });
 
   const ipDownload = useGetEventsQuery({
     ...alertParams,
-    qfilter: `alert.signature:*dotted* AND alert.signature:*quad* AND alert.signature:*request* AND alert.signature:*host*`,
+    qfilter: ALERT_QFILTERS.ipDownload,
   });
 
   const rawProtocol = useGetEventsQuery({
     ...alertParams,
-    qfilter: `alert.signature:*raw* AND alert.signature:*Hunt*`,
+    qfilter: ALERT_QFILTERS.rawProtocol,
   });
 
   const userEnum = useGetEventsQuery({
     ...alertParams,
-    qfilter: `alert.signature:*EnumerateUsers* AND alert.metadata.provider.keyword:Stamus AND alert.metadata.source.keyword:smb_lateral`,
+    qfilter: ALERT_QFILTERS.userEnum,
   });
 
   const powershell = useGetEventsQuery({
     ...alertParams,
-    qfilter: `alert.signature:*Powershell* AND alert.signature:*Hunt*`,
+    qfilter: ALERT_QFILTERS.powershell,
   });
 
   const newServers = useGetEventsQuery({
     ...alertParams,
-    qfilter: `alert.signature:Server AND metadata.flowbits:stamus.sightings`,
+    qfilter: ALERT_QFILTERS.newServers,
   });
 
   const smbSightings = useGetEventsQuery({
     ...alertParams,
-    qfilter: `alert.signature:SMB AND metadata.flowbits:stamus.sightings`,
+    qfilter: ALERT_QFILTERS.smbSightings,
   });
 
   const torrent = useGetEventsQuery({
     ...alertParams,
-    qfilter: `alert.signature:*torrent*`,
+    qfilter: ALERT_QFILTERS.torrent,
   });
 
   const smtpExe = useGetEventsQuery({
     ...alertParams,
-    qfilter: `alert.signature:SUSPICIOUS AND alert.signature:SMTP AND alert.signature:EXE`,
+    qfilter: ALERT_QFILTERS.smtpExe,
   });
 
   const base64Encoding = useGetEventsQuery({
     ...alertParams,
-    qfilter: `alert.signature:encoded AND alert.signature:*base64*`,
+    qfilter: ALERT_QFILTERS.base64Encoding,
   });
 
   const maliciousFilenames = useGetEventsQuery({
     ...alertParams,
-    qfilter: `alert.signature:Observed AND alert.signature:Filename`,
+    qfilter: ALERT_QFILTERS.maliciousFilenames,
   });
 
   const suspiciousFilenames = useGetEventsQuery({
     ...alertParams,
-    qfilter: `alert.signature:Suspicious AND alert.signature:Filename`,
+    qfilter: ALERT_QFILTERS.suspiciousFilenames,
   });
 
   const longDomains = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(dns.query.rrname.keyword:/.{70}.*/) AND dns.query.rrtype:*`,
+    qfilter: ALERT_QFILTERS.longDomains,
   });
 
   const shortDomains = useGetEventsQuery({
     ...alertParams,
-    qfilter: `(-dns.query.rrname.keyword:/.{10}.*/) AND dns.query.rrtype:*`,
+    qfilter: ALERT_QFILTERS.shortDomains,
   });
 
   const exeSightings = useGetEventsQuery({
     ...alertParams,
-    qfilter: `alert.signature:*exe* AND metadata.flowbits:stamus.sightings`,
+    qfilter: ALERT_QFILTERS.exeSightings,
   });
 
   const dynamicDns = useGetEventsQuery({
     ...alertParams,
-    qfilter: `alert.signature:*dns* AND alert.signature:*dynamic*`,
+    qfilter: ALERT_QFILTERS.dynamicDns,
   });
 
   const tor = useGetEventsQuery({
     ...alertParams,
-    qfilter: `alert.signature:tor`,
+    qfilter: ALERT_QFILTERS.tor,
   });
 
   const publicDns = useGetEventsQuery({
     ...alertParams,
-    qfilter: `NOT dest_ip:"10.0.0.0/8" AND NOT dest_ip:"192.168.0.0/16" AND NOT dest_ip:"172.16.0.0/12" AND dns.query.rrname:*`,
+    qfilter: ALERT_QFILTERS.publicDns,
   });
 
   const smtpUnencrypted = useGetEventsQuery({
     ...alertParams,
-    qfilter: `app_proto:smtp`,
+    qfilter: ALERT_QFILTERS.smtpUnencrypted,
   });
 
   const base64Decoding = useGetEventsQuery({
     ...alertParams,
-    qfilter: `payload_printable:*base64_decode*`,
+    qfilter: ALERT_QFILTERS.base64Decoding,
   });
 
-  // --- Events tail queries (8) ---
+  // --- Events tail queries (11) ---
 
   const file = useGetEventsTailQuery({
     ...common,
-    qfilter: `(metadata.flowbits:stamus.file.identification OR metadata.flowbits:stamus.file.store OR metadata.flowbits:stamus.dga.smbfilename) AND event_type:fileinfo`,
+    qfilter: EVENTS_TAIL_QFILTERS.file,
   });
 
   const ssh = useGetEventsTailQuery({
     ...common,
-    qfilter: `event_type.raw:"flow" AND app_proto.raw:"ssh"`,
+    qfilter: EVENTS_TAIL_QFILTERS.ssh,
   });
 
   const longerSsh = useGetEventsTailQuery({
     ...common,
-    qfilter: `event_type.raw:"flow" AND app_proto.raw:"ssh" AND (flow.age:>1200)`,
+    qfilter: EVENTS_TAIL_QFILTERS.longerSsh,
   });
 
   const rdp = useGetEventsTailQuery({
     ...common,
-    qfilter: `event_type.raw:"flow" AND app_proto.raw:"rdp"`,
+    qfilter: EVENTS_TAIL_QFILTERS.rdp,
   });
 
   const rfbVnc = useGetEventsTailQuery({
     ...common,
-    qfilter: `event_type.raw:"flow" AND app_proto.raw:"rfb"`,
+    qfilter: EVENTS_TAIL_QFILTERS.rfbVnc,
   });
 
   const biggerTcp = useGetEventsTailQuery({
     ...common,
-    qfilter: `event_type.raw:"flow" AND proto.raw:"TCP" AND ((flow.bytes_toclient:>1000000 OR flow.bytes_toserver:>1000000) AND flow.bytes_toclient:>0 AND flow.bytes_toserver:>0)`,
+    qfilter: EVENTS_TAIL_QFILTERS.biggerTcp,
   });
 
   const longerTcp = useGetEventsTailQuery({
     ...common,
-    qfilter: `event_type.raw:"flow" AND proto.raw:"TCP" AND (flow.age:>1200)`,
+    qfilter: EVENTS_TAIL_QFILTERS.longerTcp,
   });
 
   const biggerUdp = useGetEventsTailQuery({
     ...common,
-    qfilter: `event_type.raw:"flow" AND proto.raw:"UDP" AND ((flow.bytes_toclient:>1000000 OR flow.bytes_toserver:>1000000) AND flow.bytes_toclient:>0 AND flow.bytes_toserver:>0)`,
+    qfilter: EVENTS_TAIL_QFILTERS.biggerUdp,
   });
 
   const longerUdp = useGetEventsTailQuery({
     ...common,
-    qfilter: `event_type.raw:"flow" AND proto.raw:"UDP" AND (flow.age:>1200)`,
+    qfilter: EVENTS_TAIL_QFILTERS.longerUdp,
+  });
+
+  const biggerIcmp = useGetEventsTailQuery({
+    ...common,
+    qfilter: EVENTS_TAIL_QFILTERS.biggerIcmp,
+  });
+
+  const longerIcmp = useGetEventsTailQuery({
+    ...common,
+    qfilter: EVENTS_TAIL_QFILTERS.longerIcmp,
   });
 
   // --- Map query results by type ---
@@ -243,6 +251,8 @@ export function useNetworkHuntingTrail({
     longerTcp,
     biggerUdp,
     longerUdp,
+    biggerIcmp,
+    longerIcmp,
   };
 
   // --- Group by purpose ---

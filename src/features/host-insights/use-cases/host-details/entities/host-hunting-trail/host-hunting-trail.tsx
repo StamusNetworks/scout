@@ -8,7 +8,7 @@ export interface HostHuntingTrailProps {
 
 export function HostHuntingTrail({ hostId }: HostHuntingTrailProps) {
   const { start_date, end_date } = useGlobalQueryParams(['dates']);
-  const { taggedEvents, isLoading, isError, isEmpty } = useHostHuntingTrail({
+  const { groups, isLoading, isError, isEmpty } = useHostHuntingTrail({
     asset: hostId,
     startDate: start_date,
     endDate: end_date,
@@ -43,5 +43,5 @@ export function HostHuntingTrail({ hostId }: HostHuntingTrailProps) {
     );
   }
 
-  return <PurposeAggregated events={taggedEvents} />;
+  return <PurposeAggregated groups={groups} />;
 }
