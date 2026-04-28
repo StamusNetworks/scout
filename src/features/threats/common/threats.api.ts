@@ -203,7 +203,7 @@ export const ThreatsAPI = API.injectEndpoints({
         url: `/appliances/threat/${pk}/?event_view=false`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['CustomThreats'],
+      invalidatesTags: ['CustomThreats', 'Filter Actions'],
     }),
     getWorldMapOffendersCounts: builder.query<
       {
