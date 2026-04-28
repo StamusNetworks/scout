@@ -24,8 +24,7 @@ import {
   DropdownMenuTrigger,
 } from '@/common/design-system/atoms/ui/dropdown-menu';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
-import { useClearFilters } from '@/features/filtering/filters/query-filters/use-cases/clear-filters/clear-filters';
-import { useCreateFilter } from '@/features/filtering/filters/query-filters/use-cases/create-filter/create-filter';
+import { useReplaceFilters } from '@/features/filtering/filters/query-filters/use-cases/replace-filters/replace-filters';
 import { useAppDispatch } from '@/store/store';
 
 import { useGetFilterActionsQuery } from '../../api/filter-actions.api';
@@ -46,8 +45,7 @@ export const FilterActionRowActions = ({
   filterAction: FilterAction;
 }) => {
   const dispatch = useAppDispatch();
-  const clearFilters = useClearFilters();
-  const createFilter = useCreateFilter();
+  const replaceFilters = useReplaceFilters();
   const { data, isLoading } = useGetFilterActionsQuery({});
   const [moveFilterActionModalOpen, setMoveFilterActionModalOpen] =
     useState(false);
@@ -99,17 +97,16 @@ export const FilterActionRowActions = ({
   };
 
   const handleConvertToFilters = () => {
-    clearFilters();
-    filterAction.filter_defs.forEach((filter) => {
-      createFilter({
+    replaceFilters(
+      filterAction.filter_defs.map((filter) => ({
         key: filter.key,
         value: filter.value,
         options: {
           is_negated: filter.operator === 'different',
           is_wildcarded: !filter.full_string,
         },
-      });
-    });
+      })),
+    );
   };
 
   return (

@@ -38,7 +38,9 @@ export const HelpMenu = () => {
     {
       selectFromResult: (result) => ({
         ...result,
-        source: result.data?.results.find((result)=> result.datatype === 'threat'),
+        source: result.data?.results.find(
+          (result) => result.datatype === 'threat',
+        ),
       }),
     },
   );
