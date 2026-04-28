@@ -75,7 +75,8 @@ export const MitreTechniques = () => {
     },
   );
 
-  const handleClickMitreTechnique = (data: { name: string }) => {
+  const handleClickMitreTechnique = (data: { name?: string }) => {
+    if (!data.name) return;
     enableTags();
     replaceFilters([
       {

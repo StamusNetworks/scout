@@ -94,12 +94,12 @@ describe('IncidentsTable - Empty state', () => {
     await renderTable();
 
     await waitFor(() => {
-      expect(
-        screen.getByText('No incidents during this period'),
-      ).toBeInTheDocument();
+      expect(screen.getByText(/3 impacted entities/)).toBeInTheDocument();
     });
 
-    expect(screen.getByText(/3 impacted entities/)).toBeInTheDocument();
+    expect(
+      screen.getByText('No incidents during this period'),
+    ).toBeInTheDocument();
 
     const entitiesLink = screen.getByRole('link', {
       name: /view impacted entities/i,
@@ -125,12 +125,12 @@ describe('IncidentsTable - Empty state', () => {
     await renderTable();
 
     await waitFor(() => {
-      expect(
-        screen.getByText('No incidents during this period'),
-      ).toBeInTheDocument();
+      expect(screen.getByText(/1 impacted entity\b/)).toBeInTheDocument();
     });
 
-    expect(screen.getByText(/1 impacted entity\b/)).toBeInTheDocument();
+    expect(
+      screen.getByText('No incidents during this period'),
+    ).toBeInTheDocument();
 
     const entitiesLink = screen.getByRole('link', {
       name: /view impacted entity/i,

@@ -10,21 +10,17 @@ import { Column } from './layout/column';
 import { Row } from './layout/row';
 import { Button } from './ui/button';
 
-interface ErrorFallbackProps {
-  error: Error;
-  resetErrorBoundary: () => void;
-}
-export function ErrorFallback({
-  error,
-  resetErrorBoundary,
-}: ErrorFallbackProps) {
+const errorMessage = (error: unknown): string =>
+  error instanceof Error ? error.message : String(error);
+
+export function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
   return (
     <div
       role="alert"
       className="error"
     >
       <p>Something went wrong:</p>
-      <pre>{error?.message}</pre>
+      <pre>{errorMessage(error)}</pre>
       <button onClick={resetErrorBoundary}>Try again</button>
     </div>
   );
@@ -51,13 +47,13 @@ export function ErrorBoundary({
   );
 }
 
-export function PageErrorFallback({ error }: { error: Error }) {
+export function PageErrorFallback({ error }: FallbackProps) {
   const router = useRouter();
   return (
     <div className="flex h-full items-center justify-center">
       <Column className="items-center">
         <h1 className="mb-1 text-2xl font-bold">Something went wrong :(</h1>
-        <pre className="mb-2 text-sm">{error.message}</pre>
+        <pre className="mb-2 text-sm">{errorMessage(error)}</pre>
         <Row className="gap-2">
           <Button
             onClick={() => router.history.back()}
