@@ -68,7 +68,7 @@ export const ROLES_COLUMN: CustomColumnDef<Host> = {
 };
 
 export const SERVICES_COUNT_COLUMN: CustomColumnDef<Host> = {
-  id: 'services_count',
+  id: 'host_id.services_count',
   accessorFn: (row) => row.host_id?.services_count,
   header: ({ column }) => (
     <DataTableColumnHeader
