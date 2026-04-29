@@ -3,11 +3,13 @@ import { StatsCardHorizontal } from '@/common/design-system/molecules/stats-card
 import { useCreateFilter } from '@/features/filtering/filters/query-filters/use-cases/create-filter/create-filter';
 import { useFetchHostsCounts } from '@/features/host-insights/use-cases/hosts-list/hosts-list.api';
 
-import { useHomeNetParam } from '../home-net-picker/use-home-net-param';
 import { indicators } from './discovered-hosts.config';
 
-export const DiscoveredHosts = () => {
-  const [inHomeNetwork] = useHomeNetParam();
+interface DiscoveredHostsProps {
+  inHomeNetwork: 'true' | 'false' | 'all';
+}
+
+export const DiscoveredHosts = ({ inHomeNetwork }: DiscoveredHostsProps) => {
   const { data, isFetching } = useFetchHostsCounts({ inHomeNetwork });
   const createFilter = useCreateFilter();
   return (

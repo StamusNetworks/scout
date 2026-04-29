@@ -13,7 +13,10 @@ import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
+import { useSearchNavigate } from '@/common/lib/use-search-navigate';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { DiscoveredHosts } from '@/features/host-insights/common/discovered-hosts/discovered-hosts';
+import { HomeNetPicker } from '@/features/host-insights/common/home-net-picker/home-net-picker';
 import { HostsTable } from '@/features/host-insights/use-cases/hosts-list/entities/hosts-table';
 
 const searchSchema = z.object({
@@ -36,11 +39,8 @@ export const Route = createFileRoute('/_enterprise/hosts/')({
 function HostsPage() {
   usePageTitle('Hosts');
   const search = Route.useSearch();
+  const navigate = useSearchNavigate();
   const tanstackNavigate = useNavigate();
-  const navigate = (opts: {
-    search: (prev: Record<string, unknown>) => Record<string, unknown>;
-    replace?: boolean;
-  }) => tanstackNavigate(opts as Parameters<typeof tanstackNavigate>[0]);
 
   const globals = useGlobalQueryParams(['tenant', 'dates']);
 
@@ -65,24 +65,28 @@ function HostsPage() {
                 host indicators and actionable insights.
               </PageDescription>
             </PageHeaderContent>
+            <HomeNetPicker
+              value={search.in_home_net}
+              onChange={(v) =>
+                navigate({
+                  search: (prev) => ({ ...prev, in_home_net: v, page: 1 }),
+                })
+              }
+            />
           </PageHeader>
+          <DiscoveredHosts inHomeNetwork={search.in_home_net} />
           <HostsTable
             page={page}
             pageSize={pageSize}
             sorting={sorting}
             withAlerts={search.with_alerts}
-            inHomeNet={search.in_home_net}
+            inHomeNetwork={search.in_home_net}
             onPageChange={setPage}
             onPageSizeChange={setPageSize}
             onSortingChange={onSortingChange}
             onWithAlertsChange={(v) =>
               navigate({
                 search: (prev) => ({ ...prev, with_alerts: v, page: 1 }),
-              })
-            }
-            onInHomeNetChange={(v) =>
-              navigate({
-                search: (prev) => ({ ...prev, in_home_net: v, page: 1 }),
               })
             }
             onRowClick={(hostId) =>

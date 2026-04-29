@@ -60,10 +60,12 @@ const createTestRouter = () =>
     }),
   });
 
-const renderSunburst = async (inHomeNet: 'true' | 'false' | 'all' = 'all') => {
+const renderSunburst = async (
+  inHomeNetwork: 'true' | 'false' | 'all' = 'all',
+) => {
   return renderWithProviders(
     <BreadcrumbProvider>
-      <NetworkTreeSunburst inHomeNet={inHomeNet} />
+      <NetworkTreeSunburst inHomeNetwork={inHomeNetwork} />
     </BreadcrumbProvider>,
     {
       router: createTestRouter(),

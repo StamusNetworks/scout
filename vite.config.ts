@@ -16,6 +16,7 @@ export default ({ mode }: { mode: string }) => {
       tanstackRouter({
         target: 'react',
         autoCodeSplitting: true,
+        routeFileIgnorePattern: '\\.test\\.',
       }),
       react(),
       tailwindcss(),

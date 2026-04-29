@@ -3,7 +3,6 @@ import {
   Link,
   Outlet,
   useLocation,
-  useNavigate,
 } from '@tanstack/react-router';
 import { z } from 'zod';
 
@@ -23,6 +22,7 @@ import {
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
+import { useSearchNavigate } from '@/common/lib/use-search-navigate';
 import { DiscoveredHosts } from '@/features/host-insights/common/discovered-hosts/discovered-hosts';
 import { HomeNetPicker } from '@/features/host-insights/common/home-net-picker/home-net-picker';
 
@@ -34,15 +34,15 @@ export const Route = createFileRoute('/_enterprise/attack-surface')({
   validateSearch: searchSchema,
   component: () => (
     <PageBoundary key="attack-surface">
-      <AttackSurfaceLayout />
+      <AttackSurfaceRoute />
     </PageBoundary>
   ),
 });
 
-function AttackSurfaceLayout() {
+function AttackSurfaceRoute() {
   usePageTitle('Attack Surface');
   const search = Route.useSearch();
-  const navigate = useNavigate();
+  const navigate = useSearchNavigate();
   const pathname = useLocation().pathname;
 
   return (
@@ -65,15 +65,12 @@ function AttackSurfaceLayout() {
               value={search.in_home_net}
               onChange={(v) =>
                 navigate({
-                  search: (prev: Record<string, unknown>) => ({
-                    ...prev,
-                    in_home_net: v,
-                  }),
-                } as Parameters<typeof navigate>[0])
+                  search: (prev) => ({ ...prev, in_home_net: v, page: 1 }),
+                })
               }
             />
           </PageHeader>
-          <DiscoveredHosts />
+          <DiscoveredHosts inHomeNetwork={search.in_home_net} />
           <Tabs value={pathname}>
             <TabsList>
               <TabsTrigger

@@ -13,5 +13,5 @@ export const Route = createFileRoute('/_enterprise/attack-surface/')({
 
 function AttackSurfaceVisualisationPage() {
   const parentSearch = useSearch({ from: '/_enterprise/attack-surface' });
-  return <NetworkTreeSunburst inHomeNet={parentSearch.in_home_net} />;
+  return <NetworkTreeSunburst inHomeNetwork={parentSearch.in_home_net} />;
 }

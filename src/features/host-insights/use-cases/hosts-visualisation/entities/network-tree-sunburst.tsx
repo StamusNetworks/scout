@@ -81,11 +81,11 @@ const options = [
 ];
 
 interface NetworkTreeSunburstProps {
-  inHomeNet: 'true' | 'false' | 'all';
+  inHomeNetwork: 'true' | 'false' | 'all';
 }
 
 export const NetworkTreeSunburst = ({
-  inHomeNet,
+  inHomeNetwork,
 }: NetworkTreeSunburstProps) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const qfilterHost = useAppSelector(
@@ -100,8 +100,8 @@ export const NetworkTreeSunburst = ({
     ...params,
     host_id_qfilter: [
       ...(qfilterHost ? [qfilterHost] : []),
-      ...(inHomeNet !== 'all'
-        ? [`host_id.in_home_net: ${esEscape(inHomeNet)}`]
+      ...(inHomeNetwork !== 'all'
+        ? [`host_id.in_home_net: ${esEscape(inHomeNetwork)}`]
         : []),
     ].join(' AND '),
   });

@@ -18,7 +18,7 @@ interface HostsInventoryTableProps {
   page: number;
   pageSize: number;
   sorting: SortingState;
-  inHomeNet: 'true' | 'false' | 'all';
+  inHomeNetwork: 'true' | 'false' | 'all';
   onPageChange: (page: number) => void;
   onPageSizeChange: (pageSize: number) => void;
   onSortingChange: (updater: Updater<SortingState>) => void;
@@ -34,7 +34,7 @@ export function HostsInventoryTable({
   page,
   pageSize,
   sorting,
-  inHomeNet,
+  inHomeNetwork,
   onPageChange,
   onPageSizeChange,
   onSortingChange,
@@ -57,7 +57,7 @@ export function HostsInventoryTable({
   const { data, isFetching } = useHostsList({
     withAlerts: false,
     pagination: { pageIndex: page - 1, pageSize },
-    inHomeNetwork: inHomeNet,
+    inHomeNetwork,
     ordering,
   });
 

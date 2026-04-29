@@ -9,6 +9,7 @@
 ## Code Style
 
 - Prefer composition patterns over inheritance or deep prop drilling.
+- Routes own URL/router state and pass plain values + change handlers down. Feature components stay router-agnostic and receive their state via props so they remain independently testable.
 
 ## Quality Checks
 

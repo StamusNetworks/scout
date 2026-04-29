@@ -7,6 +7,7 @@ import { z } from 'zod';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
+import { useSearchNavigate } from '@/common/lib/use-search-navigate';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { HostsInventoryTable } from '@/features/host-insights/use-cases/hosts-list/entities/hosts-inventory-table';
 
@@ -28,11 +29,8 @@ export const Route = createFileRoute('/_enterprise/attack-surface/inventory')({
 function AttackSurfaceInventoryPage() {
   const search = Route.useSearch();
   const parentSearch = useSearch({ from: '/_enterprise/attack-surface' });
+  const navigate = useSearchNavigate();
   const tanstackNavigate = useNavigate();
-  const navigate = (opts: {
-    search: (prev: Record<string, unknown>) => Record<string, unknown>;
-    replace?: boolean;
-  }) => tanstackNavigate(opts as Parameters<typeof tanstackNavigate>[0]);
 
   const globals = useGlobalQueryParams(['tenant', 'dates']);
 
@@ -49,7 +47,7 @@ function AttackSurfaceInventoryPage() {
       page={page}
       pageSize={pageSize}
       sorting={sorting}
-      inHomeNet={parentSearch.in_home_net}
+      inHomeNetwork={parentSearch.in_home_net}
       onPageChange={setPage}
       onPageSizeChange={setPageSize}
       onSortingChange={onSortingChange}
