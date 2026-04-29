@@ -53,6 +53,12 @@ export const specificFields = z.discriminatedUnion('action', [
       tenants_str: z.array(z.string()).optional(),
     }),
   }),
+  z.object({
+    action: z.literal('send_mail'),
+    options: z.object({
+      max_mails_per_day: z.number().int().min(1),
+    }),
+  }),
 ]);
 
 export const filterActionSchema = z
@@ -77,6 +83,7 @@ export type SuppressFilterAction = FilterAction & { action: 'suppress' };
 export type TagFilterAction = FilterAction & { action: 'tag' | 'tagkeep' };
 export type ThresholdFilterAction = FilterAction & { action: 'threshold' };
 export type ThreatFilterAction = FilterAction & { action: 'threat' };
+export type SendMailFilterAction = FilterAction & { action: 'send_mail' };
 
 export const filterActionStatsSchema = z.object({
   key: z.string(),

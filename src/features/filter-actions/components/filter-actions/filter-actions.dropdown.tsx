@@ -1,29 +1,31 @@
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/common/design-system/atoms/ui/dropdown-menu';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/common/design-system/atoms/ui/tooltip';
+import { TooltipProvider } from '@/common/design-system/atoms/ui/tooltip';
+import { TooltipMenuItem } from '@/common/design-system/molecules/tooltip-menu-item';
 import { selectQueryFilters } from '@/features/filtering/filters/query-filters/query-filters.selectors';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { useTestAvailableActionsQuery } from '../../api/filter-actions.api';
+import { FilterAction } from '../../model/filter-action.schema';
 import { openDeclarationModal } from './create-edit-declaration-events/create-edit-declaration.slice';
+import { openSendMailModal } from './create-edit-send-mail-filter-action/create-edit-send-mail.slice';
 import { openSuppressModal } from './create-edit-suppress-filter-action/create-edit-suppress.slice';
 import { openTagModal } from './create-edit-tag-filter-action/create-edit-tag.slice';
 import { openThresholdModal } from './create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
 
+const LOADING_TOOLTIP = 'Available actions are loading';
+const NO_DATA_TOOLTIP = 'You need a valid Filter Set to create a filter action';
+const SMTP_TOOLTIP =
+  'You need to configure the SMTP and enable the Output plugin in the Global Appliance Settings';
+
 export const FilterActionsDropdown = ({
   trigger,
 }: {
-  trigger: (disabled: boolean) => React.ReactNode;
+  trigger: () => React.ReactNode;
 }) => {
   const dispatch = useAppDispatch();
 
@@ -32,65 +34,75 @@ export const FilterActionsDropdown = ({
     fields: qfilter.map((f) => f.key),
   });
 
+  const noData = !isFetching && (data?.length ?? 0) === 0;
+
+  const itemTooltip = (action: FilterAction['action']): string | undefined => {
+    if (isFetching) return LOADING_TOOLTIP;
+    if (noData) return NO_DATA_TOOLTIP;
+    if (action === 'send_mail' && !data?.includes('send_mail'))
+      return SMTP_TOOLTIP;
+    return undefined;
+  };
+
+  const itemDisabled = (action: FilterAction['action']): boolean =>
+    isFetching || noData || !data?.includes(action);
+
   return (
     <TooltipProvider>
-      <Tooltip>
-        <DropdownMenu>
-          <DropdownMenuTrigger
-            disabled={isFetching || data?.length === 0}
-            asChild
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>{trigger()}</DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <TooltipMenuItem
+            disabled={itemDisabled('threshold')}
+            tooltip={itemTooltip('threshold')}
+            onClick={() => dispatch(openThresholdModal({ mode: 'create' }))}
           >
-            <TooltipTrigger asChild>
-              {trigger(isFetching || data?.length === 0)}
-            </TooltipTrigger>
-          </DropdownMenuTrigger>
-          {/* onCloseAutoFocus is required to prevent focusing the trigger and displaying the tooltip */}
-          <DropdownMenuContent onCloseAutoFocus={(e) => e.preventDefault()}>
-            <DropdownMenuItem
-              onClick={() => dispatch(openThresholdModal({ mode: 'create' }))}
-              disabled={!data?.includes('threshold')}
-            >
-              Threshold
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => dispatch(openSuppressModal({ mode: 'create' }))}
-              disabled={!data?.includes('suppress')}
-            >
-              Suppress
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() =>
-                dispatch(openTagModal({ mode: 'create', keep: false }))
-              }
-              disabled={!data?.includes('tag')}
-            >
-              Tag
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() =>
-                dispatch(openTagModal({ mode: 'create', keep: true }))
-              }
-              disabled={!data?.includes('tagkeep')}
-            >
-              Tag and Keep
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => dispatch(openDeclarationModal({ mode: 'create' }))}
-              disabled={!data?.includes('threat')}
-            >
-              Create declaration events
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-        {isFetching ||
-          (data?.length === 0 && (
-            <TooltipContent>
-              You need a valid Filter Sets to create a filter action
-            </TooltipContent>
-          ))}
-      </Tooltip>
+            Threshold
+          </TooltipMenuItem>
+          <TooltipMenuItem
+            disabled={itemDisabled('suppress')}
+            tooltip={itemTooltip('suppress')}
+            onClick={() => dispatch(openSuppressModal({ mode: 'create' }))}
+          >
+            Suppress
+          </TooltipMenuItem>
+          <DropdownMenuSeparator />
+          <TooltipMenuItem
+            disabled={itemDisabled('tag')}
+            tooltip={itemTooltip('tag')}
+            onClick={() =>
+              dispatch(openTagModal({ mode: 'create', keep: false }))
+            }
+          >
+            Tag
+          </TooltipMenuItem>
+          <TooltipMenuItem
+            disabled={itemDisabled('tagkeep')}
+            tooltip={itemTooltip('tagkeep')}
+            onClick={() =>
+              dispatch(openTagModal({ mode: 'create', keep: true }))
+            }
+          >
+            Tag and Keep
+          </TooltipMenuItem>
+          <DropdownMenuSeparator />
+          <TooltipMenuItem
+            disabled={itemDisabled('threat')}
+            tooltip={itemTooltip('threat')}
+            onClick={() => dispatch(openDeclarationModal({ mode: 'create' }))}
+          >
+            Create declaration events
+          </TooltipMenuItem>
+          <DropdownMenuSeparator />
+          <TooltipMenuItem
+            disabled={itemDisabled('send_mail')}
+            tooltip={itemTooltip('send_mail')}
+            onClick={() => dispatch(openSendMailModal({ mode: 'create' }))}
+          >
+            Send mail
+          </TooltipMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </TooltipProvider>
   );
 };

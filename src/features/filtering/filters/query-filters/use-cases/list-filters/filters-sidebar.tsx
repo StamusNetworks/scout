@@ -241,8 +241,8 @@ export const FiltersSideBar = () => {
       label: 'Create filter actions',
       render: (
         <FilterActionsDropdown
-          trigger={(disabled) => (
-            <button disabled={disabled}>
+          trigger={() => (
+            <button>
               <SidebarActionIcon type={WandSparkles} />
             </button>
           )}

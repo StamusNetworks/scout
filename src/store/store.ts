@@ -7,6 +7,7 @@ import storage from 'redux-persist/es/storage';
 import { tablePreferencesSlice } from '@/common/design-system/molecules/data-table/table-preferences.slice';
 import { dashboardPageStateSlice } from '@/features/events/detection-events/use-cases/explorer/store/dashboard.slice';
 import { createEditDeclarationModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
+import { createEditSendMailModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-send-mail-filter-action/create-edit-send-mail.slice';
 import { createEditSuppressModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
 import { createEditTagModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
 import { createEditThresholdModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
@@ -62,6 +63,7 @@ export const rootReducer = () =>
       addFiltersCommand: addQfilterCommandSlice.reducer,
       saveFilterSetModal: saveFilterSetModalSlice.reducer,
       createEditDeclarationModal: createEditDeclarationModalSlice.reducer,
+      createEditSendMailModal: createEditSendMailModalSlice.reducer,
       createEditSuppressModal: createEditSuppressModalSlice.reducer,
       createEditTagModal: createEditTagModalSlice.reducer,
       createEditThresholdModal: createEditThresholdModalSlice.reducer,

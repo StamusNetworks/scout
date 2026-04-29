@@ -1,6 +1,7 @@
 import { tablePreferencesInitialState } from '@/common/design-system/molecules/data-table/table-preferences.slice';
 import { dashboardPageStateInitialState } from '@/features/events/detection-events/use-cases/explorer/store/dashboard.slice';
 import { createEditDeclarationModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
+import { createEditSendMailModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-send-mail-filter-action/create-edit-send-mail.slice';
 import { createEditSuppressModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
 import { createEditTagModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
 import { createEditThresholdModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
@@ -47,6 +48,7 @@ export const initialState: Omit<RootState, 'API'> = {
     addFiltersCommand: addQfilterCommandInitialState,
     saveFilterSetModal: saveFilterSetModalInitialState,
     createEditDeclarationModal: createEditDeclarationModalInitialState,
+    createEditSendMailModal: createEditSendMailModalInitialState,
     createEditSuppressModal: createEditSuppressModalInitialState,
     createEditTagModal: createEditTagModalInitialState,
     createEditThresholdModal: createEditThresholdModalInitialState,

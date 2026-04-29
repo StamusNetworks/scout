@@ -60,11 +60,10 @@ function FilterActionsPage() {
               <Row className="items-center gap-2">
                 <UpdatePushRuleset />
                 <FilterActionsDropdown
-                  trigger={(disabled) => (
+                  trigger={() => (
                     <Button
                       className="pointer-events-auto!"
                       variant="default"
-                      disabled={disabled}
                     >
                       <WandSparkles />
                       Create filter action
