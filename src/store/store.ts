@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { persistReducer } from 'redux-persist';
 import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
-import storage from 'redux-persist/lib/storage';
+import storage from 'redux-persist/es/storage';
 
 import { tablePreferencesSlice } from '@/common/design-system/molecules/data-table/table-preferences.slice';
 import { dashboardPageStateSlice } from '@/features/events/detection-events/use-cases/explorer/store/dashboard.slice';
