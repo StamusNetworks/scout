@@ -1,5 +1,5 @@
+import ReactJson, { type ThemeKeys } from '@microlink/react-json-view';
 import { useMemo } from 'react';
-import ReactJson, { type ThemeKeys } from 'react-json-view';
 
 import { useGetPreferredColorScheme } from '@/features/ui/theming/themeSelector';
 import { useTheme } from '@/features/ui/theming/useTheme';
