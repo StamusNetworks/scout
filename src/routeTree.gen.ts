@@ -8,547 +8,547 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as UserSettingsRouteImport } from './routes/user-settings'
-import { Route as ShareRouteImport } from './routes/share'
-import { Route as NetworkEventsRouteImport } from './routes/network-events'
-import { Route as InvestigationsRouteImport } from './routes/investigations'
-import { Route as FiltersActionsRouteImport } from './routes/filters-actions'
-import { Route as FilterSetsRouteImport } from './routes/filter-sets'
-import { Route as ExplorerRouteImport } from './routes/explorer'
-import { Route as EventsFlowRouteImport } from './routes/events-flow'
-import { Route as DeeplinksRouteImport } from './routes/deeplinks'
-import { Route as DeeplinkRouteImport } from './routes/deeplink'
-import { Route as EnterpriseRouteImport } from './routes/_enterprise'
-import { Route as DetectionEventsRouteRouteImport } from './routes/detection-events/route'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as DetectionMethodsIndexRouteImport } from './routes/detection-methods/index'
-import { Route as DetectionEventsIndexRouteImport } from './routes/detection-events/index'
-import { Route as DetectionMethodsDetectionMethodIdRouteImport } from './routes/detection-methods/$detectionMethodId'
-import { Route as DetectionEventsEventRouteImport } from './routes/detection-events/event'
-import { Route as EnterpriseVolumetryRouteImport } from './routes/_enterprise/volumetry'
-import { Route as EnterpriseOperationalCenterRouteImport } from './routes/_enterprise/operational-center'
-import { Route as EnterpriseThreatsRouteRouteImport } from './routes/_enterprise/threats/route'
-import { Route as EnterprisePolicyViolationsRouteRouteImport } from './routes/_enterprise/policy-violations/route'
-import { Route as EnterpriseHuntingTrailRouteRouteImport } from './routes/_enterprise/hunting-trail/route'
-import { Route as EnterpriseAttackSurfaceRouteRouteImport } from './routes/_enterprise/attack-surface/route'
-import { Route as EnterpriseAnalyticsRouteRouteImport } from './routes/_enterprise/analytics/route'
-import { Route as EnterpriseThreatsIndexRouteImport } from './routes/_enterprise/threats/index'
-import { Route as EnterprisePolicyViolationsIndexRouteImport } from './routes/_enterprise/policy-violations/index'
-import { Route as EnterpriseHuntingTrailIndexRouteImport } from './routes/_enterprise/hunting-trail/index'
-import { Route as EnterpriseHostsIndexRouteImport } from './routes/_enterprise/hosts/index'
-import { Route as EnterpriseAttackSurfaceIndexRouteImport } from './routes/_enterprise/attack-surface/index'
-import { Route as EnterpriseAnalyticsIndexRouteImport } from './routes/_enterprise/analytics/index'
-import { Route as EnterpriseThreatsTimelineRouteImport } from './routes/_enterprise/threats/timeline'
-import { Route as EnterpriseHuntingTrailPurposeRouteImport } from './routes/_enterprise/hunting-trail/$purpose'
-import { Route as EnterpriseAttackSurfaceInventoryRouteImport } from './routes/_enterprise/attack-surface/inventory'
-import { Route as EnterpriseThreatsCompromisesRouteRouteImport } from './routes/_enterprise/threats/compromises/route'
-import { Route as EnterprisePolicyViolationsViolationsRouteRouteImport } from './routes/_enterprise/policy-violations/violations/route'
-import { Route as EnterpriseHostsHostIdRouteRouteImport } from './routes/_enterprise/hosts/$hostId/route'
-import { Route as EnterpriseAnalyticsSightingsRouteRouteImport } from './routes/_enterprise/analytics/sightings/route'
-import { Route as EnterpriseAnalyticsBeaconingRouteRouteImport } from './routes/_enterprise/analytics/beaconing/route'
-import { Route as EnterpriseThreatsCoverageIndexRouteImport } from './routes/_enterprise/threats/coverage/index'
-import { Route as EnterpriseThreatsCompromisesIndexRouteImport } from './routes/_enterprise/threats/compromises/index'
-import { Route as EnterprisePolicyViolationsViolationsIndexRouteImport } from './routes/_enterprise/policy-violations/violations/index'
-import { Route as EnterprisePolicyViolationsCoverageIndexRouteImport } from './routes/_enterprise/policy-violations/coverage/index'
-import { Route as EnterpriseHostsHostIdIndexRouteImport } from './routes/_enterprise/hosts/$hostId/index'
-import { Route as EnterpriseAnalyticsSightingsIndexRouteImport } from './routes/_enterprise/analytics/sightings/index'
-import { Route as EnterpriseAnalyticsBeaconingIndexRouteImport } from './routes/_enterprise/analytics/beaconing/index'
-import { Route as EnterpriseThreatsCompromisesIncidentsRouteImport } from './routes/_enterprise/threats/compromises/incidents'
-import { Route as EnterpriseThreatsCompromisesGraphRouteImport } from './routes/_enterprise/threats/compromises/graph'
-import { Route as EnterpriseThreatsCompromisesEntitiesRouteImport } from './routes/_enterprise/threats/compromises/entities'
-import { Route as EnterpriseThreatsCompromisesAttackFlowRouteImport } from './routes/_enterprise/threats/compromises/attack-flow'
-import { Route as EnterprisePolicyViolationsViolationsGraphRouteImport } from './routes/_enterprise/policy-violations/violations/graph'
-import { Route as EnterpriseHostsHostIdTimelineRouteImport } from './routes/_enterprise/hosts/$hostId/timeline'
-import { Route as EnterpriseHostsHostIdSightingsRouteImport } from './routes/_enterprise/hosts/$hostId/sightings'
-import { Route as EnterpriseHostsHostIdOutlierEventsRouteImport } from './routes/_enterprise/hosts/$hostId/outlier-events'
-import { Route as EnterpriseHostsHostIdIncidentsRouteImport } from './routes/_enterprise/hosts/$hostId/incidents'
-import { Route as EnterpriseHostsHostIdHuntingTrailRouteImport } from './routes/_enterprise/hosts/$hostId/hunting-trail'
-import { Route as EnterpriseHostsHostIdDetectionMethodsRouteImport } from './routes/_enterprise/hosts/$hostId/detection-methods'
-import { Route as EnterpriseHostsHostIdDetectionEventsRouteImport } from './routes/_enterprise/hosts/$hostId/detection-events'
-import { Route as EnterpriseHostsHostIdBeaconsRouteImport } from './routes/_enterprise/hosts/$hostId/beacons'
-import { Route as EnterpriseAnalyticsSightingsSightingIdRouteImport } from './routes/_enterprise/analytics/sightings/$sightingId'
-import { Route as EnterpriseAnalyticsBeaconingJa3sRouteRouteImport } from './routes/_enterprise/analytics/beaconing/ja3s/route'
-import { Route as EnterpriseAnalyticsBeaconingIpsRouteRouteImport } from './routes/_enterprise/analytics/beaconing/ips/route'
-import { Route as EnterpriseAnalyticsBeaconingJa3sIndexRouteImport } from './routes/_enterprise/analytics/beaconing/ja3s/index'
-import { Route as EnterpriseAnalyticsBeaconingIpsIndexRouteImport } from './routes/_enterprise/analytics/beaconing/ips/index'
-import { Route as EnterpriseAnalyticsBeaconingJa3sJa3sRouteImport } from './routes/_enterprise/analytics/beaconing/ja3s/$ja3s'
-import { Route as EnterpriseAnalyticsBeaconingIpsIpRouteImport } from './routes/_enterprise/analytics/beaconing/ips/$ip'
-import { Route as EnterpriseThreatsCoverageThreatThreatIdRouteRouteImport } from './routes/_enterprise/threats/coverage/threat/$threatId/route'
-import { Route as EnterpriseThreatsCoverageFamilyFamilyIdRouteRouteImport } from './routes/_enterprise/threats/coverage/family/$familyId/route'
-import { Route as EnterprisePolicyViolationsCoverageThreatThreatIdRouteRouteImport } from './routes/_enterprise/policy-violations/coverage/threat/$threatId/route'
-import { Route as EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRouteImport } from './routes/_enterprise/policy-violations/coverage/family/$familyId/route'
-import { Route as EnterpriseThreatsCoverageThreatThreatIdIndexRouteImport } from './routes/_enterprise/threats/coverage/threat/$threatId/index'
-import { Route as EnterpriseThreatsCoverageFamilyFamilyIdIndexRouteImport } from './routes/_enterprise/threats/coverage/family/$familyId/index'
-import { Route as EnterprisePolicyViolationsCoverageThreatThreatIdIndexRouteImport } from './routes/_enterprise/policy-violations/coverage/threat/$threatId/index'
-import { Route as EnterprisePolicyViolationsCoverageFamilyFamilyIdIndexRouteImport } from './routes/_enterprise/policy-violations/coverage/family/$familyId/index'
-import { Route as EnterpriseThreatsCoverageThreatThreatIdEventsRouteImport } from './routes/_enterprise/threats/coverage/threat/$threatId/events'
-import { Route as EnterpriseThreatsCoverageThreatThreatIdDetectionMethodsRouteImport } from './routes/_enterprise/threats/coverage/threat/$threatId/detection-methods'
-import { Route as EnterpriseThreatsCoverageFamilyFamilyIdThreatsRouteImport } from './routes/_enterprise/threats/coverage/family/$familyId/threats'
-import { Route as EnterpriseThreatsCoverageFamilyFamilyIdEventsRouteImport } from './routes/_enterprise/threats/coverage/family/$familyId/events'
-import { Route as EnterpriseThreatsCoverageFamilyFamilyIdDetectionMethodsRouteImport } from './routes/_enterprise/threats/coverage/family/$familyId/detection-methods'
-import { Route as EnterprisePolicyViolationsCoverageThreatThreatIdEventsRouteImport } from './routes/_enterprise/policy-violations/coverage/threat/$threatId/events'
-import { Route as EnterprisePolicyViolationsCoverageThreatThreatIdDetectionMethodsRouteImport } from './routes/_enterprise/policy-violations/coverage/threat/$threatId/detection-methods'
-import { Route as EnterprisePolicyViolationsCoverageFamilyFamilyIdThreatsRouteImport } from './routes/_enterprise/policy-violations/coverage/family/$familyId/threats'
-import { Route as EnterprisePolicyViolationsCoverageFamilyFamilyIdEventsRouteImport } from './routes/_enterprise/policy-violations/coverage/family/$familyId/events'
-import { Route as EnterprisePolicyViolationsCoverageFamilyFamilyIdDetectionMethodsRouteImport } from './routes/_enterprise/policy-violations/coverage/family/$familyId/detection-methods'
+import { Route as rootRouteImport } from './routes/__root';
+import { Route as EnterpriseRouteImport } from './routes/_enterprise';
+import { Route as EnterpriseAnalyticsBeaconingIndexRouteImport } from './routes/_enterprise/analytics/beaconing/index';
+import { Route as EnterpriseAnalyticsBeaconingIpsIpRouteImport } from './routes/_enterprise/analytics/beaconing/ips/$ip';
+import { Route as EnterpriseAnalyticsBeaconingIpsIndexRouteImport } from './routes/_enterprise/analytics/beaconing/ips/index';
+import { Route as EnterpriseAnalyticsBeaconingIpsRouteRouteImport } from './routes/_enterprise/analytics/beaconing/ips/route';
+import { Route as EnterpriseAnalyticsBeaconingJa3sJa3sRouteImport } from './routes/_enterprise/analytics/beaconing/ja3s/$ja3s';
+import { Route as EnterpriseAnalyticsBeaconingJa3sIndexRouteImport } from './routes/_enterprise/analytics/beaconing/ja3s/index';
+import { Route as EnterpriseAnalyticsBeaconingJa3sRouteRouteImport } from './routes/_enterprise/analytics/beaconing/ja3s/route';
+import { Route as EnterpriseAnalyticsBeaconingRouteRouteImport } from './routes/_enterprise/analytics/beaconing/route';
+import { Route as EnterpriseAnalyticsIndexRouteImport } from './routes/_enterprise/analytics/index';
+import { Route as EnterpriseAnalyticsRouteRouteImport } from './routes/_enterprise/analytics/route';
+import { Route as EnterpriseAnalyticsSightingsSightingIdRouteImport } from './routes/_enterprise/analytics/sightings/$sightingId';
+import { Route as EnterpriseAnalyticsSightingsIndexRouteImport } from './routes/_enterprise/analytics/sightings/index';
+import { Route as EnterpriseAnalyticsSightingsRouteRouteImport } from './routes/_enterprise/analytics/sightings/route';
+import { Route as EnterpriseAttackSurfaceIndexRouteImport } from './routes/_enterprise/attack-surface/index';
+import { Route as EnterpriseAttackSurfaceInventoryRouteImport } from './routes/_enterprise/attack-surface/inventory';
+import { Route as EnterpriseAttackSurfaceRouteRouteImport } from './routes/_enterprise/attack-surface/route';
+import { Route as EnterpriseHostsHostIdBeaconsRouteImport } from './routes/_enterprise/hosts/$hostId/beacons';
+import { Route as EnterpriseHostsHostIdDetectionEventsRouteImport } from './routes/_enterprise/hosts/$hostId/detection-events';
+import { Route as EnterpriseHostsHostIdDetectionMethodsRouteImport } from './routes/_enterprise/hosts/$hostId/detection-methods';
+import { Route as EnterpriseHostsHostIdHuntingTrailRouteImport } from './routes/_enterprise/hosts/$hostId/hunting-trail';
+import { Route as EnterpriseHostsHostIdIncidentsRouteImport } from './routes/_enterprise/hosts/$hostId/incidents';
+import { Route as EnterpriseHostsHostIdIndexRouteImport } from './routes/_enterprise/hosts/$hostId/index';
+import { Route as EnterpriseHostsHostIdOutlierEventsRouteImport } from './routes/_enterprise/hosts/$hostId/outlier-events';
+import { Route as EnterpriseHostsHostIdRouteRouteImport } from './routes/_enterprise/hosts/$hostId/route';
+import { Route as EnterpriseHostsHostIdSightingsRouteImport } from './routes/_enterprise/hosts/$hostId/sightings';
+import { Route as EnterpriseHostsHostIdTimelineRouteImport } from './routes/_enterprise/hosts/$hostId/timeline';
+import { Route as EnterpriseHostsIndexRouteImport } from './routes/_enterprise/hosts/index';
+import { Route as EnterpriseHuntingTrailPurposeRouteImport } from './routes/_enterprise/hunting-trail/$purpose';
+import { Route as EnterpriseHuntingTrailIndexRouteImport } from './routes/_enterprise/hunting-trail/index';
+import { Route as EnterpriseHuntingTrailRouteRouteImport } from './routes/_enterprise/hunting-trail/route';
+import { Route as EnterpriseOperationalCenterRouteImport } from './routes/_enterprise/operational-center';
+import { Route as EnterprisePolicyViolationsCoverageFamilyFamilyIdDetectionMethodsRouteImport } from './routes/_enterprise/policy-violations/coverage/family/$familyId/detection-methods';
+import { Route as EnterprisePolicyViolationsCoverageFamilyFamilyIdEventsRouteImport } from './routes/_enterprise/policy-violations/coverage/family/$familyId/events';
+import { Route as EnterprisePolicyViolationsCoverageFamilyFamilyIdIndexRouteImport } from './routes/_enterprise/policy-violations/coverage/family/$familyId/index';
+import { Route as EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRouteImport } from './routes/_enterprise/policy-violations/coverage/family/$familyId/route';
+import { Route as EnterprisePolicyViolationsCoverageFamilyFamilyIdThreatsRouteImport } from './routes/_enterprise/policy-violations/coverage/family/$familyId/threats';
+import { Route as EnterprisePolicyViolationsCoverageIndexRouteImport } from './routes/_enterprise/policy-violations/coverage/index';
+import { Route as EnterprisePolicyViolationsCoverageThreatThreatIdDetectionMethodsRouteImport } from './routes/_enterprise/policy-violations/coverage/threat/$threatId/detection-methods';
+import { Route as EnterprisePolicyViolationsCoverageThreatThreatIdEventsRouteImport } from './routes/_enterprise/policy-violations/coverage/threat/$threatId/events';
+import { Route as EnterprisePolicyViolationsCoverageThreatThreatIdIndexRouteImport } from './routes/_enterprise/policy-violations/coverage/threat/$threatId/index';
+import { Route as EnterprisePolicyViolationsCoverageThreatThreatIdRouteRouteImport } from './routes/_enterprise/policy-violations/coverage/threat/$threatId/route';
+import { Route as EnterprisePolicyViolationsIndexRouteImport } from './routes/_enterprise/policy-violations/index';
+import { Route as EnterprisePolicyViolationsRouteRouteImport } from './routes/_enterprise/policy-violations/route';
+import { Route as EnterprisePolicyViolationsViolationsGraphRouteImport } from './routes/_enterprise/policy-violations/violations/graph';
+import { Route as EnterprisePolicyViolationsViolationsIndexRouteImport } from './routes/_enterprise/policy-violations/violations/index';
+import { Route as EnterprisePolicyViolationsViolationsRouteRouteImport } from './routes/_enterprise/policy-violations/violations/route';
+import { Route as EnterpriseThreatsCompromisesAttackFlowRouteImport } from './routes/_enterprise/threats/compromises/attack-flow';
+import { Route as EnterpriseThreatsCompromisesEntitiesRouteImport } from './routes/_enterprise/threats/compromises/entities';
+import { Route as EnterpriseThreatsCompromisesGraphRouteImport } from './routes/_enterprise/threats/compromises/graph';
+import { Route as EnterpriseThreatsCompromisesIncidentsRouteImport } from './routes/_enterprise/threats/compromises/incidents';
+import { Route as EnterpriseThreatsCompromisesIndexRouteImport } from './routes/_enterprise/threats/compromises/index';
+import { Route as EnterpriseThreatsCompromisesRouteRouteImport } from './routes/_enterprise/threats/compromises/route';
+import { Route as EnterpriseThreatsCoverageFamilyFamilyIdDetectionMethodsRouteImport } from './routes/_enterprise/threats/coverage/family/$familyId/detection-methods';
+import { Route as EnterpriseThreatsCoverageFamilyFamilyIdEventsRouteImport } from './routes/_enterprise/threats/coverage/family/$familyId/events';
+import { Route as EnterpriseThreatsCoverageFamilyFamilyIdIndexRouteImport } from './routes/_enterprise/threats/coverage/family/$familyId/index';
+import { Route as EnterpriseThreatsCoverageFamilyFamilyIdRouteRouteImport } from './routes/_enterprise/threats/coverage/family/$familyId/route';
+import { Route as EnterpriseThreatsCoverageFamilyFamilyIdThreatsRouteImport } from './routes/_enterprise/threats/coverage/family/$familyId/threats';
+import { Route as EnterpriseThreatsCoverageIndexRouteImport } from './routes/_enterprise/threats/coverage/index';
+import { Route as EnterpriseThreatsCoverageThreatThreatIdDetectionMethodsRouteImport } from './routes/_enterprise/threats/coverage/threat/$threatId/detection-methods';
+import { Route as EnterpriseThreatsCoverageThreatThreatIdEventsRouteImport } from './routes/_enterprise/threats/coverage/threat/$threatId/events';
+import { Route as EnterpriseThreatsCoverageThreatThreatIdIndexRouteImport } from './routes/_enterprise/threats/coverage/threat/$threatId/index';
+import { Route as EnterpriseThreatsCoverageThreatThreatIdRouteRouteImport } from './routes/_enterprise/threats/coverage/threat/$threatId/route';
+import { Route as EnterpriseThreatsIndexRouteImport } from './routes/_enterprise/threats/index';
+import { Route as EnterpriseThreatsRouteRouteImport } from './routes/_enterprise/threats/route';
+import { Route as EnterpriseThreatsTimelineRouteImport } from './routes/_enterprise/threats/timeline';
+import { Route as EnterpriseVolumetryRouteImport } from './routes/_enterprise/volumetry';
+import { Route as DeeplinkRouteImport } from './routes/deeplink';
+import { Route as DeeplinksRouteImport } from './routes/deeplinks';
+import { Route as DetectionEventsEventRouteImport } from './routes/detection-events/event';
+import { Route as DetectionEventsIndexRouteImport } from './routes/detection-events/index';
+import { Route as DetectionEventsRouteRouteImport } from './routes/detection-events/route';
+import { Route as DetectionMethodsDetectionMethodIdRouteImport } from './routes/detection-methods/$detectionMethodId';
+import { Route as DetectionMethodsIndexRouteImport } from './routes/detection-methods/index';
+import { Route as EventsFlowRouteImport } from './routes/events-flow';
+import { Route as ExplorerRouteImport } from './routes/explorer';
+import { Route as FilterSetsRouteImport } from './routes/filter-sets';
+import { Route as FiltersActionsRouteImport } from './routes/filters-actions';
+import { Route as IndexRouteImport } from './routes/index';
+import { Route as InvestigationsRouteImport } from './routes/investigations';
+import { Route as NetworkEventsRouteImport } from './routes/network-events';
+import { Route as ShareRouteImport } from './routes/share';
+import { Route as UserSettingsRouteImport } from './routes/user-settings';
 
 const UserSettingsRoute = UserSettingsRouteImport.update({
   id: '/user-settings',
   path: '/user-settings',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const ShareRoute = ShareRouteImport.update({
   id: '/share',
   path: '/share',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const NetworkEventsRoute = NetworkEventsRouteImport.update({
   id: '/network-events',
   path: '/network-events',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const InvestigationsRoute = InvestigationsRouteImport.update({
   id: '/investigations',
   path: '/investigations',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const FiltersActionsRoute = FiltersActionsRouteImport.update({
   id: '/filters-actions',
   path: '/filters-actions',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const FilterSetsRoute = FilterSetsRouteImport.update({
   id: '/filter-sets',
   path: '/filter-sets',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const ExplorerRoute = ExplorerRouteImport.update({
   id: '/explorer',
   path: '/explorer',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const EventsFlowRoute = EventsFlowRouteImport.update({
   id: '/events-flow',
   path: '/events-flow',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const DeeplinksRoute = DeeplinksRouteImport.update({
   id: '/deeplinks',
   path: '/deeplinks',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const DeeplinkRoute = DeeplinkRouteImport.update({
   id: '/deeplink',
   path: '/deeplink',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const EnterpriseRoute = EnterpriseRouteImport.update({
   id: '/_enterprise',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const DetectionEventsRouteRoute = DetectionEventsRouteRouteImport.update({
   id: '/detection-events',
   path: '/detection-events',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const DetectionMethodsIndexRoute = DetectionMethodsIndexRouteImport.update({
   id: '/detection-methods/',
   path: '/detection-methods/',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const DetectionEventsIndexRoute = DetectionEventsIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DetectionEventsRouteRoute,
-} as any)
+} as any);
 const DetectionMethodsDetectionMethodIdRoute =
   DetectionMethodsDetectionMethodIdRouteImport.update({
     id: '/detection-methods/$detectionMethodId',
     path: '/detection-methods/$detectionMethodId',
     getParentRoute: () => rootRouteImport,
-  } as any)
+  } as any);
 const DetectionEventsEventRoute = DetectionEventsEventRouteImport.update({
   id: '/event',
   path: '/event',
   getParentRoute: () => DetectionEventsRouteRoute,
-} as any)
+} as any);
 const EnterpriseVolumetryRoute = EnterpriseVolumetryRouteImport.update({
   id: '/volumetry',
   path: '/volumetry',
   getParentRoute: () => EnterpriseRoute,
-} as any)
+} as any);
 const EnterpriseOperationalCenterRoute =
   EnterpriseOperationalCenterRouteImport.update({
     id: '/operational-center',
     path: '/operational-center',
     getParentRoute: () => EnterpriseRoute,
-  } as any)
+  } as any);
 const EnterpriseThreatsRouteRoute = EnterpriseThreatsRouteRouteImport.update({
   id: '/threats',
   path: '/threats',
   getParentRoute: () => EnterpriseRoute,
-} as any)
+} as any);
 const EnterprisePolicyViolationsRouteRoute =
   EnterprisePolicyViolationsRouteRouteImport.update({
     id: '/policy-violations',
     path: '/policy-violations',
     getParentRoute: () => EnterpriseRoute,
-  } as any)
+  } as any);
 const EnterpriseHuntingTrailRouteRoute =
   EnterpriseHuntingTrailRouteRouteImport.update({
     id: '/hunting-trail',
     path: '/hunting-trail',
     getParentRoute: () => EnterpriseRoute,
-  } as any)
+  } as any);
 const EnterpriseAttackSurfaceRouteRoute =
   EnterpriseAttackSurfaceRouteRouteImport.update({
     id: '/attack-surface',
     path: '/attack-surface',
     getParentRoute: () => EnterpriseRoute,
-  } as any)
+  } as any);
 const EnterpriseAnalyticsRouteRoute =
   EnterpriseAnalyticsRouteRouteImport.update({
     id: '/analytics',
     path: '/analytics',
     getParentRoute: () => EnterpriseRoute,
-  } as any)
+  } as any);
 const EnterpriseThreatsIndexRoute = EnterpriseThreatsIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => EnterpriseThreatsRouteRoute,
-} as any)
+} as any);
 const EnterprisePolicyViolationsIndexRoute =
   EnterprisePolicyViolationsIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => EnterprisePolicyViolationsRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseHuntingTrailIndexRoute =
   EnterpriseHuntingTrailIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => EnterpriseHuntingTrailRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseHostsIndexRoute = EnterpriseHostsIndexRouteImport.update({
   id: '/hosts/',
   path: '/hosts/',
   getParentRoute: () => EnterpriseRoute,
-} as any)
+} as any);
 const EnterpriseAttackSurfaceIndexRoute =
   EnterpriseAttackSurfaceIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => EnterpriseAttackSurfaceRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseAnalyticsIndexRoute =
   EnterpriseAnalyticsIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => EnterpriseAnalyticsRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseThreatsTimelineRoute =
   EnterpriseThreatsTimelineRouteImport.update({
     id: '/timeline',
     path: '/timeline',
     getParentRoute: () => EnterpriseThreatsRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseHuntingTrailPurposeRoute =
   EnterpriseHuntingTrailPurposeRouteImport.update({
     id: '/$purpose',
     path: '/$purpose',
     getParentRoute: () => EnterpriseHuntingTrailRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseAttackSurfaceInventoryRoute =
   EnterpriseAttackSurfaceInventoryRouteImport.update({
     id: '/inventory',
     path: '/inventory',
     getParentRoute: () => EnterpriseAttackSurfaceRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseThreatsCompromisesRouteRoute =
   EnterpriseThreatsCompromisesRouteRouteImport.update({
     id: '/compromises',
     path: '/compromises',
     getParentRoute: () => EnterpriseThreatsRouteRoute,
-  } as any)
+  } as any);
 const EnterprisePolicyViolationsViolationsRouteRoute =
   EnterprisePolicyViolationsViolationsRouteRouteImport.update({
     id: '/violations',
     path: '/violations',
     getParentRoute: () => EnterprisePolicyViolationsRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseHostsHostIdRouteRoute =
   EnterpriseHostsHostIdRouteRouteImport.update({
     id: '/hosts/$hostId',
     path: '/hosts/$hostId',
     getParentRoute: () => EnterpriseRoute,
-  } as any)
+  } as any);
 const EnterpriseAnalyticsSightingsRouteRoute =
   EnterpriseAnalyticsSightingsRouteRouteImport.update({
     id: '/sightings',
     path: '/sightings',
     getParentRoute: () => EnterpriseAnalyticsRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseAnalyticsBeaconingRouteRoute =
   EnterpriseAnalyticsBeaconingRouteRouteImport.update({
     id: '/beaconing',
     path: '/beaconing',
     getParentRoute: () => EnterpriseAnalyticsRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseThreatsCoverageIndexRoute =
   EnterpriseThreatsCoverageIndexRouteImport.update({
     id: '/coverage/',
     path: '/coverage/',
     getParentRoute: () => EnterpriseThreatsRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseThreatsCompromisesIndexRoute =
   EnterpriseThreatsCompromisesIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => EnterpriseThreatsCompromisesRouteRoute,
-  } as any)
+  } as any);
 const EnterprisePolicyViolationsViolationsIndexRoute =
   EnterprisePolicyViolationsViolationsIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => EnterprisePolicyViolationsViolationsRouteRoute,
-  } as any)
+  } as any);
 const EnterprisePolicyViolationsCoverageIndexRoute =
   EnterprisePolicyViolationsCoverageIndexRouteImport.update({
     id: '/coverage/',
     path: '/coverage/',
     getParentRoute: () => EnterprisePolicyViolationsRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseHostsHostIdIndexRoute =
   EnterpriseHostsHostIdIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => EnterpriseHostsHostIdRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseAnalyticsSightingsIndexRoute =
   EnterpriseAnalyticsSightingsIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => EnterpriseAnalyticsSightingsRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseAnalyticsBeaconingIndexRoute =
   EnterpriseAnalyticsBeaconingIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => EnterpriseAnalyticsBeaconingRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseThreatsCompromisesIncidentsRoute =
   EnterpriseThreatsCompromisesIncidentsRouteImport.update({
     id: '/incidents',
     path: '/incidents',
     getParentRoute: () => EnterpriseThreatsCompromisesRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseThreatsCompromisesGraphRoute =
   EnterpriseThreatsCompromisesGraphRouteImport.update({
     id: '/graph',
     path: '/graph',
     getParentRoute: () => EnterpriseThreatsCompromisesRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseThreatsCompromisesEntitiesRoute =
   EnterpriseThreatsCompromisesEntitiesRouteImport.update({
     id: '/entities',
     path: '/entities',
     getParentRoute: () => EnterpriseThreatsCompromisesRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseThreatsCompromisesAttackFlowRoute =
   EnterpriseThreatsCompromisesAttackFlowRouteImport.update({
     id: '/attack-flow',
     path: '/attack-flow',
     getParentRoute: () => EnterpriseThreatsCompromisesRouteRoute,
-  } as any)
+  } as any);
 const EnterprisePolicyViolationsViolationsGraphRoute =
   EnterprisePolicyViolationsViolationsGraphRouteImport.update({
     id: '/graph',
     path: '/graph',
     getParentRoute: () => EnterprisePolicyViolationsViolationsRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseHostsHostIdTimelineRoute =
   EnterpriseHostsHostIdTimelineRouteImport.update({
     id: '/timeline',
     path: '/timeline',
     getParentRoute: () => EnterpriseHostsHostIdRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseHostsHostIdSightingsRoute =
   EnterpriseHostsHostIdSightingsRouteImport.update({
     id: '/sightings',
     path: '/sightings',
     getParentRoute: () => EnterpriseHostsHostIdRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseHostsHostIdOutlierEventsRoute =
   EnterpriseHostsHostIdOutlierEventsRouteImport.update({
     id: '/outlier-events',
     path: '/outlier-events',
     getParentRoute: () => EnterpriseHostsHostIdRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseHostsHostIdIncidentsRoute =
   EnterpriseHostsHostIdIncidentsRouteImport.update({
     id: '/incidents',
     path: '/incidents',
     getParentRoute: () => EnterpriseHostsHostIdRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseHostsHostIdHuntingTrailRoute =
   EnterpriseHostsHostIdHuntingTrailRouteImport.update({
     id: '/hunting-trail',
     path: '/hunting-trail',
     getParentRoute: () => EnterpriseHostsHostIdRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseHostsHostIdDetectionMethodsRoute =
   EnterpriseHostsHostIdDetectionMethodsRouteImport.update({
     id: '/detection-methods',
     path: '/detection-methods',
     getParentRoute: () => EnterpriseHostsHostIdRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseHostsHostIdDetectionEventsRoute =
   EnterpriseHostsHostIdDetectionEventsRouteImport.update({
     id: '/detection-events',
     path: '/detection-events',
     getParentRoute: () => EnterpriseHostsHostIdRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseHostsHostIdBeaconsRoute =
   EnterpriseHostsHostIdBeaconsRouteImport.update({
     id: '/beacons',
     path: '/beacons',
     getParentRoute: () => EnterpriseHostsHostIdRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseAnalyticsSightingsSightingIdRoute =
   EnterpriseAnalyticsSightingsSightingIdRouteImport.update({
     id: '/$sightingId',
     path: '/$sightingId',
     getParentRoute: () => EnterpriseAnalyticsSightingsRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseAnalyticsBeaconingJa3sRouteRoute =
   EnterpriseAnalyticsBeaconingJa3sRouteRouteImport.update({
     id: '/ja3s',
     path: '/ja3s',
     getParentRoute: () => EnterpriseAnalyticsBeaconingRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseAnalyticsBeaconingIpsRouteRoute =
   EnterpriseAnalyticsBeaconingIpsRouteRouteImport.update({
     id: '/ips',
     path: '/ips',
     getParentRoute: () => EnterpriseAnalyticsBeaconingRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseAnalyticsBeaconingJa3sIndexRoute =
   EnterpriseAnalyticsBeaconingJa3sIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => EnterpriseAnalyticsBeaconingJa3sRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseAnalyticsBeaconingIpsIndexRoute =
   EnterpriseAnalyticsBeaconingIpsIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => EnterpriseAnalyticsBeaconingIpsRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseAnalyticsBeaconingJa3sJa3sRoute =
   EnterpriseAnalyticsBeaconingJa3sJa3sRouteImport.update({
     id: '/$ja3s',
     path: '/$ja3s',
     getParentRoute: () => EnterpriseAnalyticsBeaconingJa3sRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseAnalyticsBeaconingIpsIpRoute =
   EnterpriseAnalyticsBeaconingIpsIpRouteImport.update({
     id: '/$ip',
     path: '/$ip',
     getParentRoute: () => EnterpriseAnalyticsBeaconingIpsRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseThreatsCoverageThreatThreatIdRouteRoute =
   EnterpriseThreatsCoverageThreatThreatIdRouteRouteImport.update({
     id: '/coverage/threat/$threatId',
     path: '/coverage/threat/$threatId',
     getParentRoute: () => EnterpriseThreatsRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseThreatsCoverageFamilyFamilyIdRouteRoute =
   EnterpriseThreatsCoverageFamilyFamilyIdRouteRouteImport.update({
     id: '/coverage/family/$familyId',
     path: '/coverage/family/$familyId',
     getParentRoute: () => EnterpriseThreatsRouteRoute,
-  } as any)
+  } as any);
 const EnterprisePolicyViolationsCoverageThreatThreatIdRouteRoute =
   EnterprisePolicyViolationsCoverageThreatThreatIdRouteRouteImport.update({
     id: '/coverage/threat/$threatId',
     path: '/coverage/threat/$threatId',
     getParentRoute: () => EnterprisePolicyViolationsRouteRoute,
-  } as any)
+  } as any);
 const EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRoute =
   EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRouteImport.update({
     id: '/coverage/family/$familyId',
     path: '/coverage/family/$familyId',
     getParentRoute: () => EnterprisePolicyViolationsRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseThreatsCoverageThreatThreatIdIndexRoute =
   EnterpriseThreatsCoverageThreatThreatIdIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => EnterpriseThreatsCoverageThreatThreatIdRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseThreatsCoverageFamilyFamilyIdIndexRoute =
   EnterpriseThreatsCoverageFamilyFamilyIdIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => EnterpriseThreatsCoverageFamilyFamilyIdRouteRoute,
-  } as any)
+  } as any);
 const EnterprisePolicyViolationsCoverageThreatThreatIdIndexRoute =
   EnterprisePolicyViolationsCoverageThreatThreatIdIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () =>
       EnterprisePolicyViolationsCoverageThreatThreatIdRouteRoute,
-  } as any)
+  } as any);
 const EnterprisePolicyViolationsCoverageFamilyFamilyIdIndexRoute =
   EnterprisePolicyViolationsCoverageFamilyFamilyIdIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () =>
       EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseThreatsCoverageThreatThreatIdEventsRoute =
   EnterpriseThreatsCoverageThreatThreatIdEventsRouteImport.update({
     id: '/events',
     path: '/events',
     getParentRoute: () => EnterpriseThreatsCoverageThreatThreatIdRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseThreatsCoverageThreatThreatIdDetectionMethodsRoute =
   EnterpriseThreatsCoverageThreatThreatIdDetectionMethodsRouteImport.update({
     id: '/detection-methods',
     path: '/detection-methods',
     getParentRoute: () => EnterpriseThreatsCoverageThreatThreatIdRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseThreatsCoverageFamilyFamilyIdThreatsRoute =
   EnterpriseThreatsCoverageFamilyFamilyIdThreatsRouteImport.update({
     id: '/threats',
     path: '/threats',
     getParentRoute: () => EnterpriseThreatsCoverageFamilyFamilyIdRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseThreatsCoverageFamilyFamilyIdEventsRoute =
   EnterpriseThreatsCoverageFamilyFamilyIdEventsRouteImport.update({
     id: '/events',
     path: '/events',
     getParentRoute: () => EnterpriseThreatsCoverageFamilyFamilyIdRouteRoute,
-  } as any)
+  } as any);
 const EnterpriseThreatsCoverageFamilyFamilyIdDetectionMethodsRoute =
   EnterpriseThreatsCoverageFamilyFamilyIdDetectionMethodsRouteImport.update({
     id: '/detection-methods',
     path: '/detection-methods',
     getParentRoute: () => EnterpriseThreatsCoverageFamilyFamilyIdRouteRoute,
-  } as any)
+  } as any);
 const EnterprisePolicyViolationsCoverageThreatThreatIdEventsRoute =
   EnterprisePolicyViolationsCoverageThreatThreatIdEventsRouteImport.update({
     id: '/events',
     path: '/events',
     getParentRoute: () =>
       EnterprisePolicyViolationsCoverageThreatThreatIdRouteRoute,
-  } as any)
+  } as any);
 const EnterprisePolicyViolationsCoverageThreatThreatIdDetectionMethodsRoute =
   EnterprisePolicyViolationsCoverageThreatThreatIdDetectionMethodsRouteImport.update(
     {
@@ -557,21 +557,21 @@ const EnterprisePolicyViolationsCoverageThreatThreatIdDetectionMethodsRoute =
       getParentRoute: () =>
         EnterprisePolicyViolationsCoverageThreatThreatIdRouteRoute,
     } as any,
-  )
+  );
 const EnterprisePolicyViolationsCoverageFamilyFamilyIdThreatsRoute =
   EnterprisePolicyViolationsCoverageFamilyFamilyIdThreatsRouteImport.update({
     id: '/threats',
     path: '/threats',
     getParentRoute: () =>
       EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRoute,
-  } as any)
+  } as any);
 const EnterprisePolicyViolationsCoverageFamilyFamilyIdEventsRoute =
   EnterprisePolicyViolationsCoverageFamilyFamilyIdEventsRouteImport.update({
     id: '/events',
     path: '/events',
     getParentRoute: () =>
       EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRoute,
-  } as any)
+  } as any);
 const EnterprisePolicyViolationsCoverageFamilyFamilyIdDetectionMethodsRoute =
   EnterprisePolicyViolationsCoverageFamilyFamilyIdDetectionMethodsRouteImport.update(
     {
@@ -580,247 +580,247 @@ const EnterprisePolicyViolationsCoverageFamilyFamilyIdDetectionMethodsRoute =
       getParentRoute: () =>
         EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRoute,
     } as any,
-  )
+  );
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/detection-events': typeof DetectionEventsRouteRouteWithChildren
-  '/deeplink': typeof DeeplinkRoute
-  '/deeplinks': typeof DeeplinksRoute
-  '/events-flow': typeof EventsFlowRoute
-  '/explorer': typeof ExplorerRoute
-  '/filter-sets': typeof FilterSetsRoute
-  '/filters-actions': typeof FiltersActionsRoute
-  '/investigations': typeof InvestigationsRoute
-  '/network-events': typeof NetworkEventsRoute
-  '/share': typeof ShareRoute
-  '/user-settings': typeof UserSettingsRoute
-  '/analytics': typeof EnterpriseAnalyticsRouteRouteWithChildren
-  '/attack-surface': typeof EnterpriseAttackSurfaceRouteRouteWithChildren
-  '/hunting-trail': typeof EnterpriseHuntingTrailRouteRouteWithChildren
-  '/policy-violations': typeof EnterprisePolicyViolationsRouteRouteWithChildren
-  '/threats': typeof EnterpriseThreatsRouteRouteWithChildren
-  '/operational-center': typeof EnterpriseOperationalCenterRoute
-  '/volumetry': typeof EnterpriseVolumetryRoute
-  '/detection-events/event': typeof DetectionEventsEventRoute
-  '/detection-methods/$detectionMethodId': typeof DetectionMethodsDetectionMethodIdRoute
-  '/detection-events/': typeof DetectionEventsIndexRoute
-  '/detection-methods/': typeof DetectionMethodsIndexRoute
-  '/analytics/beaconing': typeof EnterpriseAnalyticsBeaconingRouteRouteWithChildren
-  '/analytics/sightings': typeof EnterpriseAnalyticsSightingsRouteRouteWithChildren
-  '/hosts/$hostId': typeof EnterpriseHostsHostIdRouteRouteWithChildren
-  '/policy-violations/violations': typeof EnterprisePolicyViolationsViolationsRouteRouteWithChildren
-  '/threats/compromises': typeof EnterpriseThreatsCompromisesRouteRouteWithChildren
-  '/attack-surface/inventory': typeof EnterpriseAttackSurfaceInventoryRoute
-  '/hunting-trail/$purpose': typeof EnterpriseHuntingTrailPurposeRoute
-  '/threats/timeline': typeof EnterpriseThreatsTimelineRoute
-  '/analytics/': typeof EnterpriseAnalyticsIndexRoute
-  '/attack-surface/': typeof EnterpriseAttackSurfaceIndexRoute
-  '/hosts/': typeof EnterpriseHostsIndexRoute
-  '/hunting-trail/': typeof EnterpriseHuntingTrailIndexRoute
-  '/policy-violations/': typeof EnterprisePolicyViolationsIndexRoute
-  '/threats/': typeof EnterpriseThreatsIndexRoute
-  '/analytics/beaconing/ips': typeof EnterpriseAnalyticsBeaconingIpsRouteRouteWithChildren
-  '/analytics/beaconing/ja3s': typeof EnterpriseAnalyticsBeaconingJa3sRouteRouteWithChildren
-  '/analytics/sightings/$sightingId': typeof EnterpriseAnalyticsSightingsSightingIdRoute
-  '/hosts/$hostId/beacons': typeof EnterpriseHostsHostIdBeaconsRoute
-  '/hosts/$hostId/detection-events': typeof EnterpriseHostsHostIdDetectionEventsRoute
-  '/hosts/$hostId/detection-methods': typeof EnterpriseHostsHostIdDetectionMethodsRoute
-  '/hosts/$hostId/hunting-trail': typeof EnterpriseHostsHostIdHuntingTrailRoute
-  '/hosts/$hostId/incidents': typeof EnterpriseHostsHostIdIncidentsRoute
-  '/hosts/$hostId/outlier-events': typeof EnterpriseHostsHostIdOutlierEventsRoute
-  '/hosts/$hostId/sightings': typeof EnterpriseHostsHostIdSightingsRoute
-  '/hosts/$hostId/timeline': typeof EnterpriseHostsHostIdTimelineRoute
-  '/policy-violations/violations/graph': typeof EnterprisePolicyViolationsViolationsGraphRoute
-  '/threats/compromises/attack-flow': typeof EnterpriseThreatsCompromisesAttackFlowRoute
-  '/threats/compromises/entities': typeof EnterpriseThreatsCompromisesEntitiesRoute
-  '/threats/compromises/graph': typeof EnterpriseThreatsCompromisesGraphRoute
-  '/threats/compromises/incidents': typeof EnterpriseThreatsCompromisesIncidentsRoute
-  '/analytics/beaconing/': typeof EnterpriseAnalyticsBeaconingIndexRoute
-  '/analytics/sightings/': typeof EnterpriseAnalyticsSightingsIndexRoute
-  '/hosts/$hostId/': typeof EnterpriseHostsHostIdIndexRoute
-  '/policy-violations/coverage/': typeof EnterprisePolicyViolationsCoverageIndexRoute
-  '/policy-violations/violations/': typeof EnterprisePolicyViolationsViolationsIndexRoute
-  '/threats/compromises/': typeof EnterpriseThreatsCompromisesIndexRoute
-  '/threats/coverage/': typeof EnterpriseThreatsCoverageIndexRoute
-  '/policy-violations/coverage/family/$familyId': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRouteWithChildren
-  '/policy-violations/coverage/threat/$threatId': typeof EnterprisePolicyViolationsCoverageThreatThreatIdRouteRouteWithChildren
-  '/threats/coverage/family/$familyId': typeof EnterpriseThreatsCoverageFamilyFamilyIdRouteRouteWithChildren
-  '/threats/coverage/threat/$threatId': typeof EnterpriseThreatsCoverageThreatThreatIdRouteRouteWithChildren
-  '/analytics/beaconing/ips/$ip': typeof EnterpriseAnalyticsBeaconingIpsIpRoute
-  '/analytics/beaconing/ja3s/$ja3s': typeof EnterpriseAnalyticsBeaconingJa3sJa3sRoute
-  '/analytics/beaconing/ips/': typeof EnterpriseAnalyticsBeaconingIpsIndexRoute
-  '/analytics/beaconing/ja3s/': typeof EnterpriseAnalyticsBeaconingJa3sIndexRoute
-  '/policy-violations/coverage/family/$familyId/detection-methods': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdDetectionMethodsRoute
-  '/policy-violations/coverage/family/$familyId/events': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdEventsRoute
-  '/policy-violations/coverage/family/$familyId/threats': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdThreatsRoute
-  '/policy-violations/coverage/threat/$threatId/detection-methods': typeof EnterprisePolicyViolationsCoverageThreatThreatIdDetectionMethodsRoute
-  '/policy-violations/coverage/threat/$threatId/events': typeof EnterprisePolicyViolationsCoverageThreatThreatIdEventsRoute
-  '/threats/coverage/family/$familyId/detection-methods': typeof EnterpriseThreatsCoverageFamilyFamilyIdDetectionMethodsRoute
-  '/threats/coverage/family/$familyId/events': typeof EnterpriseThreatsCoverageFamilyFamilyIdEventsRoute
-  '/threats/coverage/family/$familyId/threats': typeof EnterpriseThreatsCoverageFamilyFamilyIdThreatsRoute
-  '/threats/coverage/threat/$threatId/detection-methods': typeof EnterpriseThreatsCoverageThreatThreatIdDetectionMethodsRoute
-  '/threats/coverage/threat/$threatId/events': typeof EnterpriseThreatsCoverageThreatThreatIdEventsRoute
-  '/policy-violations/coverage/family/$familyId/': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdIndexRoute
-  '/policy-violations/coverage/threat/$threatId/': typeof EnterprisePolicyViolationsCoverageThreatThreatIdIndexRoute
-  '/threats/coverage/family/$familyId/': typeof EnterpriseThreatsCoverageFamilyFamilyIdIndexRoute
-  '/threats/coverage/threat/$threatId/': typeof EnterpriseThreatsCoverageThreatThreatIdIndexRoute
+  '/': typeof IndexRoute;
+  '/detection-events': typeof DetectionEventsRouteRouteWithChildren;
+  '/deeplink': typeof DeeplinkRoute;
+  '/deeplinks': typeof DeeplinksRoute;
+  '/events-flow': typeof EventsFlowRoute;
+  '/explorer': typeof ExplorerRoute;
+  '/filter-sets': typeof FilterSetsRoute;
+  '/filters-actions': typeof FiltersActionsRoute;
+  '/investigations': typeof InvestigationsRoute;
+  '/network-events': typeof NetworkEventsRoute;
+  '/share': typeof ShareRoute;
+  '/user-settings': typeof UserSettingsRoute;
+  '/analytics': typeof EnterpriseAnalyticsRouteRouteWithChildren;
+  '/attack-surface': typeof EnterpriseAttackSurfaceRouteRouteWithChildren;
+  '/hunting-trail': typeof EnterpriseHuntingTrailRouteRouteWithChildren;
+  '/policy-violations': typeof EnterprisePolicyViolationsRouteRouteWithChildren;
+  '/threats': typeof EnterpriseThreatsRouteRouteWithChildren;
+  '/operational-center': typeof EnterpriseOperationalCenterRoute;
+  '/volumetry': typeof EnterpriseVolumetryRoute;
+  '/detection-events/event': typeof DetectionEventsEventRoute;
+  '/detection-methods/$detectionMethodId': typeof DetectionMethodsDetectionMethodIdRoute;
+  '/detection-events/': typeof DetectionEventsIndexRoute;
+  '/detection-methods/': typeof DetectionMethodsIndexRoute;
+  '/analytics/beaconing': typeof EnterpriseAnalyticsBeaconingRouteRouteWithChildren;
+  '/analytics/sightings': typeof EnterpriseAnalyticsSightingsRouteRouteWithChildren;
+  '/hosts/$hostId': typeof EnterpriseHostsHostIdRouteRouteWithChildren;
+  '/policy-violations/violations': typeof EnterprisePolicyViolationsViolationsRouteRouteWithChildren;
+  '/threats/compromises': typeof EnterpriseThreatsCompromisesRouteRouteWithChildren;
+  '/attack-surface/inventory': typeof EnterpriseAttackSurfaceInventoryRoute;
+  '/hunting-trail/$purpose': typeof EnterpriseHuntingTrailPurposeRoute;
+  '/threats/timeline': typeof EnterpriseThreatsTimelineRoute;
+  '/analytics/': typeof EnterpriseAnalyticsIndexRoute;
+  '/attack-surface/': typeof EnterpriseAttackSurfaceIndexRoute;
+  '/hosts/': typeof EnterpriseHostsIndexRoute;
+  '/hunting-trail/': typeof EnterpriseHuntingTrailIndexRoute;
+  '/policy-violations/': typeof EnterprisePolicyViolationsIndexRoute;
+  '/threats/': typeof EnterpriseThreatsIndexRoute;
+  '/analytics/beaconing/ips': typeof EnterpriseAnalyticsBeaconingIpsRouteRouteWithChildren;
+  '/analytics/beaconing/ja3s': typeof EnterpriseAnalyticsBeaconingJa3sRouteRouteWithChildren;
+  '/analytics/sightings/$sightingId': typeof EnterpriseAnalyticsSightingsSightingIdRoute;
+  '/hosts/$hostId/beacons': typeof EnterpriseHostsHostIdBeaconsRoute;
+  '/hosts/$hostId/detection-events': typeof EnterpriseHostsHostIdDetectionEventsRoute;
+  '/hosts/$hostId/detection-methods': typeof EnterpriseHostsHostIdDetectionMethodsRoute;
+  '/hosts/$hostId/hunting-trail': typeof EnterpriseHostsHostIdHuntingTrailRoute;
+  '/hosts/$hostId/incidents': typeof EnterpriseHostsHostIdIncidentsRoute;
+  '/hosts/$hostId/outlier-events': typeof EnterpriseHostsHostIdOutlierEventsRoute;
+  '/hosts/$hostId/sightings': typeof EnterpriseHostsHostIdSightingsRoute;
+  '/hosts/$hostId/timeline': typeof EnterpriseHostsHostIdTimelineRoute;
+  '/policy-violations/violations/graph': typeof EnterprisePolicyViolationsViolationsGraphRoute;
+  '/threats/compromises/attack-flow': typeof EnterpriseThreatsCompromisesAttackFlowRoute;
+  '/threats/compromises/entities': typeof EnterpriseThreatsCompromisesEntitiesRoute;
+  '/threats/compromises/graph': typeof EnterpriseThreatsCompromisesGraphRoute;
+  '/threats/compromises/incidents': typeof EnterpriseThreatsCompromisesIncidentsRoute;
+  '/analytics/beaconing/': typeof EnterpriseAnalyticsBeaconingIndexRoute;
+  '/analytics/sightings/': typeof EnterpriseAnalyticsSightingsIndexRoute;
+  '/hosts/$hostId/': typeof EnterpriseHostsHostIdIndexRoute;
+  '/policy-violations/coverage/': typeof EnterprisePolicyViolationsCoverageIndexRoute;
+  '/policy-violations/violations/': typeof EnterprisePolicyViolationsViolationsIndexRoute;
+  '/threats/compromises/': typeof EnterpriseThreatsCompromisesIndexRoute;
+  '/threats/coverage/': typeof EnterpriseThreatsCoverageIndexRoute;
+  '/policy-violations/coverage/family/$familyId': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRouteWithChildren;
+  '/policy-violations/coverage/threat/$threatId': typeof EnterprisePolicyViolationsCoverageThreatThreatIdRouteRouteWithChildren;
+  '/threats/coverage/family/$familyId': typeof EnterpriseThreatsCoverageFamilyFamilyIdRouteRouteWithChildren;
+  '/threats/coverage/threat/$threatId': typeof EnterpriseThreatsCoverageThreatThreatIdRouteRouteWithChildren;
+  '/analytics/beaconing/ips/$ip': typeof EnterpriseAnalyticsBeaconingIpsIpRoute;
+  '/analytics/beaconing/ja3s/$ja3s': typeof EnterpriseAnalyticsBeaconingJa3sJa3sRoute;
+  '/analytics/beaconing/ips/': typeof EnterpriseAnalyticsBeaconingIpsIndexRoute;
+  '/analytics/beaconing/ja3s/': typeof EnterpriseAnalyticsBeaconingJa3sIndexRoute;
+  '/policy-violations/coverage/family/$familyId/detection-methods': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdDetectionMethodsRoute;
+  '/policy-violations/coverage/family/$familyId/events': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdEventsRoute;
+  '/policy-violations/coverage/family/$familyId/threats': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdThreatsRoute;
+  '/policy-violations/coverage/threat/$threatId/detection-methods': typeof EnterprisePolicyViolationsCoverageThreatThreatIdDetectionMethodsRoute;
+  '/policy-violations/coverage/threat/$threatId/events': typeof EnterprisePolicyViolationsCoverageThreatThreatIdEventsRoute;
+  '/threats/coverage/family/$familyId/detection-methods': typeof EnterpriseThreatsCoverageFamilyFamilyIdDetectionMethodsRoute;
+  '/threats/coverage/family/$familyId/events': typeof EnterpriseThreatsCoverageFamilyFamilyIdEventsRoute;
+  '/threats/coverage/family/$familyId/threats': typeof EnterpriseThreatsCoverageFamilyFamilyIdThreatsRoute;
+  '/threats/coverage/threat/$threatId/detection-methods': typeof EnterpriseThreatsCoverageThreatThreatIdDetectionMethodsRoute;
+  '/threats/coverage/threat/$threatId/events': typeof EnterpriseThreatsCoverageThreatThreatIdEventsRoute;
+  '/policy-violations/coverage/family/$familyId/': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdIndexRoute;
+  '/policy-violations/coverage/threat/$threatId/': typeof EnterprisePolicyViolationsCoverageThreatThreatIdIndexRoute;
+  '/threats/coverage/family/$familyId/': typeof EnterpriseThreatsCoverageFamilyFamilyIdIndexRoute;
+  '/threats/coverage/threat/$threatId/': typeof EnterpriseThreatsCoverageThreatThreatIdIndexRoute;
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/deeplink': typeof DeeplinkRoute
-  '/deeplinks': typeof DeeplinksRoute
-  '/events-flow': typeof EventsFlowRoute
-  '/explorer': typeof ExplorerRoute
-  '/filter-sets': typeof FilterSetsRoute
-  '/filters-actions': typeof FiltersActionsRoute
-  '/investigations': typeof InvestigationsRoute
-  '/network-events': typeof NetworkEventsRoute
-  '/share': typeof ShareRoute
-  '/user-settings': typeof UserSettingsRoute
-  '/operational-center': typeof EnterpriseOperationalCenterRoute
-  '/volumetry': typeof EnterpriseVolumetryRoute
-  '/detection-events/event': typeof DetectionEventsEventRoute
-  '/detection-methods/$detectionMethodId': typeof DetectionMethodsDetectionMethodIdRoute
-  '/detection-events': typeof DetectionEventsIndexRoute
-  '/detection-methods': typeof DetectionMethodsIndexRoute
-  '/attack-surface/inventory': typeof EnterpriseAttackSurfaceInventoryRoute
-  '/hunting-trail/$purpose': typeof EnterpriseHuntingTrailPurposeRoute
-  '/threats/timeline': typeof EnterpriseThreatsTimelineRoute
-  '/analytics': typeof EnterpriseAnalyticsIndexRoute
-  '/attack-surface': typeof EnterpriseAttackSurfaceIndexRoute
-  '/hosts': typeof EnterpriseHostsIndexRoute
-  '/hunting-trail': typeof EnterpriseHuntingTrailIndexRoute
-  '/policy-violations': typeof EnterprisePolicyViolationsIndexRoute
-  '/threats': typeof EnterpriseThreatsIndexRoute
-  '/analytics/sightings/$sightingId': typeof EnterpriseAnalyticsSightingsSightingIdRoute
-  '/hosts/$hostId/beacons': typeof EnterpriseHostsHostIdBeaconsRoute
-  '/hosts/$hostId/detection-events': typeof EnterpriseHostsHostIdDetectionEventsRoute
-  '/hosts/$hostId/detection-methods': typeof EnterpriseHostsHostIdDetectionMethodsRoute
-  '/hosts/$hostId/hunting-trail': typeof EnterpriseHostsHostIdHuntingTrailRoute
-  '/hosts/$hostId/incidents': typeof EnterpriseHostsHostIdIncidentsRoute
-  '/hosts/$hostId/outlier-events': typeof EnterpriseHostsHostIdOutlierEventsRoute
-  '/hosts/$hostId/sightings': typeof EnterpriseHostsHostIdSightingsRoute
-  '/hosts/$hostId/timeline': typeof EnterpriseHostsHostIdTimelineRoute
-  '/policy-violations/violations/graph': typeof EnterprisePolicyViolationsViolationsGraphRoute
-  '/threats/compromises/attack-flow': typeof EnterpriseThreatsCompromisesAttackFlowRoute
-  '/threats/compromises/entities': typeof EnterpriseThreatsCompromisesEntitiesRoute
-  '/threats/compromises/graph': typeof EnterpriseThreatsCompromisesGraphRoute
-  '/threats/compromises/incidents': typeof EnterpriseThreatsCompromisesIncidentsRoute
-  '/analytics/beaconing': typeof EnterpriseAnalyticsBeaconingIndexRoute
-  '/analytics/sightings': typeof EnterpriseAnalyticsSightingsIndexRoute
-  '/hosts/$hostId': typeof EnterpriseHostsHostIdIndexRoute
-  '/policy-violations/coverage': typeof EnterprisePolicyViolationsCoverageIndexRoute
-  '/policy-violations/violations': typeof EnterprisePolicyViolationsViolationsIndexRoute
-  '/threats/compromises': typeof EnterpriseThreatsCompromisesIndexRoute
-  '/threats/coverage': typeof EnterpriseThreatsCoverageIndexRoute
-  '/analytics/beaconing/ips/$ip': typeof EnterpriseAnalyticsBeaconingIpsIpRoute
-  '/analytics/beaconing/ja3s/$ja3s': typeof EnterpriseAnalyticsBeaconingJa3sJa3sRoute
-  '/analytics/beaconing/ips': typeof EnterpriseAnalyticsBeaconingIpsIndexRoute
-  '/analytics/beaconing/ja3s': typeof EnterpriseAnalyticsBeaconingJa3sIndexRoute
-  '/policy-violations/coverage/family/$familyId/detection-methods': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdDetectionMethodsRoute
-  '/policy-violations/coverage/family/$familyId/events': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdEventsRoute
-  '/policy-violations/coverage/family/$familyId/threats': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdThreatsRoute
-  '/policy-violations/coverage/threat/$threatId/detection-methods': typeof EnterprisePolicyViolationsCoverageThreatThreatIdDetectionMethodsRoute
-  '/policy-violations/coverage/threat/$threatId/events': typeof EnterprisePolicyViolationsCoverageThreatThreatIdEventsRoute
-  '/threats/coverage/family/$familyId/detection-methods': typeof EnterpriseThreatsCoverageFamilyFamilyIdDetectionMethodsRoute
-  '/threats/coverage/family/$familyId/events': typeof EnterpriseThreatsCoverageFamilyFamilyIdEventsRoute
-  '/threats/coverage/family/$familyId/threats': typeof EnterpriseThreatsCoverageFamilyFamilyIdThreatsRoute
-  '/threats/coverage/threat/$threatId/detection-methods': typeof EnterpriseThreatsCoverageThreatThreatIdDetectionMethodsRoute
-  '/threats/coverage/threat/$threatId/events': typeof EnterpriseThreatsCoverageThreatThreatIdEventsRoute
-  '/policy-violations/coverage/family/$familyId': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdIndexRoute
-  '/policy-violations/coverage/threat/$threatId': typeof EnterprisePolicyViolationsCoverageThreatThreatIdIndexRoute
-  '/threats/coverage/family/$familyId': typeof EnterpriseThreatsCoverageFamilyFamilyIdIndexRoute
-  '/threats/coverage/threat/$threatId': typeof EnterpriseThreatsCoverageThreatThreatIdIndexRoute
+  '/': typeof IndexRoute;
+  '/deeplink': typeof DeeplinkRoute;
+  '/deeplinks': typeof DeeplinksRoute;
+  '/events-flow': typeof EventsFlowRoute;
+  '/explorer': typeof ExplorerRoute;
+  '/filter-sets': typeof FilterSetsRoute;
+  '/filters-actions': typeof FiltersActionsRoute;
+  '/investigations': typeof InvestigationsRoute;
+  '/network-events': typeof NetworkEventsRoute;
+  '/share': typeof ShareRoute;
+  '/user-settings': typeof UserSettingsRoute;
+  '/operational-center': typeof EnterpriseOperationalCenterRoute;
+  '/volumetry': typeof EnterpriseVolumetryRoute;
+  '/detection-events/event': typeof DetectionEventsEventRoute;
+  '/detection-methods/$detectionMethodId': typeof DetectionMethodsDetectionMethodIdRoute;
+  '/detection-events': typeof DetectionEventsIndexRoute;
+  '/detection-methods': typeof DetectionMethodsIndexRoute;
+  '/attack-surface/inventory': typeof EnterpriseAttackSurfaceInventoryRoute;
+  '/hunting-trail/$purpose': typeof EnterpriseHuntingTrailPurposeRoute;
+  '/threats/timeline': typeof EnterpriseThreatsTimelineRoute;
+  '/analytics': typeof EnterpriseAnalyticsIndexRoute;
+  '/attack-surface': typeof EnterpriseAttackSurfaceIndexRoute;
+  '/hosts': typeof EnterpriseHostsIndexRoute;
+  '/hunting-trail': typeof EnterpriseHuntingTrailIndexRoute;
+  '/policy-violations': typeof EnterprisePolicyViolationsIndexRoute;
+  '/threats': typeof EnterpriseThreatsIndexRoute;
+  '/analytics/sightings/$sightingId': typeof EnterpriseAnalyticsSightingsSightingIdRoute;
+  '/hosts/$hostId/beacons': typeof EnterpriseHostsHostIdBeaconsRoute;
+  '/hosts/$hostId/detection-events': typeof EnterpriseHostsHostIdDetectionEventsRoute;
+  '/hosts/$hostId/detection-methods': typeof EnterpriseHostsHostIdDetectionMethodsRoute;
+  '/hosts/$hostId/hunting-trail': typeof EnterpriseHostsHostIdHuntingTrailRoute;
+  '/hosts/$hostId/incidents': typeof EnterpriseHostsHostIdIncidentsRoute;
+  '/hosts/$hostId/outlier-events': typeof EnterpriseHostsHostIdOutlierEventsRoute;
+  '/hosts/$hostId/sightings': typeof EnterpriseHostsHostIdSightingsRoute;
+  '/hosts/$hostId/timeline': typeof EnterpriseHostsHostIdTimelineRoute;
+  '/policy-violations/violations/graph': typeof EnterprisePolicyViolationsViolationsGraphRoute;
+  '/threats/compromises/attack-flow': typeof EnterpriseThreatsCompromisesAttackFlowRoute;
+  '/threats/compromises/entities': typeof EnterpriseThreatsCompromisesEntitiesRoute;
+  '/threats/compromises/graph': typeof EnterpriseThreatsCompromisesGraphRoute;
+  '/threats/compromises/incidents': typeof EnterpriseThreatsCompromisesIncidentsRoute;
+  '/analytics/beaconing': typeof EnterpriseAnalyticsBeaconingIndexRoute;
+  '/analytics/sightings': typeof EnterpriseAnalyticsSightingsIndexRoute;
+  '/hosts/$hostId': typeof EnterpriseHostsHostIdIndexRoute;
+  '/policy-violations/coverage': typeof EnterprisePolicyViolationsCoverageIndexRoute;
+  '/policy-violations/violations': typeof EnterprisePolicyViolationsViolationsIndexRoute;
+  '/threats/compromises': typeof EnterpriseThreatsCompromisesIndexRoute;
+  '/threats/coverage': typeof EnterpriseThreatsCoverageIndexRoute;
+  '/analytics/beaconing/ips/$ip': typeof EnterpriseAnalyticsBeaconingIpsIpRoute;
+  '/analytics/beaconing/ja3s/$ja3s': typeof EnterpriseAnalyticsBeaconingJa3sJa3sRoute;
+  '/analytics/beaconing/ips': typeof EnterpriseAnalyticsBeaconingIpsIndexRoute;
+  '/analytics/beaconing/ja3s': typeof EnterpriseAnalyticsBeaconingJa3sIndexRoute;
+  '/policy-violations/coverage/family/$familyId/detection-methods': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdDetectionMethodsRoute;
+  '/policy-violations/coverage/family/$familyId/events': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdEventsRoute;
+  '/policy-violations/coverage/family/$familyId/threats': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdThreatsRoute;
+  '/policy-violations/coverage/threat/$threatId/detection-methods': typeof EnterprisePolicyViolationsCoverageThreatThreatIdDetectionMethodsRoute;
+  '/policy-violations/coverage/threat/$threatId/events': typeof EnterprisePolicyViolationsCoverageThreatThreatIdEventsRoute;
+  '/threats/coverage/family/$familyId/detection-methods': typeof EnterpriseThreatsCoverageFamilyFamilyIdDetectionMethodsRoute;
+  '/threats/coverage/family/$familyId/events': typeof EnterpriseThreatsCoverageFamilyFamilyIdEventsRoute;
+  '/threats/coverage/family/$familyId/threats': typeof EnterpriseThreatsCoverageFamilyFamilyIdThreatsRoute;
+  '/threats/coverage/threat/$threatId/detection-methods': typeof EnterpriseThreatsCoverageThreatThreatIdDetectionMethodsRoute;
+  '/threats/coverage/threat/$threatId/events': typeof EnterpriseThreatsCoverageThreatThreatIdEventsRoute;
+  '/policy-violations/coverage/family/$familyId': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdIndexRoute;
+  '/policy-violations/coverage/threat/$threatId': typeof EnterprisePolicyViolationsCoverageThreatThreatIdIndexRoute;
+  '/threats/coverage/family/$familyId': typeof EnterpriseThreatsCoverageFamilyFamilyIdIndexRoute;
+  '/threats/coverage/threat/$threatId': typeof EnterpriseThreatsCoverageThreatThreatIdIndexRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/detection-events': typeof DetectionEventsRouteRouteWithChildren
-  '/_enterprise': typeof EnterpriseRouteWithChildren
-  '/deeplink': typeof DeeplinkRoute
-  '/deeplinks': typeof DeeplinksRoute
-  '/events-flow': typeof EventsFlowRoute
-  '/explorer': typeof ExplorerRoute
-  '/filter-sets': typeof FilterSetsRoute
-  '/filters-actions': typeof FiltersActionsRoute
-  '/investigations': typeof InvestigationsRoute
-  '/network-events': typeof NetworkEventsRoute
-  '/share': typeof ShareRoute
-  '/user-settings': typeof UserSettingsRoute
-  '/_enterprise/analytics': typeof EnterpriseAnalyticsRouteRouteWithChildren
-  '/_enterprise/attack-surface': typeof EnterpriseAttackSurfaceRouteRouteWithChildren
-  '/_enterprise/hunting-trail': typeof EnterpriseHuntingTrailRouteRouteWithChildren
-  '/_enterprise/policy-violations': typeof EnterprisePolicyViolationsRouteRouteWithChildren
-  '/_enterprise/threats': typeof EnterpriseThreatsRouteRouteWithChildren
-  '/_enterprise/operational-center': typeof EnterpriseOperationalCenterRoute
-  '/_enterprise/volumetry': typeof EnterpriseVolumetryRoute
-  '/detection-events/event': typeof DetectionEventsEventRoute
-  '/detection-methods/$detectionMethodId': typeof DetectionMethodsDetectionMethodIdRoute
-  '/detection-events/': typeof DetectionEventsIndexRoute
-  '/detection-methods/': typeof DetectionMethodsIndexRoute
-  '/_enterprise/analytics/beaconing': typeof EnterpriseAnalyticsBeaconingRouteRouteWithChildren
-  '/_enterprise/analytics/sightings': typeof EnterpriseAnalyticsSightingsRouteRouteWithChildren
-  '/_enterprise/hosts/$hostId': typeof EnterpriseHostsHostIdRouteRouteWithChildren
-  '/_enterprise/policy-violations/violations': typeof EnterprisePolicyViolationsViolationsRouteRouteWithChildren
-  '/_enterprise/threats/compromises': typeof EnterpriseThreatsCompromisesRouteRouteWithChildren
-  '/_enterprise/attack-surface/inventory': typeof EnterpriseAttackSurfaceInventoryRoute
-  '/_enterprise/hunting-trail/$purpose': typeof EnterpriseHuntingTrailPurposeRoute
-  '/_enterprise/threats/timeline': typeof EnterpriseThreatsTimelineRoute
-  '/_enterprise/analytics/': typeof EnterpriseAnalyticsIndexRoute
-  '/_enterprise/attack-surface/': typeof EnterpriseAttackSurfaceIndexRoute
-  '/_enterprise/hosts/': typeof EnterpriseHostsIndexRoute
-  '/_enterprise/hunting-trail/': typeof EnterpriseHuntingTrailIndexRoute
-  '/_enterprise/policy-violations/': typeof EnterprisePolicyViolationsIndexRoute
-  '/_enterprise/threats/': typeof EnterpriseThreatsIndexRoute
-  '/_enterprise/analytics/beaconing/ips': typeof EnterpriseAnalyticsBeaconingIpsRouteRouteWithChildren
-  '/_enterprise/analytics/beaconing/ja3s': typeof EnterpriseAnalyticsBeaconingJa3sRouteRouteWithChildren
-  '/_enterprise/analytics/sightings/$sightingId': typeof EnterpriseAnalyticsSightingsSightingIdRoute
-  '/_enterprise/hosts/$hostId/beacons': typeof EnterpriseHostsHostIdBeaconsRoute
-  '/_enterprise/hosts/$hostId/detection-events': typeof EnterpriseHostsHostIdDetectionEventsRoute
-  '/_enterprise/hosts/$hostId/detection-methods': typeof EnterpriseHostsHostIdDetectionMethodsRoute
-  '/_enterprise/hosts/$hostId/hunting-trail': typeof EnterpriseHostsHostIdHuntingTrailRoute
-  '/_enterprise/hosts/$hostId/incidents': typeof EnterpriseHostsHostIdIncidentsRoute
-  '/_enterprise/hosts/$hostId/outlier-events': typeof EnterpriseHostsHostIdOutlierEventsRoute
-  '/_enterprise/hosts/$hostId/sightings': typeof EnterpriseHostsHostIdSightingsRoute
-  '/_enterprise/hosts/$hostId/timeline': typeof EnterpriseHostsHostIdTimelineRoute
-  '/_enterprise/policy-violations/violations/graph': typeof EnterprisePolicyViolationsViolationsGraphRoute
-  '/_enterprise/threats/compromises/attack-flow': typeof EnterpriseThreatsCompromisesAttackFlowRoute
-  '/_enterprise/threats/compromises/entities': typeof EnterpriseThreatsCompromisesEntitiesRoute
-  '/_enterprise/threats/compromises/graph': typeof EnterpriseThreatsCompromisesGraphRoute
-  '/_enterprise/threats/compromises/incidents': typeof EnterpriseThreatsCompromisesIncidentsRoute
-  '/_enterprise/analytics/beaconing/': typeof EnterpriseAnalyticsBeaconingIndexRoute
-  '/_enterprise/analytics/sightings/': typeof EnterpriseAnalyticsSightingsIndexRoute
-  '/_enterprise/hosts/$hostId/': typeof EnterpriseHostsHostIdIndexRoute
-  '/_enterprise/policy-violations/coverage/': typeof EnterprisePolicyViolationsCoverageIndexRoute
-  '/_enterprise/policy-violations/violations/': typeof EnterprisePolicyViolationsViolationsIndexRoute
-  '/_enterprise/threats/compromises/': typeof EnterpriseThreatsCompromisesIndexRoute
-  '/_enterprise/threats/coverage/': typeof EnterpriseThreatsCoverageIndexRoute
-  '/_enterprise/policy-violations/coverage/family/$familyId': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRouteWithChildren
-  '/_enterprise/policy-violations/coverage/threat/$threatId': typeof EnterprisePolicyViolationsCoverageThreatThreatIdRouteRouteWithChildren
-  '/_enterprise/threats/coverage/family/$familyId': typeof EnterpriseThreatsCoverageFamilyFamilyIdRouteRouteWithChildren
-  '/_enterprise/threats/coverage/threat/$threatId': typeof EnterpriseThreatsCoverageThreatThreatIdRouteRouteWithChildren
-  '/_enterprise/analytics/beaconing/ips/$ip': typeof EnterpriseAnalyticsBeaconingIpsIpRoute
-  '/_enterprise/analytics/beaconing/ja3s/$ja3s': typeof EnterpriseAnalyticsBeaconingJa3sJa3sRoute
-  '/_enterprise/analytics/beaconing/ips/': typeof EnterpriseAnalyticsBeaconingIpsIndexRoute
-  '/_enterprise/analytics/beaconing/ja3s/': typeof EnterpriseAnalyticsBeaconingJa3sIndexRoute
-  '/_enterprise/policy-violations/coverage/family/$familyId/detection-methods': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdDetectionMethodsRoute
-  '/_enterprise/policy-violations/coverage/family/$familyId/events': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdEventsRoute
-  '/_enterprise/policy-violations/coverage/family/$familyId/threats': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdThreatsRoute
-  '/_enterprise/policy-violations/coverage/threat/$threatId/detection-methods': typeof EnterprisePolicyViolationsCoverageThreatThreatIdDetectionMethodsRoute
-  '/_enterprise/policy-violations/coverage/threat/$threatId/events': typeof EnterprisePolicyViolationsCoverageThreatThreatIdEventsRoute
-  '/_enterprise/threats/coverage/family/$familyId/detection-methods': typeof EnterpriseThreatsCoverageFamilyFamilyIdDetectionMethodsRoute
-  '/_enterprise/threats/coverage/family/$familyId/events': typeof EnterpriseThreatsCoverageFamilyFamilyIdEventsRoute
-  '/_enterprise/threats/coverage/family/$familyId/threats': typeof EnterpriseThreatsCoverageFamilyFamilyIdThreatsRoute
-  '/_enterprise/threats/coverage/threat/$threatId/detection-methods': typeof EnterpriseThreatsCoverageThreatThreatIdDetectionMethodsRoute
-  '/_enterprise/threats/coverage/threat/$threatId/events': typeof EnterpriseThreatsCoverageThreatThreatIdEventsRoute
-  '/_enterprise/policy-violations/coverage/family/$familyId/': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdIndexRoute
-  '/_enterprise/policy-violations/coverage/threat/$threatId/': typeof EnterprisePolicyViolationsCoverageThreatThreatIdIndexRoute
-  '/_enterprise/threats/coverage/family/$familyId/': typeof EnterpriseThreatsCoverageFamilyFamilyIdIndexRoute
-  '/_enterprise/threats/coverage/threat/$threatId/': typeof EnterpriseThreatsCoverageThreatThreatIdIndexRoute
+  __root__: typeof rootRouteImport;
+  '/': typeof IndexRoute;
+  '/detection-events': typeof DetectionEventsRouteRouteWithChildren;
+  '/_enterprise': typeof EnterpriseRouteWithChildren;
+  '/deeplink': typeof DeeplinkRoute;
+  '/deeplinks': typeof DeeplinksRoute;
+  '/events-flow': typeof EventsFlowRoute;
+  '/explorer': typeof ExplorerRoute;
+  '/filter-sets': typeof FilterSetsRoute;
+  '/filters-actions': typeof FiltersActionsRoute;
+  '/investigations': typeof InvestigationsRoute;
+  '/network-events': typeof NetworkEventsRoute;
+  '/share': typeof ShareRoute;
+  '/user-settings': typeof UserSettingsRoute;
+  '/_enterprise/analytics': typeof EnterpriseAnalyticsRouteRouteWithChildren;
+  '/_enterprise/attack-surface': typeof EnterpriseAttackSurfaceRouteRouteWithChildren;
+  '/_enterprise/hunting-trail': typeof EnterpriseHuntingTrailRouteRouteWithChildren;
+  '/_enterprise/policy-violations': typeof EnterprisePolicyViolationsRouteRouteWithChildren;
+  '/_enterprise/threats': typeof EnterpriseThreatsRouteRouteWithChildren;
+  '/_enterprise/operational-center': typeof EnterpriseOperationalCenterRoute;
+  '/_enterprise/volumetry': typeof EnterpriseVolumetryRoute;
+  '/detection-events/event': typeof DetectionEventsEventRoute;
+  '/detection-methods/$detectionMethodId': typeof DetectionMethodsDetectionMethodIdRoute;
+  '/detection-events/': typeof DetectionEventsIndexRoute;
+  '/detection-methods/': typeof DetectionMethodsIndexRoute;
+  '/_enterprise/analytics/beaconing': typeof EnterpriseAnalyticsBeaconingRouteRouteWithChildren;
+  '/_enterprise/analytics/sightings': typeof EnterpriseAnalyticsSightingsRouteRouteWithChildren;
+  '/_enterprise/hosts/$hostId': typeof EnterpriseHostsHostIdRouteRouteWithChildren;
+  '/_enterprise/policy-violations/violations': typeof EnterprisePolicyViolationsViolationsRouteRouteWithChildren;
+  '/_enterprise/threats/compromises': typeof EnterpriseThreatsCompromisesRouteRouteWithChildren;
+  '/_enterprise/attack-surface/inventory': typeof EnterpriseAttackSurfaceInventoryRoute;
+  '/_enterprise/hunting-trail/$purpose': typeof EnterpriseHuntingTrailPurposeRoute;
+  '/_enterprise/threats/timeline': typeof EnterpriseThreatsTimelineRoute;
+  '/_enterprise/analytics/': typeof EnterpriseAnalyticsIndexRoute;
+  '/_enterprise/attack-surface/': typeof EnterpriseAttackSurfaceIndexRoute;
+  '/_enterprise/hosts/': typeof EnterpriseHostsIndexRoute;
+  '/_enterprise/hunting-trail/': typeof EnterpriseHuntingTrailIndexRoute;
+  '/_enterprise/policy-violations/': typeof EnterprisePolicyViolationsIndexRoute;
+  '/_enterprise/threats/': typeof EnterpriseThreatsIndexRoute;
+  '/_enterprise/analytics/beaconing/ips': typeof EnterpriseAnalyticsBeaconingIpsRouteRouteWithChildren;
+  '/_enterprise/analytics/beaconing/ja3s': typeof EnterpriseAnalyticsBeaconingJa3sRouteRouteWithChildren;
+  '/_enterprise/analytics/sightings/$sightingId': typeof EnterpriseAnalyticsSightingsSightingIdRoute;
+  '/_enterprise/hosts/$hostId/beacons': typeof EnterpriseHostsHostIdBeaconsRoute;
+  '/_enterprise/hosts/$hostId/detection-events': typeof EnterpriseHostsHostIdDetectionEventsRoute;
+  '/_enterprise/hosts/$hostId/detection-methods': typeof EnterpriseHostsHostIdDetectionMethodsRoute;
+  '/_enterprise/hosts/$hostId/hunting-trail': typeof EnterpriseHostsHostIdHuntingTrailRoute;
+  '/_enterprise/hosts/$hostId/incidents': typeof EnterpriseHostsHostIdIncidentsRoute;
+  '/_enterprise/hosts/$hostId/outlier-events': typeof EnterpriseHostsHostIdOutlierEventsRoute;
+  '/_enterprise/hosts/$hostId/sightings': typeof EnterpriseHostsHostIdSightingsRoute;
+  '/_enterprise/hosts/$hostId/timeline': typeof EnterpriseHostsHostIdTimelineRoute;
+  '/_enterprise/policy-violations/violations/graph': typeof EnterprisePolicyViolationsViolationsGraphRoute;
+  '/_enterprise/threats/compromises/attack-flow': typeof EnterpriseThreatsCompromisesAttackFlowRoute;
+  '/_enterprise/threats/compromises/entities': typeof EnterpriseThreatsCompromisesEntitiesRoute;
+  '/_enterprise/threats/compromises/graph': typeof EnterpriseThreatsCompromisesGraphRoute;
+  '/_enterprise/threats/compromises/incidents': typeof EnterpriseThreatsCompromisesIncidentsRoute;
+  '/_enterprise/analytics/beaconing/': typeof EnterpriseAnalyticsBeaconingIndexRoute;
+  '/_enterprise/analytics/sightings/': typeof EnterpriseAnalyticsSightingsIndexRoute;
+  '/_enterprise/hosts/$hostId/': typeof EnterpriseHostsHostIdIndexRoute;
+  '/_enterprise/policy-violations/coverage/': typeof EnterprisePolicyViolationsCoverageIndexRoute;
+  '/_enterprise/policy-violations/violations/': typeof EnterprisePolicyViolationsViolationsIndexRoute;
+  '/_enterprise/threats/compromises/': typeof EnterpriseThreatsCompromisesIndexRoute;
+  '/_enterprise/threats/coverage/': typeof EnterpriseThreatsCoverageIndexRoute;
+  '/_enterprise/policy-violations/coverage/family/$familyId': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRouteWithChildren;
+  '/_enterprise/policy-violations/coverage/threat/$threatId': typeof EnterprisePolicyViolationsCoverageThreatThreatIdRouteRouteWithChildren;
+  '/_enterprise/threats/coverage/family/$familyId': typeof EnterpriseThreatsCoverageFamilyFamilyIdRouteRouteWithChildren;
+  '/_enterprise/threats/coverage/threat/$threatId': typeof EnterpriseThreatsCoverageThreatThreatIdRouteRouteWithChildren;
+  '/_enterprise/analytics/beaconing/ips/$ip': typeof EnterpriseAnalyticsBeaconingIpsIpRoute;
+  '/_enterprise/analytics/beaconing/ja3s/$ja3s': typeof EnterpriseAnalyticsBeaconingJa3sJa3sRoute;
+  '/_enterprise/analytics/beaconing/ips/': typeof EnterpriseAnalyticsBeaconingIpsIndexRoute;
+  '/_enterprise/analytics/beaconing/ja3s/': typeof EnterpriseAnalyticsBeaconingJa3sIndexRoute;
+  '/_enterprise/policy-violations/coverage/family/$familyId/detection-methods': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdDetectionMethodsRoute;
+  '/_enterprise/policy-violations/coverage/family/$familyId/events': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdEventsRoute;
+  '/_enterprise/policy-violations/coverage/family/$familyId/threats': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdThreatsRoute;
+  '/_enterprise/policy-violations/coverage/threat/$threatId/detection-methods': typeof EnterprisePolicyViolationsCoverageThreatThreatIdDetectionMethodsRoute;
+  '/_enterprise/policy-violations/coverage/threat/$threatId/events': typeof EnterprisePolicyViolationsCoverageThreatThreatIdEventsRoute;
+  '/_enterprise/threats/coverage/family/$familyId/detection-methods': typeof EnterpriseThreatsCoverageFamilyFamilyIdDetectionMethodsRoute;
+  '/_enterprise/threats/coverage/family/$familyId/events': typeof EnterpriseThreatsCoverageFamilyFamilyIdEventsRoute;
+  '/_enterprise/threats/coverage/family/$familyId/threats': typeof EnterpriseThreatsCoverageFamilyFamilyIdThreatsRoute;
+  '/_enterprise/threats/coverage/threat/$threatId/detection-methods': typeof EnterpriseThreatsCoverageThreatThreatIdDetectionMethodsRoute;
+  '/_enterprise/threats/coverage/threat/$threatId/events': typeof EnterpriseThreatsCoverageThreatThreatIdEventsRoute;
+  '/_enterprise/policy-violations/coverage/family/$familyId/': typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdIndexRoute;
+  '/_enterprise/policy-violations/coverage/threat/$threatId/': typeof EnterprisePolicyViolationsCoverageThreatThreatIdIndexRoute;
+  '/_enterprise/threats/coverage/family/$familyId/': typeof EnterpriseThreatsCoverageFamilyFamilyIdIndexRoute;
+  '/_enterprise/threats/coverage/threat/$threatId/': typeof EnterpriseThreatsCoverageThreatThreatIdIndexRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
     | '/'
     | '/detection-events'
@@ -903,8 +903,8 @@ export interface FileRouteTypes {
     | '/policy-violations/coverage/family/$familyId/'
     | '/policy-violations/coverage/threat/$threatId/'
     | '/threats/coverage/family/$familyId/'
-    | '/threats/coverage/threat/$threatId/'
-  fileRoutesByTo: FileRoutesByTo
+    | '/threats/coverage/threat/$threatId/';
+  fileRoutesByTo: FileRoutesByTo;
   to:
     | '/'
     | '/deeplink'
@@ -970,7 +970,7 @@ export interface FileRouteTypes {
     | '/policy-violations/coverage/family/$familyId'
     | '/policy-violations/coverage/threat/$threatId'
     | '/threats/coverage/family/$familyId'
-    | '/threats/coverage/threat/$threatId'
+    | '/threats/coverage/threat/$threatId';
   id:
     | '__root__'
     | '/'
@@ -1055,629 +1055,629 @@ export interface FileRouteTypes {
     | '/_enterprise/policy-violations/coverage/family/$familyId/'
     | '/_enterprise/policy-violations/coverage/threat/$threatId/'
     | '/_enterprise/threats/coverage/family/$familyId/'
-    | '/_enterprise/threats/coverage/threat/$threatId/'
-  fileRoutesById: FileRoutesById
+    | '/_enterprise/threats/coverage/threat/$threatId/';
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  DetectionEventsRouteRoute: typeof DetectionEventsRouteRouteWithChildren
-  EnterpriseRoute: typeof EnterpriseRouteWithChildren
-  DeeplinkRoute: typeof DeeplinkRoute
-  DeeplinksRoute: typeof DeeplinksRoute
-  EventsFlowRoute: typeof EventsFlowRoute
-  ExplorerRoute: typeof ExplorerRoute
-  FilterSetsRoute: typeof FilterSetsRoute
-  FiltersActionsRoute: typeof FiltersActionsRoute
-  InvestigationsRoute: typeof InvestigationsRoute
-  NetworkEventsRoute: typeof NetworkEventsRoute
-  ShareRoute: typeof ShareRoute
-  UserSettingsRoute: typeof UserSettingsRoute
-  DetectionMethodsDetectionMethodIdRoute: typeof DetectionMethodsDetectionMethodIdRoute
-  DetectionMethodsIndexRoute: typeof DetectionMethodsIndexRoute
+  IndexRoute: typeof IndexRoute;
+  DetectionEventsRouteRoute: typeof DetectionEventsRouteRouteWithChildren;
+  EnterpriseRoute: typeof EnterpriseRouteWithChildren;
+  DeeplinkRoute: typeof DeeplinkRoute;
+  DeeplinksRoute: typeof DeeplinksRoute;
+  EventsFlowRoute: typeof EventsFlowRoute;
+  ExplorerRoute: typeof ExplorerRoute;
+  FilterSetsRoute: typeof FilterSetsRoute;
+  FiltersActionsRoute: typeof FiltersActionsRoute;
+  InvestigationsRoute: typeof InvestigationsRoute;
+  NetworkEventsRoute: typeof NetworkEventsRoute;
+  ShareRoute: typeof ShareRoute;
+  UserSettingsRoute: typeof UserSettingsRoute;
+  DetectionMethodsDetectionMethodIdRoute: typeof DetectionMethodsDetectionMethodIdRoute;
+  DetectionMethodsIndexRoute: typeof DetectionMethodsIndexRoute;
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/user-settings': {
-      id: '/user-settings'
-      path: '/user-settings'
-      fullPath: '/user-settings'
-      preLoaderRoute: typeof UserSettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/user-settings';
+      path: '/user-settings';
+      fullPath: '/user-settings';
+      preLoaderRoute: typeof UserSettingsRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/share': {
-      id: '/share'
-      path: '/share'
-      fullPath: '/share'
-      preLoaderRoute: typeof ShareRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/share';
+      path: '/share';
+      fullPath: '/share';
+      preLoaderRoute: typeof ShareRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/network-events': {
-      id: '/network-events'
-      path: '/network-events'
-      fullPath: '/network-events'
-      preLoaderRoute: typeof NetworkEventsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/network-events';
+      path: '/network-events';
+      fullPath: '/network-events';
+      preLoaderRoute: typeof NetworkEventsRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/investigations': {
-      id: '/investigations'
-      path: '/investigations'
-      fullPath: '/investigations'
-      preLoaderRoute: typeof InvestigationsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/investigations';
+      path: '/investigations';
+      fullPath: '/investigations';
+      preLoaderRoute: typeof InvestigationsRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/filters-actions': {
-      id: '/filters-actions'
-      path: '/filters-actions'
-      fullPath: '/filters-actions'
-      preLoaderRoute: typeof FiltersActionsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/filters-actions';
+      path: '/filters-actions';
+      fullPath: '/filters-actions';
+      preLoaderRoute: typeof FiltersActionsRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/filter-sets': {
-      id: '/filter-sets'
-      path: '/filter-sets'
-      fullPath: '/filter-sets'
-      preLoaderRoute: typeof FilterSetsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/filter-sets';
+      path: '/filter-sets';
+      fullPath: '/filter-sets';
+      preLoaderRoute: typeof FilterSetsRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/explorer': {
-      id: '/explorer'
-      path: '/explorer'
-      fullPath: '/explorer'
-      preLoaderRoute: typeof ExplorerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/explorer';
+      path: '/explorer';
+      fullPath: '/explorer';
+      preLoaderRoute: typeof ExplorerRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/events-flow': {
-      id: '/events-flow'
-      path: '/events-flow'
-      fullPath: '/events-flow'
-      preLoaderRoute: typeof EventsFlowRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/events-flow';
+      path: '/events-flow';
+      fullPath: '/events-flow';
+      preLoaderRoute: typeof EventsFlowRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/deeplinks': {
-      id: '/deeplinks'
-      path: '/deeplinks'
-      fullPath: '/deeplinks'
-      preLoaderRoute: typeof DeeplinksRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/deeplinks';
+      path: '/deeplinks';
+      fullPath: '/deeplinks';
+      preLoaderRoute: typeof DeeplinksRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/deeplink': {
-      id: '/deeplink'
-      path: '/deeplink'
-      fullPath: '/deeplink'
-      preLoaderRoute: typeof DeeplinkRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/deeplink';
+      path: '/deeplink';
+      fullPath: '/deeplink';
+      preLoaderRoute: typeof DeeplinkRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/_enterprise': {
-      id: '/_enterprise'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof EnterpriseRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/_enterprise';
+      path: '';
+      fullPath: '/';
+      preLoaderRoute: typeof EnterpriseRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/detection-events': {
-      id: '/detection-events'
-      path: '/detection-events'
-      fullPath: '/detection-events'
-      preLoaderRoute: typeof DetectionEventsRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/detection-events';
+      path: '/detection-events';
+      fullPath: '/detection-events';
+      preLoaderRoute: typeof DetectionEventsRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/';
+      path: '/';
+      fullPath: '/';
+      preLoaderRoute: typeof IndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/detection-methods/': {
-      id: '/detection-methods/'
-      path: '/detection-methods'
-      fullPath: '/detection-methods/'
-      preLoaderRoute: typeof DetectionMethodsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/detection-methods/';
+      path: '/detection-methods';
+      fullPath: '/detection-methods/';
+      preLoaderRoute: typeof DetectionMethodsIndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/detection-events/': {
-      id: '/detection-events/'
-      path: '/'
-      fullPath: '/detection-events/'
-      preLoaderRoute: typeof DetectionEventsIndexRouteImport
-      parentRoute: typeof DetectionEventsRouteRoute
-    }
+      id: '/detection-events/';
+      path: '/';
+      fullPath: '/detection-events/';
+      preLoaderRoute: typeof DetectionEventsIndexRouteImport;
+      parentRoute: typeof DetectionEventsRouteRoute;
+    };
     '/detection-methods/$detectionMethodId': {
-      id: '/detection-methods/$detectionMethodId'
-      path: '/detection-methods/$detectionMethodId'
-      fullPath: '/detection-methods/$detectionMethodId'
-      preLoaderRoute: typeof DetectionMethodsDetectionMethodIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/detection-methods/$detectionMethodId';
+      path: '/detection-methods/$detectionMethodId';
+      fullPath: '/detection-methods/$detectionMethodId';
+      preLoaderRoute: typeof DetectionMethodsDetectionMethodIdRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/detection-events/event': {
-      id: '/detection-events/event'
-      path: '/event'
-      fullPath: '/detection-events/event'
-      preLoaderRoute: typeof DetectionEventsEventRouteImport
-      parentRoute: typeof DetectionEventsRouteRoute
-    }
+      id: '/detection-events/event';
+      path: '/event';
+      fullPath: '/detection-events/event';
+      preLoaderRoute: typeof DetectionEventsEventRouteImport;
+      parentRoute: typeof DetectionEventsRouteRoute;
+    };
     '/_enterprise/volumetry': {
-      id: '/_enterprise/volumetry'
-      path: '/volumetry'
-      fullPath: '/volumetry'
-      preLoaderRoute: typeof EnterpriseVolumetryRouteImport
-      parentRoute: typeof EnterpriseRoute
-    }
+      id: '/_enterprise/volumetry';
+      path: '/volumetry';
+      fullPath: '/volumetry';
+      preLoaderRoute: typeof EnterpriseVolumetryRouteImport;
+      parentRoute: typeof EnterpriseRoute;
+    };
     '/_enterprise/operational-center': {
-      id: '/_enterprise/operational-center'
-      path: '/operational-center'
-      fullPath: '/operational-center'
-      preLoaderRoute: typeof EnterpriseOperationalCenterRouteImport
-      parentRoute: typeof EnterpriseRoute
-    }
+      id: '/_enterprise/operational-center';
+      path: '/operational-center';
+      fullPath: '/operational-center';
+      preLoaderRoute: typeof EnterpriseOperationalCenterRouteImport;
+      parentRoute: typeof EnterpriseRoute;
+    };
     '/_enterprise/threats': {
-      id: '/_enterprise/threats'
-      path: '/threats'
-      fullPath: '/threats'
-      preLoaderRoute: typeof EnterpriseThreatsRouteRouteImport
-      parentRoute: typeof EnterpriseRoute
-    }
+      id: '/_enterprise/threats';
+      path: '/threats';
+      fullPath: '/threats';
+      preLoaderRoute: typeof EnterpriseThreatsRouteRouteImport;
+      parentRoute: typeof EnterpriseRoute;
+    };
     '/_enterprise/policy-violations': {
-      id: '/_enterprise/policy-violations'
-      path: '/policy-violations'
-      fullPath: '/policy-violations'
-      preLoaderRoute: typeof EnterprisePolicyViolationsRouteRouteImport
-      parentRoute: typeof EnterpriseRoute
-    }
+      id: '/_enterprise/policy-violations';
+      path: '/policy-violations';
+      fullPath: '/policy-violations';
+      preLoaderRoute: typeof EnterprisePolicyViolationsRouteRouteImport;
+      parentRoute: typeof EnterpriseRoute;
+    };
     '/_enterprise/hunting-trail': {
-      id: '/_enterprise/hunting-trail'
-      path: '/hunting-trail'
-      fullPath: '/hunting-trail'
-      preLoaderRoute: typeof EnterpriseHuntingTrailRouteRouteImport
-      parentRoute: typeof EnterpriseRoute
-    }
+      id: '/_enterprise/hunting-trail';
+      path: '/hunting-trail';
+      fullPath: '/hunting-trail';
+      preLoaderRoute: typeof EnterpriseHuntingTrailRouteRouteImport;
+      parentRoute: typeof EnterpriseRoute;
+    };
     '/_enterprise/attack-surface': {
-      id: '/_enterprise/attack-surface'
-      path: '/attack-surface'
-      fullPath: '/attack-surface'
-      preLoaderRoute: typeof EnterpriseAttackSurfaceRouteRouteImport
-      parentRoute: typeof EnterpriseRoute
-    }
+      id: '/_enterprise/attack-surface';
+      path: '/attack-surface';
+      fullPath: '/attack-surface';
+      preLoaderRoute: typeof EnterpriseAttackSurfaceRouteRouteImport;
+      parentRoute: typeof EnterpriseRoute;
+    };
     '/_enterprise/analytics': {
-      id: '/_enterprise/analytics'
-      path: '/analytics'
-      fullPath: '/analytics'
-      preLoaderRoute: typeof EnterpriseAnalyticsRouteRouteImport
-      parentRoute: typeof EnterpriseRoute
-    }
+      id: '/_enterprise/analytics';
+      path: '/analytics';
+      fullPath: '/analytics';
+      preLoaderRoute: typeof EnterpriseAnalyticsRouteRouteImport;
+      parentRoute: typeof EnterpriseRoute;
+    };
     '/_enterprise/threats/': {
-      id: '/_enterprise/threats/'
-      path: '/'
-      fullPath: '/threats/'
-      preLoaderRoute: typeof EnterpriseThreatsIndexRouteImport
-      parentRoute: typeof EnterpriseThreatsRouteRoute
-    }
+      id: '/_enterprise/threats/';
+      path: '/';
+      fullPath: '/threats/';
+      preLoaderRoute: typeof EnterpriseThreatsIndexRouteImport;
+      parentRoute: typeof EnterpriseThreatsRouteRoute;
+    };
     '/_enterprise/policy-violations/': {
-      id: '/_enterprise/policy-violations/'
-      path: '/'
-      fullPath: '/policy-violations/'
-      preLoaderRoute: typeof EnterprisePolicyViolationsIndexRouteImport
-      parentRoute: typeof EnterprisePolicyViolationsRouteRoute
-    }
+      id: '/_enterprise/policy-violations/';
+      path: '/';
+      fullPath: '/policy-violations/';
+      preLoaderRoute: typeof EnterprisePolicyViolationsIndexRouteImport;
+      parentRoute: typeof EnterprisePolicyViolationsRouteRoute;
+    };
     '/_enterprise/hunting-trail/': {
-      id: '/_enterprise/hunting-trail/'
-      path: '/'
-      fullPath: '/hunting-trail/'
-      preLoaderRoute: typeof EnterpriseHuntingTrailIndexRouteImport
-      parentRoute: typeof EnterpriseHuntingTrailRouteRoute
-    }
+      id: '/_enterprise/hunting-trail/';
+      path: '/';
+      fullPath: '/hunting-trail/';
+      preLoaderRoute: typeof EnterpriseHuntingTrailIndexRouteImport;
+      parentRoute: typeof EnterpriseHuntingTrailRouteRoute;
+    };
     '/_enterprise/hosts/': {
-      id: '/_enterprise/hosts/'
-      path: '/hosts'
-      fullPath: '/hosts/'
-      preLoaderRoute: typeof EnterpriseHostsIndexRouteImport
-      parentRoute: typeof EnterpriseRoute
-    }
+      id: '/_enterprise/hosts/';
+      path: '/hosts';
+      fullPath: '/hosts/';
+      preLoaderRoute: typeof EnterpriseHostsIndexRouteImport;
+      parentRoute: typeof EnterpriseRoute;
+    };
     '/_enterprise/attack-surface/': {
-      id: '/_enterprise/attack-surface/'
-      path: '/'
-      fullPath: '/attack-surface/'
-      preLoaderRoute: typeof EnterpriseAttackSurfaceIndexRouteImport
-      parentRoute: typeof EnterpriseAttackSurfaceRouteRoute
-    }
+      id: '/_enterprise/attack-surface/';
+      path: '/';
+      fullPath: '/attack-surface/';
+      preLoaderRoute: typeof EnterpriseAttackSurfaceIndexRouteImport;
+      parentRoute: typeof EnterpriseAttackSurfaceRouteRoute;
+    };
     '/_enterprise/analytics/': {
-      id: '/_enterprise/analytics/'
-      path: '/'
-      fullPath: '/analytics/'
-      preLoaderRoute: typeof EnterpriseAnalyticsIndexRouteImport
-      parentRoute: typeof EnterpriseAnalyticsRouteRoute
-    }
+      id: '/_enterprise/analytics/';
+      path: '/';
+      fullPath: '/analytics/';
+      preLoaderRoute: typeof EnterpriseAnalyticsIndexRouteImport;
+      parentRoute: typeof EnterpriseAnalyticsRouteRoute;
+    };
     '/_enterprise/threats/timeline': {
-      id: '/_enterprise/threats/timeline'
-      path: '/timeline'
-      fullPath: '/threats/timeline'
-      preLoaderRoute: typeof EnterpriseThreatsTimelineRouteImport
-      parentRoute: typeof EnterpriseThreatsRouteRoute
-    }
+      id: '/_enterprise/threats/timeline';
+      path: '/timeline';
+      fullPath: '/threats/timeline';
+      preLoaderRoute: typeof EnterpriseThreatsTimelineRouteImport;
+      parentRoute: typeof EnterpriseThreatsRouteRoute;
+    };
     '/_enterprise/hunting-trail/$purpose': {
-      id: '/_enterprise/hunting-trail/$purpose'
-      path: '/$purpose'
-      fullPath: '/hunting-trail/$purpose'
-      preLoaderRoute: typeof EnterpriseHuntingTrailPurposeRouteImport
-      parentRoute: typeof EnterpriseHuntingTrailRouteRoute
-    }
+      id: '/_enterprise/hunting-trail/$purpose';
+      path: '/$purpose';
+      fullPath: '/hunting-trail/$purpose';
+      preLoaderRoute: typeof EnterpriseHuntingTrailPurposeRouteImport;
+      parentRoute: typeof EnterpriseHuntingTrailRouteRoute;
+    };
     '/_enterprise/attack-surface/inventory': {
-      id: '/_enterprise/attack-surface/inventory'
-      path: '/inventory'
-      fullPath: '/attack-surface/inventory'
-      preLoaderRoute: typeof EnterpriseAttackSurfaceInventoryRouteImport
-      parentRoute: typeof EnterpriseAttackSurfaceRouteRoute
-    }
+      id: '/_enterprise/attack-surface/inventory';
+      path: '/inventory';
+      fullPath: '/attack-surface/inventory';
+      preLoaderRoute: typeof EnterpriseAttackSurfaceInventoryRouteImport;
+      parentRoute: typeof EnterpriseAttackSurfaceRouteRoute;
+    };
     '/_enterprise/threats/compromises': {
-      id: '/_enterprise/threats/compromises'
-      path: '/compromises'
-      fullPath: '/threats/compromises'
-      preLoaderRoute: typeof EnterpriseThreatsCompromisesRouteRouteImport
-      parentRoute: typeof EnterpriseThreatsRouteRoute
-    }
+      id: '/_enterprise/threats/compromises';
+      path: '/compromises';
+      fullPath: '/threats/compromises';
+      preLoaderRoute: typeof EnterpriseThreatsCompromisesRouteRouteImport;
+      parentRoute: typeof EnterpriseThreatsRouteRoute;
+    };
     '/_enterprise/policy-violations/violations': {
-      id: '/_enterprise/policy-violations/violations'
-      path: '/violations'
-      fullPath: '/policy-violations/violations'
-      preLoaderRoute: typeof EnterprisePolicyViolationsViolationsRouteRouteImport
-      parentRoute: typeof EnterprisePolicyViolationsRouteRoute
-    }
+      id: '/_enterprise/policy-violations/violations';
+      path: '/violations';
+      fullPath: '/policy-violations/violations';
+      preLoaderRoute: typeof EnterprisePolicyViolationsViolationsRouteRouteImport;
+      parentRoute: typeof EnterprisePolicyViolationsRouteRoute;
+    };
     '/_enterprise/hosts/$hostId': {
-      id: '/_enterprise/hosts/$hostId'
-      path: '/hosts/$hostId'
-      fullPath: '/hosts/$hostId'
-      preLoaderRoute: typeof EnterpriseHostsHostIdRouteRouteImport
-      parentRoute: typeof EnterpriseRoute
-    }
+      id: '/_enterprise/hosts/$hostId';
+      path: '/hosts/$hostId';
+      fullPath: '/hosts/$hostId';
+      preLoaderRoute: typeof EnterpriseHostsHostIdRouteRouteImport;
+      parentRoute: typeof EnterpriseRoute;
+    };
     '/_enterprise/analytics/sightings': {
-      id: '/_enterprise/analytics/sightings'
-      path: '/sightings'
-      fullPath: '/analytics/sightings'
-      preLoaderRoute: typeof EnterpriseAnalyticsSightingsRouteRouteImport
-      parentRoute: typeof EnterpriseAnalyticsRouteRoute
-    }
+      id: '/_enterprise/analytics/sightings';
+      path: '/sightings';
+      fullPath: '/analytics/sightings';
+      preLoaderRoute: typeof EnterpriseAnalyticsSightingsRouteRouteImport;
+      parentRoute: typeof EnterpriseAnalyticsRouteRoute;
+    };
     '/_enterprise/analytics/beaconing': {
-      id: '/_enterprise/analytics/beaconing'
-      path: '/beaconing'
-      fullPath: '/analytics/beaconing'
-      preLoaderRoute: typeof EnterpriseAnalyticsBeaconingRouteRouteImport
-      parentRoute: typeof EnterpriseAnalyticsRouteRoute
-    }
+      id: '/_enterprise/analytics/beaconing';
+      path: '/beaconing';
+      fullPath: '/analytics/beaconing';
+      preLoaderRoute: typeof EnterpriseAnalyticsBeaconingRouteRouteImport;
+      parentRoute: typeof EnterpriseAnalyticsRouteRoute;
+    };
     '/_enterprise/threats/coverage/': {
-      id: '/_enterprise/threats/coverage/'
-      path: '/coverage'
-      fullPath: '/threats/coverage/'
-      preLoaderRoute: typeof EnterpriseThreatsCoverageIndexRouteImport
-      parentRoute: typeof EnterpriseThreatsRouteRoute
-    }
+      id: '/_enterprise/threats/coverage/';
+      path: '/coverage';
+      fullPath: '/threats/coverage/';
+      preLoaderRoute: typeof EnterpriseThreatsCoverageIndexRouteImport;
+      parentRoute: typeof EnterpriseThreatsRouteRoute;
+    };
     '/_enterprise/threats/compromises/': {
-      id: '/_enterprise/threats/compromises/'
-      path: '/'
-      fullPath: '/threats/compromises/'
-      preLoaderRoute: typeof EnterpriseThreatsCompromisesIndexRouteImport
-      parentRoute: typeof EnterpriseThreatsCompromisesRouteRoute
-    }
+      id: '/_enterprise/threats/compromises/';
+      path: '/';
+      fullPath: '/threats/compromises/';
+      preLoaderRoute: typeof EnterpriseThreatsCompromisesIndexRouteImport;
+      parentRoute: typeof EnterpriseThreatsCompromisesRouteRoute;
+    };
     '/_enterprise/policy-violations/violations/': {
-      id: '/_enterprise/policy-violations/violations/'
-      path: '/'
-      fullPath: '/policy-violations/violations/'
-      preLoaderRoute: typeof EnterprisePolicyViolationsViolationsIndexRouteImport
-      parentRoute: typeof EnterprisePolicyViolationsViolationsRouteRoute
-    }
+      id: '/_enterprise/policy-violations/violations/';
+      path: '/';
+      fullPath: '/policy-violations/violations/';
+      preLoaderRoute: typeof EnterprisePolicyViolationsViolationsIndexRouteImport;
+      parentRoute: typeof EnterprisePolicyViolationsViolationsRouteRoute;
+    };
     '/_enterprise/policy-violations/coverage/': {
-      id: '/_enterprise/policy-violations/coverage/'
-      path: '/coverage'
-      fullPath: '/policy-violations/coverage/'
-      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageIndexRouteImport
-      parentRoute: typeof EnterprisePolicyViolationsRouteRoute
-    }
+      id: '/_enterprise/policy-violations/coverage/';
+      path: '/coverage';
+      fullPath: '/policy-violations/coverage/';
+      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageIndexRouteImport;
+      parentRoute: typeof EnterprisePolicyViolationsRouteRoute;
+    };
     '/_enterprise/hosts/$hostId/': {
-      id: '/_enterprise/hosts/$hostId/'
-      path: '/'
-      fullPath: '/hosts/$hostId/'
-      preLoaderRoute: typeof EnterpriseHostsHostIdIndexRouteImport
-      parentRoute: typeof EnterpriseHostsHostIdRouteRoute
-    }
+      id: '/_enterprise/hosts/$hostId/';
+      path: '/';
+      fullPath: '/hosts/$hostId/';
+      preLoaderRoute: typeof EnterpriseHostsHostIdIndexRouteImport;
+      parentRoute: typeof EnterpriseHostsHostIdRouteRoute;
+    };
     '/_enterprise/analytics/sightings/': {
-      id: '/_enterprise/analytics/sightings/'
-      path: '/'
-      fullPath: '/analytics/sightings/'
-      preLoaderRoute: typeof EnterpriseAnalyticsSightingsIndexRouteImport
-      parentRoute: typeof EnterpriseAnalyticsSightingsRouteRoute
-    }
+      id: '/_enterprise/analytics/sightings/';
+      path: '/';
+      fullPath: '/analytics/sightings/';
+      preLoaderRoute: typeof EnterpriseAnalyticsSightingsIndexRouteImport;
+      parentRoute: typeof EnterpriseAnalyticsSightingsRouteRoute;
+    };
     '/_enterprise/analytics/beaconing/': {
-      id: '/_enterprise/analytics/beaconing/'
-      path: '/'
-      fullPath: '/analytics/beaconing/'
-      preLoaderRoute: typeof EnterpriseAnalyticsBeaconingIndexRouteImport
-      parentRoute: typeof EnterpriseAnalyticsBeaconingRouteRoute
-    }
+      id: '/_enterprise/analytics/beaconing/';
+      path: '/';
+      fullPath: '/analytics/beaconing/';
+      preLoaderRoute: typeof EnterpriseAnalyticsBeaconingIndexRouteImport;
+      parentRoute: typeof EnterpriseAnalyticsBeaconingRouteRoute;
+    };
     '/_enterprise/threats/compromises/incidents': {
-      id: '/_enterprise/threats/compromises/incidents'
-      path: '/incidents'
-      fullPath: '/threats/compromises/incidents'
-      preLoaderRoute: typeof EnterpriseThreatsCompromisesIncidentsRouteImport
-      parentRoute: typeof EnterpriseThreatsCompromisesRouteRoute
-    }
+      id: '/_enterprise/threats/compromises/incidents';
+      path: '/incidents';
+      fullPath: '/threats/compromises/incidents';
+      preLoaderRoute: typeof EnterpriseThreatsCompromisesIncidentsRouteImport;
+      parentRoute: typeof EnterpriseThreatsCompromisesRouteRoute;
+    };
     '/_enterprise/threats/compromises/graph': {
-      id: '/_enterprise/threats/compromises/graph'
-      path: '/graph'
-      fullPath: '/threats/compromises/graph'
-      preLoaderRoute: typeof EnterpriseThreatsCompromisesGraphRouteImport
-      parentRoute: typeof EnterpriseThreatsCompromisesRouteRoute
-    }
+      id: '/_enterprise/threats/compromises/graph';
+      path: '/graph';
+      fullPath: '/threats/compromises/graph';
+      preLoaderRoute: typeof EnterpriseThreatsCompromisesGraphRouteImport;
+      parentRoute: typeof EnterpriseThreatsCompromisesRouteRoute;
+    };
     '/_enterprise/threats/compromises/entities': {
-      id: '/_enterprise/threats/compromises/entities'
-      path: '/entities'
-      fullPath: '/threats/compromises/entities'
-      preLoaderRoute: typeof EnterpriseThreatsCompromisesEntitiesRouteImport
-      parentRoute: typeof EnterpriseThreatsCompromisesRouteRoute
-    }
+      id: '/_enterprise/threats/compromises/entities';
+      path: '/entities';
+      fullPath: '/threats/compromises/entities';
+      preLoaderRoute: typeof EnterpriseThreatsCompromisesEntitiesRouteImport;
+      parentRoute: typeof EnterpriseThreatsCompromisesRouteRoute;
+    };
     '/_enterprise/threats/compromises/attack-flow': {
-      id: '/_enterprise/threats/compromises/attack-flow'
-      path: '/attack-flow'
-      fullPath: '/threats/compromises/attack-flow'
-      preLoaderRoute: typeof EnterpriseThreatsCompromisesAttackFlowRouteImport
-      parentRoute: typeof EnterpriseThreatsCompromisesRouteRoute
-    }
+      id: '/_enterprise/threats/compromises/attack-flow';
+      path: '/attack-flow';
+      fullPath: '/threats/compromises/attack-flow';
+      preLoaderRoute: typeof EnterpriseThreatsCompromisesAttackFlowRouteImport;
+      parentRoute: typeof EnterpriseThreatsCompromisesRouteRoute;
+    };
     '/_enterprise/policy-violations/violations/graph': {
-      id: '/_enterprise/policy-violations/violations/graph'
-      path: '/graph'
-      fullPath: '/policy-violations/violations/graph'
-      preLoaderRoute: typeof EnterprisePolicyViolationsViolationsGraphRouteImport
-      parentRoute: typeof EnterprisePolicyViolationsViolationsRouteRoute
-    }
+      id: '/_enterprise/policy-violations/violations/graph';
+      path: '/graph';
+      fullPath: '/policy-violations/violations/graph';
+      preLoaderRoute: typeof EnterprisePolicyViolationsViolationsGraphRouteImport;
+      parentRoute: typeof EnterprisePolicyViolationsViolationsRouteRoute;
+    };
     '/_enterprise/hosts/$hostId/timeline': {
-      id: '/_enterprise/hosts/$hostId/timeline'
-      path: '/timeline'
-      fullPath: '/hosts/$hostId/timeline'
-      preLoaderRoute: typeof EnterpriseHostsHostIdTimelineRouteImport
-      parentRoute: typeof EnterpriseHostsHostIdRouteRoute
-    }
+      id: '/_enterprise/hosts/$hostId/timeline';
+      path: '/timeline';
+      fullPath: '/hosts/$hostId/timeline';
+      preLoaderRoute: typeof EnterpriseHostsHostIdTimelineRouteImport;
+      parentRoute: typeof EnterpriseHostsHostIdRouteRoute;
+    };
     '/_enterprise/hosts/$hostId/sightings': {
-      id: '/_enterprise/hosts/$hostId/sightings'
-      path: '/sightings'
-      fullPath: '/hosts/$hostId/sightings'
-      preLoaderRoute: typeof EnterpriseHostsHostIdSightingsRouteImport
-      parentRoute: typeof EnterpriseHostsHostIdRouteRoute
-    }
+      id: '/_enterprise/hosts/$hostId/sightings';
+      path: '/sightings';
+      fullPath: '/hosts/$hostId/sightings';
+      preLoaderRoute: typeof EnterpriseHostsHostIdSightingsRouteImport;
+      parentRoute: typeof EnterpriseHostsHostIdRouteRoute;
+    };
     '/_enterprise/hosts/$hostId/outlier-events': {
-      id: '/_enterprise/hosts/$hostId/outlier-events'
-      path: '/outlier-events'
-      fullPath: '/hosts/$hostId/outlier-events'
-      preLoaderRoute: typeof EnterpriseHostsHostIdOutlierEventsRouteImport
-      parentRoute: typeof EnterpriseHostsHostIdRouteRoute
-    }
+      id: '/_enterprise/hosts/$hostId/outlier-events';
+      path: '/outlier-events';
+      fullPath: '/hosts/$hostId/outlier-events';
+      preLoaderRoute: typeof EnterpriseHostsHostIdOutlierEventsRouteImport;
+      parentRoute: typeof EnterpriseHostsHostIdRouteRoute;
+    };
     '/_enterprise/hosts/$hostId/incidents': {
-      id: '/_enterprise/hosts/$hostId/incidents'
-      path: '/incidents'
-      fullPath: '/hosts/$hostId/incidents'
-      preLoaderRoute: typeof EnterpriseHostsHostIdIncidentsRouteImport
-      parentRoute: typeof EnterpriseHostsHostIdRouteRoute
-    }
+      id: '/_enterprise/hosts/$hostId/incidents';
+      path: '/incidents';
+      fullPath: '/hosts/$hostId/incidents';
+      preLoaderRoute: typeof EnterpriseHostsHostIdIncidentsRouteImport;
+      parentRoute: typeof EnterpriseHostsHostIdRouteRoute;
+    };
     '/_enterprise/hosts/$hostId/hunting-trail': {
-      id: '/_enterprise/hosts/$hostId/hunting-trail'
-      path: '/hunting-trail'
-      fullPath: '/hosts/$hostId/hunting-trail'
-      preLoaderRoute: typeof EnterpriseHostsHostIdHuntingTrailRouteImport
-      parentRoute: typeof EnterpriseHostsHostIdRouteRoute
-    }
+      id: '/_enterprise/hosts/$hostId/hunting-trail';
+      path: '/hunting-trail';
+      fullPath: '/hosts/$hostId/hunting-trail';
+      preLoaderRoute: typeof EnterpriseHostsHostIdHuntingTrailRouteImport;
+      parentRoute: typeof EnterpriseHostsHostIdRouteRoute;
+    };
     '/_enterprise/hosts/$hostId/detection-methods': {
-      id: '/_enterprise/hosts/$hostId/detection-methods'
-      path: '/detection-methods'
-      fullPath: '/hosts/$hostId/detection-methods'
-      preLoaderRoute: typeof EnterpriseHostsHostIdDetectionMethodsRouteImport
-      parentRoute: typeof EnterpriseHostsHostIdRouteRoute
-    }
+      id: '/_enterprise/hosts/$hostId/detection-methods';
+      path: '/detection-methods';
+      fullPath: '/hosts/$hostId/detection-methods';
+      preLoaderRoute: typeof EnterpriseHostsHostIdDetectionMethodsRouteImport;
+      parentRoute: typeof EnterpriseHostsHostIdRouteRoute;
+    };
     '/_enterprise/hosts/$hostId/detection-events': {
-      id: '/_enterprise/hosts/$hostId/detection-events'
-      path: '/detection-events'
-      fullPath: '/hosts/$hostId/detection-events'
-      preLoaderRoute: typeof EnterpriseHostsHostIdDetectionEventsRouteImport
-      parentRoute: typeof EnterpriseHostsHostIdRouteRoute
-    }
+      id: '/_enterprise/hosts/$hostId/detection-events';
+      path: '/detection-events';
+      fullPath: '/hosts/$hostId/detection-events';
+      preLoaderRoute: typeof EnterpriseHostsHostIdDetectionEventsRouteImport;
+      parentRoute: typeof EnterpriseHostsHostIdRouteRoute;
+    };
     '/_enterprise/hosts/$hostId/beacons': {
-      id: '/_enterprise/hosts/$hostId/beacons'
-      path: '/beacons'
-      fullPath: '/hosts/$hostId/beacons'
-      preLoaderRoute: typeof EnterpriseHostsHostIdBeaconsRouteImport
-      parentRoute: typeof EnterpriseHostsHostIdRouteRoute
-    }
+      id: '/_enterprise/hosts/$hostId/beacons';
+      path: '/beacons';
+      fullPath: '/hosts/$hostId/beacons';
+      preLoaderRoute: typeof EnterpriseHostsHostIdBeaconsRouteImport;
+      parentRoute: typeof EnterpriseHostsHostIdRouteRoute;
+    };
     '/_enterprise/analytics/sightings/$sightingId': {
-      id: '/_enterprise/analytics/sightings/$sightingId'
-      path: '/$sightingId'
-      fullPath: '/analytics/sightings/$sightingId'
-      preLoaderRoute: typeof EnterpriseAnalyticsSightingsSightingIdRouteImport
-      parentRoute: typeof EnterpriseAnalyticsSightingsRouteRoute
-    }
+      id: '/_enterprise/analytics/sightings/$sightingId';
+      path: '/$sightingId';
+      fullPath: '/analytics/sightings/$sightingId';
+      preLoaderRoute: typeof EnterpriseAnalyticsSightingsSightingIdRouteImport;
+      parentRoute: typeof EnterpriseAnalyticsSightingsRouteRoute;
+    };
     '/_enterprise/analytics/beaconing/ja3s': {
-      id: '/_enterprise/analytics/beaconing/ja3s'
-      path: '/ja3s'
-      fullPath: '/analytics/beaconing/ja3s'
-      preLoaderRoute: typeof EnterpriseAnalyticsBeaconingJa3sRouteRouteImport
-      parentRoute: typeof EnterpriseAnalyticsBeaconingRouteRoute
-    }
+      id: '/_enterprise/analytics/beaconing/ja3s';
+      path: '/ja3s';
+      fullPath: '/analytics/beaconing/ja3s';
+      preLoaderRoute: typeof EnterpriseAnalyticsBeaconingJa3sRouteRouteImport;
+      parentRoute: typeof EnterpriseAnalyticsBeaconingRouteRoute;
+    };
     '/_enterprise/analytics/beaconing/ips': {
-      id: '/_enterprise/analytics/beaconing/ips'
-      path: '/ips'
-      fullPath: '/analytics/beaconing/ips'
-      preLoaderRoute: typeof EnterpriseAnalyticsBeaconingIpsRouteRouteImport
-      parentRoute: typeof EnterpriseAnalyticsBeaconingRouteRoute
-    }
+      id: '/_enterprise/analytics/beaconing/ips';
+      path: '/ips';
+      fullPath: '/analytics/beaconing/ips';
+      preLoaderRoute: typeof EnterpriseAnalyticsBeaconingIpsRouteRouteImport;
+      parentRoute: typeof EnterpriseAnalyticsBeaconingRouteRoute;
+    };
     '/_enterprise/analytics/beaconing/ja3s/': {
-      id: '/_enterprise/analytics/beaconing/ja3s/'
-      path: '/'
-      fullPath: '/analytics/beaconing/ja3s/'
-      preLoaderRoute: typeof EnterpriseAnalyticsBeaconingJa3sIndexRouteImport
-      parentRoute: typeof EnterpriseAnalyticsBeaconingJa3sRouteRoute
-    }
+      id: '/_enterprise/analytics/beaconing/ja3s/';
+      path: '/';
+      fullPath: '/analytics/beaconing/ja3s/';
+      preLoaderRoute: typeof EnterpriseAnalyticsBeaconingJa3sIndexRouteImport;
+      parentRoute: typeof EnterpriseAnalyticsBeaconingJa3sRouteRoute;
+    };
     '/_enterprise/analytics/beaconing/ips/': {
-      id: '/_enterprise/analytics/beaconing/ips/'
-      path: '/'
-      fullPath: '/analytics/beaconing/ips/'
-      preLoaderRoute: typeof EnterpriseAnalyticsBeaconingIpsIndexRouteImport
-      parentRoute: typeof EnterpriseAnalyticsBeaconingIpsRouteRoute
-    }
+      id: '/_enterprise/analytics/beaconing/ips/';
+      path: '/';
+      fullPath: '/analytics/beaconing/ips/';
+      preLoaderRoute: typeof EnterpriseAnalyticsBeaconingIpsIndexRouteImport;
+      parentRoute: typeof EnterpriseAnalyticsBeaconingIpsRouteRoute;
+    };
     '/_enterprise/analytics/beaconing/ja3s/$ja3s': {
-      id: '/_enterprise/analytics/beaconing/ja3s/$ja3s'
-      path: '/$ja3s'
-      fullPath: '/analytics/beaconing/ja3s/$ja3s'
-      preLoaderRoute: typeof EnterpriseAnalyticsBeaconingJa3sJa3sRouteImport
-      parentRoute: typeof EnterpriseAnalyticsBeaconingJa3sRouteRoute
-    }
+      id: '/_enterprise/analytics/beaconing/ja3s/$ja3s';
+      path: '/$ja3s';
+      fullPath: '/analytics/beaconing/ja3s/$ja3s';
+      preLoaderRoute: typeof EnterpriseAnalyticsBeaconingJa3sJa3sRouteImport;
+      parentRoute: typeof EnterpriseAnalyticsBeaconingJa3sRouteRoute;
+    };
     '/_enterprise/analytics/beaconing/ips/$ip': {
-      id: '/_enterprise/analytics/beaconing/ips/$ip'
-      path: '/$ip'
-      fullPath: '/analytics/beaconing/ips/$ip'
-      preLoaderRoute: typeof EnterpriseAnalyticsBeaconingIpsIpRouteImport
-      parentRoute: typeof EnterpriseAnalyticsBeaconingIpsRouteRoute
-    }
+      id: '/_enterprise/analytics/beaconing/ips/$ip';
+      path: '/$ip';
+      fullPath: '/analytics/beaconing/ips/$ip';
+      preLoaderRoute: typeof EnterpriseAnalyticsBeaconingIpsIpRouteImport;
+      parentRoute: typeof EnterpriseAnalyticsBeaconingIpsRouteRoute;
+    };
     '/_enterprise/threats/coverage/threat/$threatId': {
-      id: '/_enterprise/threats/coverage/threat/$threatId'
-      path: '/coverage/threat/$threatId'
-      fullPath: '/threats/coverage/threat/$threatId'
-      preLoaderRoute: typeof EnterpriseThreatsCoverageThreatThreatIdRouteRouteImport
-      parentRoute: typeof EnterpriseThreatsRouteRoute
-    }
+      id: '/_enterprise/threats/coverage/threat/$threatId';
+      path: '/coverage/threat/$threatId';
+      fullPath: '/threats/coverage/threat/$threatId';
+      preLoaderRoute: typeof EnterpriseThreatsCoverageThreatThreatIdRouteRouteImport;
+      parentRoute: typeof EnterpriseThreatsRouteRoute;
+    };
     '/_enterprise/threats/coverage/family/$familyId': {
-      id: '/_enterprise/threats/coverage/family/$familyId'
-      path: '/coverage/family/$familyId'
-      fullPath: '/threats/coverage/family/$familyId'
-      preLoaderRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdRouteRouteImport
-      parentRoute: typeof EnterpriseThreatsRouteRoute
-    }
+      id: '/_enterprise/threats/coverage/family/$familyId';
+      path: '/coverage/family/$familyId';
+      fullPath: '/threats/coverage/family/$familyId';
+      preLoaderRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdRouteRouteImport;
+      parentRoute: typeof EnterpriseThreatsRouteRoute;
+    };
     '/_enterprise/policy-violations/coverage/threat/$threatId': {
-      id: '/_enterprise/policy-violations/coverage/threat/$threatId'
-      path: '/coverage/threat/$threatId'
-      fullPath: '/policy-violations/coverage/threat/$threatId'
-      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdRouteRouteImport
-      parentRoute: typeof EnterprisePolicyViolationsRouteRoute
-    }
+      id: '/_enterprise/policy-violations/coverage/threat/$threatId';
+      path: '/coverage/threat/$threatId';
+      fullPath: '/policy-violations/coverage/threat/$threatId';
+      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdRouteRouteImport;
+      parentRoute: typeof EnterprisePolicyViolationsRouteRoute;
+    };
     '/_enterprise/policy-violations/coverage/family/$familyId': {
-      id: '/_enterprise/policy-violations/coverage/family/$familyId'
-      path: '/coverage/family/$familyId'
-      fullPath: '/policy-violations/coverage/family/$familyId'
-      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRouteImport
-      parentRoute: typeof EnterprisePolicyViolationsRouteRoute
-    }
+      id: '/_enterprise/policy-violations/coverage/family/$familyId';
+      path: '/coverage/family/$familyId';
+      fullPath: '/policy-violations/coverage/family/$familyId';
+      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRouteImport;
+      parentRoute: typeof EnterprisePolicyViolationsRouteRoute;
+    };
     '/_enterprise/threats/coverage/threat/$threatId/': {
-      id: '/_enterprise/threats/coverage/threat/$threatId/'
-      path: '/'
-      fullPath: '/threats/coverage/threat/$threatId/'
-      preLoaderRoute: typeof EnterpriseThreatsCoverageThreatThreatIdIndexRouteImport
-      parentRoute: typeof EnterpriseThreatsCoverageThreatThreatIdRouteRoute
-    }
+      id: '/_enterprise/threats/coverage/threat/$threatId/';
+      path: '/';
+      fullPath: '/threats/coverage/threat/$threatId/';
+      preLoaderRoute: typeof EnterpriseThreatsCoverageThreatThreatIdIndexRouteImport;
+      parentRoute: typeof EnterpriseThreatsCoverageThreatThreatIdRouteRoute;
+    };
     '/_enterprise/threats/coverage/family/$familyId/': {
-      id: '/_enterprise/threats/coverage/family/$familyId/'
-      path: '/'
-      fullPath: '/threats/coverage/family/$familyId/'
-      preLoaderRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdIndexRouteImport
-      parentRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdRouteRoute
-    }
+      id: '/_enterprise/threats/coverage/family/$familyId/';
+      path: '/';
+      fullPath: '/threats/coverage/family/$familyId/';
+      preLoaderRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdIndexRouteImport;
+      parentRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdRouteRoute;
+    };
     '/_enterprise/policy-violations/coverage/threat/$threatId/': {
-      id: '/_enterprise/policy-violations/coverage/threat/$threatId/'
-      path: '/'
-      fullPath: '/policy-violations/coverage/threat/$threatId/'
-      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdIndexRouteImport
-      parentRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdRouteRoute
-    }
+      id: '/_enterprise/policy-violations/coverage/threat/$threatId/';
+      path: '/';
+      fullPath: '/policy-violations/coverage/threat/$threatId/';
+      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdIndexRouteImport;
+      parentRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdRouteRoute;
+    };
     '/_enterprise/policy-violations/coverage/family/$familyId/': {
-      id: '/_enterprise/policy-violations/coverage/family/$familyId/'
-      path: '/'
-      fullPath: '/policy-violations/coverage/family/$familyId/'
-      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdIndexRouteImport
-      parentRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRoute
-    }
+      id: '/_enterprise/policy-violations/coverage/family/$familyId/';
+      path: '/';
+      fullPath: '/policy-violations/coverage/family/$familyId/';
+      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdIndexRouteImport;
+      parentRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRoute;
+    };
     '/_enterprise/threats/coverage/threat/$threatId/events': {
-      id: '/_enterprise/threats/coverage/threat/$threatId/events'
-      path: '/events'
-      fullPath: '/threats/coverage/threat/$threatId/events'
-      preLoaderRoute: typeof EnterpriseThreatsCoverageThreatThreatIdEventsRouteImport
-      parentRoute: typeof EnterpriseThreatsCoverageThreatThreatIdRouteRoute
-    }
+      id: '/_enterprise/threats/coverage/threat/$threatId/events';
+      path: '/events';
+      fullPath: '/threats/coverage/threat/$threatId/events';
+      preLoaderRoute: typeof EnterpriseThreatsCoverageThreatThreatIdEventsRouteImport;
+      parentRoute: typeof EnterpriseThreatsCoverageThreatThreatIdRouteRoute;
+    };
     '/_enterprise/threats/coverage/threat/$threatId/detection-methods': {
-      id: '/_enterprise/threats/coverage/threat/$threatId/detection-methods'
-      path: '/detection-methods'
-      fullPath: '/threats/coverage/threat/$threatId/detection-methods'
-      preLoaderRoute: typeof EnterpriseThreatsCoverageThreatThreatIdDetectionMethodsRouteImport
-      parentRoute: typeof EnterpriseThreatsCoverageThreatThreatIdRouteRoute
-    }
+      id: '/_enterprise/threats/coverage/threat/$threatId/detection-methods';
+      path: '/detection-methods';
+      fullPath: '/threats/coverage/threat/$threatId/detection-methods';
+      preLoaderRoute: typeof EnterpriseThreatsCoverageThreatThreatIdDetectionMethodsRouteImport;
+      parentRoute: typeof EnterpriseThreatsCoverageThreatThreatIdRouteRoute;
+    };
     '/_enterprise/threats/coverage/family/$familyId/threats': {
-      id: '/_enterprise/threats/coverage/family/$familyId/threats'
-      path: '/threats'
-      fullPath: '/threats/coverage/family/$familyId/threats'
-      preLoaderRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdThreatsRouteImport
-      parentRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdRouteRoute
-    }
+      id: '/_enterprise/threats/coverage/family/$familyId/threats';
+      path: '/threats';
+      fullPath: '/threats/coverage/family/$familyId/threats';
+      preLoaderRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdThreatsRouteImport;
+      parentRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdRouteRoute;
+    };
     '/_enterprise/threats/coverage/family/$familyId/events': {
-      id: '/_enterprise/threats/coverage/family/$familyId/events'
-      path: '/events'
-      fullPath: '/threats/coverage/family/$familyId/events'
-      preLoaderRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdEventsRouteImport
-      parentRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdRouteRoute
-    }
+      id: '/_enterprise/threats/coverage/family/$familyId/events';
+      path: '/events';
+      fullPath: '/threats/coverage/family/$familyId/events';
+      preLoaderRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdEventsRouteImport;
+      parentRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdRouteRoute;
+    };
     '/_enterprise/threats/coverage/family/$familyId/detection-methods': {
-      id: '/_enterprise/threats/coverage/family/$familyId/detection-methods'
-      path: '/detection-methods'
-      fullPath: '/threats/coverage/family/$familyId/detection-methods'
-      preLoaderRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdDetectionMethodsRouteImport
-      parentRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdRouteRoute
-    }
+      id: '/_enterprise/threats/coverage/family/$familyId/detection-methods';
+      path: '/detection-methods';
+      fullPath: '/threats/coverage/family/$familyId/detection-methods';
+      preLoaderRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdDetectionMethodsRouteImport;
+      parentRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdRouteRoute;
+    };
     '/_enterprise/policy-violations/coverage/threat/$threatId/events': {
-      id: '/_enterprise/policy-violations/coverage/threat/$threatId/events'
-      path: '/events'
-      fullPath: '/policy-violations/coverage/threat/$threatId/events'
-      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdEventsRouteImport
-      parentRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdRouteRoute
-    }
+      id: '/_enterprise/policy-violations/coverage/threat/$threatId/events';
+      path: '/events';
+      fullPath: '/policy-violations/coverage/threat/$threatId/events';
+      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdEventsRouteImport;
+      parentRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdRouteRoute;
+    };
     '/_enterprise/policy-violations/coverage/threat/$threatId/detection-methods': {
-      id: '/_enterprise/policy-violations/coverage/threat/$threatId/detection-methods'
-      path: '/detection-methods'
-      fullPath: '/policy-violations/coverage/threat/$threatId/detection-methods'
-      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdDetectionMethodsRouteImport
-      parentRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdRouteRoute
-    }
+      id: '/_enterprise/policy-violations/coverage/threat/$threatId/detection-methods';
+      path: '/detection-methods';
+      fullPath: '/policy-violations/coverage/threat/$threatId/detection-methods';
+      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdDetectionMethodsRouteImport;
+      parentRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdRouteRoute;
+    };
     '/_enterprise/policy-violations/coverage/family/$familyId/threats': {
-      id: '/_enterprise/policy-violations/coverage/family/$familyId/threats'
-      path: '/threats'
-      fullPath: '/policy-violations/coverage/family/$familyId/threats'
-      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdThreatsRouteImport
-      parentRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRoute
-    }
+      id: '/_enterprise/policy-violations/coverage/family/$familyId/threats';
+      path: '/threats';
+      fullPath: '/policy-violations/coverage/family/$familyId/threats';
+      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdThreatsRouteImport;
+      parentRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRoute;
+    };
     '/_enterprise/policy-violations/coverage/family/$familyId/events': {
-      id: '/_enterprise/policy-violations/coverage/family/$familyId/events'
-      path: '/events'
-      fullPath: '/policy-violations/coverage/family/$familyId/events'
-      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdEventsRouteImport
-      parentRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRoute
-    }
+      id: '/_enterprise/policy-violations/coverage/family/$familyId/events';
+      path: '/events';
+      fullPath: '/policy-violations/coverage/family/$familyId/events';
+      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdEventsRouteImport;
+      parentRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRoute;
+    };
     '/_enterprise/policy-violations/coverage/family/$familyId/detection-methods': {
-      id: '/_enterprise/policy-violations/coverage/family/$familyId/detection-methods'
-      path: '/detection-methods'
-      fullPath: '/policy-violations/coverage/family/$familyId/detection-methods'
-      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdDetectionMethodsRouteImport
-      parentRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRoute
-    }
+      id: '/_enterprise/policy-violations/coverage/family/$familyId/detection-methods';
+      path: '/detection-methods';
+      fullPath: '/policy-violations/coverage/family/$familyId/detection-methods';
+      preLoaderRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdDetectionMethodsRouteImport;
+      parentRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRoute;
+    };
   }
 }
 
 interface DetectionEventsRouteRouteChildren {
-  DetectionEventsEventRoute: typeof DetectionEventsEventRoute
-  DetectionEventsIndexRoute: typeof DetectionEventsIndexRoute
+  DetectionEventsEventRoute: typeof DetectionEventsEventRoute;
+  DetectionEventsIndexRoute: typeof DetectionEventsIndexRoute;
 }
 
 const DetectionEventsRouteRouteChildren: DetectionEventsRouteRouteChildren = {
   DetectionEventsEventRoute: DetectionEventsEventRoute,
   DetectionEventsIndexRoute: DetectionEventsIndexRoute,
-}
+};
 
 const DetectionEventsRouteRouteWithChildren =
-  DetectionEventsRouteRoute._addFileChildren(DetectionEventsRouteRouteChildren)
+  DetectionEventsRouteRoute._addFileChildren(DetectionEventsRouteRouteChildren);
 
 interface EnterpriseAnalyticsBeaconingIpsRouteRouteChildren {
-  EnterpriseAnalyticsBeaconingIpsIpRoute: typeof EnterpriseAnalyticsBeaconingIpsIpRoute
-  EnterpriseAnalyticsBeaconingIpsIndexRoute: typeof EnterpriseAnalyticsBeaconingIpsIndexRoute
+  EnterpriseAnalyticsBeaconingIpsIpRoute: typeof EnterpriseAnalyticsBeaconingIpsIpRoute;
+  EnterpriseAnalyticsBeaconingIpsIndexRoute: typeof EnterpriseAnalyticsBeaconingIpsIndexRoute;
 }
 
 const EnterpriseAnalyticsBeaconingIpsRouteRouteChildren: EnterpriseAnalyticsBeaconingIpsRouteRouteChildren =
@@ -1686,16 +1686,16 @@ const EnterpriseAnalyticsBeaconingIpsRouteRouteChildren: EnterpriseAnalyticsBeac
       EnterpriseAnalyticsBeaconingIpsIpRoute,
     EnterpriseAnalyticsBeaconingIpsIndexRoute:
       EnterpriseAnalyticsBeaconingIpsIndexRoute,
-  }
+  };
 
 const EnterpriseAnalyticsBeaconingIpsRouteRouteWithChildren =
   EnterpriseAnalyticsBeaconingIpsRouteRoute._addFileChildren(
     EnterpriseAnalyticsBeaconingIpsRouteRouteChildren,
-  )
+  );
 
 interface EnterpriseAnalyticsBeaconingJa3sRouteRouteChildren {
-  EnterpriseAnalyticsBeaconingJa3sJa3sRoute: typeof EnterpriseAnalyticsBeaconingJa3sJa3sRoute
-  EnterpriseAnalyticsBeaconingJa3sIndexRoute: typeof EnterpriseAnalyticsBeaconingJa3sIndexRoute
+  EnterpriseAnalyticsBeaconingJa3sJa3sRoute: typeof EnterpriseAnalyticsBeaconingJa3sJa3sRoute;
+  EnterpriseAnalyticsBeaconingJa3sIndexRoute: typeof EnterpriseAnalyticsBeaconingJa3sIndexRoute;
 }
 
 const EnterpriseAnalyticsBeaconingJa3sRouteRouteChildren: EnterpriseAnalyticsBeaconingJa3sRouteRouteChildren =
@@ -1704,17 +1704,17 @@ const EnterpriseAnalyticsBeaconingJa3sRouteRouteChildren: EnterpriseAnalyticsBea
       EnterpriseAnalyticsBeaconingJa3sJa3sRoute,
     EnterpriseAnalyticsBeaconingJa3sIndexRoute:
       EnterpriseAnalyticsBeaconingJa3sIndexRoute,
-  }
+  };
 
 const EnterpriseAnalyticsBeaconingJa3sRouteRouteWithChildren =
   EnterpriseAnalyticsBeaconingJa3sRouteRoute._addFileChildren(
     EnterpriseAnalyticsBeaconingJa3sRouteRouteChildren,
-  )
+  );
 
 interface EnterpriseAnalyticsBeaconingRouteRouteChildren {
-  EnterpriseAnalyticsBeaconingIpsRouteRoute: typeof EnterpriseAnalyticsBeaconingIpsRouteRouteWithChildren
-  EnterpriseAnalyticsBeaconingJa3sRouteRoute: typeof EnterpriseAnalyticsBeaconingJa3sRouteRouteWithChildren
-  EnterpriseAnalyticsBeaconingIndexRoute: typeof EnterpriseAnalyticsBeaconingIndexRoute
+  EnterpriseAnalyticsBeaconingIpsRouteRoute: typeof EnterpriseAnalyticsBeaconingIpsRouteRouteWithChildren;
+  EnterpriseAnalyticsBeaconingJa3sRouteRoute: typeof EnterpriseAnalyticsBeaconingJa3sRouteRouteWithChildren;
+  EnterpriseAnalyticsBeaconingIndexRoute: typeof EnterpriseAnalyticsBeaconingIndexRoute;
 }
 
 const EnterpriseAnalyticsBeaconingRouteRouteChildren: EnterpriseAnalyticsBeaconingRouteRouteChildren =
@@ -1725,16 +1725,16 @@ const EnterpriseAnalyticsBeaconingRouteRouteChildren: EnterpriseAnalyticsBeaconi
       EnterpriseAnalyticsBeaconingJa3sRouteRouteWithChildren,
     EnterpriseAnalyticsBeaconingIndexRoute:
       EnterpriseAnalyticsBeaconingIndexRoute,
-  }
+  };
 
 const EnterpriseAnalyticsBeaconingRouteRouteWithChildren =
   EnterpriseAnalyticsBeaconingRouteRoute._addFileChildren(
     EnterpriseAnalyticsBeaconingRouteRouteChildren,
-  )
+  );
 
 interface EnterpriseAnalyticsSightingsRouteRouteChildren {
-  EnterpriseAnalyticsSightingsSightingIdRoute: typeof EnterpriseAnalyticsSightingsSightingIdRoute
-  EnterpriseAnalyticsSightingsIndexRoute: typeof EnterpriseAnalyticsSightingsIndexRoute
+  EnterpriseAnalyticsSightingsSightingIdRoute: typeof EnterpriseAnalyticsSightingsSightingIdRoute;
+  EnterpriseAnalyticsSightingsIndexRoute: typeof EnterpriseAnalyticsSightingsIndexRoute;
 }
 
 const EnterpriseAnalyticsSightingsRouteRouteChildren: EnterpriseAnalyticsSightingsRouteRouteChildren =
@@ -1743,17 +1743,17 @@ const EnterpriseAnalyticsSightingsRouteRouteChildren: EnterpriseAnalyticsSightin
       EnterpriseAnalyticsSightingsSightingIdRoute,
     EnterpriseAnalyticsSightingsIndexRoute:
       EnterpriseAnalyticsSightingsIndexRoute,
-  }
+  };
 
 const EnterpriseAnalyticsSightingsRouteRouteWithChildren =
   EnterpriseAnalyticsSightingsRouteRoute._addFileChildren(
     EnterpriseAnalyticsSightingsRouteRouteChildren,
-  )
+  );
 
 interface EnterpriseAnalyticsRouteRouteChildren {
-  EnterpriseAnalyticsBeaconingRouteRoute: typeof EnterpriseAnalyticsBeaconingRouteRouteWithChildren
-  EnterpriseAnalyticsSightingsRouteRoute: typeof EnterpriseAnalyticsSightingsRouteRouteWithChildren
-  EnterpriseAnalyticsIndexRoute: typeof EnterpriseAnalyticsIndexRoute
+  EnterpriseAnalyticsBeaconingRouteRoute: typeof EnterpriseAnalyticsBeaconingRouteRouteWithChildren;
+  EnterpriseAnalyticsSightingsRouteRoute: typeof EnterpriseAnalyticsSightingsRouteRouteWithChildren;
+  EnterpriseAnalyticsIndexRoute: typeof EnterpriseAnalyticsIndexRoute;
 }
 
 const EnterpriseAnalyticsRouteRouteChildren: EnterpriseAnalyticsRouteRouteChildren =
@@ -1763,16 +1763,16 @@ const EnterpriseAnalyticsRouteRouteChildren: EnterpriseAnalyticsRouteRouteChildr
     EnterpriseAnalyticsSightingsRouteRoute:
       EnterpriseAnalyticsSightingsRouteRouteWithChildren,
     EnterpriseAnalyticsIndexRoute: EnterpriseAnalyticsIndexRoute,
-  }
+  };
 
 const EnterpriseAnalyticsRouteRouteWithChildren =
   EnterpriseAnalyticsRouteRoute._addFileChildren(
     EnterpriseAnalyticsRouteRouteChildren,
-  )
+  );
 
 interface EnterpriseAttackSurfaceRouteRouteChildren {
-  EnterpriseAttackSurfaceInventoryRoute: typeof EnterpriseAttackSurfaceInventoryRoute
-  EnterpriseAttackSurfaceIndexRoute: typeof EnterpriseAttackSurfaceIndexRoute
+  EnterpriseAttackSurfaceInventoryRoute: typeof EnterpriseAttackSurfaceInventoryRoute;
+  EnterpriseAttackSurfaceIndexRoute: typeof EnterpriseAttackSurfaceIndexRoute;
 }
 
 const EnterpriseAttackSurfaceRouteRouteChildren: EnterpriseAttackSurfaceRouteRouteChildren =
@@ -1780,32 +1780,32 @@ const EnterpriseAttackSurfaceRouteRouteChildren: EnterpriseAttackSurfaceRouteRou
     EnterpriseAttackSurfaceInventoryRoute:
       EnterpriseAttackSurfaceInventoryRoute,
     EnterpriseAttackSurfaceIndexRoute: EnterpriseAttackSurfaceIndexRoute,
-  }
+  };
 
 const EnterpriseAttackSurfaceRouteRouteWithChildren =
   EnterpriseAttackSurfaceRouteRoute._addFileChildren(
     EnterpriseAttackSurfaceRouteRouteChildren,
-  )
+  );
 
 interface EnterpriseHuntingTrailRouteRouteChildren {
-  EnterpriseHuntingTrailPurposeRoute: typeof EnterpriseHuntingTrailPurposeRoute
-  EnterpriseHuntingTrailIndexRoute: typeof EnterpriseHuntingTrailIndexRoute
+  EnterpriseHuntingTrailPurposeRoute: typeof EnterpriseHuntingTrailPurposeRoute;
+  EnterpriseHuntingTrailIndexRoute: typeof EnterpriseHuntingTrailIndexRoute;
 }
 
 const EnterpriseHuntingTrailRouteRouteChildren: EnterpriseHuntingTrailRouteRouteChildren =
   {
     EnterpriseHuntingTrailPurposeRoute: EnterpriseHuntingTrailPurposeRoute,
     EnterpriseHuntingTrailIndexRoute: EnterpriseHuntingTrailIndexRoute,
-  }
+  };
 
 const EnterpriseHuntingTrailRouteRouteWithChildren =
   EnterpriseHuntingTrailRouteRoute._addFileChildren(
     EnterpriseHuntingTrailRouteRouteChildren,
-  )
+  );
 
 interface EnterprisePolicyViolationsViolationsRouteRouteChildren {
-  EnterprisePolicyViolationsViolationsGraphRoute: typeof EnterprisePolicyViolationsViolationsGraphRoute
-  EnterprisePolicyViolationsViolationsIndexRoute: typeof EnterprisePolicyViolationsViolationsIndexRoute
+  EnterprisePolicyViolationsViolationsGraphRoute: typeof EnterprisePolicyViolationsViolationsGraphRoute;
+  EnterprisePolicyViolationsViolationsIndexRoute: typeof EnterprisePolicyViolationsViolationsIndexRoute;
 }
 
 const EnterprisePolicyViolationsViolationsRouteRouteChildren: EnterprisePolicyViolationsViolationsRouteRouteChildren =
@@ -1814,18 +1814,18 @@ const EnterprisePolicyViolationsViolationsRouteRouteChildren: EnterprisePolicyVi
       EnterprisePolicyViolationsViolationsGraphRoute,
     EnterprisePolicyViolationsViolationsIndexRoute:
       EnterprisePolicyViolationsViolationsIndexRoute,
-  }
+  };
 
 const EnterprisePolicyViolationsViolationsRouteRouteWithChildren =
   EnterprisePolicyViolationsViolationsRouteRoute._addFileChildren(
     EnterprisePolicyViolationsViolationsRouteRouteChildren,
-  )
+  );
 
 interface EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRouteChildren {
-  EnterprisePolicyViolationsCoverageFamilyFamilyIdDetectionMethodsRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdDetectionMethodsRoute
-  EnterprisePolicyViolationsCoverageFamilyFamilyIdEventsRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdEventsRoute
-  EnterprisePolicyViolationsCoverageFamilyFamilyIdThreatsRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdThreatsRoute
-  EnterprisePolicyViolationsCoverageFamilyFamilyIdIndexRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdIndexRoute
+  EnterprisePolicyViolationsCoverageFamilyFamilyIdDetectionMethodsRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdDetectionMethodsRoute;
+  EnterprisePolicyViolationsCoverageFamilyFamilyIdEventsRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdEventsRoute;
+  EnterprisePolicyViolationsCoverageFamilyFamilyIdThreatsRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdThreatsRoute;
+  EnterprisePolicyViolationsCoverageFamilyFamilyIdIndexRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdIndexRoute;
 }
 
 const EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRouteChildren: EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRouteChildren =
@@ -1838,17 +1838,17 @@ const EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRouteChildren: Enterp
       EnterprisePolicyViolationsCoverageFamilyFamilyIdThreatsRoute,
     EnterprisePolicyViolationsCoverageFamilyFamilyIdIndexRoute:
       EnterprisePolicyViolationsCoverageFamilyFamilyIdIndexRoute,
-  }
+  };
 
 const EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRouteWithChildren =
   EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRoute._addFileChildren(
     EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRouteChildren,
-  )
+  );
 
 interface EnterprisePolicyViolationsCoverageThreatThreatIdRouteRouteChildren {
-  EnterprisePolicyViolationsCoverageThreatThreatIdDetectionMethodsRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdDetectionMethodsRoute
-  EnterprisePolicyViolationsCoverageThreatThreatIdEventsRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdEventsRoute
-  EnterprisePolicyViolationsCoverageThreatThreatIdIndexRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdIndexRoute
+  EnterprisePolicyViolationsCoverageThreatThreatIdDetectionMethodsRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdDetectionMethodsRoute;
+  EnterprisePolicyViolationsCoverageThreatThreatIdEventsRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdEventsRoute;
+  EnterprisePolicyViolationsCoverageThreatThreatIdIndexRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdIndexRoute;
 }
 
 const EnterprisePolicyViolationsCoverageThreatThreatIdRouteRouteChildren: EnterprisePolicyViolationsCoverageThreatThreatIdRouteRouteChildren =
@@ -1859,19 +1859,19 @@ const EnterprisePolicyViolationsCoverageThreatThreatIdRouteRouteChildren: Enterp
       EnterprisePolicyViolationsCoverageThreatThreatIdEventsRoute,
     EnterprisePolicyViolationsCoverageThreatThreatIdIndexRoute:
       EnterprisePolicyViolationsCoverageThreatThreatIdIndexRoute,
-  }
+  };
 
 const EnterprisePolicyViolationsCoverageThreatThreatIdRouteRouteWithChildren =
   EnterprisePolicyViolationsCoverageThreatThreatIdRouteRoute._addFileChildren(
     EnterprisePolicyViolationsCoverageThreatThreatIdRouteRouteChildren,
-  )
+  );
 
 interface EnterprisePolicyViolationsRouteRouteChildren {
-  EnterprisePolicyViolationsViolationsRouteRoute: typeof EnterprisePolicyViolationsViolationsRouteRouteWithChildren
-  EnterprisePolicyViolationsIndexRoute: typeof EnterprisePolicyViolationsIndexRoute
-  EnterprisePolicyViolationsCoverageIndexRoute: typeof EnterprisePolicyViolationsCoverageIndexRoute
-  EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRouteWithChildren
-  EnterprisePolicyViolationsCoverageThreatThreatIdRouteRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdRouteRouteWithChildren
+  EnterprisePolicyViolationsViolationsRouteRoute: typeof EnterprisePolicyViolationsViolationsRouteRouteWithChildren;
+  EnterprisePolicyViolationsIndexRoute: typeof EnterprisePolicyViolationsIndexRoute;
+  EnterprisePolicyViolationsCoverageIndexRoute: typeof EnterprisePolicyViolationsCoverageIndexRoute;
+  EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRoute: typeof EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRouteWithChildren;
+  EnterprisePolicyViolationsCoverageThreatThreatIdRouteRoute: typeof EnterprisePolicyViolationsCoverageThreatThreatIdRouteRouteWithChildren;
 }
 
 const EnterprisePolicyViolationsRouteRouteChildren: EnterprisePolicyViolationsRouteRouteChildren =
@@ -1885,19 +1885,19 @@ const EnterprisePolicyViolationsRouteRouteChildren: EnterprisePolicyViolationsRo
       EnterprisePolicyViolationsCoverageFamilyFamilyIdRouteRouteWithChildren,
     EnterprisePolicyViolationsCoverageThreatThreatIdRouteRoute:
       EnterprisePolicyViolationsCoverageThreatThreatIdRouteRouteWithChildren,
-  }
+  };
 
 const EnterprisePolicyViolationsRouteRouteWithChildren =
   EnterprisePolicyViolationsRouteRoute._addFileChildren(
     EnterprisePolicyViolationsRouteRouteChildren,
-  )
+  );
 
 interface EnterpriseThreatsCompromisesRouteRouteChildren {
-  EnterpriseThreatsCompromisesAttackFlowRoute: typeof EnterpriseThreatsCompromisesAttackFlowRoute
-  EnterpriseThreatsCompromisesEntitiesRoute: typeof EnterpriseThreatsCompromisesEntitiesRoute
-  EnterpriseThreatsCompromisesGraphRoute: typeof EnterpriseThreatsCompromisesGraphRoute
-  EnterpriseThreatsCompromisesIncidentsRoute: typeof EnterpriseThreatsCompromisesIncidentsRoute
-  EnterpriseThreatsCompromisesIndexRoute: typeof EnterpriseThreatsCompromisesIndexRoute
+  EnterpriseThreatsCompromisesAttackFlowRoute: typeof EnterpriseThreatsCompromisesAttackFlowRoute;
+  EnterpriseThreatsCompromisesEntitiesRoute: typeof EnterpriseThreatsCompromisesEntitiesRoute;
+  EnterpriseThreatsCompromisesGraphRoute: typeof EnterpriseThreatsCompromisesGraphRoute;
+  EnterpriseThreatsCompromisesIncidentsRoute: typeof EnterpriseThreatsCompromisesIncidentsRoute;
+  EnterpriseThreatsCompromisesIndexRoute: typeof EnterpriseThreatsCompromisesIndexRoute;
 }
 
 const EnterpriseThreatsCompromisesRouteRouteChildren: EnterpriseThreatsCompromisesRouteRouteChildren =
@@ -1912,18 +1912,18 @@ const EnterpriseThreatsCompromisesRouteRouteChildren: EnterpriseThreatsCompromis
       EnterpriseThreatsCompromisesIncidentsRoute,
     EnterpriseThreatsCompromisesIndexRoute:
       EnterpriseThreatsCompromisesIndexRoute,
-  }
+  };
 
 const EnterpriseThreatsCompromisesRouteRouteWithChildren =
   EnterpriseThreatsCompromisesRouteRoute._addFileChildren(
     EnterpriseThreatsCompromisesRouteRouteChildren,
-  )
+  );
 
 interface EnterpriseThreatsCoverageFamilyFamilyIdRouteRouteChildren {
-  EnterpriseThreatsCoverageFamilyFamilyIdDetectionMethodsRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdDetectionMethodsRoute
-  EnterpriseThreatsCoverageFamilyFamilyIdEventsRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdEventsRoute
-  EnterpriseThreatsCoverageFamilyFamilyIdThreatsRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdThreatsRoute
-  EnterpriseThreatsCoverageFamilyFamilyIdIndexRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdIndexRoute
+  EnterpriseThreatsCoverageFamilyFamilyIdDetectionMethodsRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdDetectionMethodsRoute;
+  EnterpriseThreatsCoverageFamilyFamilyIdEventsRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdEventsRoute;
+  EnterpriseThreatsCoverageFamilyFamilyIdThreatsRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdThreatsRoute;
+  EnterpriseThreatsCoverageFamilyFamilyIdIndexRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdIndexRoute;
 }
 
 const EnterpriseThreatsCoverageFamilyFamilyIdRouteRouteChildren: EnterpriseThreatsCoverageFamilyFamilyIdRouteRouteChildren =
@@ -1936,17 +1936,17 @@ const EnterpriseThreatsCoverageFamilyFamilyIdRouteRouteChildren: EnterpriseThrea
       EnterpriseThreatsCoverageFamilyFamilyIdThreatsRoute,
     EnterpriseThreatsCoverageFamilyFamilyIdIndexRoute:
       EnterpriseThreatsCoverageFamilyFamilyIdIndexRoute,
-  }
+  };
 
 const EnterpriseThreatsCoverageFamilyFamilyIdRouteRouteWithChildren =
   EnterpriseThreatsCoverageFamilyFamilyIdRouteRoute._addFileChildren(
     EnterpriseThreatsCoverageFamilyFamilyIdRouteRouteChildren,
-  )
+  );
 
 interface EnterpriseThreatsCoverageThreatThreatIdRouteRouteChildren {
-  EnterpriseThreatsCoverageThreatThreatIdDetectionMethodsRoute: typeof EnterpriseThreatsCoverageThreatThreatIdDetectionMethodsRoute
-  EnterpriseThreatsCoverageThreatThreatIdEventsRoute: typeof EnterpriseThreatsCoverageThreatThreatIdEventsRoute
-  EnterpriseThreatsCoverageThreatThreatIdIndexRoute: typeof EnterpriseThreatsCoverageThreatThreatIdIndexRoute
+  EnterpriseThreatsCoverageThreatThreatIdDetectionMethodsRoute: typeof EnterpriseThreatsCoverageThreatThreatIdDetectionMethodsRoute;
+  EnterpriseThreatsCoverageThreatThreatIdEventsRoute: typeof EnterpriseThreatsCoverageThreatThreatIdEventsRoute;
+  EnterpriseThreatsCoverageThreatThreatIdIndexRoute: typeof EnterpriseThreatsCoverageThreatThreatIdIndexRoute;
 }
 
 const EnterpriseThreatsCoverageThreatThreatIdRouteRouteChildren: EnterpriseThreatsCoverageThreatThreatIdRouteRouteChildren =
@@ -1957,20 +1957,20 @@ const EnterpriseThreatsCoverageThreatThreatIdRouteRouteChildren: EnterpriseThrea
       EnterpriseThreatsCoverageThreatThreatIdEventsRoute,
     EnterpriseThreatsCoverageThreatThreatIdIndexRoute:
       EnterpriseThreatsCoverageThreatThreatIdIndexRoute,
-  }
+  };
 
 const EnterpriseThreatsCoverageThreatThreatIdRouteRouteWithChildren =
   EnterpriseThreatsCoverageThreatThreatIdRouteRoute._addFileChildren(
     EnterpriseThreatsCoverageThreatThreatIdRouteRouteChildren,
-  )
+  );
 
 interface EnterpriseThreatsRouteRouteChildren {
-  EnterpriseThreatsCompromisesRouteRoute: typeof EnterpriseThreatsCompromisesRouteRouteWithChildren
-  EnterpriseThreatsTimelineRoute: typeof EnterpriseThreatsTimelineRoute
-  EnterpriseThreatsIndexRoute: typeof EnterpriseThreatsIndexRoute
-  EnterpriseThreatsCoverageIndexRoute: typeof EnterpriseThreatsCoverageIndexRoute
-  EnterpriseThreatsCoverageFamilyFamilyIdRouteRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdRouteRouteWithChildren
-  EnterpriseThreatsCoverageThreatThreatIdRouteRoute: typeof EnterpriseThreatsCoverageThreatThreatIdRouteRouteWithChildren
+  EnterpriseThreatsCompromisesRouteRoute: typeof EnterpriseThreatsCompromisesRouteRouteWithChildren;
+  EnterpriseThreatsTimelineRoute: typeof EnterpriseThreatsTimelineRoute;
+  EnterpriseThreatsIndexRoute: typeof EnterpriseThreatsIndexRoute;
+  EnterpriseThreatsCoverageIndexRoute: typeof EnterpriseThreatsCoverageIndexRoute;
+  EnterpriseThreatsCoverageFamilyFamilyIdRouteRoute: typeof EnterpriseThreatsCoverageFamilyFamilyIdRouteRouteWithChildren;
+  EnterpriseThreatsCoverageThreatThreatIdRouteRoute: typeof EnterpriseThreatsCoverageThreatThreatIdRouteRouteWithChildren;
 }
 
 const EnterpriseThreatsRouteRouteChildren: EnterpriseThreatsRouteRouteChildren =
@@ -1984,23 +1984,23 @@ const EnterpriseThreatsRouteRouteChildren: EnterpriseThreatsRouteRouteChildren =
       EnterpriseThreatsCoverageFamilyFamilyIdRouteRouteWithChildren,
     EnterpriseThreatsCoverageThreatThreatIdRouteRoute:
       EnterpriseThreatsCoverageThreatThreatIdRouteRouteWithChildren,
-  }
+  };
 
 const EnterpriseThreatsRouteRouteWithChildren =
   EnterpriseThreatsRouteRoute._addFileChildren(
     EnterpriseThreatsRouteRouteChildren,
-  )
+  );
 
 interface EnterpriseHostsHostIdRouteRouteChildren {
-  EnterpriseHostsHostIdBeaconsRoute: typeof EnterpriseHostsHostIdBeaconsRoute
-  EnterpriseHostsHostIdDetectionEventsRoute: typeof EnterpriseHostsHostIdDetectionEventsRoute
-  EnterpriseHostsHostIdDetectionMethodsRoute: typeof EnterpriseHostsHostIdDetectionMethodsRoute
-  EnterpriseHostsHostIdHuntingTrailRoute: typeof EnterpriseHostsHostIdHuntingTrailRoute
-  EnterpriseHostsHostIdIncidentsRoute: typeof EnterpriseHostsHostIdIncidentsRoute
-  EnterpriseHostsHostIdOutlierEventsRoute: typeof EnterpriseHostsHostIdOutlierEventsRoute
-  EnterpriseHostsHostIdSightingsRoute: typeof EnterpriseHostsHostIdSightingsRoute
-  EnterpriseHostsHostIdTimelineRoute: typeof EnterpriseHostsHostIdTimelineRoute
-  EnterpriseHostsHostIdIndexRoute: typeof EnterpriseHostsHostIdIndexRoute
+  EnterpriseHostsHostIdBeaconsRoute: typeof EnterpriseHostsHostIdBeaconsRoute;
+  EnterpriseHostsHostIdDetectionEventsRoute: typeof EnterpriseHostsHostIdDetectionEventsRoute;
+  EnterpriseHostsHostIdDetectionMethodsRoute: typeof EnterpriseHostsHostIdDetectionMethodsRoute;
+  EnterpriseHostsHostIdHuntingTrailRoute: typeof EnterpriseHostsHostIdHuntingTrailRoute;
+  EnterpriseHostsHostIdIncidentsRoute: typeof EnterpriseHostsHostIdIncidentsRoute;
+  EnterpriseHostsHostIdOutlierEventsRoute: typeof EnterpriseHostsHostIdOutlierEventsRoute;
+  EnterpriseHostsHostIdSightingsRoute: typeof EnterpriseHostsHostIdSightingsRoute;
+  EnterpriseHostsHostIdTimelineRoute: typeof EnterpriseHostsHostIdTimelineRoute;
+  EnterpriseHostsHostIdIndexRoute: typeof EnterpriseHostsHostIdIndexRoute;
 }
 
 const EnterpriseHostsHostIdRouteRouteChildren: EnterpriseHostsHostIdRouteRouteChildren =
@@ -2018,23 +2018,23 @@ const EnterpriseHostsHostIdRouteRouteChildren: EnterpriseHostsHostIdRouteRouteCh
     EnterpriseHostsHostIdSightingsRoute: EnterpriseHostsHostIdSightingsRoute,
     EnterpriseHostsHostIdTimelineRoute: EnterpriseHostsHostIdTimelineRoute,
     EnterpriseHostsHostIdIndexRoute: EnterpriseHostsHostIdIndexRoute,
-  }
+  };
 
 const EnterpriseHostsHostIdRouteRouteWithChildren =
   EnterpriseHostsHostIdRouteRoute._addFileChildren(
     EnterpriseHostsHostIdRouteRouteChildren,
-  )
+  );
 
 interface EnterpriseRouteChildren {
-  EnterpriseAnalyticsRouteRoute: typeof EnterpriseAnalyticsRouteRouteWithChildren
-  EnterpriseAttackSurfaceRouteRoute: typeof EnterpriseAttackSurfaceRouteRouteWithChildren
-  EnterpriseHuntingTrailRouteRoute: typeof EnterpriseHuntingTrailRouteRouteWithChildren
-  EnterprisePolicyViolationsRouteRoute: typeof EnterprisePolicyViolationsRouteRouteWithChildren
-  EnterpriseThreatsRouteRoute: typeof EnterpriseThreatsRouteRouteWithChildren
-  EnterpriseOperationalCenterRoute: typeof EnterpriseOperationalCenterRoute
-  EnterpriseVolumetryRoute: typeof EnterpriseVolumetryRoute
-  EnterpriseHostsHostIdRouteRoute: typeof EnterpriseHostsHostIdRouteRouteWithChildren
-  EnterpriseHostsIndexRoute: typeof EnterpriseHostsIndexRoute
+  EnterpriseAnalyticsRouteRoute: typeof EnterpriseAnalyticsRouteRouteWithChildren;
+  EnterpriseAttackSurfaceRouteRoute: typeof EnterpriseAttackSurfaceRouteRouteWithChildren;
+  EnterpriseHuntingTrailRouteRoute: typeof EnterpriseHuntingTrailRouteRouteWithChildren;
+  EnterprisePolicyViolationsRouteRoute: typeof EnterprisePolicyViolationsRouteRouteWithChildren;
+  EnterpriseThreatsRouteRoute: typeof EnterpriseThreatsRouteRouteWithChildren;
+  EnterpriseOperationalCenterRoute: typeof EnterpriseOperationalCenterRoute;
+  EnterpriseVolumetryRoute: typeof EnterpriseVolumetryRoute;
+  EnterpriseHostsHostIdRouteRoute: typeof EnterpriseHostsHostIdRouteRouteWithChildren;
+  EnterpriseHostsIndexRoute: typeof EnterpriseHostsIndexRoute;
 }
 
 const EnterpriseRouteChildren: EnterpriseRouteChildren = {
@@ -2050,11 +2050,11 @@ const EnterpriseRouteChildren: EnterpriseRouteChildren = {
   EnterpriseVolumetryRoute: EnterpriseVolumetryRoute,
   EnterpriseHostsHostIdRouteRoute: EnterpriseHostsHostIdRouteRouteWithChildren,
   EnterpriseHostsIndexRoute: EnterpriseHostsIndexRoute,
-}
+};
 
 const EnterpriseRouteWithChildren = EnterpriseRoute._addFileChildren(
   EnterpriseRouteChildren,
-)
+);
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -2073,7 +2073,7 @@ const rootRouteChildren: RootRouteChildren = {
   DetectionMethodsDetectionMethodIdRoute:
     DetectionMethodsDetectionMethodIdRoute,
   DetectionMethodsIndexRoute: DetectionMethodsIndexRoute,
-}
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
