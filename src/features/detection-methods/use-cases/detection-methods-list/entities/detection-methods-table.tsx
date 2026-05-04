@@ -1,6 +1,5 @@
 import type { SortingState, Updater } from '@tanstack/react-table';
 import { PencilRuler, RotateCcw } from 'lucide-react';
-import { useMemo } from 'react';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
@@ -72,32 +71,17 @@ export function DetectionMethodsTable({
 
   // Build query params
   const ordering = serializeSorting(sorting);
-  const queryParams = useMemo(
-    () => ({
-      ...globalParams,
-      hits_min: withAlerts ? 1 : undefined,
-      ...(sidFilter && { sid: sidFilter }),
-      ...(withAlerts ? { qfilter } : {}),
-      pageIndex: page - 1,
-      pageSize,
-      ordering: ordering ?? '-hits',
-    }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      page,
-      pageSize,
-      ordering,
-      withAlerts,
-      sidFilter,
-      globalParams.start_date,
-      globalParams.end_date,
-      globalParams.tenant,
-      qfilter,
-    ],
-  );
 
   // Fetch data
-  const { data, isFetching } = useGetSignaturesQuery(queryParams);
+  const { data, isFetching } = useGetSignaturesQuery({
+    ...globalParams,
+    hits_min: withAlerts ? 1 : undefined,
+    ...(sidFilter && { sid: sidFilter }),
+    ...(withAlerts ? { qfilter } : {}),
+    pageIndex: page - 1,
+    pageSize,
+    ordering: ordering ?? '-hits',
+  });
 
   const results = data?.results ?? [];
   const total = data?.count ?? 0;
