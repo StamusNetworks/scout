@@ -3,7 +3,6 @@ import { createSelector } from '@reduxjs/toolkit';
 import { selectIsEnterprise } from '@/features/settings/state/settings.selectors';
 import { RootState } from '@/store/store';
 
-import { QFBuilder } from '../builders/qf-builder';
 import { FilterCategory } from '../definitions/query-filter.config';
 import {
   CEQueryFilters,
@@ -83,32 +82,5 @@ export const selectQueryFiltersDefinitions = createSelector(
   },
 );
 
-export const selectQueryFilterDefinition = (filterId: string) =>
-  createSelector(
-    [(state: RootState) => state.filters.queryFilters.types],
-    (filterTypes) => {
-      if (!filterTypes) return QueryFiltersRecord[filterId];
-      return {
-        ...filterTypes[filterId],
-        ...QueryFiltersRecord[filterId],
-      };
-    },
-  );
-
-export const selectQfilterBuilder = createSelector(
-  [(state: RootState) => state.filters.queryFilters.types],
-  (types) => {
-    if (!types) return QFBuilder(QueryFiltersRecord, 'raw');
-    const combinedTypes = QueryFilters.reduce(
-      (acc, curr) => {
-        acc[curr.key] = {
-          ...curr,
-          ...types[curr.key],
-        };
-        return acc;
-      },
-      { ...types },
-    );
-    return QFBuilder(combinedTypes, 'raw');
-  },
-);
+export const selectQueryFilterTypes = (state: RootState) =>
+  state.filters.queryFilters.types;

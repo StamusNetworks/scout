@@ -9,7 +9,7 @@ import {
   X,
 } from 'lucide-react';
 import { isNil, toPairs } from 'ramda';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
@@ -487,24 +487,39 @@ function useFilterSetQueryParams(
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const QFBuilder = useQFBuilder();
   const appFlags = useGatedFilterFlags();
-  const setTags = filterSet.tags;
-  const filters = [
-    ...(additionalFilters ?? []),
-    ...filterSet.filters.map(mapPersistedToFilterState),
-  ];
-  return {
-    start_date: params.start_date,
-    end_date: params.end_date,
-    tenant: params.tenant,
-    qfilter: QFBuilder.toQFString(filters, {
-      untagged: setTags?.untagged ?? !!appFlags?.alertTags.untagged,
-      relevant: setTags?.relevant ?? !!appFlags?.alertTags.relevant,
-      informational:
-        setTags?.informational ?? !!appFlags?.alertTags.informational,
-    }),
-    host_id_qfilter: QFBuilder.toHostIdQFString(filters),
-    stamus: setTags?.stamus ?? !!appFlags?.eventTypes.stamus,
-    discovery: setTags?.discovery ?? !!appFlags?.eventTypes.discovery,
-    alert: setTags?.alert ?? !!appFlags?.eventTypes.alert,
-  };
+
+  // Memoize the params object — every consuming RTK Query treats this
+  // as the cache key, so a fresh literal each render would defeat the
+  // cache. Identity changes only when the inputs (filterSet, dates,
+  // tenant, app flags, additionalFilters, builder) actually change.
+  return useMemo(() => {
+    const setTags = filterSet.tags;
+    const filters = [
+      ...(additionalFilters ?? []),
+      ...filterSet.filters.map(mapPersistedToFilterState),
+    ];
+    return {
+      start_date: params.start_date,
+      end_date: params.end_date,
+      tenant: params.tenant,
+      qfilter: QFBuilder.toQFString(filters, {
+        untagged: setTags?.untagged ?? !!appFlags?.alertTags.untagged,
+        relevant: setTags?.relevant ?? !!appFlags?.alertTags.relevant,
+        informational:
+          setTags?.informational ?? !!appFlags?.alertTags.informational,
+      }),
+      host_id_qfilter: QFBuilder.toHostIdQFString(filters),
+      stamus: setTags?.stamus ?? !!appFlags?.eventTypes.stamus,
+      discovery: setTags?.discovery ?? !!appFlags?.eventTypes.discovery,
+      alert: setTags?.alert ?? !!appFlags?.eventTypes.alert,
+    };
+  }, [
+    filterSet,
+    additionalFilters,
+    params.start_date,
+    params.end_date,
+    params.tenant,
+    appFlags,
+    QFBuilder,
+  ]);
 }
