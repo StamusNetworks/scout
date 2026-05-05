@@ -17,7 +17,7 @@ export type { Analysis, Engine, Match } from './model/analysis';
 /**
  * RTK Query hook re-exports. Cross-feature consumers should prefer
  * domain-level hooks once we have them; for now these are exposed
- * so deep `@/features/detection-methods/api/*` imports stay banned
+ * so deep `@/features/rules/api/*` imports stay banned
  * by lint.
  */
 export {

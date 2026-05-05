@@ -11,7 +11,7 @@ import {
   RuleExpandedRow,
   rulesTableColumns,
   useGetRulesQuery,
-} from '@/features/detection-methods';
+} from '@/features/rules';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 interface HostDetectionMethodsTableProps {

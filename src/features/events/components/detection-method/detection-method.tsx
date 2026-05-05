@@ -14,7 +14,7 @@ import { Skeleton } from '@/common/design-system/atoms/ui/skeleton';
 import {
   RuleExpandedRowTemplate,
   useGetRuleBySidQuery,
-} from '@/features/detection-methods';
+} from '@/features/rules';
 
 export const DetectionMethodTab = ({ sid }: { sid: number }) => {
   const { data, isLoading } = useGetRuleBySidQuery({ sid });

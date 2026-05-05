@@ -26,7 +26,7 @@ import {
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { formatNumber } from '@/common/lib/numbers';
 import { capitalizeAll } from '@/common/lib/strings';
-import { useGetRulesQuery } from '@/features/detection-methods';
+import { useGetRulesQuery } from '@/features/rules';
 import {
   useGetEventsCountQuery,
   useGetEventsTailQuery,

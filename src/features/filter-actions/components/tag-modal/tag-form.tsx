@@ -26,7 +26,7 @@ import {
   SelectValue,
 } from '@/common/design-system/atoms/ui/select';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
-import { useGetRuleSetsQuery } from '@/features/detection-methods';
+import { useGetRuleSetsQuery } from '@/features/rules';
 import { FilterInput } from '@/features/query-filters/components/edit-qfilter-modal/filter-input';
 
 import {

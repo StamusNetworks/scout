@@ -91,7 +91,7 @@ export { FamiliesList } from './components/families-list/families-list';
 export { FamilyActiveThreats } from './components/family-active-threats/family-active-threats';
 // FamilyDetectionMethods, FamilyEvents, FamilyThreats are intentionally NOT
 // re-exported here: they import from `@/features/events` and
-// `@/features/detection-methods` (which themselves transitively import from
+// `@/features/rules` (which themselves transitively import from
 // the threats barrel), creating a barrel-to-barrel cycle. Routes deep-import
 // them directly via `@/features/threats/components/<name>/<name>`.
 export { HuntingTrail } from './components/hunting-trail/hunting-trail';
