@@ -1,6 +1,11 @@
 import z from 'zod';
 
-export const baseFilterActionSchema = z.object({
+/**
+ * Base schema for filter-action create/edit forms — defines the
+ * fields shared by every kind. Per-kind forms `.extend()` it with
+ * their own option fields.
+ */
+export const baseFilterActionFormSchema = z.object({
   filters: z
     .array(
       z.object({

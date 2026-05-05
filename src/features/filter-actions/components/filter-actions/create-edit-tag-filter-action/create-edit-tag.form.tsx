@@ -39,9 +39,9 @@ import {
   TagAndKeepFilterAction,
   TagFilterAction,
 } from '../../../model/filter-action';
-import { baseFilterActionSchema } from '../filter-actions.baseSchema';
+import { baseFilterActionFormSchema } from '../../../model/filter-action-form';
 
-const formSchema = baseFilterActionSchema.extend({
+const formSchema = baseFilterActionFormSchema.extend({
   tag: z.enum(['relevant', 'informational']),
 });
 

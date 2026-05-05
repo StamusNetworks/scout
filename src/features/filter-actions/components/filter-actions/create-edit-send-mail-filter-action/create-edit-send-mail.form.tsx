@@ -33,11 +33,11 @@ import {
   FilterActionPayload,
   SendMailFilterAction,
 } from '../../../model/filter-action';
-import { baseFilterActionSchema } from '../filter-actions.baseSchema';
+import { baseFilterActionFormSchema } from '../../../model/filter-action-form';
 
 export const DEFAULT_MAX_MAILS_PER_DAY = 5;
 
-const formSchema = baseFilterActionSchema.extend({
+const formSchema = baseFilterActionFormSchema.extend({
   maxMailsPerDay: z
     .number({ message: 'Maximum mails sent per day must be a number' })
     .int('Maximum mails sent per day must be an integer')

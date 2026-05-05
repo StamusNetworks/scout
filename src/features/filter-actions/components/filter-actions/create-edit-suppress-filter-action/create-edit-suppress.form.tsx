@@ -31,9 +31,9 @@ import {
   FilterActionPayload,
   SuppressFilterAction,
 } from '../../../model/filter-action';
-import { baseFilterActionSchema } from '../filter-actions.baseSchema';
+import { baseFilterActionFormSchema } from '../../../model/filter-action-form';
 
-const formSchema = baseFilterActionSchema;
+const formSchema = baseFilterActionFormSchema;
 
 export type SuppressFilterActionFormValues = z.infer<typeof formSchema>;
 

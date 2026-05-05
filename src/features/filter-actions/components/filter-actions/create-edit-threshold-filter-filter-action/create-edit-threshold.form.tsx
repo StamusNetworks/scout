@@ -40,9 +40,9 @@ import {
   FilterActionPayload,
   ThresholdFilterAction,
 } from '../../../model/filter-action';
-import { baseFilterActionSchema } from '../filter-actions.baseSchema';
+import { baseFilterActionFormSchema } from '../../../model/filter-action-form';
 
-const formSchema = baseFilterActionSchema.extend({
+const formSchema = baseFilterActionFormSchema.extend({
   count: z.number().min(1, 'Count must be a positive number'),
   seconds: z.number().min(1, 'Seconds must be a positive number'),
   track: z.enum(['by_src', 'by_dst']),

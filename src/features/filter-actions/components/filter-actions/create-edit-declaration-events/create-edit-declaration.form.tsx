@@ -63,11 +63,11 @@ import {
   FilterActionPayload,
   ThreatFilterAction,
 } from '../../../model/filter-action';
-import { baseFilterActionSchema } from '../filter-actions.baseSchema';
+import { baseFilterActionFormSchema } from '../../../model/filter-action-form';
 
 const filterActionTargetTypeSchema = z.enum(['ip', 'username', 'mail']);
 
-const formSchema = baseFilterActionSchema.extend({
+const formSchema = baseFilterActionFormSchema.extend({
   type: z.enum(['doc', 'dopv']),
   threat: z.string().refine((value) => value.length > 0, {
     message: 'You have to select a value',
