@@ -225,13 +225,13 @@ const InvestigationHistoryItem = ({
   const handleLoadAsFilters = ({
     start_date,
     end_date,
-    tags,
+    flags: serializedFlags,
     qfilter,
     stages,
   }: {
     start_date: number;
     end_date: number;
-    tags?: SerializedFilterFlags;
+    flags?: SerializedFilterFlags;
     qfilter: QueryFilterState[];
     stages: InvestigationState['stages'];
   }) => {
@@ -241,8 +241,8 @@ const InvestigationHistoryItem = ({
       start_date,
       end_date,
     });
-    if (tags) {
-      const flags = toFilterFlags(tags);
+    if (serializedFlags) {
+      const flags = toFilterFlags(serializedFlags);
       tagFiltersRepo.setEventTypes(flags.eventTypes);
       tagFiltersRepo.setAlertTags(flags.alertTags);
       tagFiltersRepo.setNovelty(flags.novelty);
@@ -264,7 +264,7 @@ const InvestigationHistoryItem = ({
         <InvestigationParams
           startDate={investigation.initialParams.start_date!}
           endDate={investigation.initialParams.end_date!}
-          tags={investigation.initialParams.tags ?? undefined}
+          flags={investigation.initialParams.flags ?? undefined}
           qfilter={investigation.initialParams.qfilter!}
           comment={investigation.comment}
         />
@@ -275,7 +275,7 @@ const InvestigationHistoryItem = ({
               handleLoadAsFilters({
                 start_date: investigation.initialParams.start_date!,
                 end_date: investigation.initialParams.end_date!,
-                tags: investigation.initialParams.tags,
+                flags: investigation.initialParams.flags,
                 qfilter: investigation.initialParams.qfilter!,
                 stages: investigation.stages,
               })

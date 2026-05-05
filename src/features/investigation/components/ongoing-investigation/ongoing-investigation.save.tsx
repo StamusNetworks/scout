@@ -95,7 +95,7 @@ export const SaveInvestigation = () => {
             <InvestigationParams
               startDate={start_date!}
               endDate={end_date!}
-              tags={serializedFlags}
+              flags={serializedFlags}
               qfilter={queryFilters}
             />
             <Separator className="my-4" />
@@ -162,7 +162,7 @@ export const SaveInvestigation = () => {
                           start_date,
                           end_date,
                           qfilter: queryFilters,
-                          tags: serializedFlags,
+                          flags: serializedFlags,
                         },
                         results: iocData,
                         stages: investigationStages,

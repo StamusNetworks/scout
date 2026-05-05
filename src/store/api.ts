@@ -47,7 +47,7 @@ const baseQuery: BaseQueryFn = async (...baseQueryArgs) => {
     prepareHeaders: (headers, { getState }) => {
       headers.set(
         'Authorization',
-        `Bearer ${(getState() as RootState).auth.access_token}`,
+        `Bearer ${(getState() as RootState).auth.accessToken}`,
       );
 
       const csrfToken = ['csrftoken', 'CSRF-TOKEN', 'X-CSRFToken', 'XSRF-TOKEN']

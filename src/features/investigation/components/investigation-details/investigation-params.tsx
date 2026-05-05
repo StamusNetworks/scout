@@ -17,14 +17,14 @@ import { valueVariants } from '../ongoing-investigation/ongoing-investigation.cu
 interface InvestigationParamsProps {
   startDate: number;
   endDate: number;
-  tags?: SerializedFilterFlags | null;
+  flags?: SerializedFilterFlags | null;
   qfilter: QueryFilterState[];
   comment?: string;
 }
 export const InvestigationParams = ({
   startDate,
   endDate,
-  tags,
+  flags,
   comment,
   qfilter,
 }: InvestigationParamsProps) => {
@@ -40,22 +40,22 @@ export const InvestigationParams = ({
           label="End date"
           value={<DateTime date={endDate} />}
         />
-        {enterprise && tags && (
+        {enterprise && flags && (
           <>
             <LabelValue
               label="Events types"
               value={
                 <Column className="mt-1 gap-1">
                   <CheckboxValue
-                    checked={tags.alert}
+                    checked={flags.alert}
                     label="Alerts"
                   />
                   <CheckboxValue
-                    checked={tags.stamus}
+                    checked={flags.stamus}
                     label="Stamus"
                   />
                   <CheckboxValue
-                    checked={tags.discovery}
+                    checked={flags.discovery}
                     label="Sightings"
                   />
                 </Column>
@@ -66,15 +66,15 @@ export const InvestigationParams = ({
               value={
                 <Column className="mt-1 gap-1">
                   <CheckboxValue
-                    checked={tags.informational}
+                    checked={flags.informational}
                     label="Informational"
                   />
                   <CheckboxValue
-                    checked={tags.relevant}
+                    checked={flags.relevant}
                     label="Relevant"
                   />
                   <CheckboxValue
-                    checked={tags.untagged}
+                    checked={flags.untagged}
                     label="Untagged"
                   />
                 </Column>
@@ -85,7 +85,7 @@ export const InvestigationParams = ({
               value={
                 <Column className="mt-1 gap-1">
                   <CheckboxValue
-                    checked={tags.novelty}
+                    checked={flags.novelty}
                     label="Outlier events"
                   />
                 </Column>

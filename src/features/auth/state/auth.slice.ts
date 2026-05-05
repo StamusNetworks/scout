@@ -6,8 +6,8 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
  * legacy auth flow and are not yet read from anywhere on the client.
  */
 const initialState = {
-  access_token: '',
-  refresh_token: '',
+  accessToken: '',
+  refreshToken: '',
   permissions: [
     'rules.events_ryod',
     'rules.events_evebox',
@@ -32,10 +32,10 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setAccessToken: (state, action: PayloadAction<string>) => {
-      state.access_token = action.payload;
+      state.accessToken = action.payload;
     },
     setRefreshToken: (state, action: PayloadAction<string>) => {
-      state.refresh_token = action.payload;
+      state.refreshToken = action.payload;
     },
   },
 });

@@ -15,7 +15,12 @@ export type InvestigationHistory = {
     start_date: number | undefined;
     end_date: number | undefined;
     qfilter: QueryFilterState[] | undefined;
-    tags: SerializedFilterFlags | undefined;
+    /**
+     * Snapshot of the active filter flags at save time. The
+     * unrelated `tags: string[]` field below holds user-supplied
+     * UI labels — different concept, same word.
+     */
+    flags: SerializedFilterFlags | undefined;
   };
   results: {
     key: string;

@@ -3,7 +3,14 @@ import type { PersistedFilter } from '@/features/query-filters/model/query-filte
 /**
  * Domain shape for filter-set tags. Aligned with the live query-filters
  * flag domain (`alert`/`discovery`/`stamus`), unlike the wire which
- * uses `alerts`/`sightings`. Filter-sets do not persist `novelty`.
+ * uses `alerts`/`sightings`.
+ *
+ * Structurally this is `SerializedFilterFlags` from query-filters
+ * minus the `novelty` field — filter-sets deliberately do not
+ * persist novelty. The two types are kept parallel rather than
+ * merged because they cross independent persistence boundaries
+ * (this one for filter-set storage, `SerializedFilterFlags` for
+ * share URLs and investigation history).
  */
 export type FilterSetTags = {
   stamus: boolean;

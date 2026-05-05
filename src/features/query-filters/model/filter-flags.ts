@@ -16,9 +16,16 @@ export type FilterFlags = {
   novelty: boolean;
 };
 
-// Flat shape used at persistence and wire boundaries: share URLs and
-// investigation history. The live slice uses `FilterFlags` (nested);
-// these transforms cross the boundary.
+/**
+ * Flat shape used at persistence and wire boundaries: share URLs and
+ * investigation history. The live slice uses `FilterFlags` (nested);
+ * these transforms cross the boundary.
+ *
+ * `filter-sets/model/filter-set.ts:FilterSetTags` is structurally the
+ * same as this minus `novelty` — filter-sets deliberately don't
+ * persist novelty. The two are kept parallel rather than merged
+ * because they cross independent persistence boundaries.
+ */
 export type SerializedFilterFlags = EventTypeFlags &
   AlertTagFlags & {
     novelty: boolean;
