@@ -1,25 +1,41 @@
-import { getRouteApi } from '@tanstack/react-router';
+import type { PaginationState, Updater } from '@tanstack/react-table';
 
 import { DataTable } from '@/common/design-system/molecules/data-table';
-import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 import { useGetFilterActionsQuery } from '../../api/filter-actions.api';
 import { filterActionsColumns } from './filter-actions-table.columns';
 import { ExpandedFilterActionRow } from './filter-actions-table.expanded-row';
 
-const routeApi = getRouteApi('/filters-actions');
+type Props = {
+  page: number;
+  pageSize: number;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (pageSize: number) => void;
+};
 
-export const FiltersActionsTable = () => {
-  const search = routeApi.useSearch();
-  const navigate = routeApi.useNavigate();
+export const FiltersActionsTable = ({
+  page,
+  pageSize,
+  onPageChange,
+  onPageSizeChange,
+}: Props) => {
   const params = useGlobalQueryParams(['tenant']);
-  const { queryParams, pagination, setPagination } = useServerTableState(
-    search,
-    params,
-    navigate,
-  );
-  const { data, isFetching } = useGetFilterActionsQuery(queryParams);
+  const pageIndex = page - 1;
+
+  const { data, isFetching } = useGetFilterActionsQuery({
+    ...params,
+    pageIndex,
+    pageSize,
+  });
+
+  const handlePaginationChange = (updater: Updater<PaginationState>) => {
+    const prev = { pageIndex, pageSize };
+    const next = typeof updater === 'function' ? updater(prev) : updater;
+    if (next.pageSize !== pageSize) onPageSizeChange(next.pageSize);
+    if (next.pageIndex !== pageIndex) onPageChange(next.pageIndex + 1);
+  };
+
   return (
     <DataTable
       data={data}
@@ -27,8 +43,8 @@ export const FiltersActionsTable = () => {
       columns={filterActionsColumns}
       ExpandedRow={ExpandedFilterActionRow}
       serverSide
-      pagination={pagination}
-      onPaginationChange={setPagination}
+      pagination={{ pageIndex, pageSize }}
+      onPaginationChange={handlePaginationChange}
     />
   );
 };

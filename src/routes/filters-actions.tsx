@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { ChevronDown, WandSparkles } from 'lucide-react';
 import { z } from 'zod';
 
@@ -14,16 +14,17 @@ import {
 } from '@/common/design-system/atoms/page';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
+import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { FilterActionsDropdown } from '@/features/filter-actions/components/filter-actions-dropdown/filter-actions-dropdown';
 import { FiltersActionsTable } from '@/features/filter-actions/components/filter-actions-table/filter-actions-table';
 import { UpdatePushRuleset } from '@/features/filter-actions/components/update-push-ruleset';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 const filtersActionsSearchSchema = z.object({
   page: z.number().min(1).catch(1),
   page_size: z.number().min(1).catch(10),
-  sort: z.string().optional(),
 });
 
 export type FiltersActionsSearch = z.output<typeof filtersActionsSearchSchema>;
@@ -40,6 +41,18 @@ export const Route = createFileRoute('/filters-actions')({
 
 function FilterActionsPage() {
   usePageTitle('Filter Actions');
+  const search = Route.useSearch();
+  const tanstackNavigate = useNavigate();
+  const navigate = (opts: {
+    search: (prev: Record<string, unknown>) => Record<string, unknown>;
+    replace?: boolean;
+  }) => tanstackNavigate(opts as Parameters<typeof tanstackNavigate>[0]);
+
+  const globals = useGlobalQueryParams(['tenant']);
+  const { page, pageSize, setPage, setPageSize } = usePaginatedSearch(
+    { search, navigate },
+    { resetOn: [globals.tenant] },
+  );
 
   return (
     <>
@@ -74,7 +87,12 @@ function FilterActionsPage() {
               </Row>
             </PageActions>
           </PageHeader>
-          <FiltersActionsTable />
+          <FiltersActionsTable
+            page={page}
+            pageSize={pageSize}
+            onPageChange={setPage}
+            onPageSizeChange={setPageSize}
+          />
         </TogglePageContainer>
       </Page>
     </>
