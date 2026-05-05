@@ -27,10 +27,8 @@ import {
 import { CommandFilterSingle } from '@/common/design-system/molecules/data-table/filters/command-filter-single';
 import { formatNumber } from '@/common/lib/numbers';
 import { esEscape } from '@/common/lib/strings';
-import {
-  selectHostIDQFilter,
-  selectQueryFilters,
-} from '@/features/filtering/filters/query-filters/query-filters.selectors';
+import { selectQueryFilters } from '@/features/filtering/filters/query-filters/query-filters.selectors';
+import { useBuildHostIdQfilter } from '@/features/filtering/filters/query-filters/use-cases/build-host-id-qfilter/build-host-id-qfilter';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useGetNetworkTreeQuery } from '@/features/host-insights/common/host-insights.api';
 import { NetworkTreeFilterService } from '@/features/host-insights/common/network-tree/network-tree.filter-service';
@@ -88,9 +86,9 @@ export const NetworkTreeSunburst = ({
   inHomeNetwork,
 }: NetworkTreeSunburstProps) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
-  const qfilterHost = useAppSelector(
-    selectHostIDQFilter([], ['host_id.net_info.agg']),
-  );
+  const qfilterHost = useBuildHostIdQfilter(undefined, [
+    'host_id.net_info.agg',
+  ]);
   const [count, setCount] = useQueryState(
     'count',
     parseAsStringLiteral(options.map((o) => o.value)).withDefault('ips'),

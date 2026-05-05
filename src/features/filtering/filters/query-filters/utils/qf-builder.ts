@@ -2,6 +2,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { esEscape } from '@/common/lib/strings';
 
+import { buildAlertTagsQfilter } from '../builders/build-alert-tags-qfilter';
+import { buildNoveltyQfilter } from '../builders/build-novelty-qfilter';
 import { FilterCategory } from '../constants/query-filter.config';
 import { getFilterDef } from '../constants/query-filter.definition';
 import { AlertTagFlags } from '../filter-flags.model';
@@ -23,7 +25,7 @@ export function QFBuilder(
 ) {
   function toQFString(
     queryFilters?: Omit<QueryFilterState, 'id'>[],
-    tagsFilters?: AlertTagFlags | null,
+    alertTags?: AlertTagFlags | null,
     novelty?: boolean,
   ) {
     const eventFilters = queryFilters?.filter(
@@ -32,16 +34,13 @@ export function QFBuilder(
         (getFilterDef(f.key) === undefined && !f.key.startsWith('host_id.')),
     );
     const qfilter = filtersToStringArray(eventFilters, definitions, suffix);
-    // Add Alert tags filters
-    const tagsQfilter = getTagsFilters(tagsFilters);
-    if (tagsQfilter) {
-      qfilter.push(tagsQfilter);
-    }
-    // Add Novelty (outliers) filter
-    if (novelty === true) {
-      qfilter.push('stamus_novel:true');
-    }
-    // Join everything and return
+
+    const alertTagsClause = buildAlertTagsQfilter(alertTags);
+    if (alertTagsClause) qfilter.push(alertTagsClause);
+
+    const noveltyClause = buildNoveltyQfilter(novelty);
+    if (noveltyClause) qfilter.push(noveltyClause);
+
     return qfilter.length ? qfilter.join(' AND ') : undefined;
   }
 
@@ -82,31 +81,6 @@ export function QFBuilder(
     toHostIdQFString,
     createFilter,
   };
-}
-
-function getTagsFilters(tagsFilters?: AlertTagFlags | null) {
-  const tagsQfilter = [];
-  if (tagsFilters) {
-    Object.entries(tagsFilters).forEach(([key, value]) => {
-      if (key === 'untagged' && value === true) {
-        tagsQfilter.push('(NOT alert.tag:*)');
-      }
-      if (key === 'informational' && value === true) {
-        tagsQfilter.push('alert.tag:"informational"');
-      }
-      if (key === 'relevant' && value === true) {
-        tagsQfilter.push('alert.tag:"relevant"');
-      }
-    });
-    if (
-      tagsFilters.untagged === false &&
-      tagsFilters.informational === false &&
-      tagsFilters.relevant === false
-    ) {
-      tagsQfilter.push('alert.tag:"none"');
-    }
-  }
-  return tagsQfilter.length !== 0 ? `(${tagsQfilter.join(' OR ')})` : '';
 }
 
 const getStringifierFn = (definition: CombinedDef, is_wildcarded: boolean) => {
