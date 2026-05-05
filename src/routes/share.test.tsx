@@ -76,14 +76,14 @@ describe('SharePage', () => {
         expect.objectContaining({
           key: 'src_ip',
           value: '10.0.0.1',
-          is_negated: false,
-          is_wildcarded: false,
+          isNegated: false,
+          isWildcarded: false,
         }),
         expect.objectContaining({
           key: 'msg',
           value: 'test',
-          is_negated: true,
-          is_wildcarded: true,
+          isNegated: true,
+          isWildcarded: true,
         }),
       ]),
     );

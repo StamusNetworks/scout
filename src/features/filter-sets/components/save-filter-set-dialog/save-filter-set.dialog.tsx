@@ -16,7 +16,7 @@ import { SaveFilterSetForm } from './save-filter-set.form';
 export const SaveFilterSetModal = () => {
   const dispatch = useAppDispatch();
   const { isOpen, mode, filters } = useAppSelector(selectSaveFilterSetModal);
-  const appFilters = useQueryFilters().filter((f) => !f.is_suspended);
+  const appFilters = useQueryFilters().filter((f) => !f.isSuspended);
   const flags = useGatedFilterFlags();
 
   const handleOpenChange = (open: boolean) =>

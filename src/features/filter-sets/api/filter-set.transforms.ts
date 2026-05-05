@@ -58,15 +58,15 @@ export const toFilterSet = (dto: FilterSetDto): FilterSet => {
 
 /**
  * Wire-shape PersistedFilter from a domain filter input. The ACL owns
- * the field translation (`key→id`, `is_wildcarded→fullString` inverted,
- * `is_negated→negated`); call sites speak domain only.
+ * the field translation (`key→id`, `isWildcarded→fullString` inverted,
+ * `isNegated→negated`); call sites speak domain only.
  */
 const toPersistedFilter = (input: FilterSetFilterInput): PersistedFilter => ({
   id: input.key,
   label: '',
   value: input.value.toString(),
-  fullString: !input.is_wildcarded,
-  negated: !!input.is_negated,
+  fullString: !input.isWildcarded,
+  negated: !!input.isNegated,
   query: input.key === 'es_filter' ? 'query' : undefined,
 });
 

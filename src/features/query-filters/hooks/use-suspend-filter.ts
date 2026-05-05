@@ -19,12 +19,12 @@ export function useSuspendFilter() {
       suspendMany: (predicate: (f: QueryFilterState) => boolean) => {
         const filters = repo.getAll();
         repo.set(
-          filters.map((f) => (predicate(f) ? { ...f, is_suspended: true } : f)),
+          filters.map((f) => (predicate(f) ? { ...f, isSuspended: true } : f)),
         );
       },
       clearSuspended: () => {
         const filters = repo.getAll();
-        repo.set(filters.filter((f) => !f.is_suspended));
+        repo.set(filters.filter((f) => !f.isSuspended));
         toast.success('Cleared suspended filters');
       },
     }),

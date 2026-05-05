@@ -98,11 +98,11 @@ export const SidebarQueryFilter = ({
         <FilterAction
           key="suspend-filter"
           filterId={filter.key}
-          Icon={filter.is_suspended ? CirclePlay : CirclePause}
+          Icon={filter.isSuspended ? CirclePlay : CirclePause}
           action={() => {
             toggleSuspend(filter.id);
           }}
-          tooltip={`${filter.is_suspended ? 'Activate' : 'Suspend'} filter`}
+          tooltip={`${filter.isSuspended ? 'Activate' : 'Suspend'} filter`}
         />
       ),
     },
@@ -204,7 +204,7 @@ export const SidebarQueryFilter = ({
                 )}
             </label>
             {shouldShowWildcard(filterDefinition?.type ?? '') &&
-              filter.is_wildcarded && (
+              filter.isWildcarded && (
                 <TooltipProvider key="negated">
                   <Tooltip>
                     <TooltipTrigger className="flex items-center">
@@ -228,7 +228,7 @@ export const SidebarQueryFilter = ({
         </Row>
       </Row>
       <Row className="items-center gap-1">
-        {filter.is_negated && (
+        {filter.isNegated && (
           <TooltipProvider key="negated">
             <Tooltip>
               <TooltipTrigger className="flex items-center">

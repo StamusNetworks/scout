@@ -113,7 +113,7 @@ export const InvestigationParams = ({
                     className={cn(
                       'cursor-default rounded-md p-2 py-1',
                       valueVariants({
-                        status: filter.is_suspended ? 'ignored' : 'undefined',
+                        status: filter.isSuspended ? 'ignored' : 'undefined',
                       }),
                     )}
                   >

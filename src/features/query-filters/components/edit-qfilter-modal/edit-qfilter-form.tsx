@@ -41,20 +41,20 @@ const formSchema = z
   .object({
     id: z.string(),
     key: z.string(),
-    is_suspended: z.boolean(),
-    is_negated: z.boolean(),
-    is_wildcarded: z.boolean(),
+    isSuspended: z.boolean(),
+    isNegated: z.boolean(),
+    isWildcarded: z.boolean(),
   })
   .and(
-    z.discriminatedUnion('is_wildcarded', [
+    z.discriminatedUnion('isWildcarded', [
       z.object({
-        is_wildcarded: z.literal(true),
+        isWildcarded: z.literal(true),
         value: z.string().refine((val) => !/\s/.test(val), {
           message: 'Spaces are not allowed when wildcard is enabled',
         }),
       }),
       z.object({
-        is_wildcarded: z.literal(false),
+        isWildcarded: z.literal(false),
         value: z.string().or(z.number()),
       }),
     ]),
@@ -64,9 +64,9 @@ const getDefaultValues = (filter?: QueryFilterState) => ({
   id: filter?.id ?? '',
   key: filter?.key ?? '',
   value: filter?.value ?? '',
-  is_suspended: filter?.is_suspended ?? false,
-  is_negated: filter?.is_negated ?? false,
-  is_wildcarded: filter?.is_wildcarded ?? false,
+  isSuspended: filter?.isSuspended ?? false,
+  isNegated: filter?.isNegated ?? false,
+  isWildcarded: filter?.isWildcarded ?? false,
 });
 
 export const EditFilterForm = ({
@@ -87,7 +87,7 @@ export const EditFilterForm = ({
   const negatable = isNegatable(config?.key ?? '');
   const wildcardable = isWildcardable(config?.type ?? '');
 
-  const isWildcarded = form.watch('is_wildcarded');
+  const isWildcarded = form.watch('isWildcarded');
   useEffect(() => {
     form.trigger('value');
   }, [isWildcarded, form]);
@@ -95,7 +95,7 @@ export const EditFilterForm = ({
   const handleSubmit = (data: z.infer<typeof formSchema>): void => {
     updateFilter({
       ...data,
-      is_negated: negatable ? data.is_negated : false,
+      isNegated: negatable ? data.isNegated : false,
     });
     onClose?.();
   };
@@ -178,7 +178,7 @@ export const EditFilterForm = ({
         </Row>
         <FormField
           control={form.control}
-          name="is_negated"
+          name="isNegated"
           disabled={!negatable}
           render={({ field }) => (
             <FormItem className="flex space-x-2">
@@ -201,7 +201,7 @@ export const EditFilterForm = ({
 
         <FormField
           control={form.control}
-          name="is_wildcarded"
+          name="isWildcarded"
           disabled={!wildcardable}
           render={({ field }) => (
             <FormItem className="flex space-x-2">
@@ -227,7 +227,7 @@ export const EditFilterForm = ({
 
         <FormField
           control={form.control}
-          name="is_suspended"
+          name="isSuspended"
           render={({ field }) => (
             <FormItem className="flex space-x-2">
               <FormControl>

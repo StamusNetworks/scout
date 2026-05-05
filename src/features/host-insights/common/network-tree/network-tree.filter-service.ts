@@ -12,23 +12,23 @@ export const NetworkTreeFilterService = {
     const filters = store.getState().filters.queryFilters.queryFilters;
     let updated = filters.map((f: QueryFilterState) =>
       f.key === 'host_id.net_info.agg' &&
-      !f.is_suspended &&
+      !f.isSuspended &&
       f.role !== 'attack_surface'
-        ? { ...f, is_suspended: true }
+        ? { ...f, isSuspended: true }
         : f,
     );
     const newFilter =
       value === 'Undefined Network'
         ? qfBuilder.createFilter('host_id.net_info.agg', '*', {
-            is_negated: true,
-            is_wildcarded: true,
-            is_suspended: false,
+            isNegated: true,
+            isWildcarded: true,
+            isSuspended: false,
             role: 'attack_surface',
           })
         : qfBuilder.createFilter('host_id.net_info.agg', value, {
-            is_negated: false,
-            is_wildcarded: value.includes('*'),
-            is_suspended: false,
+            isNegated: false,
+            isWildcarded: value.includes('*'),
+            isSuspended: false,
             role: 'attack_surface',
           });
     updated = applyUpsertByRole(updated, newFilter);
@@ -37,8 +37,8 @@ export const NetworkTreeFilterService = {
   clearFilter: () => {
     const filters = store.getState().filters.queryFilters.queryFilters;
     const updated = filters.map((f: QueryFilterState) =>
-      f.key === 'host_id.net_info.agg' && !f.is_suspended
-        ? { ...f, is_suspended: true }
+      f.key === 'host_id.net_info.agg' && !f.isSuspended
+        ? { ...f, isSuspended: true }
         : f,
     );
     store.dispatch(setQueryFilters(updated));
@@ -48,8 +48,8 @@ export const NetworkTreeFilterService = {
     const updated = filters.map((f: QueryFilterState) =>
       f.key === 'host_id.net_info.agg' &&
       f.role !== 'attack_surface' &&
-      !f.is_suspended
-        ? { ...f, is_suspended: true }
+      !f.isSuspended
+        ? { ...f, isSuspended: true }
         : f,
     );
     store.dispatch(setQueryFilters(updated));

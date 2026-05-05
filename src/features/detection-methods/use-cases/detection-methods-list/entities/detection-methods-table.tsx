@@ -57,7 +57,7 @@ export function DetectionMethodsTable({
   // SID filter from Redux query filters
   const qfilters = useQueryFilters();
   const sidFilter = qfilters
-    .filter((f) => !f.is_suspended)
+    .filter((f) => !f.isSuspended)
     .find((f) => f.key === 'alert.signature_id')?.value;
 
   // Global params from Redux

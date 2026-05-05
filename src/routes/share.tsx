@@ -50,8 +50,8 @@ const toFilterInputs = (filters: ShareableState['filters']): FilterInput[] =>
     key: f.key,
     value: f.value,
     options: {
-      ...(f.negated && { is_negated: true }),
-      ...(f.wildcarded && { is_wildcarded: true }),
+      ...(f.negated && { isNegated: true }),
+      ...(f.wildcarded && { isWildcarded: true }),
     },
   }));
 

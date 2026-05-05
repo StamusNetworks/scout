@@ -8,9 +8,9 @@ const makeFilter = (
   },
 ): QueryFilterState => ({
   id: '1',
-  is_suspended: false,
-  is_negated: false,
-  is_wildcarded: false,
+  isSuspended: false,
+  isNegated: false,
+  isWildcarded: false,
   ...overrides,
 });
 
@@ -35,8 +35,8 @@ describe('buildSignatureParams', () => {
 
   it('should comma-separate multiple negated content filters', () => {
     const filters = [
-      makeFilter({ id: '1', key: 'content', value: 'foo', is_negated: true }),
-      makeFilter({ id: '2', key: 'content', value: 'bar', is_negated: true }),
+      makeFilter({ id: '1', key: 'content', value: 'foo', isNegated: true }),
+      makeFilter({ id: '2', key: 'content', value: 'bar', isNegated: true }),
     ];
     const result = buildSignatureParams(filters);
     expect(result?.not_in_content).toBe('foo,bar');
@@ -55,7 +55,7 @@ describe('buildSignatureParams', () => {
         id: '2',
         key: 'content',
         value: 'suspended',
-        is_suspended: true,
+        isSuspended: true,
       }),
     ];
     const result = buildSignatureParams(filters);

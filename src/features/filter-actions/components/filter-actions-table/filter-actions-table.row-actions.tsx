@@ -102,8 +102,8 @@ export const FilterActionRowActions = ({
         key: filter.key,
         value: filter.value,
         options: {
-          is_negated: filter.operator === 'different',
-          is_wildcarded: !filter.full_string,
+          isNegated: filter.operator === 'different',
+          isWildcarded: !filter.full_string,
         },
       })),
     );

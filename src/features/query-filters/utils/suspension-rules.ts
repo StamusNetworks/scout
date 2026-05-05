@@ -36,7 +36,7 @@ function applySiblingSuspension(
   );
 
   if (
-    trigger.is_negated ||
+    trigger.isNegated ||
     siblings.length === 0 ||
     AUTHORIZE_MULTIPLE_FILTERS.has(trigger.key)
   ) {
@@ -44,16 +44,16 @@ function applySiblingSuspension(
   }
 
   const shouldSuspend =
-    trigger.is_wildcarded && types?.[trigger.key]?.type === 'text'
-      ? (f: QueryFilterState) => !f.is_wildcarded && !f.is_negated
-      : (f: QueryFilterState) => !f.is_negated;
+    trigger.isWildcarded && types?.[trigger.key]?.type === 'text'
+      ? (f: QueryFilterState) => !f.isWildcarded && !f.isNegated
+      : (f: QueryFilterState) => !f.isNegated;
 
   const siblingIds = new Set(siblings.filter(shouldSuspend).map((f) => f.id));
 
   if (siblingIds.size === 0) return filters;
 
   return filters.map((f) =>
-    siblingIds.has(f.id) ? { ...f, is_suspended: true } : f,
+    siblingIds.has(f.id) ? { ...f, isSuspended: true } : f,
   );
 }
 
@@ -139,7 +139,7 @@ export function applySuspensionOnUpdate(
 }
 
 /**
- * Toggle `is_suspended` on the filter with the given id.
+ * Toggle `isSuspended` on the filter with the given id.
  *
  * When unsuspending (going from suspended → active), sibling suspension
  * rules are applied. When suspending, no sibling rules fire.
@@ -157,7 +157,7 @@ export function applyToggleSuspension(
   }
 
   const filter = filters[index];
-  const willBeActive = filter.is_suspended; // toggling: if currently suspended, will become active
+  const willBeActive = filter.isSuspended; // toggling: if currently suspended, will become active
 
   // Apply sibling suspension only when unsuspending (becoming active)
   let result: QueryFilterState[];
@@ -174,7 +174,7 @@ export function applyToggleSuspension(
 
   // Toggle the target filter
   result = result.map((f) =>
-    f.id === filterId ? { ...f, is_suspended: !f.is_suspended } : f,
+    f.id === filterId ? { ...f, isSuspended: !f.isSuspended } : f,
   );
 
   return result;
@@ -184,8 +184,8 @@ export function applyToggleSuspension(
  * Replace-filters logic: suspend all existing filters, then for each new
  * filter either unsuspend a matching existing filter or create a new one.
  *
- * A "match" requires identical `key`, `value`, `is_negated`, and
- * `is_wildcarded`. New entries can be `QueryFilterState` objects (with `id`)
+ * A "match" requires identical `key`, `value`, `isNegated`, and
+ * `isWildcarded`. New entries can be `QueryFilterState` objects (with `id`)
  * or `FilterInput`-like objects (without `id`), in which case `createFilter`
  * is used.
  *
@@ -204,30 +204,30 @@ export function applyReplaceLogic(
   ) => QueryFilterState,
 ): QueryFilterState[] {
   // Suspend all existing filters
-  const result = existing.map((f) => ({ ...f, is_suspended: true }));
+  const result = existing.map((f) => ({ ...f, isSuspended: true }));
 
   for (const newFilter of newFilters) {
     const isQueryFilterState = 'id' in newFilter;
 
     const isNegated = isQueryFilterState
-      ? (newFilter as QueryFilterState).is_negated
+      ? (newFilter as QueryFilterState).isNegated
       : !!(newFilter as { options?: Record<string, unknown> }).options
-          ?.is_negated;
+          ?.isNegated;
     const isWildcarded = isQueryFilterState
-      ? (newFilter as QueryFilterState).is_wildcarded
+      ? (newFilter as QueryFilterState).isWildcarded
       : !!(newFilter as { options?: Record<string, unknown> }).options
-          ?.is_wildcarded;
+          ?.isWildcarded;
 
     const copyIndex = result.findIndex(
       (f) =>
         f.key === newFilter.key &&
         f.value === newFilter.value &&
-        f.is_negated === isNegated &&
-        f.is_wildcarded === isWildcarded,
+        f.isNegated === isNegated &&
+        f.isWildcarded === isWildcarded,
     );
 
     if (copyIndex >= 0) {
-      result[copyIndex] = { ...result[copyIndex], is_suspended: false };
+      result[copyIndex] = { ...result[copyIndex], isSuspended: false };
     } else if (isQueryFilterState) {
       result.push({ ...(newFilter as QueryFilterState) });
     } else {

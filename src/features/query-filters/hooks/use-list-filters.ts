@@ -9,8 +9,8 @@ export function useListFilters() {
   return useMemo(
     () => ({
       all: filters,
-      active: filters.filter((f) => !f.is_suspended),
-      suspended: filters.filter((f) => f.is_suspended),
+      active: filters.filter((f) => !f.isSuspended),
+      suspended: filters.filter((f) => f.isSuspended),
     }),
     [filters],
   );

@@ -471,9 +471,9 @@ function mapPersistedToFilterState(
   return {
     key: filter.id,
     value: filter.value,
-    is_suspended: false,
-    is_negated: filter.negated,
-    is_wildcarded: filter.id === 'es_filter' ? false : !filter.fullString,
+    isSuspended: false,
+    isNegated: filter.negated,
+    isWildcarded: filter.id === 'es_filter' ? false : !filter.fullString,
   };
 }
 

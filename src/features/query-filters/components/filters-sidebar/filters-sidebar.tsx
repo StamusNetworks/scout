@@ -385,7 +385,7 @@ export const FiltersSideBar = () => {
               >
                 <SideBarSubHeader>Active filters</SideBarSubHeader>
                 {queryFilters
-                  .filter((item) => !item.is_suspended)
+                  .filter((item) => !item.isSuspended)
                   .map((item) => {
                     const def = getFilterDef(item.key);
                     return (
@@ -427,7 +427,7 @@ export const FiltersSideBar = () => {
                   </Button>
                 </Row>
                 {queryFilters
-                  .filter((item) => item.is_suspended)
+                  .filter((item) => item.isSuspended)
                   .map((item) => (
                     <Reorder.Item
                       key={item.id}

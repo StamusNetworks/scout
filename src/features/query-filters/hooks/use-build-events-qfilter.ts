@@ -39,7 +39,7 @@ export function useBuildEventsQfilter(
     if (typeof filterExtension === 'string') {
       const activeFilters = queryFilters
         .filter(eventFilter)
-        .filter((f) => !f.is_suspended);
+        .filter((f) => !f.isSuspended);
       const filterString = qfBuilder.toQFString(
         activeFilters,
         options.tags ? alertTags : undefined,
@@ -74,7 +74,7 @@ export function useBuildEventsQfilter(
     const allExtension = [...extension, ...filterExtension];
     return qfBuilder.toQFString(
       [
-        ...queryFilters.filter(eventFilter).filter((f) => !f.is_suspended),
+        ...queryFilters.filter(eventFilter).filter((f) => !f.isSuspended),
         ...allExtension.filter(eventFilter),
       ],
       options.tags ? alertTags : undefined,

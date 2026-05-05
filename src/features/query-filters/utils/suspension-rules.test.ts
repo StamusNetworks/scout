@@ -21,9 +21,9 @@ function makeFilter(
   return {
     id: `filter-${nextId++}`,
     value: 'default-value',
-    is_suspended: false,
-    is_negated: false,
-    is_wildcarded: false,
+    isSuspended: false,
+    isNegated: false,
+    isWildcarded: false,
     ...overrides,
   };
 }
@@ -47,8 +47,8 @@ describe('applySuspensionOnAdd', () => {
 
     const result = applySuspensionOnAdd(existing, newFilter);
 
-    expect(result[0].is_suspended).toBe(true); // sibling with same key
-    expect(result[1].is_suspended).toBe(false); // different key, untouched
+    expect(result[0].isSuspended).toBe(true); // sibling with same key
+    expect(result[1].isSuspended).toBe(false); // different key, untouched
   });
 
   it('does NOT suspend for keys in AUTHORIZE_MULTIPLE_FILTERS', () => {
@@ -58,21 +58,21 @@ describe('applySuspensionOnAdd', () => {
 
       const result = applySuspensionOnAdd(existing, newFilter);
 
-      expect(result[0].is_suspended).toBe(false);
+      expect(result[0].isSuspended).toBe(false);
     }
   });
 
   it('does NOT suspend negated siblings', () => {
     const existing = [
-      makeFilter({ key: 'src_ip', value: '10.0.0.1', is_negated: true }),
-      makeFilter({ key: 'src_ip', value: '10.0.0.2', is_negated: false }),
+      makeFilter({ key: 'src_ip', value: '10.0.0.1', isNegated: true }),
+      makeFilter({ key: 'src_ip', value: '10.0.0.2', isNegated: false }),
     ];
     const newFilter = makeFilter({ key: 'src_ip', value: '10.0.0.3' });
 
     const result = applySuspensionOnAdd(existing, newFilter);
 
-    expect(result[0].is_suspended).toBe(false); // negated sibling, not suspended
-    expect(result[1].is_suspended).toBe(true); // non-negated sibling, suspended
+    expect(result[0].isSuspended).toBe(false); // negated sibling, not suspended
+    expect(result[1].isSuspended).toBe(true); // non-negated sibling, suspended
   });
 
   it('does NOT suspend when the new filter is negated', () => {
@@ -80,12 +80,12 @@ describe('applySuspensionOnAdd', () => {
     const newFilter = makeFilter({
       key: 'src_ip',
       value: '10.0.0.3',
-      is_negated: true,
+      isNegated: true,
     });
 
     const result = applySuspensionOnAdd(existing, newFilter);
 
-    expect(result[0].is_suspended).toBe(false);
+    expect(result[0].isSuspended).toBe(false);
   });
 
   it('does NOT suspend when there are no siblings', () => {
@@ -94,7 +94,7 @@ describe('applySuspensionOnAdd', () => {
 
     const result = applySuspensionOnAdd(existing, newFilter);
 
-    expect(result[0].is_suspended).toBe(false);
+    expect(result[0].isSuspended).toBe(false);
   });
 
   it('when wildcarded + text type, only suspends non-wildcarded siblings', () => {
@@ -102,25 +102,25 @@ describe('applySuspensionOnAdd', () => {
       makeFilter({
         key: 'src_ip',
         value: '10.0.0.1',
-        is_wildcarded: true,
+        isWildcarded: true,
       }),
       makeFilter({
         key: 'src_ip',
         value: '10.0.0.2',
-        is_wildcarded: false,
+        isWildcarded: false,
       }),
     ];
     const newFilter = makeFilter({
       key: 'src_ip',
       value: '10.*',
-      is_wildcarded: true,
+      isWildcarded: true,
     });
 
     const types = { src_ip: { type: 'text' as const } };
     const result = applySuspensionOnAdd(existing, newFilter, types);
 
-    expect(result[0].is_suspended).toBe(false); // wildcarded sibling, not suspended
-    expect(result[1].is_suspended).toBe(true); // non-wildcarded sibling, suspended
+    expect(result[0].isSuspended).toBe(false); // wildcarded sibling, not suspended
+    expect(result[1].isSuspended).toBe(true); // non-wildcarded sibling, suspended
   });
 
   it('when wildcarded + non-text type, suspends all non-negated siblings', () => {
@@ -128,25 +128,25 @@ describe('applySuspensionOnAdd', () => {
       makeFilter({
         key: 'src_ip',
         value: '10.0.0.1',
-        is_wildcarded: true,
+        isWildcarded: true,
       }),
       makeFilter({
         key: 'src_ip',
         value: '10.0.0.2',
-        is_wildcarded: false,
+        isWildcarded: false,
       }),
     ];
     const newFilter = makeFilter({
       key: 'src_ip',
       value: '10.*',
-      is_wildcarded: true,
+      isWildcarded: true,
     });
 
     const types = { src_ip: { type: 'keyword' as const } };
     const result = applySuspensionOnAdd(existing, newFilter, types);
 
-    expect(result[0].is_suspended).toBe(true);
-    expect(result[1].is_suspended).toBe(true);
+    expect(result[0].isSuspended).toBe(true);
+    expect(result[1].isSuspended).toBe(true);
   });
 
   it('returns a new array without mutating the original', () => {
@@ -156,7 +156,7 @@ describe('applySuspensionOnAdd', () => {
     const result = applySuspensionOnAdd(existing, newFilter);
 
     expect(result).not.toBe(existing);
-    expect(existing[0].is_suspended).toBe(false); // original not mutated
+    expect(existing[0].isSuspended).toBe(false); // original not mutated
   });
 });
 
@@ -173,14 +173,14 @@ describe('applyDeduplication', () => {
     const replacement = makeFilter({
       key: 'src_ip',
       value: '10.0.0.1',
-      is_suspended: true,
+      isSuspended: true,
     });
 
     const result = applyDeduplication(existing, replacement);
 
     expect(result).toHaveLength(2);
     expect(result[0].key).toBe('src_ip');
-    expect(result[0].is_suspended).toBe(true);
+    expect(result[0].isSuspended).toBe(true);
     expect(result[0].id).toBe(replacement.id); // replaced with new filter
   });
 
@@ -225,8 +225,8 @@ describe('applySuspensionOnUpdate', () => {
     const result = applySuspensionOnUpdate(filters, update);
 
     expect(result[0].value).toBe('10.0.0.99'); // updated
-    expect(result[1].is_suspended).toBe(true); // sibling suspended
-    expect(result[2].is_suspended).toBe(false); // different key, not suspended
+    expect(result[1].isSuspended).toBe(true); // sibling suspended
+    expect(result[2].isSuspended).toBe(false); // different key, not suspended
   });
 
   it('returns original filters unchanged when filter id is not found', () => {
@@ -249,12 +249,12 @@ describe('applySuspensionOnUpdate', () => {
     ];
     const update: QueryFilterState = {
       ...filters[0],
-      is_negated: true,
+      isNegated: true,
     };
 
     const result = applySuspensionOnUpdate(filters, update);
 
-    expect(result[1].is_suspended).toBe(false);
+    expect(result[1].isSuspended).toBe(false);
   });
 
   it('does NOT suspend when key is in AUTHORIZE_MULTIPLE_FILTERS', () => {
@@ -266,7 +266,7 @@ describe('applySuspensionOnUpdate', () => {
 
     const result = applySuspensionOnUpdate(filters, update);
 
-    expect(result[1].is_suspended).toBe(false);
+    expect(result[1].isSuspended).toBe(false);
   });
 
   it('when wildcarded + text type, only suspends non-wildcarded siblings', () => {
@@ -274,30 +274,30 @@ describe('applySuspensionOnUpdate', () => {
       makeFilter({
         key: 'src_ip',
         value: '10.*',
-        is_wildcarded: true,
+        isWildcarded: true,
       }),
       makeFilter({
         key: 'src_ip',
         value: '10.0.0.1',
-        is_wildcarded: false,
+        isWildcarded: false,
       }),
       makeFilter({
         key: 'src_ip',
         value: '192.*',
-        is_wildcarded: true,
+        isWildcarded: true,
       }),
     ];
     const update: QueryFilterState = {
       ...filters[0],
       value: '10.0.*',
-      is_wildcarded: true,
+      isWildcarded: true,
     };
 
     const types = { src_ip: { type: 'text' as const } };
     const result = applySuspensionOnUpdate(filters, update, types);
 
-    expect(result[1].is_suspended).toBe(true); // non-wildcarded sibling
-    expect(result[2].is_suspended).toBe(false); // wildcarded sibling
+    expect(result[1].isSuspended).toBe(true); // non-wildcarded sibling
+    expect(result[2].isSuspended).toBe(false); // wildcarded sibling
   });
 
   it('merges the update fields into the existing filter', () => {
@@ -305,13 +305,13 @@ describe('applySuspensionOnUpdate', () => {
     const update: QueryFilterState = {
       ...filters[0],
       value: '10.0.0.99',
-      is_negated: true,
+      isNegated: true,
     };
 
     const result = applySuspensionOnUpdate(filters, update);
 
     expect(result[0].value).toBe('10.0.0.99');
-    expect(result[0].is_negated).toBe(true);
+    expect(result[0].isNegated).toBe(true);
     expect(result[0].id).toBe(filters[0].id);
   });
 });
@@ -321,46 +321,46 @@ describe('applySuspensionOnUpdate', () => {
 // ---------------------------------------------------------------------------
 
 describe('applyToggleSuspension', () => {
-  it('toggles is_suspended from false to true', () => {
-    const filters = [makeFilter({ key: 'src_ip', is_suspended: false })];
+  it('toggles isSuspended from false to true', () => {
+    const filters = [makeFilter({ key: 'src_ip', isSuspended: false })];
 
     const result = applyToggleSuspension(filters, filters[0].id);
 
-    expect(result[0].is_suspended).toBe(true);
+    expect(result[0].isSuspended).toBe(true);
   });
 
-  it('toggles is_suspended from true to false', () => {
-    const filters = [makeFilter({ key: 'src_ip', is_suspended: true })];
+  it('toggles isSuspended from true to false', () => {
+    const filters = [makeFilter({ key: 'src_ip', isSuspended: true })];
 
     const result = applyToggleSuspension(filters, filters[0].id);
 
-    expect(result[0].is_suspended).toBe(false);
+    expect(result[0].isSuspended).toBe(false);
   });
 
   it('applies sibling suspension when unsuspending (toggling from true to false)', () => {
     const filters = [
-      makeFilter({ key: 'src_ip', value: '10.0.0.1', is_suspended: true }),
-      makeFilter({ key: 'src_ip', value: '10.0.0.2', is_suspended: false }),
+      makeFilter({ key: 'src_ip', value: '10.0.0.1', isSuspended: true }),
+      makeFilter({ key: 'src_ip', value: '10.0.0.2', isSuspended: false }),
     ];
 
     // Unsuspend the first filter — should trigger sibling suspension
     const result = applyToggleSuspension(filters, filters[0].id);
 
-    expect(result[0].is_suspended).toBe(false); // toggled to unsuspended
-    expect(result[1].is_suspended).toBe(true); // sibling suspended
+    expect(result[0].isSuspended).toBe(false); // toggled to unsuspended
+    expect(result[1].isSuspended).toBe(true); // sibling suspended
   });
 
   it('does NOT apply sibling suspension when suspending (toggling from false to true)', () => {
     const filters = [
-      makeFilter({ key: 'src_ip', value: '10.0.0.1', is_suspended: false }),
-      makeFilter({ key: 'src_ip', value: '10.0.0.2', is_suspended: false }),
+      makeFilter({ key: 'src_ip', value: '10.0.0.1', isSuspended: false }),
+      makeFilter({ key: 'src_ip', value: '10.0.0.2', isSuspended: false }),
     ];
 
     // Suspend the first filter — should NOT trigger sibling suspension
     const result = applyToggleSuspension(filters, filters[0].id);
 
-    expect(result[0].is_suspended).toBe(true); // toggled to suspended
-    expect(result[1].is_suspended).toBe(false); // sibling untouched
+    expect(result[0].isSuspended).toBe(true); // toggled to suspended
+    expect(result[1].isSuspended).toBe(false); // sibling untouched
   });
 
   it('returns original filters when filter id is not found', () => {
@@ -376,28 +376,28 @@ describe('applyToggleSuspension', () => {
       makeFilter({
         key: 'src_ip',
         value: '10.0.0.1',
-        is_suspended: true,
-        is_negated: true,
+        isSuspended: true,
+        isNegated: true,
       }),
-      makeFilter({ key: 'src_ip', value: '10.0.0.2', is_suspended: false }),
+      makeFilter({ key: 'src_ip', value: '10.0.0.2', isSuspended: false }),
     ];
 
     const result = applyToggleSuspension(filters, filters[0].id);
 
-    expect(result[0].is_suspended).toBe(false); // toggled
-    expect(result[1].is_suspended).toBe(false); // not suspended, filter is negated
+    expect(result[0].isSuspended).toBe(false); // toggled
+    expect(result[1].isSuspended).toBe(false); // not suspended, filter is negated
   });
 
   it('does NOT suspend siblings for AUTHORIZE_MULTIPLE_FILTERS keys', () => {
     const filters = [
-      makeFilter({ key: 'msg', value: 'hello', is_suspended: true }),
-      makeFilter({ key: 'msg', value: 'world', is_suspended: false }),
+      makeFilter({ key: 'msg', value: 'hello', isSuspended: true }),
+      makeFilter({ key: 'msg', value: 'world', isSuspended: false }),
     ];
 
     const result = applyToggleSuspension(filters, filters[0].id);
 
-    expect(result[0].is_suspended).toBe(false); // toggled
-    expect(result[1].is_suspended).toBe(false); // not suspended (msg is authorized)
+    expect(result[0].isSuspended).toBe(false); // toggled
+    expect(result[1].isSuspended).toBe(false); // not suspended (msg is authorized)
   });
 });
 
@@ -410,18 +410,18 @@ describe('applyReplaceLogic', () => {
     key: string,
     value: string | number,
     options?: {
-      is_negated?: boolean;
-      is_wildcarded?: boolean;
-      is_suspended?: boolean;
+      isNegated?: boolean;
+      isWildcarded?: boolean;
+      isSuspended?: boolean;
       role?: string;
     },
   ): QueryFilterState => ({
     id: `new-${nextId++}`,
     key,
     value,
-    is_negated: options?.is_negated ?? false,
-    is_wildcarded: options?.is_wildcarded ?? false,
-    is_suspended: options?.is_suspended ?? false,
+    isNegated: options?.isNegated ?? false,
+    isWildcarded: options?.isWildcarded ?? false,
+    isSuspended: options?.isSuspended ?? false,
     role: options?.role,
   });
 
@@ -434,7 +434,7 @@ describe('applyReplaceLogic', () => {
 
     const result = applyReplaceLogic(existing, newFilters, createFilter);
 
-    expect(result.every((f) => f.is_suspended)).toBe(true);
+    expect(result.every((f) => f.isSuspended)).toBe(true);
   });
 
   it('unsuspends matching existing filters instead of creating new ones', () => {
@@ -452,11 +452,11 @@ describe('applyReplaceLogic', () => {
     const srcFilter = result.find(
       (f) => f.key === 'src_ip' && f.value === '10.0.0.1',
     );
-    expect(srcFilter?.is_suspended).toBe(false);
+    expect(srcFilter?.isSuspended).toBe(false);
 
     // dest_ip filter should remain suspended
     const destFilter = result.find((f) => f.key === 'dest_ip');
-    expect(destFilter?.is_suspended).toBe(true);
+    expect(destFilter?.isSuspended).toBe(true);
   });
 
   it('creates new filters for non-matching entries', () => {
@@ -469,17 +469,17 @@ describe('applyReplaceLogic', () => {
 
     expect(result).toHaveLength(2);
     expect(result[0].key).toBe('src_ip');
-    expect(result[0].is_suspended).toBe(true);
+    expect(result[0].isSuspended).toBe(true);
     expect(result[1].key).toBe('dest_ip');
-    expect(result[1].is_suspended).toBe(false);
+    expect(result[1].isSuspended).toBe(false);
   });
 
-  it('matches by key, value, is_negated, and is_wildcarded', () => {
+  it('matches by key, value, isNegated, and isWildcarded', () => {
     const existing = [
       makeFilter({
         key: 'src_ip',
         value: '10.0.0.1',
-        is_negated: true,
+        isNegated: true,
       }),
     ];
     // Same key+value but NOT negated — should NOT match
@@ -487,14 +487,14 @@ describe('applyReplaceLogic', () => {
       makeFilter({
         key: 'src_ip',
         value: '10.0.0.1',
-        is_negated: false,
+        isNegated: false,
       }),
     ];
 
     const result = applyReplaceLogic(existing, newFilters, createFilter);
 
     // existing remains suspended (no match because negated differs)
-    expect(result[0].is_suspended).toBe(true);
+    expect(result[0].isSuspended).toBe(true);
     // new filter created
     expect(result).toHaveLength(2);
   });

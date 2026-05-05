@@ -51,7 +51,7 @@ export function QFBuilder(
   function toHostIdQFString(queryFilters?: Omit<QueryFilterState, 'id'>[]) {
     if (!queryFilters) return undefined;
     const hostIdFilters = queryFilters?.filter(
-      (f) => !f.is_suspended && f.key.startsWith(HOST_ID_KEY_PREFIX),
+      (f) => !f.isSuspended && f.key.startsWith(HOST_ID_KEY_PREFIX),
     );
     return filtersToStringArray(hostIdFilters, definitions, suffix).join(
       ' AND ',
@@ -65,9 +65,9 @@ export function QFBuilder(
     value: string | number,
     options?: {
       role?: string;
-      is_negated?: boolean;
-      is_suspended?: boolean;
-      is_wildcarded?: boolean;
+      isNegated?: boolean;
+      isSuspended?: boolean;
+      isWildcarded?: boolean;
     },
   ): QueryFilterState {
     return {
@@ -75,9 +75,9 @@ export function QFBuilder(
       key,
       value,
       role: options?.role,
-      is_suspended: options?.is_suspended ?? false,
-      is_negated: options?.is_negated ?? false,
-      is_wildcarded: alwaysWildcarded.has(key) || !!options?.is_wildcarded,
+      isSuspended: options?.isSuspended ?? false,
+      isNegated: options?.isNegated ?? false,
+      isWildcarded: alwaysWildcarded.has(key) || !!options?.isWildcarded,
     };
   }
   return {
@@ -87,8 +87,8 @@ export function QFBuilder(
   };
 }
 
-const getStringifierFn = (definition: CombinedDef, is_wildcarded: boolean) => {
-  const matchType = is_wildcarded
+const getStringifierFn = (definition: CombinedDef, isWildcarded: boolean) => {
+  const matchType = isWildcarded
     ? 'word'
     : QueryFilterType[definition.type!]?.match[0] || 'exact';
 
@@ -120,18 +120,15 @@ const filtersToStringArray = (
 
   queryFilters?.forEach((filterState) => {
     const filterDef = definitions[filterState.key] ?? {};
-    const stringifierFn = getStringifierFn(
-      filterDef,
-      filterState.is_wildcarded,
-    );
+    const stringifierFn = getStringifierFn(filterDef, filterState.isWildcarded);
     const escapedValue = getEscapedValue(filterDef, filterState.value);
     qfilter.push(
       stringifierFn({
         key: filterState.key,
         value: escapedValue,
         keyword: suffix,
-        negated: filterState.is_negated,
-        wildcarded: filterState.is_wildcarded,
+        negated: filterState.isNegated,
+        wildcarded: filterState.isWildcarded,
       }),
     );
   });

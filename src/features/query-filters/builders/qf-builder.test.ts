@@ -4,30 +4,30 @@ import { QFBuilder } from './qf-builder';
 
 describe('QFilter Utils', () => {
   describe('createFilter', () => {
-    it('should force is_wildcarded to true for msg filters', () => {
+    it('should force isWildcarded to true for msg filters', () => {
       const { Builder } = init();
       const filter = Builder.createFilter('msg', 'test');
-      expect(filter.is_wildcarded).toBe(true);
+      expect(filter.isWildcarded).toBe(true);
     });
 
-    it('should force is_wildcarded to true for content filters', () => {
+    it('should force isWildcarded to true for content filters', () => {
       const { Builder } = init();
       const filter = Builder.createFilter('content', 'test');
-      expect(filter.is_wildcarded).toBe(true);
+      expect(filter.isWildcarded).toBe(true);
     });
 
-    it('should force is_wildcarded to true for msg even when explicitly set to false', () => {
+    it('should force isWildcarded to true for msg even when explicitly set to false', () => {
       const { Builder } = init();
       const filter = Builder.createFilter('msg', 'test', {
-        is_wildcarded: false,
+        isWildcarded: false,
       });
-      expect(filter.is_wildcarded).toBe(true);
+      expect(filter.isWildcarded).toBe(true);
     });
 
-    it('should not force is_wildcarded for other keys', () => {
+    it('should not force isWildcarded for other keys', () => {
       const { Builder } = init();
       const filter = Builder.createFilter('src_ip', '192.168.1.1');
-      expect(filter.is_wildcarded).toBe(false);
+      expect(filter.isWildcarded).toBe(false);
     });
   });
 

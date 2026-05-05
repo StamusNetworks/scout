@@ -33,9 +33,7 @@ export const useInitialValues = (
               : getInitialFilters(filters)
                   .filter((f) => data?.fields.includes(f.key))
                   .filter((f) =>
-                    data?.operators.includes('different')
-                      ? true
-                      : !f.is_negated,
+                    data?.operators.includes('different') ? true : !f.isNegated,
                   ),
             rulesets: filterAction?.rulesets ?? [],
             comment: filterAction?.comment ?? '',
@@ -45,11 +43,11 @@ export const useInitialValues = (
 };
 
 const sortBySuspended = (filters: QueryFilterState[]) => [
-  ...filters.filter((f) => !f.is_suspended),
-  ...filters.filter((f) => f.is_suspended),
+  ...filters.filter((f) => !f.isSuspended),
+  ...filters.filter((f) => f.isSuspended),
 ];
 const addEnabled = (filters: QueryFilterState[]) =>
-  filters.map((f) => ({ ...f, enabled: f.is_suspended ? false : true }));
+  filters.map((f) => ({ ...f, enabled: f.isSuspended ? false : true }));
 
 const getInitialFilters = pipe(sortBySuspended, addEnabled);
 
@@ -59,8 +57,8 @@ export const createFiltersFromFilterDefs = (
 ) =>
   filterDefs.map((f) => ({
     ...QFBuilder.createFilter(f.key, f.value, {
-      is_negated: f.operator === 'different',
-      is_wildcarded: !f.full_string,
+      isNegated: f.operator === 'different',
+      isWildcarded: !f.full_string,
     }),
   }));
 const getFiltersFromFilterAction = pipe(

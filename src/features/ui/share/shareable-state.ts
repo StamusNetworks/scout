@@ -118,12 +118,12 @@ export const buildShareableState = (
   time: buildTimePayload(dates),
   tags: toSerializedFilterFlags(flags),
   filters: queryFilters
-    .filter((f) => !f.is_suspended)
+    .filter((f) => !f.isSuspended)
     .map((f) =>
       Object.assign(
         { key: f.key, value: f.value },
-        f.is_negated && { negated: true },
-        f.is_wildcarded && { wildcarded: true },
+        f.isNegated && { negated: true },
+        f.isWildcarded && { wildcarded: true },
       ),
     ),
 });

@@ -6,8 +6,8 @@ export const baseFilterActionSchema = z.object({
       z.object({
         key: z.string(),
         value: z.string().or(z.number()),
-        is_negated: z.boolean(),
-        is_wildcarded: z.boolean(),
+        isNegated: z.boolean(),
+        isWildcarded: z.boolean(),
         enabled: z.boolean(),
       }),
     )

@@ -22,7 +22,7 @@ export function useNetworkEventsQfilter(): string {
   const qfilter = QFBuilder.toQFString(
     filters.filter(
       (f) =>
-        !f.is_suspended &&
+        !f.isSuspended &&
         definitions[f.key]?.category === FilterCategory.EVENT &&
         !startsWithOneOf(f.key, ['alert.', 'stamus.', 'discovery.']),
     ),

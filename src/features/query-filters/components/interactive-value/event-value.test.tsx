@@ -34,8 +34,8 @@ describe('Event Value', () => {
     expect(filters[0]).toMatchObject({
       key: 'src_ip',
       value: '10.0.0.1',
-      is_negated: false,
-      is_suspended: false,
+      isNegated: false,
+      isSuspended: false,
     });
   });
 });

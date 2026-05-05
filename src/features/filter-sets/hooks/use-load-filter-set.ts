@@ -45,8 +45,8 @@ export const useLoadFilterSet = () => {
 
       const newFilters = filterSet.filters.map((filter) =>
         qfBuilder.createFilter(filter.id, filter.value as string, {
-          is_wildcarded: filter.id === 'es_filter' ? false : !filter.fullString,
-          is_negated: filter.negated,
+          isWildcarded: filter.id === 'es_filter' ? false : !filter.fullString,
+          isNegated: filter.negated,
         }),
       );
       queryFiltersRepo.set(newFilters);

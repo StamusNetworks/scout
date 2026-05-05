@@ -35,7 +35,7 @@ export const SignaturesTable = () => {
   );
   const qfilters = useQueryFilters();
   const sidFilter = qfilters
-    .filter((f) => !f.is_suspended)
+    .filter((f) => !f.isSuspended)
     .find((f) => f.key === 'alert.signature_id')?.value;
   const { qfilter, ...params } = useGlobalQueryParams([
     'tenant',

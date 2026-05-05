@@ -150,7 +150,7 @@ export const handleSubmit = (
   createFilter({
     key: key!,
     value: value,
-    options: { is_negated: negated, is_wildcarded: wildcarded },
+    options: { isNegated: negated, isWildcarded: wildcarded },
   });
   closeModal();
 };

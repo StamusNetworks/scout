@@ -44,8 +44,8 @@ export type FilterSet = {
 export type FilterSetFilterInput = {
   key: string;
   value: string | number;
-  is_negated?: boolean;
-  is_wildcarded?: boolean;
+  isNegated?: boolean;
+  isWildcarded?: boolean;
 };
 
 export type FilterSetCreateInput = {

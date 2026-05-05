@@ -80,16 +80,16 @@ describe('FilterActionRowActions - Convert to filters', () => {
     expect(filters[0]).toMatchObject({
       key: 'src_ip',
       value: '10.0.0.1',
-      is_negated: false,
-      is_wildcarded: false,
-      is_suspended: false,
+      isNegated: false,
+      isWildcarded: false,
+      isSuspended: false,
     });
     expect(filters[1]).toMatchObject({
       key: 'dest_ip',
       value: '10.0.0.2',
-      is_negated: true,
-      is_wildcarded: true,
-      is_suspended: false,
+      isNegated: true,
+      isWildcarded: true,
+      isSuspended: false,
     });
   });
 });

@@ -56,8 +56,8 @@ const formSchema = z.object({
     z.object({
       key: z.string(),
       value: z.string().or(z.number()),
-      is_negated: z.boolean(),
-      is_wildcarded: z.boolean(),
+      isNegated: z.boolean(),
+      isWildcarded: z.boolean(),
       enabled: z.boolean(),
     }),
   ),
@@ -81,7 +81,7 @@ const getDefaultValues = (
   },
   filters: filters.map((item) => ({
     ...item,
-    enabled: !item.is_suspended,
+    enabled: !item.isSuspended,
   })),
 });
 
@@ -133,8 +133,8 @@ export const SaveFilterSetForm = ({
       filters: data.filters.map((item) => ({
         key: item.key,
         value: item.value,
-        is_negated: item.is_negated,
-        is_wildcarded: item.is_wildcarded,
+        isNegated: item.isNegated,
+        isWildcarded: item.isWildcarded,
       })),
     })
       .unwrap()

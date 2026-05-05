@@ -251,13 +251,13 @@ const useSelectedNode = () => {
   const filters = useQueryFilters();
   return useMemo(() => {
     const filter = filters.find(
-      (f) => f.role === 'attack_surface' && f.is_suspended === false,
+      (f) => f.role === 'attack_surface' && f.isSuspended === false,
     );
     if (!filter) return 'root';
     if (
-      filter.is_negated &&
+      filter.isNegated &&
       filter.value === '*' &&
-      filter.is_wildcarded === true
+      filter.isWildcarded === true
     ) {
       return 'Undefined Network';
     }

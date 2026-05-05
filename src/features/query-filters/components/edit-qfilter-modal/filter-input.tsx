@@ -22,8 +22,8 @@ import { useQueryFilterDefinition } from '../../hooks/use-filters-definitions';
 type FilterState = {
   key: string;
   value: string | number;
-  is_negated: boolean;
-  is_wildcarded: boolean;
+  isNegated: boolean;
+  isWildcarded: boolean;
   enabled: boolean;
 };
 
@@ -44,11 +44,11 @@ export const FilterInput = ({
 
   const [enabled, setEnabled] = useState<boolean>(initialValue.enabled);
   const [value, setValue] = useState<string | number>(initialValue.value);
-  const [is_negated, setNegated] = useState<boolean>(
-    initialValue.is_negated || false,
+  const [isNegated, setNegated] = useState<boolean>(
+    initialValue.isNegated || false,
   );
-  const [is_wildcarded, setWildcarded] = useState<boolean>(
-    initialValue.is_wildcarded || false,
+  const [isWildcarded, setWildcarded] = useState<boolean>(
+    initialValue.isWildcarded || false,
   );
 
   // Use a ref to store the latest onValueChange callback to avoid infinite loops
@@ -57,17 +57,17 @@ export const FilterInput = ({
     onValueChangeRef.current = onValueChange;
   }, [onValueChange]);
 
-  const isValid = !is_wildcarded || !value.toString().includes(' ');
+  const isValid = !isWildcarded || !value.toString().includes(' ');
 
   useEffect(() => {
     onValueChangeRef.current({
       key: initialValue.key,
       enabled,
       value,
-      is_negated,
-      is_wildcarded,
+      isNegated,
+      isWildcarded,
     });
-  }, [enabled, value, is_negated, is_wildcarded, initialValue.key]);
+  }, [enabled, value, isNegated, isWildcarded, initialValue.key]);
 
   return (
     <Row className="flex grow items-center gap-3">
@@ -92,7 +92,7 @@ export const FilterInput = ({
       </Column>
       {isNegatable(initialValue.key) !== false && (
         <Tabs
-          defaultValue={initialValue.is_negated ? 'not' : 'is'}
+          defaultValue={initialValue.isNegated ? 'not' : 'is'}
           onValueChange={(value) => setNegated(value === 'not')}
         >
           <TabsList className="h-fit">
@@ -117,9 +117,9 @@ export const FilterInput = ({
         <Button
           type="button"
           className="size-5 px-0"
-          variant={is_wildcarded ? 'default' : 'outline'}
+          variant={isWildcarded ? 'default' : 'outline'}
           size="none"
-          onClick={() => setWildcarded(!is_wildcarded)}
+          onClick={() => setWildcarded(!isWildcarded)}
           disabled={disabled || !edit}
         >
           <Asterisk className="h-4 w-4" />

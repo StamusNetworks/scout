@@ -133,7 +133,7 @@ export const ContextMenuContent = ({
           createFilter({
             key: query_key,
             value,
-            options: { is_negated: true },
+            options: { isNegated: true },
           })
         }
       >

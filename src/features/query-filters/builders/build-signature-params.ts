@@ -23,7 +23,7 @@ export const buildSignatureParams = (
   filters: QueryFilterState[],
 ): SignatureParams | undefined => {
   const signatureFilters = filters
-    .filter((f) => !f.is_suspended)
+    .filter((f) => !f.isSuspended)
     .filter((f) => getFilterDef(f.key)?.category === FilterCategory.SIGNATURE);
 
   const appendCommaSeparated = (existing: string | undefined, value: string) =>
@@ -32,7 +32,7 @@ export const buildSignatureParams = (
   const signatureParams = signatureFilters.reduce((acc, curr) => {
     switch (curr.key) {
       case 'content':
-        if (curr.is_negated) {
+        if (curr.isNegated) {
           acc.not_in_content = appendCommaSeparated(
             acc.not_in_content,
             curr.value as string,
@@ -42,7 +42,7 @@ export const buildSignatureParams = (
         }
         break;
       case 'msg':
-        if (curr.is_negated) {
+        if (curr.isNegated) {
           acc.not_in_msg = appendCommaSeparated(
             acc.not_in_msg,
             curr.value as string,

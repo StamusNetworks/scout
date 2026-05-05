@@ -61,13 +61,36 @@ const persistedStateMigrations = {
       },
     };
   },
+  // v2: QueryFilterState renames snake_case fields to camelCase.
+  2: (state: any) => {
+    const queryFilters: unknown = state?.filters?.queryFilters?.queryFilters;
+    if (!Array.isArray(queryFilters)) return state;
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        queryFilters: {
+          ...state.filters.queryFilters,
+          queryFilters: queryFilters.map((f: any) => ({
+            id: f.id,
+            key: f.key,
+            value: f.value,
+            role: f.role,
+            isSuspended: f.isSuspended ?? f.is_suspended ?? false,
+            isNegated: f.isNegated ?? f.is_negated ?? false,
+            isWildcarded: f.isWildcarded ?? f.is_wildcarded ?? false,
+          })),
+        },
+      },
+    };
+  },
 };
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
 const persistConfig = {
   key: 'root',
   storage,
-  version: 1,
+  version: 2,
   migrate: createMigrate(persistedStateMigrations),
   whitelist: ['filters', 'pages', 'preferences', 'help', 'investigation'],
   stateReconciler: autoMergeLevel2,

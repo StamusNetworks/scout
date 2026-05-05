@@ -65,9 +65,9 @@ export type QueryFilterState = {
   id: string; // uuidv4: 10121e1a-c0e9-4d2a-a0a3-b0c4e0d0f0g0
   key: string; // signature.message
   value: string | number;
-  is_suspended: boolean;
-  is_negated: boolean;
-  is_wildcarded: boolean;
+  isSuspended: boolean;
+  isNegated: boolean;
+  isWildcarded: boolean;
   role?: string;
 };
 
