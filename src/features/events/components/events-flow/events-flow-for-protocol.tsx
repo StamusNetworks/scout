@@ -30,8 +30,8 @@ import { ContextMenuContent } from '@/features/query-filters/components/interact
 import { useCreateFilter } from '@/features/query-filters/hooks/use-create-filter';
 import { useESMapping } from '@/features/query-filters/hooks/use-es-mapping';
 
-import type { ProtoColumn } from '../events-flow.columns';
-import protoColumns from '../events-flow.columns';
+import type { ProtoColumn } from '../../definitions/events-flow.columns';
+import protoColumns from '../../definitions/events-flow.columns';
 
 export interface EventsFlowForProtocolProps {
   appProto: string;

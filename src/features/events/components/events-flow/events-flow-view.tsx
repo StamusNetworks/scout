@@ -14,7 +14,7 @@ import { buildEventsFlowQfilter } from '@/features/events/builders/build-events-
 import { useGetProtocolsFromEventsQuery } from '@/features/events/common/events.api';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { EventsFlowForProtocol } from '../molecules/events-flow-for-protocol';
+import { EventsFlowForProtocol } from './events-flow-for-protocol';
 
 export function EventsFlowView() {
   const globalParams = useGlobalQueryParams(['dates', 'qfilter', 'tenant']);
