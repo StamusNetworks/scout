@@ -46,7 +46,7 @@ import { useUpdateEffect } from '@/common/lib/use-update-effect';
 import { useGetRulesetsQuery } from '@/features/detection-methods/rulesets.api';
 import { FilterInput } from '@/features/query-filters/components/edit-qfilter-modal/filter-input';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
-import { KIND_LABEL, ThreatForm, toThreat } from '@/features/threats';
+import { KIND_LABEL, ThreatForm } from '@/features/threats';
 import { useGetCustomThreatsQuery } from '@/features/threats/api/threats.api';
 import {
   KillChainKeys,
@@ -170,7 +170,8 @@ export const CreateEditDeclarationFilterActionForm = ({
         data:
           result.data &&
           values(result.data.entities).filter(
-            (threat) => threat.family_class === (isDoc ? 'doc' : 'dopv'),
+            (threat) =>
+              threat.kind === (isDoc ? 'compromise' : 'policyViolation'),
           ),
       }),
     },
@@ -340,7 +341,7 @@ export const CreateEditDeclarationFilterActionForm = ({
                       <SelectContent>
                         {threatOptions?.map((threat) => (
                           <SelectItem
-                            key={threat.pk}
+                            key={threat.id}
                             value={threat.name}
                           >
                             {threat.name}
@@ -394,12 +395,9 @@ export const CreateEditDeclarationFilterActionForm = ({
                       <DialogTitle>Edit custom {KIND_LABEL[kind]}</DialogTitle>
                       <ThreatForm
                         kind={kind}
-                        threat={(() => {
-                          const dto = threatOptions?.find(
-                            (threat) => threat.name === field.value,
-                          );
-                          return dto ? toThreat(dto) : undefined;
-                        })()}
+                        threat={threatOptions?.find(
+                          (threat) => threat.name === field.value,
+                        )}
                         onClose={handleCustomThreatMutationSuccess}
                       />
                     </DialogContent>

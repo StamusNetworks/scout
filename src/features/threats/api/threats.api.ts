@@ -11,33 +11,39 @@ import {
 import { API } from '@/store/api';
 import { applyOptimisticUpdateToAllCacheEntries } from '@/store/utils';
 
+import { ActiveThreat } from '../model/active-threat';
+import { ActiveThreatFamily } from '../model/active-threat-family';
 import { Threat as DomainThreat } from '../model/threat';
-import { ActiveThreatFamily } from './active-threat-family.dto';
-import { ActiveThreat } from './active-threat.dto';
-import { ThreatFamily } from './threat-family.dto';
+import { ThreatFamily } from '../model/threat-family';
+import { ActiveThreatFamily as ActiveThreatFamilyDto } from './active-threat-family.dto';
+import { toActiveThreatFamily } from './active-threat-family.transforms';
+import { ActiveThreat as ActiveThreatDto } from './active-threat.dto';
+import { toActiveThreat } from './active-threat.transforms';
+import { ThreatFamily as ThreatFamilyDto } from './threat-family.dto';
+import { toThreatFamily } from './threat-family.transforms';
 import { ThreatStatus } from './threat-status.dto';
 import { ThreatDto, ThreatPayloadDto } from './threat.dto';
 import { toThreat } from './threat.transforms';
 
 export type URLParams = Record<string, string>;
 
-const threatsAdapter = createEntityAdapter<ThreatDto, number>({
-  selectId: (threat) => threat.pk,
+const threatsAdapter = createEntityAdapter<DomainThreat, number>({
+  selectId: (threat) => threat.id,
 });
 const threatsInitialState = threatsAdapter.getInitialState();
 
-const customThreatsAdapter = createEntityAdapter<ThreatDto, number>({
-  selectId: (threat) => threat.pk,
+const customThreatsAdapter = createEntityAdapter<DomainThreat, number>({
+  selectId: (threat) => threat.id,
 });
 const customThreatsInitialState = customThreatsAdapter.getInitialState();
 
 const activeThreatsAdapter = createEntityAdapter<ActiveThreat, number>({
-  selectId: (threat) => threat.threat_id,
+  selectId: (threat) => threat.threatId,
 });
 const activeThreatsInitialState = activeThreatsAdapter.getInitialState();
 
 const threatFamiliesAdapter = createEntityAdapter<ThreatFamily, number>({
-  selectId: (threat) => threat.pk,
+  selectId: (family) => family.id,
 });
 const threatFamiliesInitialState = threatFamiliesAdapter.getInitialState();
 
@@ -45,7 +51,7 @@ const activeThreatFamiliesAdapter = createEntityAdapter<
   ActiveThreatFamily,
   number
 >({
-  selectId: (threat) => threat.pk,
+  selectId: (family) => family.id,
 });
 const activeThreatFamiliesInitialState =
   activeThreatFamiliesAdapter.getInitialState();
@@ -55,8 +61,7 @@ export const ThreatsAPI = API.injectEndpoints({
     // QUERIES
     getThreatFamilies: builder.query<
       EntityState<ThreatFamily, number>,
-      { family_class?: string; family_id?: string } & Partial<ThreatFamily> &
-        Tenant
+      { family_class?: string; family_id?: string } & Tenant
     >({
       query: (params) => ({
         url: `/appliances/threat_family/`,
@@ -66,10 +71,10 @@ export const ThreatsAPI = API.injectEndpoints({
           event_view: false,
         },
       }),
-      transformResponse(res: Paginated<ThreatFamily>) {
+      transformResponse(res: Paginated<ThreatFamilyDto>) {
         return threatFamiliesAdapter.setAll(
           threatFamiliesInitialState,
-          res.results,
+          res.results.map(toThreatFamily),
         );
       },
       providesTags: ['Reload', 'ThreatFamilies'],
@@ -85,15 +90,15 @@ export const ThreatsAPI = API.injectEndpoints({
           ...buildQueryParams(params),
         },
       }),
-      transformResponse(res: ActiveThreatFamily[]) {
+      transformResponse(res: ActiveThreatFamilyDto[]) {
         return activeThreatFamiliesAdapter.setAll(
           activeThreatFamiliesInitialState,
-          res,
+          res.map(toActiveThreatFamily),
         );
       },
       providesTags: ['Reload', 'ThreatFamilies'],
     }),
-    getSTIThreats: builder.query<EntityState<ThreatDto, number>, void>({
+    getSTIThreats: builder.query<EntityState<DomainThreat, number>, void>({
       query: () => ({
         url: `/api/v2/appliances/threats/`,
         method: 'GET',
@@ -103,11 +108,14 @@ export const ThreatsAPI = API.injectEndpoints({
         },
       }),
       transformResponse(res: Paginated<ThreatDto>) {
-        return threatsAdapter.setAll(threatsInitialState, res.results);
+        return threatsAdapter.setAll(
+          threatsInitialState,
+          res.results.map(toThreat),
+        );
       },
       providesTags: ['Threats'],
     }),
-    getCustomThreats: builder.query<EntityState<ThreatDto, number>, Tenant>({
+    getCustomThreats: builder.query<EntityState<DomainThreat, number>, Tenant>({
       query: (params) => ({
         url: `/api/v2/appliances/threats/`,
         method: 'GET',
@@ -119,7 +127,7 @@ export const ThreatsAPI = API.injectEndpoints({
       transformResponse(res: Paginated<ThreatDto>) {
         return customThreatsAdapter.setAll(
           customThreatsInitialState,
-          res.results,
+          res.results.map(toThreat),
         );
       },
       providesTags: ['CustomThreats'],
@@ -145,13 +153,16 @@ export const ThreatsAPI = API.injectEndpoints({
           page_size: 10000,
         },
       }),
-      transformResponse(res: ActiveThreat[]) {
-        return activeThreatsAdapter.setAll(activeThreatsInitialState, res);
+      transformResponse(res: ActiveThreatDto[]) {
+        return activeThreatsAdapter.setAll(
+          activeThreatsInitialState,
+          res.map(toActiveThreat),
+        );
       },
       providesTags: ['Reload', 'ActiveThreats'],
     }),
     createThreat: builder.mutation<
-      ThreatDto,
+      DomainThreat,
       ThreatPayloadDto & { family_class: string }
     >({
       query: ({ family_class, ...threat }) => ({
@@ -159,6 +170,7 @@ export const ThreatsAPI = API.injectEndpoints({
         method: 'POST',
         body: threat,
       }),
+      transformResponse: (dto: ThreatDto) => toThreat(dto),
       async onQueryStarted(_arg, { dispatch, getState, queryFulfilled }) {
         try {
           const { data: createdThreat } = await queryFulfilled;
@@ -184,7 +196,7 @@ export const ThreatsAPI = API.injectEndpoints({
       invalidatesTags: ['CustomThreats'],
     }),
     updateThreat: builder.mutation<
-      ThreatDto,
+      DomainThreat,
       ThreatPayloadDto & { pk: number }
     >({
       query: ({ pk, ...threat }) => ({
@@ -192,6 +204,7 @@ export const ThreatsAPI = API.injectEndpoints({
         method: 'PATCH',
         body: threat,
       }),
+      transformResponse: (dto: ThreatDto) => toThreat(dto),
       async onQueryStarted({ pk, ...patch }, api) {
         applyOptimisticUpdateToAllCacheEntries<
           ReturnType<typeof customThreatsAdapter.getInitialState>

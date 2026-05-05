@@ -1,8 +1,9 @@
+import { ThreatKind } from '../../../model/threat';
 import { CoverageBlock, CoverageBlockRow } from './coverage-block';
 
 interface ActiveThreatBlockProps {
   id: number;
-  familyClass: 'doc' | 'dopv';
+  kind: ThreatKind;
   name: string;
   description: string;
   familyName?: string;
@@ -12,7 +13,7 @@ interface ActiveThreatBlockProps {
 
 export const ActiveThreatBlockView = ({
   id,
-  familyClass,
+  kind,
   name,
   description,
   familyName,
@@ -22,7 +23,7 @@ export const ActiveThreatBlockView = ({
   <CoverageBlock
     id={id}
     link="threat"
-    familyClass={familyClass}
+    kind={kind}
     name={name}
     isActive
     description={description}

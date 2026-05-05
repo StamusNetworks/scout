@@ -23,7 +23,7 @@ describe('CoverageBlock', () => {
       <CoverageBlock
         id={1}
         link="threat"
-        familyClass="doc"
+        kind="compromise"
         name="Test Threat Name"
         isActive={false}
       />,
@@ -37,7 +37,7 @@ describe('CoverageBlock', () => {
       <CoverageBlock
         id={1}
         link="threat"
-        familyClass="doc"
+        kind="compromise"
         name="Test Threat"
         isActive={false}
         description="A detailed description of the threat"
@@ -54,7 +54,7 @@ describe('CoverageBlock', () => {
       <CoverageBlock
         id={1}
         link="threat"
-        familyClass="doc"
+        kind="compromise"
         name="Test Threat"
         isActive={false}
         badge="Malware Family"
@@ -69,7 +69,7 @@ describe('CoverageBlock', () => {
       <CoverageBlock
         id={1}
         link="threat"
-        familyClass="doc"
+        kind="compromise"
         name="Test Threat"
         isActive={false}
       />,
@@ -85,7 +85,7 @@ describe('CoverageBlock', () => {
       <CoverageBlock
         id={1}
         link="threat"
-        familyClass="doc"
+        kind="compromise"
         name="Test Threat"
         isActive={false}
       >
@@ -102,7 +102,7 @@ describe('ActiveThreatBlockView', () => {
     await renderWithProviders(
       <ActiveThreatBlockView
         id={42}
-        familyClass="doc"
+        kind="compromise"
         name="Active Threat"
         description="This threat is currently active"
         familyName="Ransomware"
@@ -122,7 +122,7 @@ describe('ActiveThreatBlockView', () => {
     await renderWithProviders(
       <ActiveThreatBlockView
         id={42}
-        familyClass="doc"
+        kind="compromise"
         name="Active Threat"
         description="Description"
         victims={5}
@@ -142,7 +142,7 @@ describe('ThreatBlockView', () => {
     await renderWithProviders(
       <ThreatBlockView
         id={99}
-        familyClass="dopv"
+        kind="policyViolation"
         name="Policy Violation Threat"
         isActive={false}
         description="A policy violation description"

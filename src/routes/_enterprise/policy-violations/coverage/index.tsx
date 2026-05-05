@@ -26,7 +26,7 @@ function PolicyViolationsCoveragePage() {
             </PageDescription>
           </PageHeaderContent>
         </PageHeader>
-        <CoveragePage familyClass="dopv" />
+        <CoveragePage kind="policyViolation" />
       </TogglePageContainer>
     </Page>
   );

@@ -6,22 +6,21 @@ import {
   useGetActiveThreatsQuery,
   useGetThreatFamiliesQuery,
 } from '../../api/threats.api';
+import { ThreatKind } from '../../model/threat';
 import { useThreats } from '../hooks/use-threats';
 import { CoverageBlockSkeleton } from '../molecules/coverage-block/coverage-block.skeleton';
 import { ThreatBlockView } from '../molecules/coverage-block/threat-block';
 import { ThreatGrid } from '../molecules/threat-grid';
 
 export const ThreatsList = ({
-  familyClass,
+  kind,
   searchInput,
 }: {
-  familyClass: 'all' | 'doc' | 'dopv';
+  kind?: ThreatKind;
   searchInput: string;
 }) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
-  const { data: threats, isLoading: threatsLoading } = useThreats(
-    familyClass === 'all' ? {} : { family_class: familyClass },
-  );
+  const { data: threats, isLoading: threatsLoading } = useThreats({ kind });
   const { data: families } = useGetThreatFamiliesQuery({});
   const filteredThreats = useMemo(() => {
     return threats.filter((threat) => {
@@ -53,13 +52,13 @@ export const ThreatsList = ({
     <ThreatGrid>
       {filteredThreats.map((threat) => (
         <ThreatBlockView
-          key={threat.pk}
-          id={threat.pk}
-          familyClass={threat.family_class}
+          key={threat.id}
+          id={threat.id}
+          kind={threat.kind}
           name={threat.name}
-          isActive={!!activeThreatData?.entities[threat.pk]}
+          isActive={!!activeThreatData?.entities[threat.id]}
           description={threat.description}
-          familyName={families?.entities[threat.family]?.name}
+          familyName={families?.entities[threat.familyId]?.name}
         />
       ))}
     </ThreatGrid>

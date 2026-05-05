@@ -43,11 +43,12 @@ import { KIND_LABEL, ThreatForm } from '@/features/threats';
 import { KillChainCountersByFamilyId } from '@/features/threats/common/killchain/components/killchain-counters/killchain-counters';
 import { ImpactedEntitiesTable } from '@/features/threats/common/molecules/impacted-entities-table/impacted-entities-table';
 
-import { ThreatFamily } from '../../../api/threat-family.dto';
 import {
   useGetActiveThreatFamiliesQuery,
   useGetThreatFamiliesQuery,
 } from '../../../api/threats.api';
+import { ThreatKind } from '../../../model/threat';
+import { ThreatFamily } from '../../../model/threat-family';
 import { useFamilyDetectionMethods } from '../../hooks/use-family-detection-methods';
 import { useFamilyEvents } from '../../hooks/use-family-events';
 import { FamilyActiveThreats } from '../family-active-threats';
@@ -81,12 +82,8 @@ const slugSuffix: Record<string, string> = {
   threats_coverage_family_threats: '/threats',
 };
 
-const getLink = (
-  slug: string,
-  familyClass: 'doc' | 'dopv',
-  familyId: number,
-) => {
-  const base = familyClass === 'doc' ? '/threats' : '/policy-violations';
+const getLink = (slug: string, kind: ThreatKind, familyId: number) => {
+  const base = kind === 'compromise' ? '/threats' : '/policy-violations';
   return `${base}/coverage/family/${familyId}${slugSuffix[slug] ?? ''}`;
 };
 
@@ -124,23 +121,12 @@ export const ThreatFamilyById = () => {
     isLoading: familyDetectionMethodsLoading,
   } = usePageFamilyDetectionMethods();
 
+  const assets = activeThreatFamily?.assets;
   const stats = [
-    {
-      label: 'New victims',
-      value: activeThreatFamily?.nb_assets?.nb_victim || 0,
-    },
-    {
-      label: 'Total victims',
-      value: activeThreatFamily?.nb_assets?.nb_victim || 0,
-    },
-    {
-      label: 'New offenders',
-      value: activeThreatFamily?.nb_assets?.nb_offender || 0,
-    },
-    {
-      label: 'Total offenders',
-      value: activeThreatFamily?.nb_assets?.nb_offender || 0,
-    },
+    { label: 'New victims', value: assets?.victims ?? 0 },
+    { label: 'Total victims', value: assets?.victims ?? 0 },
+    { label: 'New offenders', value: assets?.offenders ?? 0 },
+    { label: 'Total offenders', value: assets?.offenders ?? 0 },
   ];
 
   if (!threatFamily) return null;
@@ -154,7 +140,7 @@ export const ThreatFamilyById = () => {
             <PageHeaderContent>
               <Row className="items-center">
                 <ThreatFamilyName family={threatFamily} />
-                {(threatFamily.pk === 1 || threatFamily.pk === 25) && (
+                {(threatFamily.id === 1 || threatFamily.id === 25) && (
                   <Row className="bg-primary text-primary-foreground ml-3 w-fit rounded-md border px-2 py-1 text-xs">
                     <Info className="mr-2" />
                     Links might be broken in preview mode.
@@ -213,16 +199,16 @@ export const ThreatFamilyById = () => {
               <TabsTriggerLink
                 value={getLink(
                   'threats_coverage_family',
-                  threatFamily.klass,
-                  threatFamily.pk,
+                  threatFamily.kind,
+                  threatFamily.id,
                 )}
               >
                 Entities
                 <TabsBadge
                   count={
-                    (activeThreatFamily?.nb_assets?.nb_victim || 0) +
-                    (activeThreatFamily?.nb_assets?.nb_offender || 0) -
-                    (activeThreatFamily?.nb_assets?.nb_both || 0)
+                    (assets?.victims ?? 0) +
+                    (assets?.offenders ?? 0) -
+                    (assets?.bothVictimAndOffender ?? 0)
                   }
                   isLoading={activeThreatFamilyLoading}
                 />
@@ -230,8 +216,8 @@ export const ThreatFamilyById = () => {
               <TabsTriggerLink
                 value={getLink(
                   'threats_coverage_family_detection_methods',
-                  threatFamily.klass,
-                  threatFamily.pk,
+                  threatFamily.kind,
+                  threatFamily.id,
                 )}
               >
                 Detection Methods
@@ -243,8 +229,8 @@ export const ThreatFamilyById = () => {
               <TabsTriggerLink
                 value={getLink(
                   'threats_coverage_family_events',
-                  threatFamily.klass,
-                  threatFamily.pk,
+                  threatFamily.kind,
+                  threatFamily.id,
                 )}
               >
                 Events
@@ -256,11 +242,13 @@ export const ThreatFamilyById = () => {
               <TabsTriggerLink
                 value={getLink(
                   'threats_coverage_family_threats',
-                  threatFamily.klass,
-                  threatFamily.pk,
+                  threatFamily.kind,
+                  threatFamily.id,
                 )}
               >
-                {threatFamily.klass === 'doc' ? 'Threats' : 'Policy Violations'}
+                {threatFamily.kind === 'compromise'
+                  ? 'Threats'
+                  : 'Policy Violations'}
               </TabsTriggerLink>
             </TabsList>
             <div className="pt-4">
@@ -274,9 +262,9 @@ export const ThreatFamilyById = () => {
 };
 
 export const ThreatFamilyDefault = ({
-  familyClass = 'doc',
+  kind = 'compromise',
 }: {
-  familyClass?: 'doc' | 'dopv';
+  kind?: ThreatKind;
 }) => {
   const { familyId } = useParams({ strict: false }) as { familyId: string };
   const { data: family } = useGetThreatFamiliesQuery(
@@ -290,7 +278,7 @@ export const ThreatFamilyDefault = ({
   );
   return (
     <>
-      {familyId && family?.klass === 'doc' && (
+      {familyId && family?.kind === 'compromise' && (
         <KillChainCountersByFamilyId
           className="mb-6"
           familyId={familyId}
@@ -298,7 +286,7 @@ export const ThreatFamilyDefault = ({
       )}
       <ImpactedEntitiesTable
         familyId={parseInt(familyId!)}
-        familyClass={familyClass}
+        familyClass={kind === 'compromise' ? 'doc' : 'dopv'}
       />
     </>
   );
@@ -306,8 +294,7 @@ export const ThreatFamilyDefault = ({
 
 export const ThreatFamilyName = ({ family }: { family: ThreatFamily }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const kind = family.klass === 'doc' ? 'compromise' : 'policyViolation';
-  if (family.pk !== 1 && family.pk !== 25)
+  if (family.id !== 1 && family.id !== 25)
     return <PageTitle>{family.name}</PageTitle>;
 
   return (
@@ -327,10 +314,10 @@ export const ThreatFamilyName = ({ family }: { family: ThreatFamily }) => {
             </Button>
           </DialogTrigger>
           <DialogContent>
-            <DialogTitle>Create Custom {KIND_LABEL[kind]}</DialogTitle>
+            <DialogTitle>Create Custom {KIND_LABEL[family.kind]}</DialogTitle>
             <ThreatForm
               onClose={() => setIsEditing(false)}
-              kind={kind}
+              kind={family.kind}
             />
           </DialogContent>
         </Dialog>

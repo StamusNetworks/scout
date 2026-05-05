@@ -49,8 +49,8 @@ export const ThreatTag = ({
 
   const handleClick = () => {
     const base =
-      threatDef.family_class === 'doc' ? '/threats' : '/policy-violations';
-    navigate({ to: `${base}/coverage/threat/${threatDef.pk}` });
+      threatDef.kind === 'compromise' ? '/threats' : '/policy-violations';
+    navigate({ to: `${base}/coverage/threat/${threatDef.id}` });
   };
 
   return (
@@ -68,7 +68,7 @@ export const ThreatTag = ({
                 ? 'muted'
                 : is_offender
                   ? 'offender'
-                  : threatDef.family_class === 'dopv'
+                  : threatDef.kind === 'policyViolation'
                     ? 'policy_violation'
                     : 'victim'
             }

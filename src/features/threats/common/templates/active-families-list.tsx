@@ -4,17 +4,18 @@ import { values } from 'ramda';
 import { sortBy } from '@/common/lib/sorting';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { ActiveThreatFamily } from '../../api/active-threat-family.dto';
 import { useGetActiveThreatFamiliesQuery } from '../../api/threats.api';
+import { ActiveThreatFamily } from '../../model/active-threat-family';
+import { ThreatKind } from '../../model/threat';
 import { ActiveFamilyBlock } from '../molecules/coverage-block/active-family-block';
 import { CoverageBlockSkeleton } from '../molecules/coverage-block/coverage-block.skeleton';
 import { ThreatGrid } from '../molecules/threat-grid';
 
 export const ActiveFamiliesList = ({
-  familyClass,
+  kind,
   searchInput,
 }: {
-  familyClass: 'all' | 'doc' | 'dopv';
+  kind?: ThreatKind;
   searchInput: string;
 }) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
@@ -25,11 +26,7 @@ export const ActiveFamiliesList = ({
         ...result,
         data:
           result.data?.entities &&
-          getFamiliesFromFilters(
-            result.data.entities,
-            familyClass,
-            searchInput,
-          ),
+          filterActiveFamilies(result.data.entities, kind, searchInput),
       }),
     });
   if (activeFamiliesLoading) {
@@ -45,22 +42,22 @@ export const ActiveFamiliesList = ({
     <ThreatGrid>
       {activeFamilies?.map((family) => (
         <ActiveFamilyBlock
-          key={family.pk}
-          id={family.pk}
+          key={family.id}
+          id={family.id}
         />
       ))}
     </ThreatGrid>
   );
 };
 
-const getFamiliesFromFilters = (
+const filterActiveFamilies = (
   families: EntityState<ActiveThreatFamily, number>['entities'],
-  familyClass: 'all' | 'doc' | 'dopv',
+  kind: ThreatKind | undefined,
   searchInput: string,
 ) => {
   let list = values(families);
-  if (familyClass !== 'all') {
-    list = list.filter((family) => family.klass === familyClass);
+  if (kind) {
+    list = list.filter((family) => family.kind === kind);
   }
   if (searchInput) {
     list = list.filter((family) => {

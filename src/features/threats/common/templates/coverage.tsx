@@ -9,16 +9,13 @@ import {
 } from '@/common/design-system/atoms/ui/pillTabs';
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
 
+import { ThreatKind } from '../../model/threat';
 import { ActiveFamiliesList } from './active-families-list';
 import { ActiveThreatsList } from './active-threats-list';
 import { FamiliesList } from './threat-families-list';
 import { ThreatsList } from './threats-list';
 
-export const CoveragePage = ({
-  familyClass,
-}: {
-  familyClass: 'doc' | 'dopv';
-}) => {
+export const CoveragePage = ({ kind }: { kind: ThreatKind }) => {
   const [entityOrFamily, setEntityOrFamily] = useQueryState(
     'show',
     parseAsStringLiteral(['threat', 'family']).withDefault('threat'),
@@ -27,7 +24,7 @@ export const CoveragePage = ({
     'search',
     parseAsString.withDefault(''),
   );
-  const entity = familyClass === 'doc' ? 'Threat' : 'Policy Violation';
+  const entity = kind === 'compromise' ? 'Threat' : 'Policy Violation';
   return (
     <>
       <Tabs
@@ -57,7 +54,7 @@ export const CoveragePage = ({
               className="my-6"
             />
             <ActiveFamiliesList
-              familyClass={familyClass}
+              kind={kind}
               searchInput={search}
             />
             <Divider
@@ -65,7 +62,7 @@ export const CoveragePage = ({
               className="my-6"
             />
             <FamiliesList
-              familyClass={familyClass}
+              kind={kind}
               searchInput={search}
             />
           </>
@@ -73,12 +70,12 @@ export const CoveragePage = ({
           <>
             <Divider
               label={
-                familyClass === 'doc' ? 'Active Threats' : 'Violated policies'
+                kind === 'compromise' ? 'Active Threats' : 'Violated policies'
               }
               className="my-6"
             />
             <ActiveThreatsList
-              familyClass={familyClass}
+              kind={kind}
               searchInput={search}
             />
             <Divider
@@ -86,7 +83,7 @@ export const CoveragePage = ({
               className="my-6"
             />
             <ThreatsList
-              familyClass={familyClass}
+              kind={kind}
               searchInput={search}
             />
           </>

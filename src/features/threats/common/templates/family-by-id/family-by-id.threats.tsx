@@ -13,7 +13,7 @@ export const ThreatFamilyThreatsList = () => {
   const { familyId } = useParams({ strict: false }) as { familyId: string };
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const { data: threats, isLoading } = useThreats({
-    family_id: parseInt(familyId || ''),
+    familyId: parseInt(familyId || ''),
   });
   const { data: activeThreatData } = useGetActiveThreatsQuery(params);
 
@@ -26,20 +26,21 @@ export const ThreatFamilyThreatsList = () => {
       </ThreatGrid>
     );
   }
+  if (!threats.length) return null;
   return (
     <>
       <OutletBreadcrumb>
-        {threats[0].family_class === 'doc' ? 'Threats' : 'Policy Violations'}
+        {threats[0].kind === 'compromise' ? 'Threats' : 'Policy Violations'}
       </OutletBreadcrumb>
       <ThreatGrid>
         {threats.map((threat) => (
           <ThreatBlockView
-            key={threat.pk}
-            id={threat.pk}
-            familyClass={threat.family_class}
+            key={threat.id}
+            id={threat.id}
+            kind={threat.kind}
             name={threat.name}
             description={threat.description}
-            isActive={!!activeThreatData?.entities[threat.pk]}
+            isActive={!!activeThreatData?.entities[threat.id]}
           />
         ))}
       </ThreatGrid>

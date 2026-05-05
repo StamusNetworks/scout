@@ -10,12 +10,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/common/design-system/atoms/ui/card';
-const getLink = (
-  familyClass: 'doc' | 'dopv',
-  link: 'family' | 'threat',
-  id: number,
-) => {
-  const base = familyClass === 'doc' ? '/threats' : '/policy-violations';
+
+import { ThreatKind } from '../../../model/threat';
+
+const getLink = (kind: ThreatKind, link: 'family' | 'threat', id: number) => {
+  const base = kind === 'compromise' ? '/threats' : '/policy-violations';
   return `${base}/coverage/${link}/${id}`;
 };
 
@@ -24,7 +23,7 @@ export const CoverageBlock = ({
   description,
   children,
   link,
-  familyClass,
+  kind,
   name,
   isActive,
   badge,
@@ -34,18 +33,18 @@ export const CoverageBlock = ({
   description?: string;
   children?: React.ReactNode;
   link: 'family' | 'threat';
-  familyClass: 'doc' | 'dopv';
+  kind: ThreatKind;
   name: string;
   badge?: string;
 }) => {
   return (
     <Link
-      to={getLink(familyClass, link, id)}
+      to={getLink(kind, link, id)}
       className="h-full"
     >
       <Card
         className="h-full"
-        variant={isActive ? (familyClass === 'doc' ? 'doc' : 'dopv') : 'base'}
+        variant={isActive ? (kind === 'compromise' ? 'doc' : 'dopv') : 'base'}
       >
         <CardHeader className="w-full flex-row items-center justify-between gap-2 space-y-0 p-4 pb-2">
           <CardTitle className="overflow-hidden text-ellipsis whitespace-nowrap">

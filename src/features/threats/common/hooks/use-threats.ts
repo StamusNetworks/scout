@@ -7,12 +7,13 @@ import {
   useGetCustomThreatsQuery,
   useGetSTIThreatsQuery,
 } from '../../api/threats.api';
+import { ThreatKind } from '../../model/threat';
 
 interface ThreatsHookParams {
-  family_class?: 'doc' | 'dopv';
-  family_id?: number;
+  kind?: ThreatKind;
+  familyId?: number;
 }
-export const useThreats = ({ family_class, family_id }: ThreatsHookParams) => {
+export const useThreats = ({ kind, familyId }: ThreatsHookParams) => {
   const tenant = useTenant();
   const { data: STIThreats, isLoading: STILoading } =
     useGetSTIThreatsQuery(undefined);
@@ -27,15 +28,15 @@ export const useThreats = ({ family_class, family_id }: ThreatsHookParams) => {
   }, [STIThreats, customThreats]);
 
   const filtered = useMemo(() => {
-    if (!family_class && !family_id) return all;
-    const filteredByClass = all.filter((threat) =>
-      family_class ? threat.family_class === family_class : true,
+    if (!kind && !familyId) return all;
+    const filteredByKind = all.filter((threat) =>
+      kind ? threat.kind === kind : true,
     );
-    return filteredByClass.filter((threat) => {
-      if (!family_id) return true;
-      return threat.family === family_id;
+    return filteredByKind.filter((threat) => {
+      if (!familyId) return true;
+      return threat.familyId === familyId;
     });
-  }, [all, family_class, family_id]);
+  }, [all, kind, familyId]);
 
   return {
     data: filtered,

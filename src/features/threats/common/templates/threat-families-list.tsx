@@ -4,20 +4,21 @@ import { values } from 'ramda';
 import { sortBy } from '@/common/lib/sorting';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { ThreatFamily } from '../../api/threat-family.dto';
 import {
   useGetActiveThreatFamiliesQuery,
   useGetThreatFamiliesQuery,
 } from '../../api/threats.api';
+import { ThreatKind } from '../../model/threat';
+import { ThreatFamily } from '../../model/threat-family';
 import { CoverageBlockSkeleton } from '../molecules/coverage-block/coverage-block.skeleton';
 import { FamilyBlockView } from '../molecules/coverage-block/family-block';
 import { ThreatGrid } from '../molecules/threat-grid';
 
 export const FamiliesList = ({
-  familyClass,
+  kind,
   searchInput,
 }: {
-  familyClass: 'all' | 'doc' | 'dopv';
+  kind?: ThreatKind;
   searchInput: string;
 }) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
@@ -29,11 +30,7 @@ export const FamiliesList = ({
           ...result,
           data:
             result.data?.entities &&
-            getFamiliesIdsFromFilters(
-              result.data.entities,
-              familyClass,
-              searchInput,
-            ),
+            filterFamilies(result.data.entities, kind, searchInput),
         }),
       },
     );
@@ -55,26 +52,26 @@ export const FamiliesList = ({
     <ThreatGrid>
       {families.map((family) => (
         <FamilyBlockView
-          key={family.pk}
-          id={family.pk}
+          key={family.id}
+          id={family.id}
           name={family.name}
-          isActive={!!activeFamiliesData?.entities[family.pk]}
+          isActive={!!activeFamiliesData?.entities[family.id]}
           description={family.description}
-          familyClass={family.klass}
+          kind={family.kind}
         />
       ))}
     </ThreatGrid>
   );
 };
 
-const getFamiliesIdsFromFilters = (
+const filterFamilies = (
   families: EntityState<ThreatFamily, number>['entities'],
-  familyClass: 'all' | 'doc' | 'dopv',
+  kind: ThreatKind | undefined,
   searchInput: string,
 ) => {
   let list = values(families);
-  if (familyClass !== 'all') {
-    list = list.filter((family) => family.klass === familyClass);
+  if (kind) {
+    list = list.filter((family) => family.kind === kind);
   }
   if (searchInput) {
     list = list.filter((family) => {

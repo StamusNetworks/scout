@@ -4,40 +4,35 @@ import { values } from 'ramda';
 import { sortBy } from '@/common/lib/sorting';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { ActiveThreat } from '../../api/active-threat.dto';
-import { Threat } from '../../api/threat.dto';
 import {
   useGetActiveThreatsQuery,
   useGetThreatFamiliesQuery,
 } from '../../api/threats.api';
+import { ActiveThreat } from '../../model/active-threat';
+import { Threat, ThreatKind } from '../../model/threat';
 import { useCombinedThreats } from '../hooks/use-combined-threats';
 import { ActiveThreatBlockView } from '../molecules/coverage-block/active-threat-block';
 import { CoverageBlockSkeleton } from '../molecules/coverage-block/coverage-block.skeleton';
 import { ThreatGrid } from '../molecules/threat-grid';
 
 export const ActiveThreatsList = ({
-  familyClass,
+  kind,
   searchInput,
 }: {
-  familyClass: 'all' | 'doc' | 'dopv';
+  kind?: ThreatKind;
   searchInput: string;
 }) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const { data: threats, isLoading: threatsLoading } = useCombinedThreats();
   const { data: families } = useGetThreatFamiliesQuery({});
-  const { data: activeThreatIds, isLoading: activeThreatsLoading } =
+  const { data: activeThreats, isLoading: activeThreatsLoading } =
     useGetActiveThreatsQuery(params, {
       selectFromResult: (result) => ({
         ...result,
         data:
           threats &&
           result.data?.entities &&
-          getThreatIdsFromFilters(
-            threats,
-            result.data.entities,
-            familyClass,
-            searchInput,
-          ),
+          filterActiveThreats(threats, result.data.entities, kind, searchInput),
       }),
     });
   if (threatsLoading || activeThreatsLoading) {
@@ -52,21 +47,21 @@ export const ActiveThreatsList = ({
   if (!threats) return null;
   return (
     <ThreatGrid>
-      {activeThreatIds?.map((threat) => {
-        const threatDetail = threats.entities[threat.pk];
-        const familyName = threatDetail?.family
-          ? families?.entities[threatDetail.family]?.name
+      {activeThreats?.map((threat) => {
+        const threatDetail = threats.entities[threat.id];
+        const familyName = threatDetail?.familyId
+          ? families?.entities[threatDetail.familyId]?.name
           : undefined;
         return (
           <ActiveThreatBlockView
-            key={threat.pk}
-            id={threat.pk}
+            key={threat.id}
+            id={threat.id}
             name={threat.name}
             description={threat.description}
             familyName={familyName}
-            familyClass={threatDetail?.family_class ?? 'doc'}
-            victims={threat.nb_assets?.nb_victim}
-            victimsNew={threat.nb_assets?.nb_new_victim}
+            kind={threatDetail?.kind ?? 'compromise'}
+            victims={threat.assets.victims}
+            victimsNew={threat.assets.newVictims}
           />
         );
       })}
@@ -74,19 +69,19 @@ export const ActiveThreatsList = ({
   );
 };
 
-const getThreatIdsFromFilters = (
+const filterActiveThreats = (
   threats: EntityState<Threat, number>,
   activeThreats: EntityState<ActiveThreat, number>['entities'],
-  familyClass: 'all' | 'doc' | 'dopv',
+  kind: ThreatKind | undefined,
   searchInput: string,
 ) => {
-  // filter on familyClass has to happen on all threats because top list does not contain family class
-  const threatIds =
-    familyClass === 'all'
-      ? threats.ids
-      : values(threats.entities)
-          .filter((threat) => threat.family_class === familyClass)
-          .map((threat) => threat.pk);
+  // filter on kind has to happen on all threats because top list does not
+  // contain the kind discriminator
+  const threatIds = !kind
+    ? threats.ids
+    : values(threats.entities)
+        .filter((threat) => threat.kind === kind)
+        .map((threat) => threat.id);
 
   const list = searchInput
     ? values(activeThreats).filter((threat) => {
@@ -103,6 +98,6 @@ const getThreatIdsFromFilters = (
     : values(activeThreats);
 
   return list
-    .filter((threat) => threatIds.includes(threat.pk))
+    .filter((threat) => threatIds.includes(threat.id))
     .toSorted(sortBy('name'));
 };

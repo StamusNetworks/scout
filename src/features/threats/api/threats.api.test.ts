@@ -147,12 +147,14 @@ describe('ThreatsAPI cache updates', () => {
       })(store.getState());
       const allThreats = Object.values(cached.data?.entities ?? {});
 
-      // Filtering by 'doc' should include the new threat
-      const docThreats = allThreats.filter((t) => t?.family_class === 'doc');
+      // Filtering by 'compromise' should include the new threat
+      const docThreats = allThreats.filter((t) => t?.kind === 'compromise');
       expect(docThreats.map((t) => t?.name)).toContain('New Custom Threat');
 
-      // Filtering by 'dopv' should NOT include the new threat
-      const dopvThreats = allThreats.filter((t) => t?.family_class === 'dopv');
+      // Filtering by 'policyViolation' should NOT include the new threat
+      const dopvThreats = allThreats.filter(
+        (t) => t?.kind === 'policyViolation',
+      );
       expect(dopvThreats.map((t) => t?.name)).not.toContain(
         'New Custom Threat',
       );

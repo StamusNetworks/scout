@@ -26,7 +26,7 @@ function ThreatsCoveragePage() {
             </PageDescription>
           </PageHeaderContent>
         </PageHeader>
-        <CoveragePage familyClass="doc" />
+        <CoveragePage kind="compromise" />
       </TogglePageContainer>
     </Page>
   );

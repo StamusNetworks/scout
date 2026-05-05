@@ -91,7 +91,7 @@ export const CompromiseIncidentsTable = ({
         {
           key: 'stamus.threat_name',
           value:
-            threats.data?.find((threat) => threat.pk === row.original.threat_id)
+            threats.data?.find((threat) => threat.id === row.original.threat_id)
               ?.name || '',
         },
       ]);

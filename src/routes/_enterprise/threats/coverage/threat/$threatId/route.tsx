@@ -80,17 +80,17 @@ function ThreatDetailPage() {
 
   if (!threat) return null;
 
-  const assets = activeThreat?.nb_assets;
+  const assets = activeThreat?.assets;
   const entitiesCount =
-    (assets?.nb_victim ?? 0) +
-    (assets?.nb_offender ?? 0) -
-    (assets?.nb_both ?? 0);
+    (assets?.victims ?? 0) +
+    (assets?.offenders ?? 0) -
+    (assets?.bothVictimAndOffender ?? 0);
 
   return (
     <>
       {family && (
         <OutletBreadcrumb
-          link={`${threat.kind === 'compromise' ? '/threats' : '/policy-violations'}/coverage/family/${family.pk}`}
+          link={`${threat.kind === 'compromise' ? '/threats' : '/policy-violations'}/coverage/family/${family.id}`}
         >
           {family.name}
         </OutletBreadcrumb>
@@ -116,19 +116,19 @@ function ThreatDetailPage() {
           <PageStats>
             <PageStat
               label="New victims"
-              value={assets?.nb_new_victim ?? 0}
+              value={assets?.newVictims ?? 0}
             />
             <PageStat
               label="Total victims"
-              value={assets?.nb_victim ?? 0}
+              value={assets?.victims ?? 0}
             />
             <PageStat
               label="New offenders"
-              value={assets?.nb_new_offender ?? 0}
+              value={assets?.newOffenders ?? 0}
             />
             <PageStat
               label="Total offenders"
-              value={assets?.nb_offender ?? 0}
+              value={assets?.offenders ?? 0}
             />
           </PageStats>
           <ThreatDetailTabs

@@ -5,6 +5,7 @@ import {
   useGetActiveThreatsQuery,
   useGetThreatFamiliesQuery,
 } from '../../../api/threats.api';
+import { ThreatKind } from '../../../model/threat';
 import { CoverageBlock, CoverageBlockRow } from './coverage-block';
 import { CoverageBlockSkeleton } from './coverage-block.skeleton';
 
@@ -38,17 +39,15 @@ export const ActiveFamilyBlock = ({ id }: { id: number }) => {
   if (threatsLoading || activeThreatsLoading) return <CoverageBlockSkeleton />;
   if (!familyData || !activeFamilyData) return null;
 
+  const { victims, offenders, bothVictimAndOffender } = activeFamilyData.assets;
+
   return (
     <ActiveFamilyBlockView
       id={id}
       description={familyData.description}
-      familyClass={familyData.klass}
+      kind={familyData.kind}
       name={familyData.name}
-      victims={
-        (activeFamilyData.nb_assets?.nb_victim || 0) +
-        (activeFamilyData.nb_assets?.nb_offender || 0) -
-        (activeFamilyData.nb_assets?.nb_both || 0)
-      }
+      victims={victims + offenders - bothVictimAndOffender}
       activeThreats={activeThreats?.ids.length || 0}
     />
   );
@@ -56,7 +55,7 @@ export const ActiveFamilyBlock = ({ id }: { id: number }) => {
 
 interface ActiveFamilyBlockProps {
   id: number;
-  familyClass: 'doc' | 'dopv';
+  kind: ThreatKind;
   name: string;
   description: string;
   victims: number;
@@ -65,7 +64,7 @@ interface ActiveFamilyBlockProps {
 
 export const ActiveFamilyBlockView = ({
   id,
-  familyClass,
+  kind,
   name,
   description,
   victims,
@@ -74,7 +73,7 @@ export const ActiveFamilyBlockView = ({
   <CoverageBlock
     id={id}
     link="family"
-    familyClass={familyClass}
+    kind={kind}
     name={name}
     isActive
     description={description}

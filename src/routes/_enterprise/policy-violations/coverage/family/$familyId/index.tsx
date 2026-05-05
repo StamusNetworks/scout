@@ -8,7 +8,7 @@ export const Route = createFileRoute(
 )({
   component: () => (
     <PageBoundary key="pv-family-default">
-      <ThreatFamilyDefault familyClass="dopv" />
+      <ThreatFamilyDefault kind="policyViolation" />
     </PageBoundary>
   ),
 });

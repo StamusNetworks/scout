@@ -7,7 +7,7 @@ import {
   useGetSTIThreatsQuery,
 } from '../../api/threats.api';
 
-export const useThreat = (pk?: number) => {
+export const useThreat = (id?: number) => {
   const tenant = useTenant();
   const { data: allThreats, isLoading: STILoading } = useGetSTIThreatsQuery();
   const { data: customThreats, isLoading: customLoading } =
@@ -15,15 +15,15 @@ export const useThreat = (pk?: number) => {
 
   return useMemo(
     () =>
-      pk === undefined
+      id === undefined
         ? {
             data: undefined,
             isLoading: STILoading || customLoading,
           }
         : {
-            data: allThreats?.entities[pk] || customThreats?.entities[pk],
+            data: allThreats?.entities[id] || customThreats?.entities[id],
             isLoading: STILoading || customLoading,
           },
-    [allThreats, customThreats, pk, STILoading, customLoading],
+    [allThreats, customThreats, id, STILoading, customLoading],
   );
 };

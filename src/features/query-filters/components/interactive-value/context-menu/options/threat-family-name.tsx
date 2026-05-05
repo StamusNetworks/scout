@@ -30,14 +30,14 @@ export const ThreatFamilyNameOption = ({
 
   if (!family) return null;
 
-  const Icon = family.klass === 'doc' ? Biohazard : Scale;
+  const Icon = family.kind === 'compromise' ? Biohazard : Scale;
 
   return (
     <ContextMenuItem
-      disabled={!family?.pk}
+      disabled={!family?.id}
       asChild
     >
-      <Link to={getLink(family.klass, family.pk)}>
+      <Link to={getLink(family.kind, family.id)}>
         <Icon className={iconClass} />
         Go to family page
       </Link>
@@ -45,7 +45,7 @@ export const ThreatFamilyNameOption = ({
   );
 };
 
-const getLink = (familyClass: 'doc' | 'dopv', id: number) =>
-  familyClass === 'doc'
+const getLink = (kind: 'compromise' | 'policyViolation', id: number) =>
+  kind === 'compromise'
     ? `/threats/coverage/family/${id}`
     : `/policy-violations/coverage/family/${id}`;

@@ -39,13 +39,13 @@ export const FamilyActiveThreats = ({ familyId }: { familyId: number }) => {
         <Row className="gap-4 [&_a]:w-64">
           {values(activeThreats.entities).map((threat) => (
             <ActiveThreatBlockView
-              key={threat.pk}
-              id={threat.pk}
-              familyClass={threats.entities[threat.pk]?.family_class}
+              key={threat.id}
+              id={threat.id}
+              kind={threats.entities[threat.id]?.kind ?? 'compromise'}
               name={threat.name}
               description={threat.description}
-              victims={threat.nb_assets?.nb_victim}
-              victimsNew={threat.nb_assets?.nb_new_victim}
+              victims={threat.assets.victims}
+              victimsNew={threat.assets.newVictims}
             />
           ))}
         </Row>

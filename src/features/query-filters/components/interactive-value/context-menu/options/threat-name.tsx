@@ -16,17 +16,17 @@ export const ThreatNameOptions = ({ threatName }: { threatName: string }) => {
 
   if (!threat) return null;
 
-  const Icon = threat.family_class === 'doc' ? Biohazard : Scale;
+  const Icon = threat.kind === 'compromise' ? Biohazard : Scale;
 
   return (
     <>
       <ContextMenuItem
         asChild
-        disabled={!threat?.pk}
+        disabled={!threat?.id}
       >
-        <Link to={getLink(threat?.family_class, 'threat', threat?.pk)}>
+        <Link to={getLink(threat.kind, 'threat', threat.id)}>
           <Icon className={iconClass} />
-          Go to {threat.family_class === 'doc'
+          Go to {threat.kind === 'compromise'
             ? 'threat'
             : 'policy violation'}{' '}
           page
@@ -34,9 +34,9 @@ export const ThreatNameOptions = ({ threatName }: { threatName: string }) => {
       </ContextMenuItem>
       <ContextMenuItem
         asChild
-        disabled={!threat?.pk}
+        disabled={!threat?.id}
       >
-        <Link to={getLink(threat?.family_class, 'family', threat?.family)}>
+        <Link to={getLink(threat.kind, 'family', threat.familyId)}>
           <Icon className={iconClass} />
           Go to family page
         </Link>
@@ -46,11 +46,11 @@ export const ThreatNameOptions = ({ threatName }: { threatName: string }) => {
 };
 
 const getLink = (
-  familyClass: 'doc' | 'dopv',
+  kind: 'compromise' | 'policyViolation',
   link: 'family' | 'threat',
   id: number,
 ) => {
-  const base = familyClass === 'doc' ? '/threats' : '/policy-violations';
+  const base = kind === 'compromise' ? '/threats' : '/policy-violations';
   return link === 'family'
     ? `${base}/coverage/family/${id}`
     : `${base}/coverage/threat/${id}`;
