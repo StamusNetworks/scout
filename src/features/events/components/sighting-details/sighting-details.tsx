@@ -21,12 +21,12 @@ import {
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
+import { SightingEventsCountsTimeline } from '@/features/events/components/events-counts-timeline/events-counts-timeline';
+import { EventsStream } from '@/features/events/components/events-stream/events-stream';
+import { SightingEventsTailFlow } from '@/features/events/components/events-tail-flow/events-tail-flow';
+import { PatientZeroDetails } from '@/features/events/components/patient-zero-details/patient-zero-details';
+import { SightingsMetadata } from '@/features/events/components/sightings-metadata/sightings-metadata';
 import { useGetSightingById } from '@/features/events/hooks/use-get-sighting-by-id';
-import { SightingEventsCountsTimeline } from '@/features/events/sightings/common/molecules/events-counts-timeline';
-import { EventsStream } from '@/features/events/sightings/common/molecules/events-stream';
-import { SightingEventsTailFlow } from '@/features/events/sightings/common/molecules/events-tail-flow';
-import { PatientZeroDetails } from '@/features/events/sightings/common/molecules/patient-zero-details';
-import { SightingsMetadata } from '@/features/events/sightings/common/molecules/sightings-metadata';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { getFilterDef } from '@/features/query-filters/definitions/query-filter.definitions';
 

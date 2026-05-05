@@ -2,8 +2,8 @@ import Flow from '@/common/design-system/graphs/proto-flow/flow';
 import protoColumns from '@/common/design-system/graphs/proto-flow/flow.columns';
 import { FlowSkeleton } from '@/common/design-system/graphs/proto-flow/flow.skeleton';
 
-import { useGetSightingById } from '../../../hooks/use-get-sighting-by-id';
-import { useGetSightingEventsTail } from '../../../hooks/use-get-sighting-events-tail';
+import { useGetSightingById } from '../../hooks/use-get-sighting-by-id';
+import { useGetSightingEventsTail } from '../../hooks/use-get-sighting-events-tail';
 
 interface SightingEventsTailFlowProps {
   sightingId: string;

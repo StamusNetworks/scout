@@ -5,8 +5,8 @@ import { useGetEventsTimelineQuery } from '@/features/events/common/events.api';
 import { CountsTimeline } from '@/features/events/model/counts-timeline';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { buildSightingQfilter } from '../../../builders/build-sighting-qfilter';
-import { useGetSightingById } from '../../../hooks/use-get-sighting-by-id';
+import { buildSightingQfilter } from '../../builders/build-sighting-qfilter';
+import { useGetSightingById } from '../../hooks/use-get-sighting-by-id';
 
 interface SightingEventsCountsTimelineProps {
   sightingId: string;

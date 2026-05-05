@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { SightingDetails } from '@/features/events/sightings/use-cases/sighting-details/entities/sighting-details';
+import { SightingDetails } from '@/features/events/components/sighting-details/sighting-details';
 
 export const Route = createFileRoute(
   '/_enterprise/analytics/sightings/$sightingId',

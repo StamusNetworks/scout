@@ -19,7 +19,7 @@ import {
   allSightingsExport,
   allSightingsTableColumns,
   sightingRoleOptions,
-} from '../sightings-list.table';
+} from './sightings-table.columns';
 
 interface SightingsTableProps {
   page: number;

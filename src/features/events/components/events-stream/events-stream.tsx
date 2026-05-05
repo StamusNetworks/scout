@@ -47,8 +47,8 @@ import { FileinfoEvent } from '@/features/events/model/event-types/fileinfo.sche
 import { FlowEvent } from '@/features/events/model/event-types/flow.schema';
 import { StamusEvent } from '@/features/events/model/event-types/stamus.schema';
 
-import { useGetSightingById } from '../../../hooks/use-get-sighting-by-id';
-import { useGetSightingEventsTail } from '../../../hooks/use-get-sighting-events-tail';
+import { useGetSightingById } from '../../hooks/use-get-sighting-by-id';
+import { useGetSightingEventsTail } from '../../hooks/use-get-sighting-events-tail';
 
 interface EventsStreamProps {
   sightingId: string;

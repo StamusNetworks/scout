@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 
 import { DataTable } from '@/common/design-system/molecules/data-table';
-import { allSightingsTableColumns } from '@/features/events/sightings/use-cases/sightings-list/sightings-list.table';
+import { allSightingsTableColumns } from '@/features/events/components/sightings-table/sightings-table.columns';
 
-import { useGetSightingById } from '../../../hooks/use-get-sighting-by-id';
+import { useGetSightingById } from '../../hooks/use-get-sighting-by-id';
 
 interface PatientZeroDetailsProps {
   sightingId: string;
