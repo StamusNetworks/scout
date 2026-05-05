@@ -17,10 +17,7 @@ import { getShortcutDisplay } from '@/common/lib/platform';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { getConfig } from '@/config';
 import { useUpdatePushRulesetMutation } from '@/features/detection-methods/rulesets.api';
-import { openDeclarationModal } from '@/features/filter-actions/components/filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
-import { openSuppressModal } from '@/features/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
-import { openTagModal } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
-import { openThresholdModal } from '@/features/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
+import { useFilterActionModal } from '@/features/filter-actions/hooks/use-filter-action-modal';
 import { useQueryFilters } from '@/features/query-filters';
 import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
 import {
@@ -52,6 +49,7 @@ export const useGlobalCommands = (): GlobalCommands[] => {
   const { enterprise } = useFeatureFlags();
   const [updatePushRuleset] = useUpdatePushRulesetMutation();
   const clearFilters = useClearFilters();
+  const filterActionModal = useFilterActionModal();
   const handleUpdatePushRuleset = () => {
     updatePushRuleset({ enterprise })
       .unwrap()
@@ -126,37 +124,29 @@ export const useGlobalCommands = (): GlobalCommands[] => {
       items: [
         {
           title: 'Create Suppress filter action',
-          action: () => {
-            dispatch(openSuppressModal({ mode: 'create' }));
-          },
+          action: () => filterActionModal.openSuppress({ mode: 'create' }),
           disabled: filters.length === 0,
         },
         {
           title: 'Create Threshold filter action',
-          action: () => {
-            dispatch(openThresholdModal({ mode: 'create' }));
-          },
+          action: () => filterActionModal.openThreshold({ mode: 'create' }),
           disabled: filters.length === 0,
         },
         {
           title: 'Create Tag filter action',
-          action: () => {
-            dispatch(openTagModal({ mode: 'create', keep: false }));
-          },
+          action: () =>
+            filterActionModal.openTag({ mode: 'create', keep: false }),
           disabled: filters.length === 0,
         },
         {
           title: 'Create Tag and Keep filter action',
-          action: () => {
-            dispatch(openTagModal({ mode: 'create', keep: true }));
-          },
+          action: () =>
+            filterActionModal.openTag({ mode: 'create', keep: true }),
           disabled: filters.length === 0,
         },
         {
           title: 'Create declaration events',
-          action: () => {
-            dispatch(openDeclarationModal({ mode: 'create' }));
-          },
+          action: () => filterActionModal.openDeclaration({ mode: 'create' }),
           disabled: filters.length === 0,
         },
       ],

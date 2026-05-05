@@ -2,11 +2,7 @@ import { tablePreferencesInitialState } from '@/common/design-system/molecules/d
 import { authInitialState } from '@/features/auth/state/auth.slice';
 import { datesFiltersInitialState } from '@/features/dates/state/dates.slice';
 import { dashboardPageStateInitialState } from '@/features/events/state/dashboard.slice';
-import { createEditDeclarationModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
-import { createEditSendMailModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-send-mail-filter-action/create-edit-send-mail.slice';
-import { createEditSuppressModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
-import { createEditTagModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
-import { createEditThresholdModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
+import { filterActionModalInitialState } from '@/features/filter-actions/state/filter-action-modal.slice';
 import { queryFiltersSetsInitialState } from '@/features/filter-sets/state/filter-sets.slice';
 import { saveFilterSetModalInitialState } from '@/features/filter-sets/state/save-filter-set.slice';
 import { investigationInitialState } from '@/features/investigation/investigation.slice';
@@ -45,11 +41,7 @@ export const initialState: Omit<RootState, 'API'> = {
   modals: {
     addFiltersCommand: addQfilterCommandInitialState,
     saveFilterSetModal: saveFilterSetModalInitialState,
-    createEditDeclarationModal: createEditDeclarationModalInitialState,
-    createEditSendMailModal: createEditSendMailModalInitialState,
-    createEditSuppressModal: createEditSuppressModalInitialState,
-    createEditTagModal: createEditTagModalInitialState,
-    createEditThresholdModal: createEditThresholdModalInitialState,
+    filterActionModal: filterActionModalInitialState,
   },
   marketing: marketingStateInitialState,
 };

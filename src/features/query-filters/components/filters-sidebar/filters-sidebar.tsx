@@ -25,7 +25,7 @@ import {
 import { startsWithOneOf } from '@/common/lib/strings';
 import { cn } from '@/common/lib/utils';
 import { FilterActionsDropdown } from '@/features/filter-actions/components/filter-actions/filter-actions.dropdown';
-import { useSupportedFilterActionsFilters } from '@/features/filter-actions/utils/get-supported-filters';
+import { useSupportedFilters } from '@/features/filter-actions/hooks/use-supported-filters';
 import {
   SideBarQueryFilterSets,
   useSaveFilterSetModal,
@@ -107,7 +107,7 @@ export const FiltersSideBar = () => {
   const flags = useSelector(selectGatedFilterFlags);
   const queryFilters = useSelector(selectQueryFilters);
   const isOpen = useAppSelector(selectIsSidebarOpen);
-  const filterActionSupportedFilters = useSupportedFilterActionsFilters();
+  const filterActionSupportedFilters = useSupportedFilters();
   const autoOpenSidebarOnNavigation = useAppSelector(
     selectAutoOpenSidebarOnNavigation,
   );

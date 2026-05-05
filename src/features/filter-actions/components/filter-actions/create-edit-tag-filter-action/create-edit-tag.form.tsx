@@ -33,13 +33,13 @@ import {
   useCreateFilterActionMutation,
   useUpdateFilterActionMutation,
 } from '../../../api/filter-actions.api';
+import { useFilterActionFormValues } from '../../../hooks/use-filter-action-form-values';
 import {
   FilterActionPayload,
   TagAndKeepFilterAction,
   TagFilterAction,
 } from '../../../model/filter-action';
 import { baseFilterActionSchema } from '../filter-actions.baseSchema';
-import { useInitialValues } from '../use-initial-values';
 
 const formSchema = baseFilterActionSchema.extend({
   tag: z.enum(['relevant', 'informational']),
@@ -51,7 +51,7 @@ const useInitialTagValues = (
   keep?: boolean,
   filterAction?: TagFilterAction | TagAndKeepFilterAction,
 ): TagFilterActionFormValues => {
-  const initialValues = useInitialValues(
+  const initialValues = useFilterActionFormValues(
     keep ? 'tagAndKeep' : 'tag',
     filterAction,
   );

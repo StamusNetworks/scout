@@ -5,14 +5,14 @@ import { useQueryFilters } from '@/features/query-filters';
 import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 import { QueryFilterState } from '@/features/query-filters/model/query-filter';
 
-import { useTestActionsQuery } from '../../api/filter-actions.api';
+import { useTestActionsQuery } from '../api/filter-actions.api';
 import {
   FilterAction,
   FilterActionKind,
   FilterDef,
-} from '../../model/filter-action';
+} from '../model/filter-action';
 
-export const useInitialValues = (
+export const useFilterActionFormValues = (
   kind: FilterActionKind,
   filterAction?: FilterAction,
 ) => {

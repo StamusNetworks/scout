@@ -25,17 +25,13 @@ import {
 } from '@/common/design-system/atoms/ui/dropdown-menu';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
-import { useAppDispatch } from '@/store/store';
 
 import { useGetFilterActionsQuery } from '../../api/filter-actions.api';
+import { useFilterActionModal } from '../../hooks/use-filter-action-modal';
 import {
   FILTER_ACTION_KIND_LABEL,
   FilterAction,
 } from '../../model/filter-action';
-import { openDeclarationModal } from '../filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
-import { openSuppressModal } from '../filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
-import { openTagModal } from '../filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
-import { openThresholdModal } from '../filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
 import { DeleteFilterActionForm } from './filter-actions-table.row-actions.delete-form';
 import { MoveFilterActionForm } from './filter-actions-table.row-actions.move-form';
 
@@ -47,7 +43,7 @@ export const FilterActionRowActions = ({
 }: {
   filterAction: FilterAction;
 }) => {
-  const dispatch = useAppDispatch();
+  const modal = useFilterActionModal();
   const replaceFilters = useReplaceFilters();
   const { data, isLoading } = useGetFilterActionsQuery({});
   const [moveFilterActionModalOpen, setMoveFilterActionModalOpen] =
@@ -62,19 +58,19 @@ export const FilterActionRowActions = ({
   const handleEditFilterAction = () => {
     switch (filterAction.kind) {
       case 'threshold':
-        dispatch(openThresholdModal({ mode: 'edit', filterAction }));
+        modal.openThreshold({ mode: 'edit', filterAction });
         break;
       case 'threat':
-        dispatch(openDeclarationModal({ mode: 'edit', filterAction }));
+        modal.openDeclaration({ mode: 'edit', filterAction });
         break;
       case 'suppress':
-        dispatch(openSuppressModal({ mode: 'edit', filterAction }));
+        modal.openSuppress({ mode: 'edit', filterAction });
         break;
       case 'tag':
-        dispatch(openTagModal({ mode: 'edit', keep: false, filterAction }));
+        modal.openTag({ mode: 'edit', keep: false, filterAction });
         break;
       case 'tagAndKeep':
-        dispatch(openTagModal({ mode: 'edit', keep: true, filterAction }));
+        modal.openTag({ mode: 'edit', keep: true, filterAction });
         break;
       default:
         break;

@@ -181,7 +181,10 @@ describe('FilterActionsDropdown', () => {
     const sendMail = screen.getByRole('menuitem', { name: /Send mail/i });
     await user.click(sendMail);
 
-    expect(store.getState().modals.createEditSendMailModal.isOpen).toBe(true);
-    expect(store.getState().modals.createEditSendMailModal.mode).toBe('create');
+    const modalState = store.getState().modals.filterActionModal;
+    expect(modalState.kind).toBe('sendMail');
+    if (modalState.kind === 'sendMail') {
+      expect(modalState.mode).toBe('create');
+    }
   });
 });

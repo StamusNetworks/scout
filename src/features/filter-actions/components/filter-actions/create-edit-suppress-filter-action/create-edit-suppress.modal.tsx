@@ -4,40 +4,36 @@ import {
   DialogDescription,
   DialogTitle,
 } from '@/common/design-system/atoms/ui/dialog';
-import { useAppDispatch, useAppSelector } from '@/store/store';
 
+import { useFilterActionModal } from '../../../hooks/use-filter-action-modal';
 import { CreateEditSuppressFilterActionForm } from './create-edit-suppress.form';
-import {
-  closeSuppressModal,
-  selectSuppressModal,
-} from './create-edit-suppress.slice';
 
 export const CreateEditSuppressModal = () => {
-  const dispatch = useAppDispatch();
-  const { isOpen, mode, filterAction } = useAppSelector(selectSuppressModal);
+  const { state, close } = useFilterActionModal();
+  const suppress = state.kind === 'suppress' ? state : null;
 
-  const handleOpenChange = (open: boolean) =>
-    !open && dispatch(closeSuppressModal());
-  const handleClose = () => dispatch(closeSuppressModal());
   return (
     <Dialog
-      open={isOpen}
-      onOpenChange={handleOpenChange}
+      open={!!suppress}
+      onOpenChange={(open) => !open && close()}
     >
-      <DialogContent>
-        <DialogTitle>
-          {mode === 'create' ? 'Create ' : 'Edit '}Suppress filter action
-        </DialogTitle>
-        <DialogDescription>
-          Create a Suppress filter action to suppress events matching the
-          filters.
-        </DialogDescription>
-        <CreateEditSuppressFilterActionForm
-          edit={mode === 'edit'}
-          filterAction={filterAction}
-          onClose={handleClose}
-        />
-      </DialogContent>
+      {suppress && (
+        <DialogContent>
+          <DialogTitle>
+            {suppress.mode === 'create' ? 'Create ' : 'Edit '}Suppress filter
+            action
+          </DialogTitle>
+          <DialogDescription>
+            Create a Suppress filter action to suppress events matching the
+            filters.
+          </DialogDescription>
+          <CreateEditSuppressFilterActionForm
+            edit={suppress.mode === 'edit'}
+            filterAction={suppress.filterAction}
+            onClose={close}
+          />
+        </DialogContent>
+      )}
     </Dialog>
   );
 };

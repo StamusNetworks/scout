@@ -35,12 +35,12 @@ import {
   useCreateFilterActionMutation,
   useUpdateFilterActionMutation,
 } from '../../../api/filter-actions.api';
+import { useFilterActionFormValues } from '../../../hooks/use-filter-action-form-values';
 import {
   FilterActionPayload,
   ThresholdFilterAction,
 } from '../../../model/filter-action';
 import { baseFilterActionSchema } from '../filter-actions.baseSchema';
-import { useInitialValues } from '../use-initial-values';
 
 const formSchema = baseFilterActionSchema.extend({
   count: z.number().min(1, 'Count must be a positive number'),
@@ -53,7 +53,7 @@ export type ThresholdFilterActionFormValues = z.infer<typeof formSchema>;
 const useThresholdInitialValues = (
   filterAction?: ThresholdFilterAction,
 ): ThresholdFilterActionFormValues => {
-  const initialValues = useInitialValues('threshold', filterAction);
+  const initialValues = useFilterActionFormValues('threshold', filterAction);
   return {
     ...initialValues,
     count: filterAction?.options.count ?? 1,

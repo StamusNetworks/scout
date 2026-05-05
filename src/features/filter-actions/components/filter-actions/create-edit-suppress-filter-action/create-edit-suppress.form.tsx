@@ -26,12 +26,12 @@ import {
   useCreateFilterActionMutation,
   useUpdateFilterActionMutation,
 } from '../../../api/filter-actions.api';
+import { useFilterActionFormValues } from '../../../hooks/use-filter-action-form-values';
 import {
   FilterActionPayload,
   SuppressFilterAction,
 } from '../../../model/filter-action';
 import { baseFilterActionSchema } from '../filter-actions.baseSchema';
-import { useInitialValues } from '../use-initial-values';
 
 const formSchema = baseFilterActionSchema;
 
@@ -48,7 +48,7 @@ export const CreateEditSuppressFilterActionForm = ({
   onClose,
 }: CreateEditSuppressFilterActionFormProps) => {
   const navigate = useNavigate();
-  const initialValues = useInitialValues('suppress', filterAction);
+  const initialValues = useFilterActionFormValues('suppress', filterAction);
   const { data: rulesetsList } = useGetRulesetsQuery();
 
   const form = useForm<SuppressFilterActionFormValues>({

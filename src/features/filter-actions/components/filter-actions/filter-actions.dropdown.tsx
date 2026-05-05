@@ -7,15 +7,10 @@ import {
 import { TooltipProvider } from '@/common/design-system/atoms/ui/tooltip';
 import { TooltipMenuItem } from '@/common/design-system/molecules/tooltip-menu-item';
 import { useQueryFilters } from '@/features/query-filters';
-import { useAppDispatch } from '@/store/store';
 
 import { useTestAvailableActionsQuery } from '../../api/filter-actions.api';
+import { useFilterActionModal } from '../../hooks/use-filter-action-modal';
 import { FilterActionKind } from '../../model/filter-action';
-import { openDeclarationModal } from './create-edit-declaration-events/create-edit-declaration.slice';
-import { openSendMailModal } from './create-edit-send-mail-filter-action/create-edit-send-mail.slice';
-import { openSuppressModal } from './create-edit-suppress-filter-action/create-edit-suppress.slice';
-import { openTagModal } from './create-edit-tag-filter-action/create-edit-tag.slice';
-import { openThresholdModal } from './create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
 
 const LOADING_TOOLTIP = 'Available actions are loading';
 const NO_DATA_TOOLTIP = 'You need a valid Filter Set to create a filter action';
@@ -27,7 +22,7 @@ export const FilterActionsDropdown = ({
 }: {
   trigger: () => React.ReactNode;
 }) => {
-  const dispatch = useAppDispatch();
+  const modal = useFilterActionModal();
 
   const qfilter = useQueryFilters();
   const { data, isFetching } = useTestAvailableActionsQuery({
@@ -54,14 +49,14 @@ export const FilterActionsDropdown = ({
           <TooltipMenuItem
             disabled={itemDisabled('threshold')}
             tooltip={itemTooltip('threshold')}
-            onClick={() => dispatch(openThresholdModal({ mode: 'create' }))}
+            onClick={() => modal.openThreshold({ mode: 'create' })}
           >
             Threshold
           </TooltipMenuItem>
           <TooltipMenuItem
             disabled={itemDisabled('suppress')}
             tooltip={itemTooltip('suppress')}
-            onClick={() => dispatch(openSuppressModal({ mode: 'create' }))}
+            onClick={() => modal.openSuppress({ mode: 'create' })}
           >
             Suppress
           </TooltipMenuItem>
@@ -69,18 +64,14 @@ export const FilterActionsDropdown = ({
           <TooltipMenuItem
             disabled={itemDisabled('tag')}
             tooltip={itemTooltip('tag')}
-            onClick={() =>
-              dispatch(openTagModal({ mode: 'create', keep: false }))
-            }
+            onClick={() => modal.openTag({ mode: 'create', keep: false })}
           >
             Tag
           </TooltipMenuItem>
           <TooltipMenuItem
             disabled={itemDisabled('tagAndKeep')}
             tooltip={itemTooltip('tagAndKeep')}
-            onClick={() =>
-              dispatch(openTagModal({ mode: 'create', keep: true }))
-            }
+            onClick={() => modal.openTag({ mode: 'create', keep: true })}
           >
             Tag and Keep
           </TooltipMenuItem>
@@ -88,7 +79,7 @@ export const FilterActionsDropdown = ({
           <TooltipMenuItem
             disabled={itemDisabled('threat')}
             tooltip={itemTooltip('threat')}
-            onClick={() => dispatch(openDeclarationModal({ mode: 'create' }))}
+            onClick={() => modal.openDeclaration({ mode: 'create' })}
           >
             Create declaration events
           </TooltipMenuItem>
@@ -96,7 +87,7 @@ export const FilterActionsDropdown = ({
           <TooltipMenuItem
             disabled={itemDisabled('sendMail')}
             tooltip={itemTooltip('sendMail')}
-            onClick={() => dispatch(openSendMailModal({ mode: 'create' }))}
+            onClick={() => modal.openSendMail({ mode: 'create' })}
           >
             Send mail
           </TooltipMenuItem>

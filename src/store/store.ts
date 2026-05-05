@@ -8,11 +8,7 @@ import { tablePreferencesSlice } from '@/common/design-system/molecules/data-tab
 import { authSlice } from '@/features/auth/state/auth.slice';
 import { datesFiltersSlice } from '@/features/dates/state/dates.slice';
 import { dashboardPageStateSlice } from '@/features/events/state/dashboard.slice';
-import { createEditDeclarationModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
-import { createEditSendMailModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-send-mail-filter-action/create-edit-send-mail.slice';
-import { createEditSuppressModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
-import { createEditTagModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
-import { createEditThresholdModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
+import { filterActionModalSlice } from '@/features/filter-actions/state/filter-action-modal.slice';
 import { queryFiltersSetsSlice } from '@/features/filter-sets/state/filter-sets.slice';
 import { saveFilterSetModalSlice } from '@/features/filter-sets/state/save-filter-set.slice';
 import { investigationSlice } from '@/features/investigation/investigation.slice';
@@ -121,11 +117,7 @@ export const rootReducer = () =>
     modals: combineReducers({
       addFiltersCommand: addQfilterCommandSlice.reducer,
       saveFilterSetModal: saveFilterSetModalSlice.reducer,
-      createEditDeclarationModal: createEditDeclarationModalSlice.reducer,
-      createEditSendMailModal: createEditSendMailModalSlice.reducer,
-      createEditSuppressModal: createEditSuppressModalSlice.reducer,
-      createEditTagModal: createEditTagModalSlice.reducer,
-      createEditThresholdModal: createEditThresholdModalSlice.reducer,
+      filterActionModal: filterActionModalSlice.reducer,
     }),
     [API.reducerPath]: API.reducer,
   });

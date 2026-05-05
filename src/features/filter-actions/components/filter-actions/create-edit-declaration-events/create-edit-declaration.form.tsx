@@ -58,12 +58,12 @@ import {
   useCreateFilterActionMutation,
   useUpdateFilterActionMutation,
 } from '../../../api/filter-actions.api';
+import { useFilterActionFormValues } from '../../../hooks/use-filter-action-form-values';
 import {
   FilterActionPayload,
   ThreatFilterAction,
 } from '../../../model/filter-action';
 import { baseFilterActionSchema } from '../filter-actions.baseSchema';
-import { useInitialValues } from '../use-initial-values';
 
 const filterActionTargetTypeSchema = z.enum(['ip', 'username', 'mail']);
 
@@ -97,7 +97,7 @@ export type DeclarationFormValues = z.infer<typeof formSchema>;
 const useDeclarationInitialValues = (
   filterAction?: ThreatFilterAction,
 ): DeclarationFormValues => {
-  const initialValues = useInitialValues('threat', filterAction);
+  const initialValues = useFilterActionFormValues('threat', filterAction);
   return useMemo(
     () => ({
       ...initialValues,

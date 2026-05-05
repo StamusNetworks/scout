@@ -4,40 +4,36 @@ import {
   DialogDescription,
   DialogTitle,
 } from '@/common/design-system/atoms/ui/dialog';
-import { useAppDispatch, useAppSelector } from '@/store/store';
 
+import { useFilterActionModal } from '../../../hooks/use-filter-action-modal';
 import { CreateEditThresholdFilterActionForm } from './create-edit-threshold.form';
-import {
-  closeThresholdModal,
-  selectThresholdModal,
-} from './create-edit-threshold.slice';
 
 export const CreateEditThresholdModal = () => {
-  const dispatch = useAppDispatch();
-  const { isOpen, mode, filterAction } = useAppSelector(selectThresholdModal);
+  const { state, close } = useFilterActionModal();
+  const threshold = state.kind === 'threshold' ? state : null;
 
-  const handleOpenChange = (open: boolean) =>
-    !open && dispatch(closeThresholdModal());
-  const handleClose = () => dispatch(closeThresholdModal());
   return (
     <Dialog
-      open={isOpen}
-      onOpenChange={handleOpenChange}
+      open={!!threshold}
+      onOpenChange={(open) => !open && close()}
     >
-      <DialogContent>
-        <DialogTitle>
-          {mode === 'create' ? 'Create ' : 'Edit '} Threshold filter action
-        </DialogTitle>
-        <DialogDescription>
-          Create a Threshold filter action to limit the number of events
-          matching the filters in a given time period.
-        </DialogDescription>
-        <CreateEditThresholdFilterActionForm
-          edit={mode === 'edit'}
-          filterAction={filterAction}
-          onClose={handleClose}
-        />
-      </DialogContent>
+      {threshold && (
+        <DialogContent>
+          <DialogTitle>
+            {threshold.mode === 'create' ? 'Create ' : 'Edit '} Threshold filter
+            action
+          </DialogTitle>
+          <DialogDescription>
+            Create a Threshold filter action to limit the number of events
+            matching the filters in a given time period.
+          </DialogDescription>
+          <CreateEditThresholdFilterActionForm
+            edit={threshold.mode === 'edit'}
+            filterAction={threshold.filterAction}
+            onClose={close}
+          />
+        </DialogContent>
+      )}
     </Dialog>
   );
 };

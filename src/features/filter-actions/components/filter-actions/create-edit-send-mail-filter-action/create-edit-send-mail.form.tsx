@@ -28,12 +28,12 @@ import {
   useCreateFilterActionMutation,
   useUpdateFilterActionMutation,
 } from '../../../api/filter-actions.api';
+import { useFilterActionFormValues } from '../../../hooks/use-filter-action-form-values';
 import {
   FilterActionPayload,
   SendMailFilterAction,
 } from '../../../model/filter-action';
 import { baseFilterActionSchema } from '../filter-actions.baseSchema';
-import { useInitialValues } from '../use-initial-values';
 
 export const DEFAULT_MAX_MAILS_PER_DAY = 5;
 
@@ -49,7 +49,7 @@ export type SendMailFilterActionFormValues = z.infer<typeof formSchema>;
 const useSendMailInitialValues = (
   filterAction?: SendMailFilterAction,
 ): SendMailFilterActionFormValues => {
-  const initialValues = useInitialValues('sendMail', filterAction);
+  const initialValues = useFilterActionFormValues('sendMail', filterAction);
   return {
     ...initialValues,
     maxMailsPerDay:
