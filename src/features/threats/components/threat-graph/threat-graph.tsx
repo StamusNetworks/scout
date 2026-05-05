@@ -1,5 +1,5 @@
-import { EntitiesForceGraph } from '../../common/molecules/entities-force-graph/entities-force-graph';
 import { ThreatKind } from '../../model/threat';
+import { EntitiesForceGraph } from '../entities-force-graph/entities-force-graph';
 
 type Props = { kind: ThreatKind };
 

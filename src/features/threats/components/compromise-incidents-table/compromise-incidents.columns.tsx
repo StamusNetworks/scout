@@ -1,4 +1,4 @@
-import { threatStatusColumnDefs } from '@/features/threats/common/molecules/threat-status-columns';
+import { threatStatusColumnDefs } from '@/features/threats/components/threat-status-columns/threat-status-columns';
 
 export const compromiseIncidentsColumns = [
   { ...threatStatusColumnDefs.first_seen, enableSorting: true },

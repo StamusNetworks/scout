@@ -6,8 +6,8 @@ import { DateTime } from '@/common/design-system/entities/date-time';
 import { cn } from '@/common/lib/utils';
 import { Host } from '@/features/host-insights/common/host.model';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
-import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
-import { EntityThreatTagsListTemplate } from '@/features/threats/common/molecules/entities-threat-tags-list/entities-threat-tags-list';
+import { EntityThreatTagsListTemplate } from '@/features/threats/components/entities-threat-tags-list/entities-threat-tags-list';
+import { KillchainTag } from '@/features/threats/components/kill-chain-tag/kill-chain-tag';
 import { ImpactedEntity } from '@/features/threats/model/impacted-entity';
 
 import { HostnameTemplate } from './host-details/hostname';

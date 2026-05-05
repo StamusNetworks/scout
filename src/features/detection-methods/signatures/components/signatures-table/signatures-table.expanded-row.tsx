@@ -12,8 +12,8 @@ import {
   ValueListCard,
 } from '@/common/design-system/molecules/value-list-card';
 import { useGetDashboardFieldsQuery } from '@/features/events';
-import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
-import { ThreatTag } from '@/features/threats/common/molecules/threat-tag';
+import { KillchainTag } from '@/features/threats/components/kill-chain-tag/kill-chain-tag';
+import { ThreatTag } from '@/features/threats/components/threat-tag/threat-tag';
 
 import { Signature } from '../../model/signature';
 import { SignatureAnalysis } from '../signature-analysis';

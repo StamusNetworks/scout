@@ -11,8 +11,8 @@ import { Network } from '@/features/host-insights/use-cases/host-details/molecul
 import { RoleBadge } from '@/features/host-insights/use-cases/host-details/molecules/host-details/roles';
 import { Username } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
-import { EntityThreatTagsList } from '@/features/threats/common/molecules/entities-threat-tags-list/entities-threat-tags-list';
-import { IpOrEntityEventValue } from '@/features/threats/common/molecules/ip-or-entity';
+import { EntityThreatTagsList } from '@/features/threats/components/entities-threat-tags-list/entities-threat-tags-list';
+import { IpOrEntityEventValue } from '@/features/threats/components/ip-or-entity/ip-or-entity';
 
 export const hostSightingTableColumns: CustomColumnDef<Event>[] = [
   {

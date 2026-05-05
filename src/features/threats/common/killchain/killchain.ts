@@ -2,8 +2,7 @@
  * Back-compat shim. The canonical location is `model/kill-chain.ts`.
  *
  * This module is preserved while consumers migrate. New code should
- * import `KillChainPhase`, `KILL_CHAIN_PHASES`, `phaseFromStep`, etc.
- * from the threats public barrel (`@/features/threats`).
+ * import from the threats public barrel (`@/features/threats`).
  */
 
 import { z } from 'zod';
@@ -19,7 +18,7 @@ import {
 
 export type { KillChainPhase } from '../../model/kill-chain';
 
-/** @deprecated Use KILL_CHAIN_PHASES. */
+/** @deprecated Use KILL_CHAIN_PHASES from the threats barrel. */
 export const killChainsConfig = Object.fromEntries(
   Object.entries(KILL_CHAIN_PHASES).map(([key, cfg]) => [
     key,

@@ -8,11 +8,11 @@ import {
   useGetActiveThreatFamiliesQuery,
   useGetThreatFamiliesQuery,
 } from '../../api/threats.api';
+import { CoverageBlockSkeleton } from '../../components/coverage-block/coverage-block.skeleton';
+import { FamilyBlockView } from '../../components/coverage-block/family-block';
+import { ThreatGrid } from '../../components/threat-grid/threat-grid';
 import { ThreatKind } from '../../model/threat';
 import { ThreatFamily } from '../../model/threat-family';
-import { CoverageBlockSkeleton } from '../molecules/coverage-block/coverage-block.skeleton';
-import { FamilyBlockView } from '../molecules/coverage-block/family-block';
-import { ThreatGrid } from '../molecules/threat-grid';
 
 export const FamiliesList = ({
   kind,

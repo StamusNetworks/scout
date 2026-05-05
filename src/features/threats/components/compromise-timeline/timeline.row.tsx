@@ -11,7 +11,7 @@ import {
 import { cn } from '@/common/lib/utils';
 import { Hostname } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
 import { Roles } from '@/features/host-insights/use-cases/host-details/molecules/host-details/roles';
-import { IpOrEntityEventValue } from '@/features/threats/common/molecules/ip-or-entity';
+import { IpOrEntityEventValue } from '@/features/threats/components/ip-or-entity/ip-or-entity';
 
 import { TimelineProps } from '../../model/threat-history';
 import { useTimelineContext } from './compromise-timeline';

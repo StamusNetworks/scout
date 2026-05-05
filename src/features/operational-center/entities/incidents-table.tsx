@@ -18,7 +18,7 @@ import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
 import { useGetThreatsStatusQuery } from '@/features/threats/api/threats.api';
 import { KillChainKeysWithoutPolicies } from '@/features/threats/common/killchain/killchain';
-import { threatStatusColumnDefs } from '@/features/threats/common/molecules/threat-status-columns';
+import { threatStatusColumnDefs } from '@/features/threats/components/threat-status-columns/threat-status-columns';
 import { useThreats } from '@/features/threats/hooks/use-threats';
 import { ThreatStatus } from '@/features/threats/model/threat-status';
 

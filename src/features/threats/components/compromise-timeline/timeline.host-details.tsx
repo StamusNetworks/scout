@@ -5,7 +5,7 @@ import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-
 import { HostStats } from '@/features/host-insights/use-cases/host-details/molecules/host-summary';
 import { InternalExternal } from '@/features/host-insights/use-cases/host-details/molecules/internal-external';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
-import { IpOrEntityEventValue } from '@/features/threats/common/molecules/ip-or-entity';
+import { IpOrEntityEventValue } from '@/features/threats/components/ip-or-entity/ip-or-entity';
 
 import { useGetThreatHistoryQuery } from '../../api/timeline.api';
 import { HostTimelineTemplate } from './history-timeline';

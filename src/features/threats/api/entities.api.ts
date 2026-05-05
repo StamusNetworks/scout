@@ -3,7 +3,7 @@ import { Dates, Tenant } from '@/common/fetching/fetching.types';
 import { Paginated, Pagination } from '@/common/fetching/fetching.types';
 import { API } from '@/store/api';
 
-import { getESParams } from '../common/molecules/attacker-infrastructure/attacker-infrastructure.utils';
+import { getESParams } from '../components/attacker-infrastructure/attacker-infrastructure.utils';
 import { ImpactedEntity } from '../model/impacted-entity';
 import {
   KILL_CHAIN_PHASES,

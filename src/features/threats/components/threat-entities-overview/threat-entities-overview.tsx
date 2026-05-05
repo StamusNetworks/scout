@@ -1,6 +1,6 @@
-import { KillChainCounters } from '../../common/killchain/components/killchain-counters/killchain-counters';
-import { ImpactedEntitiesTable } from '../../common/molecules/impacted-entities-table/impacted-entities-table';
 import { ThreatKind } from '../../model/threat';
+import { ImpactedEntitiesTable } from '../impacted-entities-table/impacted-entities-table';
+import { KillChainCounters } from '../kill-chain-counters/kill-chain-counters';
 
 type Props = { kind: ThreatKind };
 

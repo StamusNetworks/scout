@@ -6,11 +6,11 @@ import {
   useGetActiveThreatsQuery,
   useGetThreatFamiliesQuery,
 } from '../../api/threats.api';
+import { CoverageBlockSkeleton } from '../../components/coverage-block/coverage-block.skeleton';
+import { ThreatBlockView } from '../../components/coverage-block/threat-block';
+import { ThreatGrid } from '../../components/threat-grid/threat-grid';
 import { useThreats } from '../../hooks/use-threats';
 import { ThreatKind } from '../../model/threat';
-import { CoverageBlockSkeleton } from '../molecules/coverage-block/coverage-block.skeleton';
-import { ThreatBlockView } from '../molecules/coverage-block/threat-block';
-import { ThreatGrid } from '../molecules/threat-grid';
 
 export const ThreatsList = ({
   kind,

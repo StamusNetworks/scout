@@ -8,9 +8,9 @@ import {
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 import { useGetActiveThreatsQuery } from '../../api/threats.api';
+import { ActiveThreatBlockView } from '../../components/coverage-block/active-threat-block';
+import { CoverageBlockSkeleton } from '../../components/coverage-block/coverage-block.skeleton';
 import { useCombinedThreats } from '../../hooks/use-combined-threats';
-import { ActiveThreatBlockView } from '../molecules/coverage-block/active-threat-block';
-import { CoverageBlockSkeleton } from '../molecules/coverage-block/coverage-block.skeleton';
 
 export const FamilyActiveThreats = ({ familyId }: { familyId: number }) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);

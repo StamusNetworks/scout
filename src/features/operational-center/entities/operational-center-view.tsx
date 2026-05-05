@@ -12,8 +12,8 @@ import { MitreTechniques } from '@/features/operational-center/entities/mitre-te
 import { OutliersTimeline } from '@/features/operational-center/entities/outliers-timeline';
 import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
 import { useEnableFilterFlags } from '@/features/query-filters/hooks/use-enable-filter-flags';
-import { KillChainCounters } from '@/features/threats/common/killchain/components/killchain-counters/killchain-counters';
-import { OffendersWorldMap } from '@/features/threats/common/molecules/offenders-world-map/offenders-world-map';
+import { KillChainCounters } from '@/features/threats/components/kill-chain-counters/kill-chain-counters';
+import { OffendersWorldMap } from '@/features/threats/components/offenders-world-map/offenders-world-map';
 interface OperationalCenterViewProps {
   enterprise: boolean;
 }

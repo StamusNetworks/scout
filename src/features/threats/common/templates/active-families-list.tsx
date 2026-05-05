@@ -5,11 +5,11 @@ import { sortBy } from '@/common/lib/sorting';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 import { useGetActiveThreatFamiliesQuery } from '../../api/threats.api';
+import { ActiveFamilyBlock } from '../../components/coverage-block/active-family-block';
+import { CoverageBlockSkeleton } from '../../components/coverage-block/coverage-block.skeleton';
+import { ThreatGrid } from '../../components/threat-grid/threat-grid';
 import { ActiveThreatFamily } from '../../model/active-threat-family';
 import { ThreatKind } from '../../model/threat';
-import { ActiveFamilyBlock } from '../molecules/coverage-block/active-family-block';
-import { CoverageBlockSkeleton } from '../molecules/coverage-block/coverage-block.skeleton';
-import { ThreatGrid } from '../molecules/threat-grid';
 
 export const ActiveFamiliesList = ({
   kind,

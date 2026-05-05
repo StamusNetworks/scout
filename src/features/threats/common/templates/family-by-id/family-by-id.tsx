@@ -40,8 +40,8 @@ import { useCreateFilter } from '@/features/query-filters/hooks/use-create-filte
 import { useEnableFilterFlags } from '@/features/query-filters/hooks/use-enable-filter-flags';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { KIND_LABEL, ThreatForm } from '@/features/threats';
-import { KillChainCountersByFamilyId } from '@/features/threats/common/killchain/components/killchain-counters/killchain-counters';
-import { ImpactedEntitiesTable } from '@/features/threats/common/molecules/impacted-entities-table/impacted-entities-table';
+import { ImpactedEntitiesTable } from '@/features/threats/components/impacted-entities-table/impacted-entities-table';
+import { KillChainCountersByFamilyId } from '@/features/threats/components/kill-chain-counters/kill-chain-counters';
 
 import {
   useGetActiveThreatFamiliesQuery,

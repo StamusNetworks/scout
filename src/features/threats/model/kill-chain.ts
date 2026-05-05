@@ -81,7 +81,11 @@ export const KILL_CHAIN_PHASES_KEYS = Object.keys(
 export const KILL_CHAIN_PHASES_KEYS_WITHOUT_POLICIES =
   KILL_CHAIN_PHASES_KEYS.slice(0, -1);
 
-const STEP_TO_PHASE: Record<number, KillChainPhase> = {
+/**
+ * Mapping from numeric kill-chain step to phase key. Some endpoints
+ * return numeric steps (older shape) — `phaseFromStep` resolves them.
+ */
+export const STEP_TO_PHASE: Record<number, KillChainPhase> = {
   '-1': 'pre_condition',
   '0': 'reconnaissance',
   '1': 'weaponization',

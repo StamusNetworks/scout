@@ -22,8 +22,8 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { isIP } from '@/common/lib/ips';
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
-import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
-import { ThreatTag } from '@/features/threats/common/molecules/threat-tag';
+import { KillchainTag } from '@/features/threats/components/kill-chain-tag/kill-chain-tag';
+import { ThreatTag } from '@/features/threats/components/threat-tag/threat-tag';
 import { useThreat } from '@/features/threats/hooks/use-threat';
 import { ThreatStatus } from '@/features/threats/model/threat-status';
 
