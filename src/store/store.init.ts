@@ -1,7 +1,7 @@
 import { tablePreferencesInitialState } from '@/common/design-system/molecules/data-table/table-preferences.slice';
 import { authInitialState } from '@/features/auth/state/auth.slice';
 import { datesFiltersInitialState } from '@/features/dates/state/dates.slice';
-import { dashboardPageStateInitialState } from '@/features/events/detection-events/use-cases/explorer/store/dashboard.slice';
+import { dashboardPageStateInitialState } from '@/features/events/state/dashboard.slice';
 import { createEditDeclarationModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
 import { createEditSendMailModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-send-mail-filter-action/create-edit-send-mail.slice';
 import { createEditSuppressModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';

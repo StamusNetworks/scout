@@ -3,8 +3,8 @@ import { ListOrdered } from 'lucide-react';
 import { CommandFilterSingle } from '@/common/design-system/molecules/data-table/filters/command-filter-single';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
-import { selectOrdering } from '../store/dashboard.selectors';
-import { setOrdering } from '../store/dashboard.slice';
+import { selectOrdering } from '../../state/dashboard.selectors';
+import { setOrdering } from '../../state/dashboard.slice';
 
 export const OrderingSelector = () => {
   const dispatch = useAppDispatch();

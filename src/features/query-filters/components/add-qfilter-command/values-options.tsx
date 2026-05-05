@@ -5,7 +5,7 @@ import {
   CommandLoading,
 } from '@/common/design-system/atoms/ui/command';
 import { formatNumber } from '@/common/lib/numbers';
-import { useGetDashboardFieldsQuery } from '@/features/events/detection-events/use-cases/explorer/api/dashboard.api';
+import { useGetDashboardFieldsQuery } from '@/features/events/api/dashboard.api';
 import { setOpenModal } from '@/features/ui/ui-state.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 

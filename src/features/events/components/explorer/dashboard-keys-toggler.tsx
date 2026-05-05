@@ -13,9 +13,9 @@ import {
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
-import { selectDisabledKeys } from '../store/dashboard.selectors';
-import { toggleDisabledKey } from '../store/dashboard.slice';
-import { CEdashboard, dashboard } from './dashboard.config';
+import { CEdashboard, dashboard } from '../../definitions/dashboard.config';
+import { selectDisabledKeys } from '../../state/dashboard.selectors';
+import { toggleDisabledKey } from '../../state/dashboard.slice';
 
 export const DashboardKeysToggler = ({
   panelId,

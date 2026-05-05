@@ -65,9 +65,9 @@ import {
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
-import { useDashboard } from '../api/hooks/useDashboard';
-import { useFieldsStats } from '../api/hooks/useFieldsStats';
-import { selectOrdering } from '../store/dashboard.selectors';
+import { useDashboard } from '../../hooks/use-dashboard';
+import { useFieldsStats } from '../../hooks/use-fields-stats';
+import { selectOrdering } from '../../state/dashboard.selectors';
 
 export type DataEntry = {
   key: string;

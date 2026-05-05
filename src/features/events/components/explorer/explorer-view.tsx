@@ -12,14 +12,14 @@ import {
   EmptyMedia,
 } from '@/common/design-system/atoms/ui/empty';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
-import { useDashboard } from '@/features/events/detection-events/use-cases/explorer/api/hooks/useDashboard';
-import { DashboardPanels } from '@/features/events/detection-events/use-cases/explorer/components/dashboard-panels';
-import { EventsCounter } from '@/features/events/detection-events/use-cases/explorer/components/events-counter';
-import { EventsCountTimeline } from '@/features/events/detection-events/use-cases/explorer/components/events-counts-timeline';
-import { ExpandCollapseRows } from '@/features/events/detection-events/use-cases/explorer/components/expand-collapse-rows';
-import { HideEmptyPanels } from '@/features/events/detection-events/use-cases/explorer/components/hide-empty-tiles';
-import { OrderingSelector } from '@/features/events/detection-events/use-cases/explorer/components/ordering-selector';
-import { PageSizeSelector } from '@/features/events/detection-events/use-cases/explorer/components/page-size-selector';
+import { EventsCounter } from '@/features/events/components/events-counter/events-counter';
+import { EventsCountTimeline } from '@/features/events/components/events-counts-timeline/events-counts-timeline';
+import { DashboardPanels } from '@/features/events/components/explorer/dashboard-panels';
+import { ExpandCollapseRows } from '@/features/events/components/explorer/expand-collapse-rows';
+import { HideEmptyPanels } from '@/features/events/components/explorer/hide-empty-tiles';
+import { OrderingSelector } from '@/features/events/components/explorer/ordering-selector';
+import { PageSizeSelector } from '@/features/events/components/explorer/page-size-selector';
+import { useDashboard } from '@/features/events/hooks/use-dashboard';
 
 export const ExplorerView = () => {
   const { data: dashboardData, isLoading } = useDashboard();

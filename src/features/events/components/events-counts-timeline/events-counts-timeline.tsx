@@ -1,55 +1,50 @@
-import { useMemo } from 'react';
-
+import { Column } from '@/common/design-system/atoms/layout/column';
+import { Row } from '@/common/design-system/atoms/layout/row';
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+} from '@/common/design-system/atoms/ui/pillTabs';
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
-import { useGetEventsTimelineQuery } from '@/features/events/common/events.api';
-import { CountsTimeline } from '@/features/events/model/counts-timeline';
-import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+import { useFeatureFlags } from '@/common/lib/use-feature-flags';
+import { useCountsTimeline } from '@/features/events/hooks/use-counts-timeline';
+import { useAppDispatch, useAppSelector } from '@/store/store';
 
-import { buildSightingQfilter } from '../../builders/build-sighting-qfilter';
-import { useGetSightingById } from '../../hooks/use-get-sighting-by-id';
+import { selectChartTarget } from '../../state/dashboard.selectors';
+import { setChartTarget } from '../../state/dashboard.slice';
 
-interface SightingEventsCountsTimelineProps {
-  sightingId: string;
-}
-export const SightingEventsCountsTimeline = ({
-  sightingId,
-}: SightingEventsCountsTimelineProps) => {
-  const params = useGlobalQueryParams(['tenant', 'dates']);
-  const start_date = useMemo(() => {
-    return params.start_date || 0;
-  }, [params.start_date]);
-  const end_date = useMemo(() => {
-    return params.end_date || new Date().getTime();
-  }, [params.end_date]);
-  const interval = Math.floor((end_date - start_date) / 24 / 1000);
-  const { data: sighting } = useGetSightingById(sightingId);
-  const qfilter = buildSightingQfilter(
-    sighting?.discovery?.key,
-    sighting?.discovery?.value,
-    sighting?.app_proto,
+export const EventsCountTimeline = () => {
+  const dispatch = useAppDispatch();
+
+  const chartTarget = useAppSelector(selectChartTarget);
+  const { enterprise } = useFeatureFlags();
+  const compChartTarget = enterprise ? chartTarget : false; // Chart target can only be specified in Enterprise
+
+  const { data } = useCountsTimeline(compChartTarget);
+
+  return (
+    <Column>
+      {enterprise && (
+        <Row className="mb-2 justify-end">
+          <Tabs value={compChartTarget.toString()}>
+            <TabsList>
+              <TabsTrigger
+                value="true"
+                onClick={() => dispatch(setChartTarget(true))}
+              >
+                Tags
+              </TabsTrigger>
+              <TabsTrigger
+                value="false"
+                onClick={() => dispatch(setChartTarget(false))}
+              >
+                Probes
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </Row>
+      )}
+      {!data ? null : <BarChartTimeline data={data} />}
+    </Column>
   );
-  const { data: timeline } = useGetEventsTimelineQuery(
-    {
-      start_date,
-      end_date,
-      qfilter,
-      interval,
-    },
-    {
-      skip: !qfilter,
-      selectFromResult: (result) => ({
-        ...result,
-        data: {
-          from_date: start_date.toString(),
-          to_date: end_date.toString(),
-          interval: interval.toString(),
-          events: {
-            entries: result.data,
-          },
-        } as unknown as CountsTimeline,
-      }),
-    },
-  );
-  if (!qfilter) return <div>No data.</div>;
-  return <BarChartTimeline data={timeline} />;
 };

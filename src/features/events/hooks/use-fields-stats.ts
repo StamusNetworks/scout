@@ -1,7 +1,7 @@
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 
-import { useGetDashboardFieldsQuery } from '../dashboard.api';
+import { useGetDashboardFieldsQuery } from '../api/dashboard.api';
 
 export const useFieldsStats = (
   fields: string,

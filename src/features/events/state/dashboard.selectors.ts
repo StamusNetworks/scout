@@ -1,6 +1,6 @@
 import { RootState } from '@/store/store';
 
-import { dashboard } from '../components/dashboard.config';
+import { dashboard } from '../definitions/dashboard.config';
 
 export const selectDashboardPageState = (state: RootState) =>
   state.pages.explorer;

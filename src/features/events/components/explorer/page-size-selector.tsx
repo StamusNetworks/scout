@@ -8,8 +8,8 @@ import {
 } from '@/common/design-system/atoms/ui/select';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
-import { selectPageSize } from '../store/dashboard.selectors';
-import { setPageSize } from '../store/dashboard.slice';
+import { selectPageSize } from '../../state/dashboard.selectors';
+import { setPageSize } from '../../state/dashboard.slice';
 
 export const PageSizeSelector = () => {
   const dispatch = useAppDispatch();

@@ -2,7 +2,10 @@ import { Button } from '@/common/design-system/atoms/ui/button';
 import { ButtonGroup } from '@/common/design-system/atoms/ui/button-group';
 import { useAppDispatch } from '@/store/store';
 
-import { collapseAllPanels, expandAllPanels } from '../store/dashboard.slice';
+import {
+  collapseAllPanels,
+  expandAllPanels,
+} from '../../state/dashboard.slice';
 
 export const ExpandCollapseRows = () => {
   const dispatch = useAppDispatch();

@@ -7,7 +7,7 @@ import storage from 'redux-persist/es/storage';
 import { tablePreferencesSlice } from '@/common/design-system/molecules/data-table/table-preferences.slice';
 import { authSlice } from '@/features/auth/state/auth.slice';
 import { datesFiltersSlice } from '@/features/dates/state/dates.slice';
-import { dashboardPageStateSlice } from '@/features/events/detection-events/use-cases/explorer/store/dashboard.slice';
+import { dashboardPageStateSlice } from '@/features/events/state/dashboard.slice';
 import { createEditDeclarationModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
 import { createEditSendMailModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-send-mail-filter-action/create-edit-send-mail.slice';
 import { createEditSuppressModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';

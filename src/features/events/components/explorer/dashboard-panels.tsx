@@ -21,7 +21,12 @@ import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { getFilterDef } from '@/features/query-filters/definitions/query-filter.definitions';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
-import { useDashboard } from '../api/hooks/useDashboard';
+import {
+  CEdashboard,
+  dashboard,
+  DashboardItem,
+} from '../../definitions/dashboard.config';
+import { useDashboard } from '../../hooks/use-dashboard';
 import {
   selectCanPanelMoveDown,
   selectCanPanelMoveUp,
@@ -29,16 +34,15 @@ import {
   selectHideEmptyPanels,
   selectIsPanelCollapsed,
   selectPanelsOrder,
-} from '../store/dashboard.selectors';
+} from '../../state/dashboard.selectors';
 import {
   initializePanelsOrdering,
   movePanelDown,
   movePanelUp,
   toggleCollapse,
-} from '../store/dashboard.slice';
+} from '../../state/dashboard.slice';
 import { ValueListCard } from './dashboard-card';
 import { DashboardKeysToggler } from './dashboard-keys-toggler';
-import { CEdashboard, dashboard, DashboardItem } from './dashboard.config';
 
 export const DashboardPanels = () => {
   const dispatch = useAppDispatch();

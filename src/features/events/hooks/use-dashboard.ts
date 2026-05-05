@@ -1,12 +1,9 @@
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useAppSelector } from '@/store/store';
 
-import { CEdashboard, dashboard } from '../../components/dashboard.config';
-import {
-  selectOrdering,
-  selectPageSize,
-} from '../../store/dashboard.selectors';
-import { useFieldsStats } from './useFieldsStats';
+import { CEdashboard, dashboard } from '../definitions/dashboard.config';
+import { selectOrdering, selectPageSize } from '../state/dashboard.selectors';
+import { useFieldsStats } from './use-fields-stats';
 
 export const useDashboard = () => {
   const ordering = useAppSelector(selectOrdering);
