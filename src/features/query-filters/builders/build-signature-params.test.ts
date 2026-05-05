@@ -65,4 +65,14 @@ describe('buildSignatureParams', () => {
   it('should return undefined when no signature filters exist', () => {
     expect(buildSignatureParams([])).toBeUndefined();
   });
+
+  it('should populate both content and not_in_content when filters mix negation', () => {
+    const filters = [
+      makeFilter({ id: '1', key: 'content', value: 'foo' }),
+      makeFilter({ id: '2', key: 'content', value: 'bar', isNegated: true }),
+    ];
+    const result = buildSignatureParams(filters);
+    expect(result?.content).toBe('foo');
+    expect(result?.not_in_content).toBe('bar');
+  });
 });

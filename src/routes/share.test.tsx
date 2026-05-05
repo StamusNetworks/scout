@@ -30,6 +30,10 @@ const SHARED_STATE: ShareableState = {
   },
   filters: [
     { key: 'src_ip', value: '10.0.0.1' },
+    // The `wildcarded: true` flag from the payload should flow through;
+    // pick a non-`msg`/`content` key so we're not just observing the
+    // builder's `alwaysWildcarded` set.
+    { key: 'src_port', value: 8080, wildcarded: true },
     { key: 'msg', value: 'test', negated: true },
   ],
 };
@@ -79,9 +83,20 @@ describe('SharePage', () => {
           isWildcarded: false,
         }),
         expect.objectContaining({
+          key: 'src_port',
+          value: 8080,
+          isNegated: false,
+          // From the share-payload's `wildcarded: true`, not from the
+          // builder's alwaysWildcarded set.
+          isWildcarded: true,
+        }),
+        expect.objectContaining({
           key: 'msg',
           value: 'test',
           isNegated: true,
+          // `msg` is in the builder's alwaysWildcarded set, so this
+          // is forced regardless of the payload — covered by the
+          // src_port assertion above.
           isWildcarded: true,
         }),
       ]),
