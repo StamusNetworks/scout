@@ -2,7 +2,7 @@ import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { cn } from '@/common/lib/utils';
 
-import { type Match as TMatch } from '../../../../model/analysis.matches';
+import { type Match as TMatch } from '../../../../../model/analysis';
 import { Badge } from '../badge';
 import { BsizeMatchTemplate } from './match.bsize';
 import { BytejumpMatchTemplate } from './match.bytejump';

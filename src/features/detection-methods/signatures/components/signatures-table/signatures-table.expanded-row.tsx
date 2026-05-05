@@ -15,7 +15,7 @@ import { useGetDashboardFieldsQuery } from '@/features/events';
 import { KillchainTag } from '@/features/threats';
 import { ThreatTag } from '@/features/threats';
 
-import { Signature } from '../../model/signature';
+import { Rule } from '../../../model/rule';
 import { SignatureAnalysis } from '../signature-analysis';
 import { SignatureFlow } from '../signature-flow/signature-flow';
 import { SignatureRulesetStatus } from '../signature-ruleset-status/signature-ruleset-status';
@@ -32,17 +32,17 @@ type FieldStats = {
 export const DetectionMethodsExpandedRow = ({
   row,
 }: {
-  row: TanstackRow<Signature>;
+  row: TanstackRow<Rule>;
 }) => <DetectionMethodExpandedRowTemplate detectionMethod={row.original} />;
 
 export const DetectionMethodExpandedRowTemplate = ({
   detectionMethod,
 }: {
-  detectionMethod: Signature;
+  detectionMethod: Rule;
 }) => {
   const [applyGlobalFilters, setApplyGlobalFilters] = useState(false);
   const [showOriginal, setShowOriginal] = useState(false);
-  const { data } = useCardsStats(detectionMethod.pk, applyGlobalFilters);
+  const { data } = useCardsStats(detectionMethod.id, applyGlobalFilters);
   const formattedData = data as FieldStats;
 
   return (
@@ -50,18 +50,20 @@ export const DetectionMethodExpandedRowTemplate = ({
       <Row className="justify-between">
         <div>
           {detectionMethod.method &&
-            Object.keys(detectionMethod.method).length > 0 && (
+            Object.keys(detectionMethod.method).length > 0 &&
+            detectionMethod.method.killChainPhase && (
               <Row className="mt-1 gap-2">
                 Method for{' '}
                 <ThreatTag
-                  threat_id={detectionMethod.method!.threat_id}
-                  kill_chain={detectionMethod.method.kill_chain}
+                  threat_id={detectionMethod.method.threatId}
+                  kill_chain={detectionMethod.method.killChainPhase}
                 />{' '}
-                in stage <KillchainTag kc={detectionMethod.method.kill_chain} />
+                in stage{' '}
+                <KillchainTag kc={detectionMethod.method.killChainPhase} />
               </Row>
             )}
         </div>
-        <SignatureRulesetStatus pk={detectionMethod.pk} />
+        <SignatureRulesetStatus ruleId={detectionMethod.id} />
       </Row>
 
       {detectionMethod.versions?.length > 0 && (
@@ -84,16 +86,16 @@ export const DetectionMethodExpandedRowTemplate = ({
         />
       </Row>
       <SignatureContent
-        content={detectionMethod.versions[0].content_html}
+        content={detectionMethod.versions[0].contentHtml}
         open={showOriginal}
       />
       <SignatureFlow
-        sid={detectionMethod.pk}
-        methodType={detectionMethod.method?.method_type}
+        sid={detectionMethod.id}
+        methodType={detectionMethod.method?.methodType}
         applyGlobalFilters={applyGlobalFilters}
       />
       <SignaturesTableTimeline
-        sid={detectionMethod.pk}
+        sid={detectionMethod.id}
         applyGlobalFilters={applyGlobalFilters}
       />
       <Grid className="grid-cols-4 gap-2">

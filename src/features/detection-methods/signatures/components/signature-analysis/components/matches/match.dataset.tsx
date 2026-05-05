@@ -6,7 +6,7 @@ import {
   TooltipTrigger,
 } from '@/common/design-system/atoms/ui/tooltip';
 
-import { DatasetMatch } from '../../../../model/analysis.matches';
+import { DatasetMatch } from '../../../../../model/analysis';
 import { Badge } from '../badge';
 import { LabelValue } from '../label-value';
 import { Match, MatchContent, MatchLabel, MatchName } from './match';

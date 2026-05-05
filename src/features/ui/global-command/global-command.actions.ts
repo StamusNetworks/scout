@@ -16,7 +16,7 @@ import { useSidebar } from '@/common/design-system/atoms/ui/sidebar';
 import { getShortcutDisplay } from '@/common/lib/platform';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { getConfig } from '@/config';
-import { useUpdatePushRulesetMutation } from '@/features/detection-methods/rulesets.api';
+import { useUpdatePushRuleSetMutation } from '@/features/detection-methods/api/rules.api';
 import { useFilterActionModal } from '@/features/filter-actions';
 import { useQueryFilters } from '@/features/query-filters';
 import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
@@ -47,7 +47,7 @@ export const useGlobalCommands = (): GlobalCommands[] => {
   const { toggleSidebar: toggleNavSidebar } = useSidebar();
   const isSidebarOpen = useAppSelector(selectIsSidebarOpen);
   const { enterprise } = useFeatureFlags();
-  const [updatePushRuleset] = useUpdatePushRulesetMutation();
+  const [updatePushRuleset] = useUpdatePushRuleSetMutation();
   const clearFilters = useClearFilters();
   const filterActionModal = useFilterActionModal();
   const handleUpdatePushRuleset = () => {

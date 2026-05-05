@@ -28,7 +28,7 @@ import {
 } from '@/common/design-system/atoms/ui/select';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { DefaultField } from '@/common/design-system/molecules/default-field';
-import { useGetRulesetsQuery } from '@/features/detection-methods/rulesets.api';
+import { useGetRuleSetsQuery } from '@/features/detection-methods/api/rules.api';
 import { FilterInput } from '@/features/query-filters/components/edit-qfilter-modal/filter-input';
 
 import {
@@ -74,7 +74,7 @@ export const ThresholdForm = ({
 }: ThresholdFormProps) => {
   const navigate = useNavigate();
   const initialValues = useThresholdInitialValues(filterAction);
-  const { data: rulesetsList } = useGetRulesetsQuery();
+  const { data: rulesetsList } = useGetRuleSetsQuery();
 
   const form = useForm<ThresholdFormValues>({
     defaultValues: initialValues,
@@ -241,24 +241,24 @@ export const ThresholdForm = ({
               </div>
               {rulesetsList?.map((item) => (
                 <FormField
-                  key={item.pk}
+                  key={item.id}
                   control={form.control}
                   name="rulesets"
                   render={({ field }) => {
                     return (
                       <FormItem
-                        key={item.pk}
+                        key={item.id}
                         className="flex flex-row items-center space-y-0 space-x-3"
                       >
                         <FormControl>
                           <Checkbox
-                            checked={field.value?.includes(item.pk)}
+                            checked={field.value?.includes(item.id)}
                             onCheckedChange={(checked) => {
                               return checked
-                                ? field.onChange([...field.value, item.pk])
+                                ? field.onChange([...field.value, item.id])
                                 : field.onChange(
                                     field.value?.filter(
-                                      (value) => value !== item.pk,
+                                      (value) => value !== item.id,
                                     ),
                                   );
                             }}

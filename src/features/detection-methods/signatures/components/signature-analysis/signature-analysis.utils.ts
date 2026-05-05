@@ -2,10 +2,10 @@ import { pipe } from 'ramda';
 
 import { getMitreTacticUrl, getMitreTechniqueUrl } from '@/common/lib/mitre';
 
-import { Engine } from '../../model/analysis';
-import { Rule } from '../../model/signature';
+import { Engine } from '../../../model/analysis';
+import { RuleVersion } from '../../../model/rule';
 
-export const getRuleData = (rule: Rule) => ({
+export const getRuleData = (rule: RuleVersion) => ({
   generalData: getSignatureGeneralData(rule),
   engines: getUniqueEngines(rule.analysis.engines),
   payload: rule.analysis.lists.payload,
@@ -16,7 +16,7 @@ export const getRuleData = (rule: Rule) => ({
   references: getSignatureReferences(rule.content),
 });
 
-const getSignatureGeneralData = (rule: Rule) => {
+const getSignatureGeneralData = (rule: RuleVersion) => {
   const { destination, target } = getDirection();
   const { originIp, originPort, destinationIp, destinationPort } =
     parseRuleContent(rule.content);
@@ -59,7 +59,7 @@ const getUniqueEngines = (engines?: Engine[]) =>
     return [...prev, cur];
   }, [] as Engine[]) || [];
 
-const getSignatureMetadata = (rule: Rule) => {
+const getSignatureMetadata = (rule: RuleVersion) => {
   const metadata =
     rule.content
       ?.split('metadata:')[1]
@@ -80,8 +80,16 @@ const getSignatureMetadata = (rule: Rule) => {
 
   return [
     ...metadata,
-    { label: 'created at', value: rule.created || 'unknown', link: undefined },
-    { label: 'updated at', value: rule.updated || 'unknown', link: undefined },
+    {
+      label: 'created at',
+      value: rule.createdAt || 'unknown',
+      link: undefined,
+    },
+    {
+      label: 'updated at',
+      value: rule.updatedAt || 'unknown',
+      link: undefined,
+    },
   ];
 };
 

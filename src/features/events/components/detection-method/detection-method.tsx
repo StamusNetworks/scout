@@ -11,13 +11,11 @@ import {
   EmptyMedia,
 } from '@/common/design-system/atoms/ui/empty';
 import { Skeleton } from '@/common/design-system/atoms/ui/skeleton';
-import { useGetSignatureQuery } from '@/features/detection-methods/signatures/api/signatures.api';
+import { useGetRuleBySidQuery } from '@/features/detection-methods/api/rules.api';
 import { DetectionMethodExpandedRowTemplate } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.expanded-row';
 
 export const DetectionMethodTab = ({ sid }: { sid: number }) => {
-  const { data, isLoading } = useGetSignatureQuery({
-    pk: sid,
-  });
+  const { data, isLoading } = useGetRuleBySidQuery({ sid });
 
   if (isLoading)
     return (

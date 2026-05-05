@@ -1,6 +1,6 @@
 import { toPairs } from 'ramda';
 
-import { PcreMatch } from '../../../../model/analysis.matches';
+import { PcreMatch } from '../../../../../model/analysis';
 import { Badge } from '../badge';
 import { Match, MatchContent, MatchLabel, MatchName } from './match';
 

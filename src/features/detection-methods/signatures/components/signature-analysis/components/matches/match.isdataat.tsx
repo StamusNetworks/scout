@@ -1,4 +1,4 @@
-import { IsdataatMatch } from '../../../../model/analysis.matches';
+import { IsdataatMatch } from '../../../../../model/analysis';
 import { Badge } from '../badge';
 import { Match, MatchContent, MatchLabel, MatchName } from './match';
 

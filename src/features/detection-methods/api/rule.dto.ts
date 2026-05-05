@@ -1,8 +1,15 @@
 import { z } from 'zod';
 
-import { analysisSchema } from './analysis';
+import { analysisSchema } from '../model/analysis';
 
-export const ruleSchema = z.object({
+/**
+ * Wire-shape (snake_case, server vocabulary). Internal to the
+ * detection-methods bounded context — never imported outside `api/`.
+ * Components and hooks consume the domain `Rule` from
+ * `model/rule.ts` instead.
+ */
+
+export const ruleVersionDtoSchema = z.object({
   id: z.number(),
   analysis: analysisSchema,
   content_html: z.string(),
@@ -17,9 +24,9 @@ export const ruleSchema = z.object({
   updated: z.string(),
 });
 
-export type Rule = z.infer<typeof ruleSchema>;
+export type RuleVersionDto = z.infer<typeof ruleVersionDtoSchema>;
 
-export const signatureSchema = z.object({
+export const ruleDtoSchema = z.object({
   pk: z.number(),
   sid: z.number(),
   category: z.object({
@@ -33,7 +40,7 @@ export const signatureSchema = z.object({
   created: z.string(),
   updated: z.string(),
   hits: z.number(),
-  versions: z.array(ruleSchema),
+  versions: z.array(ruleVersionDtoSchema),
   threat_info: z.object({
     family: z.string(),
     name: z.string(),
@@ -74,4 +81,4 @@ export const signatureSchema = z.object({
   }),
 });
 
-export type Signature = z.infer<typeof signatureSchema>;
+export type RuleDto = z.infer<typeof ruleDtoSchema>;

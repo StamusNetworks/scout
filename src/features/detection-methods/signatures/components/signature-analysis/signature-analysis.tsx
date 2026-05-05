@@ -2,14 +2,14 @@ import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Separator } from '@/common/design-system/atoms/ui/separator';
 
-import { Rule } from '../../model/signature';
+import { RuleVersion } from '../../../model/rule';
 import { Badge } from './components/badge';
 import { Card, CardName, CardTitle, EngineMatches } from './components/card';
 import { LabelValue } from './components/label-value';
 import { MatchTemplate } from './components/matches/match';
 import { getRuleData } from './signature-analysis.utils';
 
-export const SignatureAnalysis = ({ rule }: { rule: Rule }) => {
+export const SignatureAnalysis = ({ rule }: { rule: RuleVersion }) => {
   if (!rule.analysis) return null;
 
   const {

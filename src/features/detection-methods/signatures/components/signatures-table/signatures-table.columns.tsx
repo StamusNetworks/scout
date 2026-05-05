@@ -6,9 +6,9 @@ import { CustomColumnDef } from '@/common/design-system/molecules/data-table/fil
 import { formatNumber } from '@/common/lib/numbers';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
-import { Signature } from '../../model/signature';
+import { Rule } from '../../../model/rule';
 
-export const detectionMethodsColumns: CustomColumnDef<Signature>[] = [
+export const detectionMethodsColumns: CustomColumnDef<Rule>[] = [
   {
     id: 'sid-expanded',
     cell: ({ row }) => <DataTableRowExpander row={row} />,
@@ -71,7 +71,7 @@ export const detectionMethodsColumns: CustomColumnDef<Signature>[] = [
         title="Created"
       />
     ),
-    accessorFn: (row) => row.created,
+    accessorFn: (row) => row.createdAt,
   },
   {
     id: 'hits',
@@ -94,7 +94,7 @@ export const detectionMethodsColumns: CustomColumnDef<Signature>[] = [
   },
 ];
 
-export const exportColumns: ExportColumn<Signature>[] = [
+export const exportColumns: ExportColumn<Rule>[] = [
   {
     label: 'Signature ID',
     value: ({ sid }) => sid?.toString(),
@@ -109,7 +109,7 @@ export const exportColumns: ExportColumn<Signature>[] = [
   },
   {
     label: 'Created',
-    value: ({ created }) => created,
+    value: ({ createdAt }) => createdAt,
   },
   {
     label: 'Hits',

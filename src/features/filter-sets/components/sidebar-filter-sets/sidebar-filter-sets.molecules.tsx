@@ -26,7 +26,7 @@ import {
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { formatNumber } from '@/common/lib/numbers';
 import { capitalizeAll } from '@/common/lib/strings';
-import { useGetSignaturesQuery } from '@/features/detection-methods/signatures/api/signatures.api';
+import { useGetRulesQuery } from '@/features/detection-methods/api/rules.api';
 import {
   useGetEventsCountQuery,
   useGetEventsTailQuery,
@@ -410,7 +410,7 @@ function FilterSetDetectionMethodsBadge({
   filterSet: FilterSet;
 }) {
   const params = useFilterSetQueryParams(filterSet);
-  const detectionMethods = useGetSignaturesQuery({
+  const detectionMethods = useGetRulesQuery({
     start_date: params.start_date,
     end_date: params.end_date,
     tenant: params.tenant,

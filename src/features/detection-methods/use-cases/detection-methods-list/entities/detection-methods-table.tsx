@@ -11,11 +11,11 @@ import { useTablePreferences } from '@/common/design-system/molecules/data-table
 import { ExportButton } from '@/common/design-system/molecules/export-button';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
-import { useGetSignaturesQuery } from '@/features/detection-methods/detection-methods.api';
+import { useGetRulesQuery } from '@/features/detection-methods/api/rules.api';
 import {
-  DETECTION_METHODS_COLUMNS,
-  DETECTION_METHODS_EXPORT_COLUMNS,
-} from '@/features/detection-methods/detection-methods.table';
+  detectionMethodsColumns,
+  exportColumns,
+} from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.columns';
 import { DetectionMethodsExpandedRow } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.expanded-row';
 import { useQueryFilters } from '@/features/query-filters';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
@@ -51,7 +51,7 @@ export function DetectionMethodsTable({
     onClickReset,
   } = useTablePreferences({
     tableId: 'detectionMethodsTable',
-    columns: DETECTION_METHODS_COLUMNS,
+    columns: detectionMethodsColumns,
   });
 
   // SID filter from Redux query filters
@@ -72,7 +72,7 @@ export function DetectionMethodsTable({
   const ordering = serializeSorting(sorting);
 
   // Fetch data
-  const { data, isFetching } = useGetSignaturesQuery({
+  const { data, isFetching } = useGetRulesQuery({
     ...globalParams,
     hits_min: withAlerts ? 1 : undefined,
     ...(sidFilter && { sid: sidFilter }),
@@ -99,9 +99,9 @@ export function DetectionMethodsTable({
         <Row className="items-center gap-2">
           <ExportButton
             data={results.map((row) =>
-              DETECTION_METHODS_EXPORT_COLUMNS.map((col) => col.value(row)),
+              exportColumns.map((col) => col.value(row)),
             )}
-            headers={DETECTION_METHODS_EXPORT_COLUMNS.map((col) => col.label)}
+            headers={exportColumns.map((col) => col.label)}
             className="h-8"
           />
           {canReset && (
@@ -122,7 +122,7 @@ export function DetectionMethodsTable({
 
       <Table
         data={results}
-        columns={DETECTION_METHODS_COLUMNS}
+        columns={detectionMethodsColumns}
         isLoading={isFetching}
         sorting={sorting}
         onSortingChange={onSortingChange}
@@ -131,7 +131,7 @@ export function DetectionMethodsTable({
         columnOrder={columnOrder}
         onColumnOrderChange={onColumnOrderChange}
         ExpandedRow={DetectionMethodsExpandedRow}
-        getRowId={(row) => row.pk?.toString()}
+        getRowId={(row) => row.id?.toString()}
         Empty={
           <DataTableEmpty
             Icon={PencilRuler}

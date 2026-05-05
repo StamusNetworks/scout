@@ -11,7 +11,7 @@
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { esEscape } from '@/common/lib/strings';
-import { useGetSignaturesQuery } from '@/features/detection-methods/signatures/api/signatures.api';
+import { useGetRulesQuery } from '@/features/detection-methods/api/rules.api';
 import { useGetBeaconingEventsQuery } from '@/features/events';
 import { useGetEventsQuery } from '@/features/events';
 import { useGetSightingEventsQuery } from '@/features/events';
@@ -70,7 +70,7 @@ export const HostHeader = ({ hostId }: HostHeaderProps) => {
   );
 
   // ── Detection methods count (feeds HostDetectionsRadar) ───────────
-  const { data: detectionMethodsList } = useGetSignaturesQuery(
+  const { data: detectionMethodsList } = useGetRulesQuery(
     {
       host_id_qfilter: `ip:"${esEscape(hostId)}"`,
       tenant: params.tenant,

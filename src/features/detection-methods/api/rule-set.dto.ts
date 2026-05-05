@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const rulesetSchema = z.object({
+export const ruleSetDtoSchema = z.object({
   pk: z.number(),
   name: z.string(),
   descr: z.string(),
@@ -16,4 +16,4 @@ export const rulesetSchema = z.object({
   warnings_send_mail: z.string(),
 });
 
-export type Ruleset = z.infer<typeof rulesetSchema>;
+export type RuleSetDto = z.infer<typeof ruleSetDtoSchema>;

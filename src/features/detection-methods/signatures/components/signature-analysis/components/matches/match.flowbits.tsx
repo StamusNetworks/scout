@@ -1,4 +1,4 @@
-import { FlowbitsMatch } from '../../../../model/analysis.matches';
+import { FlowbitsMatch } from '../../../../../model/analysis';
 import { Badge } from '../badge';
 import { Match, MatchContent, MatchLabel, MatchName } from './match';
 

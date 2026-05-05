@@ -1,6 +1,6 @@
 import { toPairs } from 'ramda';
 
-import { FlowMatch } from '../../../../model/analysis.matches';
+import { FlowMatch } from '../../../../../model/analysis';
 import { Match, MatchContent, MatchLabel, MatchName } from './match';
 
 interface FlowMatchProps {

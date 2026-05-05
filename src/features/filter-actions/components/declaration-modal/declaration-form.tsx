@@ -43,7 +43,7 @@ import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { DefaultField } from '@/common/design-system/molecules/default-field';
 import { Dates, QFilter, Tenant } from '@/common/fetching/fetching.types';
 import { useUpdateEffect } from '@/common/lib/use-update-effect';
-import { useGetRulesetsQuery } from '@/features/detection-methods/rulesets.api';
+import { useGetRuleSetsQuery } from '@/features/detection-methods/api/rules.api';
 import { FilterInput } from '@/features/query-filters/components/edit-qfilter-modal/filter-input';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { KIND_LABEL, ThreatForm } from '@/features/threats';
@@ -131,7 +131,7 @@ export const DeclarationForm = ({
 }: DeclarationFormProps) => {
   const params = useGlobalQueryParams(['tenant', 'qfilter', 'dates']);
   const navigate = useNavigate();
-  const { data: rulesetsList } = useGetRulesetsQuery();
+  const { data: rulesetsList } = useGetRuleSetsQuery();
 
   const initialValues = useDeclarationInitialValues(filterAction);
   const form = useForm<DeclarationFormValues>({
@@ -602,24 +602,24 @@ export const DeclarationForm = ({
               </div>
               {rulesetsList?.map((item) => (
                 <FormField
-                  key={item.pk}
+                  key={item.id}
                   control={form.control}
                   name="rulesets"
                   render={({ field }) => {
                     return (
                       <FormItem
-                        key={item.pk}
+                        key={item.id}
                         className="flex flex-row items-center space-y-0 space-x-3"
                       >
                         <FormControl>
                           <Checkbox
-                            checked={field.value?.includes(item.pk)}
+                            checked={field.value?.includes(item.id)}
                             onCheckedChange={(checked) => {
                               return checked
-                                ? field.onChange([...field.value, item.pk])
+                                ? field.onChange([...field.value, item.id])
                                 : field.onChange(
                                     field.value?.filter(
-                                      (value) => value !== item.pk,
+                                      (value) => value !== item.id,
                                     ),
                                   );
                             }}

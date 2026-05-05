@@ -1,6 +1,6 @@
 import { PaginationState } from '@tanstack/react-table';
 
-import { useGetSignaturesQuery } from '@/features/detection-methods/signatures/api/signatures.api';
+import { useGetRulesQuery } from '@/features/detection-methods/api/rules.api';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 
@@ -17,7 +17,7 @@ export const useThreatDetectionMethods = ({
 }: UseThreatEventsParams) => {
   const QFBuilder = useQFBuilder();
   const params = useGlobalQueryParams(['tenant', 'dates']);
-  return useGetSignaturesQuery(
+  return useGetRulesQuery(
     {
       ...params,
       ...pagination,

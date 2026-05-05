@@ -2,7 +2,7 @@ import { pipe, toPairs } from 'ramda';
 
 import { decodeUnicodeEscapeSequence } from '@/common/lib/strings';
 
-import { ContentMatch } from '../../../../model/analysis.matches';
+import { ContentMatch } from '../../../../../model/analysis';
 import { Badge } from '../badge';
 import {
   Match,

@@ -7,8 +7,8 @@ import { serializeSorting } from '@/common/design-system/molecules/data-table/ho
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
 import { esEscape } from '@/common/lib/strings';
-import { useGetSignaturesQuery } from '@/features/detection-methods/detection-methods.api';
-import { DETECTION_METHODS_COLUMNS } from '@/features/detection-methods/detection-methods.table';
+import { useGetRulesQuery } from '@/features/detection-methods/api/rules.api';
+import { detectionMethodsColumns } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.columns';
 import { DetectionMethodsExpandedRow } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.expanded-row';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
@@ -57,7 +57,7 @@ export function HostDetectionMethodsTable({
     ],
   );
 
-  const { data, isFetching } = useGetSignaturesQuery(queryParams);
+  const { data, isFetching } = useGetRulesQuery(queryParams);
 
   const results = data?.results ?? [];
   const total = data?.count ?? 0;
@@ -66,12 +66,12 @@ export function HostDetectionMethodsTable({
     <div className="space-y-2">
       <Table
         data={results}
-        columns={DETECTION_METHODS_COLUMNS}
+        columns={detectionMethodsColumns}
         isLoading={isFetching}
         sorting={sorting}
         onSortingChange={onSortingChange}
         ExpandedRow={DetectionMethodsExpandedRow}
-        getRowId={(row) => row.pk?.toString()}
+        getRowId={(row) => row.id?.toString()}
         Empty={
           <DataTableEmpty
             Icon={PencilRuler}

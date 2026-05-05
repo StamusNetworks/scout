@@ -9,7 +9,7 @@ import {
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/borderTabs';
 import { TableCard } from '@/common/design-system/molecules/table-card';
-import { useGetRulesetsQuery } from '@/features/detection-methods/rulesets.api';
+import { useGetRuleSetsQuery } from '@/features/detection-methods/api/rules.api';
 import { useGetFilterActionStatsQuery } from '@/features/filter-actions/api/filter-actions.api';
 import { FilterActionParameters } from '@/features/filter-actions/components/filter-actions-table/filter-actions-parameters';
 import { FilterAction } from '@/features/filter-actions/model/filter-action';
@@ -21,7 +21,7 @@ export const ExpandedFilterActionRow = ({
 }: {
   row: Row<FilterAction>;
 }) => {
-  const { data: rulesetsList } = useGetRulesetsQuery();
+  const { data: rulesetsList } = useGetRuleSetsQuery();
   const { data, isLoading } = useGetFilterActionStatsQuery({
     id: row.original.id,
   });
@@ -55,7 +55,7 @@ export const ExpandedFilterActionRow = ({
           >
             {row.original.rulesets.map((itemRulesetId) => (
               <div key={itemRulesetId}>
-                {rulesetsList?.find((o) => o.pk === itemRulesetId)?.name}
+                {rulesetsList?.find((o) => o.id === itemRulesetId)?.name}
               </div>
             ))}
           </TableCard>

@@ -10,7 +10,7 @@ import { useTablePreferences } from '@/common/design-system/molecules/data-table
 import { useQueryFilters } from '@/features/query-filters';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { useGetSignaturesQuery } from '../../api/signatures.api';
+import { useGetRulesQuery } from '../../../api/rules.api';
 import {
   detectionMethodsColumns,
   exportColumns,
@@ -50,7 +50,7 @@ export const SignaturesTable = () => {
       ...(sidFilter && { sid: sidFilter }),
       ...(applyEventFilter ? { qfilter } : {}),
     });
-  const { data, isFetching } = useGetSignaturesQuery({
+  const { data, isFetching } = useGetRulesQuery({
     ...queryParams,
     ordering: queryParams.ordering ?? '-hits',
   });
@@ -69,7 +69,7 @@ export const SignaturesTable = () => {
       isLoading={isFetching}
       columns={detectionMethodsColumns}
       ExpandedRow={DetectionMethodsExpandedRow}
-      getRowId={(row) => row.pk?.toString()}
+      getRowId={(row) => row.id?.toString()}
       toolBar={toolBar}
       serverSide
       pagination={pagination}

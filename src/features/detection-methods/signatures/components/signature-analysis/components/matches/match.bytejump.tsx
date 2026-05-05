@@ -1,6 +1,6 @@
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 
-import { ByteJumpMatch } from '../../../../model/analysis.matches';
+import { ByteJumpMatch } from '../../../../../model/analysis';
 import {
   Match,
   MatchContent,

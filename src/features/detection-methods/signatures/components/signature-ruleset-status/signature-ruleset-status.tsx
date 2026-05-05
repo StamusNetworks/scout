@@ -11,23 +11,21 @@ import { DataTable } from '@/common/design-system/molecules/data-table/data-tabl
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 
-import { useGetSignatureRulesetsStatusQuery } from '../../api/signatures.api';
-import { SignatureStatus } from '../../model/signature-status';
+import { useGetRuleStatusesByRuleIdQuery } from '../../../api/rules.api';
+import { RuleStatus } from '../../../model/rule-status';
 
 interface SignatureRulesetStatusProps {
-  pk: number;
+  ruleId: number;
 }
 
-export const SignatureRulesetStatus = ({ pk }: SignatureRulesetStatusProps) => {
-  const { isFetching, status } = useGetSignatureRulesetsStatusQuery(
-    {
-      pk,
-    },
+export const SignatureRulesetStatus = ({
+  ruleId,
+}: SignatureRulesetStatusProps) => {
+  const { isFetching, status } = useGetRuleStatusesByRuleIdQuery(
+    { id: ruleId },
     {
       selectFromResult: (result) => {
-        const activeRulesets = result.data?.filter(
-          (item) => item.active === true,
-        );
+        const activeRulesets = result.data?.filter((item) => item.isActive);
         const danger = activeRulesets?.every(
           (item) => item.valid.status === false,
         );
@@ -61,19 +59,17 @@ export const SignatureRulesetStatus = ({ pk }: SignatureRulesetStatusProps) => {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-fit max-w-[800px]">
-        <SignatureRulesetStatusContent pk={pk} />
+        <SignatureRulesetStatusContent ruleId={ruleId} />
       </PopoverContent>
     </Popover>
   );
 };
 
 export const SignatureRulesetStatusContent = ({
-  pk,
+  ruleId,
 }: SignatureRulesetStatusProps) => {
-  const { data: rulesetsStatus } = useGetSignatureRulesetsStatusQuery(
-    {
-      pk,
-    },
+  const { data: rulesetsStatus } = useGetRuleStatusesByRuleIdQuery(
+    { id: ruleId },
     {
       selectFromResult: (result) => ({
         ...result,
@@ -95,7 +91,7 @@ export const SignatureRulesetStatusContent = ({
   );
 };
 
-const columns: CustomColumnDef<SignatureStatus>[] = [
+const columns: CustomColumnDef<RuleStatus>[] = [
   {
     id: 'name',
     header: ({ column }) => (
@@ -124,7 +120,7 @@ const columns: CustomColumnDef<SignatureStatus>[] = [
         title="Active"
       />
     ),
-    cell: ({ row }) => (row.original.active ? <Power /> : <PowerOff />),
+    cell: ({ row }) => (row.original.isActive ? <Power /> : <PowerOff />),
   },
   {
     id: 'target',
