@@ -34,8 +34,8 @@ import { type FilterFlags } from '@/features/query-filters/filter-flags.model';
 import { QueryFilterState } from '@/features/query-filters/query-filter.model';
 import { FilterInput } from '@/features/query-filters/use-cases/update-filter/filter-input';
 
-import { useCreateFilterSetMutation } from '../../filtersets.api';
-import { filterSetPageConfig } from '../../filtersets.constants';
+import { useCreateFilterSetMutation } from '../../filter-sets.api';
+import { filterSetPageConfig } from '../../filter-sets.constants';
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -44,8 +44,8 @@ const formSchema = z.object({
   share: z.boolean().optional(),
   tags: z
     .object({
-      alerts: z.boolean(),
-      sightings: z.boolean(),
+      alert: z.boolean(),
+      discovery: z.boolean(),
       stamus: z.boolean(),
       informational: z.boolean(),
       relevant: z.boolean(),
@@ -71,11 +71,10 @@ const getDefaultValues = (
   page: 'DASHBOARDS',
   share: true,
   description: '',
-  // Wire shape uses `alerts/sightings`; domain uses `alert/discovery`.
   tags: {
-    alerts: flags?.eventTypes.alert ?? false,
+    alert: flags?.eventTypes.alert ?? false,
     stamus: flags?.eventTypes.stamus ?? false,
-    sightings: flags?.eventTypes.discovery ?? false,
+    discovery: flags?.eventTypes.discovery ?? false,
     informational: flags?.alertTags.informational ?? false,
     relevant: flags?.alertTags.relevant ?? false,
     untagged: flags?.alertTags.untagged ?? false,
@@ -159,7 +158,7 @@ export const SaveFilterSetForm = ({
           {flags && (
             <Grid className="grid-cols-3 gap-2">
               <FormField
-                name="tags.alerts"
+                name="tags.alert"
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-center gap-2 text-sm">
                     <Checkbox
@@ -183,7 +182,7 @@ export const SaveFilterSetForm = ({
                 )}
               />
               <FormField
-                name="tags.sightings"
+                name="tags.discovery"
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-center gap-2 text-sm">
                     <Checkbox

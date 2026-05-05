@@ -9,12 +9,12 @@ import {
 } from '@/features/query-filters/query-filters.store';
 import { RootState, useAppSelector } from '@/store/store';
 
-import { QueryFilterSet } from './filterset.model';
+import { type FilterSet } from './model/filter-set';
 
 type QueryFiltersSetsState = {
   loaded: number | null;
-  favorites: QueryFilterSet[];
-  pinned: QueryFilterSet[];
+  favorites: FilterSet[];
+  pinned: FilterSet[];
 };
 
 export type QueryFiltersKey = keyof Omit<QueryFiltersSetsState, 'loaded'>;
@@ -29,16 +29,16 @@ export const queryFiltersSetsSlice = createSlice({
   name: 'queryFiltersSets',
   initialState,
   reducers: {
-    addQueryFilterSets: (
+    addFilterSets: (
       state,
-      action: PayloadAction<{ key: QueryFiltersKey; sets: QueryFilterSet[] }>,
+      action: PayloadAction<{ key: QueryFiltersKey; sets: FilterSet[] }>,
     ) => {
       const newSets = action.payload.sets.filter(
         (set) => !state[action.payload.key].some((s) => s.id === set.id),
       );
       state[action.payload.key].push(...newSets);
     },
-    removeQueryFilterSet: (
+    removeFilterSet: (
       state,
       action: PayloadAction<{ key: QueryFiltersKey; id: number }>,
     ) => {
@@ -46,7 +46,7 @@ export const queryFiltersSetsSlice = createSlice({
         (set) => set.id !== action.payload.id,
       );
     },
-    clearQueryFilterSets: (state, action: PayloadAction<QueryFiltersKey>) => {
+    clearFilterSets: (state, action: PayloadAction<QueryFiltersKey>) => {
       state[action.payload] = [];
     },
     setLoadedFilterSetId: (state, action: PayloadAction<number>) => {
@@ -73,15 +73,15 @@ export const queryFiltersSetsSlice = createSlice({
 });
 
 export const {
-  addQueryFilterSets,
-  removeQueryFilterSet,
-  clearQueryFilterSets,
+  addFilterSets,
+  removeFilterSet,
+  clearFilterSets,
   setLoadedFilterSetId,
 } = queryFiltersSetsSlice.actions;
 
 export const queryFiltersSetsInitialState = initialState;
 
-export const selectQueryFilterSets = (state: RootState, key: QueryFiltersKey) =>
+export const selectFilterSets = (state: RootState, key: QueryFiltersKey) =>
   state.filters.queryFiltersSets[key];
 
 export const selectLoadedFilterSetId = (state: RootState) =>

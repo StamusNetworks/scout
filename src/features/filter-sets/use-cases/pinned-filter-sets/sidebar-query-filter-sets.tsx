@@ -8,10 +8,10 @@ import { RootState } from '@/store/store';
 import { store } from '@/store/store-instance';
 
 import {
-  clearQueryFilterSets,
-  removeQueryFilterSet,
-  selectQueryFilterSets,
-} from '../../filtersets.store';
+  clearFilterSets,
+  removeFilterSet,
+  selectFilterSets,
+} from '../../filter-sets.store';
 import {
   FilterSetsClearButton,
   FilterSetsHeader,
@@ -21,24 +21,24 @@ import {
 } from './sidebar-query-filter-sets.molecules';
 
 const handleClearFavorites = () => {
-  store.dispatch(clearQueryFilterSets('favorites'));
+  store.dispatch(clearFilterSets('favorites'));
 };
 const handleClearPinned = () => {
-  store.dispatch(clearQueryFilterSets('pinned'));
+  store.dispatch(clearFilterSets('pinned'));
 };
 const handleDeleteFilterSetFromFavorites = (id: number) => {
-  store.dispatch(removeQueryFilterSet({ key: 'favorites', id }));
+  store.dispatch(removeFilterSet({ key: 'favorites', id }));
 };
 const handleDeleteFilterSetFromPinned = (id: number) => {
-  store.dispatch(removeQueryFilterSet({ key: 'pinned', id }));
+  store.dispatch(removeFilterSet({ key: 'pinned', id }));
 };
 
 export const SideBarQueryFilterSets = () => {
   const favorites = useSelector((state: RootState) =>
-    selectQueryFilterSets(state, 'favorites'),
+    selectFilterSets(state, 'favorites'),
   );
   const pinned = useSelector((state: RootState) =>
-    selectQueryFilterSets(state, 'pinned'),
+    selectFilterSets(state, 'pinned'),
   );
   const sortedFavorites = useMemo(
     () => [...favorites].toSorted((a, b) => a.name.localeCompare(b.name)),

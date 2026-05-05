@@ -45,13 +45,9 @@ import {
 import { selectGatedFilterFlags } from '@/features/query-filters/query-filters.selectors';
 import { useAppSelector } from '@/store/store';
 
-import {
-  getFiltersFromFilterSet,
-  getTagsFromFilterSet,
-  QueryFilterSet,
-} from '../../filterset.model';
-import { filterSetPageConfig } from '../../filtersets.constants';
-import { useIsLoadedFilterSet } from '../../filtersets.store';
+import { filterSetPageConfig } from '../../filter-sets.constants';
+import { useIsLoadedFilterSet } from '../../filter-sets.store';
+import { type FilterSet } from '../../model/filter-set';
 import { loadFilterSet } from '../load-filter-set/load-filter-set';
 
 export function FilterSetsHeader({
@@ -103,7 +99,7 @@ export function FilterSetsItems({
 }
 
 interface FilterSetsItemProps extends React.ComponentProps<typeof Card> {
-  filterSet: QueryFilterSet;
+  filterSet: FilterSet;
   onDelete: (id: number) => void;
 }
 export const FilterSetsItem = ({
@@ -116,10 +112,9 @@ export const FilterSetsItem = ({
   const navigate = useNavigate();
   const onClickHandler = () => {
     loadFilterSet(filterSet);
-    const filters = getFiltersFromFilterSet(filterSet);
     const suffix =
       filterSet.page === 'HOSTS_LIST' &&
-      filters?.some((filter) => !filter.id.startsWith('host_id.'))
+      filterSet.filters.some((filter) => !filter.id.startsWith('host_id.'))
         ? ''
         : '?with_alerts=false';
     navigate({ to: filterSetPageConfig[filterSet.page].route + suffix });
@@ -194,15 +189,13 @@ export const FilterSetsItem = ({
 const FilterSetsItemPopoverContent = ({
   filterSet,
 }: {
-  filterSet: QueryFilterSet;
+  filterSet: FilterSet;
 }) => {
-  const tags = getTagsFromFilterSet(filterSet);
-  const filters = getFiltersFromFilterSet(filterSet);
   return (
     <Column className="gap-3">
-      {tags && (
+      {filterSet.tags && (
         <Grid className="grid-cols-3 gap-2">
-          {toPairs(tags)
+          {toPairs(filterSet.tags)
             .filter((value) => !isNil(value))
             .map(([tag, value]) => (
               <Row
@@ -216,7 +209,7 @@ const FilterSetsItemPopoverContent = ({
         </Grid>
       )}
       <Column className="gap-1">
-        {filters?.map((filter) => (
+        {filterSet.filters.map((filter) => (
           <PopoverQueryFilter
             key={filter.id}
             filter={filter}
@@ -246,7 +239,7 @@ const PopoverQueryFilter = ({ filter }: { filter: PersistedFilter }) => {
   );
 };
 
-function FilterSetEventsBadge({ filterSet }: { filterSet: QueryFilterSet }) {
+function FilterSetEventsBadge({ filterSet }: { filterSet: FilterSet }) {
   const navigate = useNavigate();
   const params = useFilterSetQueryParams(filterSet);
   const events = useGetEventsCountQuery({
@@ -272,11 +265,7 @@ function FilterSetEventsBadge({ filterSet }: { filterSet: QueryFilterSet }) {
   );
 }
 
-function FilterSetTransactionsBadge({
-  filterSet,
-}: {
-  filterSet: QueryFilterSet;
-}) {
+function FilterSetTransactionsBadge({ filterSet }: { filterSet: FilterSet }) {
   const navigate = useNavigate();
   const params = useFilterSetQueryParams(filterSet);
   const events = useGetEventsTailQuery({
@@ -300,7 +289,7 @@ function FilterSetTransactionsBadge({
   );
 }
 
-function FilterSetHostsBadge({ filterSet }: { filterSet: QueryFilterSet }) {
+function FilterSetHostsBadge({ filterSet }: { filterSet: FilterSet }) {
   const navigate = useNavigate();
   const params = useFilterSetQueryParams(filterSet);
   const hosts = useGetHostsQuery({
@@ -324,11 +313,7 @@ function FilterSetHostsBadge({ filterSet }: { filterSet: QueryFilterSet }) {
   );
 }
 
-function FilterSetInternalHostsBadge({
-  filterSet,
-}: {
-  filterSet: QueryFilterSet;
-}) {
+function FilterSetInternalHostsBadge({ filterSet }: { filterSet: FilterSet }) {
   const navigate = useNavigate();
   const QFBuilder = useQFBuilder();
   const params = useFilterSetQueryParams(filterSet, [
@@ -361,7 +346,7 @@ function FilterSetInternalHostsBadge({
 function FilterSetInternalHostsWithEventsBadge({
   filterSet,
 }: {
-  filterSet: QueryFilterSet;
+  filterSet: FilterSet;
 }) {
   const navigate = useNavigate();
   const QFBuilder = useQFBuilder();
@@ -390,7 +375,7 @@ function FilterSetInternalHostsWithEventsBadge({
 function FilterSetHostsWithEventsBadge({
   filterSet,
 }: {
-  filterSet: QueryFilterSet;
+  filterSet: FilterSet;
 }) {
   const navigate = useNavigate();
   const params = useFilterSetQueryParams(filterSet);
@@ -416,7 +401,7 @@ function FilterSetHostsWithEventsBadge({
 function FilterSetDetectionMethodsBadge({
   filterSet,
 }: {
-  filterSet: QueryFilterSet;
+  filterSet: FilterSet;
 }) {
   const navigate = useNavigate();
   const params = useFilterSetQueryParams(filterSet);
@@ -489,19 +474,17 @@ function mapPersistedToFilterState(
 }
 
 function useFilterSetQueryParams(
-  filterSet: QueryFilterSet,
+  filterSet: FilterSet,
   additionalFilters?: QueryFilterState[],
 ) {
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const QFBuilder = useQFBuilder();
   const appFlags = useAppSelector(selectGatedFilterFlags);
-  const setTags = getTagsFromFilterSet(filterSet);
+  const setTags = filterSet.tags;
   const filters = [
     ...(additionalFilters ?? []),
-    ...(getFiltersFromFilterSet(filterSet)?.map(mapPersistedToFilterState) ??
-      []),
+    ...filterSet.filters.map(mapPersistedToFilterState),
   ];
-  // Wire shape uses `alerts/sightings`; domain uses `alert/discovery`.
   return {
     start_date: params.start_date,
     end_date: params.end_date,
@@ -514,7 +497,7 @@ function useFilterSetQueryParams(
     }),
     host_id_qfilter: QFBuilder.toHostIdQFString(filters),
     stamus: setTags?.stamus ?? !!appFlags?.eventTypes.stamus,
-    discovery: setTags?.sightings ?? !!appFlags?.eventTypes.discovery,
-    alert: setTags?.alerts ?? !!appFlags?.eventTypes.alert,
+    discovery: setTags?.discovery ?? !!appFlags?.eventTypes.discovery,
+    alert: setTags?.alert ?? !!appFlags?.eventTypes.alert,
   };
 }

@@ -24,20 +24,17 @@ import { DeleteModal } from '@/common/design-system/molecules/delete-modal';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { cn } from '@/common/lib/utils';
 import {
-  getFiltersFromFilterSet,
-  QueryFilterSet,
-} from '@/features/filtering/filtersets/filterset.model';
-import {
   useDeleteFilterSetMutation,
   useGetFilterSetsQuery,
-} from '@/features/filtering/filtersets/filtersets.api';
-import { filterSetPageConfig } from '@/features/filtering/filtersets/filtersets.constants';
+} from '@/features/filter-sets/filter-sets.api';
+import { filterSetPageConfig } from '@/features/filter-sets/filter-sets.constants';
 import {
-  addQueryFilterSets,
-  QueryFiltersKey,
+  addFilterSets,
+  type QueryFiltersKey,
   useIsLoadedFilterSet,
-} from '@/features/filtering/filtersets/filtersets.store';
-import { loadFilterSet } from '@/features/filtering/filtersets/use-cases/load-filter-set/load-filter-set';
+} from '@/features/filter-sets/filter-sets.store';
+import { type FilterSet } from '@/features/filter-sets/model/filter-set';
+import { loadFilterSet } from '@/features/filter-sets/use-cases/load-filter-set/load-filter-set';
 import { useAppDispatch } from '@/store/store';
 
 const typeMap = {
@@ -170,7 +167,7 @@ export const FilterSetsView = () => {
   );
 };
 
-const getColumns = (enterprise: boolean): CustomColumnDef<QueryFilterSet>[] => [
+const getColumns = (enterprise: boolean): CustomColumnDef<FilterSet>[] => [
   {
     id: 'name',
     header: 'Name',
@@ -183,7 +180,7 @@ const getColumns = (enterprise: boolean): CustomColumnDef<QueryFilterSet>[] => [
           header: 'Type',
           accessorFn: (row) => (row.share ? labelMap[row.share] : null),
         },
-      ] as CustomColumnDef<QueryFilterSet>[])
+      ] as CustomColumnDef<FilterSet>[])
     : []),
   {
     id: 'page',
@@ -214,15 +211,14 @@ const getColumns = (enterprise: boolean): CustomColumnDef<QueryFilterSet>[] => [
 ];
 
 const handleLoadFilterSet = (
-  filterSet: QueryFilterSet,
+  filterSet: FilterSet,
   navigate: ReturnType<typeof useNavigate>,
 ) => {
   loadFilterSet(filterSet);
-  const filters = getFiltersFromFilterSet(filterSet);
   const route = filterSetPageConfig[filterSet.page].route;
   const needsAlertFilter =
     filterSet.page === 'HOSTS_LIST' &&
-    !filters?.some((filter) => !filter.id.startsWith('host_id.'));
+    !filterSet.filters.some((filter) => !filter.id.startsWith('host_id.'));
   if (needsAlertFilter && route === '/hosts') {
     navigate({ to: '/hosts' as string, search: { with_alerts: false } });
   } else {
@@ -234,12 +230,12 @@ const AddToDropdown = ({
   filterSets,
   onSuccess,
 }: {
-  filterSets: QueryFilterSet[];
+  filterSets: FilterSet[];
   onSuccess: () => void;
 }) => {
   const dispatch = useAppDispatch();
   const handleAddTo = (key: QueryFiltersKey) => {
-    dispatch(addQueryFilterSets({ key, sets: filterSets }));
+    dispatch(addFilterSets({ key, sets: filterSets }));
     toast.success('Filter set added to favorites');
     onSuccess();
   };
@@ -265,7 +261,7 @@ const AddToDropdown = ({
   );
 };
 
-export const Name = ({ filterSet }: { filterSet: QueryFilterSet }) => {
+export const Name = ({ filterSet }: { filterSet: FilterSet }) => {
   const isSelected = useIsLoadedFilterSet(filterSet.id);
   return (
     <Row className={cn('items-center gap-1', isSelected && 'font-bold')}>
@@ -275,7 +271,7 @@ export const Name = ({ filterSet }: { filterSet: QueryFilterSet }) => {
   );
 };
 
-const DeleteFilterSetCell = ({ filterSet }: { filterSet: QueryFilterSet }) => {
+const DeleteFilterSetCell = ({ filterSet }: { filterSet: FilterSet }) => {
   const [deleteFilterSet] = useDeleteFilterSetMutation();
   return (
     <div onClick={(e) => e.stopPropagation()}>

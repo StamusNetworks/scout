@@ -13,8 +13,8 @@ import { createEditSendMailModalSlice } from '@/features/filter-actions/componen
 import { createEditSuppressModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
 import { createEditTagModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
 import { createEditThresholdModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
-import { queryFiltersSetsSlice } from '@/features/filtering/filtersets/filtersets.store';
-import { saveFilterSetModalSlice } from '@/features/filtering/filtersets/use-cases/save-filter-set/save-filterset.slice';
+import { queryFiltersSetsSlice } from '@/features/filter-sets/filter-sets.store';
+import { saveFilterSetModalSlice } from '@/features/filter-sets/use-cases/save-filter-set/save-filterset.slice';
 import { investigationSlice } from '@/features/investigation/investigation.slice';
 import { investigationsHistorySlice } from '@/features/investigation/investigations-history.slice';
 import { marketingStateSlice } from '@/features/marketing/store/marketing.store';

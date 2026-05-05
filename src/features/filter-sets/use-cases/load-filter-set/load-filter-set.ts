@@ -10,41 +10,34 @@ import { QFBuilder } from '@/features/query-filters/utils/qf-builder';
 import { store } from '@/store/store-instance';
 
 import {
-  getFiltersFromFilterSet,
-  getTagsFromFilterSet,
-  QueryFilterSet,
-} from '../../filterset.model';
-import {
   selectLoadedFilterSetId,
   setLoadedFilterSetId,
-} from '../../filtersets.store';
+} from '../../filter-sets.store';
+import { type FilterSet } from '../../model/filter-set';
 
-export const loadFilterSet = (filterSet: QueryFilterSet) => {
+export const loadFilterSet = (filterSet: FilterSet) => {
   const loadedFilterSetId = selectLoadedFilterSetId(store.getState());
   if (loadedFilterSetId === filterSet.id) return;
 
   const qfBuilder = QFBuilder(QueryFiltersRecord, 'raw');
-  const persistedTags = getTagsFromFilterSet(filterSet);
-  if (persistedTags) {
-    // Wire shape uses `alerts/sightings`; translate to domain `alert/discovery`.
+  if (filterSet.tags) {
     store.dispatch(
       setEventTypes({
-        alert: persistedTags.alerts,
-        stamus: persistedTags.stamus,
-        discovery: persistedTags.sightings,
+        alert: filterSet.tags.alert,
+        stamus: filterSet.tags.stamus,
+        discovery: filterSet.tags.discovery,
       }),
     );
     store.dispatch(
       setAlertTags({
-        relevant: persistedTags.relevant,
-        informational: persistedTags.informational,
-        untagged: persistedTags.untagged,
+        relevant: filterSet.tags.relevant,
+        informational: filterSet.tags.informational,
+        untagged: filterSet.tags.untagged,
       }),
     );
   }
 
-  const persistedFilters = getFiltersFromFilterSet(filterSet);
-  const newFilters = (persistedFilters ?? []).map((filter) =>
+  const newFilters = filterSet.filters.map((filter) =>
     qfBuilder.createFilter(filter.id, filter.value as string, {
       is_wildcarded: filter.id === 'es_filter' ? false : !filter.fullString,
       is_negated: filter.negated,

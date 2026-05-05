@@ -284,7 +284,7 @@ Linting enforces kebab-case (`unicorn/filename-case`, see
 | Pattern | When | How |
 |---|---|---|
 | **Anti-Corruption Layer** | every HTTP boundary | `api/*.transforms.ts` |
-| **Shared Kernel** | filtering, tenancy, design-system | Lives in `common/` or owns its own context (`features/filtering`); imported by everyone |
+| **Shared Kernel** | query-filters, tenancy, design-system | Lives in `common/` or owns its own context (`features/query-filters`); imported by everyone |
 | **Customer/Supplier** | one context publishes a type, others consume | Producer's `index.ts` exports the type; consumer imports from `@/features/<producer>` |
 | **Open Host Service** | design-system for UI shell | `common/design-system/*` exposes generic primitives with no domain knowledge |
 
@@ -297,7 +297,7 @@ Linting enforces kebab-case (`unicorn/filename-case`, see
 - The kernel (`common/`) does not depend on a feature. The wire-shape
   flags (`alert`, `stamus`, `discovery`) on `QFilter` are inlined in
   `common/fetching/fetching.types.ts` — they describe query params, not
-  the filtering feature's UI state.
+  the query-filters feature's UI state.
 - Cross-context types that are genuinely shared (e.g. `Tenant`,
   `DateRange`) live in the kernel, not in either feature.
 
@@ -349,15 +349,19 @@ Phase 0 — this document, oxlint rules, no behavior change. **(current)**
 Phase 1 — pilot one context (`threats`) end-to-end as the reference
 implementation.
 
-Phase 2 — kernel cleanup. Done: inverted the `EventTypes` dependency
-(kernel `QFilter` no longer imports from `features/filtering`).
+Phase 2 — kernel cleanup. Done: inverted the `EventTypeFlags`
+dependency (kernel `QFilter` no longer imports from any feature).
 Deferred to Phase 3 (see "Deferred kernel cleanup" below): collapsing the
 duplicate `Pagination` shape and introducing the `DateRange` value
 object.
 
-Phase 3 — migrate contexts in dependency order: identity & tenancy → 
-filtering → events → threats → hosts/detection-methods/beaconing/filter-actions
-→ remaining. As each context migrates, its API surface adopts the
+Phase 3 — migrate contexts in dependency order: identity & tenancy →
+dates → query-filters → filter-sets → events → threats →
+hosts/detection-methods/beaconing/filter-actions → remaining. Done
+to date: tenancy, auth, settings, dates, query-filters (extracted
+from the legacy `features/filtering/`), filter-sets (extracted from
+the legacy `features/filtering/filtersets/` with full `alerts`↔`alert`
+ACL). As each context migrates, its API surface adopts the
 domain-shaped `Pagination` (`{ page, pageSize, ordering }`) and
 `DateRange` (`{ from, to }`); `buildQueryParams` translates to wire at
 the boundary. The kernel-wide collapse falls out of these per-feature

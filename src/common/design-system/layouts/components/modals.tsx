@@ -3,7 +3,7 @@ import { CreateEditSendMailModal } from '@/features/filter-actions/components/fi
 import { CreateEditSuppressModal } from '@/features/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.modal';
 import { CreateEditTagModal } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.modal';
 import { CreateEditThresholdModal } from '@/features/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.modal';
-import { SaveFilterSetModal } from '@/features/filtering/filtersets/use-cases/save-filter-set/save-filterset.dialog';
+import { SaveFilterSetModal } from '@/features/filter-sets/use-cases/save-filter-set/save-filterset.dialog';
 import { AddEsFilterModal } from '@/features/query-filters/use-cases/create-filter/add-es-filter.modal';
 import { AddQfilterCommand } from '@/features/query-filters/use-cases/create-filter/add-qfilter-command';
 import { GlobalCommand } from '@/features/ui/global-command/global-command';

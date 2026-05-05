@@ -2,23 +2,23 @@ import { useMemo } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
-import type { QueryFilterSet } from './filterset.model';
 import {
-  addQueryFilterSets,
-  clearQueryFilterSets,
+  addFilterSets,
+  clearFilterSets,
   type QueryFiltersKey,
-  removeQueryFilterSet,
+  removeFilterSet,
   selectLoadedFilterSetId,
-  selectQueryFilterSets,
+  selectFilterSets,
   setLoadedFilterSetId,
-} from './filtersets.store';
+} from './filter-sets.store';
+import type { FilterSet } from './model/filter-set';
 
 export type FilterSetsRepository = {
   getLoadedId(): number | null;
-  getFavorites(): QueryFilterSet[];
-  getPinned(): QueryFilterSet[];
+  getFavorites(): FilterSet[];
+  getPinned(): FilterSet[];
   setLoadedId(id: number): void;
-  addToCollection(key: QueryFiltersKey, sets: QueryFilterSet[]): void;
+  addToCollection(key: QueryFiltersKey, sets: FilterSet[]): void;
   removeFromCollection(key: QueryFiltersKey, id: number): void;
   clearCollection(key: QueryFiltersKey): void;
 };
@@ -26,11 +26,9 @@ export type FilterSetsRepository = {
 export function useFilterSetsRepository(): FilterSetsRepository {
   const loadedId = useAppSelector(selectLoadedFilterSetId);
   const favorites = useAppSelector((state) =>
-    selectQueryFilterSets(state, 'favorites'),
+    selectFilterSets(state, 'favorites'),
   );
-  const pinned = useAppSelector((state) =>
-    selectQueryFilterSets(state, 'pinned'),
-  );
+  const pinned = useAppSelector((state) => selectFilterSets(state, 'pinned'));
   const dispatch = useAppDispatch();
 
   return useMemo(
@@ -39,12 +37,11 @@ export function useFilterSetsRepository(): FilterSetsRepository {
       getFavorites: () => favorites,
       getPinned: () => pinned,
       setLoadedId: (id: number) => dispatch(setLoadedFilterSetId(id)),
-      addToCollection: (key: QueryFiltersKey, sets: QueryFilterSet[]) =>
-        dispatch(addQueryFilterSets({ key, sets })),
+      addToCollection: (key: QueryFiltersKey, sets: FilterSet[]) =>
+        dispatch(addFilterSets({ key, sets })),
       removeFromCollection: (key: QueryFiltersKey, id: number) =>
-        dispatch(removeQueryFilterSet({ key, id })),
-      clearCollection: (key: QueryFiltersKey) =>
-        dispatch(clearQueryFilterSets(key)),
+        dispatch(removeFilterSet({ key, id })),
+      clearCollection: (key: QueryFiltersKey) => dispatch(clearFilterSets(key)),
     }),
     [loadedId, favorites, pinned, dispatch],
   );
