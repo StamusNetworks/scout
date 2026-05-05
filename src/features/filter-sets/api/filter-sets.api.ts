@@ -1,8 +1,8 @@
 import { API } from '@/store/api';
 
-import { type FilterSetDto } from './api/filter-set.dto';
-import { toCreatePayloadDto, toFilterSet } from './api/filter-set.transforms';
-import { type FilterSet, type FilterSetCreateInput } from './model/filter-set';
+import { type FilterSet, type FilterSetCreateInput } from '../model/filter-set';
+import { type FilterSetDto } from './filter-set.dto';
+import { toCreatePayloadDto, toFilterSet } from './filter-set.transforms';
 
 export const FilterSetsAPI = API.injectEndpoints({
   endpoints: (builder) => ({

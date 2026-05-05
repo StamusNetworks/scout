@@ -19,8 +19,7 @@ import { Button } from '@/common/design-system/atoms/ui/button';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
-import { FilterSetsView } from '@/features/filter-sets/use-cases/list-filter-sets/filter-sets-view';
-import { openSaveFilterSetModal } from '@/features/filter-sets/use-cases/save-filter-set/save-filterset.slice';
+import { FilterSetsView, useSaveFilterSetModal } from '@/features/filter-sets';
 import { disableHelp } from '@/features/ui/help/help.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
@@ -35,6 +34,7 @@ export const Route = createFileRoute('/filter-sets')({
 function FilterSetsPage() {
   usePageTitle('Filter Sets');
   const dispatch = useAppDispatch();
+  const saveFilterSetModal = useSaveFilterSetModal();
   const showFilterSetsBackNavTip = useAppSelector(
     (state) => state.help.showFilterSetsBackNavTip,
   );
@@ -76,7 +76,7 @@ function FilterSetsPage() {
               </PageDescription>
             </PageHeaderContent>
             <PageActions>
-              <Button onClick={() => dispatch(openSaveFilterSetModal())}>
+              <Button onClick={() => saveFilterSetModal.open()}>
                 <Group />
                 Create Filter Set
               </Button>

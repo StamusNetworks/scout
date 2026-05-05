@@ -9,7 +9,7 @@ import {
 } from '@/features/query-filters/state/query-filters.slice';
 import { RootState, useAppSelector } from '@/store/store';
 
-import { type FilterSet } from './model/filter-set';
+import { type FilterSet } from '../model/filter-set';
 
 type QueryFiltersSetsState = {
   loaded: number | null;

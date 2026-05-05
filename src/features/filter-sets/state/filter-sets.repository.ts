@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
+import type { FilterSet } from '../model/filter-set';
 import {
   addFilterSets,
   clearFilterSets,
@@ -10,8 +11,7 @@ import {
   selectLoadedFilterSetId,
   selectFilterSets,
   setLoadedFilterSetId,
-} from './filter-sets.store';
-import type { FilterSet } from './model/filter-set';
+} from './filter-sets.slice';
 
 export type FilterSetsRepository = {
   getLoadedId(): number | null;

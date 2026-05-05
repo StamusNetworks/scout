@@ -42,6 +42,7 @@ export { useGlobalQueryParams } from './hooks/use-global-query-params';
 export { useESMapping } from './hooks/use-es-mapping';
 export { enableTags, useEnableTags } from './hooks/use-enable-tags';
 export { useTagFiltersRepository } from './hooks/use-tag-filters';
+export { useQueryFiltersRepository } from './state/query-filters.repository';
 export { useQFBuilder } from './hooks/use-qf-builder';
 export { useQueryFilterDefinition } from './hooks/use-filters-definitions';
 

@@ -26,8 +26,10 @@ import { startsWithOneOf } from '@/common/lib/strings';
 import { cn } from '@/common/lib/utils';
 import { FilterActionsDropdown } from '@/features/filter-actions/components/filter-actions/filter-actions.dropdown';
 import { useSupportedFilterActionsFilters } from '@/features/filter-actions/utils/get-supported-filters';
-import { SideBarQueryFilterSets } from '@/features/filter-sets/use-cases/pinned-filter-sets/sidebar-query-filter-sets';
-import { openSaveFilterSetModal } from '@/features/filter-sets/use-cases/save-filter-set/save-filterset.slice';
+import {
+  SideBarQueryFilterSets,
+  useSaveFilterSetModal,
+} from '@/features/filter-sets';
 import { useWithAlertsParam } from '@/features/host-insights/common/hosts-table/use-with-alerts-param';
 import { Investigation } from '@/features/investigation/components/ongoing-investigation/ongoing-investigation';
 import { selectInvestigationStage } from '@/features/investigation/investigation.slice';
@@ -101,6 +103,7 @@ type SideBarConfig = {
 export const FiltersSideBar = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
+  const saveFilterSetModal = useSaveFilterSetModal();
   const flags = useSelector(selectGatedFilterFlags);
   const queryFilters = useSelector(selectQueryFilters);
   const isOpen = useAppSelector(selectIsSidebarOpen);
@@ -231,7 +234,7 @@ export const FiltersSideBar = () => {
       render: (
         <button
           onClick={() => {
-            dispatch(openSaveFilterSetModal());
+            saveFilterSetModal.open();
           }}
         >
           <SidebarActionIcon type={Save} />

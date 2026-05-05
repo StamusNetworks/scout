@@ -44,10 +44,10 @@ import {
   useQueryFilterDefinition,
 } from '@/features/query-filters';
 
-import { filterSetPageConfig } from '../../filter-sets.constants';
-import { useIsLoadedFilterSet } from '../../filter-sets.store';
+import { filterSetPageConfig } from '../../definitions/filter-sets.constants';
+import { useLoadFilterSet } from '../../hooks/use-load-filter-set';
 import { type FilterSet } from '../../model/filter-set';
-import { loadFilterSet } from '../load-filter-set/load-filter-set';
+import { useIsLoadedFilterSet } from '../../state/filter-sets.slice';
 
 export function FilterSetsHeader({
   children,
@@ -109,6 +109,7 @@ export const FilterSetsItem = ({
   const Icon = filterSetPageConfig[filterSet.page].icon;
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const loadFilterSet = useLoadFilterSet();
   const onClickHandler = () => {
     loadFilterSet(filterSet);
     const suffix =
@@ -240,6 +241,7 @@ const PopoverQueryFilter = ({ filter }: { filter: PersistedFilter }) => {
 
 function FilterSetEventsBadge({ filterSet }: { filterSet: FilterSet }) {
   const navigate = useNavigate();
+  const loadFilterSet = useLoadFilterSet();
   const params = useFilterSetQueryParams(filterSet);
   const events = useGetEventsCountQuery({
     start_date: params.start_date,
@@ -266,6 +268,7 @@ function FilterSetEventsBadge({ filterSet }: { filterSet: FilterSet }) {
 
 function FilterSetTransactionsBadge({ filterSet }: { filterSet: FilterSet }) {
   const navigate = useNavigate();
+  const loadFilterSet = useLoadFilterSet();
   const params = useFilterSetQueryParams(filterSet);
   const events = useGetEventsTailQuery({
     start_date: params.start_date,
@@ -290,6 +293,7 @@ function FilterSetTransactionsBadge({ filterSet }: { filterSet: FilterSet }) {
 
 function FilterSetHostsBadge({ filterSet }: { filterSet: FilterSet }) {
   const navigate = useNavigate();
+  const loadFilterSet = useLoadFilterSet();
   const params = useFilterSetQueryParams(filterSet);
   const hosts = useGetHostsQuery({
     start_date: params.start_date,
@@ -314,6 +318,7 @@ function FilterSetHostsBadge({ filterSet }: { filterSet: FilterSet }) {
 
 function FilterSetInternalHostsBadge({ filterSet }: { filterSet: FilterSet }) {
   const navigate = useNavigate();
+  const loadFilterSet = useLoadFilterSet();
   const QFBuilder = useQFBuilder();
   const params = useFilterSetQueryParams(filterSet, [
     QFBuilder.createFilter('host_id.in_home_net', 'true'),
@@ -348,6 +353,7 @@ function FilterSetInternalHostsWithEventsBadge({
   filterSet: FilterSet;
 }) {
   const navigate = useNavigate();
+  const loadFilterSet = useLoadFilterSet();
   const QFBuilder = useQFBuilder();
   const params = useFilterSetQueryParams(filterSet, [
     QFBuilder.createFilter('host_id.in_home_net', 'true'),
@@ -377,6 +383,7 @@ function FilterSetHostsWithEventsBadge({
   filterSet: FilterSet;
 }) {
   const navigate = useNavigate();
+  const loadFilterSet = useLoadFilterSet();
   const params = useFilterSetQueryParams(filterSet);
   const hosts = useGetHostsWithAlertsQuery({
     ...params,
@@ -403,6 +410,7 @@ function FilterSetDetectionMethodsBadge({
   filterSet: FilterSet;
 }) {
   const navigate = useNavigate();
+  const loadFilterSet = useLoadFilterSet();
   const params = useFilterSetQueryParams(filterSet);
   const detectionMethods = useGetSignaturesQuery({
     start_date: params.start_date,

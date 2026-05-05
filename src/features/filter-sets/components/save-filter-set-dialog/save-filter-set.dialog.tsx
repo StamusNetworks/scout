@@ -6,12 +6,12 @@ import {
 import { useGatedFilterFlags, useQueryFilters } from '@/features/query-filters';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
-import { SaveFilterSetForm } from './save-filterset.form';
 import {
   closeSaveFilterSetModal,
   openSaveFilterSetModal,
   selectSaveFilterSetModal,
-} from './save-filterset.slice';
+} from '../../state/save-filter-set.slice';
+import { SaveFilterSetForm } from './save-filter-set.form';
 
 export const SaveFilterSetModal = () => {
   const dispatch = useAppDispatch();

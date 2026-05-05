@@ -11,14 +11,14 @@ import {
   clearFilterSets,
   removeFilterSet,
   selectFilterSets,
-} from '../../filter-sets.store';
+} from '../../state/filter-sets.slice';
 import {
   FilterSetsClearButton,
   FilterSetsHeader,
   FilterSetsItem,
   FilterSetsItems,
   FilterSetsTitle,
-} from './sidebar-query-filter-sets.molecules';
+} from './sidebar-filter-sets.molecules';
 
 const handleClearFavorites = () => {
   store.dispatch(clearFilterSets('favorites'));

@@ -7,8 +7,8 @@ import { createEditSendMailModalInitialState } from '@/features/filter-actions/c
 import { createEditSuppressModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
 import { createEditTagModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
 import { createEditThresholdModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
-import { queryFiltersSetsInitialState } from '@/features/filter-sets/filter-sets.store';
-import { saveFilterSetModalInitialState } from '@/features/filter-sets/use-cases/save-filter-set/save-filterset.slice';
+import { queryFiltersSetsInitialState } from '@/features/filter-sets/state/filter-sets.slice';
+import { saveFilterSetModalInitialState } from '@/features/filter-sets/state/save-filter-set.slice';
 import { investigationInitialState } from '@/features/investigation/investigation.slice';
 import { investigationsHistoryInitialState } from '@/features/investigation/investigations-history.slice';
 import { marketingStateInitialState } from '@/features/marketing/store/marketing.store';

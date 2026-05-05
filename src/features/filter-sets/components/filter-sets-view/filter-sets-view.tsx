@@ -23,19 +23,20 @@ import { usePaginationUrlState } from '@/common/design-system/molecules/data-tab
 import { DeleteModal } from '@/common/design-system/molecules/delete-modal';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { cn } from '@/common/lib/utils';
+import { useAppDispatch } from '@/store/store';
+
 import {
   useDeleteFilterSetMutation,
   useGetFilterSetsQuery,
-} from '@/features/filter-sets/filter-sets.api';
-import { filterSetPageConfig } from '@/features/filter-sets/filter-sets.constants';
+} from '../../api/filter-sets.api';
+import { filterSetPageConfig } from '../../definitions/filter-sets.constants';
+import { useLoadFilterSet } from '../../hooks/use-load-filter-set';
+import { type FilterSet } from '../../model/filter-set';
 import {
   addFilterSets,
   type QueryFiltersKey,
   useIsLoadedFilterSet,
-} from '@/features/filter-sets/filter-sets.store';
-import { type FilterSet } from '@/features/filter-sets/model/filter-set';
-import { loadFilterSet } from '@/features/filter-sets/use-cases/load-filter-set/load-filter-set';
-import { useAppDispatch } from '@/store/store';
+} from '../../state/filter-sets.slice';
 
 const typeMap = {
   global: 'global',
@@ -56,6 +57,7 @@ const pageReverseMap = Object.fromEntries(
 
 export const FilterSetsView = () => {
   const navigate = useNavigate();
+  const loadFilterSet = useLoadFilterSet();
   const [pagination, setPagination] = usePaginationUrlState();
   const [search, setSearch] = useQueryState(
     'search',
@@ -111,7 +113,9 @@ export const FilterSetsView = () => {
       serverSide={false}
       columns={columns}
       defaultPageSize={20}
-      onRowClick={(row) => handleLoadFilterSet(row.original, navigate)}
+      onRowClick={(row) =>
+        handleLoadFilterSet(row.original, loadFilterSet, navigate)
+      }
       rowClickCursor="pointer"
       getRowId={(row) => row.id?.toString()}
       rowSelection={selectedRows}
@@ -212,6 +216,7 @@ const getColumns = (enterprise: boolean): CustomColumnDef<FilterSet>[] => [
 
 const handleLoadFilterSet = (
   filterSet: FilterSet,
+  loadFilterSet: (set: FilterSet) => void,
   navigate: ReturnType<typeof useNavigate>,
 ) => {
   loadFilterSet(filterSet);
