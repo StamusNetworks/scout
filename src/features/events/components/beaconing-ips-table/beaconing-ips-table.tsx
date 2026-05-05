@@ -6,14 +6,14 @@ import { CustomColumnDef } from '@/common/design-system/molecules/data-table/fil
 import { usePaginationState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { esEscape } from '@/common/lib/strings';
 import { useGetHostsQuery } from '@/features/host-insights/api/hosts.api';
+import { HostnameTemplate } from '@/features/host-insights/components/host-attributes/hostname';
+import { NetworkTemplate } from '@/features/host-insights/components/host-attributes/network';
+import { UsernameTemplate } from '@/features/host-insights/components/host-attributes/username';
 import {
   getHostRole,
   Host,
   HostRoles,
 } from '@/features/host-insights/model/host';
-import { HostnameTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
-import { NetworkTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
-import { UsernameTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { EntityThreatTagsList } from '@/features/threats';

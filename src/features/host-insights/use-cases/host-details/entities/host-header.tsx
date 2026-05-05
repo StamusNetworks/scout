@@ -15,15 +15,14 @@ import { useGetBeaconingEventsQuery } from '@/features/events';
 import { useGetEventsQuery } from '@/features/events';
 import { useGetSightingEventsQuery } from '@/features/events';
 import { useGetHostWithAlertsQuery } from '@/features/host-insights/api/hosts.api';
+import { HostDetectionsRadar } from '@/features/host-insights/components/host-detections-radar';
+import { HostProfile } from '@/features/host-insights/components/host-profile';
+import { getHostProfileChartData } from '@/features/host-insights/components/host-profile.utils';
+import { HostSummary } from '@/features/host-insights/components/host-summary';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useGetRulesQuery } from '@/features/rules';
 import { useGetImpactedEntitiesQuery } from '@/features/threats';
 import { useGetThreatsStatusQuery } from '@/features/threats';
-
-import { HostDetectionsRadar } from '../molecules/host-detections-radar';
-import { HostProfile } from '../molecules/host-profile';
-import { getHostProfileChartData } from '../molecules/host-profile.utils';
-import { HostSummary } from '../molecules/host-summary';
 
 export interface HostHeaderProps {
   hostId: string;

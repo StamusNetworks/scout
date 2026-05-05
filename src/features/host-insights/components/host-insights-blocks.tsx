@@ -3,7 +3,7 @@ import { cn } from '@/common/lib/utils';
 import { useGetHostWithAlertsQuery } from '@/features/host-insights/api/hosts.api';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { HostBlock } from './host-block';
+import { HostBlock } from './host-block/host-block';
 import { getBlocks } from './host-block/host-block.config';
 
 interface HostInsightsBlocksProps {

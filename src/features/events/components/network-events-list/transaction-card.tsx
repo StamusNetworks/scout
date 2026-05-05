@@ -17,8 +17,8 @@ import {
   SyntheticTab,
 } from '@/features/events/components/event-detail';
 import { Event } from '@/features/events/model/event';
-import { Hostname } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
-import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
+import { Hostname } from '@/features/host-insights/components/host-attributes/hostname';
+import { Network } from '@/features/host-insights/components/host-attributes/network';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { KillchainTag, KillChainPhase, ThreatTag } from '@/features/threats';
 import { selectDefaultEventDetailTab } from '@/features/ui/preferences/preferences.slice';

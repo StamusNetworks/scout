@@ -6,10 +6,10 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { Filter } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { Event } from '@/features/events/model/event';
-import { Hostname } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
-import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
-import { RoleBadge } from '@/features/host-insights/use-cases/host-details/molecules/host-details/roles';
-import { Username } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';
+import { Hostname } from '@/features/host-insights/components/host-attributes/hostname';
+import { Network } from '@/features/host-insights/components/host-attributes/network';
+import { RoleBadge } from '@/features/host-insights/components/host-attributes/roles';
+import { Username } from '@/features/host-insights/components/host-attributes/username';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { EntityThreatTagsList } from '@/features/threats';
 import { IpOrEntityEventValue } from '@/features/threats';

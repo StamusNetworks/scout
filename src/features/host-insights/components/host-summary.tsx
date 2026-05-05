@@ -10,10 +10,10 @@ import { EntityThreatTagsListTemplate } from '@/features/threats';
 import { KillchainTag } from '@/features/threats';
 import { ImpactedEntity } from '@/features/threats';
 
-import { HostnameTemplate } from './host-details/hostname';
-import { NetworkTemplate } from './host-details/network';
-import { RolesTemplate } from './host-details/roles';
-import { UsernameTemplate } from './host-details/username';
+import { HostnameTemplate } from './host-attributes/hostname';
+import { NetworkTemplate } from './host-attributes/network';
+import { RolesTemplate } from './host-attributes/roles';
+import { UsernameTemplate } from './host-attributes/username';
 import { InternalExternal } from './internal-external';
 
 export const HostSummary = ({

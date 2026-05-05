@@ -11,10 +11,10 @@ import {
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
-import { Hostname } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
-import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
-import { Roles } from '@/features/host-insights/use-cases/host-details/molecules/host-details/roles';
-import { Username } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';
+import { Hostname } from '@/features/host-insights/components/host-attributes/hostname';
+import { Network } from '@/features/host-insights/components/host-attributes/network';
+import { Roles } from '@/features/host-insights/components/host-attributes/roles';
+import { Username } from '@/features/host-insights/components/host-attributes/username';
 import { KillchainTag } from '@/features/threats/components/kill-chain-tag/kill-chain-tag';
 
 import { useThreat } from '../../hooks/use-threat';

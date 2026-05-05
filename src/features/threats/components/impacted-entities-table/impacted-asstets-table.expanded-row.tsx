@@ -7,7 +7,7 @@ import {
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/pillTabs';
 import { ScrollArea } from '@/common/design-system/atoms/ui/scroll-area';
-import { HostInsightsBlocks } from '@/features/host-insights/use-cases/host-details/molecules/host-insights-blocks';
+import { HostInsightsBlocks } from '@/features/host-insights/components/host-insights-blocks';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { HuntingTrail } from '@/features/threats';
 import { Timeline } from '@/features/threats';
