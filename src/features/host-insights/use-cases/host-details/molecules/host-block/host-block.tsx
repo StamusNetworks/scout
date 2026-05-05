@@ -24,9 +24,8 @@ import {
 } from '@/common/design-system/molecules/pagination';
 import { TableCard } from '@/common/design-system/molecules/table-card';
 import { useDates } from '@/features/dates';
+import { useValuesSortParam } from '@/features/host-insights/hooks/use-values-sort-param';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
-
-import { useValuesSortParam } from './use-values-sort-param';
 
 function formatForExport(data: HostBlockItem[] | undefined) {
   if (!data) return [];

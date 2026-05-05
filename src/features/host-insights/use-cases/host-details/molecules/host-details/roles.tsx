@@ -2,10 +2,9 @@ import { Row } from '@/common/design-system/atoms/layout/row';
 import { Badge } from '@/common/design-system/atoms/ui/badge';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { cn } from '@/common/lib/utils';
+import { useGetHostInsights } from '@/features/host-insights/hooks/use-get-host-insights';
 import { getHostRole, Host } from '@/features/host-insights/model/host';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
-
-import { useGetHostInsights } from '../../hooks/use-get-host-insights';
 
 interface RolesProps {
   host: string;

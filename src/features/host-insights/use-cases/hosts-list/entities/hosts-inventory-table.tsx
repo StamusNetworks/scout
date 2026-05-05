@@ -9,10 +9,12 @@ import { useTablePreferences } from '@/common/design-system/molecules/data-table
 import { ExportButton } from '@/common/design-system/molecules/export-button';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
+import {
+  HOSTS_BASE_COLUMNS,
+  HOSTS_EXPORT_COLUMNS,
+} from '@/features/host-insights/definitions/hosts-table.columns';
+import { useHostsList } from '@/features/host-insights/hooks/use-hosts-list';
 import { HostsTableExpandedRow } from '@/features/host-insights/use-cases/host-details/molecules/hosts-table-expanded-row';
-
-import { useHostsList } from '../hosts-list.api';
-import { HOSTS_BASE_COLUMNS, HOSTS_EXPORT_COLUMNS } from '../hosts-list.table';
 
 interface HostsInventoryTableProps {
   page: number;

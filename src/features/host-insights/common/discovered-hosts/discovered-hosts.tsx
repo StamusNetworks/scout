@@ -1,6 +1,6 @@
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { StatsCardHorizontal } from '@/common/design-system/molecules/stats-card-horizontal';
-import { useFetchHostsCounts } from '@/features/host-insights/use-cases/hosts-list/hosts-list.api';
+import { useFetchHostsCounts } from '@/features/host-insights/hooks/use-fetch-hosts-counts';
 import { useCreateFilter } from '@/features/query-filters/hooks/use-create-filter';
 
 import { indicators } from './discovered-hosts.config';
