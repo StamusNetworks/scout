@@ -1,8 +1,8 @@
 import { PaginationState } from '@tanstack/react-table';
 
-import { useGetRulesQuery } from '@/features/rules';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
+import { useGetRulesQuery } from '@/features/rules';
 
 interface UseThreatEventsParams {
   threatId: string;

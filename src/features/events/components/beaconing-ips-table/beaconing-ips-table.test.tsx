@@ -11,7 +11,7 @@ import { vi } from 'vitest';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
 import { BeaconingIPsTable } from '@/features/events/components/beaconing-ips-table/beaconing-ips-table';
-import { Host } from '@/features/host-insights/common/host.model';
+import { Host } from '@/features/host-insights/model/host';
 import { ImpactedEntityDto as Entity } from '@/features/threats/api/impacted-entity.dto';
 import { ThreatDto as Threat } from '@/features/threats/api/threat.dto';
 

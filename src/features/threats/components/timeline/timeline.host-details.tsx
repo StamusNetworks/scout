@@ -1,7 +1,7 @@
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { ScrollArea } from '@/common/design-system/atoms/ui/scroll-area';
-import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
+import { useGetHostWithAlertsQuery } from '@/features/host-insights/api/hosts.api';
 import { HostStats } from '@/features/host-insights/use-cases/host-details/molecules/host-summary';
 import { InternalExternal } from '@/features/host-insights/use-cases/host-details/molecules/internal-external';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { hostSchema } from './host.schema';
+import { hostSchema } from '../api/host.dto';
 
 export type Host = z.infer<typeof hostSchema>;
 

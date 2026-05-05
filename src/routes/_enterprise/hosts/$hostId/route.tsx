@@ -29,13 +29,13 @@ import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { isIP } from '@/common/lib/ips';
 import { esEscape } from '@/common/lib/strings';
-import { useGetRulesQuery } from '@/features/rules';
 import { useGetBeaconingEventsQuery } from '@/features/events';
 import { useGetEventsQuery } from '@/features/events';
 import { useGetSightingEventsQuery } from '@/features/events';
-import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
+import { useGetHostWithAlertsQuery } from '@/features/host-insights/api/hosts.api';
 import { HostHeader } from '@/features/host-insights/use-cases/host-details/entities/host-header';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+import { useGetRulesQuery } from '@/features/rules';
 import { useTenancy } from '@/features/tenancy';
 import { useGetThreatsStatusQuery } from '@/features/threats';
 

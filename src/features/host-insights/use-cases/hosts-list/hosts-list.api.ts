@@ -6,7 +6,7 @@ import {
   getCustomFilter,
   useFetchHostsCountsQuery,
   useGetHostsQuery,
-} from '@/features/host-insights/common/host-insights.api';
+} from '@/features/host-insights/api/hosts.api';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 

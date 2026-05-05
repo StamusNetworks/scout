@@ -16,10 +16,10 @@ import { useSidebar } from '@/common/design-system/atoms/ui/sidebar';
 import { getShortcutDisplay } from '@/common/lib/platform';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { getConfig } from '@/config';
-import { useUpdatePushRuleSetMutation } from '@/features/rules';
 import { useFilterActionModal } from '@/features/filter-actions';
 import { useQueryFilters } from '@/features/query-filters';
 import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
+import { useUpdatePushRuleSetMutation } from '@/features/rules';
 import {
   selectIsSidebarOpen,
   setIsSidebarOpen,

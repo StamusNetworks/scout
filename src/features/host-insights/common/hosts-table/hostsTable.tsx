@@ -15,7 +15,7 @@ import type { CustomColumnDef } from '@/common/design-system/molecules/data-tabl
 import { SwitchFilter } from '@/common/design-system/molecules/data-table/filters/switch-filter';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
 import type { Paginated } from '@/common/fetching/fetching.types';
-import type { Host } from '@/features/host-insights/common/host.model';
+import type { Host } from '@/features/host-insights/model/host';
 import { HostValuesSort } from '@/features/host-insights/use-cases/host-details/molecules/host-block/host-values-sort';
 import { HostsTableExpandedRow } from '@/features/host-insights/use-cases/host-details/molecules/hosts-table-expanded-row';
 

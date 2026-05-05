@@ -3,7 +3,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { DataTable } from '@/common/design-system/molecules/data-table/data-table.tsx';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences.ts';
-import { useGetHostsQuery } from '@/features/host-insights/common/host-insights.api';
+import { useGetHostsQuery } from '@/features/host-insights/api/hosts.api';
 import { HostsTableExpandedRow } from '@/features/host-insights/use-cases/host-details/molecules/hosts-table-expanded-row';
 import { getFilterExtension } from '@/features/host-insights/use-cases/hosts-list/hosts-list.api';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';

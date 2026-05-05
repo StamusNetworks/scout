@@ -1,7 +1,7 @@
 import { formatDuration } from 'date-fns';
 
 import { formatBytes } from '@/common/lib/numbers';
-import { Role, ROLES } from '@/features/host-insights/common/hosts.config';
+import { Role, ROLES } from '@/features/host-insights/model/role';
 
 import { QueryFilterDefinition, QueryFilterType } from '../model/query-filter';
 import {

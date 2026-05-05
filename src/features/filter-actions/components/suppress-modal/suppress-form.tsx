@@ -19,8 +19,8 @@ import {
   FormMessage,
 } from '@/common/design-system/atoms/ui/form';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
-import { useGetRuleSetsQuery } from '@/features/rules';
 import { FilterInput } from '@/features/query-filters/components/edit-qfilter-modal/filter-input';
+import { useGetRuleSetsQuery } from '@/features/rules';
 
 import {
   useCreateFilterActionMutation,

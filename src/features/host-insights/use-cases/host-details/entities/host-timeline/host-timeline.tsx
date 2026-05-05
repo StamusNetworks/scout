@@ -2,7 +2,7 @@ import { Biohazard, History } from 'lucide-react';
 
 import { BlockTitle } from '@/common/design-system/atoms/block';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
-import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
+import { useGetHostWithAlertsQuery } from '@/features/host-insights/api/hosts.api';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import {
   Timeline,

@@ -26,7 +26,6 @@ import {
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { formatNumber } from '@/common/lib/numbers';
 import { capitalizeAll } from '@/common/lib/strings';
-import { useGetRulesQuery } from '@/features/rules';
 import {
   useGetEventsCountQuery,
   useGetEventsTailQuery,
@@ -34,7 +33,7 @@ import {
 import {
   useGetHostsQuery,
   useGetHostsWithAlertsQuery,
-} from '@/features/host-insights/common/host-insights.api';
+} from '@/features/host-insights/api/hosts.api';
 import {
   type PersistedFilter,
   type QueryFilterState,
@@ -43,6 +42,7 @@ import {
   useQFBuilder,
   useQueryFilterDefinition,
 } from '@/features/query-filters';
+import { useGetRulesQuery } from '@/features/rules';
 
 import { filterSetPageConfig } from '../../definitions/filter-sets.constants';
 import { useIsLoadedFilterSet } from '../../hooks/use-is-loaded-filter-set';

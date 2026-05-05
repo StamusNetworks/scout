@@ -1,6 +1,6 @@
 import { Binary, Fingerprint, Network, Shapes } from 'lucide-react';
 
-import { Host } from '@/features/host-insights/common/host.model';
+import { Host } from '@/features/host-insights/model/host';
 
 export const getBlocks = (host: Host | undefined) => [
   {

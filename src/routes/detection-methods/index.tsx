@@ -13,8 +13,8 @@ import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
-import { RulesTable } from '@/features/rules';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+import { RulesTable } from '@/features/rules';
 
 const searchSchema = z.object({
   page: z.number().default(1),

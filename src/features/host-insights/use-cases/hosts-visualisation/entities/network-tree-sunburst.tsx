@@ -26,8 +26,8 @@ import {
 import { CommandFilterSingle } from '@/common/design-system/molecules/data-table/filters/command-filter-single';
 import { formatNumber } from '@/common/lib/numbers';
 import { esEscape } from '@/common/lib/strings';
-import { useGetNetworkTreeQuery } from '@/features/host-insights/common/host-insights.api';
-import { NetworkTreeFilterService } from '@/features/host-insights/common/network-tree/network-tree.filter-service';
+import { useGetNetworkTreeQuery } from '@/features/host-insights/api/hosts.api';
+import { NetworkTreeFilterService } from '@/features/host-insights/utils/network-tree-filter-service';
 import {
   useBuildHostIdQfilter,
   useGlobalQueryParams,

@@ -11,12 +11,12 @@
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { esEscape } from '@/common/lib/strings';
-import { useGetRulesQuery } from '@/features/rules';
 import { useGetBeaconingEventsQuery } from '@/features/events';
 import { useGetEventsQuery } from '@/features/events';
 import { useGetSightingEventsQuery } from '@/features/events';
-import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
+import { useGetHostWithAlertsQuery } from '@/features/host-insights/api/hosts.api';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+import { useGetRulesQuery } from '@/features/rules';
 import { useGetImpactedEntitiesQuery } from '@/features/threats';
 import { useGetThreatsStatusQuery } from '@/features/threats';
 

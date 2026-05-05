@@ -7,7 +7,7 @@ import { Paginated, Pagination } from '@/common/fetching/fetching.types';
 import { Aggregation } from '@/common/lib/aggregation';
 import { API } from '@/store/api';
 
-import { Host } from './host.model';
+import { Host } from '../model/host';
 
 export type URLParams = Record<string, string>;
 

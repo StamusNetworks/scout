@@ -2,13 +2,13 @@ import { useParams } from '@tanstack/react-router';
 
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 import {
   RuleExpandedRow,
   rulesTableColumns,
   useGetRulesQuery,
 } from '@/features/rules';
-import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
-import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 
 export const FamilyDetectionMethods = () => {
   const { familyId } = useParams({ strict: false }) as { familyId: string };

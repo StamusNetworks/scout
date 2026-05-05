@@ -1,12 +1,12 @@
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 import {
   RuleExpandedRow,
   rulesTableColumns,
   useGetRulesQuery,
 } from '@/features/rules';
-import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
-import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 
 type Props = { threatId: string };
 

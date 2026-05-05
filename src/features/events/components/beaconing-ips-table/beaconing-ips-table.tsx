@@ -5,12 +5,12 @@ import { DataTable } from '@/common/design-system/molecules/data-table';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { usePaginationState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { esEscape } from '@/common/lib/strings';
-import { useGetHostsQuery } from '@/features/host-insights/common/host-insights.api';
+import { useGetHostsQuery } from '@/features/host-insights/api/hosts.api';
 import {
   getHostRole,
   Host,
   HostRoles,
-} from '@/features/host-insights/common/host.model';
+} from '@/features/host-insights/model/host';
 import { HostnameTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
 import { NetworkTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 import { UsernameTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';

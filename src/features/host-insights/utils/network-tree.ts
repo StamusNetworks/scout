@@ -1,6 +1,6 @@
 import { toPairs } from 'ramda';
 
-import { Host } from '@/features/host-insights/common/host.model';
+import { Host } from '../model/host';
 
 export type TreeNode = {
   id: string;

@@ -7,12 +7,12 @@ import { serializeSorting } from '@/common/design-system/molecules/data-table/ho
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
 import { esEscape } from '@/common/lib/strings';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import {
   RuleExpandedRow,
   rulesTableColumns,
   useGetRulesQuery,
 } from '@/features/rules';
-import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 interface HostDetectionMethodsTableProps {
   hostId: string;

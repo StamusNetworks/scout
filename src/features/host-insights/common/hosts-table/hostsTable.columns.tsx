@@ -7,7 +7,7 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { FormattedBadge } from '@/common/design-system/molecules/formatted-badge';
-import { Host } from '@/features/host-insights/common/host.model';
+import { Host } from '@/features/host-insights/model/host';
 import { HostnameTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
 import { NetworkTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 import { RolesTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/roles';

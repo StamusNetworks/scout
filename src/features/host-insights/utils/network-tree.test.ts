@@ -1,4 +1,4 @@
-import { getNetNodes } from './network-tree.utils';
+import { getNetNodes } from './network-tree';
 
 describe('Network tree utils', () => {
   describe('Computing the network nodes', () => {
