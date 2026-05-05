@@ -1,4 +1,4 @@
-import type { PersistedFilter } from '@/features/query-filters/query-filter.model';
+import type { PersistedFilter } from '@/features/query-filters/model/query-filter';
 
 /**
  * Domain shape for filter-set tags. Aligned with the live query-filters

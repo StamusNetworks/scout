@@ -1,7 +1,7 @@
-import { QueryFiltersRecord } from '@/features/query-filters/constants/query-filter.definition';
-import { QueryFilterState } from '@/features/query-filters/query-filter.model';
-import { setQueryFilters } from '@/features/query-filters/query-filters.store';
-import { QFBuilder } from '@/features/query-filters/utils/qf-builder';
+import { QFBuilder } from '@/features/query-filters/builders/qf-builder';
+import { QueryFiltersRecord } from '@/features/query-filters/definitions/query-filter.definitions';
+import { QueryFilterState } from '@/features/query-filters/model/query-filter';
+import { setQueryFilters } from '@/features/query-filters/state/query-filters.slice';
 import { applyUpsertByRole } from '@/features/query-filters/utils/suspension-rules';
 import { store } from '@/store/store-instance';
 

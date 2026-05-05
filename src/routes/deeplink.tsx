@@ -4,8 +4,8 @@ import { useEffect } from 'react';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { isNumeric } from '@/common/lib/numbers';
-import { useClearFilters } from '@/features/query-filters/use-cases/clear-filters/clear-filters';
-import { useCreateFilter } from '@/features/query-filters/use-cases/create-filter/create-filter';
+import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
+import { useCreateFilter } from '@/features/query-filters/hooks/use-create-filter';
 
 export const Route = createFileRoute('/deeplink')({
   component: () => (

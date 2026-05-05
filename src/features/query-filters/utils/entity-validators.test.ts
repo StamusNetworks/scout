@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { FilterType } from '../constants/query-filter.config';
+import { FilterType } from '../definitions/query-filter.config';
 import { resolveEntityTypes } from './entity-validators';
 
 describe('resolveEntityTypes', () => {

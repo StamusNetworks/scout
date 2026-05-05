@@ -1,8 +1,8 @@
 import { isIP } from '@/common/lib/ips';
 import { isEmail } from '@/common/lib/strings';
 
-import { FilterType } from '../constants/query-filter.config';
-import type { FilterType as FilterTypeType } from '../query-filter.model';
+import { FilterType } from '../definitions/query-filter.config';
+import type { FilterType as FilterTypeType } from '../model/query-filter';
 
 // Validators for entity types that need runtime resolution.
 // Types NOT in this map always pass (backward compatible).

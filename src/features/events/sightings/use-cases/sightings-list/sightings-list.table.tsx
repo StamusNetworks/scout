@@ -10,7 +10,7 @@ import { Hostname } from '@/features/host-insights/use-cases/host-details/molecu
 import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 import { RoleBadge } from '@/features/host-insights/use-cases/host-details/molecules/host-details/roles';
 import { Username } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';
-import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { EntityThreatTagsList } from '@/features/threats/common/molecules/entities-threat-tags-list/entities-threat-tags-list';
 import { IpOrEntityEventValue } from '@/features/threats/common/molecules/ip-or-entity';
 

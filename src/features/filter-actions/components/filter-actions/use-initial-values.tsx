@@ -1,10 +1,9 @@
 import { pipe } from 'ramda';
 import { useMemo } from 'react';
 
+import { useQueryFilters } from '@/features/query-filters';
 import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
-import { QueryFilterState } from '@/features/query-filters/query-filter.model';
-import { selectQueryFilters } from '@/features/query-filters/query-filters.selectors';
-import { useAppSelector } from '@/store/store';
+import { QueryFilterState } from '@/features/query-filters/model/query-filter';
 
 import { useTestActionsQuery } from '../../api/filter-actions.api';
 import { FilterAction } from '../../model/filter-action.schema';
@@ -13,7 +12,7 @@ export const useInitialValues = (
   type: FilterAction['action'],
   filterAction?: FilterAction,
 ) => {
-  const filters = useAppSelector(selectQueryFilters);
+  const filters = useQueryFilters();
   const QFBuilder = useQFBuilder();
   const { data, isLoading } = useTestActionsQuery({
     action: type,

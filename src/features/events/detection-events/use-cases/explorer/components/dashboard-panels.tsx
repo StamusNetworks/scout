@@ -18,7 +18,7 @@ import {
   TooltipTrigger,
 } from '@/common/design-system/atoms/ui/tooltip';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
-import { getFilterDef } from '@/features/query-filters/constants/query-filter.definition';
+import { getFilterDef } from '@/features/query-filters/definitions/query-filter.definitions';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { useDashboard } from '../api/hooks/useDashboard';

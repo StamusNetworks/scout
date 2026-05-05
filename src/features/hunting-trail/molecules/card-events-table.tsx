@@ -7,7 +7,7 @@ import {
   TimelineEventType,
   TimelineGroup,
 } from '@/features/hunting-trail/hunting-trail.model';
-import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 type EventItem = TimelineGroup['events'][number];
 

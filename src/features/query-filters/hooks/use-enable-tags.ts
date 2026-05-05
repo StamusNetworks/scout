@@ -1,16 +1,14 @@
 import { useCallback } from 'react';
 
-import {
-  defaultFilterFlags,
-  type FilterFlags,
-} from '@/features/query-filters/filter-flags.model';
+import { useAppDispatch } from '@/store/store';
+import { store } from '@/store/store-instance';
+
+import { defaultFilterFlags, type FilterFlags } from '../model/filter-flags';
 import {
   setAlertTags,
   setEventTypes,
   setNovelty,
-} from '@/features/query-filters/query-filters.store';
-import { useAppDispatch } from '@/store/store';
-import { store } from '@/store/store-instance';
+} from '../state/query-filters.slice';
 
 const applyOverrides = (overrides?: Partial<FilterFlags>): FilterFlags => ({
   eventTypes: { ...defaultFilterFlags.eventTypes, ...overrides?.eventTypes },

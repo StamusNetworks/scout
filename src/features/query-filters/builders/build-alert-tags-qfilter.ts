@@ -1,4 +1,4 @@
-import { type AlertTagFlags } from '../filter-flags.model';
+import { type AlertTagFlags } from '../model/filter-flags';
 
 /**
  * Translates the active alert-tag flags into a single qfilter clause:

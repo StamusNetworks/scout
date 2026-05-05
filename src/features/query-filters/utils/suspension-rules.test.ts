@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { QueryFilterState } from '../query-filter.model';
+import { QueryFilterState } from '../model/query-filter';
 import {
   applyDeduplication,
   applyReplaceLogic,

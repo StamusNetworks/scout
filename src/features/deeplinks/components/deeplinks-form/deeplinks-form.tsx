@@ -18,7 +18,7 @@ import {
 } from '@/common/design-system/atoms/ui/form';
 import { Input } from '@/common/design-system/atoms/ui/input';
 import { MultiSelect } from '@/common/design-system/atoms/ui/multi-select';
-import { FilterType } from '@/features/query-filters/constants/query-filter.config';
+import { FilterType } from '@/features/query-filters/definitions/query-filter.config';
 
 import {
   useCreateDeepLinkMutation,

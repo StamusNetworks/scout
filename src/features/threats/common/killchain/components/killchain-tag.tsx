@@ -5,8 +5,8 @@ import { useCallback, useMemo } from 'react';
 import { Badge } from '@/common/design-system/atoms/ui/badge';
 import { ContextMenuItem } from '@/common/design-system/atoms/ui/context-menu';
 import { cn } from '@/common/lib/utils';
-import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
-import { useReplaceFilters } from '@/features/query-filters/use-cases/replace-filters/replace-filters';
+import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
+import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
 
 import { KillChainMap, killChainsConfig } from '../killchain';
 

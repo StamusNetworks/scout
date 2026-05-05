@@ -1,7 +1,7 @@
 import { values } from 'ramda';
 import { z } from 'zod';
 
-import { FilterType } from '@/features/query-filters/constants/query-filter.config';
+import { FilterType } from '@/features/query-filters/definitions/query-filter.config';
 
 export const deeplinkCreateSchema = z.object({
   name: z.string().min(1),

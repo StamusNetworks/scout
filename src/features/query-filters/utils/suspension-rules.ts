@@ -1,4 +1,4 @@
-import type { QueryFilterState } from '../query-filter.model';
+import type { QueryFilterState } from '../model/query-filter';
 
 /**
  * Keys that allow multiple active (non-suspended) filters simultaneously.

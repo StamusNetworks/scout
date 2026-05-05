@@ -3,7 +3,7 @@ import { ExportColumn } from '@/common/design-system/molecules/data-table/data-t
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { formatNumber } from '@/common/lib/numbers';
-import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 import { Signature } from './detection-method.model';
 

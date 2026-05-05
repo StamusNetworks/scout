@@ -21,8 +21,8 @@ import { openDeclarationModal } from '@/features/filter-actions/components/filte
 import { openSuppressModal } from '@/features/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
 import { openTagModal } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
 import { openThresholdModal } from '@/features/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
-import { selectQueryFilters } from '@/features/query-filters/query-filters.selectors';
-import { useClearFilters } from '@/features/query-filters/use-cases/clear-filters/clear-filters';
+import { useQueryFilters } from '@/features/query-filters';
+import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
 import {
   selectIsSidebarOpen,
   setIsSidebarOpen,
@@ -46,7 +46,7 @@ export type GlobalCommands = {
 
 export const useGlobalCommands = (): GlobalCommands[] => {
   const dispatch = useAppDispatch();
-  const filters = useAppSelector(selectQueryFilters);
+  const filters = useQueryFilters();
   const { toggleSidebar: toggleNavSidebar } = useSidebar();
   const isSidebarOpen = useAppSelector(selectIsSidebarOpen);
   const { enterprise } = useFeatureFlags();

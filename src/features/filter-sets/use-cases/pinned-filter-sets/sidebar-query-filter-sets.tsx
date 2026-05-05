@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { AlertDialog } from '@/common/design-system/molecules/alert-dialog';
-import { SideBarHeader } from '@/features/query-filters/use-cases/list-filters/filters-sidebar';
+import { SideBarHeader } from '@/features/query-filters/components/filters-sidebar/filters-sidebar';
 import { RootState } from '@/store/store';
 import { store } from '@/store/store-instance';
 

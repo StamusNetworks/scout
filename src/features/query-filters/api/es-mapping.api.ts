@@ -2,8 +2,8 @@ import { toPairs } from 'ramda';
 
 import { API } from '@/store/api';
 
-import { FilterCategory } from '../constants/query-filter.config';
-import { QueryFilterType } from '../query-filter.model';
+import { FilterCategory } from '../definitions/query-filter.config';
+import { QueryFilterType } from '../model/query-filter';
 
 /**
  * Elasticsearch field-type metadata. Built lazily from the appliance's

@@ -6,8 +6,8 @@ import {
 } from '@/common/design-system/atoms/ui/dropdown-menu';
 import { TooltipProvider } from '@/common/design-system/atoms/ui/tooltip';
 import { TooltipMenuItem } from '@/common/design-system/molecules/tooltip-menu-item';
-import { selectQueryFilters } from '@/features/query-filters/query-filters.selectors';
-import { useAppDispatch, useAppSelector } from '@/store/store';
+import { useQueryFilters } from '@/features/query-filters';
+import { useAppDispatch } from '@/store/store';
 
 import { useTestAvailableActionsQuery } from '../../api/filter-actions.api';
 import { FilterAction } from '../../model/filter-action.schema';
@@ -29,7 +29,7 @@ export const FilterActionsDropdown = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  const qfilter = useAppSelector(selectQueryFilters);
+  const qfilter = useQueryFilters();
   const { data, isFetching } = useTestAvailableActionsQuery({
     fields: qfilter.map((f) => f.key),
   });

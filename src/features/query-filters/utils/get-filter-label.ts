@@ -1,6 +1,6 @@
 import { capitalizeAll } from '@/common/lib/strings';
 
-import { QueryFiltersRecord } from '../constants/query-filter.definition';
+import { QueryFiltersRecord } from '../definitions/query-filter.definitions';
 
 export const getFilterLabel = (key: string) => {
   const filterDef = QueryFiltersRecord[key];

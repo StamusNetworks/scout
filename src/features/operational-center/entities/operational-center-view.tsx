@@ -10,8 +10,8 @@ import { CipherSecurity } from '@/features/operational-center/entities/cipher-se
 import { IndicidentsTable } from '@/features/operational-center/entities/incidents-table';
 import { MitreTechniques } from '@/features/operational-center/entities/mitre-techniques';
 import { OutliersTimeline } from '@/features/operational-center/entities/outliers-timeline';
+import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
 import { useEnableTags } from '@/features/query-filters/hooks/use-enable-tags';
-import { useClearFilters } from '@/features/query-filters/use-cases/clear-filters/clear-filters';
 import { KillChainCounters } from '@/features/threats/common/killchain/components/killchain-counters/killchain-counters';
 import { OffendersWorldMap } from '@/features/threats/common/molecules/offenders-world-map/offenders-world-map';
 interface OperationalCenterViewProps {

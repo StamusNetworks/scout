@@ -3,10 +3,7 @@ import {
   DialogContent,
   DialogTitle,
 } from '@/common/design-system/atoms/ui/dialog';
-import {
-  selectGatedFilterFlags,
-  selectQueryFilters,
-} from '@/features/query-filters/query-filters.selectors';
+import { useGatedFilterFlags, useQueryFilters } from '@/features/query-filters';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { SaveFilterSetForm } from './save-filterset.form';
@@ -19,10 +16,8 @@ import {
 export const SaveFilterSetModal = () => {
   const dispatch = useAppDispatch();
   const { isOpen, mode, filters } = useAppSelector(selectSaveFilterSetModal);
-  const appFilters = useAppSelector(selectQueryFilters).filter(
-    (f) => !f.is_suspended,
-  );
-  const flags = useAppSelector(selectGatedFilterFlags);
+  const appFilters = useQueryFilters().filter((f) => !f.is_suspended);
+  const flags = useGatedFilterFlags();
 
   const handleOpenChange = (open: boolean) =>
     open

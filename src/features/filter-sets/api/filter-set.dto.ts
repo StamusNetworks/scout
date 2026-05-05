@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { qfilterDef } from '@/features/query-filters/query-filter.model';
+import { qfilterDef } from '@/features/query-filters/model/query-filter';
 
 /**
  * Wire-shape schema for filter-set tags. The server uses `alerts` and

@@ -15,7 +15,7 @@ import { DataTable } from '@/common/design-system/molecules/data-table';
 import { usePaginationState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { isIP } from '@/common/lib/strings';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
-import { useReplaceFilters } from '@/features/query-filters/use-cases/replace-filters/replace-filters';
+import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
 import { useThreats } from '@/features/threats/common/hooks/use-threats';
 import { KillChainKeysWithoutPolicies } from '@/features/threats/common/killchain/killchain';
 import { threatStatusColumnDefs } from '@/features/threats/common/molecules/threat-status-columns';

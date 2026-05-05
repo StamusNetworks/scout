@@ -3,7 +3,7 @@ import { Badge } from '@/common/design-system/atoms/ui/badge';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { cn } from '@/common/lib/utils';
 import { getHostRole, Host } from '@/features/host-insights/common/host.model';
-import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 import { useGetHostInsights } from '../../hooks/use-get-host-insights';
 

@@ -8,7 +8,6 @@ import { beforeEach, describe, expect, test } from 'vitest';
 import { mockNavigate } from '@/common/testing/mocks/hooks/use-navigate.mock';
 import { renderWithProviders, withoutIds } from '@/common/testing/test-utils';
 import { selectDates } from '@/features/dates';
-import { selectQueryFilters } from '@/features/query-filters/query-filters.selectors';
 import {
   encodeShareableState,
   type ShareableState,
@@ -71,7 +70,7 @@ describe('SharePage', () => {
     });
 
     // Verify query filters were hydrated with correct flags
-    const queryFilters = selectQueryFilters(store.getState());
+    const queryFilters = store.getState().filters.queryFilters.queryFilters;
     expect(withoutIds(queryFilters)).toEqual(
       expect.arrayContaining([
         expect.objectContaining({

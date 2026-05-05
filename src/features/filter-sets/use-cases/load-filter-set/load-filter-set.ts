@@ -1,12 +1,12 @@
 import { toast } from 'sonner';
 
-import { QueryFiltersRecord } from '@/features/query-filters/constants/query-filter.definition';
+import { QFBuilder } from '@/features/query-filters/builders/qf-builder';
+import { QueryFiltersRecord } from '@/features/query-filters/definitions/query-filter.definitions';
 import {
   setAlertTags,
   setEventTypes,
   setQueryFilters,
-} from '@/features/query-filters/query-filters.store';
-import { QFBuilder } from '@/features/query-filters/utils/qf-builder';
+} from '@/features/query-filters/state/query-filters.slice';
 import { store } from '@/store/store-instance';
 
 import {

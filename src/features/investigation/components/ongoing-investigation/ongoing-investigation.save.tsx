@@ -22,12 +22,12 @@ import {
   ValueListCard,
 } from '@/common/design-system/molecules/value-list-card';
 import { useGetDashboardFieldsQuery } from '@/features/events/detection-events/use-cases/explorer/api/dashboard.api';
-import { toSerializedFilterFlags } from '@/features/query-filters/filter-flags.model';
-import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import {
-  selectGatedFilterFlags,
-  selectQueryFilters,
-} from '@/features/query-filters/query-filters.selectors';
+  toSerializedFilterFlags,
+  useGatedFilterFlags,
+  useGlobalQueryParams,
+  useQueryFilters,
+} from '@/features/query-filters';
 import { getFilterLabel } from '@/features/query-filters/utils/get-filter-label';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
@@ -59,8 +59,8 @@ export const inventoryHistoryOptions = [
 export const SaveInvestigation = () => {
   const dispatch = useAppDispatch();
   const { start_date, end_date } = useGlobalQueryParams(['dates']);
-  const flags = useAppSelector(selectGatedFilterFlags);
-  const queryFilters = useAppSelector(selectQueryFilters);
+  const flags = useGatedFilterFlags();
+  const queryFilters = useQueryFilters();
   const serializedFlags = flags ? toSerializedFilterFlags(flags) : undefined;
   const resultKeys = useAppSelector(selectInvestigationFindingsKeys);
   const investigationStages = useAppSelector(selectInvestigationStages);

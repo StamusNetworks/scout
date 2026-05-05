@@ -2,11 +2,11 @@ import { computeDates, useDates } from '@/features/dates';
 import { useTenant } from '@/features/tenancy';
 import { useAppSelector } from '@/store/store';
 
-import type { QueryFilterState } from '../query-filter.model';
-import { selectEventTypeFlagsParams } from '../query-filters.selectors';
-import { useBuildHostIdQfilter } from '../use-cases/build-host-id-qfilter/build-host-id-qfilter';
-import { useBuildEventsQfilter } from '../use-cases/build-qfilter/build-qfilter';
-import { useBuildSignatureFilter } from '../use-cases/build-signature-filter/build-signature-filter';
+import { useBuildEventsQfilter } from '../hooks/use-build-events-qfilter';
+import { useBuildHostIdQfilter } from '../hooks/use-build-host-id-qfilter';
+import { useBuildSignatureFilter } from '../hooks/use-build-signature-params';
+import type { QueryFilterState } from '../model/query-filter';
+import { selectEventTypeFlagsParams } from '../state/query-filters.selectors';
 
 type SubscribeKey =
   | 'dates'

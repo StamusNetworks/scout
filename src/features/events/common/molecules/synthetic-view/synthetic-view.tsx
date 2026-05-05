@@ -5,8 +5,8 @@ import { DataTable } from '@/common/design-system/molecules/data-table';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { TableCard } from '@/common/design-system/molecules/table-card';
 import { type Event } from '@/features/events/common/events.model';
-import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
-import { EventField } from '@/features/query-filters/use-cases/list-filters/event-field';
+import { EventField } from '@/features/query-filters/components/filters-sidebar/event-field';
+import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 import { EventFileInfo } from '../../model/event-types/fileinfo.schema';
 import { PayloadCard } from './payload-card';

@@ -1,9 +1,8 @@
 import { startsWithOneOf } from '@/common/lib/strings';
-import { FilterCategory } from '@/features/query-filters/constants/query-filter.config';
+import { useQueryFilters } from '@/features/query-filters';
+import { FilterCategory } from '@/features/query-filters/definitions/query-filter.config';
 import { useQueryFiltersDefinitions } from '@/features/query-filters/hooks/use-filters-definitions';
 import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
-import { selectQueryFilters } from '@/features/query-filters/query-filters.selectors';
-import { useAppSelector } from '@/store/store';
 
 const NETWORK_EVENTS_BASE_FILTER =
   '(flow_id:* AND NOT event_type:(alert OR stamus OR discovery))';
@@ -16,7 +15,7 @@ const NETWORK_EVENTS_BASE_FILTER =
  * QFBuilder and combines with the base network events filter.
  */
 export function useNetworkEventsQfilter(): string {
-  const filters = useAppSelector(selectQueryFilters);
+  const filters = useQueryFilters();
   const QFBuilder = useQFBuilder();
   const definitions = useQueryFiltersDefinitions();
 

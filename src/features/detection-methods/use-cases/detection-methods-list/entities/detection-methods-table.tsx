@@ -17,9 +17,8 @@ import {
   DETECTION_METHODS_EXPORT_COLUMNS,
 } from '@/features/detection-methods/detection-methods.table';
 import { DetectionMethodsExpandedRow } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.expanded-row';
+import { useQueryFilters } from '@/features/query-filters';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
-import { selectQueryFilters } from '@/features/query-filters/query-filters.selectors';
-import { useAppSelector } from '@/store/store';
 
 interface DetectionMethodsTableProps {
   page: number;
@@ -56,7 +55,7 @@ export function DetectionMethodsTable({
   });
 
   // SID filter from Redux query filters
-  const qfilters = useAppSelector(selectQueryFilters);
+  const qfilters = useQueryFilters();
   const sidFilter = qfilters
     .filter((f) => !f.is_suspended)
     .find((f) => f.key === 'alert.signature_id')?.value;

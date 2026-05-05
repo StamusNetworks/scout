@@ -1,8 +1,5 @@
-// Cross-feature import via legacy path; will move through query-filters'
-// public barrel once that context migrates.
-import { selectEventTypeFlagsParams } from '@/features/query-filters/query-filters.selectors';
+import { useEventTypeFlagsParams } from '@/features/query-filters';
 import { useTenant } from '@/features/tenancy';
-import { useAppSelector } from '@/store/store';
 
 import { useGetAutoDateRangeQuery } from '../api/dates.api';
 
@@ -14,7 +11,7 @@ import { useGetAutoDateRangeQuery } from '../api/dates.api';
  * `auto`.
  */
 export const useAutoRange = () => {
-  const params = useAppSelector(selectEventTypeFlagsParams);
+  const params = useEventTypeFlagsParams();
   const tenant = useTenant();
   return useGetAutoDateRangeQuery(
     { ...params, tenant },

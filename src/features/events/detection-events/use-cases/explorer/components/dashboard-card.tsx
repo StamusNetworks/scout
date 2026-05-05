@@ -62,7 +62,7 @@ import {
   selectIsActiveFindings,
   startInvestigation,
 } from '@/features/investigation/investigation.slice';
-import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { useDashboard } from '../api/hooks/useDashboard';

@@ -1,4 +1,4 @@
-import type { EventTypeFlags } from '@/features/query-filters/query-filters.store';
+import { type EventTypeFlags } from '@/features/query-filters';
 
 export function buildEventsFlowQfilter(
   qfilter?: string,

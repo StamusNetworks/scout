@@ -2,9 +2,9 @@ import { useNavigate } from '@tanstack/react-router';
 import { Binary, LayoutDashboard } from 'lucide-react';
 
 import { Button } from '@/common/design-system/atoms/ui/button';
+import { useCreateFilter } from '@/features/query-filters/hooks/use-create-filter';
 import { useEnableTags } from '@/features/query-filters/hooks/use-enable-tags';
 import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
-import { useCreateFilter } from '@/features/query-filters/use-cases/create-filter/create-filter';
 
 type Props = {
   /** The threat name used as the filter value when navigating to events/explorer. */

@@ -4,10 +4,7 @@ import { toast } from 'sonner';
 
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { selectDates } from '@/features/dates';
-import {
-  selectFilterFlags,
-  selectQueryFilters,
-} from '@/features/query-filters/query-filters.selectors';
+import { useFilterFlags, useQueryFilters } from '@/features/query-filters';
 import { useTenant } from '@/features/tenancy';
 import {
   buildShareableState,
@@ -18,8 +15,8 @@ import { useAppSelector } from '@/store/store';
 export const ShareButton = () => {
   const location = useLocation();
   const dates = useAppSelector(selectDates);
-  const queryFilters = useAppSelector(selectQueryFilters);
-  const flags = useAppSelector(selectFilterFlags);
+  const queryFilters = useQueryFilters();
+  const flags = useFilterFlags();
   const tenant = useTenant();
 
   const handleClick = () => {

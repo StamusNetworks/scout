@@ -24,7 +24,7 @@ import {
   DropdownMenuTrigger,
 } from '@/common/design-system/atoms/ui/dropdown-menu';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
-import { useReplaceFilters } from '@/features/query-filters/use-cases/replace-filters/replace-filters';
+import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
 import { useAppDispatch } from '@/store/store';
 
 import { useGetFilterActionsQuery } from '../../api/filter-actions.api';

@@ -12,8 +12,8 @@ import { saveFilterSetModalInitialState } from '@/features/filter-sets/use-cases
 import { investigationInitialState } from '@/features/investigation/investigation.slice';
 import { investigationsHistoryInitialState } from '@/features/investigation/investigations-history.slice';
 import { marketingStateInitialState } from '@/features/marketing/store/marketing.store';
-import { queryFiltersInitialState } from '@/features/query-filters/query-filters.store';
-import { addQfilterCommandInitialState } from '@/features/query-filters/use-cases/create-filter/add-qfilter-command.slice';
+import { addQfilterCommandInitialState } from '@/features/query-filters/state/add-qfilter-command.slice';
+import { queryFiltersInitialState } from '@/features/query-filters/state/query-filters.slice';
 import { settingsInitialState } from '@/features/settings/state/settings.slice';
 import { tenancyInitialState } from '@/features/tenancy/state/tenancy.slice';
 import { helpInitialState } from '@/features/ui/help/help.slice';

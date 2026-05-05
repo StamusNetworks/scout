@@ -5,8 +5,8 @@ import {
   type FilterFlags,
   type SerializedFilterFlags,
   toSerializedFilterFlags,
-} from '@/features/query-filters/filter-flags.model';
-import { type QueryFilterState } from '@/features/query-filters/query-filter.model';
+} from '@/features/query-filters/model/filter-flags';
+import { type QueryFilterState } from '@/features/query-filters/model/query-filter';
 
 const shareableFilterSchema = z.object({
   key: z.string(),

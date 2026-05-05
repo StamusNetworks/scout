@@ -35,15 +35,15 @@ import { InvestigationStage } from '@/features/investigation/components/investig
 import { inventoryHistoryOptions } from '@/features/investigation/components/ongoing-investigation/ongoing-investigation.save';
 import { InvestigationState } from '@/features/investigation/investigation.slice';
 import { InvestigationHistory } from '@/features/investigation/investigations-history.slice';
+import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
+import { useCreateFilter } from '@/features/query-filters/hooks/use-create-filter';
+import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
+import { useTagFiltersRepository } from '@/features/query-filters/hooks/use-tag-filters';
 import {
   type SerializedFilterFlags,
   toFilterFlags,
-} from '@/features/query-filters/filter-flags.model';
-import { useTagFiltersRepository } from '@/features/query-filters/hooks/use-tag-filters';
-import { QueryFilterState } from '@/features/query-filters/query-filter.model';
-import { useClearFilters } from '@/features/query-filters/use-cases/clear-filters/clear-filters';
-import { useCreateFilter } from '@/features/query-filters/use-cases/create-filter/create-filter';
-import { useReplaceFilters } from '@/features/query-filters/use-cases/replace-filters/replace-filters';
+} from '@/features/query-filters/model/filter-flags';
+import { QueryFilterState } from '@/features/query-filters/model/query-filter';
 import { getFilterLabel } from '@/features/query-filters/utils/get-filter-label';
 import { useAppSelector } from '@/store/store';
 

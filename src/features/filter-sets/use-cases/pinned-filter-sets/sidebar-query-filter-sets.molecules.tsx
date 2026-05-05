@@ -35,15 +35,14 @@ import {
   useGetHostsQuery,
   useGetHostsWithAlertsQuery,
 } from '@/features/host-insights/common/host-insights.api';
-import { useQueryFilterDefinition } from '@/features/query-filters/hooks/use-filters-definitions';
-import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
-import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 import {
-  PersistedFilter,
-  QueryFilterState,
-} from '@/features/query-filters/query-filter.model';
-import { selectGatedFilterFlags } from '@/features/query-filters/query-filters.selectors';
-import { useAppSelector } from '@/store/store';
+  type PersistedFilter,
+  type QueryFilterState,
+  useGatedFilterFlags,
+  useGlobalQueryParams,
+  useQFBuilder,
+  useQueryFilterDefinition,
+} from '@/features/query-filters';
 
 import { filterSetPageConfig } from '../../filter-sets.constants';
 import { useIsLoadedFilterSet } from '../../filter-sets.store';
@@ -479,7 +478,7 @@ function useFilterSetQueryParams(
 ) {
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const QFBuilder = useQFBuilder();
-  const appFlags = useAppSelector(selectGatedFilterFlags);
+  const appFlags = useGatedFilterFlags();
   const setTags = filterSet.tags;
   const filters = [
     ...(additionalFilters ?? []),

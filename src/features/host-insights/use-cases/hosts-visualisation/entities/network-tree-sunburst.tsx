@@ -1,4 +1,3 @@
-import { createSelector } from '@reduxjs/toolkit';
 import {
   LaptopMinimal,
   LucideIcon,
@@ -29,10 +28,11 @@ import { formatNumber } from '@/common/lib/numbers';
 import { esEscape } from '@/common/lib/strings';
 import { useGetNetworkTreeQuery } from '@/features/host-insights/common/host-insights.api';
 import { NetworkTreeFilterService } from '@/features/host-insights/common/network-tree/network-tree.filter-service';
-import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
-import { selectQueryFilters } from '@/features/query-filters/query-filters.selectors';
-import { useBuildHostIdQfilter } from '@/features/query-filters/use-cases/build-host-id-qfilter/build-host-id-qfilter';
-import { useAppSelector } from '@/store/store';
+import {
+  useBuildHostIdQfilter,
+  useGlobalQueryParams,
+  useQueryFilters,
+} from '@/features/query-filters';
 
 export type TreeDataPayload = {
   path: string;
@@ -110,7 +110,7 @@ export const NetworkTreeSunburst = ({
       options.find((o) => o.value === count)?.key || 'ips_count',
     );
   }, [data, count]);
-  const selectedNode = useAppSelector(selectNode);
+  const selectedNode = useSelectedNode();
   const handleNodeClick = useCallback(
     /* @ts-expect-error flemme */
     (_, node) =>
@@ -247,20 +247,23 @@ const ChildBadge = ({ count, Icon }: { count: number; Icon: LucideIcon }) => (
   </Badge>
 );
 
-const selectNode = createSelector([selectQueryFilters], (filters) => {
-  const filter = filters.find(
-    (f) => f.role === 'attack_surface' && f.is_suspended === false,
-  );
-  if (!filter) return 'root';
-  if (
-    filter.is_negated &&
-    filter.value === '*' &&
-    filter.is_wildcarded === true
-  ) {
-    return 'Undefined Network';
-  }
-  return filter.value.toString().replace('*.', '') || 'root';
-});
+const useSelectedNode = () => {
+  const filters = useQueryFilters();
+  return useMemo(() => {
+    const filter = filters.find(
+      (f) => f.role === 'attack_surface' && f.is_suspended === false,
+    );
+    if (!filter) return 'root';
+    if (
+      filter.is_negated &&
+      filter.value === '*' &&
+      filter.is_wildcarded === true
+    ) {
+      return 'Undefined Network';
+    }
+    return filter.value.toString().replace('*.', '') || 'root';
+  }, [filters]);
+};
 
 export function findNodeByPath(
   root: TreeData | undefined,

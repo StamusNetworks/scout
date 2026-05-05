@@ -18,8 +18,8 @@ import { saveFilterSetModalSlice } from '@/features/filter-sets/use-cases/save-f
 import { investigationSlice } from '@/features/investigation/investigation.slice';
 import { investigationsHistorySlice } from '@/features/investigation/investigations-history.slice';
 import { marketingStateSlice } from '@/features/marketing/store/marketing.store';
-import { queryFiltersSlice } from '@/features/query-filters/query-filters.store';
-import { addQfilterCommandSlice } from '@/features/query-filters/use-cases/create-filter/add-qfilter-command.slice';
+import { addQfilterCommandSlice } from '@/features/query-filters/state/add-qfilter-command.slice';
+import { queryFiltersSlice } from '@/features/query-filters/state/query-filters.slice';
 import { settingsSlice } from '@/features/settings/state/settings.slice';
 import { tenancySlice } from '@/features/tenancy/state/tenancy.slice';
 import { helpSlice } from '@/features/ui/help/help.slice';

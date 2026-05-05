@@ -329,6 +329,11 @@ them. Two relevant rules in this phase:
     across features (e.g. query-filter selectors reading
     `selectIsEnterprise` from settings) is a valid pattern that the
     hook-only public API cannot express.
+  - **Imperative dispatchers** (`**/use-cases/load-*/*.ts`,
+    `**/*.filter-service.ts`): use cases that run outside React and
+    dispatch via `store.dispatch()` (e.g. `loadFilterSet`,
+    `NetworkTreeFilterService`) need direct slice action access
+    because hooks aren't usable in imperative contexts.
   - **Route guards** (`src/routes/_enterprise.tsx`): TanStack Router's
     `beforeLoad` runs synchronously outside React, so it needs direct
     selector access rather than a hook.

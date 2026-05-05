@@ -12,7 +12,7 @@ import { HostnameTemplate } from '@/features/host-insights/use-cases/host-detail
 import { NetworkTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 import { RolesTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/roles';
 import { UsernameTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';
-import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 export const expanderColumn: CustomColumnDef<Host> = {
   id: 'expander',

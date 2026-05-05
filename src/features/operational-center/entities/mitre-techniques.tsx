@@ -26,10 +26,10 @@ import {
 } from '@/common/design-system/molecules/pagination';
 import { formatNumber } from '@/common/lib/numbers';
 import { useGetDashboardFieldsQuery } from '@/features/events/detection-events/use-cases/explorer/api/dashboard.api';
+import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { useEnableTags } from '@/features/query-filters/hooks/use-enable-tags';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
-import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
-import { useReplaceFilters } from '@/features/query-filters/use-cases/replace-filters/replace-filters';
+import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
 
 export const MitreTechniques = () => {
   const navigate = useNavigate();

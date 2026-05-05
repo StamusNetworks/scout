@@ -29,10 +29,10 @@ import {
   useGetEventsAggregationQuery,
   useGetProtocolsFromEventsQuery,
 } from '@/features/events/common/events.api';
+import { ContextMenuContent } from '@/features/query-filters/components/interactive-value/context-menu/context-menu.content';
+import { useCreateFilter } from '@/features/query-filters/hooks/use-create-filter';
 import { useESMapping } from '@/features/query-filters/hooks/use-es-mapping';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
-import { useCreateFilter } from '@/features/query-filters/use-cases/create-filter/create-filter';
-import { ContextMenuContent } from '@/features/query-filters/use-cases/interactive-value/context-menu/context-menu.content';
 
 import { useSignatureDetailsParams } from '../signatures-table/signatures-table.utils';
 

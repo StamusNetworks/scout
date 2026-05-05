@@ -16,7 +16,7 @@ import {
   FlowEventFileStatus,
   FlowEvents,
 } from '@/features/events/common/model/flowEvent.schema';
-import { EventTypeFlags } from '@/features/query-filters/query-filters.store';
+import { type EventTypeFlags } from '@/features/query-filters';
 import { API } from '@/store/api';
 
 export const EventsAPI = API.injectEndpoints({

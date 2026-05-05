@@ -5,7 +5,7 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import type { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { Hostname } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
 import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
-import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 import type { Event } from './events.model';
 

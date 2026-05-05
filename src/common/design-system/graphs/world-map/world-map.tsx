@@ -11,7 +11,7 @@ import {
 } from 'react-simple-maps';
 
 import { useEnableTags } from '@/features/query-filters/hooks/use-enable-tags';
-import { useReplaceFilters } from '@/features/query-filters/use-cases/replace-filters/replace-filters';
+import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
 import { useTheme } from '@/features/ui/theming/useTheme';
 
 import { Tooltip, TooltipContent } from '../../molecules/tooltip';

@@ -1,16 +1,17 @@
 import { useMemo } from 'react';
 
+import { useAppDispatch, useAppSelector } from '@/store/store';
+
 import {
   type AlertTagFlags,
   type EventTypeFlags,
   type FilterFlags,
-} from '@/features/query-filters/filter-flags.model';
+} from '../model/filter-flags';
 import {
   setAlertTags,
   setEventTypes,
   setNovelty,
-} from '@/features/query-filters/query-filters.store';
-import { useAppDispatch, useAppSelector } from '@/store/store';
+} from '../state/query-filters.slice';
 
 export type TagFiltersRepository = {
   getAll(): FilterFlags;

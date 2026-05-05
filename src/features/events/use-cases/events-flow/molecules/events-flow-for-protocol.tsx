@@ -24,10 +24,10 @@ import {
   transformAggToSankey,
 } from '@/common/design-system/graphs/sankey/sankey.utils';
 import { useGetEventsAggregationQuery } from '@/features/events/common/events.api';
+import { type EventTypeFlags } from '@/features/query-filters';
+import { ContextMenuContent } from '@/features/query-filters/components/interactive-value/context-menu/context-menu.content';
+import { useCreateFilter } from '@/features/query-filters/hooks/use-create-filter';
 import { useESMapping } from '@/features/query-filters/hooks/use-es-mapping';
-import type { EventTypeFlags } from '@/features/query-filters/query-filters.store';
-import { useCreateFilter } from '@/features/query-filters/use-cases/create-filter/create-filter';
-import { ContextMenuContent } from '@/features/query-filters/use-cases/interactive-value/context-menu/context-menu.content';
 
 import { buildEventsFlowQfilter } from '../build-events-flow-qfilter';
 import type { ProtoColumn } from '../events-flow.columns';

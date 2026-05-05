@@ -30,9 +30,9 @@ import {
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { Textarea } from '@/common/design-system/atoms/ui/textarea';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
-import { type FilterFlags } from '@/features/query-filters/filter-flags.model';
-import { QueryFilterState } from '@/features/query-filters/query-filter.model';
-import { FilterInput } from '@/features/query-filters/use-cases/update-filter/filter-input';
+import { FilterInput } from '@/features/query-filters/components/edit-qfilter-modal/filter-input';
+import { type FilterFlags } from '@/features/query-filters/model/filter-flags';
+import { QueryFilterState } from '@/features/query-filters/model/query-filter';
 
 import { useCreateFilterSetMutation } from '../../filter-sets.api';
 import { filterSetPageConfig } from '../../filter-sets.constants';
