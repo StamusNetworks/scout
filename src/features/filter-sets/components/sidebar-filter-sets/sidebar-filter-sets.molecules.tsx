@@ -45,9 +45,9 @@ import {
 } from '@/features/query-filters';
 
 import { filterSetPageConfig } from '../../definitions/filter-sets.constants';
+import { useIsLoadedFilterSet } from '../../hooks/use-is-loaded-filter-set';
 import { useLoadFilterSet } from '../../hooks/use-load-filter-set';
 import { type FilterSet } from '../../model/filter-set';
-import { useIsLoadedFilterSet } from '../../state/filter-sets.slice';
 
 export function FilterSetsHeader({
   children,
@@ -239,9 +239,25 @@ const PopoverQueryFilter = ({ filter }: { filter: PersistedFilter }) => {
   );
 };
 
-function FilterSetEventsBadge({ filterSet }: { filterSet: FilterSet }) {
+/**
+ * Returns an onClick handler that loads the filter set into live state
+ * and navigates to the given route. Used by every sidebar badge.
+ */
+function useFilterSetClickHandler(
+  filterSet: FilterSet,
+  target: { to: string; search?: Record<string, unknown> },
+) {
   const navigate = useNavigate();
   const loadFilterSet = useLoadFilterSet();
+  return () => {
+    loadFilterSet(filterSet);
+    // The router's typed `navigate` rejects untyped search params; the
+    // legacy routes here predate full typing so cast through `unknown`.
+    navigate(target as Parameters<typeof navigate>[0]);
+  };
+}
+
+function FilterSetEventsBadge({ filterSet }: { filterSet: FilterSet }) {
   const params = useFilterSetQueryParams(filterSet);
   const events = useGetEventsCountQuery({
     start_date: params.start_date,
@@ -252,23 +268,20 @@ function FilterSetEventsBadge({ filterSet }: { filterSet: FilterSet }) {
     discovery: params.discovery,
     alert: params.alert,
   });
-  const onClickHandler = () => {
-    loadFilterSet(filterSet);
-    navigate({ to: '/detection-events' });
-  };
+  const onClick = useFilterSetClickHandler(filterSet, {
+    to: '/detection-events',
+  });
   return (
     <FilterSetBadge
       Icon={Binary}
       count={events.data?.doc_count}
       loading={events.isFetching}
-      handleClick={onClickHandler}
+      handleClick={onClick}
     />
   );
 }
 
 function FilterSetTransactionsBadge({ filterSet }: { filterSet: FilterSet }) {
-  const navigate = useNavigate();
-  const loadFilterSet = useLoadFilterSet();
   const params = useFilterSetQueryParams(filterSet);
   const events = useGetEventsTailQuery({
     start_date: params.start_date,
@@ -277,23 +290,20 @@ function FilterSetTransactionsBadge({ filterSet }: { filterSet: FilterSet }) {
     qfilter: params.qfilter,
     pageSize: 1,
   });
-  const onClickHandler = () => {
-    loadFilterSet(filterSet);
-    navigate({ to: '/network-events' });
-  };
+  const onClick = useFilterSetClickHandler(filterSet, {
+    to: '/network-events',
+  });
   return (
     <FilterSetBadge
       Icon={ArrowUpDown}
       count={events.data?.count}
       loading={events.isFetching}
-      handleClick={onClickHandler}
+      handleClick={onClick}
     />
   );
 }
 
 function FilterSetHostsBadge({ filterSet }: { filterSet: FilterSet }) {
-  const navigate = useNavigate();
-  const loadFilterSet = useLoadFilterSet();
   const params = useFilterSetQueryParams(filterSet);
   const hosts = useGetHostsQuery({
     start_date: params.start_date,
@@ -302,23 +312,21 @@ function FilterSetHostsBadge({ filterSet }: { filterSet: FilterSet }) {
     host_id_qfilter: params.host_id_qfilter,
     pageSize: 1,
   });
-  const onClickHandler = () => {
-    loadFilterSet(filterSet);
-    navigate({ to: '/hosts' as string, search: { with_alerts: false } });
-  };
+  const onClick = useFilterSetClickHandler(filterSet, {
+    to: '/hosts' as string,
+    search: { with_alerts: false },
+  });
   return (
     <FilterSetBadge
       Icon={LaptopMinimal}
       count={hosts.data?.count}
       loading={hosts.isFetching}
-      handleClick={onClickHandler}
+      handleClick={onClick}
     />
   );
 }
 
 function FilterSetInternalHostsBadge({ filterSet }: { filterSet: FilterSet }) {
-  const navigate = useNavigate();
-  const loadFilterSet = useLoadFilterSet();
   const QFBuilder = useQFBuilder();
   const params = useFilterSetQueryParams(filterSet, [
     QFBuilder.createFilter('host_id.in_home_net', 'true'),
@@ -330,19 +338,16 @@ function FilterSetInternalHostsBadge({ filterSet }: { filterSet: FilterSet }) {
     host_id_qfilter: params.host_id_qfilter,
     pageSize: 1,
   });
-  const onClickHandler = () => {
-    loadFilterSet(filterSet);
-    navigate({
-      to: '/hosts' as string,
-      search: { with_alerts: false, in_home_net: 'true' },
-    });
-  };
+  const onClick = useFilterSetClickHandler(filterSet, {
+    to: '/hosts' as string,
+    search: { with_alerts: false, in_home_net: 'true' },
+  });
   return (
     <FilterSetBadge
       Icon={Building2}
       count={hosts.data?.count}
       loading={hosts.isFetching}
-      handleClick={onClickHandler}
+      handleClick={onClick}
     />
   );
 }
@@ -352,8 +357,6 @@ function FilterSetInternalHostsWithEventsBadge({
 }: {
   filterSet: FilterSet;
 }) {
-  const navigate = useNavigate();
-  const loadFilterSet = useLoadFilterSet();
   const QFBuilder = useQFBuilder();
   const params = useFilterSetQueryParams(filterSet, [
     QFBuilder.createFilter('host_id.in_home_net', 'true'),
@@ -363,16 +366,16 @@ function FilterSetInternalHostsWithEventsBadge({
     pageSize: 1,
     highlight: true,
   });
-  const onClickHandler = () => {
-    loadFilterSet(filterSet);
-    navigate({ to: '/hosts' as string, search: { in_home_net: 'true' } });
-  };
+  const onClick = useFilterSetClickHandler(filterSet, {
+    to: '/hosts' as string,
+    search: { in_home_net: 'true' },
+  });
   return (
     <FilterSetBadge
       Icon={Building2}
       count={hosts.data?.count}
       loading={hosts.isFetching}
-      handleClick={onClickHandler}
+      handleClick={onClick}
     />
   );
 }
@@ -382,24 +385,21 @@ function FilterSetHostsWithEventsBadge({
 }: {
   filterSet: FilterSet;
 }) {
-  const navigate = useNavigate();
-  const loadFilterSet = useLoadFilterSet();
   const params = useFilterSetQueryParams(filterSet);
   const hosts = useGetHostsWithAlertsQuery({
     ...params,
     pageSize: 1,
     highlight: true,
   });
-  const onClickHandler = () => {
-    loadFilterSet(filterSet);
-    navigate({ to: '/hosts' as string });
-  };
+  const onClick = useFilterSetClickHandler(filterSet, {
+    to: '/hosts' as string,
+  });
   return (
     <FilterSetBadge
       Icon={LaptopMinimal}
       count={hosts.data?.count}
       loading={hosts.isFetching}
-      handleClick={onClickHandler}
+      handleClick={onClick}
     />
   );
 }
@@ -409,8 +409,6 @@ function FilterSetDetectionMethodsBadge({
 }: {
   filterSet: FilterSet;
 }) {
-  const navigate = useNavigate();
-  const loadFilterSet = useLoadFilterSet();
   const params = useFilterSetQueryParams(filterSet);
   const detectionMethods = useGetSignaturesQuery({
     start_date: params.start_date,
@@ -423,16 +421,15 @@ function FilterSetDetectionMethodsBadge({
     pageSize: 1,
     hits_min: 1,
   });
-  const onClickHandler = () => {
-    loadFilterSet(filterSet);
-    navigate({ to: '/detection-methods' });
-  };
+  const onClick = useFilterSetClickHandler(filterSet, {
+    to: '/detection-methods',
+  });
   return (
     <FilterSetBadge
       Icon={PencilRuler}
       count={detectionMethods.data?.count}
       loading={detectionMethods.isFetching}
-      handleClick={onClickHandler}
+      handleClick={onClick}
     />
   );
 }

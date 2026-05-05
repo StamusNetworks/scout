@@ -30,12 +30,12 @@ import {
   useGetFilterSetsQuery,
 } from '../../api/filter-sets.api';
 import { filterSetPageConfig } from '../../definitions/filter-sets.constants';
+import { useIsLoadedFilterSet } from '../../hooks/use-is-loaded-filter-set';
 import { useLoadFilterSet } from '../../hooks/use-load-filter-set';
 import { type FilterSet } from '../../model/filter-set';
 import {
   addFilterSets,
   type QueryFiltersKey,
-  useIsLoadedFilterSet,
 } from '../../state/filter-sets.slice';
 
 const typeMap = {

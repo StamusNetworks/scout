@@ -1,17 +1,10 @@
-import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useCallback, useMemo } from 'react';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { AlertDialog } from '@/common/design-system/molecules/alert-dialog';
-import { SideBarHeader } from '@/features/query-filters/components/filters-sidebar/filters-sidebar';
-import { RootState } from '@/store/store';
-import { store } from '@/store/store-instance';
+import { SideBarHeader } from '@/features/query-filters';
 
-import {
-  clearFilterSets,
-  removeFilterSet,
-  selectFilterSets,
-} from '../../state/filter-sets.slice';
+import { useFilterSetsRepository } from '../../state/filter-sets.repository';
 import {
   FilterSetsClearButton,
   FilterSetsHeader,
@@ -20,26 +13,11 @@ import {
   FilterSetsTitle,
 } from './sidebar-filter-sets.molecules';
 
-const handleClearFavorites = () => {
-  store.dispatch(clearFilterSets('favorites'));
-};
-const handleClearPinned = () => {
-  store.dispatch(clearFilterSets('pinned'));
-};
-const handleDeleteFilterSetFromFavorites = (id: number) => {
-  store.dispatch(removeFilterSet({ key: 'favorites', id }));
-};
-const handleDeleteFilterSetFromPinned = (id: number) => {
-  store.dispatch(removeFilterSet({ key: 'pinned', id }));
-};
-
 export const SideBarQueryFilterSets = () => {
-  const favorites = useSelector((state: RootState) =>
-    selectFilterSets(state, 'favorites'),
-  );
-  const pinned = useSelector((state: RootState) =>
-    selectFilterSets(state, 'pinned'),
-  );
+  const repo = useFilterSetsRepository();
+  const favorites = repo.getFavorites();
+  const pinned = repo.getPinned();
+
   const sortedFavorites = useMemo(
     () => [...favorites].toSorted((a, b) => a.name.localeCompare(b.name)),
     [favorites],
@@ -48,6 +26,24 @@ export const SideBarQueryFilterSets = () => {
     () => [...pinned].toSorted((a, b) => a.name.localeCompare(b.name)),
     [pinned],
   );
+
+  const handleClearFavorites = useCallback(
+    () => repo.clearCollection('favorites'),
+    [repo],
+  );
+  const handleClearPinned = useCallback(
+    () => repo.clearCollection('pinned'),
+    [repo],
+  );
+  const handleDeleteFromFavorites = useCallback(
+    (id: number) => repo.removeFromCollection('favorites', id),
+    [repo],
+  );
+  const handleDeleteFromPinned = useCallback(
+    (id: number) => repo.removeFromCollection('pinned', id),
+    [repo],
+  );
+
   return (
     <Column>
       <SideBarHeader>Filter Sets</SideBarHeader>
@@ -65,7 +61,7 @@ export const SideBarQueryFilterSets = () => {
               <FilterSetsItem
                 key={filterSet.id}
                 filterSet={filterSet}
-                onDelete={handleDeleteFilterSetFromFavorites}
+                onDelete={handleDeleteFromFavorites}
               />
             ))}
           </FilterSetsItems>
@@ -80,7 +76,7 @@ export const SideBarQueryFilterSets = () => {
               <FilterSetsItem
                 key={filterSet.id}
                 filterSet={filterSet}
-                onDelete={handleDeleteFilterSetFromPinned}
+                onDelete={handleDeleteFromPinned}
               />
             ))}
           </FilterSetsItems>

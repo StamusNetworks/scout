@@ -125,15 +125,16 @@ export const SaveFilterSetForm = ({
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     createFilterSet({
-      ...data,
+      name: data.name,
+      page: data.page,
+      description: data.description,
       share: enterprise ? (data.share ? 'global' : 'private') : undefined,
+      tags: data.tags,
       filters: data.filters.map((item) => ({
-        id: item.key,
-        value: item.value.toString(),
-        fullString: !item.is_wildcarded,
-        negated: !!item.is_negated,
-        label: '',
-        query: item.key === 'es_filter' ? 'query' : undefined,
+        key: item.key,
+        value: item.value,
+        is_negated: item.is_negated,
+        is_wildcarded: item.is_wildcarded,
       })),
     })
       .unwrap()

@@ -29,11 +29,23 @@ export type FilterSet = {
   tags?: FilterSetTags;
 };
 
+/**
+ * What the create form / save dialog provides for each filter. The
+ * wire fields (`fullString`, `negated`, `id`) are derived in the ACL
+ * transform — the input layer speaks domain language.
+ */
+export type FilterSetFilterInput = {
+  key: string;
+  value: string | number;
+  is_negated?: boolean;
+  is_wildcarded?: boolean;
+};
+
 export type FilterSetCreateInput = {
   name: string;
   page: string;
   share?: 'static' | 'global' | 'private';
   description: string;
-  filters: PersistedFilter[];
+  filters: FilterSetFilterInput[];
   tags?: FilterSetTags;
 };

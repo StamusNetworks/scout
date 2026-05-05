@@ -21,7 +21,7 @@ export {
 } from './api/filter-sets.api';
 
 export { useFilterSetsRepository } from './state/filter-sets.repository';
-export { useIsLoadedFilterSet } from './state/filter-sets.slice';
+export { useIsLoadedFilterSet } from './hooks/use-is-loaded-filter-set';
 export { useLoadFilterSet } from './hooks/use-load-filter-set';
 export { useSaveFilterSetModal } from './hooks/use-save-filter-set-modal';
 

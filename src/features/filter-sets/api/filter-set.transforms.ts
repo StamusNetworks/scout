@@ -3,6 +3,7 @@ import type { PersistedFilter } from '@/features/query-filters/model/query-filte
 import type {
   FilterSet,
   FilterSetCreateInput,
+  FilterSetFilterInput,
   FilterSetTags,
 } from '../model/filter-set';
 import type {
@@ -55,6 +56,20 @@ export const toFilterSet = (dto: FilterSetDto): FilterSet => {
   };
 };
 
+/**
+ * Wire-shape PersistedFilter from a domain filter input. The ACL owns
+ * the field translation (`key→id`, `is_wildcarded→fullString` inverted,
+ * `is_negated→negated`); call sites speak domain only.
+ */
+const toPersistedFilter = (input: FilterSetFilterInput): PersistedFilter => ({
+  id: input.key,
+  label: '',
+  value: input.value.toString(),
+  fullString: !input.is_wildcarded,
+  negated: !!input.is_negated,
+  query: input.key === 'es_filter' ? 'query' : undefined,
+});
+
 export const toCreatePayloadDto = (
   input: FilterSetCreateInput,
 ): FilterSetCreatePayloadDto => ({
@@ -62,6 +77,6 @@ export const toCreatePayloadDto = (
   page: input.page,
   share: input.share,
   description: input.description,
-  filters: input.filters,
+  filters: input.filters.map(toPersistedFilter),
   tags: input.tags ? domainTagsToWire(input.tags) : undefined,
 });

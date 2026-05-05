@@ -7,7 +7,7 @@ import {
   setNovelty,
   setQueryFilters,
 } from '@/features/query-filters/state/query-filters.slice';
-import { RootState, useAppSelector } from '@/store/store';
+import { RootState } from '@/store/store';
 
 import { type FilterSet } from '../model/filter-set';
 
@@ -86,10 +86,3 @@ export const selectFilterSets = (state: RootState, key: QueryFiltersKey) =>
 
 export const selectLoadedFilterSetId = (state: RootState) =>
   state.filters.queryFiltersSets.loaded;
-
-export const useIsLoadedFilterSet = (id: number) => {
-  const loadedFilterSetId = useAppSelector((state: RootState) =>
-    selectLoadedFilterSetId(state),
-  );
-  return loadedFilterSetId === id;
-};
