@@ -10,10 +10,10 @@ import {
   EmptyMedia,
 } from '@/common/design-system/atoms/ui/empty';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
+import { buildEventsFlowQfilter } from '@/features/events/builders/build-events-flow-qfilter';
 import { useGetProtocolsFromEventsQuery } from '@/features/events/common/events.api';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { buildEventsFlowQfilter } from '../build-events-flow-qfilter';
 import { EventsFlowForProtocol } from '../molecules/events-flow-for-protocol';
 
 export function EventsFlowView() {

@@ -1,6 +1,6 @@
 import { esEscape } from '@/common/lib/strings';
 
-export const getSightingQfilter = (
+export const buildSightingQfilter = (
   key: string | undefined,
   value: string | undefined,
   protocol: string | undefined,

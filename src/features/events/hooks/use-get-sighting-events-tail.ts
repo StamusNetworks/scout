@@ -1,7 +1,7 @@
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 import { useGetEventsTailQuery } from '../api/events.api';
-import { getSightingQfilter } from '../sightings/common/utils/get-sighting-qfilter';
+import { buildSightingQfilter } from '../builders/build-sighting-qfilter';
 
 interface useGetSightingEventsTailProps {
   key: string | undefined;
@@ -14,7 +14,7 @@ export const useGetSightingEventsTail = ({
   protocol,
 }: useGetSightingEventsTailProps) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
-  const qfilter = getSightingQfilter(key, value, protocol);
+  const qfilter = buildSightingQfilter(key, value, protocol);
   return useGetEventsTailQuery(
     {
       ...params,

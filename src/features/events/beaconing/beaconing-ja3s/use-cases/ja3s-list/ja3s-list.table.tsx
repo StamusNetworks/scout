@@ -5,8 +5,8 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { SNI } from '@/common/design-system/molecules/sni';
 import { getDuration } from '@/common/lib/duration';
-import { formatBeaconMetric } from '@/features/events/beaconing/common/utils/format-beacon-metric';
 import { BeaconingEvent } from '@/features/events/model/beaconing-event';
+import { formatBeaconMetric } from '@/features/events/utils/format-beacon-metric';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 export const tlsJ3ASTableColumns: CustomColumnDef<BeaconingEvent>[] = [

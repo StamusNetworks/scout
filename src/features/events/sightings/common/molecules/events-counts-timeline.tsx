@@ -5,8 +5,8 @@ import { useGetEventsTimelineQuery } from '@/features/events/common/events.api';
 import { CountsTimeline } from '@/features/events/model/counts-timeline';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
+import { buildSightingQfilter } from '../../../builders/build-sighting-qfilter';
 import { useGetSightingById } from '../../../hooks/use-get-sighting-by-id';
-import { getSightingQfilter } from '../utils/get-sighting-qfilter';
 
 interface SightingEventsCountsTimelineProps {
   sightingId: string;
@@ -23,7 +23,7 @@ export const SightingEventsCountsTimeline = ({
   }, [params.end_date]);
   const interval = Math.floor((end_date - start_date) / 24 / 1000);
   const { data: sighting } = useGetSightingById(sightingId);
-  const qfilter = getSightingQfilter(
+  const qfilter = buildSightingQfilter(
     sighting?.discovery?.key,
     sighting?.discovery?.value,
     sighting?.app_proto,

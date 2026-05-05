@@ -19,8 +19,8 @@ import { DateTime } from '@/common/design-system/entities/date-time';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { BeaconingMetadata } from '@/features/events/beaconing/common/molecules/beaconing-metadata';
 import { ReportSummary } from '@/features/events/beaconing/common/molecules/report-summary';
-import { formatBeaconMetric } from '@/features/events/beaconing/common/utils/format-beacon-metric';
 import { useBeaconReport } from '@/features/events/hooks/use-beacon-report';
+import { formatBeaconMetric } from '@/features/events/utils/format-beacon-metric';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 import { BeaconingIPsTable } from '../../../molecules/beaconing-ips-table';

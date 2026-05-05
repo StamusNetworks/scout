@@ -23,13 +23,13 @@ import {
   getMaxNodesPerColumn,
   transformAggToSankey,
 } from '@/common/design-system/graphs/sankey/sankey.utils';
+import { buildEventsFlowQfilter } from '@/features/events/builders/build-events-flow-qfilter';
 import { useGetEventsAggregationQuery } from '@/features/events/common/events.api';
 import { type EventTypeFlags } from '@/features/query-filters';
 import { ContextMenuContent } from '@/features/query-filters/components/interactive-value/context-menu/context-menu.content';
 import { useCreateFilter } from '@/features/query-filters/hooks/use-create-filter';
 import { useESMapping } from '@/features/query-filters/hooks/use-es-mapping';
 
-import { buildEventsFlowQfilter } from '../build-events-flow-qfilter';
 import type { ProtoColumn } from '../events-flow.columns';
 import protoColumns from '../events-flow.columns';
 
