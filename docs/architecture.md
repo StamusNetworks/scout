@@ -383,8 +383,13 @@ ACL), events (with beaconing folded in as a sub-component of the
 events context), threats (full ACL with `kind`-discriminated
 compromise/policy-violation domain), and filter-actions (full ACL
 with `kind`-discriminated domain, single consolidated modal slice
-under `state/`, and a route orchestrator). Remaining: detection-methods,
-host-insights, and the peripheral contexts (deeplinks, hunting-trail,
+under `state/`, and a route orchestrator), and rules (formerly
+`detection-methods/`; folder renamed to match domain language while
+the marketing label "Detection Methods" stays on the route and UI
+strings — the wire `signatures` and `rulesets` collapse into Rule,
+RuleVersion, RuleSet, and RuleStatus, with the Suricata Analysis dump
+preserved as a documented wire-passthrough leaf). Remaining:
+host-insights and the peripheral contexts (deeplinks, hunting-trail,
 investigation, marketing, operational-center, ui). As each context
 migrates, its API surface adopts the domain-shaped `Pagination`
 (`{ page, pageSize, ordering }`) and `DateRange` (`{ from, to }`);
