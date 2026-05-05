@@ -2,8 +2,20 @@ import { z } from 'zod';
 
 import { killChainPhaseSchema } from '@/features/threats';
 
-export const filterActionTargetType = z.enum(['ip', 'username', 'mail']);
-export const filterDefSchema = z.object({
+/**
+ * Wire-shape (snake_case, server vocabulary). Internal to the
+ * filter-actions bounded context — never imported outside `api/`.
+ * Components and hooks consume the domain `FilterAction` from
+ * `model/filter-action.ts` instead.
+ */
+
+export const filterActionTargetTypeDtoSchema = z.enum([
+  'ip',
+  'username',
+  'mail',
+]);
+
+export const filterDefDtoSchema = z.object({
   key: z.string(),
   value: z.string().or(z.number()),
   operator: z.string(),
@@ -11,7 +23,9 @@ export const filterDefSchema = z.object({
   msg: z.string().optional(),
 });
 
-export const specificFields = z.discriminatedUnion('action', [
+export type FilterDefDto = z.infer<typeof filterDefDtoSchema>;
+
+const specificFieldsDtoSchema = z.discriminatedUnion('action', [
   z.object({
     action: z.literal('threshold'),
     options: z.object({
@@ -45,7 +59,7 @@ export const specificFields = z.discriminatedUnion('action', [
       target_key: z.string(),
       track_offender: z.boolean(),
       track_target: z.boolean(),
-      target_type: filterActionTargetType,
+      target_type: filterActionTargetTypeDtoSchema,
       stamus_event: z.boolean(),
       checkWebhooks: z.boolean(),
       all_tenants: z.boolean().optional(),
@@ -61,11 +75,11 @@ export const specificFields = z.discriminatedUnion('action', [
   }),
 ]);
 
-export const filterActionSchema = z
+export const filterActionDtoSchema = z
   .object({
     pk: z.number(),
     event_type: z.string(),
-    filter_defs: z.array(filterDefSchema),
+    filter_defs: z.array(filterDefDtoSchema),
     rulesets: z.array(z.number()),
     index: z.number(),
     description: z.string(),
@@ -74,43 +88,30 @@ export const filterActionSchema = z
     comment: z.string(),
     username: z.string(),
     creation_date: z.string(),
-    options: z.object({}),
   })
-  .and(specificFields);
+  .and(specificFieldsDtoSchema);
 
-export type FilterAction = z.infer<typeof filterActionSchema>;
-export type SuppressFilterAction = FilterAction & { action: 'suppress' };
-export type TagFilterAction = FilterAction & { action: 'tag' | 'tagkeep' };
-export type ThresholdFilterAction = FilterAction & { action: 'threshold' };
-export type ThreatFilterAction = FilterAction & { action: 'threat' };
-export type SendMailFilterAction = FilterAction & { action: 'send_mail' };
+export type FilterActionDto = z.infer<typeof filterActionDtoSchema>;
+export type FilterActionActionDto = FilterActionDto['action'];
 
-export const filterActionStatsSchema = z.object({
+export const filterActionStatsDtoSchema = z.object({
   key: z.string(),
   doc_count: z.number(),
-  drop: z.object({
-    value: z.number(),
-  }),
-  seen: z.object({
-    value: z.number(),
-  }),
+  drop: z.object({ value: z.number() }),
+  seen: z.object({ value: z.number() }),
 });
 
-export const baseFilterActionPayloadSchema = z.object({
-  filter_defs: z.array(
-    z.object({
-      key: z.string(),
-      value: z.string().or(z.number()),
-      operator: z.string(),
-      full_string: z.boolean(),
-      msg: z.string().optional(),
-    }),
-  ),
+export type FilterActionStatsDto = z.infer<typeof filterActionStatsDtoSchema>;
+
+const baseFilterActionPayloadDtoSchema = z.object({
+  filter_defs: z.array(filterDefDtoSchema),
   rulesets: z.array(z.number()),
   comment: z.string(),
 });
 
-export const filterActionPayloadSchema =
-  baseFilterActionPayloadSchema.and(specificFields);
+export const filterActionPayloadDtoSchema =
+  baseFilterActionPayloadDtoSchema.and(specificFieldsDtoSchema);
 
-export type FilterActionPayload = z.infer<typeof filterActionPayloadSchema>;
+export type FilterActionPayloadDto = z.infer<
+  typeof filterActionPayloadDtoSchema
+>;

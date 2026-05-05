@@ -60,35 +60,35 @@ import {
 } from '../../../api/filter-actions.api';
 import {
   FilterActionPayload,
-  filterActionTargetType,
   ThreatFilterAction,
-} from '../../../model/filter-action.schema';
+} from '../../../model/filter-action';
 import { baseFilterActionSchema } from '../filter-actions.baseSchema';
-import { toFilterDefDto } from '../to-dto';
 import { useInitialValues } from '../use-initial-values';
+
+const filterActionTargetTypeSchema = z.enum(['ip', 'username', 'mail']);
 
 const formSchema = baseFilterActionSchema.extend({
   type: z.enum(['doc', 'dopv']),
   threat: z.string().refine((value) => value.length > 0, {
     message: 'You have to select a value',
   }),
-  kill_chain: killChainPhaseSchema,
-  track_options: z
+  killChain: killChainPhaseSchema,
+  trackOptions: z
     .object({
-      track_offender: z.boolean(),
-      track_target: z.boolean(),
+      trackOffender: z.boolean(),
+      trackTarget: z.boolean(),
     })
-    .refine((value) => value.track_offender || value.track_target, {
+    .refine((value) => value.trackOffender || value.trackTarget, {
       message: 'You have to select at least one option',
     }),
-  target_type: filterActionTargetType,
-  target_key: z.string().refine((value) => value.length > 0, {
+  targetType: filterActionTargetTypeSchema,
+  targetKey: z.string().refine((value) => value.length > 0, {
     message: 'You have to select a value',
   }),
-  source_key: z.string().refine((value) => value.length > 0, {
+  sourceKey: z.string().refine((value) => value.length > 0, {
     message: 'You have to select a value',
   }),
-  stamus_event: z.boolean(),
+  stamusEvent: z.boolean(),
   checkWebhooks: z.boolean(),
 });
 
@@ -102,17 +102,17 @@ const useDeclarationInitialValues = (
     () => ({
       ...initialValues,
       type:
-        filterAction?.options.kill_chain === 'pre_condition' ? 'dopv' : 'doc',
+        filterAction?.options.killChain === 'pre_condition' ? 'dopv' : 'doc',
       threat: filterAction?.options.threat ?? '',
-      kill_chain: filterAction?.options.kill_chain ?? 'reconnaissance',
-      track_options: {
-        track_offender: filterAction?.options.track_offender ?? false,
-        track_target: filterAction?.options.track_target ?? true,
+      killChain: filterAction?.options.killChain ?? 'reconnaissance',
+      trackOptions: {
+        trackOffender: filterAction?.options.trackOffender ?? false,
+        trackTarget: filterAction?.options.trackTarget ?? true,
       },
-      target_type: filterAction?.options.target_type ?? 'ip',
-      target_key: filterAction?.options.target_key ?? '',
-      source_key: filterAction?.options.source_key ?? '',
-      stamus_event: filterAction?.options.stamus_event ?? false,
+      targetType: filterAction?.options.targetType ?? 'ip',
+      targetKey: filterAction?.options.targetKey ?? '',
+      sourceKey: filterAction?.options.sourceKey ?? '',
+      stamusEvent: filterAction?.options.stamusEvent ?? false,
       checkWebhooks: filterAction?.options.checkWebhooks ?? false,
     }),
     [filterAction, initialValues],
@@ -150,13 +150,13 @@ export const CreateEditDeclarationFilterActionForm = ({
 
   const isDoc = form.watch('type') === 'doc';
   const kind = isDoc ? 'compromise' : 'policyViolation';
-  const withHistorical = form.watch('stamus_event');
+  const withHistorical = form.watch('stamusEvent');
   useUpdateEffect(() => {
     if (isDoc) {
-      form.setValue('kill_chain', 'reconnaissance');
+      form.setValue('killChain', 'reconnaissance');
       form.setValue('threat', '');
     } else {
-      form.setValue('kill_chain', 'pre_condition');
+      form.setValue('killChain', 'pre_condition');
       form.setValue('threat', '');
     }
     setPendingThreat(null);
@@ -180,29 +180,36 @@ export const CreateEditDeclarationFilterActionForm = ({
   const [createThreatFilterAction] = useCreateFilterActionMutation();
   const [updateFilterAction] = useUpdateFilterActionMutation();
   const handleSubmit = (data: z.infer<typeof formSchema>): void => {
-    const response: FilterActionPayload & { params: Tenant & Dates & QFilter } =
+    const payload: FilterActionPayload & { params: Tenant & Dates & QFilter } =
       {
         params,
-        action: 'threat',
+        kind: 'threat',
         comment: data.comment || '',
-        filter_defs: data.filters.filter((f) => f.enabled).map(toFilterDefDto),
+        filterDefs: data.filters
+          .filter((f) => f.enabled)
+          .map((f) => ({
+            key: f.key,
+            value: f.value,
+            isNegated: f.isNegated,
+            isWildcarded: f.isWildcarded,
+          })),
         rulesets: data.rulesets,
         options: {
           threat: data.threat,
-          kill_chain: data.kill_chain,
-          source_key: data.source_key,
-          target_key: data.target_key,
-          track_offender: data.track_options.track_offender,
-          track_target: data.track_options.track_target,
-          target_type: data.target_type,
-          stamus_event: data.stamus_event,
-          checkWebhooks: data.stamus_event && data.checkWebhooks,
+          killChain: data.killChain,
+          sourceKey: data.sourceKey,
+          targetKey: data.targetKey,
+          trackOffender: data.trackOptions.trackOffender,
+          trackTarget: data.trackOptions.trackTarget,
+          targetType: data.targetType,
+          stamusEvent: data.stamusEvent,
+          checkWebhooks: data.stamusEvent && data.checkWebhooks,
         },
       };
     const submitFn =
       edit && filterAction
-        ? () => updateFilterAction({ ...response, pk: filterAction.pk })
-        : () => createThreatFilterAction(response);
+        ? () => updateFilterAction({ id: filterAction.id, ...payload })
+        : () => createThreatFilterAction(payload);
     submitFn()
       .unwrap()
       .then(() => {
@@ -238,9 +245,9 @@ export const CreateEditDeclarationFilterActionForm = ({
     }
   }, [form, pendingThreat, threatOptions]);
 
-  const victimType = form.watch('target_type');
+  const victimType = form.watch('targetType');
   useUpdateEffect(() => {
-    form.setValue('target_key', '');
+    form.setValue('targetKey', '');
   }, [form, victimType]);
 
   return (
@@ -409,7 +416,7 @@ export const CreateEditDeclarationFilterActionForm = ({
           />
           <FormField
             control={form.control}
-            name="kill_chain"
+            name="killChain"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Kill chain phase</FormLabel>
@@ -444,7 +451,7 @@ export const CreateEditDeclarationFilterActionForm = ({
         </Grid>
         <FormField
           control={form.control}
-          name="track_options"
+          name="trackOptions"
           render={() => (
             <FormItem>
               <Row className="pt-2">
@@ -452,7 +459,7 @@ export const CreateEditDeclarationFilterActionForm = ({
                 <Row className="ml-4 gap-4">
                   <FormField
                     control={form.control}
-                    name="track_options.track_target"
+                    name="trackOptions.trackTarget"
                     render={({ field }) => (
                       <FormItem className="flex items-center space-y-0 space-x-2">
                         <FormControl>
@@ -469,7 +476,7 @@ export const CreateEditDeclarationFilterActionForm = ({
                   />
                   <FormField
                     control={form.control}
-                    name="track_options.track_offender"
+                    name="trackOptions.trackOffender"
                     render={({ field }) => (
                       <FormItem className="flex items-center space-y-0 space-x-2">
                         <FormControl>
@@ -493,7 +500,7 @@ export const CreateEditDeclarationFilterActionForm = ({
         <Grid className="grid-cols-2 gap-4">
           <FormField
             control={form.control}
-            name="target_type"
+            name="targetType"
             render={({ field }) => (
               <DefaultField label="Victim type">
                 <Select
@@ -514,7 +521,7 @@ export const CreateEditDeclarationFilterActionForm = ({
           />
           <FormField
             control={form.control}
-            name="target_key"
+            name="targetKey"
             render={({ field }) => (
               <DefaultField label="Victim key">
                 <Select
@@ -556,7 +563,7 @@ export const CreateEditDeclarationFilterActionForm = ({
           </DefaultField>
           <FormField
             control={form.control}
-            name="source_key"
+            name="sourceKey"
             render={({ field }) => (
               <DefaultField label="Offender key">
                 <Select
@@ -635,7 +642,7 @@ export const CreateEditDeclarationFilterActionForm = ({
           <FormLabel>Historical data</FormLabel>
           <FormField
             control={form.control}
-            name="stamus_event"
+            name="stamusEvent"
             render={({ field }) => (
               <FormItem className="flex flex-row items-center space-y-0 space-x-2">
                 <FormControl>

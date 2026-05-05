@@ -10,11 +10,10 @@ type KeyToDisplay = {
 
 const keysToDisplay: KeyToDisplay[] = [
   { name: 'Threat Name', key: 'threat' },
-  { name: 'Kill Chain', key: 'kill_chain' },
-  { name: 'Offender Type', key: 'offender_type' },
-  { name: 'Offender Key', key: 'source_key' },
-  { name: 'Victim Type', key: 'target_type' },
-  { name: 'Victim Key', key: 'target_key' },
+  { name: 'Kill Chain', key: 'killChain' },
+  { name: 'Offender Key', key: 'sourceKey' },
+  { name: 'Victim Type', key: 'targetType' },
+  { name: 'Victim Key', key: 'targetKey' },
   { name: 'Count', key: 'count' },
   { name: 'Seconds', key: 'seconds' },
   {
@@ -24,9 +23,9 @@ const keysToDisplay: KeyToDisplay[] = [
   },
 ];
 
-const formatOptions = (options: FilterAction['options']) =>
-  keysToDisplay.reduce((acc, { name, key, formatedValue }) => {
-    const optionValue = options[key as keyof FilterAction['options']];
+const formatOptions = (options: Record<string, unknown>) =>
+  keysToDisplay.reduce<KeyToDisplay[]>((acc, { name, key, formatedValue }) => {
+    const optionValue = options[key];
     if (optionValue !== undefined) {
       const displayValue =
         formatedValue &&
@@ -37,21 +36,18 @@ const formatOptions = (options: FilterAction['options']) =>
       return [...acc, { name, key, value: displayValue }];
     }
     return acc;
-  }, [] as KeyToDisplay[]);
+  }, []);
 
-const formatTenantArray = (filterAction: FilterAction) => {
-  if (filterAction.action !== 'threat') return '';
-  const options = filterAction.options as Extract<
-    FilterAction,
-    { action: 'threat' }
-  >['options'];
-  if (options.all_tenants) {
-    return ['All tenants', options.no_tenant && 'No tenant']
+const formatTenants = (
+  options: Extract<FilterAction, { kind: 'threat' }>['options'],
+) => {
+  if (options.allTenants) {
+    return ['All tenants', options.noTenant && 'No tenant']
       .filter(Boolean)
       .join(', ');
   }
-  if (options.tenants_str) {
-    return options.tenants_str.join(', ');
+  if (options.tenantsStr) {
+    return options.tenantsStr.join(', ');
   }
   return '';
 };
@@ -71,41 +67,41 @@ export const FilterActionParameters = ({
   const { multitenancy } = useTenancy();
 
   const threatOptions =
-    filterAction.action === 'threat'
-      ? (filterAction.options as Extract<
-          FilterAction,
-          { action: 'threat' }
-        >['options'])
-      : null;
+    filterAction.kind === 'threat' ? filterAction.options : null;
+
+  const optionsRecord =
+    'options' in filterAction
+      ? (filterAction.options as Record<string, unknown>)
+      : {};
 
   let formattedOptions: KeyToDisplay[] = [
     {
       name: 'Threat Type',
-      key: 'threat_type',
-      value: threatOptions?.kill_chain
-        ? threatOptions.kill_chain === 'pre_condition'
+      key: 'threatType',
+      value: threatOptions?.killChain
+        ? threatOptions.killChain === 'pre_condition'
           ? 'Declaration of policy violation'
           : 'Declaration of Compromise'
         : '',
     },
-    ...formatOptions(filterAction.options),
+    ...formatOptions(optionsRecord),
     {
       name: 'Tracking',
       key: 'tracking',
       value: trackValue(
-        threatOptions?.track_offender ?? false,
-        threatOptions?.track_target ?? false,
+        threatOptions?.trackOffender ?? false,
+        threatOptions?.trackTarget ?? false,
       ),
     },
   ];
 
-  if (multitenancy) {
+  if (multitenancy && threatOptions) {
     formattedOptions = [
       ...formattedOptions,
       {
         name: 'Tenants',
         key: 'tenants',
-        value: formatTenantArray(filterAction),
+        value: formatTenants(threatOptions),
       },
     ];
   }

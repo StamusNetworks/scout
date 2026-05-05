@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from '@/store/store';
 
-import { ThresholdFilterAction } from '../../../model/filter-action.schema';
+import { ThresholdFilterAction } from '../../../model/filter-action';
 
 type ThresholdModalState = {
   isOpen: boolean;

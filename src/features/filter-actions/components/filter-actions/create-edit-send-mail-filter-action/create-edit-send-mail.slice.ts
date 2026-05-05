@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from '@/store/store';
 
-import { SendMailFilterAction } from '../../../model/filter-action.schema';
+import { SendMailFilterAction } from '../../../model/filter-action';
 
 type SendMailModalState = {
   isOpen: boolean;

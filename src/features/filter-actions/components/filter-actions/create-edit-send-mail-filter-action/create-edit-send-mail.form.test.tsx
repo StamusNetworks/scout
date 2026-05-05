@@ -11,7 +11,7 @@ import { describe, expect, test } from 'vitest';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
 
-import { SendMailFilterAction } from '../../../model/filter-action.schema';
+import { SendMailFilterAction } from '../../../model/filter-action';
 import {
   CreateEditSendMailFilterActionForm,
   DEFAULT_MAX_MAILS_PER_DAY,
@@ -85,7 +85,28 @@ describe('CreateEditSendMailFilterActionForm', () => {
     server.use(
       http.post(baseUrl + '/rules/processing-filter/', async ({ request }) => {
         capturedBody = await request.json();
-        return HttpResponse.json({ pk: 99 });
+        return HttpResponse.json({
+          pk: 99,
+          action: 'send_mail',
+          event_type: 'alert',
+          filter_defs: [
+            {
+              key: 'src_ip',
+              value: '10.0.0.1',
+              operator: 'equal',
+              full_string: true,
+            },
+          ],
+          rulesets: [42],
+          index: 0,
+          description: '',
+          enabled: true,
+          imported: false,
+          comment: '',
+          username: 'tester',
+          creation_date: '2026-04-29T00:00:00Z',
+          options: { max_mails_per_day: DEFAULT_MAX_MAILS_PER_DAY },
+        });
       }),
     );
 
@@ -121,11 +142,10 @@ describe('CreateEditSendMailFilterActionForm', () => {
     await renderForm();
 
     const submit = await screen.findByRole('button', { name: /Submit/i });
-    // No ruleset selected: schema refuses to validate, button stays disabled.
     expect(submit).toBeDisabled();
   });
 
-  test('edit mode PATCHes the existing filter action with its pk', async () => {
+  test('edit mode PATCHes the existing filter action with its id', async () => {
     let capturedBody: unknown;
     let capturedUrl = '';
     let capturedMethod = '';
@@ -136,21 +156,42 @@ describe('CreateEditSendMailFilterActionForm', () => {
           capturedBody = await request.json();
           capturedUrl = String(params.pk);
           capturedMethod = request.method;
-          return HttpResponse.json({ pk: Number(params.pk) });
+          return HttpResponse.json({
+            pk: Number(params.pk),
+            action: 'send_mail',
+            event_type: 'alert',
+            filter_defs: [
+              {
+                key: 'src_ip',
+                value: '10.0.0.1',
+                operator: 'equal',
+                full_string: true,
+              },
+            ],
+            rulesets: [42],
+            index: 0,
+            description: '',
+            enabled: true,
+            imported: false,
+            comment: '',
+            username: 'tester',
+            creation_date: '2026-04-29T00:00:00Z',
+            options: { max_mails_per_day: 9 },
+          });
         },
       ),
     );
 
     const existing: SendMailFilterAction = {
-      pk: 77,
-      action: 'send_mail',
-      event_type: 'alert',
-      filter_defs: [
+      id: 77,
+      kind: 'sendMail',
+      eventType: 'alert',
+      filterDefs: [
         {
           key: 'src_ip',
           value: '10.0.0.1',
-          operator: 'equal',
-          full_string: true,
+          isNegated: false,
+          isWildcarded: false,
         },
       ],
       rulesets: [42],
@@ -160,9 +201,8 @@ describe('CreateEditSendMailFilterActionForm', () => {
       imported: false,
       comment: 'existing comment',
       username: 'tester',
-      creation_date: '2026-04-29T00:00:00Z',
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      options: { max_mails_per_day: 9 } as any,
+      createdAt: '2026-04-29T00:00:00Z',
+      options: { maxMailsPerDay: 9 },
     };
 
     setupRulesetsAndTestActions();

@@ -28,7 +28,10 @@ import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-fi
 import { useAppDispatch } from '@/store/store';
 
 import { useGetFilterActionsQuery } from '../../api/filter-actions.api';
-import { FilterAction } from '../../model/filter-action.schema';
+import {
+  FILTER_ACTION_KIND_LABEL,
+  FilterAction,
+} from '../../model/filter-action';
 import { openDeclarationModal } from '../filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
 import { openSuppressModal } from '../filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
 import { openTagModal } from '../filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
@@ -57,39 +60,21 @@ export const FilterActionRowActions = ({
   const lastIndex = data.count;
 
   const handleEditFilterAction = () => {
-    switch (filterAction.action) {
+    switch (filterAction.kind) {
       case 'threshold':
-        dispatch(
-          openThresholdModal({ mode: 'edit', filterAction: filterAction }),
-        );
+        dispatch(openThresholdModal({ mode: 'edit', filterAction }));
         break;
       case 'threat':
-        dispatch(
-          openDeclarationModal({ mode: 'edit', filterAction: filterAction }),
-        );
+        dispatch(openDeclarationModal({ mode: 'edit', filterAction }));
         break;
       case 'suppress':
-        dispatch(
-          openSuppressModal({ mode: 'edit', filterAction: filterAction }),
-        );
+        dispatch(openSuppressModal({ mode: 'edit', filterAction }));
         break;
       case 'tag':
-        dispatch(
-          openTagModal({
-            mode: 'edit',
-            keep: false,
-            filterAction: filterAction,
-          }),
-        );
+        dispatch(openTagModal({ mode: 'edit', keep: false, filterAction }));
         break;
-      case 'tagkeep':
-        dispatch(
-          openTagModal({
-            mode: 'edit',
-            keep: true,
-            filterAction: filterAction,
-          }),
-        );
+      case 'tagAndKeep':
+        dispatch(openTagModal({ mode: 'edit', keep: true, filterAction }));
         break;
       default:
         break;
@@ -98,16 +83,18 @@ export const FilterActionRowActions = ({
 
   const handleConvertToFilters = () => {
     replaceFilters(
-      filterAction.filter_defs.map((filter) => ({
+      filterAction.filterDefs.map((filter) => ({
         key: filter.key,
         value: filter.value,
         options: {
-          isNegated: filter.operator === 'different',
-          isWildcarded: !filter.full_string,
+          isNegated: filter.isNegated,
+          isWildcarded: filter.isWildcarded,
         },
       })),
     );
   };
+
+  const kindLabel = FILTER_ACTION_KIND_LABEL[filterAction.kind];
 
   return (
     <>
@@ -156,8 +143,7 @@ export const FilterActionRowActions = ({
       >
         <DialogContent aria-describedby={undefined}>
           <DialogTitle>
-            Move {filterAction.action} filter action at index{' '}
-            {filterAction.index}
+            Move {kindLabel} filter action at index {filterAction.index}
           </DialogTitle>
           <DialogDescription>
             Move a filter action by changing it&apos;s index. Be careful as the
@@ -176,8 +162,7 @@ export const FilterActionRowActions = ({
       >
         <DialogContent>
           <DialogTitle>
-            Delete {filterAction.action} filter action at index{' '}
-            {filterAction.index}
+            Delete {kindLabel} filter action at index {filterAction.index}
           </DialogTitle>
           <DialogDescription>
             Deleting a filter action will remove it from the list and cannot be

@@ -38,9 +38,8 @@ import {
 import {
   FilterActionPayload,
   ThresholdFilterAction,
-} from '../../../model/filter-action.schema';
+} from '../../../model/filter-action';
 import { baseFilterActionSchema } from '../filter-actions.baseSchema';
-import { toFilterDefDto } from '../to-dto';
 import { useInitialValues } from '../use-initial-values';
 
 const formSchema = baseFilterActionSchema.extend({
@@ -95,10 +94,17 @@ export const CreateEditThresholdFilterActionForm = ({
   const [updateFilterAction] = useUpdateFilterActionMutation();
 
   const handleSubmit = (data: ThresholdFilterActionFormValues): void => {
-    const response: FilterActionPayload = {
-      action: 'threshold',
+    const payload: FilterActionPayload = {
+      kind: 'threshold',
       comment: data.comment || '',
-      filter_defs: data.filters.filter((f) => f.enabled).map(toFilterDefDto),
+      filterDefs: data.filters
+        .filter((f) => f.enabled)
+        .map((f) => ({
+          key: f.key,
+          value: f.value,
+          isNegated: f.isNegated,
+          isWildcarded: f.isWildcarded,
+        })),
       rulesets: data.rulesets,
       options: {
         type: 'both',
@@ -109,8 +115,8 @@ export const CreateEditThresholdFilterActionForm = ({
     };
     const submitFn =
       edit && filterAction
-        ? () => updateFilterAction({ ...response, pk: filterAction.pk })
-        : () => createFilterAction(response);
+        ? () => updateFilterAction({ id: filterAction.id, ...payload })
+        : () => createFilterAction(payload);
     submitFn()
       .unwrap()
       .then(() => {

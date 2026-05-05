@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from '@/store/store';
 
-import { ThreatFilterAction } from '../../../model/filter-action.schema';
+import { ThreatFilterAction } from '../../../model/filter-action';
 import { openSuppressModal } from '../create-edit-suppress-filter-action/create-edit-suppress.slice';
 import { openTagModal } from '../create-edit-tag-filter-action/create-edit-tag.slice';
 import { openThresholdModal } from '../create-edit-threshold-filter-filter-action/create-edit-threshold.slice';

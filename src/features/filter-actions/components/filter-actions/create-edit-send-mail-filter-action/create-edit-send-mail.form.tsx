@@ -31,15 +31,14 @@ import {
 import {
   FilterActionPayload,
   SendMailFilterAction,
-} from '../../../model/filter-action.schema';
+} from '../../../model/filter-action';
 import { baseFilterActionSchema } from '../filter-actions.baseSchema';
-import { toFilterDefDto } from '../to-dto';
 import { useInitialValues } from '../use-initial-values';
 
 export const DEFAULT_MAX_MAILS_PER_DAY = 5;
 
 const formSchema = baseFilterActionSchema.extend({
-  max_mails_per_day: z
+  maxMailsPerDay: z
     .number({ message: 'Maximum mails sent per day must be a number' })
     .int('Maximum mails sent per day must be an integer')
     .min(1, 'Maximum mails sent per day must be a positive number'),
@@ -50,11 +49,11 @@ export type SendMailFilterActionFormValues = z.infer<typeof formSchema>;
 const useSendMailInitialValues = (
   filterAction?: SendMailFilterAction,
 ): SendMailFilterActionFormValues => {
-  const initialValues = useInitialValues('send_mail', filterAction);
+  const initialValues = useInitialValues('sendMail', filterAction);
   return {
     ...initialValues,
-    max_mails_per_day:
-      filterAction?.options.max_mails_per_day ?? DEFAULT_MAX_MAILS_PER_DAY,
+    maxMailsPerDay:
+      filterAction?.options.maxMailsPerDay ?? DEFAULT_MAX_MAILS_PER_DAY,
   };
 };
 
@@ -91,19 +90,26 @@ export const CreateEditSendMailFilterActionForm = ({
   const [updateFilterAction] = useUpdateFilterActionMutation();
 
   const handleSubmit = (data: SendMailFilterActionFormValues): void => {
-    const response: FilterActionPayload = {
-      action: 'send_mail',
+    const payload: FilterActionPayload = {
+      kind: 'sendMail',
       comment: data.comment || '',
-      filter_defs: data.filters.filter((f) => f.enabled).map(toFilterDefDto),
+      filterDefs: data.filters
+        .filter((f) => f.enabled)
+        .map((f) => ({
+          key: f.key,
+          value: f.value,
+          isNegated: f.isNegated,
+          isWildcarded: f.isWildcarded,
+        })),
       rulesets: data.rulesets,
       options: {
-        max_mails_per_day: data.max_mails_per_day,
+        maxMailsPerDay: data.maxMailsPerDay,
       },
     };
     const submitFn =
       edit && filterAction
-        ? () => updateFilterAction({ ...response, pk: filterAction.pk })
-        : () => createFilterAction(response);
+        ? () => updateFilterAction({ id: filterAction.id, ...payload })
+        : () => createFilterAction(payload);
     submitFn()
       .unwrap()
       .then(() => {
@@ -163,7 +169,7 @@ export const CreateEditSendMailFilterActionForm = ({
         />
         <FormField
           control={form.control}
-          name="max_mails_per_day"
+          name="maxMailsPerDay"
           render={({ field }) => (
             <DefaultField label="Maximum mails sent per day">
               <Input

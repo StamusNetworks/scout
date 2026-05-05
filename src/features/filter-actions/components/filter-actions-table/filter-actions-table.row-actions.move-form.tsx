@@ -23,7 +23,7 @@ import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { Textarea } from '@/common/design-system/atoms/ui/textarea';
 
 import { useUpdateFilterActionPositionMutation } from '../../api/filter-actions.api';
-import { FilterAction } from '../../model/filter-action.schema';
+import { FilterAction } from '../../model/filter-action';
 
 const getFormSchema = (max: number) =>
   z
@@ -79,7 +79,7 @@ export const MoveFilterActionForm = ({
   const [updateFilterActionPosition] = useUpdateFilterActionPositionMutation();
   const handleSubmit = (data: z.infer<typeof schema>) => {
     const body = {
-      pk: filterAction.pk,
+      id: filterAction.id,
       comment: data.comment || '',
       index:
         data.action === 'top'

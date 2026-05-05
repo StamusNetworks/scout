@@ -35,22 +35,24 @@ import {
 } from '../../../api/filter-actions.api';
 import {
   FilterActionPayload,
+  TagAndKeepFilterAction,
   TagFilterAction,
-} from '../../../model/filter-action.schema';
+} from '../../../model/filter-action';
 import { baseFilterActionSchema } from '../filter-actions.baseSchema';
-import { toFilterDefDto } from '../to-dto';
 import { useInitialValues } from '../use-initial-values';
 
 const formSchema = baseFilterActionSchema.extend({
   tag: z.enum(['relevant', 'informational']),
 });
 
+export type TagFilterActionFormValues = z.infer<typeof formSchema>;
+
 const useInitialTagValues = (
   keep?: boolean,
-  filterAction?: TagFilterAction,
+  filterAction?: TagFilterAction | TagAndKeepFilterAction,
 ): TagFilterActionFormValues => {
   const initialValues = useInitialValues(
-    keep ? 'tagkeep' : 'tag',
+    keep ? 'tagAndKeep' : 'tag',
     filterAction,
   );
   return {
@@ -59,11 +61,9 @@ const useInitialTagValues = (
   };
 };
 
-export type TagFilterActionFormValues = z.infer<typeof formSchema>;
-
 interface CreateEditTagFilterActionFormProps {
   edit: boolean;
-  filterAction?: TagFilterAction | undefined;
+  filterAction?: TagFilterAction | TagAndKeepFilterAction | undefined;
   keep?: boolean;
   onClose?: () => void;
 }
@@ -95,10 +95,17 @@ export const CreateEditTagFilterActionForm = ({
   const [updateFilterAction] = useUpdateFilterActionMutation();
 
   const handleSubmit = (data: TagFilterActionFormValues): void => {
-    const response: FilterActionPayload = {
-      action: keep ? 'tagkeep' : 'tag',
+    const payload: FilterActionPayload = {
+      kind: keep ? 'tagAndKeep' : 'tag',
       comment: data.comment || '',
-      filter_defs: data.filters.filter((f) => f.enabled).map(toFilterDefDto),
+      filterDefs: data.filters
+        .filter((f) => f.enabled)
+        .map((f) => ({
+          key: f.key,
+          value: f.value,
+          isNegated: f.isNegated,
+          isWildcarded: f.isWildcarded,
+        })),
       rulesets: data.rulesets,
       options: {
         tag: data.tag,
@@ -106,8 +113,8 @@ export const CreateEditTagFilterActionForm = ({
     };
     const submitFn =
       edit && filterAction
-        ? () => updateFilterAction({ ...response, pk: filterAction.pk })
-        : () => createFilterAction(response);
+        ? () => updateFilterAction({ id: filterAction.id, ...payload })
+        : () => createFilterAction(payload);
     submitFn()
       .unwrap()
       .then(() => {

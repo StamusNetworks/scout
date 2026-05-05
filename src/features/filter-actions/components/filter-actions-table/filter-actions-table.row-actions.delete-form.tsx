@@ -5,7 +5,7 @@ import { Button } from '@/common/design-system/atoms/ui/button';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 
 import { useDeleteFilterActionMutation } from '../../api/filter-actions.api';
-import { FilterAction } from '../../model/filter-action.schema';
+import { FilterAction } from '../../model/filter-action';
 
 export const DeleteFilterActionForm = ({
   filterAction,
@@ -16,7 +16,7 @@ export const DeleteFilterActionForm = ({
 }) => {
   const [deleteFilterAction, { isLoading }] = useDeleteFilterActionMutation();
   const handleDelete = () => {
-    deleteFilterAction(filterAction.pk)
+    deleteFilterAction(filterAction.id)
       .unwrap()
       .then(() => {
         toast.success('Filter action deleted successfully');

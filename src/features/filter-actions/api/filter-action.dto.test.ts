@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { filterActionPayloadSchema } from './filter-action.schema';
+import { filterActionPayloadDtoSchema } from './filter-action.dto';
 
 const baseFields = {
   filter_defs: [
@@ -15,9 +15,9 @@ const baseFields = {
   comment: '',
 };
 
-describe('filterActionPayloadSchema — send_mail', () => {
+describe('filterActionPayloadDtoSchema — send_mail', () => {
   test('parses a valid send_mail payload', () => {
-    const result = filterActionPayloadSchema.safeParse({
+    const result = filterActionPayloadDtoSchema.safeParse({
       ...baseFields,
       action: 'send_mail',
       options: { max_mails_per_day: 5 },
@@ -26,7 +26,7 @@ describe('filterActionPayloadSchema — send_mail', () => {
   });
 
   test('rejects send_mail payload missing options.max_mails_per_day', () => {
-    const result = filterActionPayloadSchema.safeParse({
+    const result = filterActionPayloadDtoSchema.safeParse({
       ...baseFields,
       action: 'send_mail',
       options: {},
@@ -35,7 +35,7 @@ describe('filterActionPayloadSchema — send_mail', () => {
   });
 
   test('rejects send_mail payload with non-positive max_mails_per_day', () => {
-    const result = filterActionPayloadSchema.safeParse({
+    const result = filterActionPayloadDtoSchema.safeParse({
       ...baseFields,
       action: 'send_mail',
       options: { max_mails_per_day: 0 },
@@ -44,7 +44,7 @@ describe('filterActionPayloadSchema — send_mail', () => {
   });
 
   test('rejects send_mail payload with non-integer max_mails_per_day', () => {
-    const result = filterActionPayloadSchema.safeParse({
+    const result = filterActionPayloadDtoSchema.safeParse({
       ...baseFields,
       action: 'send_mail',
       options: { max_mails_per_day: 1.5 },

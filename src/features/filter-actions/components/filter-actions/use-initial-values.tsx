@@ -6,18 +6,22 @@ import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 import { QueryFilterState } from '@/features/query-filters/model/query-filter';
 
 import { useTestActionsQuery } from '../../api/filter-actions.api';
-import { FilterAction } from '../../model/filter-action.schema';
+import {
+  FilterAction,
+  FilterActionKind,
+  FilterDef,
+} from '../../model/filter-action';
 
 export const useInitialValues = (
-  type: FilterAction['action'],
+  kind: FilterActionKind,
   filterAction?: FilterAction,
 ) => {
   const filters = useQueryFilters();
   const QFBuilder = useQFBuilder();
   const { data, isLoading } = useTestActionsQuery({
-    action: type,
+    kind,
     fields:
-      filterAction?.filter_defs.map((f) => f.key) ?? filters.map((f) => f.key),
+      filterAction?.filterDefs.map((f) => f.key) ?? filters.map((f) => f.key),
   });
   return useMemo(
     () =>
@@ -29,7 +33,7 @@ export const useInitialValues = (
           }
         : {
             filters: filterAction
-              ? getFiltersFromFilterAction(filterAction.filter_defs, QFBuilder)
+              ? getFiltersFromFilterAction(filterAction.filterDefs, QFBuilder)
               : getInitialFilters(filters)
                   .filter((f) => data?.fields.includes(f.key))
                   .filter((f) =>
@@ -52,15 +56,15 @@ const addEnabled = (filters: QueryFilterState[]) =>
 const getInitialFilters = pipe(sortBySuspended, addEnabled);
 
 export const createFiltersFromFilterDefs = (
-  filterDefs: FilterAction['filter_defs'],
+  filterDefs: FilterDef[],
   QFBuilder: ReturnType<typeof useQFBuilder>,
 ) =>
-  filterDefs.map((f) => ({
-    ...QFBuilder.createFilter(f.key, f.value, {
-      isNegated: f.operator === 'different',
-      isWildcarded: !f.full_string,
+  filterDefs.map((f) =>
+    QFBuilder.createFilter(f.key, f.value, {
+      isNegated: f.isNegated,
+      isWildcarded: f.isWildcarded,
     }),
-  }));
+  );
 const getFiltersFromFilterAction = pipe(
   createFiltersFromFilterDefs,
   addEnabled,

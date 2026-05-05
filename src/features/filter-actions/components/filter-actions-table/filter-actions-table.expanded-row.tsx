@@ -23,7 +23,7 @@ export const ExpandedFilterActionRow = ({
 }) => {
   const { data: rulesetsList } = useGetRulesetsQuery();
   const { data, isLoading } = useGetFilterActionStatsQuery({
-    pk: row.original.pk,
+    id: row.original.id,
   });
 
   return (
@@ -41,7 +41,7 @@ export const ExpandedFilterActionRow = ({
             title="Filters"
             dropdown={false}
           >
-            {getRowFilters(row.original, row.original.filter_defs.length)}
+            {getRowFilters(row.original, row.original.filterDefs.length)}
           </TableCard>
           <TableCard
             title="Parameters"
@@ -69,7 +69,7 @@ export const ExpandedFilterActionRow = ({
             </div>
             <div>
               <b>creation date: </b>
-              {format(new Date(row.original.creation_date), 'yyyy-MM-dd HH:mm')}
+              {format(new Date(row.original.createdAt), 'yyyy-MM-dd HH:mm')}
             </div>
             <div>
               <b>comment: </b>
@@ -90,10 +90,10 @@ export const ExpandedFilterActionRow = ({
                 dropdown={false}
               >
                 <div>
-                  <b>Drop:</b> {item.drop.value}
+                  <b>Drop:</b> {item.drop}
                 </div>
                 <div>
-                  <b>Seen:</b> {item.seen.value}
+                  <b>Seen:</b> {item.seen}
                 </div>
               </TableCard>
             ))}

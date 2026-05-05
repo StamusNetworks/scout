@@ -9,8 +9,24 @@ import {
 } from '@/common/fetching/fetching.types.ts';
 import { API } from '@/store/api';
 
-import { FilterActionPayload } from '../model/filter-action.schema.ts';
-import { FilterAction, FilterActionStats } from '../model/filter-action.ts';
+import {
+  FilterAction,
+  FilterActionKind,
+  FilterActionPayload,
+  FilterActionStats,
+} from '../model/filter-action';
+import {
+  FilterActionActionDto,
+  FilterActionDto,
+  FilterActionStatsDto,
+} from './filter-action.dto';
+import {
+  toFilterAction,
+  toFilterActionActionDto,
+  toFilterActionKind,
+  toFilterActionPayloadDto,
+  toFilterActionStats,
+} from './filter-action.transforms';
 
 export const FilterActionsAPI = API.injectEndpoints({
   endpoints: (builder) => ({
@@ -27,78 +43,100 @@ export const FilterActionsAPI = API.injectEndpoints({
           ...buildQueryParams(params),
         },
       }),
+      transformResponse: (
+        res: Paginated<FilterActionDto>,
+      ): Paginated<FilterAction> => ({
+        ...res,
+        results: res.results.map(toFilterAction),
+      }),
       providesTags: ['Reload', 'Filter Actions'],
     }),
     getFilterActionStats: builder.query<
       FilterActionStats[],
-      Dates & Tenant & { pk: number }
+      Dates & Tenant & { id: number }
     >({
-      query: ({ pk, ...params }) => ({
+      query: ({ id, ...params }) => ({
         url: `rules${ENDPOINTS.ES_FILTER_ACTIONS_DATA.url}`,
         method: 'GET',
         params: {
           ...buildQueryParams(params, { time_format: 'elastic' }),
-          value: `rule_filter_${pk}`,
+          value: `rule_filter_${id}`,
         },
       }),
+      transformResponse: (res: FilterActionStatsDto[]): FilterActionStats[] =>
+        res.map(toFilterActionStats),
       providesTags: ['Reload', 'Filter Actions'],
     }),
     createFilterAction: builder.mutation<
       FilterAction,
       FilterActionPayload & { params?: Tenant & Dates & QFilter }
     >({
-      query: ({ params, ...body }) => ({
+      query: ({ params, ...payload }) => ({
         url: ENDPOINTS.FILTER_ACTIONS.url,
         method: 'POST',
         params: params
           ? buildQueryParams(params, { time_format: 'elastic' })
           : undefined,
-        body,
+        body: toFilterActionPayloadDto(payload),
       }),
+      transformResponse: (dto: FilterActionDto) => toFilterAction(dto),
       invalidatesTags: ['Filter Actions'],
     }),
     updateFilterAction: builder.mutation<
       FilterAction,
-      { pk: number } & Partial<Omit<FilterActionPayload, 'pk'>>
+      { id: number } & FilterActionPayload
     >({
-      query: ({ pk, ...body }) => ({
-        url: `${ENDPOINTS.FILTER_ACTIONS.url}${pk}/`,
+      query: ({ id, ...payload }) => ({
+        url: `${ENDPOINTS.FILTER_ACTIONS.url}${id}/`,
         method: 'PATCH',
-        body,
+        body: toFilterActionPayloadDto(payload),
       }),
+      transformResponse: (dto: FilterActionDto) => toFilterAction(dto),
       invalidatesTags: ['Filter Actions'],
     }),
     updateFilterActionPosition: builder.mutation<
       FilterAction,
-      { pk: number; index: number; comment?: string }
+      { id: number; index: number; comment?: string }
     >({
-      query: ({ pk, ...body }) => ({
-        url: `${ENDPOINTS.FILTER_ACTIONS.url}${pk}/`,
+      query: ({ id, ...body }) => ({
+        url: `${ENDPOINTS.FILTER_ACTIONS.url}${id}/`,
         method: 'PATCH',
         body,
       }),
+      transformResponse: (dto: FilterActionDto) => toFilterAction(dto),
       invalidatesTags: ['Filter Actions'],
     }),
     deleteFilterAction: builder.mutation<void, number>({
-      query: (pk) => ({
-        url: `${ENDPOINTS.FILTER_ACTIONS.url}${pk}/`,
+      query: (id) => ({
+        url: `${ENDPOINTS.FILTER_ACTIONS.url}${id}/`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Filter Actions'],
     }),
     testActions: builder.query<
-      { fields: string[]; operators: string[]; supported_fields?: string },
-      { action: FilterAction['action']; fields: string[] }
+      { fields: string[]; operators: string[]; supportedFields?: string },
+      { kind: FilterActionKind; fields: string[] }
     >({
-      query: (body) => ({
+      query: ({ kind, fields }) => ({
         url: `${ENDPOINTS.FILTER_ACTIONS.url}test/`,
         method: 'POST',
-        body,
+        body: { action: toFilterActionActionDto(kind), fields },
+      }),
+      transformResponse: (res: {
+        fields: string[];
+        operators: string[];
+        supported_fields?: string;
+      }) => ({
+        fields: res.fields,
+        operators: res.operators,
+        ...(res.supported_fields !== undefined
+          ? { supportedFields: res.supported_fields }
+          : {}),
       }),
       providesTags: ['Filter Actions'],
     }),
     testAvailableActions: builder.query<
-      FilterAction['action'][],
+      FilterActionKind[],
       { fields: string[] }
     >({
       query: (body) => ({
@@ -109,7 +147,8 @@ export const FilterActionsAPI = API.injectEndpoints({
       transformResponse: (response: { actions: string[][] }) =>
         response.actions
           .map(([first]) => first)
-          .filter((action) => action !== '-') as FilterAction['action'][],
+          .filter((action): action is FilterActionActionDto => action !== '-')
+          .map(toFilterActionKind),
       providesTags: ['Filter Actions'],
     }),
   }),

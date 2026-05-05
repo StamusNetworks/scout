@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from '@/store/store';
 
-import { SuppressFilterAction } from '../../../model/filter-action.schema';
+import { SuppressFilterAction } from '../../../model/filter-action';
 
 type SuppressModalState = {
   isOpen: boolean;

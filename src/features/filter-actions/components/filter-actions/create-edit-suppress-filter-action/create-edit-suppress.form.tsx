@@ -29,9 +29,8 @@ import {
 import {
   FilterActionPayload,
   SuppressFilterAction,
-} from '../../../model/filter-action.schema';
+} from '../../../model/filter-action';
 import { baseFilterActionSchema } from '../filter-actions.baseSchema';
-import { toFilterDefDto } from '../to-dto';
 import { useInitialValues } from '../use-initial-values';
 
 const formSchema = baseFilterActionSchema;
@@ -70,16 +69,23 @@ export const CreateEditSuppressFilterActionForm = ({
   const [updateFilterAction] = useUpdateFilterActionMutation();
 
   const handleSubmit = (data: SuppressFilterActionFormValues): void => {
-    const response: FilterActionPayload = {
-      action: 'suppress',
+    const payload: FilterActionPayload = {
+      kind: 'suppress',
       comment: data.comment || '',
-      filter_defs: data.filters.filter((f) => f.enabled).map(toFilterDefDto),
+      filterDefs: data.filters
+        .filter((f) => f.enabled)
+        .map((f) => ({
+          key: f.key,
+          value: f.value,
+          isNegated: f.isNegated,
+          isWildcarded: f.isWildcarded,
+        })),
       rulesets: data.rulesets,
     };
     const submitFn =
       edit && filterAction
-        ? () => updateFilterAction({ ...response, pk: filterAction.pk })
-        : () => createFilterAction(response);
+        ? () => updateFilterAction({ id: filterAction.id, ...payload })
+        : () => createFilterAction(payload);
     submitFn()
       .unwrap()
       .then(() => {

@@ -11,7 +11,7 @@ import { describe, expect, test } from 'vitest';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
 
-import { FilterAction } from '../../model/filter-action.schema';
+import { FilterAction } from '../../model/filter-action';
 import { FilterActionRowActions } from './filter-actions-table.row-actions';
 
 const createTestRouter = () =>
@@ -21,21 +21,21 @@ const createTestRouter = () =>
   });
 
 const filterActionWithMultipleFilters: FilterAction = {
-  pk: 1,
-  action: 'suppress',
-  event_type: 'alert',
-  filter_defs: [
+  id: 1,
+  kind: 'suppress',
+  eventType: 'alert',
+  filterDefs: [
     {
       key: 'src_ip',
       value: '10.0.0.1',
-      operator: 'equal',
-      full_string: true,
+      isNegated: false,
+      isWildcarded: false,
     },
     {
       key: 'dest_ip',
       value: '10.0.0.2',
-      operator: 'different',
-      full_string: false,
+      isNegated: true,
+      isWildcarded: true,
     },
   ],
   rulesets: [],
@@ -45,19 +45,47 @@ const filterActionWithMultipleFilters: FilterAction = {
   imported: false,
   comment: '',
   username: 'tester',
-  creation_date: '2026-04-28T00:00:00Z',
-  options: {},
+  createdAt: '2026-04-28T00:00:00Z',
 };
 
 describe('FilterActionRowActions - Convert to filters', () => {
-  test('replaces query filters with all filter_defs, not just the last one', async () => {
+  test('replaces query filters with all filter defs, not just the last one', async () => {
     server.use(
       http.get(baseUrl + '/rules/processing-filter/', () =>
         HttpResponse.json({
           count: 1,
           next: null,
           previous: null,
-          results: [filterActionWithMultipleFilters],
+          results: [
+            {
+              pk: 1,
+              action: 'suppress',
+              event_type: 'alert',
+              filter_defs: [
+                {
+                  key: 'src_ip',
+                  value: '10.0.0.1',
+                  operator: 'equal',
+                  full_string: true,
+                },
+                {
+                  key: 'dest_ip',
+                  value: '10.0.0.2',
+                  operator: 'different',
+                  full_string: false,
+                },
+              ],
+              rulesets: [],
+              index: 0,
+              description: '',
+              enabled: true,
+              imported: false,
+              comment: '',
+              username: 'tester',
+              creation_date: '2026-04-28T00:00:00Z',
+              options: {},
+            },
+          ],
         }),
       ),
     );

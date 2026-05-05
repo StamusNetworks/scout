@@ -7,24 +7,24 @@ import { FilterActionRowActions } from './filter-actions-table.row-actions';
 
 const getRowDescription = (item: FilterAction) => {
   let description: React.ReactNode[] = [];
-  if (item.action === 'threshold') {
+  if (item.kind === 'threshold') {
     description.push(
       <div key="track">
         <strong>track</strong>: {item.options.track}
       </div>,
     );
-  } else if (item.action === 'threat') {
+  } else if (item.kind === 'threat') {
     description.push(
       <div key="threat">
         <strong>threat</strong>: {item.options.threat}
       </div>,
     );
-  } else if (item.action !== 'suppress') {
+  } else if (item.kind !== 'suppress') {
     description = (
       Object.keys(item.options) as (keyof typeof item.options)[]
     ).map((option) => (
       <div key={option}>
-        <strong>{option}</strong>: {item.options[option]}
+        <strong>{option}</strong>: {String(item.options[option])}
       </div>
     ));
   }
@@ -34,34 +34,31 @@ const getRowDescription = (item: FilterAction) => {
 export const getRowFilters = (item: FilterAction, size = 1) => {
   const filters = [];
 
-  if (item.filter_defs.length === 0) {
+  if (item.filterDefs.length === 0) {
     return [];
   }
-  const limit = size || item.filter_defs.length;
+  const limit = size || item.filterDefs.length;
   for (let i = 0; i < limit; i += 1) {
+    const def = item.filterDefs[i];
     let info = (
-      <div key={item.filter_defs[i].key + '-' + item.filter_defs[i].value}>
-        {item.filter_defs[i].operator === 'different' && 'Not '}
-        <strong>{item.filter_defs[i].key}</strong>: {item.filter_defs[i].value}
+      <div key={def.key + '-' + def.value}>
+        {def.isNegated && 'Not '}
+        <strong>{def.key}</strong>: {def.value}
       </div>
     );
-    if (
-      item.filter_defs[i].key === 'alert.signature_id' &&
-      item.filter_defs[i].msg
-    ) {
+    if (def.key === 'alert.signature_id' && def.msg) {
       info = (
-        <div key={item.filter_defs[i].key + '-' + item.filter_defs[i].value}>
-          {item.filter_defs[i].operator === 'different' && 'Not '}
-          <strong>{item.filter_defs[i].key}</strong>:{' '}
-          {item.filter_defs[i].value} ({item.filter_defs[i].msg})
+        <div key={def.key + '-' + def.value}>
+          {def.isNegated && 'Not '}
+          <strong>{def.key}</strong>: {def.value} ({def.msg})
         </div>
       );
     }
     filters.push(info);
   }
-  if (size && size < item.filter_defs.length) {
+  if (size && size < item.filterDefs.length) {
     filters.push(
-      <span key="more">and {item.filter_defs.length - size} more...</span>,
+      <span key="more">and {item.filterDefs.length - size} more...</span>,
     );
   }
   return filters;
@@ -85,7 +82,7 @@ export const filterActionsColumns: CustomColumnDef<FilterAction>[] = [
   },
   {
     id: 'action',
-    accessorKey: 'action',
+    accessorKey: 'kind',
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}

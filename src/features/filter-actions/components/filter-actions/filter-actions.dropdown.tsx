@@ -10,7 +10,7 @@ import { useQueryFilters } from '@/features/query-filters';
 import { useAppDispatch } from '@/store/store';
 
 import { useTestAvailableActionsQuery } from '../../api/filter-actions.api';
-import { FilterAction } from '../../model/filter-action.schema';
+import { FilterActionKind } from '../../model/filter-action';
 import { openDeclarationModal } from './create-edit-declaration-events/create-edit-declaration.slice';
 import { openSendMailModal } from './create-edit-send-mail-filter-action/create-edit-send-mail.slice';
 import { openSuppressModal } from './create-edit-suppress-filter-action/create-edit-suppress.slice';
@@ -36,16 +36,15 @@ export const FilterActionsDropdown = ({
 
   const noData = !isFetching && (data?.length ?? 0) === 0;
 
-  const itemTooltip = (action: FilterAction['action']): string | undefined => {
+  const itemTooltip = (kind: FilterActionKind): string | undefined => {
     if (isFetching) return LOADING_TOOLTIP;
     if (noData) return NO_DATA_TOOLTIP;
-    if (action === 'send_mail' && !data?.includes('send_mail'))
-      return SMTP_TOOLTIP;
+    if (kind === 'sendMail' && !data?.includes('sendMail')) return SMTP_TOOLTIP;
     return undefined;
   };
 
-  const itemDisabled = (action: FilterAction['action']): boolean =>
-    isFetching || noData || !data?.includes(action);
+  const itemDisabled = (kind: FilterActionKind): boolean =>
+    isFetching || noData || !data?.includes(kind);
 
   return (
     <TooltipProvider>
@@ -77,8 +76,8 @@ export const FilterActionsDropdown = ({
             Tag
           </TooltipMenuItem>
           <TooltipMenuItem
-            disabled={itemDisabled('tagkeep')}
-            tooltip={itemTooltip('tagkeep')}
+            disabled={itemDisabled('tagAndKeep')}
+            tooltip={itemTooltip('tagAndKeep')}
             onClick={() =>
               dispatch(openTagModal({ mode: 'create', keep: true }))
             }
@@ -95,8 +94,8 @@ export const FilterActionsDropdown = ({
           </TooltipMenuItem>
           <DropdownMenuSeparator />
           <TooltipMenuItem
-            disabled={itemDisabled('send_mail')}
-            tooltip={itemTooltip('send_mail')}
+            disabled={itemDisabled('sendMail')}
+            tooltip={itemTooltip('sendMail')}
             onClick={() => dispatch(openSendMailModal({ mode: 'create' }))}
           >
             Send mail

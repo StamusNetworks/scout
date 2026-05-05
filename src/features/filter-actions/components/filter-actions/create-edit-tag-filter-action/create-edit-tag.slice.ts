@@ -2,13 +2,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from '@/store/store';
 
-import { TagFilterAction } from '../../../model/filter-action.schema';
+import {
+  TagAndKeepFilterAction,
+  TagFilterAction,
+} from '../../../model/filter-action';
+
+type TagOrKeepFilterAction = TagFilterAction | TagAndKeepFilterAction;
 
 type TagModalState = {
   isOpen: boolean;
   keep: boolean;
   mode: 'create' | 'edit';
-  filterAction: TagFilterAction | undefined;
+  filterAction: TagOrKeepFilterAction | undefined;
 };
 
 const initialState: TagModalState = {
@@ -28,9 +33,13 @@ export const createEditTagModalSlice = createSlice({
         | {
             mode: 'create';
             keep: boolean;
-            filterAction?: TagFilterAction;
+            filterAction?: TagOrKeepFilterAction;
           }
-        | { mode: 'edit'; filterAction: TagFilterAction; keep: boolean }
+        | {
+            mode: 'edit';
+            filterAction: TagOrKeepFilterAction;
+            keep: boolean;
+          }
       >,
     ) => {
       state.keep = action.payload.keep;
