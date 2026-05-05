@@ -6,8 +6,11 @@ import {
   ToggleGroupItem,
 } from '@/common/design-system/atoms/ui/toggle-group';
 
-import { type SeriesKey, TIMELINE_SERIES } from './timeline.constants';
-import { useTimelineVisibility } from './use-timeline-visibility';
+import {
+  type SeriesKey,
+  TIMELINE_SERIES,
+} from '../../definitions/timeline-series';
+import { useTimelineVisibility } from '../../hooks/use-timeline-visibility';
 
 export function SeriesToggleBar() {
   const [enabledSeries, setEnabledSeries] = useTimelineVisibility();

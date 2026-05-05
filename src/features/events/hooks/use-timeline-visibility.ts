@@ -3,7 +3,10 @@ import { useCallback } from 'react';
 
 import { Route } from '@/routes/_enterprise/volumetry';
 
-import { DEFAULT_ENABLED_SERIES, type SeriesKey } from './timeline.constants';
+import {
+  DEFAULT_ENABLED_SERIES,
+  type SeriesKey,
+} from '../definitions/timeline-series';
 
 export function useTimelineVisibility() {
   const { series } = Route.useSearch();

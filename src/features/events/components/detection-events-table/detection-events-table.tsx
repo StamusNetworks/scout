@@ -17,6 +17,14 @@ import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useGetEventsQuery } from '@/features/events/common/events.api';
 import { ExpandedEventRow } from '@/features/events/components/expanded-event-row/expanded-event-row';
 import {
+  CATEGORY_COLUMN,
+  EXPORT_COLUMNS,
+  LATERAL_COLUMN,
+  METHOD_COLUMN,
+  OUTLIER_COLUMN,
+  TAG_COLUMN,
+} from '@/features/events/definitions/detection-event-columns';
+import {
   DESTINATION_COLUMN,
   HOST_COLUMN,
   HOSTNAME_HOST_COLUMN,
@@ -31,14 +39,6 @@ import {
   PAYLOAD_COLUMN,
   TLS_SNI_COLUMN,
 } from '@/features/events/definitions/network-event-columns';
-import {
-  CATEGORY_COLUMN,
-  EXPORT_COLUMNS,
-  LATERAL_COLUMN,
-  METHOD_COLUMN,
-  OUTLIER_COLUMN,
-  TAG_COLUMN,
-} from '@/features/events/detection-events/detection-events.table';
 import type { Event } from '@/features/events/model/event';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 

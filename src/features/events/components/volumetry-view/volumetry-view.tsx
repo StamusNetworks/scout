@@ -29,8 +29,8 @@ import { useProbes } from '@/features/settings';
 import { Route } from '@/routes/_enterprise/volumetry';
 
 import { type ChartScale } from './dual-axis-line-chart';
-import { EventsTimeline } from './events-timeline';
 import { SeriesToggleBar } from './series-toggle-bar';
+import { EventsTimeline } from './volumetry-timeline';
 
 const pageSize = 5;
 

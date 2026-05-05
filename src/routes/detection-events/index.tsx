@@ -13,9 +13,9 @@ import {
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
-import { DetectionEventsTable } from '@/features/events/detection-events/entities/detection-events-table';
-import { EventsCounter } from '@/features/events/detection-events/entities/events-counter';
-import { EventsTimeline } from '@/features/events/detection-events/entities/events-timeline';
+import { DetectionEventsTable } from '@/features/events/components/detection-events-table/detection-events-table';
+import { EventsCounter } from '@/features/events/components/events-counter/events-counter';
+import { EventsTimeline } from '@/features/events/components/events-timeline/events-timeline';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 const searchSchema = z.object({

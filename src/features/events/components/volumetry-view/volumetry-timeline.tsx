@@ -6,16 +6,16 @@ import { useGetEventsTimelineQuery } from '@/features/events/common/events.api';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 import {
+  computeInterval,
+  SeriesKey,
+  TIMELINE_SERIES,
+} from '../../definitions/timeline-series';
+import { useTimelineVisibility } from '../../hooks/use-timeline-visibility';
+import {
   type ChartScale,
   MultiSeriesLineChart,
   type TimelineSeries,
 } from './dual-axis-line-chart';
-import {
-  computeInterval,
-  SeriesKey,
-  TIMELINE_SERIES,
-} from './timeline.constants';
-import { useTimelineVisibility } from './use-timeline-visibility';
 
 type EventsTimelineProps = {
   qfilterPrefix?: string;

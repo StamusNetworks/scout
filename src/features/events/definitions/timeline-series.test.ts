@@ -4,7 +4,7 @@ import {
   computeInterval,
   DEFAULT_ENABLED_SERIES,
   TIMELINE_SERIES,
-} from './timeline.constants';
+} from './timeline-series';
 
 describe('computeInterval', () => {
   it('returns 0 for empty array', () => {

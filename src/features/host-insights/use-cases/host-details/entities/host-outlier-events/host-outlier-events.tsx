@@ -12,18 +12,18 @@ import { useGetEventsQuery } from '@/features/events/common/events.api';
 import { ExpandedEventRow } from '@/features/events/components/expanded-event-row/expanded-event-row';
 import { useGetCountsTimelineQuery } from '@/features/events/counts-timeline/counts-timeline.api';
 import {
+  CATEGORY_COLUMN,
+  LATERAL_COLUMN,
+  METHOD_COLUMN,
+  OUTLIER_COLUMN,
+} from '@/features/events/definitions/detection-event-columns';
+import {
   DESTINATION_COLUMN,
   HOST_COLUMN,
   PROTOCOL_COLUMN,
   SOURCE_COLUMN,
   TIMESTAMP_COLUMN,
 } from '@/features/events/definitions/event-columns';
-import {
-  CATEGORY_COLUMN,
-  LATERAL_COLUMN,
-  METHOD_COLUMN,
-  OUTLIER_COLUMN,
-} from '@/features/events/detection-events/detection-events.table';
 import type { Event } from '@/features/events/model/event';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
