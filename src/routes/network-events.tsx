@@ -15,7 +15,7 @@ import { TogglePageContainer } from '@/common/design-system/molecules/toggle-con
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { NetworkEventsList } from '@/features/events/network-events/use-cases/network-events-list/entities/network-events-list';
 import { NetworkEventsTimeline } from '@/features/events/network-events/use-cases/network-events-timeline/entities/network-events-timeline';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 const searchSchema = z.object({
   page: z.number().default(1),

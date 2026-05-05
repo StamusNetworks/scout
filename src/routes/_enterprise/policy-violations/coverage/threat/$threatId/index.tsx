@@ -2,7 +2,7 @@ import { createFileRoute, useParams } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { Column } from '@/common/design-system/atoms/layout/column';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useThreatById } from '@/features/threats';
 import { ImpactedEntitiesTable } from '@/features/threats/common/molecules/impacted-entities-table/impacted-entities-table';
 

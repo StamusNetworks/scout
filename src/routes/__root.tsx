@@ -15,7 +15,7 @@ import { AppSidebar } from '@/common/design-system/layouts/components/navigation
 import { defaultMenu } from '@/common/design-system/layouts/components/navigation/navigation.config';
 import { BreadcrumbProvider } from '@/common/design-system/molecules/breadcrumbs';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
-import { FiltersSideBar } from '@/features/filtering/filters/query-filters/use-cases/list-filters/filters-sidebar';
+import { FiltersSideBar } from '@/features/query-filters/use-cases/list-filters/filters-sidebar';
 import { useSystemSettings } from '@/features/settings';
 import {
   selectIsSidebarOpen,

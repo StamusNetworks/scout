@@ -17,8 +17,8 @@ import {
   DETECTION_METHODS_EXPORT_COLUMNS,
 } from '@/features/detection-methods/detection-methods.table';
 import { DetectionMethodsExpandedRow } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.expanded-row';
-import { selectQueryFilters } from '@/features/filtering/filters/query-filters/query-filters.selectors';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+import { selectQueryFilters } from '@/features/query-filters/query-filters.selectors';
 import { useAppSelector } from '@/store/store';
 
 interface DetectionMethodsTableProps {

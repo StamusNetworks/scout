@@ -2,10 +2,10 @@ import { useMemo } from 'react';
 
 import { esEscape } from '@/common/lib/strings';
 import { selectInvestigationFilter } from '@/features/investigation/investigation.slice';
+import { useTagFiltersRepository } from '@/features/query-filters/hooks/use-tag-filters';
 import { useIsEnterprise } from '@/features/settings';
 import { useAppSelector } from '@/store/store';
 
-import { useTagFiltersRepository } from '../../../tag-filters/tag-filters.repository';
 import { FilterCategory } from '../../constants/query-filter.config';
 import { getFilterDef } from '../../constants/query-filter.definition';
 import { useQFBuilder } from '../../hooks/use-qf-builder';

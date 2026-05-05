@@ -6,7 +6,7 @@ import {
 } from '@/common/design-system/atoms/ui/command';
 import { formatNumber } from '@/common/lib/numbers';
 import { useGetDashboardFieldsQuery } from '@/features/events/detection-events/use-cases/explorer/api/dashboard.api';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { setOpenModal } from '@/features/ui/ui-state.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 

@@ -4,12 +4,12 @@ import {
   type AlertTagFlags,
   type EventTypeFlags,
   type FilterFlags,
-} from '@/features/filtering/filters/query-filters/filter-flags.model';
+} from '@/features/query-filters/filter-flags.model';
 import {
   setAlertTags,
   setEventTypes,
   setNovelty,
-} from '@/features/filtering/filters/query-filters/query-filters.store';
+} from '@/features/query-filters/query-filters.store';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 export type TagFiltersRepository = {

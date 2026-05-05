@@ -1,8 +1,8 @@
 import { startsWithOneOf } from '@/common/lib/strings';
-import { FilterCategory } from '@/features/filtering/filters/query-filters/constants/query-filter.config';
-import { useQueryFiltersDefinitions } from '@/features/filtering/filters/query-filters/hooks/use-filters-definitions';
-import { useQFBuilder } from '@/features/filtering/filters/query-filters/hooks/use-qf-builder';
-import { selectQueryFilters } from '@/features/filtering/filters/query-filters/query-filters.selectors';
+import { FilterCategory } from '@/features/query-filters/constants/query-filter.config';
+import { useQueryFiltersDefinitions } from '@/features/query-filters/hooks/use-filters-definitions';
+import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
+import { selectQueryFilters } from '@/features/query-filters/query-filters.selectors';
 import { useAppSelector } from '@/store/store';
 
 const NETWORK_EVENTS_BASE_FILTER =

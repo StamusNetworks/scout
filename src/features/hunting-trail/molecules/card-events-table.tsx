@@ -3,11 +3,11 @@ import { Binary } from 'lucide-react';
 
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { DateTime } from '@/common/design-system/entities/date-time';
-import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
 import {
   TimelineEventType,
   TimelineGroup,
 } from '@/features/hunting-trail/hunting-trail.model';
+import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
 
 type EventItem = TimelineGroup['events'][number];
 

@@ -20,7 +20,7 @@ import { useBeaconReport } from '@/features/events/beaconing/common/hooks/use-be
 import { BeaconingMetadata } from '@/features/events/beaconing/common/molecules/beaconing-metadata';
 import { ReportSummary } from '@/features/events/beaconing/common/molecules/report-summary';
 import { formatBeaconMetric } from '@/features/events/beaconing/common/utils/format-beacon-metric';
-import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
 
 import { IpsServingJa3sTable } from '../molecules/ips-serving-ja3s-table';
 

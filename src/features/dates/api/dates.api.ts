@@ -2,7 +2,7 @@ import { Tenant } from '@/common/fetching/fetching.types';
 // EventTypeFlags is consumed across many features; it currently lives on
 // query-filters' store. Imported via the legacy path until query-filters
 // migrates and exposes a public type.
-import { EventTypeFlags } from '@/features/filtering/filters/query-filters/query-filters.store';
+import { EventTypeFlags } from '@/features/query-filters/query-filters.store';
 import { API } from '@/store/api';
 
 export const DatesAPI = API.injectEndpoints({

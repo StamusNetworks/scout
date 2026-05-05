@@ -5,8 +5,6 @@ import { DataTable } from '@/common/design-system/molecules/data-table';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { usePaginationState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { esEscape } from '@/common/lib/strings';
-import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useGetHostsQuery } from '@/features/host-insights/common/host-insights.api';
 import {
   getHostRole,
@@ -16,6 +14,8 @@ import {
 import { HostnameTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
 import { NetworkTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 import { UsernameTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
 import { EntityThreatTagsList } from '@/features/threats/common/molecules/entities-threat-tags-list/entities-threat-tags-list';
 
 export const beaconingIpsTableColumns: CustomColumnDef<Host>[] = [

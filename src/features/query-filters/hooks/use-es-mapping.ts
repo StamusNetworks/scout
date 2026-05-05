@@ -1,4 +1,4 @@
-import { useGetESMappingQuery } from './es-mapping.api';
+import { useGetESMappingQuery } from '../api/es-mapping.api';
 
 /**
  * Triggers the ES-mapping fetch and exposes its data. The query-filter

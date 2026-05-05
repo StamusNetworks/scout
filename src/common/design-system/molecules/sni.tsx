@@ -1,4 +1,4 @@
-import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
 
 import { Row } from '../atoms/layout/row';
 import {

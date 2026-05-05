@@ -40,7 +40,7 @@ import {
   PAYLOAD_COLUMN,
   TLS_SNI_COLUMN,
 } from '@/features/events/network-events/network-events.table';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 // --- Props ---
 

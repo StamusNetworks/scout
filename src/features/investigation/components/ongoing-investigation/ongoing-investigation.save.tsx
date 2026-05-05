@@ -22,13 +22,13 @@ import {
   ValueListCard,
 } from '@/common/design-system/molecules/value-list-card';
 import { useGetDashboardFieldsQuery } from '@/features/events/detection-events/use-cases/explorer/api/dashboard.api';
-import { toSerializedFilterFlags } from '@/features/filtering/filters/query-filters/filter-flags.model';
+import { toSerializedFilterFlags } from '@/features/query-filters/filter-flags.model';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import {
   selectGatedFilterFlags,
   selectQueryFilters,
-} from '@/features/filtering/filters/query-filters/query-filters.selectors';
-import { getFilterLabel } from '@/features/filtering/filters/query-filters/utils/get-filter-label';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+} from '@/features/query-filters/query-filters.selectors';
+import { getFilterLabel } from '@/features/query-filters/utils/get-filter-label';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import {

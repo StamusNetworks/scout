@@ -56,13 +56,13 @@ import {
 import { FormattedBadge } from '@/common/design-system/molecules/formatted-badge';
 import { downloadBlob, formatToCsv, saveToClipboard } from '@/common/lib/save';
 import { cn } from '@/common/lib/utils';
-import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
 import {
   addFindingsKey,
   selectInvestigationStage,
   selectIsActiveFindings,
   startInvestigation,
 } from '@/features/investigation/investigation.slice';
+import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { useDashboard } from '../api/hooks/useDashboard';

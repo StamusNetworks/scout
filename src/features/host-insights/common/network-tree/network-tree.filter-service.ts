@@ -1,8 +1,8 @@
-import { QueryFiltersRecord } from '@/features/filtering/filters/query-filters/constants/query-filter.definition';
-import { QueryFilterState } from '@/features/filtering/filters/query-filters/query-filter.model';
-import { setQueryFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
-import { QFBuilder } from '@/features/filtering/filters/query-filters/utils/qf-builder';
-import { applyUpsertByRole } from '@/features/filtering/filters/query-filters/utils/suspension-rules';
+import { QueryFiltersRecord } from '@/features/query-filters/constants/query-filter.definition';
+import { QueryFilterState } from '@/features/query-filters/query-filter.model';
+import { setQueryFilters } from '@/features/query-filters/query-filters.store';
+import { QFBuilder } from '@/features/query-filters/utils/qf-builder';
+import { applyUpsertByRole } from '@/features/query-filters/utils/suspension-rules';
 import { store } from '@/store/store-instance';
 
 const qfBuilder = QFBuilder(QueryFiltersRecord, 'raw');

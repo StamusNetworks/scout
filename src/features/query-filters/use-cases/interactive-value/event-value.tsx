@@ -21,9 +21,9 @@ import {
 } from '@/common/design-system/atoms/ui/tooltip';
 import { compressIPv6, isIP, isIPv6 } from '@/common/lib/ips';
 import { cn } from '@/common/lib/utils';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useGetHostInsights } from '@/features/host-insights/use-cases/host-details/hooks/use-get-host-insights';
 import { HostSummary } from '@/features/host-insights/use-cases/host-details/molecules/host-summary';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useGetImpactedEntityQuery } from '@/features/threats/common/entities.api';
 
 import { getFilterDef } from '../../constants/query-filter.definition';

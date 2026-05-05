@@ -6,8 +6,8 @@ import { usePaginationState } from '@/common/design-system/molecules/data-table/
 import { esEscape } from '@/common/lib/strings';
 import { BeaconingEvent } from '@/features/events/beaconing/common/beaconing-event.model';
 import { useGetBeaconingEventsQuery } from '@/features/events/beaconing/common/beaconing.api';
-import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
 
 export const ipsServingJa3sTableColumns: CustomColumnDef<BeaconingEvent>[] = [
   {

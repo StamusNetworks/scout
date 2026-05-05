@@ -26,12 +26,12 @@ import { startsWithOneOf } from '@/common/lib/strings';
 import { cn } from '@/common/lib/utils';
 import { FilterActionsDropdown } from '@/features/filter-actions/components/filter-actions/filter-actions.dropdown';
 import { useSupportedFilterActionsFilters } from '@/features/filter-actions/utils/get-supported-filters';
-import { useTagFiltersRepository } from '@/features/filtering/filters/tag-filters/tag-filters.repository';
 import { SideBarQueryFilterSets } from '@/features/filtering/filtersets/use-cases/pinned-filter-sets/sidebar-query-filter-sets';
 import { openSaveFilterSetModal } from '@/features/filtering/filtersets/use-cases/save-filter-set/save-filterset.slice';
 import { useWithAlertsParam } from '@/features/host-insights/common/hosts-table/use-with-alerts-param';
 import { Investigation } from '@/features/investigation/components/ongoing-investigation/ongoing-investigation';
 import { selectInvestigationStage } from '@/features/investigation/investigation.slice';
+import { useTagFiltersRepository } from '@/features/query-filters/hooks/use-tag-filters';
 import { useIsEnterprise } from '@/features/settings';
 import { selectAutoOpenSidebarOnNavigation } from '@/features/ui/preferences/preferences.slice';
 import {

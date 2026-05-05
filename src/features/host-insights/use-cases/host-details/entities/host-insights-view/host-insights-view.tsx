@@ -1,8 +1,8 @@
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 import { HostValuesSort } from '../../molecules/host-block/host-values-sort';
 import { HostInsightsBlocks } from '../../molecules/host-insights-blocks';

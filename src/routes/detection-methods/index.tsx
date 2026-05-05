@@ -14,7 +14,7 @@ import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { DetectionMethodsTable } from '@/features/detection-methods/use-cases/detection-methods-list/entities/detection-methods-table';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 const searchSchema = z.object({
   page: z.number().default(1),

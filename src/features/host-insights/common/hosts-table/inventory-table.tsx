@@ -3,11 +3,11 @@ import { useNavigate } from '@tanstack/react-router';
 import { DataTable } from '@/common/design-system/molecules/data-table/data-table.tsx';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences.ts';
-import { useQFBuilder } from '@/features/filtering/filters/query-filters/hooks/use-qf-builder.ts';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useGetHostsQuery } from '@/features/host-insights/common/host-insights.api';
 import { HostsTableExpandedRow } from '@/features/host-insights/use-cases/host-details/molecules/hosts-table-expanded-row';
 import { getFilterExtension } from '@/features/host-insights/use-cases/hosts-list/hosts-list.api';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder.ts';
 
 import { columns, exportColumns } from './hostsTable.columns.tsx';
 

@@ -25,12 +25,12 @@ import { saveToClipboard } from '@/common/lib/save';
 import { startsWithOneOf } from '@/common/lib/strings';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useGetDeeplinksQuery } from '@/features/deeplinks/api/deeplinks.api';
-import { useEnableTags } from '@/features/filtering/filters/tag-filters/use-cases/update-tag-filters/update-tag-filters';
 import {
   addEvidence,
   selectCurrentInvestigationStage,
   selectInvestigationStage,
 } from '@/features/investigation/investigation.slice';
+import { useEnableTags } from '@/features/query-filters/hooks/use-enable-tags';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { useQueryFilterDefinition } from '../../../hooks/use-filters-definitions';

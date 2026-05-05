@@ -27,8 +27,8 @@ import { EventsStream } from '@/features/events/sightings/common/molecules/event
 import { SightingEventsTailFlow } from '@/features/events/sightings/common/molecules/events-tail-flow';
 import { PatientZeroDetails } from '@/features/events/sightings/common/molecules/patient-zero-details';
 import { SightingsMetadata } from '@/features/events/sightings/common/molecules/sightings-metadata';
-import { getFilterDef } from '@/features/filtering/filters/query-filters/constants/query-filter.definition';
-import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
+import { getFilterDef } from '@/features/query-filters/constants/query-filter.definition';
+import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
 
 interface SightingDetailsProps {
   sightingId: string;

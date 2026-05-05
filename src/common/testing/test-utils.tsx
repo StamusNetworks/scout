@@ -6,7 +6,7 @@ import { NuqsTestingAdapter } from 'nuqs/adapters/testing';
 import { PropsWithChildren, type ReactElement } from 'react';
 import { Provider } from 'react-redux';
 
-import { QueryFilterState } from '@/features/filtering/filters/query-filters/query-filter.model';
+import { QueryFilterState } from '@/features/query-filters/query-filter.model';
 import { AppStore, RootState, setupStore } from '@/store/store';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {

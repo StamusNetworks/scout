@@ -11,7 +11,7 @@ import {
 } from '@/common/design-system/atoms/ui/empty';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { useGetProtocolsFromEventsQuery } from '@/features/events/common/events.api';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 import { buildEventsFlowQfilter } from '../build-events-flow-qfilter';
 import { EventsFlowForProtocol } from '../molecules/events-flow-for-protocol';

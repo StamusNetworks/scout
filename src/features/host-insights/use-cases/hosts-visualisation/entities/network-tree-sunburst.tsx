@@ -27,11 +27,11 @@ import {
 import { CommandFilterSingle } from '@/common/design-system/molecules/data-table/filters/command-filter-single';
 import { formatNumber } from '@/common/lib/numbers';
 import { esEscape } from '@/common/lib/strings';
-import { selectQueryFilters } from '@/features/filtering/filters/query-filters/query-filters.selectors';
-import { useBuildHostIdQfilter } from '@/features/filtering/filters/query-filters/use-cases/build-host-id-qfilter/build-host-id-qfilter';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useGetNetworkTreeQuery } from '@/features/host-insights/common/host-insights.api';
 import { NetworkTreeFilterService } from '@/features/host-insights/common/network-tree/network-tree.filter-service';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+import { selectQueryFilters } from '@/features/query-filters/query-filters.selectors';
+import { useBuildHostIdQfilter } from '@/features/query-filters/use-cases/build-host-id-qfilter/build-host-id-qfilter';
 import { useAppSelector } from '@/store/store';
 
 export type TreeDataPayload = {

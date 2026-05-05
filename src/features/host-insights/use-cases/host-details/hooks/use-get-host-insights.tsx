@@ -1,6 +1,6 @@
 import { esEscape } from '@/common/lib/strings';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useGetHostsQuery } from '@/features/host-insights/common/host-insights.api';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 export const useGetHostInsights = (host: string, enabled = true) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);

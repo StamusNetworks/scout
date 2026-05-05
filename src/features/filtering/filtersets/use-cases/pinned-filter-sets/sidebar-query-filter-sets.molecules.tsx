@@ -31,18 +31,18 @@ import {
   useGetEventsCountQuery,
   useGetEventsTailQuery,
 } from '@/features/events/common/events.api';
-import { useQueryFilterDefinition } from '@/features/filtering/filters/query-filters/hooks/use-filters-definitions';
-import { useQFBuilder } from '@/features/filtering/filters/query-filters/hooks/use-qf-builder';
-import {
-  PersistedFilter,
-  QueryFilterState,
-} from '@/features/filtering/filters/query-filters/query-filter.model';
-import { selectGatedFilterFlags } from '@/features/filtering/filters/query-filters/query-filters.selectors';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import {
   useGetHostsQuery,
   useGetHostsWithAlertsQuery,
 } from '@/features/host-insights/common/host-insights.api';
+import { useQueryFilterDefinition } from '@/features/query-filters/hooks/use-filters-definitions';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
+import {
+  PersistedFilter,
+  QueryFilterState,
+} from '@/features/query-filters/query-filter.model';
+import { selectGatedFilterFlags } from '@/features/query-filters/query-filters.selectors';
 import { useAppSelector } from '@/store/store';
 
 import {

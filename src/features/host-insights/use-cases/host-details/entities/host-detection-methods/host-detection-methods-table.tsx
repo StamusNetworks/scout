@@ -10,7 +10,7 @@ import { esEscape } from '@/common/lib/strings';
 import { useGetSignaturesQuery } from '@/features/detection-methods/detection-methods.api';
 import { DETECTION_METHODS_COLUMNS } from '@/features/detection-methods/detection-methods.table';
 import { DetectionMethodsExpandedRow } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.expanded-row';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 interface HostDetectionMethodsTableProps {
   hostId: string;

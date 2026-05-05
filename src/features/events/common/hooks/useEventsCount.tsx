@@ -1,6 +1,6 @@
 import { Dates } from '@/common/fetching/fetching.types';
 import { useGetEventsCountQuery } from '@/features/events/common/events.api';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 export const useEventsCount = (dates?: Dates) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);

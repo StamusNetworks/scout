@@ -1,6 +1,6 @@
 // Cross-feature import via legacy path; will move through query-filters'
 // public barrel once that context migrates.
-import { selectEventTypeFlagsParams } from '@/features/filtering/filters/query-filters/query-filters.selectors';
+import { selectEventTypeFlagsParams } from '@/features/query-filters/query-filters.selectors';
 import { useTenant } from '@/features/tenancy';
 import { useAppSelector } from '@/store/store';
 

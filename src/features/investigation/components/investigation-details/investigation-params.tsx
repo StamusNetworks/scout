@@ -7,10 +7,10 @@ import { CheckboxValue } from '@/common/design-system/molecules/checkbox-value';
 import { LabelValue } from '@/common/design-system/molecules/label-value';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { cn } from '@/common/lib/utils';
-import { type SerializedFilterFlags } from '@/features/filtering/filters/query-filters/filter-flags.model';
-import { QueryFilterState } from '@/features/filtering/filters/query-filters/query-filter.model';
-import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
-import { getFilterLabel } from '@/features/filtering/filters/query-filters/utils/get-filter-label';
+import { type SerializedFilterFlags } from '@/features/query-filters/filter-flags.model';
+import { QueryFilterState } from '@/features/query-filters/query-filter.model';
+import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
+import { getFilterLabel } from '@/features/query-filters/utils/get-filter-label';
 
 import { valueVariants } from '../ongoing-investigation/ongoing-investigation.current';
 

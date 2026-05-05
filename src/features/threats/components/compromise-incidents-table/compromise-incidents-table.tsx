@@ -21,8 +21,8 @@ import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableToolbar } from '@/common/design-system/molecules/data-table/data-table.toolbar';
 import { CommandFilterMultiple } from '@/common/design-system/molecules/data-table/filters/command-filter-multiple';
 import { isIP } from '@/common/lib/strings';
-import { useReplaceFilters } from '@/features/filtering/filters/query-filters/use-cases/replace-filters/replace-filters';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+import { useReplaceFilters } from '@/features/query-filters/use-cases/replace-filters/replace-filters';
 import { useGetImpactedEntitiesQuery } from '@/features/threats/common/entities.api';
 import { useThreats } from '@/features/threats/common/hooks/use-threats';
 import {

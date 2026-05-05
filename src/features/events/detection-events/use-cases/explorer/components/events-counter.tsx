@@ -4,7 +4,7 @@ import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { PieChart } from '@/common/design-system/graphs/pie-chart/pie-chart';
 import { formatNumber } from '@/common/lib/numbers';
 import { useGetEventsCountQuery } from '@/features/events/common/events.api';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 const chartConfig = {
   current: {

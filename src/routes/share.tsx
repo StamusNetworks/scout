@@ -6,11 +6,11 @@ import { toast } from 'sonner';
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { type DatesPayload, useSetDates } from '@/features/dates';
-import { toFilterFlags } from '@/features/filtering/filters/query-filters/filter-flags.model';
-import { useReorderFilters } from '@/features/filtering/filters/query-filters/use-cases/reorder-filters/reorder-filters';
-import { useReplaceFilters } from '@/features/filtering/filters/query-filters/use-cases/replace-filters/replace-filters';
-import { type FilterInput } from '@/features/filtering/filters/query-filters/utils/filter-mapper';
-import { useTagFiltersRepository } from '@/features/filtering/filters/tag-filters/tag-filters.repository';
+import { toFilterFlags } from '@/features/query-filters/filter-flags.model';
+import { useTagFiltersRepository } from '@/features/query-filters/hooks/use-tag-filters';
+import { useReorderFilters } from '@/features/query-filters/use-cases/reorder-filters/reorder-filters';
+import { useReplaceFilters } from '@/features/query-filters/use-cases/replace-filters/replace-filters';
+import { type FilterInput } from '@/features/query-filters/utils/filter-mapper';
 import { useSetTenant } from '@/features/tenancy';
 import {
   decodeShareableState,

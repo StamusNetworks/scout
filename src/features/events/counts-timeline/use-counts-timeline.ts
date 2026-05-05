@@ -1,5 +1,5 @@
-import { QueryFilterState } from '@/features/filtering/filters/query-filters/query-filter.model';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+import { QueryFilterState } from '@/features/query-filters/query-filter.model';
 
 import { useGetCountsTimelineQuery } from './counts-timeline.api';
 

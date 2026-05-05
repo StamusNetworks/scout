@@ -5,8 +5,8 @@ import { useServerTableState } from '@/common/design-system/molecules/data-table
 import { useGetSignaturesQuery } from '@/features/detection-methods/signatures/api/signatures.api';
 import { detectionMethodsColumns } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.columns';
 import { DetectionMethodsExpandedRow } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.expanded-row';
-import { useQFBuilder } from '@/features/filtering/filters/query-filters/hooks/use-qf-builder';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 
 export const ThreatFamilyDetectionMethods = () => {
   const { familyId } = useParams({ strict: false }) as { familyId: string };

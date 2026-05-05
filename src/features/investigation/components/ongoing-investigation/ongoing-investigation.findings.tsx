@@ -5,7 +5,7 @@ import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { Label } from '@/common/design-system/atoms/ui/label';
 import { Separator } from '@/common/design-system/atoms/ui/separator';
-import { getFilterLabel } from '@/features/filtering/filters/query-filters/utils/get-filter-label';
+import { getFilterLabel } from '@/features/query-filters/utils/get-filter-label';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import {

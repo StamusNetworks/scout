@@ -3,7 +3,7 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { SmtpEvent } from '@/features/events/common/model/app-proto/smtp.schema';
-import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
 
 export const relatedFlowColumns: CustomColumnDef<SmtpEvent>[] = [
   {

@@ -11,7 +11,7 @@ import { useFeatureFlags } from '@/common/lib/use-feature-flags.ts';
 import { useGetEventsQuery } from '@/features/events/common/events.api';
 import { Event } from '@/features/events/common/events.model';
 import { ExpandedEventRow } from '@/features/events/common/molecules/expanded-event-row';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 import { exportColumns, getColumns } from './events.columns';
 

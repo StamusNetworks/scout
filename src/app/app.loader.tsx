@@ -4,7 +4,7 @@ import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { getConfig } from '@/config';
 import { useSessionActivity } from '@/features/auth';
 import { useRefreshDates } from '@/features/dates';
-import { useESMapping } from '@/features/filtering/es-mapping/use-es-mapping';
+import { useESMapping } from '@/features/query-filters/hooks/use-es-mapping';
 import { useGlobalSettings, useSystemSettings } from '@/features/settings';
 import { useFetchTenantsList } from '@/features/tenancy';
 import { useAutoReload } from '@/features/ui/use-auto-reload';

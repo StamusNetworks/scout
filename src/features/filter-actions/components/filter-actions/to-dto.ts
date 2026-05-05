@@ -1,4 +1,4 @@
-import { QueryFilterState } from '@/features/filtering/filters/query-filters/query-filter.model';
+import { QueryFilterState } from '@/features/query-filters/query-filter.model';
 
 const forceWildcard = new Set(['content', 'msg']);
 

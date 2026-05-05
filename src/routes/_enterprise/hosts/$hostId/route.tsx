@@ -33,9 +33,9 @@ import { useGetSignaturesQuery } from '@/features/detection-methods/signatures/a
 import { useGetBeaconingEventsQuery } from '@/features/events/beaconing/common/beaconing.api';
 import { useGetEventsQuery } from '@/features/events/common/events.api';
 import { useGetSightingEventsQuery } from '@/features/events/sightings/common/sightings.api';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
 import { HostHeader } from '@/features/host-insights/use-cases/host-details/entities/host-header';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useTenancy } from '@/features/tenancy';
 import { useGetThreatsStatusQuery } from '@/features/threats/common/threats.api';
 

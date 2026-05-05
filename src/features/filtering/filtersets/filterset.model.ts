@@ -3,7 +3,7 @@ import { z } from 'zod';
 import {
   PersistedFilter,
   qfilterDef,
-} from '@/features/filtering/filters/query-filters/query-filter.model';
+} from '@/features/query-filters/query-filter.model';
 
 export const persistedTagsSchema = z.object({
   stamus: z.boolean().optional(),

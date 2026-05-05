@@ -16,7 +16,7 @@ import { usePageTitle } from '@/common/lib/use-page-title';
 import { DetectionEventsTable } from '@/features/events/detection-events/entities/detection-events-table';
 import { EventsCounter } from '@/features/events/detection-events/entities/events-counter';
 import { EventsTimeline } from '@/features/events/detection-events/entities/events-timeline';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 const searchSchema = z.object({
   page: z.number().default(1),

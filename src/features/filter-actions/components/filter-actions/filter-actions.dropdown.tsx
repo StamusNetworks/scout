@@ -6,7 +6,7 @@ import {
 } from '@/common/design-system/atoms/ui/dropdown-menu';
 import { TooltipProvider } from '@/common/design-system/atoms/ui/tooltip';
 import { TooltipMenuItem } from '@/common/design-system/molecules/tooltip-menu-item';
-import { selectQueryFilters } from '@/features/filtering/filters/query-filters/query-filters.selectors';
+import { selectQueryFilters } from '@/features/query-filters/query-filters.selectors';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { useTestAvailableActionsQuery } from '../../api/filter-actions.api';

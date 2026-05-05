@@ -8,8 +8,8 @@ import { CustomColumnDef } from '@/common/design-system/molecules/data-table/fil
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { SNI } from '@/common/design-system/molecules/sni';
 import { getDuration } from '@/common/lib/duration';
-import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
 
 import { BeaconingEvent } from '../beaconing-event.model';
 import { useGetBeaconingEventsQuery } from '../beaconing.api';

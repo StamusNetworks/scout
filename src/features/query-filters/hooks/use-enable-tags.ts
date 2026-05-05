@@ -3,12 +3,12 @@ import { useCallback } from 'react';
 import {
   defaultFilterFlags,
   type FilterFlags,
-} from '@/features/filtering/filters/query-filters/filter-flags.model';
+} from '@/features/query-filters/filter-flags.model';
 import {
   setAlertTags,
   setEventTypes,
   setNovelty,
-} from '@/features/filtering/filters/query-filters/query-filters.store';
+} from '@/features/query-filters/query-filters.store';
 import { useAppDispatch } from '@/store/store';
 import { store } from '@/store/store-instance';
 

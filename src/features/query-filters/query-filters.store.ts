@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { toPairs } from 'ramda';
 
 import { startsWithOneOf } from '@/common/lib/strings';
-import { ESMappingAPI } from '@/features/filtering/es-mapping/es-mapping.api';
+import { ESMappingAPI } from '@/features/query-filters/api/es-mapping.api';
 
 import {
   type AlertTagFlags,

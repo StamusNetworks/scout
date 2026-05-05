@@ -1,5 +1,5 @@
 import { esEscape } from '@/common/lib/strings';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 import { useGetBeaconingEventsQuery } from '../beaconing.api';
 

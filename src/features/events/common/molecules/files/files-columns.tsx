@@ -1,7 +1,7 @@
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
-import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
+import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
 
 import { EventFileInfo } from '../../model/event-types/fileinfo.schema';
 

@@ -10,8 +10,8 @@ import {
   ZoomableGroup,
 } from 'react-simple-maps';
 
-import { useReplaceFilters } from '@/features/filtering/filters/query-filters/use-cases/replace-filters/replace-filters';
-import { useEnableTags } from '@/features/filtering/filters/tag-filters/use-cases/update-tag-filters/update-tag-filters';
+import { useEnableTags } from '@/features/query-filters/hooks/use-enable-tags';
+import { useReplaceFilters } from '@/features/query-filters/use-cases/replace-filters/replace-filters';
 import { useTheme } from '@/features/ui/theming/useTheme';
 
 import { Tooltip, TooltipContent } from '../../molecules/tooltip';

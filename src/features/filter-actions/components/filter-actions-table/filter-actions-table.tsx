@@ -2,7 +2,7 @@ import { getRouteApi } from '@tanstack/react-router';
 
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 import { useGetFilterActionsQuery } from '../../api/filter-actions.api';
 import { filterActionsColumns } from './filter-actions-table.columns';

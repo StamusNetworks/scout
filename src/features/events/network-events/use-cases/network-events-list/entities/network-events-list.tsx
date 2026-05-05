@@ -10,7 +10,7 @@ import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data
 import { Pagination } from '@/common/design-system/molecules/pagination';
 import { useGetEventsTailQuery } from '@/features/events/common/events.api';
 import { Event } from '@/features/events/common/events.model';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 import { useNetworkEventsQfilter } from '../../build-network-events-qfilter';
 import { TransactionCard } from '../molecules/transaction-card';

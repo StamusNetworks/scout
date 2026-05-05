@@ -7,13 +7,13 @@ import { createEditSendMailModalInitialState } from '@/features/filter-actions/c
 import { createEditSuppressModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-suppress-filter-action/create-edit-suppress.slice';
 import { createEditTagModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-tag-filter-action/create-edit-tag.slice';
 import { createEditThresholdModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-threshold-filter-filter-action/create-edit-threshold.slice';
-import { queryFiltersInitialState } from '@/features/filtering/filters/query-filters/query-filters.store';
-import { addQfilterCommandInitialState } from '@/features/filtering/filters/query-filters/use-cases/create-filter/add-qfilter-command.slice';
 import { queryFiltersSetsInitialState } from '@/features/filtering/filtersets/filtersets.store';
 import { saveFilterSetModalInitialState } from '@/features/filtering/filtersets/use-cases/save-filter-set/save-filterset.slice';
 import { investigationInitialState } from '@/features/investigation/investigation.slice';
 import { investigationsHistoryInitialState } from '@/features/investigation/investigations-history.slice';
 import { marketingStateInitialState } from '@/features/marketing/store/marketing.store';
+import { queryFiltersInitialState } from '@/features/query-filters/query-filters.store';
+import { addQfilterCommandInitialState } from '@/features/query-filters/use-cases/create-filter/add-qfilter-command.slice';
 import { settingsInitialState } from '@/features/settings/state/settings.slice';
 import { tenancyInitialState } from '@/features/tenancy/state/tenancy.slice';
 import { helpInitialState } from '@/features/ui/help/help.slice';

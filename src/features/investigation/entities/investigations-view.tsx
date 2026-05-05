@@ -29,22 +29,22 @@ import { ValueListCard } from '@/common/design-system/molecules/value-list-card'
 import { Paginated } from '@/common/fetching/fetching.types';
 import { esEscape } from '@/common/lib/strings';
 import { useSetDates } from '@/features/dates';
-import {
-  type SerializedFilterFlags,
-  toFilterFlags,
-} from '@/features/filtering/filters/query-filters/filter-flags.model';
-import { QueryFilterState } from '@/features/filtering/filters/query-filters/query-filter.model';
-import { useClearFilters } from '@/features/filtering/filters/query-filters/use-cases/clear-filters/clear-filters';
-import { useCreateFilter } from '@/features/filtering/filters/query-filters/use-cases/create-filter/create-filter';
-import { useReplaceFilters } from '@/features/filtering/filters/query-filters/use-cases/replace-filters/replace-filters';
-import { getFilterLabel } from '@/features/filtering/filters/query-filters/utils/get-filter-label';
-import { useTagFiltersRepository } from '@/features/filtering/filters/tag-filters/tag-filters.repository';
 import { InvestigationParams } from '@/features/investigation/components/investigation-details/investigation-params';
 import { InvestigationResults } from '@/features/investigation/components/investigation-details/investigation-results';
 import { InvestigationStage } from '@/features/investigation/components/investigation-details/investigation-stage';
 import { inventoryHistoryOptions } from '@/features/investigation/components/ongoing-investigation/ongoing-investigation.save';
 import { InvestigationState } from '@/features/investigation/investigation.slice';
 import { InvestigationHistory } from '@/features/investigation/investigations-history.slice';
+import {
+  type SerializedFilterFlags,
+  toFilterFlags,
+} from '@/features/query-filters/filter-flags.model';
+import { useTagFiltersRepository } from '@/features/query-filters/hooks/use-tag-filters';
+import { QueryFilterState } from '@/features/query-filters/query-filter.model';
+import { useClearFilters } from '@/features/query-filters/use-cases/clear-filters/clear-filters';
+import { useCreateFilter } from '@/features/query-filters/use-cases/create-filter/create-filter';
+import { useReplaceFilters } from '@/features/query-filters/use-cases/replace-filters/replace-filters';
+import { getFilterLabel } from '@/features/query-filters/utils/get-filter-label';
 import { useAppSelector } from '@/store/store';
 
 function useShowOnlyKept() {

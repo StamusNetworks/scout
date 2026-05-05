@@ -6,7 +6,7 @@ import {
   setEventTypes,
   setNovelty,
   setQueryFilters,
-} from '@/features/filtering/filters/query-filters/query-filters.store';
+} from '@/features/query-filters/query-filters.store';
 import { RootState, useAppSelector } from '@/store/store';
 
 import { QueryFilterSet } from './filterset.model';

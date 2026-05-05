@@ -8,8 +8,8 @@ import { z } from 'zod';
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
 import { useSearchNavigate } from '@/common/lib/use-search-navigate';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { HostsInventoryTable } from '@/features/host-insights/use-cases/hosts-list/entities/hosts-inventory-table';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 const searchSchema = z.object({
   page: z.number().default(1),

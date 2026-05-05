@@ -5,8 +5,8 @@ import { useServerTableState } from '@/common/design-system/molecules/data-table
 import { useGetEventsQuery } from '@/features/events/common/events.api';
 import { getColumns } from '@/features/events/common/molecules/events-table/events.columns';
 import { ExpandedEventRow } from '@/features/events/common/molecules/expanded-event-row';
-import { useQFBuilder } from '@/features/filtering/filters/query-filters/hooks/use-qf-builder';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 
 const columns = getColumns(true);
 

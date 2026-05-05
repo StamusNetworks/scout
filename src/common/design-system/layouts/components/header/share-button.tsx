@@ -7,7 +7,7 @@ import { selectDates } from '@/features/dates';
 import {
   selectFilterFlags,
   selectQueryFilters,
-} from '@/features/filtering/filters/query-filters/query-filters.selectors';
+} from '@/features/query-filters/query-filters.selectors';
 import { useTenant } from '@/features/tenancy';
 import {
   buildShareableState,

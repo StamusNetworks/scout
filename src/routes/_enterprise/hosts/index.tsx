@@ -14,10 +14,10 @@ import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { useSearchNavigate } from '@/common/lib/use-search-navigate';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { DiscoveredHosts } from '@/features/host-insights/common/discovered-hosts/discovered-hosts';
 import { HomeNetPicker } from '@/features/host-insights/common/home-net-picker/home-net-picker';
 import { HostsTable } from '@/features/host-insights/use-cases/hosts-list/entities/hosts-table';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 const searchSchema = z.object({
   page: z.number().min(1).default(1),

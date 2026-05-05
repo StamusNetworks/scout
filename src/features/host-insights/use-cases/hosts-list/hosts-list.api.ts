@@ -1,14 +1,14 @@
 import { PaginationState } from '@tanstack/react-table';
 
 import { selectDates } from '@/features/dates';
-import { useQFBuilder } from '@/features/filtering/filters/query-filters/hooks/use-qf-builder';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import {
   getAggregationBody,
   getCustomFilter,
   useFetchHostsCountsQuery,
   useGetHostsQuery,
 } from '@/features/host-insights/common/host-insights.api';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 import { useAppSelector } from '@/store/store';
 
 // ── useHostsList ──────────────────────────────────────────────────────

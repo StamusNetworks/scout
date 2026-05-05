@@ -9,8 +9,8 @@ import {
 } from '@/common/design-system/atoms/ui/popover';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { cn } from '@/common/lib/utils';
-import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
 import { Host } from '@/features/host-insights/common/host.model';
+import { EventValue } from '@/features/query-filters/use-cases/interactive-value/event-value';
 
 import { useGetHostInsights } from '../../hooks/use-get-host-insights';
 import { DetailsVariants, detailsVariants } from './details.variants';

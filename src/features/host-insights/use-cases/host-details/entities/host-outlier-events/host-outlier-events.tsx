@@ -25,7 +25,7 @@ import {
   METHOD_COLUMN,
   OUTLIER_COLUMN,
 } from '@/features/events/detection-events/detection-events.table';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 const outlierColumns = [
   TIMESTAMP_COLUMN,

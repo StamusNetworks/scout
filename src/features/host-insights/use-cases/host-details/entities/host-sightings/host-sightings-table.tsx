@@ -10,7 +10,7 @@ import { esEscape } from '@/common/lib/strings';
 import { ExpandedEventRow } from '@/features/events/common/molecules/expanded-event-row';
 import { useGetSightingEventsQuery } from '@/features/events/sightings/common/sightings.api';
 import { hostSightingTableColumns } from '@/features/events/sightings/use-cases/sightings-list/sightings-list.table';
-import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 interface HostSightingsTableProps {
   hostId: string;
