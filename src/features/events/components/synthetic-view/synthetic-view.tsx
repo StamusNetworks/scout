@@ -8,7 +8,7 @@ import { type Event } from '@/features/events/model/event';
 import { EventField } from '@/features/query-filters/components/filters-sidebar/event-field';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
-import { EventFileInfo } from '../../../model/event-types/fileinfo.schema';
+import { EventFileInfo } from '../../model/event-types/fileinfo.schema';
 import { PayloadCard } from './payload-card';
 import { getSyntheticView } from './synthetic-view.config';
 

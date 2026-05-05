@@ -3,7 +3,7 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
-import { EventFileInfo } from '../../../model/event-types/fileinfo.schema';
+import { EventFileInfo } from '../../model/event-types/fileinfo.schema';
 
 export const getColumns = (
   isDownloading: boolean,

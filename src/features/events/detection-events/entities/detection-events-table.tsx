@@ -15,6 +15,7 @@ import { Table } from '@/common/design-system/molecules/table';
 import { esEscape } from '@/common/lib/strings';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useGetEventsQuery } from '@/features/events/common/events.api';
+import { ExpandedEventRow } from '@/features/events/components/expanded-event-row/expanded-event-row';
 import {
   DESTINATION_COLUMN,
   HOST_COLUMN,
@@ -22,8 +23,7 @@ import {
   PROTOCOL_COLUMN,
   SOURCE_COLUMN,
   TIMESTAMP_COLUMN,
-} from '@/features/events/common/events.table';
-import { ExpandedEventRow } from '@/features/events/common/molecules/expanded-event-row';
+} from '@/features/events/definitions/event-columns';
 import {
   CATEGORY_COLUMN,
   EXPORT_COLUMNS,

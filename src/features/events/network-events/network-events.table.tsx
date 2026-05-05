@@ -2,7 +2,7 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import type { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
-import { Scrollable } from '../common/atoms/scrollable';
+import { Scrollable } from '../components/scrollable/scrollable';
 import type { Event } from '../model/event';
 
 export const TLS_SNI_COLUMN: CustomColumnDef<Event> = {

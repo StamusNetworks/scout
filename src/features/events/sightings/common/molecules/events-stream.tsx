@@ -1,27 +1,27 @@
-import { RelatedAlertsTab } from '@/features/events/common/molecules/related-events/related-alerts/related-alerts';
-import { RelatedAnomalyTab } from '@/features/events/common/molecules/related-events/related-anomaly/related-anomaly';
-import { RelatedDcerpcTab } from '@/features/events/common/molecules/related-events/related-dcerpc/related-dcerpc';
-import { RelatedDhcpTab } from '@/features/events/common/molecules/related-events/related-dhcp/related-dhcp';
-import { RelatedDnsTab } from '@/features/events/common/molecules/related-events/related-dns/related-dns';
-import { RelatedFileinfoTab } from '@/features/events/common/molecules/related-events/related-file-info/related-file-info';
-import { RelatedFlowTab } from '@/features/events/common/molecules/related-events/related-flow/related-flow';
-import { RelatedFtpTab } from '@/features/events/common/molecules/related-events/related-ftp/related-ftp';
-import { RelatedFtp_DataTab } from '@/features/events/common/molecules/related-events/related-ftp_data/related-ftp_data';
-import { RelatedHttpTab } from '@/features/events/common/molecules/related-events/related-http/related-http';
-import { RelatedKrb5Tab } from '@/features/events/common/molecules/related-events/related-krb5/related-krb5';
-import { RelatedMqttTab } from '@/features/events/common/molecules/related-events/related-mqtt/related-mqtt';
-import { RelatedNetflowTab } from '@/features/events/common/molecules/related-events/related-netflow/related-netflow';
-import { RelatedNfsTab } from '@/features/events/common/molecules/related-events/related-nfs/related-nfs';
-import { RelatedRdpTab } from '@/features/events/common/molecules/related-events/related-rdp/related-rdp';
-import { RelatedRfbTab } from '@/features/events/common/molecules/related-events/related-rfb/related-rfb';
-import { RelatedSipTab } from '@/features/events/common/molecules/related-events/related-sip/related-sip';
-import { RelatedSmbTab } from '@/features/events/common/molecules/related-events/related-smb/related-smb';
-import { RelatedSmtpTab } from '@/features/events/common/molecules/related-events/related-smtp/related-smtp';
-import { RelatedSnmpTab } from '@/features/events/common/molecules/related-events/related-snmp/related-snmp';
-import { RelatedSshTab } from '@/features/events/common/molecules/related-events/related-ssh/related-ssh';
-import { RelatedStamusTab } from '@/features/events/common/molecules/related-events/related-stamus/related-stamus';
-import { RelatedTftpTab } from '@/features/events/common/molecules/related-events/related-tftp/related-tftp';
-import { RelatedTlsTab } from '@/features/events/common/molecules/related-events/related-tls/related-tls';
+import { RelatedAlertsTab } from '@/features/events/components/related-events/related-alerts/related-alerts';
+import { RelatedAnomalyTab } from '@/features/events/components/related-events/related-anomaly/related-anomaly';
+import { RelatedDcerpcTab } from '@/features/events/components/related-events/related-dcerpc/related-dcerpc';
+import { RelatedDhcpTab } from '@/features/events/components/related-events/related-dhcp/related-dhcp';
+import { RelatedDnsTab } from '@/features/events/components/related-events/related-dns/related-dns';
+import { RelatedFileinfoTab } from '@/features/events/components/related-events/related-file-info/related-file-info';
+import { RelatedFlowTab } from '@/features/events/components/related-events/related-flow/related-flow';
+import { RelatedFtpDataTab } from '@/features/events/components/related-events/related-ftp-data/related-ftp-data';
+import { RelatedFtpTab } from '@/features/events/components/related-events/related-ftp/related-ftp';
+import { RelatedHttpTab } from '@/features/events/components/related-events/related-http/related-http';
+import { RelatedKrb5Tab } from '@/features/events/components/related-events/related-krb5/related-krb5';
+import { RelatedMqttTab } from '@/features/events/components/related-events/related-mqtt/related-mqtt';
+import { RelatedNetflowTab } from '@/features/events/components/related-events/related-netflow/related-netflow';
+import { RelatedNfsTab } from '@/features/events/components/related-events/related-nfs/related-nfs';
+import { RelatedRdpTab } from '@/features/events/components/related-events/related-rdp/related-rdp';
+import { RelatedRfbTab } from '@/features/events/components/related-events/related-rfb/related-rfb';
+import { RelatedSipTab } from '@/features/events/components/related-events/related-sip/related-sip';
+import { RelatedSmbTab } from '@/features/events/components/related-events/related-smb/related-smb';
+import { RelatedSmtpTab } from '@/features/events/components/related-events/related-smtp/related-smtp';
+import { RelatedSnmpTab } from '@/features/events/components/related-events/related-snmp/related-snmp';
+import { RelatedSshTab } from '@/features/events/components/related-events/related-ssh/related-ssh';
+import { RelatedStamusTab } from '@/features/events/components/related-events/related-stamus/related-stamus';
+import { RelatedTftpTab } from '@/features/events/components/related-events/related-tftp/related-tftp';
+import { RelatedTlsTab } from '@/features/events/components/related-events/related-tls/related-tls';
 import { DcerpcEvent } from '@/features/events/model/app-proto/dcerpc.schema';
 import { DhcpEvent } from '@/features/events/model/app-proto/dhcp.schema';
 import { DnsEvent } from '@/features/events/model/app-proto/dns.schema';
@@ -88,7 +88,7 @@ export const EventsStream = ({ sightingId }: EventsStreamProps) => {
       return <RelatedFtpTab data={data?.results as unknown as FtpEvent[]} />;
     case 'ftp_data':
       return (
-        <RelatedFtp_DataTab data={data?.results as unknown as FtpDataEvent[]} />
+        <RelatedFtpDataTab data={data?.results as unknown as FtpDataEvent[]} />
       );
     case 'http':
       return <RelatedHttpTab data={data?.results as unknown as HttpEvent[]} />;

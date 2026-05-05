@@ -15,7 +15,7 @@ import {
   PcapTab,
   RelatedEventsTabs,
   SyntheticTab,
-} from '@/features/events/common/event-detail';
+} from '@/features/events/components/event-detail';
 import { Event } from '@/features/events/model/event';
 import { Hostname } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
 import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';

@@ -17,17 +17,17 @@ import { useGetImpactedEntitiesQuery } from '@/features/threats/common/entities.
 import { selectDefaultEventDetailTab } from '@/features/ui/preferences/preferences.slice';
 import { useAppSelector } from '@/store/store';
 
+import { useGetEventsQuery } from '../../api/events.api';
+import { EventDetailTabs } from './event-detail-tabs';
 import {
   DetectionMethodTab,
-  EventDetailTabs,
   FilesTab,
   JsonTab,
   MetaViewTab,
   PcapTab,
   RelatedEventsTabs,
   SyntheticTab,
-} from '..';
-import { useGetEventsQuery } from '../../events.api';
+} from './tabs';
 
 interface EventDetailProps {
   eventId: string;

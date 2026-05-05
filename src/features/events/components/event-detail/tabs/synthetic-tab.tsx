@@ -1,4 +1,4 @@
-import { SyntheticView } from '@/features/events/common/molecules/synthetic-view/synthetic-view';
+import { SyntheticView } from '@/features/events/components/synthetic-view/synthetic-view';
 import { Event } from '@/features/events/model/event';
 
 import { TabComponentType } from '../event-detail-tabs.types';

@@ -9,15 +9,15 @@ import { PaginationFooter } from '@/common/design-system/molecules/pagination-fo
 import { Table } from '@/common/design-system/molecules/table';
 import { esEscape } from '@/common/lib/strings';
 import { useGetEventsQuery } from '@/features/events/common/events.api';
+import { ExpandedEventRow } from '@/features/events/components/expanded-event-row/expanded-event-row';
+import { useGetCountsTimelineQuery } from '@/features/events/counts-timeline/counts-timeline.api';
 import {
   DESTINATION_COLUMN,
   HOST_COLUMN,
   PROTOCOL_COLUMN,
   SOURCE_COLUMN,
   TIMESTAMP_COLUMN,
-} from '@/features/events/common/events.table';
-import { ExpandedEventRow } from '@/features/events/common/molecules/expanded-event-row';
-import { useGetCountsTimelineQuery } from '@/features/events/counts-timeline/counts-timeline.api';
+} from '@/features/events/definitions/event-columns';
 import {
   CATEGORY_COLUMN,
   LATERAL_COLUMN,

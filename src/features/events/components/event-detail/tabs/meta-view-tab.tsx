@@ -1,5 +1,5 @@
 import { Tag } from '@/common/design-system/layouts/components/navigation/navigation';
-import { MetaView } from '@/features/events/common/molecules/meta-view/meta-view';
+import { MetaView } from '@/features/events/components/meta-view/meta-view';
 import { Event } from '@/features/events/model/event';
 
 import { TabComponentType } from '../event-detail-tabs.types';

@@ -4,15 +4,15 @@ import { getDuration } from '@/common/lib/duration';
 import { formatBytes, formatNumber } from '@/common/lib/numbers';
 import { killChainsConfig } from '@/features/threats/common/killchain/killchain';
 
-import { DnsEvent } from '../../../model/app-proto/dns.schema';
-import { HttpEvent } from '../../../model/app-proto/http.schema';
-import { SmbEvent } from '../../../model/app-proto/smb.schema';
-import { TlsEvent } from '../../../model/app-proto/tls.schema';
-import { AlertEvent } from '../../../model/event-types/alert.schema';
-import { FileinfoEvent } from '../../../model/event-types/fileinfo.schema';
-import { FlowEvent } from '../../../model/event-types/flow.schema';
-import { StamusEvent } from '../../../model/event-types/stamus.schema';
-import { FlowEvents } from '../../../model/flow-event.schema';
+import { DnsEvent } from '../../model/app-proto/dns.schema';
+import { HttpEvent } from '../../model/app-proto/http.schema';
+import { SmbEvent } from '../../model/app-proto/smb.schema';
+import { TlsEvent } from '../../model/app-proto/tls.schema';
+import { AlertEvent } from '../../model/event-types/alert.schema';
+import { FileinfoEvent } from '../../model/event-types/fileinfo.schema';
+import { FlowEvent } from '../../model/event-types/flow.schema';
+import { StamusEvent } from '../../model/event-types/stamus.schema';
+import { FlowEvents } from '../../model/flow-event.schema';
 
 type FlowEventArray = NonNullable<FlowEvents[keyof FlowEvents]>;
 type AnyFlowEvent = FlowEventArray[number];

@@ -4,7 +4,7 @@ import { esEscape } from '@/common/lib/strings';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 import { useGetEventsFromFlowQuery } from '../api/events.api';
-import { EventDetailData } from '../common/event-detail/event-detail-tabs.types';
+import { EventDetailData } from '../components/event-detail/event-detail-tabs.types';
 import { Event } from '../model/event';
 
 export const useEventDetailData = (event: Event): EventDetailData => {
