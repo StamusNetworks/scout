@@ -8,7 +8,7 @@ export const toCurrentUser = (dto: CurrentUserDto): CurrentUser => ({
   lastName: dto.last_name,
   email: dto.email,
   isActive: dto.is_active,
-  joinedAt: new Date(dto.date_joined),
+  joinedAt: dto.date_joined,
   permissions: dto.perms,
   role: dto.role,
   isVisibleWithoutTenant: dto.no_tenant,

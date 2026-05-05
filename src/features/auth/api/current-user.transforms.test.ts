@@ -30,7 +30,7 @@ describe('toCurrentUser', () => {
       lastName: 'Doe',
       isActive: true,
       email: 'jane@example.com',
-      joinedAt: new Date('2024-01-15T08:30:00Z'),
+      joinedAt: '2024-01-15T08:30:00Z',
       permissions: ['rules.events_view', 'rules.events_edit'],
       role: 'admin',
       isVisibleWithoutTenant: false,
