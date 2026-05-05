@@ -1,10 +1,10 @@
-import '../global.css';
 import '@/common/design-system/molecules/htmlCodeDisplay/pygments.css';
 import { RouterProvider } from '@tanstack/react-router';
 import { NuqsAdapter } from 'nuqs/adapters/tanstack-router';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import '../global.css';
 import { router } from '@/router';
 import { persistor, store } from '@/store/store-instance';
 
@@ -13,11 +13,11 @@ import { AppLoader, SystemSettings } from './app.loader';
 
 function App() {
   return (
-    <PersistGate
-      loading={null}
-      persistor={persistor}
-    >
-      <Provider store={store}>
+    <Provider store={store}>
+      <PersistGate
+        loading={null}
+        persistor={persistor}
+      >
         <SystemSettings>
           <AppLoader>
             <NuqsAdapter>
@@ -26,8 +26,8 @@ function App() {
             <Toaster />
           </AppLoader>
         </SystemSettings>
-      </Provider>
-    </PersistGate>
+      </PersistGate>
+    </Provider>
   );
 }
 

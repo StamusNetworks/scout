@@ -6,10 +6,12 @@ import { toast } from 'sonner';
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { type DatesPayload, useSetDates } from '@/features/dates';
-import { useReorderFilters } from '@/features/query-filters/hooks/use-reorder-filters';
-import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
-import { useTagFiltersRepository } from '@/features/query-filters/hooks/use-tag-filters';
-import { toFilterFlags } from '@/features/query-filters/model/filter-flags';
+import {
+  toFilterFlags,
+  useQFBuilder,
+  useQueryFiltersRepository,
+  useTagFiltersRepository,
+} from '@/features/query-filters';
 import { type FilterInput } from '@/features/query-filters/utils/filter-mapper';
 import { useSetTenant } from '@/features/tenancy';
 import {
@@ -56,9 +58,9 @@ const toFilterInputs = (filters: ShareableState['filters']): FilterInput[] =>
 function SharePage() {
   const navigate = useNavigate();
   const { enterprise } = useFeatureFlags();
-  const reorderFilters = useReorderFilters();
-  const replaceFilters = useReplaceFilters();
+  const queryFiltersRepo = useQueryFiltersRepository();
   const tagFiltersRepo = useTagFiltersRepository();
+  const qfBuilder = useQFBuilder();
   const setTenant = useSetTenant();
   const setDates = useSetDates();
 
@@ -99,11 +101,13 @@ function SharePage() {
     tagFiltersRepo.setAlertTags(flags.alertTags);
     tagFiltersRepo.setNovelty(flags.novelty);
 
-    // Set query filters: clear silently (no toast) then replace
-    reorderFilters([]);
-    if (state.filters.length > 0) {
-      replaceFilters(toFilterInputs(state.filters));
-    }
+    // Replace query filters in one dispatch — fresh state from the share
+    // payload, no merge with what was loaded before.
+    queryFiltersRepo.set(
+      toFilterInputs(state.filters).map((input) =>
+        qfBuilder.createFilter(input.key, input.value, input.options),
+      ),
+    );
 
     navigate({ to: state.route, replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Run once on mount to hydrate state from URL
