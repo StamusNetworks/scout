@@ -43,7 +43,10 @@ export type Threat = {
   severity: number;
   version: number;
   isActive: boolean;
-  createdAt: Date;
+  /** ISO 8601 date string. Domain values stay serializable so they can
+   * live in Redux/RTK-Query cache without tripping the serializability
+   * check. */
+  createdAt: string;
   familyId: number;
   links: ThreatLink[];
   isUserDefined: boolean;

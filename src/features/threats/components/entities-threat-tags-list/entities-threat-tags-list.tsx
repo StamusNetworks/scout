@@ -65,8 +65,8 @@ export const EntityThreatTagsListTemplate = ({
       threat_id={threat.threatId}
       kill_chain={threat.phase ?? undefined}
       is_offender={threat.isOffender}
-      first_seen={threat.firstSeen.toISOString()}
-      last_seen={threat.lastSeen.toISOString()}
+      first_seen={threat.firstSeen}
+      last_seen={threat.lastSeen}
       status={threat.status}
     />
   );

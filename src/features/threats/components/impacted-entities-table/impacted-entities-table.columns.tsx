@@ -269,10 +269,10 @@ export const exportThreatsColumns = ({
     : []),
   {
     label: 'First seen',
-    value: ({ firstSeen }) => firstSeen.toISOString(),
+    value: ({ firstSeen }) => firstSeen,
   },
   {
     label: 'Last seen',
-    value: ({ lastSeen }) => lastSeen.toISOString(),
+    value: ({ lastSeen }) => lastSeen,
   },
 ];

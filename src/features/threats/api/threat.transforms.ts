@@ -44,7 +44,7 @@ export const toThreat = (dto: ThreatDto): Threat => ({
   severity: dto.criticity,
   version: dto.version,
   isActive: dto.active,
-  createdAt: new Date(dto.creation_date),
+  createdAt: dto.creation_date,
   familyId: dto.family,
   links: [
     ...(Array.isArray(dto.links?.threat) ? dto.links.threat : []).map((l) => ({
@@ -75,7 +75,7 @@ export const toThreatDto = (threat: Threat): ThreatDto => ({
   criticity: threat.severity,
   version: threat.version,
   active: threat.isActive,
-  creation_date: threat.createdAt.toISOString().slice(0, 10),
+  creation_date: threat.createdAt.slice(0, 10),
   family: threat.familyId,
   family_class: FAMILY_CLASS_BY_KIND[threat.kind],
   links: {

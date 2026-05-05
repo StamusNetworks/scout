@@ -66,10 +66,9 @@ export const EntitiesAPI = API.injectEndpoints({
           KILL_CHAIN_PHASES[phase]?.step ?? Number.NEGATIVE_INFINITY;
         const highestPhase = (a: KillChainPhase, b: KillChainPhase) =>
           stepOf(a) >= stepOf(b) ? a : b;
-        const earliest = (a: Date, b: Date) =>
-          a.getTime() <= b.getTime() ? a : b;
-        const latest = (a: Date, b: Date) =>
-          a.getTime() >= b.getTime() ? a : b;
+        // ISO 8601 strings sort lexicographically as chronologically.
+        const earliest = (a: string, b: string) => (a <= b ? a : b);
+        const latest = (a: string, b: string) => (a >= b ? a : b);
 
         return entities.reduce((merged, current) => ({
           ...merged,

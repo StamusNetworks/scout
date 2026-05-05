@@ -61,8 +61,8 @@ export const threatStatusColumns: CustomColumnDef<ThreatStatus>[] = [
         threat_id={row.original.threatId}
         is_offender={row.original.isOffender}
         kill_chain={row.original.phase}
-        first_seen={row.original.firstSeen.toISOString()}
-        last_seen={row.original.lastSeen.toISOString()}
+        first_seen={row.original.firstSeen}
+        last_seen={row.original.lastSeen}
         status={row.original.status}
       />
     ),

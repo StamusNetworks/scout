@@ -13,8 +13,10 @@ export type EntityThreat = {
   phase: KillChainPhase | null;
   offenderPhase: KillChainPhase | null;
   isOffender: boolean;
-  firstSeen: Date;
-  lastSeen: Date;
+  /** ISO 8601 date string. */
+  firstSeen: string;
+  /** ISO 8601 date string. */
+  lastSeen: string;
 };
 
 /**
@@ -27,9 +29,12 @@ export type ImpactedEntity = {
   assetType: string;
   tenant: number;
   networkDef: string;
-  firstSeen: Date;
-  lastSeen: Date;
-  fixedAt: Date | null;
+  /** ISO 8601 date string. */
+  firstSeen: string;
+  /** ISO 8601 date string. */
+  lastSeen: string;
+  /** ISO 8601 date string, or null if not yet fixed. */
+  fixedAt: string | null;
   threats: EntityThreat[];
   status: 'new' | 'fixed';
   phase: KillChainPhase;

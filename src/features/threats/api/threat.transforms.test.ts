@@ -52,8 +52,8 @@ describe('threat transforms', () => {
       expect(threat.methodCount).toBe(12);
     });
 
-    it('parses creation_date string into a Date', () => {
-      expect(toThreat(dto).createdAt).toEqual(new Date('2026-04-01'));
+    it('keeps creation_date as an ISO string (Redux-serializable)', () => {
+      expect(toThreat(dto).createdAt).toBe('2026-04-01');
     });
 
     it('maps family_class to ThreatKind sum type', () => {

@@ -54,8 +54,8 @@ const threatsColumns = (kind: ThreatKind): CustomColumnDef<EntityThreat>[] => [
         threat_id={row.original.threatId}
         kill_chain={row.original.phase ?? undefined}
         is_offender={row.original.isOffender}
-        first_seen={row.original.firstSeen.toISOString()}
-        last_seen={row.original.lastSeen.toISOString()}
+        first_seen={row.original.firstSeen}
+        last_seen={row.original.lastSeen}
         status={row.original.status}
       />
     ),

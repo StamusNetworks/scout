@@ -14,7 +14,10 @@ export type ThreatStatus = {
   isOffender: boolean;
   phase: KillChainPhase;
   offenderPhase: KillChainPhase;
-  firstSeen: Date;
-  lastSeen: Date;
-  closedAt: Date | null;
+  /** ISO 8601 date string. */
+  firstSeen: string;
+  /** ISO 8601 date string. */
+  lastSeen: string;
+  /** ISO 8601 date string, or null if still open. */
+  closedAt: string | null;
 };

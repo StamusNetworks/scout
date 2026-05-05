@@ -59,6 +59,6 @@ describe('useThreatById', () => {
     expect(data.isUserDefined).toBe(false);
     expect(data.isVisibleWithoutTenant).toBe(true);
     expect(data.tenantScope).toEqual({ mode: 'specific', tenantIds: [] });
-    expect(data.createdAt).toBeInstanceOf(Date);
+    expect(typeof data.createdAt).toBe('string');
   });
 });

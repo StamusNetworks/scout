@@ -2,9 +2,6 @@ import { EntityThreat, ImpactedEntity } from '../model/impacted-entity';
 import { KillChainCountersData, phaseFromStep } from '../model/kill-chain';
 import { EntityThreatDto, ImpactedEntityDto } from './impacted-entity.dto';
 
-const optionalDate = (s: string | null | undefined): Date | null =>
-  s ? new Date(s) : null;
-
 export const toEntityThreat = (dto: EntityThreatDto): EntityThreat => ({
   threatId: dto.threat__threat_id,
   name: dto.threat__name,
@@ -13,8 +10,8 @@ export const toEntityThreat = (dto: EntityThreatDto): EntityThreat => ({
   phase: phaseFromStep(dto.kill_chain) ?? null,
   offenderPhase: phaseFromStep(dto.kill_chain_offender) ?? null,
   isOffender: dto.kill_chain_offender > 0,
-  firstSeen: new Date(dto.first_seen),
-  lastSeen: new Date(dto.last_seen),
+  firstSeen: dto.first_seen,
+  lastSeen: dto.last_seen,
 });
 
 export const toImpactedEntity = (dto: ImpactedEntityDto): ImpactedEntity => ({
@@ -23,9 +20,9 @@ export const toImpactedEntity = (dto: ImpactedEntityDto): ImpactedEntity => ({
   assetType: dto.asset_type,
   tenant: dto.tenant,
   networkDef: dto.network_def,
-  firstSeen: new Date(dto.first_seen),
-  lastSeen: new Date(dto.last_seen),
-  fixedAt: optionalDate(dto.fixed_date),
+  firstSeen: dto.first_seen,
+  lastSeen: dto.last_seen,
+  fixedAt: dto.fixed_date || null,
   threats: dto.threats.map(toEntityThreat),
   status: dto.status,
   phase: dto.kill_chain,
