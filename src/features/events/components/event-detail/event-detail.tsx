@@ -9,8 +9,10 @@ import { DateTime } from '@/common/design-system/entities/date-time';
 import { esEscape } from '@/common/lib/strings';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { Event } from '@/features/events/model/event';
-import { useGetHostWithAlertsQuery } from '@/features/host-insights/api/hosts.api';
-import { HostSummary } from '@/features/host-insights/components/host-summary';
+import {
+  HostSummary,
+  useGetHostWithAlertsQuery,
+} from '@/features/host-insights';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useGetImpactedEntitiesQuery } from '@/features/threats';

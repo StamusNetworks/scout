@@ -1,5 +1,6 @@
 import type { SortingState, Updater } from '@tanstack/react-table';
 import { LaptopMinimal, RotateCcw } from 'lucide-react';
+import { useMemo } from 'react';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
@@ -9,12 +10,13 @@ import { useTablePreferences } from '@/common/design-system/molecules/data-table
 import { ExportButton } from '@/common/design-system/molecules/export-button';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
-import { HostsTableExpandedRow } from '@/features/host-insights/components/hosts-table-expanded-row';
+
 import {
   HOSTS_BASE_COLUMNS,
   HOSTS_EXPORT_COLUMNS,
-} from '@/features/host-insights/definitions/hosts-table.columns';
-import { useHostsList } from '@/features/host-insights/hooks/use-hosts-list';
+} from '../../definitions/hosts-table.columns';
+import { useHostsList } from '../../hooks/use-hosts-list';
+import { HostsTableExpandedRow } from '../hosts-table-expanded-row';
 
 interface HostsInventoryTableProps {
   page: number;
@@ -27,11 +29,6 @@ interface HostsInventoryTableProps {
   onRowClick: (hostId: string) => void;
 }
 
-const columns = HOSTS_BASE_COLUMNS;
-const exportColumns = HOSTS_EXPORT_COLUMNS.filter(
-  (col) => col.label !== 'Hits',
-);
-
 export function HostsInventoryTable({
   page,
   pageSize,
@@ -42,6 +39,11 @@ export function HostsInventoryTable({
   onSortingChange,
   onRowClick,
 }: HostsInventoryTableProps) {
+  const columns = HOSTS_BASE_COLUMNS;
+  const exportColumns = useMemo(
+    () => HOSTS_EXPORT_COLUMNS.filter((col) => col.label !== 'Hits'),
+    [],
+  );
   const {
     columnOrder,
     onColumnOrderChange,

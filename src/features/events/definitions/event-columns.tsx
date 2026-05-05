@@ -3,8 +3,7 @@ import { Row } from '@/common/design-system/atoms/layout/row';
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import type { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
-import { Hostname } from '@/features/host-insights/components/host-attributes/hostname';
-import { Network } from '@/features/host-insights/components/host-attributes/network';
+import { Hostname, Network } from '@/features/host-insights';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 import type { Event } from '../model/event';

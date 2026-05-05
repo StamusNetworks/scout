@@ -26,13 +26,14 @@ import {
 import { CommandFilterSingle } from '@/common/design-system/molecules/data-table/filters/command-filter-single';
 import { formatNumber } from '@/common/lib/numbers';
 import { esEscape } from '@/common/lib/strings';
-import { useGetNetworkTreeQuery } from '@/features/host-insights/api/hosts.api';
-import { NetworkTreeFilterService } from '@/features/host-insights/utils/network-tree-filter-service';
 import {
   useBuildHostIdQfilter,
   useGlobalQueryParams,
   useQueryFilters,
 } from '@/features/query-filters';
+
+import { useGetNetworkTreeQuery } from '../../api/hosts.api';
+import { NetworkTreeFilterService } from '../../utils/network-tree-filter-service';
 
 export type TreeDataPayload = {
   path: string;

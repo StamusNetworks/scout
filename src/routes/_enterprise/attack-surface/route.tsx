@@ -23,8 +23,7 @@ import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { useSearchNavigate } from '@/common/lib/use-search-navigate';
-import { DiscoveredHosts } from '@/features/host-insights/components/discovered-hosts/discovered-hosts';
-import { HomeNetPicker } from '@/features/host-insights/components/home-net-picker/home-net-picker';
+import { DiscoveredHosts, HomeNetPicker } from '@/features/host-insights';
 
 const searchSchema = z.object({
   in_home_net: z.enum(['true', 'false', 'all']).default('all'),

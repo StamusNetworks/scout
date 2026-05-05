@@ -14,15 +14,16 @@ import { esEscape } from '@/common/lib/strings';
 import { useGetBeaconingEventsQuery } from '@/features/events';
 import { useGetEventsQuery } from '@/features/events';
 import { useGetSightingEventsQuery } from '@/features/events';
-import { useGetHostWithAlertsQuery } from '@/features/host-insights/api/hosts.api';
-import { HostDetectionsRadar } from '@/features/host-insights/components/host-detections-radar';
-import { HostProfile } from '@/features/host-insights/components/host-profile';
-import { getHostProfileChartData } from '@/features/host-insights/components/host-profile.utils';
-import { HostSummary } from '@/features/host-insights/components/host-summary';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useGetRulesQuery } from '@/features/rules';
 import { useGetImpactedEntitiesQuery } from '@/features/threats';
 import { useGetThreatsStatusQuery } from '@/features/threats';
+
+import { useGetHostWithAlertsQuery } from '../../api/hosts.api';
+import { HostDetectionsRadar } from '../host-detections-radar';
+import { HostProfile } from '../host-profile';
+import { getHostProfileChartData } from '../host-profile.utils';
+import { HostSummary } from '../host-summary';
 
 export interface HostHeaderProps {
   hostId: string;

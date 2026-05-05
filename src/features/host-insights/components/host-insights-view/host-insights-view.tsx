@@ -1,10 +1,11 @@
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
-import { useGetHostWithAlertsQuery } from '@/features/host-insights/api/hosts.api';
-import { HostValuesSort } from '@/features/host-insights/components/host-block/host-values-sort';
-import { HostInsightsBlocks } from '@/features/host-insights/components/host-insights-blocks';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+
+import { useGetHostWithAlertsQuery } from '../../api/hosts.api';
+import { HostValuesSort } from '../host-block/host-values-sort';
+import { HostInsightsBlocks } from '../host-insights-blocks';
 
 export interface HostInsightsViewProps {
   hostId: string;

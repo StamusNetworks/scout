@@ -16,7 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/common/design-system/atoms/ui/popover';
-import { Host } from '@/features/host-insights/model/host';
+import { Host } from '@/features/host-insights';
 import { KillchainTag } from '@/features/threats/components/kill-chain-tag/kill-chain-tag';
 import { ThreatTag } from '@/features/threats/components/threat-tag/threat-tag';
 import { KillChainPhase } from '@/features/threats/model/kill-chain';

@@ -1,7 +1,7 @@
 import { createFileRoute, useParams } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { HostInsightsView } from '@/features/host-insights/components/host-insights-view/host-insights-view';
+import { HostInsightsView } from '@/features/host-insights';
 
 export const Route = createFileRoute('/_enterprise/hosts/$hostId/')({
   component: () => (

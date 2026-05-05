@@ -14,10 +14,7 @@ import { ExportColumn } from '@/common/design-system/molecules/data-table/data-t
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
-import { Hostname } from '@/features/host-insights/components/host-attributes/hostname';
-import { Network } from '@/features/host-insights/components/host-attributes/network';
-import { Roles } from '@/features/host-insights/components/host-attributes/roles';
-import { Username } from '@/features/host-insights/components/host-attributes/username';
+import { Hostname, Network, Roles, Username } from '@/features/host-insights';
 import { KillchainTag } from '@/features/threats/components/kill-chain-tag/kill-chain-tag';
 
 import { ImpactedEntity } from '../../model/impacted-entity';

@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
-import { HostOutlierEvents } from '@/features/host-insights/components/host-outlier-events/host-outlier-events';
+import { HostOutlierEvents } from '@/features/host-insights';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 const searchSchema = z.object({

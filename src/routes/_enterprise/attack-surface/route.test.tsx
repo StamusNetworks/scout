@@ -16,7 +16,7 @@ import { z } from 'zod';
 import { BreadcrumbProvider } from '@/common/design-system/molecules/breadcrumbs';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
-import { HomeNetPicker } from '@/features/host-insights/components/home-net-picker/home-net-picker';
+import { HomeNetPicker } from '@/features/host-insights';
 
 const emptyAggregation = {
   aggregations: {

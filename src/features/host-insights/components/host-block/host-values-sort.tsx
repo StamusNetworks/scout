@@ -1,10 +1,11 @@
 import { ListOrdered } from 'lucide-react';
 
 import { CommandFilterSingle } from '@/common/design-system/molecules/data-table/filters/command-filter-single';
+
 import {
   type HostsValuesSort,
   useValuesSortParam,
-} from '@/features/host-insights/hooks/use-values-sort-param';
+} from '../../hooks/use-values-sort-param';
 
 export const HostValuesSort = () => {
   const [sort, setSort] = useValuesSortParam();

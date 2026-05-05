@@ -32,8 +32,10 @@ import { esEscape } from '@/common/lib/strings';
 import { useGetBeaconingEventsQuery } from '@/features/events';
 import { useGetEventsQuery } from '@/features/events';
 import { useGetSightingEventsQuery } from '@/features/events';
-import { useGetHostWithAlertsQuery } from '@/features/host-insights/api/hosts.api';
-import { HostHeader } from '@/features/host-insights/components/host-header/host-header';
+import {
+  HostHeader,
+  useGetHostWithAlertsQuery,
+} from '@/features/host-insights';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useGetRulesQuery } from '@/features/rules';
 import { useTenancy } from '@/features/tenancy';

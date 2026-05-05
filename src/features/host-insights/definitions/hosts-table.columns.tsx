@@ -6,12 +6,13 @@ import { ExportColumn } from '@/common/design-system/molecules/data-table/data-t
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { FormattedBadge } from '@/common/design-system/molecules/formatted-badge';
-import { HostnameTemplate } from '@/features/host-insights/components/host-attributes/hostname';
-import { NetworkTemplate } from '@/features/host-insights/components/host-attributes/network';
-import { RolesTemplate } from '@/features/host-insights/components/host-attributes/roles';
-import { UsernameTemplate } from '@/features/host-insights/components/host-attributes/username';
-import { Host } from '@/features/host-insights/model/host';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
+
+import { HostnameTemplate } from '../components/host-attributes/hostname';
+import { NetworkTemplate } from '../components/host-attributes/network';
+import { RolesTemplate } from '../components/host-attributes/roles';
+import { UsernameTemplate } from '../components/host-attributes/username';
+import { Host } from '../model/host';
 
 export const HOST_COLUMN: CustomColumnDef<Host> = {
   id: 'host',

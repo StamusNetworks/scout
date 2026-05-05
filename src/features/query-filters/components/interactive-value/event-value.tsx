@@ -21,8 +21,7 @@ import {
 } from '@/common/design-system/atoms/ui/tooltip';
 import { compressIPv6, isIP, isIPv6 } from '@/common/lib/ips';
 import { cn } from '@/common/lib/utils';
-import { HostSummary } from '@/features/host-insights/components/host-summary';
-import { useGetHostInsights } from '@/features/host-insights/hooks/use-get-host-insights';
+import { HostSummary, useGetHostInsights } from '@/features/host-insights';
 import { useGetImpactedEntityQuery } from '@/features/threats';
 
 import { getFilterDef } from '../../definitions/query-filter.definitions';

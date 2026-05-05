@@ -17,8 +17,7 @@ import {
   SyntheticTab,
 } from '@/features/events/components/event-detail';
 import { Event } from '@/features/events/model/event';
-import { Hostname } from '@/features/host-insights/components/host-attributes/hostname';
-import { Network } from '@/features/host-insights/components/host-attributes/network';
+import { Hostname, Network } from '@/features/host-insights';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { KillchainTag, KillChainPhase, ThreatTag } from '@/features/threats';
 import { selectDefaultEventDetailTab } from '@/features/ui/preferences/preferences.slice';

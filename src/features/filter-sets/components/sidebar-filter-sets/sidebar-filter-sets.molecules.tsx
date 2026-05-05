@@ -33,7 +33,7 @@ import {
 import {
   useGetHostsQuery,
   useGetHostsWithAlertsQuery,
-} from '@/features/host-insights/api/hosts.api';
+} from '@/features/host-insights';
 import {
   type PersistedFilter,
   type QueryFilterState,

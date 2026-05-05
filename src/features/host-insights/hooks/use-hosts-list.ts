@@ -1,8 +1,9 @@
 import { PaginationState } from '@tanstack/react-table';
 
-import { useGetHostsQuery } from '@/features/host-insights/api/hosts.api';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
+
+import { useGetHostsQuery } from '../api/hosts.api';
 
 export const useHostsList = ({
   withAlerts,

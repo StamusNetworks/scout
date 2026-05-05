@@ -1,8 +1,8 @@
 import { Row } from '@tanstack/react-table';
 
 import { Grid } from '@/common/design-system/atoms/layout/grid';
-import { Host } from '@/features/host-insights/model/host';
 
+import { Host } from '../model/host';
 import { HostBlock } from './host-block/host-block';
 import { getBlocks } from './host-block/host-block.config';
 

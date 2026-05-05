@@ -1,8 +1,8 @@
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { cn } from '@/common/lib/utils';
-import { useGetHostWithAlertsQuery } from '@/features/host-insights/api/hosts.api';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
+import { useGetHostWithAlertsQuery } from '../api/hosts.api';
 import { HostBlock } from './host-block/host-block';
 import { getBlocks } from './host-block/host-block.config';
 

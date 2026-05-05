@@ -32,7 +32,7 @@ import {
   SideBarQueryFilterSets,
   useSaveFilterSetModal,
 } from '@/features/filter-sets';
-import { useWithAlertsParam } from '@/features/host-insights/hooks/use-with-alerts-param';
+import { useWithAlertsParam } from '@/features/host-insights';
 import { Investigation } from '@/features/investigation/components/ongoing-investigation/ongoing-investigation';
 import { selectInvestigationStage } from '@/features/investigation/investigation.slice';
 import { useIsEnterprise } from '@/features/settings';

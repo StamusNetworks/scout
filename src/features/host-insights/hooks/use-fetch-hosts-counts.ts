@@ -1,10 +1,11 @@
 import { useDates } from '@/features/dates';
+import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+
 import {
   getAggregationBody,
   getCustomFilter,
   useFetchHostsCountsQuery,
-} from '@/features/host-insights/api/hosts.api';
-import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+} from '../api/hosts.api';
 
 export const useFetchHostsCounts = ({
   inHomeNetwork,

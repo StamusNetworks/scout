@@ -14,8 +14,7 @@ import { DataTableRowExpander } from '@/common/design-system/molecules/data-tabl
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { cn } from '@/common/lib/utils';
 import { Event } from '@/features/events/model/event';
-import { Hostname } from '@/features/host-insights/components/host-attributes/hostname';
-import { Network } from '@/features/host-insights/components/host-attributes/network';
+import { Hostname, Network } from '@/features/host-insights';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 export const getColumns = (

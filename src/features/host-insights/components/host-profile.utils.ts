@@ -1,4 +1,4 @@
-import { Host } from '@/features/host-insights/model/host';
+import { Host } from '../model/host';
 
 export const getHostProfileChartData = (host: Host | undefined) => [
   {

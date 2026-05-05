@@ -5,15 +5,15 @@ import { DataTable } from '@/common/design-system/molecules/data-table';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { usePaginationState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { esEscape } from '@/common/lib/strings';
-import { useGetHostsQuery } from '@/features/host-insights/api/hosts.api';
-import { HostnameTemplate } from '@/features/host-insights/components/host-attributes/hostname';
-import { NetworkTemplate } from '@/features/host-insights/components/host-attributes/network';
-import { UsernameTemplate } from '@/features/host-insights/components/host-attributes/username';
 import {
   getHostRole,
   Host,
+  HostnameTemplate,
   HostRoles,
-} from '@/features/host-insights/model/host';
+  NetworkTemplate,
+  useGetHostsQuery,
+  UsernameTemplate,
+} from '@/features/host-insights';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { EntityThreatTagsList } from '@/features/threats';

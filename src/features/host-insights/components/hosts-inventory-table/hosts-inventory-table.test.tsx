@@ -9,12 +9,9 @@ import { http, HttpResponse } from 'msw';
 import { BreadcrumbProvider } from '@/common/design-system/molecules/breadcrumbs';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
-import {
-  emptyPaginated,
-  mockHost,
-} from '@/features/host-insights/api/host.mocks';
 import { initialState } from '@/store/store.init';
 
+import { emptyPaginated, mockHost } from '../../api/host.mocks';
 import { HostsInventoryTable } from './hosts-inventory-table';
 
 const createTestRouter = () =>

@@ -1,9 +1,11 @@
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { ScrollArea } from '@/common/design-system/atoms/ui/scroll-area';
-import { useGetHostWithAlertsQuery } from '@/features/host-insights/api/hosts.api';
-import { HostStats } from '@/features/host-insights/components/host-summary';
-import { InternalExternal } from '@/features/host-insights/components/internal-external';
+import {
+  HostStats,
+  InternalExternal,
+  useGetHostWithAlertsQuery,
+} from '@/features/host-insights';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { IpOrEntityEventValue } from '@/features/threats/components/ip-or-entity/ip-or-entity';
 

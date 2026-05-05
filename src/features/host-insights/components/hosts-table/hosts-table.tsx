@@ -12,13 +12,14 @@ import { useTablePreferences } from '@/common/design-system/molecules/data-table
 import { ExportButton } from '@/common/design-system/molecules/export-button';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
-import { HostsTableExpandedRow } from '@/features/host-insights/components/hosts-table-expanded-row';
+
 import {
   HITS_COLUMN,
   HOSTS_BASE_COLUMNS,
   HOSTS_EXPORT_COLUMNS,
-} from '@/features/host-insights/definitions/hosts-table.columns';
-import { useHostsList } from '@/features/host-insights/hooks/use-hosts-list';
+} from '../../definitions/hosts-table.columns';
+import { useHostsList } from '../../hooks/use-hosts-list';
+import { HostsTableExpandedRow } from '../hosts-table-expanded-row';
 
 interface HostsTableProps {
   page: number;
