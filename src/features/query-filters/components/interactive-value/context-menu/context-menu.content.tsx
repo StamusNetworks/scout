@@ -33,7 +33,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { useCreateFilter } from '../../../hooks/use-create-filter';
-import { useEnableTags } from '../../../hooks/use-enable-tags';
+import { useEnableFilterFlags } from '../../../hooks/use-enable-filter-flags';
 import { useQueryFilterDefinition } from '../../../hooks/use-filters-definitions';
 import { useReplaceFilters } from '../../../hooks/use-replace-filters';
 import { resolveEntityTypes } from '../../../utils/entity-validators';
@@ -59,7 +59,7 @@ export const ContextMenuContent = ({
   const dispatch = useAppDispatch();
   const createFilter = useCreateFilter();
   const replaceFilters = useReplaceFilters();
-  const enableTags = useEnableTags();
+  const enableTags = useEnableFilterFlags();
   const { data: deeplinksData } = useGetDeeplinksQuery({
     pageIndex: 0,
     pageSize: 1000000,

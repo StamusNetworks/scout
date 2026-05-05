@@ -18,7 +18,7 @@ const applyOverrides = (overrides?: Partial<FilterFlags>): FilterFlags => ({
       : defaultFilterFlags.novelty,
 });
 
-export const useEnableTags = () => {
+export const useEnableFilterFlags = () => {
   const dispatch = useAppDispatch();
   return useCallback(
     (overrides?: Partial<FilterFlags>) => {

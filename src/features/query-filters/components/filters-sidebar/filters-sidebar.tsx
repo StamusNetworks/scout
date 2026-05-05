@@ -45,9 +45,9 @@ import { useAppSelector } from '@/store/store';
 import { FilterCategory } from '../../definitions/query-filter.config';
 import { getFilterDef } from '../../definitions/query-filter.definitions';
 import { useClearFilters } from '../../hooks/use-clear-filters';
+import { useFilterFlagsRepository } from '../../hooks/use-filter-flags-repository';
 import { useReorderFilters } from '../../hooks/use-reorder-filters';
 import { useSuspendFilter } from '../../hooks/use-suspend-filter';
-import { useTagFiltersRepository } from '../../hooks/use-tag-filters';
 import { AlertTagFlags, EventTypeFlags } from '../../model/filter-flags';
 import { QueryFilterState } from '../../model/query-filter';
 import {
@@ -116,7 +116,7 @@ export const FiltersSideBar = () => {
   const clearFilters = useClearFilters();
   const reorderFilters = useReorderFilters();
   const { clearSuspended } = useSuspendFilter();
-  const tagFiltersRepo = useTagFiltersRepository();
+  const tagFiltersRepo = useFilterFlagsRepository();
 
   const sideBarConfigPerPage: Partial<Record<string, SideBarConfig>> = useMemo(
     () => ({

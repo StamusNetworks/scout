@@ -10,7 +10,7 @@ import {
   toFilterFlags,
   useQFBuilder,
   useQueryFiltersRepository,
-  useTagFiltersRepository,
+  useFilterFlagsRepository,
 } from '@/features/query-filters';
 import { type FilterInput } from '@/features/query-filters/utils/filter-mapper';
 import { useSetTenant } from '@/features/tenancy';
@@ -59,7 +59,7 @@ function SharePage() {
   const navigate = useNavigate();
   const { enterprise } = useFeatureFlags();
   const queryFiltersRepo = useQueryFiltersRepository();
-  const tagFiltersRepo = useTagFiltersRepository();
+  const tagFiltersRepo = useFilterFlagsRepository();
   const qfBuilder = useQFBuilder();
   const setTenant = useSetTenant();
   const setDates = useSetDates();

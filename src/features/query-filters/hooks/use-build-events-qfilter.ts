@@ -10,8 +10,8 @@ import {
   HOST_ID_KEY_PREFIX,
 } from '../definitions/query-filter.config';
 import { getFilterDef } from '../definitions/query-filter.definitions';
+import { useFilterFlagsRepository } from '../hooks/use-filter-flags-repository';
 import { useQFBuilder } from '../hooks/use-qf-builder';
-import { useTagFiltersRepository } from '../hooks/use-tag-filters';
 import { QueryFilterState } from '../model/query-filter';
 import { useQueryFiltersRepository } from '../state/query-filters.repository';
 
@@ -20,7 +20,7 @@ export function useBuildEventsQfilter(
   options: Partial<{ tags: boolean }> = { tags: true },
 ): string | undefined {
   const repo = useQueryFiltersRepository();
-  const tagRepo = useTagFiltersRepository();
+  const tagRepo = useFilterFlagsRepository();
   const qfBuilder = useQFBuilder();
   const investigation = useAppSelector(selectInvestigationFilter);
   const isEnterprise = useIsEnterprise();

@@ -3,7 +3,7 @@ import { Binary, LayoutDashboard } from 'lucide-react';
 
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { useCreateFilter } from '@/features/query-filters/hooks/use-create-filter';
-import { useEnableTags } from '@/features/query-filters/hooks/use-enable-tags';
+import { useEnableFilterFlags } from '@/features/query-filters/hooks/use-enable-filter-flags';
 import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 
 type Props = {
@@ -18,7 +18,7 @@ type Props = {
 export const ThreatActions = ({ threatName }: Props) => {
   const navigate = useNavigate();
   const createFilter = useCreateFilter();
-  const enableTags = useEnableTags();
+  const enableTags = useEnableFilterFlags();
   const QFBuilder = useQFBuilder();
   const disabled = !QFBuilder;
 

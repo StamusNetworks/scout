@@ -37,7 +37,7 @@ import { usePaginationUrlState } from '@/common/design-system/molecules/data-tab
 import { useSortingUrlState } from '@/common/design-system/molecules/data-table/hooks/use-sorting';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { useCreateFilter } from '@/features/query-filters/hooks/use-create-filter';
-import { useEnableTags } from '@/features/query-filters/hooks/use-enable-tags';
+import { useEnableFilterFlags } from '@/features/query-filters/hooks/use-enable-filter-flags';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { KIND_LABEL, ThreatForm } from '@/features/threats';
 import { KillChainCountersByFamilyId } from '@/features/threats/common/killchain/components/killchain-counters/killchain-counters';
@@ -95,7 +95,7 @@ export const ThreatFamilyById = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const createFilter = useCreateFilter();
-  const enableTags = useEnableTags();
+  const enableTags = useEnableFilterFlags();
 
   const params = useGlobalQueryParams(['tenant', 'dates']);
 

@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import {
   useQFBuilder,
   useQueryFiltersRepository,
-  useTagFiltersRepository,
+  useFilterFlagsRepository,
 } from '@/features/query-filters';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
@@ -23,7 +23,7 @@ export const useLoadFilterSet = () => {
   const dispatch = useAppDispatch();
   const loadedFilterSetId = useAppSelector(selectLoadedFilterSetId);
   const qfBuilder = useQFBuilder();
-  const tagFiltersRepo = useTagFiltersRepository();
+  const tagFiltersRepo = useFilterFlagsRepository();
   const queryFiltersRepo = useQueryFiltersRepository();
 
   return useCallback(

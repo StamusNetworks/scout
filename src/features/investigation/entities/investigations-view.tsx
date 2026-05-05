@@ -37,8 +37,8 @@ import { InvestigationState } from '@/features/investigation/investigation.slice
 import { InvestigationHistory } from '@/features/investigation/investigations-history.slice';
 import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
 import { useCreateFilter } from '@/features/query-filters/hooks/use-create-filter';
+import { useFilterFlagsRepository } from '@/features/query-filters/hooks/use-filter-flags-repository';
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
-import { useTagFiltersRepository } from '@/features/query-filters/hooks/use-tag-filters';
 import {
   type SerializedFilterFlags,
   toFilterFlags,
@@ -220,7 +220,7 @@ const InvestigationHistoryItem = ({
   const clearFilters = useClearFilters();
   const createFilter = useCreateFilter();
   const replaceFilters = useReplaceFilters();
-  const tagFiltersRepo = useTagFiltersRepository();
+  const tagFiltersRepo = useFilterFlagsRepository();
 
   const handleLoadAsFilters = ({
     start_date,

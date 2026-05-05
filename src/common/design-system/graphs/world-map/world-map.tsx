@@ -10,7 +10,7 @@ import {
   ZoomableGroup,
 } from 'react-simple-maps';
 
-import { useEnableTags } from '@/features/query-filters/hooks/use-enable-tags';
+import { useEnableFilterFlags } from '@/features/query-filters/hooks/use-enable-filter-flags';
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
 import { useTheme } from '@/features/ui/theming/useTheme';
 
@@ -23,7 +23,7 @@ interface MapChartProps {
 const WorldMap = ({ data }: MapChartProps) => {
   const navigate = useNavigate();
   const replaceFilters = useReplaceFilters();
-  const forceTags = useEnableTags();
+  const forceTags = useEnableFilterFlags();
   const { isDark } = useTheme();
   const moving = useRef<boolean>(false);
 

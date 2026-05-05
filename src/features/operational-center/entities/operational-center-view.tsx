@@ -11,7 +11,7 @@ import { IndicidentsTable } from '@/features/operational-center/entities/inciden
 import { MitreTechniques } from '@/features/operational-center/entities/mitre-techniques';
 import { OutliersTimeline } from '@/features/operational-center/entities/outliers-timeline';
 import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
-import { useEnableTags } from '@/features/query-filters/hooks/use-enable-tags';
+import { useEnableFilterFlags } from '@/features/query-filters/hooks/use-enable-filter-flags';
 import { KillChainCounters } from '@/features/threats/common/killchain/components/killchain-counters/killchain-counters';
 import { OffendersWorldMap } from '@/features/threats/common/molecules/offenders-world-map/offenders-world-map';
 interface OperationalCenterViewProps {
@@ -23,7 +23,7 @@ export const OperationalCenterView = ({
 }: OperationalCenterViewProps) => {
   const navigate = useNavigate();
   const clearFilters = useClearFilters();
-  const enableTags = useEnableTags();
+  const enableTags = useEnableFilterFlags();
 
   const handleClickOutliers = () => {
     enableTags({ novelty: true });

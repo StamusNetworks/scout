@@ -13,14 +13,14 @@ import {
   setNovelty,
 } from '../state/query-filters.slice';
 
-export type TagFiltersRepository = {
+export type FilterFlagsRepository = {
   getAll(): FilterFlags;
   setEventTypes(flags: Partial<EventTypeFlags>): void;
   setAlertTags(flags: Partial<AlertTagFlags>): void;
   setNovelty(value: boolean): void;
 };
 
-export function useTagFiltersRepository(): TagFiltersRepository {
+export function useFilterFlagsRepository(): FilterFlagsRepository {
   const flags = useAppSelector((state) => state.filters.queryFilters.flags);
   const dispatch = useAppDispatch();
 

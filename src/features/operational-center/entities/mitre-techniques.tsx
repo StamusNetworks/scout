@@ -27,14 +27,14 @@ import {
 import { formatNumber } from '@/common/lib/numbers';
 import { useGetDashboardFieldsQuery } from '@/features/events/detection-events/use-cases/explorer/api/dashboard.api';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
-import { useEnableTags } from '@/features/query-filters/hooks/use-enable-tags';
+import { useEnableFilterFlags } from '@/features/query-filters/hooks/use-enable-filter-flags';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
 
 export const MitreTechniques = () => {
   const navigate = useNavigate();
   const replaceFilters = useReplaceFilters();
-  const enableTags = useEnableTags();
+  const enableTags = useEnableFilterFlags();
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const [pagination, setPagination] = usePaginationState();
   const { data, config, total, isError, isEmpty } = useGetDashboardFieldsQuery(
