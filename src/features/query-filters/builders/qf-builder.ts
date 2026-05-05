@@ -4,7 +4,10 @@ import { esEscape } from '@/common/lib/strings';
 
 import { buildAlertTagsQfilter } from '../builders/build-alert-tags-qfilter';
 import { buildNoveltyQfilter } from '../builders/build-novelty-qfilter';
-import { FilterCategory } from '../definitions/query-filter.config';
+import {
+  FilterCategory,
+  HOST_ID_KEY_PREFIX,
+} from '../definitions/query-filter.config';
 import { getFilterDef } from '../definitions/query-filter.definitions';
 import { AlertTagFlags } from '../model/filter-flags';
 import {
@@ -31,7 +34,8 @@ export function QFBuilder(
     const eventFilters = queryFilters?.filter(
       (f) =>
         getFilterDef(f.key)?.category === FilterCategory.EVENT ||
-        (getFilterDef(f.key) === undefined && !f.key.startsWith('host_id.')),
+        (getFilterDef(f.key) === undefined &&
+          !f.key.startsWith(HOST_ID_KEY_PREFIX)),
     );
     const qfilter = filtersToStringArray(eventFilters, definitions, suffix);
 
@@ -47,7 +51,7 @@ export function QFBuilder(
   function toHostIdQFString(queryFilters?: Omit<QueryFilterState, 'id'>[]) {
     if (!queryFilters) return undefined;
     const hostIdFilters = queryFilters?.filter(
-      (f) => !f.is_suspended && f.key.startsWith('host_id.'),
+      (f) => !f.is_suspended && f.key.startsWith(HOST_ID_KEY_PREFIX),
     );
     return filtersToStringArray(hostIdFilters, definitions, suffix).join(
       ' AND ',

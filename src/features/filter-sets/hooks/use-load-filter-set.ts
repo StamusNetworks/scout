@@ -51,7 +51,7 @@ export const useLoadFilterSet = () => {
       );
       queryFiltersRepo.set(newFilters);
       dispatch(setLoadedFilterSetId(filterSet.id));
-      toast.success('Filterset applied');
+      toast.success('Filter set applied');
     },
     [dispatch, loadedFilterSetId, qfBuilder, tagFiltersRepo, queryFiltersRepo],
   );

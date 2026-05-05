@@ -2,7 +2,10 @@ import { toPairs } from 'ramda';
 
 import { API } from '@/store/api';
 
-import { FilterCategory } from '../definitions/query-filter.config';
+import {
+  FilterCategory,
+  HOST_ID_KEY_PREFIX,
+} from '../definitions/query-filter.config';
 import { QueryFilterType } from '../model/query-filter';
 
 /**
@@ -28,7 +31,7 @@ export const ESMappingAPI = API.injectEndpoints({
         toPairs(response).reduce((acc, [key, value]) => {
           acc[key] = {
             type: value.type,
-            category: key.startsWith('host_id.')
+            category: key.startsWith(HOST_ID_KEY_PREFIX)
               ? FilterCategory.HOST
               : FilterCategory.EVENT,
           };

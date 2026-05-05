@@ -5,7 +5,10 @@ import { selectInvestigationFilter } from '@/features/investigation/investigatio
 import { useIsEnterprise } from '@/features/settings';
 import { useAppSelector } from '@/store/store';
 
-import { FilterCategory } from '../definitions/query-filter.config';
+import {
+  FilterCategory,
+  HOST_ID_KEY_PREFIX,
+} from '../definitions/query-filter.config';
 import { getFilterDef } from '../definitions/query-filter.definitions';
 import { useQFBuilder } from '../hooks/use-qf-builder';
 import { useTagFiltersRepository } from '../hooks/use-tag-filters';
@@ -30,7 +33,8 @@ export function useBuildEventsQfilter(
 
     const eventFilter = (f: QueryFilterState) =>
       getFilterDef(f.key)?.category === FilterCategory.EVENT ||
-      (getFilterDef(f.key) === undefined && !f.key.startsWith('host_id.'));
+      (getFilterDef(f.key) === undefined &&
+        !f.key.startsWith(HOST_ID_KEY_PREFIX));
 
     if (typeof filterExtension === 'string') {
       const activeFilters = queryFilters

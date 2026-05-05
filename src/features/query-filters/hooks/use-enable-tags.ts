@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
 
 import { useAppDispatch } from '@/store/store';
-import { store } from '@/store/store-instance';
 
 import { defaultFilterFlags, type FilterFlags } from '../model/filter-flags';
 import {
@@ -18,13 +17,6 @@ const applyOverrides = (overrides?: Partial<FilterFlags>): FilterFlags => ({
       ? overrides.novelty
       : defaultFilterFlags.novelty,
 });
-
-export const enableTags = (overrides?: Partial<FilterFlags>) => {
-  const flags = applyOverrides(overrides);
-  store.dispatch(setEventTypes(flags.eventTypes));
-  store.dispatch(setAlertTags(flags.alertTags));
-  store.dispatch(setNovelty(flags.novelty));
-};
 
 export const useEnableTags = () => {
   const dispatch = useAppDispatch();

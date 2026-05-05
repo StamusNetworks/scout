@@ -1,3 +1,10 @@
+/**
+ * Prefix that identifies host-scoped filter keys (e.g. `host_id.ip`,
+ * `host_id.roles.name`). Filters with this prefix get rolled into the
+ * `host_id_qfilter` query param; everything else flows through `qfilter`.
+ */
+export const HOST_ID_KEY_PREFIX = 'host_id.';
+
 export const ES_Types = {
   date: 'date',
   keyword: 'keyword',
