@@ -11,7 +11,7 @@ import { compressIPv6 } from '@/common/lib/ips';
 import { cn } from '@/common/lib/utils';
 import { useThreat } from '@/features/threats/hooks/use-threat';
 
-import { MENU_WIDTH, useTimelineContext } from './compromise-timeline';
+import { MENU_WIDTH, useTimelineContext } from './timeline';
 
 interface TimelineLateralMovementProps {
   timelineRef: React.RefObject<HTMLDivElement | null>;

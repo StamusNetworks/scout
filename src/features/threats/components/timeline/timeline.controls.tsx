@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import { useCallback, useEffect, useState } from 'react';
 
-import { MENU_WIDTH, useTimelineContext } from './compromise-timeline';
+import { MENU_WIDTH, useTimelineContext } from './timeline';
 
 interface TimelineControlsProps {
   timelineRef: React.RefObject<HTMLDivElement | null>;

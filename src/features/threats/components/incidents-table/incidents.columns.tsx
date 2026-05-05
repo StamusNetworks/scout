@@ -1,6 +1,6 @@
 import { threatStatusColumnDefs } from '@/features/threats/components/threat-status-columns/threat-status-columns';
 
-export const compromiseIncidentsColumns = [
+export const incidentsColumns = [
   { ...threatStatusColumnDefs.first_seen, enableSorting: true },
   threatStatusColumnDefs.entity,
   threatStatusColumnDefs.role,

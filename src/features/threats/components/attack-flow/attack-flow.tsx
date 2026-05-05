@@ -49,7 +49,7 @@ const ATTACK_FLOW_COLUMNS: ProtoColumn[] = [
   },
 ];
 
-export const CompromiseAttackFlow = () => {
+export const AttackFlow = () => {
   const createFilter = useCreateFilter();
   const globalParams = useGlobalQueryParams(['dates', 'tenant', 'qfilter']);
   const { data: esMapping } = useESMapping();

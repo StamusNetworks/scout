@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
 
-import { useTimelineContext } from './compromise-timeline';
+import { useTimelineContext } from './timeline';
 
 export const TimelineGraduation = () => {
   const { from_date, to_date } = useTimelineContext();

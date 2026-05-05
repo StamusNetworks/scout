@@ -2,7 +2,7 @@ import { ScanSearch } from 'lucide-react';
 
 import { Button } from '@/common/design-system/atoms/ui/button';
 
-import { useTimelineContext } from './compromise-timeline';
+import { useTimelineContext } from './timeline';
 
 interface TimelineZoomToFitProps {
   start_date: number;

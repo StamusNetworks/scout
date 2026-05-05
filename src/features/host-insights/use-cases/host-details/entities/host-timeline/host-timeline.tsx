@@ -5,7 +5,7 @@ import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import {
-  CompromiseTimeline,
+  Timeline,
   HostTimelineTemplate,
   useGetThreatHistoryQuery,
 } from '@/features/threats';
@@ -61,7 +61,7 @@ export function HostTimeline({ hostId }: HostTimelineProps) {
         <Biohazard />
         Threats timeline
       </BlockTitle>
-      <CompromiseTimeline entity={hostId} />
+      <Timeline entity={hostId} />
       <BlockTitle className="mt-8">
         <History /> Host History
       </BlockTitle>

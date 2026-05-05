@@ -8,7 +8,7 @@ import {
   PageTitle,
 } from '@/common/design-system/atoms/page';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
-import { CompromiseTimeline } from '@/features/threats';
+import { Timeline } from '@/features/threats';
 
 export const Route = createFileRoute('/_enterprise/threats/timeline')({
   component: () => (
@@ -27,7 +27,7 @@ function ThreatsTimelinePage() {
             <PageTitle>Threats Timeline</PageTitle>
           </PageHeaderContent>
         </PageHeader>
-        <CompromiseTimeline />
+        <Timeline />
       </TogglePageContainer>
     </Page>
   );

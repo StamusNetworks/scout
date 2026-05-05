@@ -7,7 +7,7 @@ interface CompromiseHuntingTrailProps {
   endDate: number | undefined;
 }
 
-export const CompromiseHuntingTrail = ({
+export const HuntingTrail = ({
   asset,
   startDate,
   endDate,

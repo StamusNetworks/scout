@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
-import { CompromiseIncidentsTable } from '@/features/threats';
+import { IncidentsTable } from '@/features/threats';
 
 const searchSchema = z.object({
   page: z.number().default(1),
@@ -42,7 +42,7 @@ function IncidentsTab() {
     );
 
   return (
-    <CompromiseIncidentsTable
+    <IncidentsTable
       page={page}
       pageSize={pageSize}
       sorting={sorting}

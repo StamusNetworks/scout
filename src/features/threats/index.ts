@@ -33,9 +33,9 @@ export { useGetThreatHistoryQuery } from './api/timeline.api';
 export { toThreat } from './api/threat.transforms';
 
 // Components
-export { CompromiseAttackFlow } from './components/compromise-attack-flow/compromise-attack-flow';
-export { CompromiseHuntingTrail } from './components/compromise-hunting-trail/compromise-hunting-trail';
-export { CompromiseIncidentsTable } from './components/compromise-incidents-table/compromise-incidents-table';
+export { AttackFlow } from './components/attack-flow/attack-flow';
+export { HuntingTrail } from './components/hunting-trail/hunting-trail';
+export { IncidentsTable } from './components/incidents-table/incidents-table';
 export { ThreatActions } from './components/threat-actions/threat-actions';
 export { ThreatDetailTabs } from './components/threat-detail-tabs/threat-detail-tabs';
 export { ThreatDetectionMethods } from './components/threat-detection-methods/threat-detection-methods';
@@ -44,5 +44,5 @@ export { ThreatEvents } from './components/threat-events/threat-events';
 export { ThreatForm } from './components/threat-form/threat-form';
 export { ThreatGraph } from './components/threat-graph/threat-graph';
 export { ThreatName } from './components/threat-name/threat-name';
-export { CompromiseTimeline } from './components/compromise-timeline/compromise-timeline';
-export { HostTimelineTemplate } from './components/compromise-timeline/history-timeline';
+export { Timeline } from './components/timeline/timeline';
+export { HostTimelineTemplate } from './components/timeline/history-timeline';

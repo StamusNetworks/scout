@@ -11,7 +11,7 @@ import { renderWithProviders } from '@/common/testing/test-utils';
 import { makeLateralEvent, makeNrdEvent } from '@/features/events';
 import { makeSightingApiEvent } from '@/features/events';
 
-import { CompromiseHuntingTrail } from './compromise-hunting-trail';
+import { HuntingTrail } from './hunting-trail';
 
 const createTestRouter = () =>
   createRouter({
@@ -37,7 +37,7 @@ beforeEach(() => {
 
 const renderComponent = () =>
   renderWithProviders(
-    <CompromiseHuntingTrail
+    <HuntingTrail
       asset="192.168.1.5"
       startDate={1736640000000}
       endDate={1736899200000}
@@ -47,7 +47,7 @@ const renderComponent = () =>
     },
   );
 
-describe('CompromiseHuntingTrail', () => {
+describe('HuntingTrail', () => {
   it('shows loading skeleton while queries are in flight', async () => {
     server.use(
       http.get(baseUrl + '/rules/es/alerts_tail', async () => {
@@ -56,7 +56,7 @@ describe('CompromiseHuntingTrail', () => {
       }),
     );
     renderWithProviders(
-      <CompromiseHuntingTrail
+      <HuntingTrail
         asset="192.168.1.5"
         startDate={1736640000000}
         endDate={1736899200000}

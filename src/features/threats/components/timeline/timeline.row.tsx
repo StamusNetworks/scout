@@ -14,7 +14,7 @@ import { Roles } from '@/features/host-insights/use-cases/host-details/molecules
 import { IpOrEntityEventValue } from '@/features/threats/components/ip-or-entity/ip-or-entity';
 
 import { TimelineProps } from '../../model/threat-history';
-import { useTimelineContext } from './compromise-timeline';
+import { useTimelineContext } from './timeline';
 import { TimelineHostDetails } from './timeline.host-details';
 import { TimelineKCPhaseBadge } from './timeline.kc-phase';
 import { TimelineThreatB } from './timeline.threat';

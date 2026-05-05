@@ -13,9 +13,9 @@ import { renderWithProviders } from '@/common/testing/test-utils';
 import { initialState } from '@/store/store.init';
 
 import {
-  CompromiseIncidentsTable,
+  IncidentsTable,
   CompromiseIncidentsTableProps,
-} from './compromise-incidents-table';
+} from './incidents-table';
 
 const createTestRouter = () =>
   createRouter({
@@ -57,7 +57,7 @@ const renderTable = async (
 ) =>
   renderWithProviders(
     <BreadcrumbProvider>
-      <CompromiseIncidentsTable
+      <IncidentsTable
         {...defaultProps}
         {...props}
       />
@@ -83,7 +83,7 @@ beforeEach(() => {
   );
 });
 
-describe('CompromiseIncidentsTable - Empty state', () => {
+describe('IncidentsTable - Empty state', () => {
   it('shows plural impacted entities message when count > 1', async () => {
     server.use(
       http.get(baseUrl + '/appliances/threat/threats_per_asset/', () =>

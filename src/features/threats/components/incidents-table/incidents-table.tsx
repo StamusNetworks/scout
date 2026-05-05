@@ -33,7 +33,7 @@ import {
 import { useThreats } from '@/features/threats/hooks/use-threats';
 import { ThreatStatus } from '@/features/threats/model/threat-status';
 
-import { compromiseIncidentsColumns } from './compromise-incidents.columns';
+import { incidentsColumns } from './incidents.columns';
 
 export interface CompromiseIncidentsTableProps {
   page: number;
@@ -44,7 +44,7 @@ export interface CompromiseIncidentsTableProps {
   onSortingChange: (updater: Updater<SortingState>) => void;
 }
 
-export const CompromiseIncidentsTable = ({
+export const IncidentsTable = ({
   page,
   pageSize,
   sorting,
@@ -124,7 +124,7 @@ export const CompromiseIncidentsTable = ({
     <DataTable
       data={data}
       isLoading={isFetching}
-      columns={compromiseIncidentsColumns}
+      columns={incidentsColumns}
       pagination={pagination}
       onPaginationChange={handlePaginationChange}
       onRowClick={onRowClick}
