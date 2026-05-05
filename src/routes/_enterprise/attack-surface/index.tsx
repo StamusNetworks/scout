@@ -1,7 +1,7 @@
 import { createFileRoute, useSearch } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { NetworkTreeSunburst } from '@/features/host-insights/use-cases/hosts-visualisation/entities/network-tree-sunburst';
+import { NetworkTreeSunburst } from '@/features/host-insights/components/network-tree-sunburst/network-tree-sunburst';
 
 export const Route = createFileRoute('/_enterprise/attack-surface/')({
   component: () => (

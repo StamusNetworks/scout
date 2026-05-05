@@ -14,9 +14,9 @@ import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { useSearchNavigate } from '@/common/lib/use-search-navigate';
-import { DiscoveredHosts } from '@/features/host-insights/common/discovered-hosts/discovered-hosts';
-import { HomeNetPicker } from '@/features/host-insights/common/home-net-picker/home-net-picker';
-import { HostsTable } from '@/features/host-insights/use-cases/hosts-list/entities/hosts-table';
+import { DiscoveredHosts } from '@/features/host-insights/components/discovered-hosts/discovered-hosts';
+import { HomeNetPicker } from '@/features/host-insights/components/home-net-picker/home-net-picker';
+import { HostsTable } from '@/features/host-insights/components/hosts-table/hosts-table';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 const searchSchema = z.object({
