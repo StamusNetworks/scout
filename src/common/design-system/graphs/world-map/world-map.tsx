@@ -110,9 +110,11 @@ const WorldMap = ({ data }: MapChartProps) => {
                         onClick={() => {
                           navigate({ to: '/explorer' });
                           forceTags({
-                            alert: false,
-                            discovery: false,
-                            stamus: true,
+                            eventTypes: {
+                              alert: false,
+                              discovery: false,
+                              stamus: true,
+                            },
                           });
                           replaceFilters([
                             { key: 'geoip.country.name', value: NAME },

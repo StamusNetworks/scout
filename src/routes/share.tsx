@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { type DatesPayload, useSetDates } from '@/features/dates';
+import { toFilterFlags } from '@/features/filtering/filters/query-filters/filter-flags.model';
 import { useReorderFilters } from '@/features/filtering/filters/query-filters/use-cases/reorder-filters/reorder-filters';
 import { useReplaceFilters } from '@/features/filtering/filters/query-filters/use-cases/replace-filters/replace-filters';
 import { type FilterInput } from '@/features/filtering/filters/query-filters/utils/filter-mapper';
@@ -92,8 +93,11 @@ function SharePage() {
     // Set time filters
     setDates(toDatesPayload(state.time));
 
-    // Set tag filters
-    tagFiltersRepo.set(state.tags);
+    // Set flag filters (event types, alert tags, novelty)
+    const flags = toFilterFlags(state.tags);
+    tagFiltersRepo.setEventTypes(flags.eventTypes);
+    tagFiltersRepo.setAlertTags(flags.alertTags);
+    tagFiltersRepo.setNovelty(flags.novelty);
 
     // Set query filters: clear silently (no toast) then replace
     reorderFilters([]);

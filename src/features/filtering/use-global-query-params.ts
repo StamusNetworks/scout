@@ -3,7 +3,7 @@ import { useTenant } from '@/features/tenancy';
 import { useAppSelector } from '@/store/store';
 
 import type { QueryFilterState } from './filters/query-filters/query-filter.model';
-import { selectEventsTypesParams } from './filters/query-filters/query-filters.selectors';
+import { selectEventTypeFlagsParams } from './filters/query-filters/query-filters.selectors';
 import { useBuildHostIdQfilter } from './filters/query-filters/use-cases/build-host-id-qfilter/build-host-id-qfilter';
 import { useBuildEventsQfilter } from './filters/query-filters/use-cases/build-qfilter/build-qfilter';
 import { useBuildSignatureFilter } from './filters/query-filters/use-cases/build-signature-filter/build-signature-filter';
@@ -23,7 +23,7 @@ export const useGlobalQueryParams = (
 ) => {
   const dates = useDates();
   const tenant = useTenant();
-  const eventsTypes = useAppSelector(selectEventsTypesParams);
+  const eventTypes = useAppSelector(selectEventTypeFlagsParams);
   const qfilter = useBuildEventsQfilter(options?.extendQfilter);
   const hostIdQfilter = useBuildHostIdQfilter(options?.extendQfilter);
   const signatureFilters = useBuildSignatureFilter(options?.extendQfilter);
@@ -36,7 +36,7 @@ export const useGlobalQueryParams = (
     }),
     ...(subscribe?.includes('qfilter') && {
       qfilter,
-      ...eventsTypes,
+      ...eventTypes,
     }),
     ...(subscribe?.includes('qfilterHost') && {
       host_id_qfilter: hostIdQfilter,

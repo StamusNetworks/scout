@@ -30,8 +30,8 @@ import {
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { Textarea } from '@/common/design-system/atoms/ui/textarea';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
+import { type FilterFlags } from '@/features/filtering/filters/query-filters/filter-flags.model';
 import { QueryFilterState } from '@/features/filtering/filters/query-filters/query-filter.model';
-import { TagFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
 import { FilterInput } from '@/features/filtering/filters/query-filters/use-cases/update-filter/filter-input';
 
 import { useCreateFilterSetMutation } from '../../filtersets.api';
@@ -63,18 +63,22 @@ const formSchema = z.object({
   ),
 });
 
-const getDefaultValues = (filters: QueryFilterState[], tags?: TagFilters) => ({
+const getDefaultValues = (
+  filters: QueryFilterState[],
+  flags?: FilterFlags,
+) => ({
   name: '',
   page: 'DASHBOARDS',
   share: true,
   description: '',
+  // Wire shape uses `alerts/sightings`; domain uses `alert/discovery`.
   tags: {
-    alerts: tags?.alert ?? false,
-    stamus: tags?.stamus ?? false,
-    sightings: tags?.discovery ?? false,
-    informational: tags?.informational ?? false,
-    relevant: tags?.relevant ?? false,
-    untagged: tags?.untagged ?? false,
+    alerts: flags?.eventTypes.alert ?? false,
+    stamus: flags?.eventTypes.stamus ?? false,
+    sightings: flags?.eventTypes.discovery ?? false,
+    informational: flags?.alertTags.informational ?? false,
+    relevant: flags?.alertTags.relevant ?? false,
+    untagged: flags?.alertTags.untagged ?? false,
   },
   filters: filters.map((item) => ({
     ...item,
@@ -104,16 +108,16 @@ const DefaultInput = ({ label, placeholder, ...props }: DefaultInputProps) => {
 
 interface SaveFilterSetFormProps {
   filters: QueryFilterState[];
-  tags?: TagFilters;
+  flags?: FilterFlags;
   onClose?: () => void;
 }
 export const SaveFilterSetForm = ({
   filters,
-  tags,
+  flags,
   onClose,
 }: SaveFilterSetFormProps) => {
   const { enterprise } = useFeatureFlags();
-  const initialValues = getDefaultValues(filters, tags);
+  const initialValues = getDefaultValues(filters, flags);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialValues,
@@ -152,7 +156,7 @@ export const SaveFilterSetForm = ({
         className="space-y-4"
       >
         <Column className="gap-4">
-          {tags && (
+          {flags && (
             <Grid className="grid-cols-3 gap-2">
               <FormField
                 name="tags.alerts"

@@ -4,13 +4,13 @@ import { esEscape } from '@/common/lib/strings';
 
 import { FilterCategory } from '../constants/query-filter.config';
 import { getFilterDef } from '../constants/query-filter.definition';
+import { AlertTagFlags } from '../filter-flags.model';
 import {
   QueryFilterDefinition,
   QueryFilterState,
   QueryFilterType,
   QueryMatching,
 } from '../query-filter.model';
-import { AlertTags } from '../query-filters.store';
 
 type CombinedDef =
   | QueryFilterDefinition
@@ -23,7 +23,7 @@ export function QFBuilder(
 ) {
   function toQFString(
     queryFilters?: Omit<QueryFilterState, 'id'>[],
-    tagsFilters?: AlertTags | null,
+    tagsFilters?: AlertTagFlags | null,
     novelty?: boolean,
   ) {
     const eventFilters = queryFilters?.filter(
@@ -84,7 +84,7 @@ export function QFBuilder(
   };
 }
 
-function getTagsFilters(tagsFilters?: AlertTags | null) {
+function getTagsFilters(tagsFilters?: AlertTagFlags | null) {
   const tagsQfilter = [];
   if (tagsFilters) {
     Object.entries(tagsFilters).forEach(([key, value]) => {

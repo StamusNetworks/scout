@@ -1,14 +1,12 @@
 import { z } from 'zod';
 
 import {
-  EVENT_TYPES,
   FilterCategory,
   FilterInputType,
   FilterType,
   FilterValidationType,
 } from './constants/query-filter.config';
 
-export type EventTypes = typeof EVENT_TYPES;
 export type FilterValidationType = typeof FilterValidationType;
 export type FilterInputType = typeof FilterInputType;
 export type FilterType = typeof FilterType;

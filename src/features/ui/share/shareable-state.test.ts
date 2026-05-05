@@ -124,7 +124,22 @@ const DATES_ALL = {
   from_unit: undefined,
 };
 
-const TAG_FILTERS = {
+const FLAGS = {
+  eventTypes: {
+    alert: true,
+    stamus: true,
+    discovery: false,
+  },
+  alertTags: {
+    relevant: true,
+    informational: false,
+    untagged: true,
+  },
+  novelty: false,
+};
+
+// Flat serialized form (what ends up in the URL).
+const SERIALIZED_FLAGS = {
   alert: true,
   stamus: true,
   discovery: false,
@@ -167,14 +182,14 @@ describe('buildShareableState', () => {
       '/hosts/42/incidents',
       DATES_FROM,
       QUERY_FILTERS,
-      TAG_FILTERS,
+      FLAGS,
       4,
     );
     expect(result).toEqual({
       route: '/hosts/42/incidents',
       tenant: 4,
       time: { type: 'from', duration: 30, unit: 'days' },
-      tags: TAG_FILTERS,
+      tags: SERIALIZED_FLAGS,
       filters: [
         { key: 'src_ip', value: '192.168.1.1' },
         { key: 'alert.severity', value: 3, wildcarded: true },
@@ -187,7 +202,7 @@ describe('buildShareableState', () => {
       '/explorer',
       DATES_ALL,
       QUERY_FILTERS,
-      TAG_FILTERS,
+      FLAGS,
       undefined,
     );
     expect(result.filters).toHaveLength(2);
@@ -199,7 +214,7 @@ describe('buildShareableState', () => {
       '/explorer',
       DATES_ALL,
       [],
-      TAG_FILTERS,
+      FLAGS,
       undefined,
     );
     expect(result.tenant).toBeUndefined();
@@ -211,7 +226,7 @@ describe('buildShareableState', () => {
       '/explorer',
       DATES_ALL,
       QUERY_FILTERS,
-      TAG_FILTERS,
+      FLAGS,
       undefined,
     );
     const srcIpFilter = result.filters.find((f) => f.key === 'src_ip')!;
@@ -224,7 +239,7 @@ describe('buildShareableState', () => {
       '/explorer',
       DATES_RANGE,
       [],
-      TAG_FILTERS,
+      FLAGS,
       undefined,
     );
     expect(result.time).toEqual({
@@ -239,7 +254,7 @@ describe('buildShareableState', () => {
       '/explorer',
       DATES_AUTO,
       [],
-      TAG_FILTERS,
+      FLAGS,
       undefined,
     );
     expect(result.time).toEqual({ type: 'auto' });
@@ -250,7 +265,7 @@ describe('buildShareableState', () => {
       '/hosts/42/incidents?page=3&sort=desc',
       DATES_FROM,
       QUERY_FILTERS,
-      TAG_FILTERS,
+      FLAGS,
       4,
     );
     expect(result.route).toBe('/hosts/42/incidents?page=3&sort=desc');

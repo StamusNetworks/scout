@@ -1,43 +1,33 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { isNil, toPairs } from 'ramda';
+import { toPairs } from 'ramda';
 
 import { startsWithOneOf } from '@/common/lib/strings';
 import { ESMappingAPI } from '@/features/filtering/es-mapping/es-mapping.api';
-import type { TagFilters } from '@/features/filtering/filters/tag-filters/tag-filters.model';
 
+import {
+  type AlertTagFlags,
+  defaultFilterFlags,
+  type EventTypeFlags,
+  type FilterFlags,
+} from './filter-flags.model';
 import { QueryFilterState, QueryFilterType } from './query-filter.model';
-
-export type {
-  AlertTags,
-  EventTypes,
-  Novelty,
-  TagFilters,
-} from '@/features/filtering/filters/tag-filters/tag-filters.model';
 
 const blacklisted = ['agent', 'beaconing_statistics'];
 
 type QueryFiltersSliceState = {
   queryFilters: QueryFilterState[];
-  tagFilters: TagFilters;
+  flags: FilterFlags;
   types: Record<string, { type: QueryFilterType }> | undefined;
 };
 
 const initialState: QueryFiltersSliceState = {
   queryFilters: [],
-  tagFilters: {
-    novelty: false,
-    informational: true,
-    relevant: true,
-    untagged: true,
-    stamus: true,
-    alert: true,
-    discovery: true,
-  },
+  flags: defaultFilterFlags,
   types: undefined,
 };
 
 export const queryFiltersSlice = createSlice({
-  name: 'filters',
+  name: 'queryFilters',
   initialState,
   reducers: {
     setQueryFilters: (state, action: PayloadAction<QueryFilterState[]>) => {
@@ -46,14 +36,14 @@ export const queryFiltersSlice = createSlice({
     clearQueryFilters: (state) => {
       state.queryFilters = [];
     },
-    setTagFilters: (state, action: PayloadAction<Partial<TagFilters>>) => {
-      toPairs(action.payload)
-        .filter((value) => !isNil(value))
-        .forEach(([key, value]) => {
-          if (!isNil(value)) {
-            state.tagFilters[key] = value;
-          }
-        });
+    setEventTypes: (state, action: PayloadAction<Partial<EventTypeFlags>>) => {
+      Object.assign(state.flags.eventTypes, action.payload);
+    },
+    setAlertTags: (state, action: PayloadAction<Partial<AlertTagFlags>>) => {
+      Object.assign(state.flags.alertTags, action.payload);
+    },
+    setNovelty: (state, action: PayloadAction<boolean>) => {
+      state.flags.novelty = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -75,6 +65,17 @@ export const queryFiltersSlice = createSlice({
   },
 });
 
-export const { setQueryFilters, clearQueryFilters, setTagFilters } =
-  queryFiltersSlice.actions;
+export const {
+  setQueryFilters,
+  clearQueryFilters,
+  setEventTypes,
+  setAlertTags,
+  setNovelty,
+} = queryFiltersSlice.actions;
 export const queryFiltersInitialState = initialState;
+
+export type {
+  AlertTagFlags,
+  EventTypeFlags,
+  FilterFlags,
+} from './filter-flags.model';

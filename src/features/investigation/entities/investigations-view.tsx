@@ -29,8 +29,11 @@ import { ValueListCard } from '@/common/design-system/molecules/value-list-card'
 import { Paginated } from '@/common/fetching/fetching.types';
 import { esEscape } from '@/common/lib/strings';
 import { useSetDates } from '@/features/dates';
+import {
+  type SerializedFilterFlags,
+  toFilterFlags,
+} from '@/features/filtering/filters/query-filters/filter-flags.model';
 import { QueryFilterState } from '@/features/filtering/filters/query-filters/query-filter.model';
-import { TagFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
 import { useClearFilters } from '@/features/filtering/filters/query-filters/use-cases/clear-filters/clear-filters';
 import { useCreateFilter } from '@/features/filtering/filters/query-filters/use-cases/create-filter/create-filter';
 import { useReplaceFilters } from '@/features/filtering/filters/query-filters/use-cases/replace-filters/replace-filters';
@@ -228,7 +231,7 @@ const InvestigationHistoryItem = ({
   }: {
     start_date: number;
     end_date: number;
-    tags?: TagFilters;
+    tags?: SerializedFilterFlags;
     qfilter: QueryFilterState[];
     stages: InvestigationState['stages'];
   }) => {
@@ -238,7 +241,12 @@ const InvestigationHistoryItem = ({
       start_date,
       end_date,
     });
-    if (tags) tagFiltersRepo.set(tags);
+    if (tags) {
+      const flags = toFilterFlags(tags);
+      tagFiltersRepo.setEventTypes(flags.eventTypes);
+      tagFiltersRepo.setAlertTags(flags.alertTags);
+      tagFiltersRepo.setNovelty(flags.novelty);
+    }
     replaceFilters(qfilter);
     stages.forEach((stage) => {
       createFilter({

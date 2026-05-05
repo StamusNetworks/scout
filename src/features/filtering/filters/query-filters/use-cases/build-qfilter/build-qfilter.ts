@@ -24,8 +24,9 @@ export function useBuildEventsQfilter(
 
   return useMemo(() => {
     const queryFilters = repo.getAll();
-    const tags = isEnterprise ? tagRepo.getAll() : null;
-    const novelty = options?.tags ? tags?.novelty : false;
+    const flags = isEnterprise ? tagRepo.getAll() : null;
+    const alertTags = flags?.alertTags;
+    const novelty = options?.tags ? flags?.novelty : false;
 
     const eventFilter = (f: QueryFilterState) =>
       getFilterDef(f.key)?.category === FilterCategory.EVENT ||
@@ -37,7 +38,7 @@ export function useBuildEventsQfilter(
         .filter((f) => !f.is_suspended);
       const filterString = qfBuilder.toQFString(
         activeFilters,
-        options.tags ? tags : undefined,
+        options.tags ? alertTags : undefined,
         novelty,
       );
       return `${filterString ? filterString + ' AND ' : ''} ${filterExtension}`;
@@ -72,7 +73,7 @@ export function useBuildEventsQfilter(
         ...queryFilters.filter(eventFilter).filter((f) => !f.is_suspended),
         ...allExtension.filter(eventFilter),
       ],
-      tags,
+      options.tags ? alertTags : undefined,
       novelty,
     );
   }, [

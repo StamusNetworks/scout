@@ -1,8 +1,8 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { DataEntry } from '@/common/design-system/molecules/value-list-card';
+import { type SerializedFilterFlags } from '@/features/filtering/filters/query-filters/filter-flags.model';
 import { QueryFilterState } from '@/features/filtering/filters/query-filters/query-filter.model';
-import { TagFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
 import { RootState } from '@/store/store';
 
 import {
@@ -15,7 +15,7 @@ export type InvestigationHistory = {
     start_date: number | undefined;
     end_date: number | undefined;
     qfilter: QueryFilterState[] | undefined;
-    tags: TagFilters | undefined;
+    tags: SerializedFilterFlags | undefined;
   };
   results: {
     key: string;

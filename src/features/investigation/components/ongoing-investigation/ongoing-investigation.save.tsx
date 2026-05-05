@@ -22,9 +22,10 @@ import {
   ValueListCard,
 } from '@/common/design-system/molecules/value-list-card';
 import { useGetDashboardFieldsQuery } from '@/features/events/detection-events/use-cases/explorer/api/dashboard.api';
+import { toSerializedFilterFlags } from '@/features/filtering/filters/query-filters/filter-flags.model';
 import {
+  selectGatedFilterFlags,
   selectQueryFilters,
-  selectTagFilters,
 } from '@/features/filtering/filters/query-filters/query-filters.selectors';
 import { getFilterLabel } from '@/features/filtering/filters/query-filters/utils/get-filter-label';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
@@ -58,8 +59,9 @@ export const inventoryHistoryOptions = [
 export const SaveInvestigation = () => {
   const dispatch = useAppDispatch();
   const { start_date, end_date } = useGlobalQueryParams(['dates']);
-  const tagFilters = useAppSelector(selectTagFilters);
+  const flags = useAppSelector(selectGatedFilterFlags);
   const queryFilters = useAppSelector(selectQueryFilters);
+  const serializedFlags = flags ? toSerializedFilterFlags(flags) : undefined;
   const resultKeys = useAppSelector(selectInvestigationFindingsKeys);
   const investigationStages = useAppSelector(selectInvestigationStages);
   const stage = useAppSelector(selectInvestigationStage);
@@ -93,7 +95,7 @@ export const SaveInvestigation = () => {
             <InvestigationParams
               startDate={start_date!}
               endDate={end_date!}
-              tags={tagFilters}
+              tags={serializedFlags}
               qfilter={queryFilters}
             />
             <Separator className="my-4" />
@@ -160,7 +162,7 @@ export const SaveInvestigation = () => {
                           start_date,
                           end_date,
                           qfilter: queryFilters,
-                          tags: tagFilters ?? undefined,
+                          tags: serializedFlags,
                         },
                         results: iocData,
                         stages: investigationStages,

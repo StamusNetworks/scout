@@ -1,8 +1,8 @@
-import type { EventTypes } from '@/features/filtering/filters/query-filters/query-filters.store';
+import type { EventTypeFlags } from '@/features/filtering/filters/query-filters/query-filters.store';
 
 export function buildEventsFlowQfilter(
   qfilter?: string,
-  eventTypes?: EventTypes | null,
+  eventTypes?: EventTypeFlags | null,
 ): string | undefined {
   const parts: string[] = [];
   if (qfilter) parts.push(qfilter);

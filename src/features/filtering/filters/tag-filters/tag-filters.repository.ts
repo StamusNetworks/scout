@@ -1,24 +1,35 @@
 import { useMemo } from 'react';
 
-import { setTagFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
+import {
+  type AlertTagFlags,
+  type EventTypeFlags,
+  type FilterFlags,
+} from '@/features/filtering/filters/query-filters/filter-flags.model';
+import {
+  setAlertTags,
+  setEventTypes,
+  setNovelty,
+} from '@/features/filtering/filters/query-filters/query-filters.store';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
-import type { TagFilters } from './tag-filters.model';
-
 export type TagFiltersRepository = {
-  getAll(): TagFilters;
-  set(tags: Partial<TagFilters>): void;
+  getAll(): FilterFlags;
+  setEventTypes(flags: Partial<EventTypeFlags>): void;
+  setAlertTags(flags: Partial<AlertTagFlags>): void;
+  setNovelty(value: boolean): void;
 };
 
 export function useTagFiltersRepository(): TagFiltersRepository {
-  const tags = useAppSelector((state) => state.filters.queryFilters.tagFilters);
+  const flags = useAppSelector((state) => state.filters.queryFilters.flags);
   const dispatch = useAppDispatch();
 
   return useMemo(
     () => ({
-      getAll: () => tags,
-      set: (newTags: Partial<TagFilters>) => dispatch(setTagFilters(newTags)),
+      getAll: () => flags,
+      setEventTypes: (next) => dispatch(setEventTypes(next)),
+      setAlertTags: (next) => dispatch(setAlertTags(next)),
+      setNovelty: (value) => dispatch(setNovelty(value)),
     }),
-    [tags, dispatch],
+    [flags, dispatch],
   );
 }

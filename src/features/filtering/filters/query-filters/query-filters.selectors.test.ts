@@ -3,9 +3,9 @@ import { describe, expect, it } from 'vitest';
 import { RootStateWithAPI } from '@/store/store';
 import { initialState } from '@/store/store.init';
 
+import { type FilterFlags } from './filter-flags.model';
 import { QueryFilterState } from './query-filter.model';
 import { selectEventsQfilter } from './query-filters.selectors';
-import { TagFilters } from './query-filters.store';
 
 describe('QFilter selector', () => {
   describe('Alert Tags', () => {
@@ -20,7 +20,7 @@ describe('QFilter selector', () => {
     `('should handle tags and return $expected', ({ tags, expected }) => {
       const store = createStoreState({
         filters: [],
-        tags: createTagFilters(tags),
+        flags: createFlags(tags),
       });
       const qfilter = selectEventsQfilter(undefined, { tags: true })(
         // @ts-expect-error We just need a partial of the API
@@ -43,22 +43,24 @@ describe('Signature Filters selector', () => {
   });
 });
 
-const createTagFilters = (tags: Partial<TagFilters>) => ({
-  informational: tags.informational ?? false,
-  relevant: tags.relevant ?? false,
-  untagged: tags.untagged ?? false,
-  novelty: tags.novelty ?? false,
-  alert: tags.alert ?? false,
-  discovery: tags.discovery ?? false,
-  stamus: tags.stamus ?? false,
+const createFlags = (
+  alertTagsOverrides: Partial<FilterFlags['alertTags']> = {},
+): FilterFlags => ({
+  eventTypes: { alert: false, stamus: false, discovery: false },
+  alertTags: {
+    informational: alertTagsOverrides.informational ?? false,
+    relevant: alertTagsOverrides.relevant ?? false,
+    untagged: alertTagsOverrides.untagged ?? false,
+  },
+  novelty: false,
 });
 
 const createStoreState = ({
   filters,
-  tags,
+  flags,
 }: {
   filters: QueryFilterState[];
-  tags: TagFilters;
+  flags: FilterFlags;
 }) => ({
   ...initialState,
   filters: {
@@ -66,7 +68,7 @@ const createStoreState = ({
     queryFilters: {
       ...initialState.filters.queryFilters,
       queryFilters: filters,
-      tagFilters: tags,
+      flags,
     },
   },
   API: {

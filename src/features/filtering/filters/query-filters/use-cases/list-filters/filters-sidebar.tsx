@@ -43,10 +43,12 @@ import { useAppSelector } from '@/store/store';
 
 import { FilterCategory } from '../../constants/query-filter.config';
 import { getFilterDef } from '../../constants/query-filter.definition';
+import { AlertTagFlags, EventTypeFlags } from '../../filter-flags.model';
 import { QueryFilterState } from '../../query-filter.model';
-import { selectTagFilters } from '../../query-filters.selectors';
-import { selectQueryFilters } from '../../query-filters.selectors';
-import { AlertTags, EventTypes } from '../../query-filters.store';
+import {
+  selectGatedFilterFlags,
+  selectQueryFilters,
+} from '../../query-filters.selectors';
 import { useClearFilters } from '../clear-filters/clear-filters';
 import { useReorderFilters } from '../reorder-filters/reorder-filters';
 import { useSuspendFilter } from '../suspend-filter/suspend-filter';
@@ -66,7 +68,7 @@ const eventsTypes = [
     label: 'Sightings',
     key: 'discovery',
   },
-] satisfies { label: string; key: keyof EventTypes }[];
+] satisfies { label: string; key: keyof EventTypeFlags }[];
 
 const tags = [
   {
@@ -81,7 +83,7 @@ const tags = [
     label: 'Untagged',
     key: 'untagged',
   },
-] satisfies { label: string; key: keyof AlertTags }[];
+] satisfies { label: string; key: keyof AlertTagFlags }[];
 
 export const SidebarActionIcon = ({ type: Type }: { type: LucideIcon }) => {
   return (
@@ -99,7 +101,7 @@ type SideBarConfig = {
 export const FiltersSideBar = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
-  const tagFilters = useSelector(selectTagFilters);
+  const flags = useSelector(selectGatedFilterFlags);
   const queryFilters = useSelector(selectQueryFilters);
   const isOpen = useAppSelector(selectIsSidebarOpen);
   const filterActionSupportedFilters = useSupportedFilterActionsFilters();
@@ -265,15 +267,15 @@ export const FiltersSideBar = () => {
       className={`${isOpen ? 'w-72' : 'w-0'} relative h-[calc(100vh-48px)] shrink-0 grow-0 overflow-clip border-l transition-all duration-200 ease-in-out`}
     >
       <div className="max-w-72 p-3 pb-5">
-        {tagFilters && enterprise && (
+        {flags && enterprise && (
           <>
             <div className="w-full">
               <div className="mb-2">
                 <SideBarHeader>Global Filters</SideBarHeader>
                 <SideBarFilter
-                  filter_key="novelty"
                   label="Outlier events"
-                  checked={tagFilters.novelty}
+                  checked={flags.novelty}
+                  onChange={(next) => tagFiltersRepo.setNovelty(next)}
                   disabled={
                     !sideBarConfig?.filterTypes.includes(
                       FilterCategory.EVENT,
@@ -289,9 +291,11 @@ export const FiltersSideBar = () => {
                 {eventsTypes.map((f) => (
                   <SideBarFilter
                     key={f.key}
-                    filter_key={f.key}
                     label={f.label}
-                    checked={tagFilters[f.key]}
+                    checked={flags.eventTypes[f.key]}
+                    onChange={(next) =>
+                      tagFiltersRepo.setEventTypes({ [f.key]: next })
+                    }
                     disabled={
                       !sideBarConfig?.filterTypes.includes(
                         FilterCategory.EVENT,
@@ -317,9 +321,11 @@ export const FiltersSideBar = () => {
                     )}
                   >
                     <Checkbox
-                      checked={tagFilters[f.key]}
+                      checked={flags.alertTags[f.key]}
                       onCheckedChange={() =>
-                        tagFiltersRepo.set({ [f.key]: !tagFilters[f.key] })
+                        tagFiltersRepo.setAlertTags({
+                          [f.key]: !flags.alertTags[f.key],
+                        })
                       }
                       disabled={
                         !sideBarConfig?.filterTypes.includes(

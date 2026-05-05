@@ -13,16 +13,32 @@ import {
   QueryFiltersRecord,
 } from './constants/query-filter.definition';
 import {
+  AlertTagFlags,
+  EventTypeFlags,
+  FilterFlags,
+} from './filter-flags.model';
+import {
   QueryFilterDefinition,
   QueryFilterState,
   QueryFilterType,
 } from './query-filter.model';
-import { AlertTags, EventTypes, TagFilters } from './query-filters.store';
 import { buildSignatureFilters } from './use-cases/build-signature-filter/build-signature-filter';
 import { QFBuilder } from './utils/qf-builder';
 
 export const selectQueryFilters = (state: RootState) =>
   state.filters.queryFilters.queryFilters;
+
+export const selectFilterFlags = (state: RootState) =>
+  state.filters.queryFilters.flags;
+
+export const selectEventTypeFlags = (state: RootState) =>
+  state.filters.queryFilters.flags.eventTypes;
+
+export const selectAlertTagFlags = (state: RootState) =>
+  state.filters.queryFilters.flags.alertTags;
+
+export const selectNovelty = (state: RootState) =>
+  state.filters.queryFilters.flags.novelty;
 
 export const selectHostIDQFilter = (
   extraQFilter: QueryFilterState[] = [],
@@ -52,74 +68,21 @@ export const selectSignatureFilters = (extraQFilter: QueryFilterState[] = []) =>
     return buildSignatureFilters(filters);
   });
 
-const selectAlert = (state: RootState) =>
-  state.filters.queryFilters.tagFilters.alert;
-const selectDiscovery = (state: RootState) =>
-  state.filters.queryFilters.tagFilters.discovery;
-const selectStamus = (state: RootState) =>
-  state.filters.queryFilters.tagFilters.stamus;
-const selectInformational = (state: RootState) =>
-  state.filters.queryFilters.tagFilters.informational;
-const selectRelevant = (state: RootState) =>
-  state.filters.queryFilters.tagFilters.relevant;
-const selectUntagged = (state: RootState) =>
-  state.filters.queryFilters.tagFilters.untagged;
-export const selectNovelty = (state: RootState) =>
-  state.filters.queryFilters.tagFilters.novelty;
-
-export const selectAlertTagsFiltersParams = createSelector(
-  [selectRelevant, selectUntagged, selectInformational, selectNovelty],
-  (relevant, untagged, informational): AlertTags => ({
-    relevant,
-    untagged,
-    informational,
-  }),
+export const selectEventTypeFlagsParams = createSelector(
+  [selectEventTypeFlags, selectIsEnterprise],
+  (eventTypes, isEnterprise): EventTypeFlags | null =>
+    isEnterprise ? eventTypes : null,
 );
 
-export const selectEventsTypesParams = createSelector(
-  [selectDiscovery, selectStamus, selectAlert, selectIsEnterprise],
-  (discovery, stamus, alert, isEnterprise): EventTypes | null =>
-    isEnterprise
-      ? {
-          discovery,
-          stamus,
-          alert,
-        }
-      : null,
+export const selectAlertTagFlagsParams = createSelector(
+  [selectAlertTagFlags, selectIsEnterprise],
+  (alertTags, isEnterprise): AlertTagFlags | null =>
+    isEnterprise ? alertTags : null,
 );
 
-export const selectTagFilters = createSelector(
-  [
-    selectAlert,
-    selectDiscovery,
-    selectStamus,
-    selectInformational,
-    selectRelevant,
-    selectUntagged,
-    selectNovelty,
-    selectIsEnterprise,
-  ],
-  (
-    alert,
-    discovery,
-    stamus,
-    informational,
-    relevant,
-    untagged,
-    novelty,
-    isEnterprise,
-  ): TagFilters | null =>
-    isEnterprise
-      ? {
-          alert,
-          discovery,
-          stamus,
-          informational,
-          relevant,
-          untagged,
-          novelty,
-        }
-      : null,
+export const selectGatedFilterFlags = createSelector(
+  [selectFilterFlags, selectIsEnterprise],
+  (flags, isEnterprise): FilterFlags | null => (isEnterprise ? flags : null),
 );
 
 export type FilterMapping = { type: string; category: FilterCategory };
@@ -189,11 +152,11 @@ export const selectEventsQfilter = (
   createSelector(
     [
       (state: RootState) => state.filters.queryFilters.queryFilters,
-      selectTagFilters,
+      selectGatedFilterFlags,
       selectQfilterBuilder,
     ],
-    (queryFilters, tags, Builder) => {
-      const novelty = options?.tags ? tags?.novelty : false;
+    (queryFilters, flags, Builder) => {
+      const novelty = options?.tags ? flags?.novelty : false;
       if (typeof filterExtension === 'string') {
         const filterString = Builder?.toQFString(
           queryFilters
@@ -204,7 +167,7 @@ export const selectEventsQfilter = (
                   !f.key.startsWith('host_id.')),
             )
             .filter((f) => f.is_suspended !== true),
-          options.tags ? tags : undefined,
+          options.tags ? flags?.alertTags : undefined,
           novelty,
         );
         return `${filterString ? filterString + ' AND ' : ''} ${filterExtension}`;
@@ -226,7 +189,7 @@ export const selectEventsQfilter = (
                 !f.key.startsWith('host_id.')),
           ),
         ],
-        tags,
+        options.tags ? flags?.alertTags : undefined,
         novelty,
       );
     },

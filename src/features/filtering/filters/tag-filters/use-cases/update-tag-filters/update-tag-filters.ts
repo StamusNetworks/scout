@@ -1,24 +1,42 @@
-import { setTagFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
-import { useTagFiltersRepository } from '@/features/filtering/filters/tag-filters/tag-filters.repository';
+import { useCallback } from 'react';
+
+import {
+  defaultFilterFlags,
+  type FilterFlags,
+} from '@/features/filtering/filters/query-filters/filter-flags.model';
+import {
+  setAlertTags,
+  setEventTypes,
+  setNovelty,
+} from '@/features/filtering/filters/query-filters/query-filters.store';
+import { useAppDispatch } from '@/store/store';
 import { store } from '@/store/store-instance';
 
-import type { TagFilters } from '../../tag-filters.model';
+const applyOverrides = (overrides?: Partial<FilterFlags>): FilterFlags => ({
+  eventTypes: { ...defaultFilterFlags.eventTypes, ...overrides?.eventTypes },
+  alertTags: { ...defaultFilterFlags.alertTags, ...overrides?.alertTags },
+  novelty:
+    overrides?.novelty !== undefined
+      ? overrides.novelty
+      : defaultFilterFlags.novelty,
+});
 
-const defaultTags: TagFilters = {
-  novelty: false,
-  alert: true,
-  discovery: true,
-  stamus: true,
-  informational: true,
-  relevant: true,
-  untagged: true,
+export const enableTags = (overrides?: Partial<FilterFlags>) => {
+  const flags = applyOverrides(overrides);
+  store.dispatch(setEventTypes(flags.eventTypes));
+  store.dispatch(setAlertTags(flags.alertTags));
+  store.dispatch(setNovelty(flags.novelty));
 };
 
-export const enableTags = (tags: Partial<TagFilters> = {}) =>
-  store.dispatch(setTagFilters({ ...defaultTags, ...tags }));
-
 export const useEnableTags = () => {
-  const tagFiltersRepo = useTagFiltersRepository();
-  return (tags?: Partial<TagFilters>) =>
-    tagFiltersRepo.set({ ...defaultTags, ...tags });
+  const dispatch = useAppDispatch();
+  return useCallback(
+    (overrides?: Partial<FilterFlags>) => {
+      const flags = applyOverrides(overrides);
+      dispatch(setEventTypes(flags.eventTypes));
+      dispatch(setAlertTags(flags.alertTags));
+      dispatch(setNovelty(flags.novelty));
+    },
+    [dispatch],
+  );
 };

@@ -7,8 +7,8 @@ import { CheckboxValue } from '@/common/design-system/molecules/checkbox-value';
 import { LabelValue } from '@/common/design-system/molecules/label-value';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { cn } from '@/common/lib/utils';
+import { type SerializedFilterFlags } from '@/features/filtering/filters/query-filters/filter-flags.model';
 import { QueryFilterState } from '@/features/filtering/filters/query-filters/query-filter.model';
-import { TagFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
 import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
 import { getFilterLabel } from '@/features/filtering/filters/query-filters/utils/get-filter-label';
 
@@ -17,7 +17,7 @@ import { valueVariants } from '../ongoing-investigation/ongoing-investigation.cu
 interface InvestigationParamsProps {
   startDate: number;
   endDate: number;
-  tags?: TagFilters | null;
+  tags?: SerializedFilterFlags | null;
   qfilter: QueryFilterState[];
   comment?: string;
 }

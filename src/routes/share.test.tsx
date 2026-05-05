@@ -89,9 +89,21 @@ describe('SharePage', () => {
       ]),
     );
 
-    // Verify tag filters match the decoded tags
-    const { tagFilters } = store.getState().filters.queryFilters;
-    expect(tagFilters).toEqual(SHARED_STATE.tags);
+    // Verify flag filters match the decoded tags (nested domain shape).
+    const { flags } = store.getState().filters.queryFilters;
+    expect(flags).toEqual({
+      eventTypes: {
+        alert: SHARED_STATE.tags.alert,
+        stamus: SHARED_STATE.tags.stamus,
+        discovery: SHARED_STATE.tags.discovery,
+      },
+      alertTags: {
+        relevant: SHARED_STATE.tags.relevant,
+        informational: SHARED_STATE.tags.informational,
+        untagged: SHARED_STATE.tags.untagged,
+      },
+      novelty: SHARED_STATE.tags.novelty,
+    });
 
     // Verify dates match the decoded time
     const dates = selectDates(store.getState());

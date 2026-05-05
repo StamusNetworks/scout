@@ -25,7 +25,7 @@ import {
 } from '@/common/design-system/graphs/sankey/sankey.utils';
 import { useGetEventsAggregationQuery } from '@/features/events/common/events.api';
 import { useESMapping } from '@/features/filtering/es-mapping/use-es-mapping';
-import type { EventTypes } from '@/features/filtering/filters/query-filters/query-filters.store';
+import type { EventTypeFlags } from '@/features/filtering/filters/query-filters/query-filters.store';
 import { useCreateFilter } from '@/features/filtering/filters/query-filters/use-cases/create-filter/create-filter';
 import { ContextMenuContent } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/context-menu/context-menu.content';
 
@@ -41,7 +41,7 @@ export interface EventsFlowForProtocolProps {
     tenant?: number;
     qfilter?: string;
   };
-  eventTypes: EventTypes | null;
+  eventTypes: EventTypeFlags | null;
 }
 
 export function EventsFlowForProtocol({

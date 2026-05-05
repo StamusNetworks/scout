@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
-import { persistReducer } from 'redux-persist';
+import { createMigrate, persistReducer } from 'redux-persist';
 import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/es/storage';
 
@@ -28,9 +28,47 @@ import { uiStateSlice } from '@/features/ui/ui-state.slice';
 
 import { API } from './api';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// Persisted state versions. Bump and add a migration when slice shapes change
+// for keys in `whitelist`. Live state types are not coupled to these — these
+// migrations work against the stored JSON shape at the time the version was cut.
+const persistedStateMigrations = {
+  // v1: queryFilters slice replaces flat `tagFilters` with nested `flags`.
+  1: (state: any) => {
+    const tagFilters = state?.filters?.queryFilters?.tagFilters;
+    if (!tagFilters) return state;
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        queryFilters: {
+          ...state.filters.queryFilters,
+          flags: {
+            eventTypes: {
+              alert: tagFilters.alert ?? true,
+              stamus: tagFilters.stamus ?? true,
+              discovery: tagFilters.discovery ?? true,
+            },
+            alertTags: {
+              relevant: tagFilters.relevant ?? true,
+              informational: tagFilters.informational ?? true,
+              untagged: tagFilters.untagged ?? true,
+            },
+            novelty: tagFilters.novelty ?? false,
+          },
+          tagFilters: undefined,
+        },
+      },
+    };
+  },
+};
+/* eslint-enable @typescript-eslint/no-explicit-any */
+
 const persistConfig = {
   key: 'root',
   storage,
+  version: 1,
+  migrate: createMigrate(persistedStateMigrations),
   whitelist: ['filters', 'pages', 'preferences', 'help', 'investigation'],
   stateReconciler: autoMergeLevel2,
 };

@@ -1,26 +1,22 @@
 import { Checkbox } from '@/common/design-system/atoms/ui/checkbox';
 import { Switch } from '@/common/design-system/atoms/ui/switch';
 import { cn } from '@/common/lib/utils';
-import { useTagFiltersRepository } from '@/features/filtering/filters/tag-filters/tag-filters.repository';
-
-import { TagFilters } from '../../query-filters.store';
 
 type SideBarFilterProps = {
   label: string;
-  filter_key: keyof TagFilters;
   checked: boolean;
   disabled: boolean;
+  onChange: (next: boolean) => void;
   type?: 'checkbox' | 'switch';
 };
 
 export const SideBarFilter = ({
   label,
-  filter_key,
   checked,
   disabled,
+  onChange,
   type = 'checkbox',
 }: SideBarFilterProps) => {
-  const tagFiltersRepo = useTagFiltersRepository();
   return (
     <label
       className={cn(
@@ -31,14 +27,14 @@ export const SideBarFilter = ({
       {type === 'checkbox' && (
         <Checkbox
           checked={checked}
-          onCheckedChange={() => tagFiltersRepo.set({ [filter_key]: !checked })}
+          onCheckedChange={() => onChange(!checked)}
           disabled={disabled}
         />
       )}
       {type === 'switch' && (
         <Switch
           checked={checked}
-          onCheckedChange={() => tagFiltersRepo.set({ [filter_key]: !checked })}
+          onCheckedChange={() => onChange(!checked)}
           size="sm"
           disabled={disabled}
         />

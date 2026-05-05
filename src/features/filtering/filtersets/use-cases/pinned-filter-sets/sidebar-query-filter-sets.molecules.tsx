@@ -37,7 +37,7 @@ import {
   PersistedFilter,
   QueryFilterState,
 } from '@/features/filtering/filters/query-filters/query-filter.model';
-import { selectTagFilters } from '@/features/filtering/filters/query-filters/query-filters.selectors';
+import { selectGatedFilterFlags } from '@/features/filtering/filters/query-filters/query-filters.selectors';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import {
   useGetHostsQuery,
@@ -494,25 +494,27 @@ function useFilterSetQueryParams(
 ) {
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const QFBuilder = useQFBuilder();
-  const appTags = useAppSelector(selectTagFilters);
-  const tags = getTagsFromFilterSet(filterSet);
+  const appFlags = useAppSelector(selectGatedFilterFlags);
+  const setTags = getTagsFromFilterSet(filterSet);
   const filters = [
     ...(additionalFilters ?? []),
     ...(getFiltersFromFilterSet(filterSet)?.map(mapPersistedToFilterState) ??
       []),
   ];
+  // Wire shape uses `alerts/sightings`; domain uses `alert/discovery`.
   return {
     start_date: params.start_date,
     end_date: params.end_date,
     tenant: params.tenant,
     qfilter: QFBuilder.toQFString(filters, {
-      untagged: tags?.untagged ?? !!appTags?.untagged,
-      relevant: tags?.relevant ?? !!appTags?.relevant,
-      informational: tags?.informational ?? !!appTags?.informational,
+      untagged: setTags?.untagged ?? !!appFlags?.alertTags.untagged,
+      relevant: setTags?.relevant ?? !!appFlags?.alertTags.relevant,
+      informational:
+        setTags?.informational ?? !!appFlags?.alertTags.informational,
     }),
     host_id_qfilter: QFBuilder.toHostIdQFString(filters),
-    stamus: tags?.stamus ?? !!appTags?.stamus,
-    discovery: tags?.sightings ?? !!appTags?.discovery,
-    alert: tags?.alerts ?? !!appTags?.alert,
+    stamus: setTags?.stamus ?? !!appFlags?.eventTypes.stamus,
+    discovery: setTags?.sightings ?? !!appFlags?.eventTypes.discovery,
+    alert: setTags?.alerts ?? !!appFlags?.eventTypes.alert,
   };
 }

@@ -7,8 +7,10 @@ import { QueryFilterState } from './query-filter.model';
 import { selectQueryFilters } from './query-filters.selectors';
 import {
   clearQueryFilters,
+  setAlertTags,
+  setEventTypes,
+  setNovelty,
   setQueryFilters,
-  setTagFilters,
 } from './query-filters.store';
 
 describe('Query Filters Slice', () => {
@@ -85,29 +87,53 @@ describe('Query Filters Slice', () => {
     });
   });
 
-  describe('setTagFilters', () => {
-    it('should merge partial tag filters into existing state', () => {
+  describe('setEventTypes', () => {
+    it('should merge partial event-type flags into existing state', () => {
       const store = setupStore(initialState);
 
-      store.dispatch(setTagFilters({ alert: false, stamus: false }));
+      store.dispatch(setEventTypes({ alert: false, stamus: false }));
 
-      const state = store.getState();
-      expect(state.filters.queryFilters.tagFilters.alert).toBe(false);
-      expect(state.filters.queryFilters.tagFilters.stamus).toBe(false);
-      // Unchanged values should remain
-      expect(state.filters.queryFilters.tagFilters.discovery).toBe(true);
-      expect(state.filters.queryFilters.tagFilters.informational).toBe(true);
+      const { flags } = store.getState().filters.queryFilters;
+      expect(flags.eventTypes.alert).toBe(false);
+      expect(flags.eventTypes.stamus).toBe(false);
+      expect(flags.eventTypes.discovery).toBe(true);
     });
 
-    it('should not overwrite keys that are not in the payload', () => {
+    it('should not affect other flag groups', () => {
       const store = setupStore(initialState);
 
-      store.dispatch(setTagFilters({ novelty: true }));
+      store.dispatch(setEventTypes({ alert: false }));
 
-      const state = store.getState();
-      expect(state.filters.queryFilters.tagFilters.novelty).toBe(true);
-      expect(state.filters.queryFilters.tagFilters.alert).toBe(true);
-      expect(state.filters.queryFilters.tagFilters.discovery).toBe(true);
+      const { flags } = store.getState().filters.queryFilters;
+      expect(flags.alertTags.informational).toBe(true);
+      expect(flags.alertTags.relevant).toBe(true);
+      expect(flags.alertTags.untagged).toBe(true);
+      expect(flags.novelty).toBe(false);
+    });
+  });
+
+  describe('setAlertTags', () => {
+    it('should merge partial alert-tag flags into existing state', () => {
+      const store = setupStore(initialState);
+
+      store.dispatch(setAlertTags({ informational: false }));
+
+      const { flags } = store.getState().filters.queryFilters;
+      expect(flags.alertTags.informational).toBe(false);
+      expect(flags.alertTags.relevant).toBe(true);
+      expect(flags.alertTags.untagged).toBe(true);
+    });
+  });
+
+  describe('setNovelty', () => {
+    it('should toggle the novelty flag', () => {
+      const store = setupStore(initialState);
+
+      store.dispatch(setNovelty(true));
+
+      const { flags } = store.getState().filters.queryFilters;
+      expect(flags.novelty).toBe(true);
+      expect(flags.eventTypes.alert).toBe(true);
     });
   });
 });

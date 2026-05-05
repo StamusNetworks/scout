@@ -1,9 +1,3 @@
-export const EVENT_TYPES = {
-  ALERT: 'alerts',
-  SIGHTINGS: 'sightings',
-  STAMUS: 'stamus',
-} as const;
-
 export const ES_Types = {
   date: 'date',
   keyword: 'keyword',

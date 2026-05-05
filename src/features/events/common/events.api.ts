@@ -16,7 +16,7 @@ import {
   FlowEventFileStatus,
   FlowEvents,
 } from '@/features/events/common/model/flowEvent.schema';
-import { EventTypes } from '@/features/filtering/filters/query-filters/query-filters.store';
+import { EventTypeFlags } from '@/features/filtering/filters/query-filters/query-filters.store';
 import { API } from '@/store/api';
 
 export const EventsAPI = API.injectEndpoints({
@@ -40,7 +40,7 @@ export const EventsAPI = API.injectEndpoints({
           hosts?: string;
           prev?: number;
         } & QFilter &
-        Partial<EventTypes>
+        Partial<EventTypeFlags>
     >({
       query: (params) => ({
         url: `/rules/es/alerts_count`,

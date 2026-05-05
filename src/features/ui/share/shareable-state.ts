@@ -1,8 +1,12 @@
 import { z } from 'zod';
 
 import { type DatesState } from '@/features/dates';
+import {
+  type FilterFlags,
+  type SerializedFilterFlags,
+  toSerializedFilterFlags,
+} from '@/features/filtering/filters/query-filters/filter-flags.model';
 import { type QueryFilterState } from '@/features/filtering/filters/query-filters/query-filter.model';
-import { type TagFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
 
 const shareableFilterSchema = z.object({
   key: z.string(),
@@ -34,7 +38,7 @@ const shareableTimeSchema = z.discriminatedUnion('type', [
   }),
 ]);
 
-const tagFiltersSchema = z.object({
+const shareableFlagsSchema = z.object({
   alert: z.boolean(),
   stamus: z.boolean(),
   discovery: z.boolean(),
@@ -42,13 +46,13 @@ const tagFiltersSchema = z.object({
   informational: z.boolean(),
   untagged: z.boolean(),
   novelty: z.boolean(),
-});
+}) satisfies z.ZodType<SerializedFilterFlags>;
 
 const shareableStateSchema = z.object({
   route: z.string().startsWith('/'),
   tenant: z.number().optional(),
   time: shareableTimeSchema,
-  tags: tagFiltersSchema,
+  tags: shareableFlagsSchema,
   filters: z.array(shareableFilterSchema),
 });
 
@@ -106,13 +110,13 @@ export const buildShareableState = (
   route: string,
   dates: DatesState,
   queryFilters: QueryFilterState[],
-  tagFilters: TagFilters,
+  flags: FilterFlags,
   tenant: number | undefined,
 ): ShareableState => ({
   route,
   ...(tenant !== undefined && { tenant }),
   time: buildTimePayload(dates),
-  tags: { ...tagFilters },
+  tags: toSerializedFilterFlags(flags),
   filters: queryFilters
     .filter((f) => !f.is_suspended)
     .map((f) =>

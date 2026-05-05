@@ -2,8 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import {
   clearQueryFilters,
+  setAlertTags,
+  setEventTypes,
+  setNovelty,
   setQueryFilters,
-  setTagFilters,
 } from '@/features/filtering/filters/query-filters/query-filters.store';
 import { RootState, useAppSelector } from '@/store/store';
 
@@ -58,7 +60,13 @@ export const queryFiltersSetsSlice = createSlice({
     builder.addCase(clearQueryFilters, (state) => {
       state.loaded = null;
     });
-    builder.addCase(setTagFilters, (state) => {
+    builder.addCase(setEventTypes, (state) => {
+      state.loaded = null;
+    });
+    builder.addCase(setAlertTags, (state) => {
+      state.loaded = null;
+    });
+    builder.addCase(setNovelty, (state) => {
       state.loaded = null;
     });
   },
