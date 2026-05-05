@@ -1,48 +1,18 @@
-import { z } from 'zod';
+/**
+ * Backward-compat shim. The canonical schema lives in `api/threat.dto.ts`
+ * (see `docs/architecture.md` — ACL).
+ *
+ * Legacy code imports `Threat`, `threatSchema`, etc. from this file. New
+ * code should import the domain `Threat` from `@/features/threats` (the
+ * barrel) and never touch the DTO directly.
+ */
 
-import { ActiveThreat } from './active-threat.model';
-
-export const threatSchema = z.object({
-  pk: z.number(),
-  threat_id: z.number(),
-  name: z.string(),
-  description: z.string(),
-  additional_info: z.string().optional(),
-  criticity: z.number(),
-  version: z.number(),
-  active: z.boolean(),
-  creation_date: z.string(),
-  family: z.number(),
-  family_class: z.enum(['doc', 'dopv']),
-  links: z.array(
-    z.object({
-      name: z.string(),
-      link: z.string(),
-      reference_type: z.string(),
-    }),
-  ),
-  user_defined: z.boolean(),
-  nb_methods: z.number(),
-  tenants: z.array(z.number()),
-  no_tenant: z.boolean(),
-  all_tenants: z.boolean(),
-});
-
-export type Threat = z.infer<typeof threatSchema>;
-
-export type CombinedThreat = { family_class?: 'doc' | 'dopv' } & (
-  | (Threat & { is_active: false })
-  | (Threat & ActiveThreat & { is_active: true })
-);
-
-export const threatPayload = z.object({
-  family_class: z.enum(['doc', 'dopv']),
-  name: z.string().min(1),
-  description: z.string().min(1),
-  additional_info: z.string().optional(),
-  no_tenant: z.boolean(),
-  all_tenants: z.boolean(),
-  tenants: z.array(z.number()),
-});
-
-export type ThreatPayload = z.infer<typeof threatPayload>;
+export {
+  threatDtoSchema as threatSchema,
+  threatPayloadDtoSchema as threatPayload,
+} from '../api/threat.dto';
+export type {
+  ThreatDto as Threat,
+  ThreatPayloadDto as ThreatPayload,
+  CombinedThreatDto as CombinedThreat,
+} from '../api/threat.dto';

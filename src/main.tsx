@@ -18,7 +18,7 @@ console.group(import.meta.env.VITE_APP_MODE);
 console.group(import.meta.env.BASE_URL);
 
 loadConfig().then(async () => {
-  const App = (await import('./app/App.tsx')).default;
+  const App = (await import('./app/app.tsx')).default;
   axios.defaults.withCredentials = true;
 
   ReactDOM.createRoot(document.getElementById('root')!).render(

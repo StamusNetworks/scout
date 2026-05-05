@@ -1,12 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { CompromisesGraph } from '@/features/threats/compromises/use-cases/graph/entities/compromises-graph';
+import { ThreatGraph } from '@/features/threats';
 
 export const Route = createFileRoute('/_enterprise/threats/compromises/graph')({
   component: () => (
     <PageBoundary key="threats-graph">
-      <CompromisesGraph />
+      <ThreatGraph kind="compromise" />
     </PageBoundary>
   ),
 });

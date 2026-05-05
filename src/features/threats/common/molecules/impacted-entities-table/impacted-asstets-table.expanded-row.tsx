@@ -9,8 +9,8 @@ import {
 import { ScrollArea } from '@/common/design-system/atoms/ui/scroll-area';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { HostInsightsBlocks } from '@/features/host-insights/use-cases/host-details/molecules/host-insights-blocks';
-import { HuntingTrail } from '@/features/threats/compromises/use-cases/hunting-trail/entities/hunting-trail';
-import { ThreatsTimeline } from '@/features/threats/compromises/use-cases/timeline/components/timeline/timeline';
+import { CompromiseHuntingTrail } from '@/features/threats';
+import { CompromiseTimeline } from '@/features/threats';
 
 import { Entity } from '../../entity';
 import { AttackerInfrastructure } from '../attacker-infrastructure/attacker-infrastructure';
@@ -43,13 +43,13 @@ export const ExpandedRow = (type: 'doc' | 'dopv') => {
         </TabsList>
         {type === 'doc' && (
           <TabsContent value="timeline">
-            <ThreatsTimeline entity={row.original.value} />
+            <CompromiseTimeline entity={row.original.value} />
           </TabsContent>
         )}
         {type === 'doc' && (
           <TabsContent value="hunting-trail">
             <ScrollArea className="max-h-[800px]">
-              <HuntingTrail
+              <CompromiseHuntingTrail
                 asset={row.original.value}
                 startDate={start_date}
                 endDate={end_date}

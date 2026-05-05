@@ -11,12 +11,12 @@ import { useReorderFilters } from '@/features/filtering/filters/query-filters/us
 import { useReplaceFilters } from '@/features/filtering/filters/query-filters/use-cases/replace-filters/replace-filters';
 import { type FilterInput } from '@/features/filtering/filters/query-filters/utils/filter-mapper';
 import { useTagFiltersRepository } from '@/features/filtering/filters/tag-filters/tag-filters.repository';
+import { useSetTenant } from '@/features/tenancy';
 import {
   decodeShareableState,
   type ShareableState,
   type ShareableTime,
 } from '@/features/ui/share/shareable-state';
-import { setTenant } from '@/features/user/tenancy/tenancy.slice';
 import { useAppDispatch } from '@/store/store';
 
 export const Route = createFileRoute('/share')({
@@ -61,6 +61,7 @@ function SharePage() {
   const reorderFilters = useReorderFilters();
   const replaceFilters = useReplaceFilters();
   const tagFiltersRepo = useTagFiltersRepository();
+  const setTenant = useSetTenant();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -87,7 +88,7 @@ function SharePage() {
 
     // Set tenant
     if (state.tenant !== undefined) {
-      dispatch(setTenant(state.tenant));
+      setTenant(state.tenant);
     }
 
     // Set time filters

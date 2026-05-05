@@ -8,13 +8,22 @@ export const activeThreatSchema = z.object({
   version: z.number(),
   icon: z.string(),
   description: z.string(),
-  links: z.array(
-    z.object({
-      name: z.string(),
-      link: z.string(),
-      reference_type: z.string(),
-    }),
-  ),
+  links: z.object({
+    threat: z.array(
+      z.object({
+        name: z.string(),
+        link: z.string(),
+        reference_type: z.string(),
+      }),
+    ),
+    family: z.array(
+      z.object({
+        name: z.string(),
+        link: z.string(),
+        reference_type: z.string(),
+      }),
+    ),
+  }),
   family_class: z.enum(['doc', 'dopv']),
   max_criticity: z.number(),
   nb_malwares: z.number(),

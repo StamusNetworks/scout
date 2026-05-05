@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 
-import { selectTenant } from '@/features/user/tenancy/tenancy.selector';
-import { useAppSelector } from '@/store/store';
+import { useTenant } from '@/features/tenancy';
 
 import {
   useGetCustomThreatsQuery,
@@ -9,7 +8,7 @@ import {
 } from '../threats.api';
 
 export const useCombinedThreats = () => {
-  const tenant = useAppSelector(selectTenant);
+  const tenant = useTenant();
   const { data: STIThreats, isLoading: STILoading } =
     useGetSTIThreatsQuery(undefined);
   const { data: customThreats, isLoading: customLoading } =

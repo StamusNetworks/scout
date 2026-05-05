@@ -39,12 +39,12 @@ import { TogglePageContainer } from '@/common/design-system/molecules/toggle-con
 import { useCreateFilter } from '@/features/filtering/filters/query-filters/use-cases/create-filter/create-filter';
 import { useEnableTags } from '@/features/filtering/filters/tag-filters/use-cases/update-tag-filters/update-tag-filters';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { KIND_LABEL, ThreatForm } from '@/features/threats';
 import { KillChainCountersByFamilyId } from '@/features/threats/common/killchain/components/killchain-counters/killchain-counters';
 import { ImpactedEntitiesTable } from '@/features/threats/common/molecules/impacted-entities-table/impacted-entities-table';
 
 import { useFamilyDetectionMethods } from '../../hooks/use-family-detection-methods';
 import { useFamilyEvents } from '../../hooks/use-family-events';
-import { CreateEditThreatForm } from '../../molecules/create-edit-threat-form';
 import { ThreatFamily } from '../../threat-family.model';
 import {
   useGetActiveThreatFamiliesQuery,
@@ -306,6 +306,7 @@ export const ThreatFamilyDefault = ({
 
 export const ThreatFamilyName = ({ family }: { family: ThreatFamily }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const kind = family.klass === 'doc' ? 'compromise' : 'policyViolation';
   if (family.pk !== 1 && family.pk !== 25)
     return <PageTitle>{family.name}</PageTitle>;
 
@@ -326,10 +327,10 @@ export const ThreatFamilyName = ({ family }: { family: ThreatFamily }) => {
             </Button>
           </DialogTrigger>
           <DialogContent>
-            <DialogTitle>Create Custom Threat</DialogTitle>
-            <CreateEditThreatForm
-              handleClose={() => setIsEditing(false)}
-              isDoc={family.klass === 'doc'}
+            <DialogTitle>Create Custom {KIND_LABEL[kind]}</DialogTitle>
+            <ThreatForm
+              onClose={() => setIsEditing(false)}
+              kind={kind}
             />
           </DialogContent>
         </Dialog>

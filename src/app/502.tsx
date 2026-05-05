@@ -8,10 +8,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/common/design-system/atoms/ui/card';
-import { useGetSystemSettingsQuery } from '@/features/user/settings/settings.api';
+import { useSystemSettings } from '@/features/settings';
 
 export const useDisplayError502 = () => {
-  const { error, refetch } = useGetSystemSettingsQuery(undefined, {
+  const { error, refetch } = useSystemSettings({
     refetchOnFocus: false,
     refetchOnReconnect: false,
   });

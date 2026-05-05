@@ -2,8 +2,8 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { isNil, toPairs } from 'ramda';
 
 import { startsWithOneOf } from '@/common/lib/strings';
+import { ESMappingAPI } from '@/features/filtering/es-mapping/es-mapping.api';
 import type { TagFilters } from '@/features/filtering/filters/tag-filters/tag-filters.model';
-import { SettingsAPI } from '@/features/user/settings/settings.api';
 
 import { QueryFilterState, QueryFilterType } from './query-filter.model';
 
@@ -58,7 +58,7 @@ export const queryFiltersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(
-      SettingsAPI.endpoints.getESMapping.matchFulfilled,
+      ESMappingAPI.endpoints.getESMapping.matchFulfilled,
       (state, action) => {
         state.types = toPairs(action.payload).reduce(
           (acc, [key, value]) => {

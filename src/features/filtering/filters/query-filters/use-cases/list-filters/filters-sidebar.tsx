@@ -32,13 +32,13 @@ import { openSaveFilterSetModal } from '@/features/filtering/filtersets/use-case
 import { useWithAlertsParam } from '@/features/host-insights/common/hosts-table/use-with-alerts-param';
 import { Investigation } from '@/features/investigation/components/ongoing-investigation/ongoing-investigation';
 import { selectInvestigationStage } from '@/features/investigation/investigation.slice';
+import { useIsEnterprise } from '@/features/settings';
 import { selectAutoOpenSidebarOnNavigation } from '@/features/ui/preferences/preferences.slice';
 import {
   selectIsSidebarOpen,
   setIsSidebarOpen,
   setOpenModal,
 } from '@/features/ui/ui-state.slice';
-import { selectIsEnterprise } from '@/features/user/settings/settings.slice';
 import { useAppSelector } from '@/store/store';
 
 import { FilterCategory } from '../../constants/query-filter.config';
@@ -106,7 +106,7 @@ export const FiltersSideBar = () => {
   const autoOpenSidebarOnNavigation = useAppSelector(
     selectAutoOpenSidebarOnNavigation,
   );
-  const enterprise = useAppSelector(selectIsEnterprise);
+  const enterprise = useIsEnterprise();
   const [withAlerts] = useWithAlertsParam();
   const clearFilters = useClearFilters();
   const reorderFilters = useReorderFilters();

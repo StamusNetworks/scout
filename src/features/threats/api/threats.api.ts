@@ -1,0 +1,267 @@
+import { createEntityAdapter, EntityState } from '@reduxjs/toolkit';
+import { isNil } from 'ramda';
+
+import { buildQueryParams } from '@/common/fetching/buildQueryParams';
+import {
+  Dates,
+  Paginated,
+  Pagination,
+  Tenant,
+} from '@/common/fetching/fetching.types';
+import { API } from '@/store/api';
+import { applyOptimisticUpdateToAllCacheEntries } from '@/store/utils';
+
+import { ActiveThreatFamily } from '../common/active-threat-family.model';
+import { ActiveThreat } from '../common/active-threat.model';
+import { ThreatFamily } from '../common/threat-family.model';
+import { ThreatStatus } from '../common/threat-status.schema';
+import { Threat as DomainThreat } from '../model/threat';
+import { ThreatDto, ThreatPayloadDto } from './threat.dto';
+import { toThreat } from './threat.transforms';
+
+export type URLParams = Record<string, string>;
+
+const threatsAdapter = createEntityAdapter<ThreatDto, number>({
+  selectId: (threat) => threat.pk,
+});
+const threatsInitialState = threatsAdapter.getInitialState();
+
+const customThreatsAdapter = createEntityAdapter<ThreatDto, number>({
+  selectId: (threat) => threat.pk,
+});
+const customThreatsInitialState = customThreatsAdapter.getInitialState();
+
+const activeThreatsAdapter = createEntityAdapter<ActiveThreat, number>({
+  selectId: (threat) => threat.threat_id,
+});
+const activeThreatsInitialState = activeThreatsAdapter.getInitialState();
+
+const threatFamiliesAdapter = createEntityAdapter<ThreatFamily, number>({
+  selectId: (threat) => threat.pk,
+});
+const threatFamiliesInitialState = threatFamiliesAdapter.getInitialState();
+
+const activeThreatFamiliesAdapter = createEntityAdapter<
+  ActiveThreatFamily,
+  number
+>({
+  selectId: (threat) => threat.pk,
+});
+const activeThreatFamiliesInitialState =
+  activeThreatFamiliesAdapter.getInitialState();
+
+export const ThreatsAPI = API.injectEndpoints({
+  endpoints: (builder) => ({
+    // QUERIES
+    getThreatFamilies: builder.query<
+      EntityState<ThreatFamily, number>,
+      { family_class?: string; family_id?: string } & Partial<ThreatFamily> &
+        Tenant
+    >({
+      query: (params) => ({
+        url: `/appliances/threat_family/`,
+        method: 'GET',
+        params: {
+          ...params,
+          event_view: false,
+        },
+      }),
+      transformResponse(res: Paginated<ThreatFamily>) {
+        return threatFamiliesAdapter.setAll(
+          threatFamiliesInitialState,
+          res.results,
+        );
+      },
+      providesTags: ['Reload', 'ThreatFamilies'],
+    }),
+    getActiveThreatFamilies: builder.query<
+      EntityState<ActiveThreatFamily, number>,
+      Tenant & Dates & Partial<ThreatDto>
+    >({
+      query: (params) => ({
+        url: `/appliances/threat_family/top_list/`,
+        method: 'GET',
+        params: {
+          ...buildQueryParams(params),
+        },
+      }),
+      transformResponse(res: ActiveThreatFamily[]) {
+        return activeThreatFamiliesAdapter.setAll(
+          activeThreatFamiliesInitialState,
+          res,
+        );
+      },
+      providesTags: ['Reload', 'ThreatFamilies'],
+    }),
+    getSTIThreats: builder.query<EntityState<ThreatDto, number>, void>({
+      query: () => ({
+        url: `/api/v2/appliances/threats/`,
+        method: 'GET',
+        params: {
+          page_size: 10000,
+          user_defined: false,
+        },
+      }),
+      transformResponse(res: Paginated<ThreatDto>) {
+        return threatsAdapter.setAll(threatsInitialState, res.results);
+      },
+      providesTags: ['Threats'],
+    }),
+    getCustomThreats: builder.query<EntityState<ThreatDto, number>, Tenant>({
+      query: (params) => ({
+        url: `/api/v2/appliances/threats/`,
+        method: 'GET',
+        params: {
+          ...(!isNil(params.tenant) ? { tenant: params.tenant } : {}),
+          user_defined: true,
+        },
+      }),
+      transformResponse(res: Paginated<ThreatDto>) {
+        return customThreatsAdapter.setAll(
+          customThreatsInitialState,
+          res.results,
+        );
+      },
+      providesTags: ['CustomThreats'],
+    }),
+    getThreatById: builder.query<DomainThreat, Tenant & { threatId: string }>({
+      query: ({ threatId, ...rest }) => ({
+        url: `/appliances/threat/${threatId}/`,
+        method: 'GET',
+        params: { event_view: false, ...buildQueryParams(rest) },
+      }),
+      transformResponse: (dto: ThreatDto) => toThreat(dto),
+      providesTags: ['Threats'],
+    }),
+    getActiveThreats: builder.query<
+      EntityState<ActiveThreat, number>,
+      Tenant & Dates & Partial<ThreatDto> & { family_id?: number }
+    >({
+      query: (params) => ({
+        url: `/appliances/threat/top_list/`,
+        method: 'GET',
+        params: {
+          ...buildQueryParams(params),
+          page_size: 10000,
+        },
+      }),
+      transformResponse(res: ActiveThreat[]) {
+        return activeThreatsAdapter.setAll(activeThreatsInitialState, res);
+      },
+      providesTags: ['Reload', 'ActiveThreats'],
+    }),
+    createThreat: builder.mutation<
+      ThreatDto,
+      ThreatPayloadDto & { family_class: string }
+    >({
+      query: ({ family_class, ...threat }) => ({
+        url: `/appliances/threat/create_custom/?family_class=${family_class}`,
+        method: 'POST',
+        body: threat,
+      }),
+      async onQueryStarted(_arg, { dispatch, getState, queryFulfilled }) {
+        try {
+          const { data: createdThreat } = await queryFulfilled;
+          const cachedArgs = ThreatsAPI.util.selectCachedArgsForQuery(
+            getState(),
+            'getCustomThreats',
+          );
+          cachedArgs.forEach((params: Tenant) => {
+            dispatch(
+              ThreatsAPI.util.updateQueryData(
+                'getCustomThreats',
+                params,
+                (draft) => {
+                  customThreatsAdapter.upsertOne(draft, createdThreat);
+                },
+              ),
+            );
+          });
+        } catch {
+          // No undo needed — insert only happens on success
+        }
+      },
+      invalidatesTags: ['CustomThreats'],
+    }),
+    updateThreat: builder.mutation<
+      ThreatDto,
+      ThreatPayloadDto & { pk: number }
+    >({
+      query: ({ pk, ...threat }) => ({
+        url: `/appliances/threat/${pk}/?event_view=false`,
+        method: 'PATCH',
+        body: threat,
+      }),
+      async onQueryStarted({ pk, ...patch }, api) {
+        applyOptimisticUpdateToAllCacheEntries<
+          ReturnType<typeof customThreatsAdapter.getInitialState>
+        >(api, ThreatsAPI, 'getCustomThreats', (draft) => {
+          customThreatsAdapter.updateOne(draft, {
+            id: pk,
+            changes: patch,
+          });
+        });
+      },
+      invalidatesTags: ['CustomThreats'],
+    }),
+    deleteThreat: builder.mutation<void, number>({
+      query: (pk) => ({
+        url: `/appliances/threat/${pk}/?event_view=false`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['CustomThreats', 'Filter Actions'],
+    }),
+    getWorldMapOffendersCounts: builder.query<
+      {
+        res: { key: string; doc_count: number; offenders: { value: number } }[];
+      },
+      Dates &
+        Tenant & {
+          status?: 'new' | 'fixed' | undefined;
+        }
+    >({
+      query: (params) => ({
+        url: `/appliances/threat/worldmap/`,
+        method: 'GET',
+        params: {
+          status: 'new',
+          ...buildQueryParams(params),
+        },
+      }),
+      providesTags: ['Reload', 'Threats'],
+    }),
+    getThreatsStatus: builder.query<
+      Paginated<ThreatStatus>,
+      Pagination &
+        Tenant & {
+          asset?: string;
+          threat_id?: number;
+          ordering?: string;
+          kill_chain?: string;
+          first_seen__lte?: number;
+          first_seen__gte?: number;
+        }
+    >({
+      query: (params) => ({
+        url: `/api/v2/appliances/threat-status/`,
+        method: 'GET',
+        params: buildQueryParams(params),
+      }),
+      providesTags: ['Reload', 'Incidents'],
+    }),
+  }),
+});
+
+export const {
+  useGetThreatFamiliesQuery,
+  useGetActiveThreatFamiliesQuery,
+  useGetActiveThreatsQuery,
+  useCreateThreatMutation,
+  useUpdateThreatMutation,
+  useGetWorldMapOffendersCountsQuery,
+  useGetThreatByIdQuery,
+  useDeleteThreatMutation,
+  useGetThreatsStatusQuery,
+  useGetSTIThreatsQuery,
+  useGetCustomThreatsQuery,
+} = ThreatsAPI;

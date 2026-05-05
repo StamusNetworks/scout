@@ -9,7 +9,7 @@ import { GlobalStats } from '@/features/events/detection-events/use-cases/explor
 import { useGlobalStats } from '@/features/events/detection-events/use-cases/explorer/api/hooks/useGlobalStats';
 import { usePreviousDates } from '@/features/filtering/dates/use-cases/previous-dates/use-previous-dates';
 import { indicators } from '@/features/operational-center/config';
-import { useGetSystemSettingsQuery } from '@/features/user/settings/settings.api';
+import { useSystemSettings } from '@/features/settings';
 
 export const Indicators = () => {
   const previousDates = usePreviousDates();
@@ -22,8 +22,8 @@ export const Indicators = () => {
   const { data: previousEventsCount, isFetching: isPreviousEventsLoading } =
     useEventsCount(previousDates);
 
-  const { data: systemSettings } = useGetSystemSettingsQuery();
-  const kibana_url = systemSettings?.kibana_url;
+  const { data: systemSettings } = useSystemSettings();
+  const kibana_url = systemSettings?.kibanaUrl;
   return (
     <IndicatorsTemplate
       globalStats={globalStats}

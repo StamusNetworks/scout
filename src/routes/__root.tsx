@@ -16,12 +16,12 @@ import { defaultMenu } from '@/common/design-system/layouts/components/navigatio
 import { BreadcrumbProvider } from '@/common/design-system/molecules/breadcrumbs';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { FiltersSideBar } from '@/features/filtering/filters/query-filters/use-cases/list-filters/filters-sidebar';
+import { useSystemSettings } from '@/features/settings';
 import {
   selectIsSidebarOpen,
   setIsSidebarOpen,
   setOpenModal,
 } from '@/features/ui/ui-state.slice';
-import { useGetSystemSettingsQuery } from '@/features/user/settings/settings.api';
 import type { AppStore } from '@/store/store';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
@@ -72,7 +72,7 @@ function RootComponent() {
     };
   }, [dispatch]);
 
-  const { data: systemSettings } = useGetSystemSettingsQuery();
+  const { data: systemSettings } = useSystemSettings();
 
   const menu = useMemo(() => {
     return defaultMenu(systemSettings!, enterprise);

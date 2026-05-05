@@ -29,10 +29,10 @@ import {
   useGetEventsAggregationQuery,
   useGetProtocolsFromEventsQuery,
 } from '@/features/events/common/events.api';
+import { useESMapping } from '@/features/filtering/es-mapping/use-es-mapping';
 import { useCreateFilter } from '@/features/filtering/filters/query-filters/use-cases/create-filter/create-filter';
 import { ContextMenuContent } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/context-menu/context-menu.content';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
-import { useGetESMappingQuery } from '@/features/user/settings/settings.api';
 
 import { useSignatureDetailsParams } from '../signatures-table/signatures-table.utils';
 
@@ -86,7 +86,7 @@ function SignatureFlowForProtocol({
   globalParams: ReturnType<typeof useGlobalQueryParams>;
 }) {
   const createFilter = useCreateFilter();
-  const { data: esMapping } = useGetESMappingQuery();
+  const { data: esMapping } = useESMapping();
 
   const columns = useMemo(() => {
     const cols =

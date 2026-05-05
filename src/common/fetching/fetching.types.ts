@@ -1,5 +1,3 @@
-import { EventTypes } from '../../features/filtering/filters/query-filters/query-filters.store';
-
 export type Tenant = {
   tenant?: number;
 };
@@ -12,7 +10,10 @@ export type Dates = {
 export type QFilter = {
   qfilter?: string;
   host_id_qfilter?: string;
-} & Partial<EventTypes>;
+  alert?: boolean;
+  stamus?: boolean;
+  discovery?: boolean;
+};
 
 export type Pagination = {
   page?: number;

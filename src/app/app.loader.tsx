@@ -2,52 +2,40 @@ import { useEffect } from 'react';
 
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { getConfig } from '@/config';
+import { useSessionActivity } from '@/features/auth';
 import { refreshRange } from '@/features/filtering/dates/dates.store';
+import { useESMapping } from '@/features/filtering/es-mapping/use-es-mapping';
+import { useGlobalSettings, useSystemSettings } from '@/features/settings';
+import { useFetchTenantsList } from '@/features/tenancy';
 import { useAutoReload } from '@/features/ui/use-auto-reload';
-import { useSessionActivity } from '@/features/user/auth/hooks/use-session-activity';
-import {
-  useGetESMappingQuery,
-  useGetGlobalSettingsQuery,
-  useGetSystemSettingsQuery,
-  useGetTenantsListQuery,
-} from '@/features/user/settings/settings.api';
 import { useAppDispatch } from '@/store/store';
 
 import { Error502, useDisplayError502 } from './502';
 
 export const SystemSettings = ({ children }: { children: React.ReactNode }) => {
-  const { isLoading: systemSettingsLoading } = useGetSystemSettingsQuery(
-    undefined,
-    {
-      refetchOnFocus: false,
-      refetchOnReconnect: false,
-    },
-  );
+  const { isLoading: systemSettingsLoading } = useSystemSettings({
+    refetchOnFocus: false,
+    refetchOnReconnect: false,
+  });
   return systemSettingsLoading ? <Spin /> : children;
 };
 
 export const AppLoader = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useAppDispatch();
   useSessionActivity();
-  const { isLoading: globalSettingsLoading } = useGetGlobalSettingsQuery(
-    undefined,
-    {
-      refetchOnFocus: false,
-      refetchOnReconnect: false,
-    },
-  );
-  const { isLoading: tenantsListLoading } = useGetTenantsListQuery(undefined, {
+  const { isLoading: globalSettingsLoading } = useGlobalSettings({
     refetchOnFocus: false,
     refetchOnReconnect: false,
   });
-  const { isLoading: systemSettingsLoading, error } = useGetSystemSettingsQuery(
-    undefined,
-    {
-      refetchOnFocus: false,
-      refetchOnReconnect: false,
-    },
-  );
-  useGetESMappingQuery();
+  const { isLoading: tenantsListLoading } = useFetchTenantsList({
+    refetchOnFocus: false,
+    refetchOnReconnect: false,
+  });
+  const { isLoading: systemSettingsLoading, error } = useSystemSettings({
+    refetchOnFocus: false,
+    refetchOnReconnect: false,
+  });
+  useESMapping();
   useAutoReload();
 
   useEffect(() => {

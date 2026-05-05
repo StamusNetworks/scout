@@ -1,8 +1,7 @@
 import { values } from 'ramda';
 import { useMemo } from 'react';
 
-import { selectTenant } from '@/features/user/tenancy/tenancy.selector';
-import { useAppSelector } from '@/store/store';
+import { useTenant } from '@/features/tenancy';
 
 import {
   useGetCustomThreatsQuery,
@@ -14,7 +13,7 @@ interface ThreatsHookParams {
   family_id?: number;
 }
 export const useThreats = ({ family_class, family_id }: ThreatsHookParams) => {
-  const tenant = useAppSelector(selectTenant);
+  const tenant = useTenant();
   const { data: STIThreats, isLoading: STILoading } =
     useGetSTIThreatsQuery(undefined);
   const { data: customThreats, isLoading: customLoading } =

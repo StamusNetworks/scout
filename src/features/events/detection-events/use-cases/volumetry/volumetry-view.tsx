@@ -25,7 +25,7 @@ import { useEventsCount } from '@/features/events/common/hooks/useEventsCount';
 import { useGlobalStats } from '@/features/events/detection-events/use-cases/explorer/api/hooks/useGlobalStats';
 import { usePreviousDates } from '@/features/filtering/dates/use-cases/previous-dates/use-previous-dates';
 import { indicators } from '@/features/operational-center/config';
-import { useGetProbesQuery } from '@/features/user/settings/settings.api';
+import { useProbes } from '@/features/settings';
 import { Route } from '@/routes/_enterprise/volumetry';
 
 import { type ChartScale } from './dual-axis-line-chart';
@@ -147,7 +147,7 @@ const ProbeTimelineList = ({ scale }: { scale: ChartScale }) => {
     data: probes,
     isFetching: isProbesLoading,
     isError: isProbesError,
-  } = useGetProbesQuery();
+  } = useProbes();
 
   const filteredProbes = useMemo(() => {
     if (!probes) return [];
@@ -205,7 +205,7 @@ const ProbeTimelineList = ({ scale }: { scale: ChartScale }) => {
       ) : (
         <>
           {paginatedProbes.map((probe) => (
-            <Column key={probe.appliance_id}>
+            <Column key={probe.applianceId}>
               <Row className="mb-2 items-center gap-3">
                 <BlockTitle>{probe.name}</BlockTitle>
                 <span className="text-muted-foreground text-xs">

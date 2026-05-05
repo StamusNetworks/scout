@@ -18,32 +18,16 @@ import {
 } from '@/common/design-system/atoms/ui/dropdown-menu';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { getConfig } from '@/config';
-import {
-  useGetSciriusContextQuery,
-  useGetSourcesQuery,
-} from '@/features/user/settings/settings.api';
+import { useSciriusContext, useSources } from '@/features/settings';
 
 export const HelpMenu = () => {
-  const { product, version } = useGetSciriusContextQuery(undefined, {
-    selectFromResult: (result) => ({
-      ...result,
-      product: result.data?.product_long_name,
-      version: result.data?.version
-        ? /\d+\.\d+\.\d+/.exec(result.data?.version)
-        : undefined,
-    }),
-  });
-  const { source } = useGetSourcesQuery(
-    { datatype: 'threat' },
-    {
-      selectFromResult: (result) => ({
-        ...result,
-        source: result.data?.results.find(
-          (result) => result.datatype === 'threat',
-        ),
-      }),
-    },
-  );
+  const { data: sciriusContext } = useSciriusContext();
+  const product = sciriusContext?.productLongName;
+  const version = sciriusContext?.version
+    ? /\d+\.\d+\.\d+/.exec(sciriusContext.version)
+    : undefined;
+  const { data: sources } = useSources({ datatype: 'threat' });
+  const source = sources?.results.find((s) => s.datatype === 'threat');
   const { enterprise } = useFeatureFlags();
   return (
     <Dialog>
@@ -117,8 +101,8 @@ export const HelpMenu = () => {
             <li>
               <span className="font-bold">Stamus Threat Intelligence:</span> v
               {source?.version}{' '}
-              {source?.updated_date &&
-                `(updated at ${format(new Date(source.updated_date), 'yyyy-MM-dd')})`}
+              {source?.updatedAt &&
+                `(updated at ${format(new Date(source.updatedAt), 'yyyy-MM-dd')})`}
             </li>
           </ul>
           <p className="mt-4 text-sm">Copyright 2014-2025, Stamus Networks</p>

@@ -5,11 +5,11 @@ import { toast } from 'sonner';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { selectDates } from '@/features/filtering/dates/dates.selectors';
 import { selectQueryFilters } from '@/features/filtering/filters/query-filters/query-filters.selectors';
+import { useTenant } from '@/features/tenancy';
 import {
   buildShareableState,
   buildShareUrl,
 } from '@/features/ui/share/shareable-state';
-import { selectTenant } from '@/features/user/tenancy/tenancy.selector';
 import { type RootState, useAppSelector } from '@/store/store';
 
 export const ShareButton = () => {
@@ -19,7 +19,7 @@ export const ShareButton = () => {
   const tagFilters = useAppSelector(
     (state: RootState) => state.filters.queryFilters.tagFilters,
   );
-  const tenant = useAppSelector(selectTenant);
+  const tenant = useTenant();
 
   const handleClick = () => {
     const state = buildShareableState(

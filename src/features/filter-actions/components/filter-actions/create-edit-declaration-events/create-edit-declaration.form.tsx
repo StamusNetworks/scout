@@ -46,12 +46,12 @@ import { useUpdateEffect } from '@/common/lib/use-update-effect';
 import { useGetRulesetsQuery } from '@/features/detection-methods/rulesets.api';
 import { FilterInput } from '@/features/filtering/filters/query-filters/use-cases/update-filter/filter-input';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { KIND_LABEL, ThreatForm, toThreat } from '@/features/threats';
 import {
   KillChainKeys,
   killChainSchema,
   killChainsConfig,
 } from '@/features/threats/common/killchain/killchain';
-import { CreateEditThreatForm } from '@/features/threats/common/molecules/create-edit-threat-form';
 import { useGetCustomThreatsQuery } from '@/features/threats/common/threats.api';
 
 import {
@@ -149,6 +149,7 @@ export const CreateEditDeclarationFilterActionForm = ({
   }, [form, initialValues?.filters]);
 
   const isDoc = form.watch('type') === 'doc';
+  const kind = isDoc ? 'compromise' : 'policyViolation';
   const withHistorical = form.watch('stamus_event');
   useUpdateEffect(() => {
     if (isDoc) {
@@ -325,7 +326,7 @@ export const CreateEditDeclarationFilterActionForm = ({
             name="threat"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{isDoc ? 'Threat' : 'Policy Violation'}</FormLabel>
+                <FormLabel>{KIND_LABEL[kind]}</FormLabel>
                 <Row className="items-center gap-1">
                   <FormControl>
                     <Select
@@ -365,11 +366,11 @@ export const CreateEditDeclarationFilterActionForm = ({
                     </DialogTrigger>
                     <DialogContent>
                       <DialogTitle>
-                        Create custom {isDoc ? 'Threat' : 'Policy Violation'}
+                        Create custom {KIND_LABEL[kind]}
                       </DialogTitle>
-                      <CreateEditThreatForm
-                        isDoc={isDoc}
-                        handleClose={handleCustomThreatMutationSuccess}
+                      <ThreatForm
+                        kind={kind}
+                        onClose={handleCustomThreatMutationSuccess}
                       />
                     </DialogContent>
                   </Dialog>
@@ -390,15 +391,16 @@ export const CreateEditDeclarationFilterActionForm = ({
                       </Button>
                     </DialogTrigger>
                     <DialogContent>
-                      <DialogTitle>
-                        Edit custom {isDoc ? 'Threat' : 'Policy Violation'}
-                      </DialogTitle>
-                      <CreateEditThreatForm
-                        isDoc={isDoc}
-                        threat={threatOptions?.find(
-                          (threat) => threat.name === field.value,
-                        )}
-                        handleClose={handleCustomThreatMutationSuccess}
+                      <DialogTitle>Edit custom {KIND_LABEL[kind]}</DialogTitle>
+                      <ThreatForm
+                        kind={kind}
+                        threat={(() => {
+                          const dto = threatOptions?.find(
+                            (threat) => threat.name === field.value,
+                          );
+                          return dto ? toThreat(dto) : undefined;
+                        })()}
+                        onClose={handleCustomThreatMutationSuccess}
                       />
                     </DialogContent>
                   </Dialog>

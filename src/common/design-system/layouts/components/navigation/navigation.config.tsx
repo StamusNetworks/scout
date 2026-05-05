@@ -26,7 +26,7 @@ import {
 } from 'lucide-react';
 
 import { getConfig } from '@/config';
-import { SystemSettings } from '@/features/user/settings/settings.model';
+import { type SystemSettings } from '@/features/settings';
 
 export type MenuItem = {
   key: string;
@@ -285,14 +285,14 @@ export const defaultMenu = (
       {
         key: 'kibana-opensearch',
         type: 'external',
-        url: getConfig()?.apiUrl + systemSettings.kibana_url,
-        title: systemSettings.use_opensearch ? 'OpenSearch' : 'Kibana',
+        url: getConfig()?.apiUrl + systemSettings.kibanaUrl,
+        title: systemSettings.useOpensearch ? 'OpenSearch' : 'Kibana',
         icon: <ScanSearch />,
       },
       {
         key: 'cyber-chef',
         type: 'external',
-        url: getConfig()?.apiUrl + systemSettings.cyberchef_url,
+        url: getConfig()?.apiUrl + systemSettings.cyberchefUrl,
         title: 'Cyber Chef',
         icon: <ChefHat />,
       },
@@ -302,14 +302,14 @@ export const defaultMenu = (
             {
               key: 'arkime',
               type: 'external',
-              url: getConfig()?.apiUrl + systemSettings.arkime_url,
+              url: getConfig()?.apiUrl + systemSettings.arkimeUrl,
               title: 'Arkime',
               icon: <Globe />,
             },
             {
               key: 'evebox',
               type: 'external',
-              url: getConfig()?.apiUrl + systemSettings.evebox_url,
+              url: getConfig()?.apiUrl + systemSettings.eveboxUrl,
               title: 'EveBox',
               icon: <Eye />,
             },

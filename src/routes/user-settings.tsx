@@ -11,14 +11,13 @@ import {
 } from '@/common/design-system/atoms/page';
 import { Separator } from '@/common/design-system/atoms/ui/separator';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
-import { ColorBlindnessSelector } from '@/features/user/settings/components/color-blindness';
-import { DataDisplay } from '@/features/user/settings/components/data-display';
-import { DateTimeSelector } from '@/features/user/settings/components/date-time-format';
-import { DefaultEventTab } from '@/features/user/settings/components/default-event-tab';
-import { ExportFormatSelector } from '@/features/user/settings/components/export-format-selector';
-import { SidebarConfig } from '@/features/user/settings/components/sidebars';
-import { selectIsEnterprise } from '@/features/user/settings/settings.slice';
-import { useAppSelector } from '@/store/store';
+import { useIsEnterprise } from '@/features/settings';
+import { ColorBlindnessSelector } from '@/features/ui/preferences/components/color-blindness';
+import { DataDisplay } from '@/features/ui/preferences/components/data-display';
+import { DateTimeSelector } from '@/features/ui/preferences/components/date-time-format';
+import { DefaultEventTab } from '@/features/ui/preferences/components/default-event-tab';
+import { ExportFormatSelector } from '@/features/ui/preferences/components/export-format-selector';
+import { SidebarConfig } from '@/features/ui/preferences/components/sidebars';
 
 export const Route = createFileRoute('/user-settings')({
   component: () => (
@@ -29,7 +28,7 @@ export const Route = createFileRoute('/user-settings')({
 });
 
 function UserSettingsPage() {
-  const isEnterprise = useAppSelector(selectIsEnterprise);
+  const isEnterprise = useIsEnterprise();
   return (
     <Page>
       <TogglePageContainer>

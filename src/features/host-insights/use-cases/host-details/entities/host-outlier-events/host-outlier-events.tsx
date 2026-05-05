@@ -18,6 +18,7 @@ import {
   TIMESTAMP_COLUMN,
 } from '@/features/events/common/events.table';
 import { ExpandedEventRow } from '@/features/events/common/molecules/expanded-event-row';
+import { useGetCountsTimelineQuery } from '@/features/events/counts-timeline/counts-timeline.api';
 import {
   CATEGORY_COLUMN,
   LATERAL_COLUMN,
@@ -25,7 +26,6 @@ import {
   OUTLIER_COLUMN,
 } from '@/features/events/detection-events/detection-events.table';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
-import { useGetCountsTimelineQuery } from '@/features/threats/compromises/use-cases/timeline/api/timeline.api';
 
 const outlierColumns = [
   TIMESTAMP_COLUMN,

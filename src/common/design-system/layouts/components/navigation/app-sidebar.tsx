@@ -43,10 +43,8 @@ import {
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { cn } from '@/common/lib/utils';
 import { getConfig } from '@/config';
-import { useGetCurrentUserQuery } from '@/features/user/auth/api/auth.api';
-import { selectTenancy } from '@/features/user/tenancy/tenancy.selector';
-import { setTenant, type Tenant } from '@/features/user/tenancy/tenancy.slice';
-import { useAppDispatch, useAppSelector } from '@/store/store';
+import { useCurrentUser } from '@/features/auth';
+import { type Tenant, useSetTenant, useTenancy } from '@/features/tenancy';
 
 import type { MenuItem, Submenu } from './navigation.config';
 
@@ -112,8 +110,8 @@ export const AppSidebar = ({ menu }: AppSidebarProps) => {
 };
 
 const SidebarHeaderContent = () => {
-  const dispatch = useAppDispatch();
-  const { multitenancy, tenant, tenantsList } = useAppSelector(selectTenancy);
+  const setTenant = useSetTenant();
+  const { multitenancy, tenant, tenantsList } = useTenancy();
   const { state } = useSidebar();
 
   return (
@@ -138,9 +136,7 @@ const SidebarHeaderContent = () => {
       {multitenancy && state === 'expanded' && (
         <Select
           value={tenant?.toString()}
-          onValueChange={(value: string) =>
-            dispatch(setTenant(parseInt(value)))
-          }
+          onValueChange={(value: string) => setTenant(parseInt(value))}
         >
           <SelectTrigger className="bg-background h-8 w-full">
             <SelectValue placeholder="Select Tenant" />
@@ -293,7 +289,7 @@ const LegacyUIButton = () => {
 };
 
 const SidebarUserFooter = () => {
-  const { data } = useGetCurrentUserQuery();
+  const { data } = useCurrentUser();
   const { state } = useSidebar();
 
   const content = (

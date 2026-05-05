@@ -16,7 +16,7 @@ import {
   ChartTooltipContent,
 } from '@/common/design-system/atoms/ui/chart';
 import { cn } from '@/common/lib/utils';
-import { CountsTimeline } from '@/features/threats/compromises/use-cases/timeline/models/counts-timeline.model';
+import { CountsTimeline } from '@/features/events/counts-timeline/counts-timeline.model';
 
 import { getTimelineData } from './bar-chart-timeline.utils';
 

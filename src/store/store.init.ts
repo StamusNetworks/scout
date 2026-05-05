@@ -1,4 +1,5 @@
 import { tablePreferencesInitialState } from '@/common/design-system/molecules/data-table/table-preferences.slice';
+import { authInitialState } from '@/features/auth/state/auth.slice';
 import { dashboardPageStateInitialState } from '@/features/events/detection-events/use-cases/explorer/store/dashboard.slice';
 import { createEditDeclarationModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
 import { createEditSendMailModalInitialState } from '@/features/filter-actions/components/filter-actions/create-edit-send-mail-filter-action/create-edit-send-mail.slice';
@@ -13,19 +14,16 @@ import { saveFilterSetModalInitialState } from '@/features/filtering/filtersets/
 import { investigationInitialState } from '@/features/investigation/investigation.slice';
 import { investigationsHistoryInitialState } from '@/features/investigation/investigations-history.slice';
 import { marketingStateInitialState } from '@/features/marketing/store/marketing.store';
+import { settingsInitialState } from '@/features/settings/state/settings.slice';
+import { tenancyInitialState } from '@/features/tenancy/state/tenancy.slice';
 import { helpInitialState } from '@/features/ui/help/help.slice';
 import { preferencesInitialState } from '@/features/ui/preferences/preferences.slice';
 import { uiStateInitialState } from '@/features/ui/ui-state.slice';
-import { authInitialState } from '@/features/user/auth/store/auth.slice';
-import { settingsInitialState } from '@/features/user/settings/settings.slice';
-import { tenancyInitialState } from '@/features/user/tenancy/tenancy.slice';
-import { userInitialState } from '@/features/user/user/user.slice';
 
 import { RootState } from './store';
 
 export const initialState: Omit<RootState, 'API'> = {
   auth: authInitialState,
-  user: userInitialState,
   settings: settingsInitialState,
   filters: {
     queryFiltersSets: queryFiltersSetsInitialState,

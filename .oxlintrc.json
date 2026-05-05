@@ -19,6 +19,51 @@
     "unicorn/no-array-reverse": "off",
     "unicorn/prefer-set-has": "off",
     "oxc/no-map-spread": "off",
-    "oxc/no-accumulating-spread": "off"
-  }
+    "oxc/no-accumulating-spread": "off",
+    "unicorn/filename-case": [
+      "warn",
+      {
+        "case": "kebabCase"
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "@/features/*/api",
+              "@/features/*/api/*",
+              "@/features/*/api/**",
+              "@/features/*/state",
+              "@/features/*/state/*",
+              "@/features/*/state/**"
+            ],
+            "message": "Cross-feature imports must go through the feature's public barrel ('@/features/<feature>'). 'api' and 'state' folders are internal — see docs/architecture.md."
+          }
+        ]
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["src/routes/**/$*.tsx", "src/routes/**/$*.ts"],
+      "rules": {
+        "unicorn/filename-case": "off"
+      }
+    },
+    {
+      "files": [
+        "src/store/store.ts",
+        "src/store/store.init.ts",
+        "src/features/**/*.slice.ts",
+        "src/features/**/*.store.ts",
+        "src/features/**/*.selectors.ts",
+        "src/routes/_enterprise.tsx"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ]
 }

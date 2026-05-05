@@ -3,7 +3,7 @@ import { parseAsInteger, useQueryState } from 'nuqs';
 import { useCallback, useMemo, useState } from 'react';
 
 import { useUpdateEffect } from '@/common/lib/use-update-effect';
-import { selectTenant } from '@/features/user/tenancy/tenancy.selector';
+import { useTenant } from '@/features/tenancy';
 import { useAppSelector } from '@/store/store';
 
 export const usePaginationState = () =>
@@ -15,7 +15,7 @@ export const usePaginationState = () =>
 export const usePaginationUrlState = (
   defaultPageSize = 10,
 ): [PaginationState, (updater: Updater<PaginationState>) => void] => {
-  const tenant = useAppSelector(selectTenant);
+  const tenant = useTenant();
   const qfilters = useAppSelector(
     (state) => state.filters.queryFilters.queryFilters,
   );

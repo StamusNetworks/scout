@@ -1,3 +1,4 @@
+import { useTenant } from '@/features/tenancy';
 import { useAppSelector } from '@/store/store';
 
 import { useDatesRepository } from './dates/dates.repository';
@@ -7,7 +8,6 @@ import { selectEventsTypesParams } from './filters/query-filters/query-filters.s
 import { useBuildHostIdQfilter } from './filters/query-filters/use-cases/build-host-id-qfilter/build-host-id-qfilter';
 import { useBuildEventsQfilter } from './filters/query-filters/use-cases/build-qfilter/build-qfilter';
 import { useBuildSignatureFilter } from './filters/query-filters/use-cases/build-signature-filter/build-signature-filter';
-import { useTenantRepository } from './tenant/tenant.repository';
 
 type SubscribeKey =
   | 'dates'
@@ -23,7 +23,7 @@ export const useGlobalQueryParams = (
   },
 ) => {
   const dates = useDatesRepository();
-  const tenant = useTenantRepository();
+  const tenant = useTenant();
   const eventsTypes = useAppSelector(selectEventsTypesParams);
   const qfilter = useBuildEventsQfilter(options?.extendQfilter);
   const hostIdQfilter = useBuildHostIdQfilter(options?.extendQfilter);
@@ -43,6 +43,6 @@ export const useGlobalQueryParams = (
       host_id_qfilter: hostIdQfilter,
     }),
     ...(subscribe?.includes('qfilterSignature') && signatureFilters),
-    ...(subscribe?.includes('tenant') && { tenant: tenant.get() }),
+    ...(subscribe?.includes('tenant') && { tenant }),
   };
 };

@@ -1,14 +1,17 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useParams } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { ThreatByIdDetectionMethods } from '@/features/threats/common/templates/threat-by-id/threat-by-id.detection-methods';
+import { ThreatDetectionMethods } from '@/features/threats';
 
 export const Route = createFileRoute(
   '/_enterprise/policy-violations/coverage/threat/$threatId/detection-methods',
 )({
-  component: () => (
-    <PageBoundary key="pv-by-id-detection-methods">
-      <ThreatByIdDetectionMethods />
-    </PageBoundary>
-  ),
+  component: () => {
+    const { threatId } = useParams({ strict: false }) as { threatId: string };
+    return (
+      <PageBoundary key="pv-by-id-detection-methods">
+        <ThreatDetectionMethods threatId={threatId} />
+      </PageBoundary>
+    );
+  },
 });

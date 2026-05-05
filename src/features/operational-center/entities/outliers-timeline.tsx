@@ -1,6 +1,6 @@
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
+import { useGetCountsTimelineQuery } from '@/features/events/counts-timeline/counts-timeline.api';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
-import { useGetCountsTimelineQuery } from '@/features/threats/compromises/use-cases/timeline/api/timeline.api';
 
 export const OutliersTimeline = () => {
   const params = useGlobalQueryParams(['tenant', 'dates']);

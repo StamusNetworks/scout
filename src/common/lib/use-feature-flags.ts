@@ -1,8 +1,7 @@
-import { selectIsEnterprise } from '@/features/user/settings/settings.slice';
-import { useAppSelector } from '@/store/store';
+import { useIsEnterprise } from '@/features/settings';
 
 export const useFeatureFlags = () => {
-  const enterprise = useAppSelector(selectIsEnterprise);
+  const enterprise = useIsEnterprise();
   return {
     experimental: true,
     enterprise,

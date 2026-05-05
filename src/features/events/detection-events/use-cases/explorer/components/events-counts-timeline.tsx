@@ -7,7 +7,7 @@ import {
 } from '@/common/design-system/atoms/ui/pillTabs';
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
-import { useTimeline } from '@/features/threats/compromises/use-cases/timeline/api/hooks/useTimeline';
+import { useCountsTimeline } from '@/features/events/counts-timeline/use-counts-timeline';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { selectChartTarget } from '../store/dashboard.selectors';
@@ -20,7 +20,7 @@ export const EventsCountTimeline = () => {
   const { enterprise } = useFeatureFlags();
   const compChartTarget = enterprise ? chartTarget : false; // Chart target can only be specified in Enterprise
 
-  const { data } = useTimeline(compChartTarget);
+  const { data } = useCountsTimeline(compChartTarget);
 
   return (
     <Column>

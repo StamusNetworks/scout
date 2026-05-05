@@ -1,7 +1,7 @@
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
 import { useGetEventsTimelineQuery } from '@/features/events/common/events.api';
+import { CountsTimeline } from '@/features/events/counts-timeline/counts-timeline.model';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
-import { CountsTimeline } from '@/features/threats/compromises/use-cases/timeline/models/counts-timeline.model';
 
 import { useNetworkEventsQfilter } from '../../build-network-events-qfilter';
 

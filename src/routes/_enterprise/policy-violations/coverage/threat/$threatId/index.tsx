@@ -1,14 +1,34 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useParams } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { ThreatByIdIndex } from '@/features/threats/common/templates/threat-by-id/threat-by-id';
+import { Column } from '@/common/design-system/atoms/layout/column';
+import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
+import { useThreatById } from '@/features/threats';
+import { ImpactedEntitiesTable } from '@/features/threats/common/molecules/impacted-entities-table/impacted-entities-table';
 
 export const Route = createFileRoute(
   '/_enterprise/policy-violations/coverage/threat/$threatId/',
 )({
   component: () => (
     <PageBoundary key="pv-by-id-index">
-      <ThreatByIdIndex familyClass="dopv" />
+      <PolicyViolationEntitiesTab />
     </PageBoundary>
   ),
 });
+
+function PolicyViolationEntitiesTab() {
+  const { threatId } = useParams({ strict: false }) as { threatId: string };
+  const { tenant } = useGlobalQueryParams(['tenant']);
+  const { data: threat } = useThreatById({ threatId, tenant });
+
+  if (!threat) return null;
+
+  return (
+    <Column className="mt-6">
+      <ImpactedEntitiesTable
+        threatId={threat.id}
+        familyClass="dopv"
+      />
+    </Column>
+  );
+}

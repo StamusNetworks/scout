@@ -5,6 +5,7 @@ import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/es/storage';
 
 import { tablePreferencesSlice } from '@/common/design-system/molecules/data-table/table-preferences.slice';
+import { authSlice } from '@/features/auth/state/auth.slice';
 import { dashboardPageStateSlice } from '@/features/events/detection-events/use-cases/explorer/store/dashboard.slice';
 import { createEditDeclarationModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-declaration-events/create-edit-declaration.slice';
 import { createEditSendMailModalSlice } from '@/features/filter-actions/components/filter-actions/create-edit-send-mail-filter-action/create-edit-send-mail.slice';
@@ -19,13 +20,11 @@ import { saveFilterSetModalSlice } from '@/features/filtering/filtersets/use-cas
 import { investigationSlice } from '@/features/investigation/investigation.slice';
 import { investigationsHistorySlice } from '@/features/investigation/investigations-history.slice';
 import { marketingStateSlice } from '@/features/marketing/store/marketing.store';
+import { settingsSlice } from '@/features/settings/state/settings.slice';
+import { tenancySlice } from '@/features/tenancy/state/tenancy.slice';
 import { helpSlice } from '@/features/ui/help/help.slice';
 import { preferencesSlice } from '@/features/ui/preferences/preferences.slice';
 import { uiStateSlice } from '@/features/ui/ui-state.slice';
-import { authSlice } from '@/features/user/auth/store/auth.slice';
-import { settingsSlice } from '@/features/user/settings/settings.slice';
-import { tenancySlice } from '@/features/user/tenancy/tenancy.slice';
-import { userSlice } from '@/features/user/user/user.slice';
 
 import { API } from './api';
 
@@ -39,7 +38,6 @@ const persistConfig = {
 export const rootReducer = () =>
   combineReducers({
     auth: authSlice.reducer,
-    user: userSlice.reducer,
     settings: settingsSlice.reducer,
     filters: combineReducers({
       queryFilters: queryFiltersSlice.reducer,

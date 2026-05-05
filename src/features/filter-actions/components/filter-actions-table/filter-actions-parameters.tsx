@@ -1,7 +1,5 @@
-import { useSelector } from 'react-redux';
-
 import { FilterAction } from '@/features/filter-actions/model/filter-action';
-import { selectTenancy } from '@/features/user/tenancy/tenancy.selector';
+import { useTenancy } from '@/features/tenancy';
 
 type KeyToDisplay = {
   name: string;
@@ -70,7 +68,7 @@ export const FilterActionParameters = ({
 }: {
   filterAction: FilterAction;
 }) => {
-  const { multitenancy } = useSelector(selectTenancy);
+  const { multitenancy } = useTenancy();
 
   const threatOptions =
     filterAction.action === 'threat'

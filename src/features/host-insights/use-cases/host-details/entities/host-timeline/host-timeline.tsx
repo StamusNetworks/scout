@@ -4,9 +4,11 @@ import { BlockTitle } from '@/common/design-system/atoms/block';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
-import { useGetThreatHistoryQuery } from '@/features/threats/compromises/use-cases/timeline/api/timeline.api';
-import { HostTimelineTemplate } from '@/features/threats/compromises/use-cases/timeline/components/history-timeline/history-timeline';
-import { ThreatsTimeline } from '@/features/threats/compromises/use-cases/timeline/components/timeline/timeline';
+import {
+  CompromiseTimeline,
+  HostTimelineTemplate,
+  useGetThreatHistoryQuery,
+} from '@/features/threats';
 
 export interface HostTimelineProps {
   hostId: string;
@@ -59,7 +61,7 @@ export function HostTimeline({ hostId }: HostTimelineProps) {
         <Biohazard />
         Threats timeline
       </BlockTitle>
-      <ThreatsTimeline entity={hostId} />
+      <CompromiseTimeline entity={hostId} />
       <BlockTitle className="mt-8">
         <History /> Host History
       </BlockTitle>

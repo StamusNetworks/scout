@@ -1,14 +1,17 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useParams } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { ThreatByIdEvents } from '@/features/threats/common/templates/threat-by-id/threat-by-id.events';
+import { ThreatEvents } from '@/features/threats';
 
 export const Route = createFileRoute(
   '/_enterprise/policy-violations/coverage/threat/$threatId/events',
 )({
-  component: () => (
-    <PageBoundary key="pv-by-id-events">
-      <ThreatByIdEvents />
-    </PageBoundary>
-  ),
+  component: () => {
+    const { threatId } = useParams({ strict: false }) as { threatId: string };
+    return (
+      <PageBoundary key="pv-by-id-events">
+        <ThreatEvents threatId={threatId} />
+      </PageBoundary>
+    );
+  },
 });

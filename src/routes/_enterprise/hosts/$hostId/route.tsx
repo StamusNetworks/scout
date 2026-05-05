@@ -36,9 +36,8 @@ import { useGetSightingEventsQuery } from '@/features/events/sightings/common/si
 import { useGlobalQueryParams } from '@/features/filtering/use-global-query-params';
 import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
 import { HostHeader } from '@/features/host-insights/use-cases/host-details/entities/host-header';
+import { useTenancy } from '@/features/tenancy';
 import { useGetThreatsStatusQuery } from '@/features/threats/common/threats.api';
-import { selectTenancy } from '@/features/user/tenancy/tenancy.selector';
-import { useAppSelector } from '@/store/store';
 
 export const Route = createFileRoute('/_enterprise/hosts/$hostId')({
   component: () => (
@@ -53,7 +52,7 @@ function HostDetailsLayout() {
   const { pathname } = useLocation();
 
   const params = useGlobalQueryParams(['tenant', 'dates']);
-  const { multitenancy } = useAppSelector(selectTenancy);
+  const { multitenancy } = useTenancy();
 
   const isValidIp = Boolean(hostId && isIP(hostId));
 
