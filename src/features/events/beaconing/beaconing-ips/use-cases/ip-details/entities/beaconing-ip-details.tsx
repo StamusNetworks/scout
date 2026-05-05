@@ -17,10 +17,10 @@ import {
 } from '@/common/design-system/atoms/ui/scroll-area';
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
-import { useBeaconReport } from '@/features/events/beaconing/common/hooks/use-beacon-report';
 import { BeaconingMetadata } from '@/features/events/beaconing/common/molecules/beaconing-metadata';
 import { ReportSummary } from '@/features/events/beaconing/common/molecules/report-summary';
 import { formatBeaconMetric } from '@/features/events/beaconing/common/utils/format-beacon-metric';
+import { useBeaconReport } from '@/features/events/hooks/use-beacon-report';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 import { BeaconingIPsTable } from '../../../molecules/beaconing-ips-table';

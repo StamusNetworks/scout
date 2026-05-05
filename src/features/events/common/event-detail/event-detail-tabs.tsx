@@ -14,12 +14,12 @@ import {
 } from '@/common/design-system/atoms/ui/pillTabs';
 import { Event } from '@/features/events/model/event';
 
+import { useEventDetailData } from '../../hooks/use-event-detail-data';
 import {
   EventDetailData,
   TabComponentType,
   TabConfig,
 } from './event-detail-tabs.types';
-import { useEventDetailData } from './use-event-detail-data';
 
 interface EventDetailTabsProps {
   event: Event;

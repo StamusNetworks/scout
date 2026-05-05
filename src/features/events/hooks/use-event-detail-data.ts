@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 
 import { esEscape } from '@/common/lib/strings';
-import { useGetEventsFromFlowQuery } from '@/features/events/common/events.api';
-import { Event } from '@/features/events/model/event';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { EventDetailData } from './event-detail-tabs.types';
+import { useGetEventsFromFlowQuery } from '../api/events.api';
+import { EventDetailData } from '../common/event-detail/event-detail-tabs.types';
+import { Event } from '../model/event';
 
 export const useEventDetailData = (event: Event): EventDetailData => {
   const params = useGlobalQueryParams(['tenant', 'dates']);

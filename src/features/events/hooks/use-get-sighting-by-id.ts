@@ -1,7 +1,7 @@
 import { esEscape } from '@/common/lib/strings';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { useGetSightingEventsQuery } from '../sightings.api';
+import { useGetSightingEventsQuery } from '../api/events.api';
 
 export const useGetSightingById = (sightingId: string) => {
   const params = useGlobalQueryParams(['dates', 'tenant']);

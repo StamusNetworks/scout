@@ -1,7 +1,7 @@
-import { useGetEventsTailQuery } from '@/features/events/common/events.api';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { getSightingQfilter } from '../utils/get-sighting-qfilter';
+import { useGetEventsTailQuery } from '../api/events.api';
+import { getSightingQfilter } from '../sightings/common/utils/get-sighting-qfilter';
 
 interface useGetSightingEventsTailProps {
   key: string | undefined;

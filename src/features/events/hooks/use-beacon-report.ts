@@ -1,7 +1,7 @@
 import { esEscape } from '@/common/lib/strings';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { useGetBeaconingEventsQuery } from '../beaconing.api';
+import { useGetBeaconingEventsQuery } from '../api/events.api';
 
 export const useBeaconReport = (type: 'ja3s' | 'ip', value: string) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
