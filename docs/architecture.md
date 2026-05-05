@@ -379,11 +379,17 @@ hosts/detection-methods/beaconing/filter-actions → remaining. Done
 to date: tenancy, auth, settings, dates, query-filters (extracted
 from the legacy `features/filtering/`), filter-sets (extracted from
 the legacy `features/filtering/filtersets/` with full `alerts`↔`alert`
-ACL). As each context migrates, its API surface adopts the
-domain-shaped `Pagination` (`{ page, pageSize, ordering }`) and
-`DateRange` (`{ from, to }`); `buildQueryParams` translates to wire at
-the boundary. The kernel-wide collapse falls out of these per-feature
-migrations.
+ACL), events (with beaconing folded in as a sub-component of the
+events context), threats (full ACL with `kind`-discriminated
+compromise/policy-violation domain), and filter-actions (full ACL
+with `kind`-discriminated domain, single consolidated modal slice
+under `state/`, and a route orchestrator). Remaining: detection-methods,
+host-insights, and the peripheral contexts (deeplinks, hunting-trail,
+investigation, marketing, operational-center, ui). As each context
+migrates, its API surface adopts the domain-shaped `Pagination`
+(`{ page, pageSize, ordering }`) and `DateRange` (`{ from, to }`);
+`buildQueryParams` translates to wire at the boundary. The
+kernel-wide collapse falls out of these per-feature migrations.
 
 ### Deferred kernel cleanup
 
