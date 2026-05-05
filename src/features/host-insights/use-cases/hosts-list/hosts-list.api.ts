@@ -1,6 +1,6 @@
 import { PaginationState } from '@tanstack/react-table';
 
-import { selectDates } from '@/features/dates';
+import { useDates } from '@/features/dates';
 import {
   getAggregationBody,
   getCustomFilter,
@@ -9,7 +9,6 @@ import {
 } from '@/features/host-insights/common/host-insights.api';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
-import { useAppSelector } from '@/store/store';
 
 // ── useHostsList ──────────────────────────────────────────────────────
 
@@ -68,7 +67,7 @@ export const useFetchHostsCounts = ({
 }: {
   inHomeNetwork: 'true' | 'false' | 'all';
 }) => {
-  const dateFilters = useAppSelector(selectDates);
+  const dateFilters = useDates();
   const { tenant, start_date, end_date } = useGlobalQueryParams([
     'tenant',
     'dates',

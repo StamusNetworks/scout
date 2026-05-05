@@ -11,11 +11,10 @@ import {
 import { Skeleton } from '@/common/design-system/atoms/ui/skeleton';
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { cn } from '@/common/lib/utils';
-import { selectIsAfterStart } from '@/features/dates';
+import { useIsAfterStart } from '@/features/dates';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
 import { type KillChainPhase } from '@/features/threats/common/killchain/killchain';
-import { useAppSelector } from '@/store/store';
 
 import { useThreat } from '../hooks/use-threat';
 
@@ -39,8 +38,8 @@ export const ThreatTag = ({
   className,
 }: ThreatTagProps) => {
   const navigate = useNavigate();
-  const isAfterStart = useAppSelector(
-    selectIsAfterStart(first_seen ? new Date(first_seen) : new Date(0)),
+  const isAfterStart = useIsAfterStart(
+    first_seen ? new Date(first_seen) : new Date(0),
   );
   const startedInRange = first_seen && isAfterStart;
 

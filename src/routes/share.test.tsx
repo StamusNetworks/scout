@@ -7,7 +7,6 @@ import { beforeEach, describe, expect, test } from 'vitest';
 
 import { mockNavigate } from '@/common/testing/mocks/hooks/use-navigate.mock';
 import { renderWithProviders, withoutIds } from '@/common/testing/test-utils';
-import { selectDates } from '@/features/dates';
 import {
   encodeShareableState,
   type ShareableState,
@@ -105,7 +104,7 @@ describe('SharePage', () => {
     });
 
     // Verify dates match the decoded time
-    const dates = selectDates(store.getState());
+    const dates = store.getState().filters.datesFilters;
     expect(dates).toEqual(
       expect.objectContaining({
         type: 'from',

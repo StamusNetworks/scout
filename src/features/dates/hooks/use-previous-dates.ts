@@ -2,7 +2,8 @@ import { useMemo } from 'react';
 
 import { useAppSelector } from '@/store/store';
 
-import { computeDates, selectDates } from '../state/dates.selectors';
+import { computeDates } from '../model/dates-state';
+import { selectDates } from '../state/dates.selectors';
 
 /**
  * The window immediately preceding the active one, of the same length.

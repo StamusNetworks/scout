@@ -34,8 +34,8 @@ import { FilterInput } from '@/features/query-filters/components/edit-qfilter-mo
 import { type FilterFlags } from '@/features/query-filters/model/filter-flags';
 import { QueryFilterState } from '@/features/query-filters/model/query-filter';
 
-import { useCreateFilterSetMutation } from '../../api/filter-sets.api';
 import { filterSetPageConfig } from '../../definitions/filter-sets.constants';
+import { useCreateFilterSet } from '../../hooks/use-filter-sets';
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -121,7 +121,7 @@ export const SaveFilterSetForm = ({
     resolver: zodResolver(formSchema),
     defaultValues: initialValues,
   });
-  const [createFilterSet, { isLoading }] = useCreateFilterSetMutation();
+  const [createFilterSet, { isLoading }] = useCreateFilterSet();
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     createFilterSet({

@@ -25,11 +25,8 @@ import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { cn } from '@/common/lib/utils';
 import { useAppDispatch } from '@/store/store';
 
-import {
-  useDeleteFilterSetMutation,
-  useGetFilterSetsQuery,
-} from '../../api/filter-sets.api';
 import { filterSetPageConfig } from '../../definitions/filter-sets.constants';
+import { useDeleteFilterSet, useFilterSets } from '../../hooks/use-filter-sets';
 import { useIsLoadedFilterSet } from '../../hooks/use-is-loaded-filter-set';
 import { useLoadFilterSet } from '../../hooks/use-load-filter-set';
 import { type FilterSet } from '../../model/filter-set';
@@ -71,7 +68,7 @@ export const FilterSetsView = () => {
     'type',
     parseAsStringLiteral(['global', 'private', 'stamus']),
   );
-  const { data, isLoading } = useGetFilterSetsQuery(undefined);
+  const { data, isLoading } = useFilterSets();
 
   const filteredData = useMemo(() => {
     const filteredData =
@@ -277,7 +274,7 @@ export const Name = ({ filterSet }: { filterSet: FilterSet }) => {
 };
 
 const DeleteFilterSetCell = ({ filterSet }: { filterSet: FilterSet }) => {
-  const [deleteFilterSet] = useDeleteFilterSetMutation();
+  const [deleteFilterSet] = useDeleteFilterSet();
   return (
     <div onClick={(e) => e.stopPropagation()}>
       <DeleteModal

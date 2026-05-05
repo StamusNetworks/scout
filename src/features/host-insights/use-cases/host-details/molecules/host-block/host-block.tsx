@@ -1,7 +1,6 @@
 import { format } from 'date-fns';
 import { LaptopMinimal, LucideIcon } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
@@ -24,7 +23,7 @@ import {
   PageSelector,
 } from '@/common/design-system/molecules/pagination';
 import { TableCard } from '@/common/design-system/molecules/table-card';
-import { selectDates } from '@/features/dates';
+import { useDates } from '@/features/dates';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 import { useValuesSortParam } from './use-values-sort-param';
@@ -54,7 +53,7 @@ export const HostBlock = ({
   Icon?: LucideIcon;
 }) => {
   const [sort] = useValuesSortParam();
-  const datesFilter = useSelector(selectDates);
+  const datesFilter = useDates();
   const [fallbackEndDate] = useState(() => Date.now());
   const start_date = datesFilter.start_date ?? 0;
   const end_date = datesFilter.end_date ?? fallbackEndDate;

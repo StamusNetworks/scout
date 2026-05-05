@@ -3,18 +3,17 @@ import { Link } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { Button } from '@/common/design-system/atoms/ui/button';
-import { selectDates } from '@/features/dates';
+import { useDates } from '@/features/dates';
 import { useFilterFlags, useQueryFilters } from '@/features/query-filters';
 import { useTenant } from '@/features/tenancy';
 import {
   buildShareableState,
   buildShareUrl,
 } from '@/features/ui/share/shareable-state';
-import { useAppSelector } from '@/store/store';
 
 export const ShareButton = () => {
   const location = useLocation();
-  const dates = useAppSelector(selectDates);
+  const dates = useDates();
   const queryFilters = useQueryFilters();
   const flags = useFilterFlags();
   const tenant = useTenant();

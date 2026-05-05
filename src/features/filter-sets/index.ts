@@ -15,10 +15,10 @@ export { filterSetPageConfig } from './definitions/filter-sets.constants';
 // --- Hooks ---------------------------------------------------------------
 
 export {
-  useCreateFilterSetMutation,
-  useDeleteFilterSetMutation,
-  useGetFilterSetsQuery,
-} from './api/filter-sets.api';
+  useCreateFilterSet,
+  useDeleteFilterSet,
+  useFilterSets,
+} from './hooks/use-filter-sets';
 
 export { useFilterSetsRepository } from './state/filter-sets.repository';
 export { useIsLoadedFilterSet } from './hooks/use-is-loaded-filter-set';

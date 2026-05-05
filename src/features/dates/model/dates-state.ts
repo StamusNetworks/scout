@@ -56,3 +56,29 @@ export const UNITS_IN_MILLISECONDS: Record<TimeUnit, number> = {
   months: 60 * 60 * 24 * 30 * 1000,
   years: 60 * 60 * 24 * 365 * 1000,
 } as const;
+
+/**
+ * Pure: collapse a `DatesState` into an absolute `[start_date, end_date]`
+ * window. `all` widens to "since epoch → now"; `range`/`from`/`auto`
+ * pass through their stored values. Used by query builders that always
+ * need concrete bounds.
+ */
+const nowCeiledToMinute = () => Math.ceil(Date.now() / 60_000) * 60_000;
+
+export const computeDates = (
+  dates: DatesState,
+): { start_date: number; end_date: number } => {
+  if (dates.type === 'all') {
+    return { start_date: 0, end_date: nowCeiledToMinute() };
+  }
+  if (
+    (dates.type === 'range' ||
+      dates.type === 'from' ||
+      dates.type === 'auto') &&
+    dates.start_date &&
+    dates.end_date
+  ) {
+    return { start_date: dates.start_date, end_date: dates.end_date };
+  }
+  return { start_date: 0, end_date: nowCeiledToMinute() };
+};
