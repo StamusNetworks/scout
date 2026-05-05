@@ -1,15 +1,8 @@
 import { z } from 'zod';
 
-export const killChainPhaseSchema = z.union([
-  z.literal('reconnaissance'),
-  z.literal('weaponization'),
-  z.literal('delivery'),
-  z.literal('exploitation'),
-  z.literal('installation'),
-  z.literal('command_and_control'),
-  z.literal('actions_on_objectives'),
-  z.literal('pre_condition'),
-]);
+import { killChainPhaseSchema } from '../model/kill-chain';
+
+export { killChainPhaseSchema };
 
 export const entityThreatSchema = z.object({
   threat__threat_id: z.number(),
@@ -40,7 +33,3 @@ export const impactedEntitySchema = z.object({
 });
 
 export type ImpactedEntityDto = z.infer<typeof impactedEntitySchema>;
-/** @deprecated Use ImpactedEntityDto. */
-export type Entity = ImpactedEntityDto;
-/** @deprecated Use EntityThreatDto. */
-export type Threat = EntityThreatDto;

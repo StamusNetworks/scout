@@ -22,7 +22,7 @@ export type { ThreatStatus } from './model/threat-status';
 export type {
   KillChainPhase,
   KillChainPhaseConfig,
-  KillChainCounters,
+  KillChainCountersData,
 } from './model/kill-chain';
 export {
   KILL_CHAIN_PHASES,
@@ -31,17 +31,47 @@ export {
   phaseFromStep,
   killChainOptions,
   killChainWithoutPoliciesOptions,
+  killChainPhaseSchema,
 } from './model/kill-chain';
 
 // Hooks
 export { useThreatById } from './hooks/use-threat-by-id';
 export { useThreatFamilyOverview } from './hooks/use-threat-family-overview';
+export { useThreats } from './hooks/use-threats';
+export { useThreat } from './hooks/use-threat';
+export { useKillChainCounters } from './hooks/use-kill-chain-counters';
+export { useThreatDetectionMethods } from './hooks/use-threat-detection-methods';
+export { useThreatEvents } from './hooks/use-threat-events';
 
 /**
- * Cross-feature consumer (host-insights) of threat history. Exposed as
- * a migration helper; will be wrapped in a domain hook later.
+ * RTK Query hook re-exports. Cross-feature consumers should prefer
+ * the domain-level hooks above, but these are exposed here so that
+ * deep `@/features/threats/api/*` imports stay banned by lint while
+ * legacy callers remain functional.
  */
-export { useGetThreatHistoryQuery } from './api/timeline.api';
+export {
+  useGetThreatFamiliesQuery,
+  useGetActiveThreatFamiliesQuery,
+  useGetActiveThreatsQuery,
+  useGetThreatByIdQuery,
+  useGetSTIThreatsQuery,
+  useGetCustomThreatsQuery,
+  useGetThreatsStatusQuery,
+  useGetWorldMapOffendersCountsQuery,
+  useDeleteThreatMutation,
+} from './api/threats.api';
+export {
+  useGetImpactedEntitiesQuery,
+  useGetImpactedEntityQuery,
+  useGetAttackerInfrastructureQuery,
+  useGetKillChainCountersQuery,
+  useGetKillChainCountersByThreatIdQuery,
+  useUpdateEntityStatusMutation,
+} from './api/entities.api';
+export {
+  useGetThreatHistoryQuery,
+  useGetOffendersQuery,
+} from './api/timeline.api';
 
 /**
  * Migration helper. Cross-feature consumers that still read DTO-shaped
@@ -55,13 +85,26 @@ export { toThreat } from './api/threat.transforms';
 export { ActiveFamiliesList } from './components/active-families-list/active-families-list';
 export { ActiveThreatsList } from './components/active-threats-list/active-threats-list';
 export { AttackFlow } from './components/attack-flow/attack-flow';
+export { EntityThreatTagsList } from './components/entities-threat-tags-list/entities-threat-tags-list';
+export { EntityThreatTagsListTemplate } from './components/entities-threat-tags-list/entities-threat-tags-list';
 export { FamiliesList } from './components/families-list/families-list';
 export { FamilyActiveThreats } from './components/family-active-threats/family-active-threats';
-export { FamilyDetectionMethods } from './components/family-detection-methods/family-detection-methods';
-export { FamilyEvents } from './components/family-events/family-events';
-export { FamilyThreats } from './components/family-threats/family-threats';
+// FamilyDetectionMethods, FamilyEvents, FamilyThreats are intentionally NOT
+// re-exported here: they import from `@/features/events` and
+// `@/features/detection-methods` (which themselves transitively import from
+// the threats barrel), creating a barrel-to-barrel cycle. Routes deep-import
+// them directly via `@/features/threats/components/<name>/<name>`.
 export { HuntingTrail } from './components/hunting-trail/hunting-trail';
+export { ImpactedEntitiesTable } from './components/impacted-entities-table/impacted-entities-table';
 export { IncidentsTable } from './components/incidents-table/incidents-table';
+export { IpOrEntityEventValue } from './components/ip-or-entity/ip-or-entity';
+export {
+  KillChainCounters,
+  KillChainCountersByFamilyId,
+  KillChainCountersByThreatId,
+} from './components/kill-chain-counters/kill-chain-counters';
+export { KillchainTag } from './components/kill-chain-tag/kill-chain-tag';
+export { OffendersWorldMap } from './components/offenders-world-map/offenders-world-map';
 export { ThreatActions } from './components/threat-actions/threat-actions';
 export { ThreatDetailTabs } from './components/threat-detail-tabs/threat-detail-tabs';
 export { ThreatDetectionMethods } from './components/threat-detection-methods/threat-detection-methods';
@@ -73,5 +116,7 @@ export { ThreatForm } from './components/threat-form/threat-form';
 export { ThreatGraph } from './components/threat-graph/threat-graph';
 export { ThreatName } from './components/threat-name/threat-name';
 export { ThreatsList } from './components/threats-list/threats-list';
+export { threatStatusColumnDefs } from './components/threat-status-columns/threat-status-columns';
+export { ThreatTag } from './components/threat-tag/threat-tag';
 export { Timeline } from './components/timeline/timeline';
 export { HostTimelineTemplate } from './components/timeline/history-timeline';

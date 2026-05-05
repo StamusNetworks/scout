@@ -16,11 +16,11 @@ import { usePaginationState } from '@/common/design-system/molecules/data-table/
 import { isIP } from '@/common/lib/strings';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
-import { useGetThreatsStatusQuery } from '@/features/threats/api/threats.api';
-import { KillChainKeysWithoutPolicies } from '@/features/threats/common/killchain/killchain';
-import { threatStatusColumnDefs } from '@/features/threats/components/threat-status-columns/threat-status-columns';
-import { useThreats } from '@/features/threats/hooks/use-threats';
-import { ThreatStatus } from '@/features/threats/model/threat-status';
+import { useGetThreatsStatusQuery } from '@/features/threats';
+import { KILL_CHAIN_PHASES_KEYS_WITHOUT_POLICIES } from '@/features/threats';
+import { threatStatusColumnDefs } from '@/features/threats';
+import { useThreats } from '@/features/threats';
+import { ThreatStatus } from '@/features/threats';
 
 export const IndicidentsTable = () => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
@@ -29,7 +29,7 @@ export const IndicidentsTable = () => {
     ...pagination,
     tenant: params.tenant,
     ordering: '-first_seen',
-    kill_chain: KillChainKeysWithoutPolicies.join(','),
+    kill_chain: KILL_CHAIN_PHASES_KEYS_WITHOUT_POLICIES.join(','),
     first_seen__gte: params.start_date,
     first_seen__lte: params.end_date,
   });

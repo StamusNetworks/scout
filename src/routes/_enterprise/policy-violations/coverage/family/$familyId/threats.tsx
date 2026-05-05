@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { FamilyThreats } from '@/features/threats';
+import { FamilyThreats } from '@/features/threats/components/family-threats/family-threats';
 
 export const Route = createFileRoute(
   '/_enterprise/policy-violations/coverage/family/$familyId/threats',

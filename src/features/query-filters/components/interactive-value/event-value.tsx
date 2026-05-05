@@ -23,7 +23,7 @@ import { compressIPv6, isIP, isIPv6 } from '@/common/lib/ips';
 import { cn } from '@/common/lib/utils';
 import { useGetHostInsights } from '@/features/host-insights/use-cases/host-details/hooks/use-get-host-insights';
 import { HostSummary } from '@/features/host-insights/use-cases/host-details/molecules/host-summary';
-import { useGetImpactedEntityQuery } from '@/features/threats/api/entities.api';
+import { useGetImpactedEntityQuery } from '@/features/threats';
 
 import { getFilterDef } from '../../definitions/query-filter.definitions';
 import { useCreateFilter } from '../../hooks/use-create-filter';

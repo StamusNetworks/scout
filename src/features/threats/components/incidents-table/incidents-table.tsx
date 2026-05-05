@@ -25,12 +25,12 @@ import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
 import { useGetImpactedEntitiesQuery } from '@/features/threats/api/entities.api';
 import { useGetThreatsStatusQuery } from '@/features/threats/api/threats.api';
-import {
-  KillChainKeysWithoutPolicies,
-  killChainsConfig,
-  killChainWithoutPoliciesOptions,
-} from '@/features/threats/common/killchain/killchain';
 import { useThreats } from '@/features/threats/hooks/use-threats';
+import {
+  KILL_CHAIN_PHASES_KEYS_WITHOUT_POLICIES,
+  KILL_CHAIN_PHASES,
+  killChainWithoutPoliciesOptions,
+} from '@/features/threats/model/kill-chain';
 import { ThreatStatus } from '@/features/threats/model/threat-status';
 
 import { incidentsColumns } from './incidents.columns';
@@ -69,7 +69,7 @@ export const IncidentsTable = ({
     first_seen__lte: params.end_date,
     kill_chain:
       killChain.length === 0
-        ? KillChainKeysWithoutPolicies.join(',')
+        ? KILL_CHAIN_PHASES_KEYS_WITHOUT_POLICIES.join(',')
         : killChain.join(','),
   });
   const threats = useThreats({});
@@ -160,7 +160,7 @@ const IncidentsEmpty = ({ killChain }: { killChain: string[] }) => {
   const entityCount = entitiesData?.count ?? 0;
   const hasFilters =
     killChain.length > 0 &&
-    killChain.length !== KillChainKeysWithoutPolicies.length;
+    killChain.length !== KILL_CHAIN_PHASES_KEYS_WITHOUT_POLICIES.length;
 
   return (
     <Empty>
@@ -172,10 +172,10 @@ const IncidentsEmpty = ({ killChain }: { killChain: string[] }) => {
         {hasFilters ? (
           <EmptyDescription>
             You might be missing incidents for kill chains:{' '}
-            {KillChainKeysWithoutPolicies.filter(
+            {KILL_CHAIN_PHASES_KEYS_WITHOUT_POLICIES.filter(
               (kc) => !killChain.includes(kc),
             )
-              .map((kc) => killChainsConfig[kc].name)
+              .map((kc) => KILL_CHAIN_PHASES[kc].name)
               .join(', ')}
           </EmptyDescription>
         ) : entityCount > 0 ? (

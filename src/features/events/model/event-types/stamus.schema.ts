@@ -1,8 +1,7 @@
-import { keys } from 'ramda';
 import z from 'zod';
 
 import { baseEventSchema } from '@/features/events/model/event';
-import { killChainsConfig } from '@/features/threats/common/killchain/killchain';
+import { killChainPhaseSchema } from '@/features/threats';
 
 import { alertSchema } from './alert.schema';
 
@@ -13,10 +12,8 @@ export const stamusSchema = z.object({
   asset_type: z.string(),
   source: z.string(),
   asset_net_info: z.string(),
-  kill_chain: z.enum(keys(killChainsConfig) as [keyof typeof killChainsConfig]),
-  kill_chain_offender: z.enum(
-    keys(killChainsConfig) as [keyof typeof killChainsConfig],
-  ),
+  kill_chain: killChainPhaseSchema,
+  kill_chain_offender: killChainPhaseSchema,
   extra_info: z.string(),
   family_id: z.number(),
   family_type: z.string(),

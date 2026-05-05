@@ -4,8 +4,8 @@ import { DataTableRowExpander } from '@/common/design-system/molecules/data-tabl
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { StamusEvent } from '@/features/events/model/event-types/stamus.schema';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
-import { KillChainPhase } from '@/features/threats/common/killchain/killchain';
-import { KillchainTag } from '@/features/threats/components/kill-chain-tag/kill-chain-tag';
+import { KillChainPhase } from '@/features/threats';
+import { KillchainTag } from '@/features/threats';
 
 export const relatedStamusColumns: CustomColumnDef<StamusEvent>[] = [
   {

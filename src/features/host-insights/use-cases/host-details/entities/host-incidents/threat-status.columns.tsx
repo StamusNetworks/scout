@@ -22,10 +22,10 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { isIP } from '@/common/lib/ips';
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
-import { KillchainTag } from '@/features/threats/components/kill-chain-tag/kill-chain-tag';
-import { ThreatTag } from '@/features/threats/components/threat-tag/threat-tag';
-import { useThreat } from '@/features/threats/hooks/use-threat';
-import { ThreatStatus } from '@/features/threats/model/threat-status';
+import { KillchainTag } from '@/features/threats';
+import { ThreatTag } from '@/features/threats';
+import { useThreat } from '@/features/threats';
+import { ThreatStatus } from '@/features/threats';
 
 export const threatStatusColumns: CustomColumnDef<ThreatStatus>[] = [
   {

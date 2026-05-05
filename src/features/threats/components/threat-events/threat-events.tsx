@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useGetEventsQuery } from '@/features/events';
@@ -6,11 +8,10 @@ import { ExpandedEventRow } from '@/features/events';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 
-const columns = getColumns(true);
-
 type Props = { threatId: string };
 
 export const ThreatEvents = ({ threatId }: Props) => {
+  const columns = useMemo(() => getColumns(true), []);
   const QFBuilder = useQFBuilder();
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const { queryParams, pagination, setPagination, sorting, setSorting } =

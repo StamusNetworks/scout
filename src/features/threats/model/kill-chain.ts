@@ -4,6 +4,8 @@
  * canonical taxonomy, not a wire-shape leak).
  */
 
+import { z } from 'zod';
+
 export type KillChainPhase =
   | 'reconnaissance'
   | 'weaponization'
@@ -78,6 +80,10 @@ export const KILL_CHAIN_PHASES_KEYS = Object.keys(
   KILL_CHAIN_PHASES,
 ) as KillChainPhase[];
 
+export const killChainPhaseSchema = z.enum(
+  KILL_CHAIN_PHASES_KEYS as [KillChainPhase, ...KillChainPhase[]],
+);
+
 export const KILL_CHAIN_PHASES_KEYS_WITHOUT_POLICIES =
   KILL_CHAIN_PHASES_KEYS.slice(0, -1);
 
@@ -109,4 +115,4 @@ export const killChainWithoutPoliciesOptions = killChainOptions.filter(
 );
 
 /** Counts of impacted assets indexed by kill chain phase. */
-export type KillChainCounters = Partial<Record<KillChainPhase, number>>;
+export type KillChainCountersData = Partial<Record<KillChainPhase, number>>;

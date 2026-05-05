@@ -7,7 +7,7 @@ import { getESParams } from '../components/attacker-infrastructure/attacker-infr
 import { ImpactedEntity } from '../model/impacted-entity';
 import {
   KILL_CHAIN_PHASES,
-  KillChainCounters,
+  KillChainCountersData,
   KillChainPhase,
 } from '../model/kill-chain';
 import { AttackerInfrastructureAggregation } from './attacker-infrastructure.dto';
@@ -90,7 +90,7 @@ export const EntitiesAPI = API.injectEndpoints({
       },
     }),
     getKillChainCounters: builder.query<
-      KillChainCounters,
+      KillChainCountersData,
       Dates & Tenant & { family_id?: string }
     >({
       query: (params) => ({
@@ -104,7 +104,7 @@ export const EntitiesAPI = API.injectEndpoints({
       providesTags: ['Reload', 'Dashboard'],
     }),
     getKillChainCountersByThreatId: builder.query<
-      KillChainCounters,
+      KillChainCountersData,
       Dates & Tenant & { threat_id: string }
     >({
       query: ({ threat_id, ...rest }) => ({
@@ -114,7 +114,7 @@ export const EntitiesAPI = API.injectEndpoints({
       }),
       transformResponse: (
         response: Partial<Record<KillChainPhase, number>>,
-      ): KillChainCounters => response,
+      ): KillChainCountersData => response,
       providesTags: ['Reload', 'Dashboard'],
     }),
     updateEntityStatus: builder.mutation<

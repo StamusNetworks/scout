@@ -17,9 +17,9 @@ import {
   PopoverTrigger,
 } from '@/common/design-system/atoms/ui/popover';
 import { Host } from '@/features/host-insights/common/host.model';
-import { KillChainPhase } from '@/features/threats/common/killchain/killchain';
 import { KillchainTag } from '@/features/threats/components/kill-chain-tag/kill-chain-tag';
 import { ThreatTag } from '@/features/threats/components/threat-tag/threat-tag';
+import { KillChainPhase } from '@/features/threats/model/kill-chain';
 
 import { ThreatHistory } from '../../model/threat-history';
 import {
@@ -204,10 +204,10 @@ const TimelineThreatItem = ({ item }: { item: ThreatHistoryItem }) => {
     <Row className="items-center gap-2">
       <ThreatTag
         threat_id={parseInt(item.values.threat_id)}
-        kill_chain={item.values.kc_step}
+        kill_chain={item.values.step}
       />
       <span className="text-sm"> detected in phase </span>
-      <KillchainTag kc={item.values.kc_step as KillChainPhase} />
+      <KillchainTag kc={item.values.step as KillChainPhase} />
     </Row>
   );
 };

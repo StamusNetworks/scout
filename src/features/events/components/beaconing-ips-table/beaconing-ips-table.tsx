@@ -16,7 +16,7 @@ import { NetworkTemplate } from '@/features/host-insights/use-cases/host-details
 import { UsernameTemplate } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
-import { EntityThreatTagsList } from '@/features/threats/components/entities-threat-tags-list/entities-threat-tags-list';
+import { EntityThreatTagsList } from '@/features/threats';
 
 export const beaconingIpsTableColumns: CustomColumnDef<Host>[] = [
   {

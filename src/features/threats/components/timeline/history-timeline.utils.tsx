@@ -1,5 +1,5 @@
 import { Host } from '@/features/host-insights/common/host.model';
-import { KillChainPhase } from '@/features/threats/common/killchain/killchain';
+import { KillChainPhase } from '@/features/threats/model/kill-chain';
 
 import { ThreatHistory } from '../../model/threat-history';
 
@@ -22,7 +22,7 @@ export interface ThreatHistoryItem extends BaseHistoryItem {
   type: 'threat';
   values: {
     threat_id: string;
-    kc_step: KillChainPhase;
+    step: KillChainPhase;
     is_offender: boolean;
   };
 }
@@ -112,7 +112,7 @@ const formatThreatHistory = (
       type: 'threat',
       values: {
         threat_id,
-        kc_step: params.step_kill_chain,
+        step: params.step_kill_chain,
         is_offender: !!params.step_kill_chain_offender,
       },
     })) || [];

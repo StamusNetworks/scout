@@ -20,9 +20,7 @@ import { Event } from '@/features/events/model/event';
 import { Hostname } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
 import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
-import { killChainsConfig } from '@/features/threats/common/killchain/killchain';
-import { KillchainTag } from '@/features/threats/components/kill-chain-tag/kill-chain-tag';
-import { ThreatTag } from '@/features/threats/components/threat-tag/threat-tag';
+import { KillchainTag, KillChainPhase, ThreatTag } from '@/features/threats';
 import { selectDefaultEventDetailTab } from '@/features/ui/preferences/preferences.slice';
 import { useAppSelector } from '@/store/store';
 
@@ -168,9 +166,7 @@ const ProtocolContent = ({ event }: { event: Event }) => {
             <ThreatTag threat_id={event.stamus.threat_id} />
           )}
           {event.stamus?.kill_chain && (
-            <KillchainTag
-              kc={event.stamus.kill_chain as keyof typeof killChainsConfig}
-            />
+            <KillchainTag kc={event.stamus.kill_chain as KillChainPhase} />
           )}
         </Row>
       );

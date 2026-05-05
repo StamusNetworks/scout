@@ -13,7 +13,7 @@ import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-
 import { HostSummary } from '@/features/host-insights/use-cases/host-details/molecules/host-summary';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
-import { useGetImpactedEntitiesQuery } from '@/features/threats/api/entities.api';
+import { useGetImpactedEntitiesQuery } from '@/features/threats';
 import { selectDefaultEventDetailTab } from '@/features/ui/preferences/preferences.slice';
 import { useAppSelector } from '@/store/store';
 

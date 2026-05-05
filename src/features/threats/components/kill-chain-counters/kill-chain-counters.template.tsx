@@ -6,7 +6,7 @@ import { cn } from '@/common/lib/utils';
 import {
   KILL_CHAIN_PHASES,
   KILL_CHAIN_PHASES_KEYS_WITHOUT_POLICIES,
-  KillChainCounters,
+  KillChainCountersData,
   KillChainPhase,
 } from '../../model/kill-chain';
 import { KCItem, KCTitle } from './kill-chain-counters.item';
@@ -17,7 +17,7 @@ export const KillChainCountersTemplate = ({
   onKCClick,
   isLoading,
 }: {
-  data?: KillChainCounters;
+  data?: KillChainCountersData;
   className?: string;
   onKCClick: (killchain: KillChainPhase) => void;
   isLoading: boolean;

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { killChainSchema } from '@/features/threats/common/killchain/killchain';
+import { killChainPhaseSchema } from '@/features/threats/model/kill-chain';
 
 export const threatStatusSchema = z.object({
   id: z.number(),
@@ -9,8 +9,8 @@ export const threatStatusSchema = z.object({
   first_seen: z.string(),
   last_seen: z.string(),
   close_status_date: z.string(),
-  kill_chain: killChainSchema,
-  kill_chain_offender: killChainSchema,
+  kill_chain: killChainPhaseSchema,
+  kill_chain_offender: killChainPhaseSchema,
   threat_id: z.number(),
   asset: z.string(),
   is_offender: z.boolean(),

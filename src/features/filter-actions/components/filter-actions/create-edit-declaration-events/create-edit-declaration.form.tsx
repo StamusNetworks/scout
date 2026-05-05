@@ -47,12 +47,12 @@ import { useGetRulesetsQuery } from '@/features/detection-methods/rulesets.api';
 import { FilterInput } from '@/features/query-filters/components/edit-qfilter-modal/filter-input';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { KIND_LABEL, ThreatForm } from '@/features/threats';
-import { useGetCustomThreatsQuery } from '@/features/threats/api/threats.api';
+import { useGetCustomThreatsQuery } from '@/features/threats';
 import {
-  KillChainKeys,
-  killChainSchema,
-  killChainsConfig,
-} from '@/features/threats/common/killchain/killchain';
+  KILL_CHAIN_PHASES_KEYS,
+  killChainPhaseSchema,
+  KILL_CHAIN_PHASES,
+} from '@/features/threats';
 
 import {
   useCreateFilterActionMutation,
@@ -72,7 +72,7 @@ const formSchema = baseFilterActionSchema.extend({
   threat: z.string().refine((value) => value.length > 0, {
     message: 'You have to select a value',
   }),
-  kill_chain: killChainSchema,
+  kill_chain: killChainPhaseSchema,
   track_options: z
     .object({
       track_offender: z.boolean(),
@@ -424,14 +424,14 @@ export const CreateEditDeclarationFilterActionForm = ({
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      {KillChainKeys.filter((kc) =>
+                      {KILL_CHAIN_PHASES_KEYS.filter((kc) =>
                         isDoc ? kc !== 'pre_condition' : kc === 'pre_condition',
                       ).map((kc) => (
                         <SelectItem
                           key={kc}
                           value={kc}
                         >
-                          {killChainsConfig[kc].name}
+                          {KILL_CHAIN_PHASES[kc].name}
                         </SelectItem>
                       ))}
                     </SelectContent>

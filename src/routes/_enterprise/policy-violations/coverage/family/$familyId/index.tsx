@@ -1,7 +1,7 @@
 import { createFileRoute, useParams } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { ImpactedEntitiesTable } from '@/features/threats/components/impacted-entities-table/impacted-entities-table';
+import { ImpactedEntitiesTable } from '@/features/threats';
 
 export const Route = createFileRoute(
   '/_enterprise/policy-violations/coverage/family/$familyId/',

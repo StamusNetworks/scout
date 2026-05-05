@@ -1,4 +1,4 @@
-import { KillChainPhase } from '@/features/threats/common/killchain/killchain';
+import { KillChainPhase } from '@/features/threats/model/kill-chain';
 
 import { OffendersData } from './offenders';
 import {
@@ -97,7 +97,7 @@ const getThreats = (history: ThreatHistory['history'], isOffender = false) =>
 const getKCPhases = (
   kc_history: KCChange[],
   last_seen: string,
-  phaseKey: 'kc_step' | 'kc_step_offender' = 'kc_step',
+  phaseKey: 'step' | 'kc_step_offender' = 'step',
 ) => {
   const filtered =
     phaseKey === 'kc_step_offender'

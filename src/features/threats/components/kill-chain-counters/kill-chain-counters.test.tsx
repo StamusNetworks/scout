@@ -17,7 +17,7 @@ const createTestRouter = () =>
     history: createMemoryHistory({ initialEntries: ['/'] }),
   });
 
-import { KillChainCounters as KillChainCountersData } from '../../model/kill-chain';
+import { KillChainCountersData } from '../../model/kill-chain';
 import {
   KillChainCounters,
   KillChainCountersByFamilyId,

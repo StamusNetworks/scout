@@ -4,8 +4,8 @@ import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useThreatById } from '@/features/threats';
-import { ImpactedEntitiesTable } from '@/features/threats/components/impacted-entities-table/impacted-entities-table';
-import { KillChainCountersByThreatId } from '@/features/threats/components/kill-chain-counters/kill-chain-counters';
+import { ImpactedEntitiesTable } from '@/features/threats';
+import { KillChainCountersByThreatId } from '@/features/threats';
 
 export const Route = createFileRoute(
   '/_enterprise/threats/coverage/threat/$threatId/',

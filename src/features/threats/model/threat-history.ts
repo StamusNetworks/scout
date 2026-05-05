@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { killChainPhaseSchema } from '@/features/threats/api/impacted-entity.dto';
-import { KillChainPhase } from '@/features/threats/common/killchain/killchain';
+import { KillChainPhase } from '@/features/threats/model/kill-chain';
 
 export const threatHistorySchema = z.object({
   asset: z.string(),
@@ -37,7 +37,7 @@ export const threatHistorySchema = z.object({
         timestamp: z.string(),
         threat_id: z.string(),
         is_offender: z.boolean(),
-        kc_step: killChainPhaseSchema,
+        step: killChainPhaseSchema,
         kc_step_offender: killChainPhaseSchema.nullable(),
       }),
       z.object({
@@ -58,7 +58,7 @@ export type KCChange = {
   timestamp: string;
   threat_id: string;
   is_offender: boolean;
-  kc_step: string;
+  step: string;
   kc_step_offender: string | null;
 };
 

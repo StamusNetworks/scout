@@ -9,8 +9,8 @@ import {
 } from '@/common/design-system/molecules/tooltip';
 import {
   KillChainPhase,
-  killChainsConfig,
-} from '@/features/threats/common/killchain/killchain';
+  KILL_CHAIN_PHASES,
+} from '@/features/threats/model/kill-chain';
 
 import { TimelineKCPhase } from '../../model/threat-history';
 
@@ -30,7 +30,7 @@ export const TimelineKCPhaseBadge = ({
       </TooltipTrigger>
       <TooltipContent>
         <h2 className="text-sm font-bold">{entity}</h2>
-        <p className="mb-0.5 italic">{killChainsConfig[kc_phase].name}</p>
+        <p className="mb-0.5 italic">{KILL_CHAIN_PHASES[kc_phase].name}</p>
         <Grid className="grid-cols-[min-content_1fr] gap-x-1">
           <p>from: </p>
           <p>{format(new Date(start_date), 'yyyy-MM-dd HH:mm:ss')}</p>

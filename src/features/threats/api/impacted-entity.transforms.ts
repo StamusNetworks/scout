@@ -1,5 +1,5 @@
 import { EntityThreat, ImpactedEntity } from '../model/impacted-entity';
-import { KillChainCounters, phaseFromStep } from '../model/kill-chain';
+import { KillChainCountersData, phaseFromStep } from '../model/kill-chain';
 import { EntityThreatDto, ImpactedEntityDto } from './impacted-entity.dto';
 
 const optionalDate = (s: string | null | undefined): Date | null =>
@@ -34,9 +34,9 @@ export const toImpactedEntity = (dto: ImpactedEntityDto): ImpactedEntity => ({
 });
 
 export const toKillChainCounters = (
-  dto: { kill_chain: keyof KillChainCounters; nb_assets: number }[],
-): KillChainCounters =>
-  dto.reduce<KillChainCounters>((acc, { kill_chain, nb_assets }) => {
+  dto: { kill_chain: keyof KillChainCountersData; nb_assets: number }[],
+): KillChainCountersData =>
+  dto.reduce<KillChainCountersData>((acc, { kill_chain, nb_assets }) => {
     acc[kill_chain] = nb_assets;
     return acc;
   }, {});

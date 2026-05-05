@@ -13,8 +13,8 @@ import { DateTime } from '@/common/design-system/entities/date-time';
 import { cn } from '@/common/lib/utils';
 import { useIsAfterStart } from '@/features/dates';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
-import { type KillChainPhase } from '@/features/threats/common/killchain/killchain';
 import { KillchainTag } from '@/features/threats/components/kill-chain-tag/kill-chain-tag';
+import { type KillChainPhase } from '@/features/threats/model/kill-chain';
 
 import { useThreat } from '../../hooks/use-threat';
 

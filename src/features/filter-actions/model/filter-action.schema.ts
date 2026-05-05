@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { killChainSchema } from '@/features/threats/common/killchain/killchain';
+import { killChainPhaseSchema } from '@/features/threats';
 
 export const filterActionTargetType = z.enum(['ip', 'username', 'mail']);
 export const filterDefSchema = z.object({
@@ -40,7 +40,7 @@ export const specificFields = z.discriminatedUnion('action', [
     action: z.literal('threat'),
     options: z.object({
       threat: z.string(),
-      kill_chain: killChainSchema,
+      kill_chain: killChainPhaseSchema,
       source_key: z.string(),
       target_key: z.string(),
       track_offender: z.boolean(),

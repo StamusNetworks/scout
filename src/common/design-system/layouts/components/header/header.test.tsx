@@ -12,7 +12,7 @@ import { SidebarProvider } from '@/common/design-system/atoms/ui/sidebar';
 import { BreadcrumbProvider } from '@/common/design-system/molecules/breadcrumbs';
 import { renderWithProviders } from '@/common/testing/test-utils';
 import * as NewsAPI from '@/features/marketing/api/news.api';
-import * as ThreatsAPI from '@/features/threats/api/threats.api';
+import * as ThreatsAPI from '@/features/threats';
 import { API } from '@/store/api';
 import * as AppStore from '@/store/store';
 import { initialState } from '@/store/store.init';

@@ -2,7 +2,7 @@ import { groupBy, toPairs } from 'ramda';
 
 import { getDuration } from '@/common/lib/duration';
 import { formatBytes, formatNumber } from '@/common/lib/numbers';
-import { killChainsConfig } from '@/features/threats/common/killchain/killchain';
+import { KillChainPhase } from '@/features/threats';
 
 import { DnsEvent } from '../../model/app-proto/dns.schema';
 import { HttpEvent } from '../../model/app-proto/http.schema';
@@ -56,8 +56,8 @@ export type MetaViewTls = {
 export type MetaViewStamus = {
   signature: string | undefined;
   threat_id: number;
-  kill_chain: keyof typeof killChainsConfig;
-  kill_chain_offender: keyof typeof killChainsConfig;
+  kill_chain: KillChainPhase;
+  kill_chain_offender: KillChainPhase;
 };
 
 export type MetaViewFileinfo = {
