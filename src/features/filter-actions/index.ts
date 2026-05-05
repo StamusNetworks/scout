@@ -30,4 +30,3 @@ export { SendMailModal } from './components/send-mail-modal/send-mail-modal';
 export { SuppressModal } from './components/suppress-modal/suppress-modal';
 export { TagModal } from './components/tag-modal/tag-modal';
 export { ThresholdModal } from './components/threshold-modal/threshold-modal';
-export { UpdatePushRuleset } from './components/update-push-ruleset';

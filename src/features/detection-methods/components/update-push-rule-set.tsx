@@ -4,13 +4,14 @@ import { toast } from 'sonner';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { getConfig } from '@/config';
-import { useUpdatePushRuleSetMutation } from '@/features/detection-methods/api/rules.api';
 
-export const UpdatePushRuleset = () => {
+import { useUpdatePushRuleSetMutation } from '../api/rules.api';
+
+export const UpdatePushRuleSet = () => {
   const { enterprise } = useFeatureFlags();
-  const [updatePushRuleset] = useUpdatePushRuleSetMutation();
+  const [updatePushRuleSet] = useUpdatePushRuleSetMutation();
   const handleClick = () => {
-    updatePushRuleset({ enterprise })
+    updatePushRuleSet({ enterprise })
       .unwrap()
       .then(() => window.open(getConfig()?.apiUrl + '/rules/status/', '_blank'))
       .catch(() => toast.error('Error updating rulesets'));
