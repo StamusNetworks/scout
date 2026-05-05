@@ -1,10 +1,16 @@
 # Project Conventions
 
+See [`docs/architecture.md`](docs/architecture.md) for the full
+contract: bounded contexts, the Anti-Corruption Layer at `api/`,
+public-barrel discipline (`@/features/<context>` only — internals
+in `api/` and `state/` are off-limits across features), the
+state-placement decision tree, and the lint exceptions.
+
 ## File Structure
 
 - **`/common`** — Shared utilities and design system components that could be used in a separate project (design system primitives, generic utils).
-- **`/features`** — Domain slices. Each feature contains its own API layer, hooks, context-specific primitives, reusable widgets, and utils.
-- **`/pages`** — Page-level components. Implementation-specific components are colocated with their page. Pages compose from `common/` and `features/` primitives, hooks, and widgets.
+- **`/features`** — Bounded contexts. Each feature follows the canonical layout in `docs/architecture.md` §2 and exposes its public surface via `index.ts`.
+- **`/routes`** — TanStack Router file-based routes. Routes are thin orchestrators — they own URL state, compose feature components, and pass plain values + change handlers down. No business logic.
 
 ## Code Style
 

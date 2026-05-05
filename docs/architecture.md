@@ -35,9 +35,10 @@ shape as a `host_id` field appearing on a row in **Detection Events**. Do not
 share types across contexts unless you are publishing them deliberately
 through the public barrel.
 
-The current set of contexts is documented in
-`docs/superpowers/specs/2026-03-17-architecture-bounded-contexts.md` (TBD —
-to be written alongside Phase 1).
+Currently extracted contexts: `auth`, `tenancy`, `settings`, `dates`,
+`query-filters`, `filter-sets`. The pre-migration `features/filtering/`
+folder is gone — it split into `features/query-filters/` and
+`features/filter-sets/`.
 
 ---
 
@@ -49,29 +50,41 @@ src/features/<context>/
 │   ├── <context>.api.ts         # RTK Query injectEndpoints
 │   ├── <context>.dto.ts         # Server-shape Zod schemas. NOT exported from index.
 │   └── <context>.transforms.ts  # toX(dto): X — domain ⇄ wire translation
-├── model/                       # Domain types and value objects. Public via index.
+├── model/                       # Domain types + pure helpers. Public via index.
 │   └── <thing>.ts               # One concept per file (threat.ts, severity.ts)
-├── state/                       # Redux slices, selectors. Internal.
-│   └── <context>.slice.ts
-├── hooks/                       # use<Thing>() — public read API (RTK + selectors)
+├── definitions/                 # Static config records (filter defs, page configs).
+│   └── <thing>.config.ts
+├── state/                       # Redux slices, selectors, repository hooks. Internal.
+│   ├── <context>.slice.ts
+│   └── <context>.selectors.ts
+├── builders/                    # Pure functions producing wire / qfilter strings.
+│   └── build-<thing>.ts
+├── hooks/                       # use<Verb><Noun>() — public action + read API
 │   └── use-<thing>.ts
 ├── components/                  # Domain components (DS primitives + business logic)
-│   └── <thing>-table/, <thing>-card/, <thing>-tag/
-├── use-cases/                   # User-action workflows (form + slice + commands)
-│   └── <verb>-<noun>/           # create-threat, suspend-filter, declare-action
+│   └── <thing>/<thing>.tsx
+├── utils/                       # Pure helpers (label resolvers, validators, toasts)
+│   └── <thing>.ts
 └── index.ts                     # Public barrel. Single source of cross-feature truth.
 ```
 
-Not every context needs every folder. A read-only context with no local state
-omits `state/`. A context with no user-driven workflows omits `use-cases/`.
-But the folders that exist must have these names.
+Not every context needs every folder. A read-only context with no local
+state omits `state/`. A context with no qfilter logic omits `builders/`.
+A context with no user-driven workflows omits `hooks/` action hooks. But
+the folders that exist must have these names.
+
+User-action workflows are spelled as a hook in `hooks/use-<verb>-<noun>.ts`
+(e.g. `use-create-filter.ts`, `use-load-filter-set.ts`) plus the matching
+UI components in `components/`. The earlier `use-cases/` folder pattern
+is no longer prescribed — use the hook + component split instead.
 
 ### What `index.ts` exposes
 
-- All domain types from `model/*`
+- Domain types from `model/*`
+- Pure helpers from `model/*` and `definitions/*` that don't depend on
+  Redux or React (e.g. `computeDates`, enum-like constants)
 - Public hooks from `hooks/*`
 - Public components from `components/*`
-- Public use-case entry points from `use-cases/*`
 
 ### What `index.ts` MUST NOT expose
 
@@ -284,7 +297,7 @@ Linting enforces kebab-case (`unicorn/filename-case`, see
 | Pattern | When | How |
 |---|---|---|
 | **Anti-Corruption Layer** | every HTTP boundary | `api/*.transforms.ts` |
-| **Shared Kernel** | query-filters, tenancy, design-system | Lives in `common/` or owns its own context (`features/query-filters`); imported by everyone |
+| **Shared Kernel** | query-filters, filter-sets, tenancy, design-system | Lives in `common/` or owns its own context (`features/query-filters`, `features/filter-sets`); imported by everyone |
 | **Customer/Supplier** | one context publishes a type, others consume | Producer's `index.ts` exports the type; consumer imports from `@/features/<producer>` |
 | **Open Host Service** | design-system for UI shell | `common/design-system/*` exposes generic primitives with no domain knowledge |
 
@@ -329,11 +342,11 @@ them. Two relevant rules in this phase:
     across features (e.g. query-filter selectors reading
     `selectIsEnterprise` from settings) is a valid pattern that the
     hook-only public API cannot express.
-  - **Imperative dispatchers** (`**/use-cases/load-*/*.ts`,
-    `**/*.filter-service.ts`): use cases that run outside React and
-    dispatch via `store.dispatch()` (e.g. `loadFilterSet`,
+  - **Imperative dispatchers** (`**/*.filter-service.ts`): services
+    that run outside React and dispatch via `store.dispatch()` (e.g.
     `NetworkTreeFilterService`) need direct slice action access
-    because hooks aren't usable in imperative contexts.
+    because hooks aren't usable in imperative contexts. Convert to a
+    hook when the only callers are React components.
   - **Route guards** (`src/routes/_enterprise.tsx`): TanStack Router's
     `beforeLoad` runs synchronously outside React, so it needs direct
     selector access rather than a hook.
@@ -349,7 +362,7 @@ oxlint rule docs: <https://oxc.rs/docs/guide/usage/linter/rules.html>
 
 ## 10. Migration phases
 
-Phase 0 — this document, oxlint rules, no behavior change. **(current)**
+Phase 0 — this document, oxlint rules, no behavior change. (done)
 
 Phase 1 — pilot one context (`threats`) end-to-end as the reference
 implementation.

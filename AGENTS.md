@@ -24,7 +24,7 @@ You are a Staff Front-End Engineer and an Expert in ReactJS, JavaScript, TypeScr
 - `src/app` contains the app entry point and the main app component
 - `src/common` contains common components and utilities, including the design system, hooks, ts library and testing util
 - `src/features` contains the features of the app, each feature has its own folder with api, components, model, slices, hooks. Tests are colocated with the files they test.
-- `src/pages` contains the pages of the app as well as the router
+- `src/routes` contains the TanStack Router file-based routes (thin orchestrators that own URL state and compose feature components)
 - `src/store` contains the redux / rtk store initialization
 
 ## Philosophy
