@@ -29,7 +29,7 @@ import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { isIP } from '@/common/lib/ips';
 import { esEscape } from '@/common/lib/strings';
-import { useGetRulesQuery } from '@/features/detection-methods/api/rules.api';
+import { useGetRulesQuery } from '@/features/detection-methods';
 import { useGetBeaconingEventsQuery } from '@/features/events';
 import { useGetEventsQuery } from '@/features/events';
 import { useGetSightingEventsQuery } from '@/features/events';

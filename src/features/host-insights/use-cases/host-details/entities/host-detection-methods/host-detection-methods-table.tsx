@@ -7,9 +7,11 @@ import { serializeSorting } from '@/common/design-system/molecules/data-table/ho
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
 import { esEscape } from '@/common/lib/strings';
-import { useGetRulesQuery } from '@/features/detection-methods/api/rules.api';
-import { rulesTableColumns } from '@/features/detection-methods/components/rules-table/rules-table.columns';
-import { RuleExpandedRow } from '@/features/detection-methods/components/rules-table/rules-table.expanded-row';
+import {
+  RuleExpandedRow,
+  rulesTableColumns,
+  useGetRulesQuery,
+} from '@/features/detection-methods';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 interface HostDetectionMethodsTableProps {

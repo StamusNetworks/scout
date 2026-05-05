@@ -28,7 +28,7 @@ import {
 } from '@/common/design-system/atoms/ui/select';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { DefaultField } from '@/common/design-system/molecules/default-field';
-import { useGetRuleSetsQuery } from '@/features/detection-methods/api/rules.api';
+import { useGetRuleSetsQuery } from '@/features/detection-methods';
 import { FilterInput } from '@/features/query-filters/components/edit-qfilter-modal/filter-input';
 
 import {

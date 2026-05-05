@@ -11,8 +11,10 @@ import {
   EmptyMedia,
 } from '@/common/design-system/atoms/ui/empty';
 import { Skeleton } from '@/common/design-system/atoms/ui/skeleton';
-import { useGetRuleBySidQuery } from '@/features/detection-methods/api/rules.api';
-import { RuleExpandedRowTemplate } from '@/features/detection-methods/components/rules-table/rules-table.expanded-row';
+import {
+  RuleExpandedRowTemplate,
+  useGetRuleBySidQuery,
+} from '@/features/detection-methods';
 
 export const DetectionMethodTab = ({ sid }: { sid: number }) => {
   const { data, isLoading } = useGetRuleBySidQuery({ sid });

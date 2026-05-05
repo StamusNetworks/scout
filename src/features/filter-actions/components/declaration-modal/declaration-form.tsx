@@ -43,7 +43,7 @@ import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { DefaultField } from '@/common/design-system/molecules/default-field';
 import { Dates, QFilter, Tenant } from '@/common/fetching/fetching.types';
 import { useUpdateEffect } from '@/common/lib/use-update-effect';
-import { useGetRuleSetsQuery } from '@/features/detection-methods/api/rules.api';
+import { useGetRuleSetsQuery } from '@/features/detection-methods';
 import { FilterInput } from '@/features/query-filters/components/edit-qfilter-modal/filter-input';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { KIND_LABEL, ThreatForm } from '@/features/threats';

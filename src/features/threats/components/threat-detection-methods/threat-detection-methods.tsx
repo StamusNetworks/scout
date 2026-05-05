@@ -1,8 +1,10 @@
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
-import { useGetRulesQuery } from '@/features/detection-methods/api/rules.api';
-import { rulesTableColumns } from '@/features/detection-methods/components/rules-table/rules-table.columns';
-import { RuleExpandedRow } from '@/features/detection-methods/components/rules-table/rules-table.expanded-row';
+import {
+  RuleExpandedRow,
+  rulesTableColumns,
+  useGetRulesQuery,
+} from '@/features/detection-methods';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 
