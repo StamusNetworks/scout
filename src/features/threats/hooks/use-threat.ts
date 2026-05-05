@@ -5,7 +5,7 @@ import { useTenant } from '@/features/tenancy';
 import {
   useGetCustomThreatsQuery,
   useGetSTIThreatsQuery,
-} from '../../api/threats.api';
+} from '../api/threats.api';
 
 export const useThreat = (id?: number) => {
   const tenant = useTenant();

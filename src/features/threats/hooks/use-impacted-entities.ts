@@ -2,7 +2,7 @@ import { PaginationState } from '@tanstack/react-table';
 
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { useGetImpactedEntitiesQuery } from '../../api/entities.api';
+import { useGetImpactedEntitiesQuery } from '../api/entities.api';
 
 export const useImpactedEntities = (pagination: PaginationState) => {
   const params = useGlobalQueryParams(['dates', 'tenant']);

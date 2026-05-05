@@ -6,7 +6,7 @@ import {
   useGetKillChainCountersByThreatIdQuery,
   useGetKillChainCountersQuery,
 } from '@/features/threats/api/entities.api';
-import { useKillChainCounters } from '@/features/threats/common/hooks/useKillChainCounters';
+import { useKillChainCounters } from '@/features/threats/hooks/use-kill-chain-counters';
 
 import { killChainsConfig } from '../../killchain';
 import { KillChainCountersTemplate } from './killchain-counters.template';

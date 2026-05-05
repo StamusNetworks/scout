@@ -47,10 +47,10 @@ import {
   useGetActiveThreatFamiliesQuery,
   useGetThreatFamiliesQuery,
 } from '../../../api/threats.api';
+import { useFamilyDetectionMethods } from '../../../hooks/use-family-detection-methods';
+import { useFamilyEvents } from '../../../hooks/use-family-events';
 import { ThreatKind } from '../../../model/threat';
 import { ThreatFamily } from '../../../model/threat-family';
-import { useFamilyDetectionMethods } from '../../hooks/use-family-detection-methods';
-import { useFamilyEvents } from '../../hooks/use-family-events';
 import { FamilyActiveThreats } from '../family-active-threats';
 
 const usePageFamilyEvents = () => {

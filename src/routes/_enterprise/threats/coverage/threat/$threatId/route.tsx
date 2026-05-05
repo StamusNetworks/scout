@@ -26,8 +26,8 @@ import {
   useGetActiveThreatsQuery,
   useGetThreatFamiliesQuery,
 } from '@/features/threats/api/threats.api';
-import { useThreatDetectionMethods } from '@/features/threats/common/hooks/use-threat-detection-methods';
-import { useThreatEvents } from '@/features/threats/common/hooks/use-threat-events';
+import { useThreatDetectionMethods } from '@/features/threats/hooks/use-threat-detection-methods';
+import { useThreatEvents } from '@/features/threats/hooks/use-threat-events';
 
 export const Route = createFileRoute(
   '/_enterprise/threats/coverage/threat/$threatId',

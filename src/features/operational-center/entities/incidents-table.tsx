@@ -17,9 +17,9 @@ import { isIP } from '@/common/lib/strings';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
 import { useGetThreatsStatusQuery } from '@/features/threats/api/threats.api';
-import { useThreats } from '@/features/threats/common/hooks/use-threats';
 import { KillChainKeysWithoutPolicies } from '@/features/threats/common/killchain/killchain';
 import { threatStatusColumnDefs } from '@/features/threats/common/molecules/threat-status-columns';
+import { useThreats } from '@/features/threats/hooks/use-threats';
 import { ThreatStatus } from '@/features/threats/model/threat-status';
 
 export const IndicidentsTable = () => {

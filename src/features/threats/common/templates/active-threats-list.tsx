@@ -8,9 +8,9 @@ import {
   useGetActiveThreatsQuery,
   useGetThreatFamiliesQuery,
 } from '../../api/threats.api';
+import { useCombinedThreats } from '../../hooks/use-combined-threats';
 import { ActiveThreat } from '../../model/active-threat';
 import { Threat, ThreatKind } from '../../model/threat';
-import { useCombinedThreats } from '../hooks/use-combined-threats';
 import { ActiveThreatBlockView } from '../molecules/coverage-block/active-threat-block';
 import { CoverageBlockSkeleton } from '../molecules/coverage-block/coverage-block.skeleton';
 import { ThreatGrid } from '../molecules/threat-grid';

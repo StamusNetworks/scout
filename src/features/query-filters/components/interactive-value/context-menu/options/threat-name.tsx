@@ -3,7 +3,7 @@ import { Biohazard, Scale } from 'lucide-react';
 import { useMemo } from 'react';
 
 import { ContextMenuItem } from '@/common/design-system/atoms/ui/context-menu';
-import { useThreats } from '@/features/threats/common/hooks/use-threats';
+import { useThreats } from '@/features/threats/hooks/use-threats';
 
 import { iconClass } from '../context-menu.content';
 

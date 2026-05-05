@@ -16,7 +16,7 @@ import { EventValue } from '@/features/query-filters/components/interactive-valu
 import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
 import { type KillChainPhase } from '@/features/threats/common/killchain/killchain';
 
-import { useThreat } from '../hooks/use-threat';
+import { useThreat } from '../../hooks/use-threat';
 
 interface ThreatTagProps {
   threat_id: number;

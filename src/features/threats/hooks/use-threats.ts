@@ -6,8 +6,8 @@ import { useTenant } from '@/features/tenancy';
 import {
   useGetCustomThreatsQuery,
   useGetSTIThreatsQuery,
-} from '../../api/threats.api';
-import { ThreatKind } from '../../model/threat';
+} from '../api/threats.api';
+import { ThreatKind } from '../model/threat';
 
 interface ThreatsHookParams {
   kind?: ThreatKind;

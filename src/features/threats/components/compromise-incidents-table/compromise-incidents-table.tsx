@@ -25,12 +25,12 @@ import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
 import { useGetImpactedEntitiesQuery } from '@/features/threats/api/entities.api';
 import { useGetThreatsStatusQuery } from '@/features/threats/api/threats.api';
-import { useThreats } from '@/features/threats/common/hooks/use-threats';
 import {
   KillChainKeysWithoutPolicies,
   killChainsConfig,
   killChainWithoutPoliciesOptions,
 } from '@/features/threats/common/killchain/killchain';
+import { useThreats } from '@/features/threats/hooks/use-threats';
 import { ThreatStatus } from '@/features/threats/model/threat-status';
 
 import { compromiseIncidentsColumns } from './compromise-incidents.columns';
