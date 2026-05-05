@@ -1,8 +1,7 @@
+import { computeDates, useDates } from '@/features/dates';
 import { useTenant } from '@/features/tenancy';
 import { useAppSelector } from '@/store/store';
 
-import { useDatesRepository } from './dates/dates.repository';
-import { computeDates } from './dates/dates.selectors';
 import type { QueryFilterState } from './filters/query-filters/query-filter.model';
 import { selectEventsTypesParams } from './filters/query-filters/query-filters.selectors';
 import { useBuildHostIdQfilter } from './filters/query-filters/use-cases/build-host-id-qfilter/build-host-id-qfilter';
@@ -22,13 +21,13 @@ export const useGlobalQueryParams = (
     extendQfilter?: QueryFilterState[];
   },
 ) => {
-  const dates = useDatesRepository();
+  const dates = useDates();
   const tenant = useTenant();
   const eventsTypes = useAppSelector(selectEventsTypesParams);
   const qfilter = useBuildEventsQfilter(options?.extendQfilter);
   const hostIdQfilter = useBuildHostIdQfilter(options?.extendQfilter);
   const signatureFilters = useBuildSignatureFilter(options?.extendQfilter);
-  const computedDates = computeDates(dates.getAll());
+  const computedDates = computeDates(dates);
 
   return {
     ...(subscribe?.includes('dates') && {

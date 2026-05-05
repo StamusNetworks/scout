@@ -3,7 +3,7 @@ import { Link } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { Button } from '@/common/design-system/atoms/ui/button';
-import { selectDates } from '@/features/filtering/dates/dates.selectors';
+import { selectDates } from '@/features/dates';
 import { selectQueryFilters } from '@/features/filtering/filters/query-filters/query-filters.selectors';
 import { useTenant } from '@/features/tenancy';
 import {

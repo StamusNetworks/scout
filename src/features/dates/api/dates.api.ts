@@ -1,11 +1,12 @@
 import { Tenant } from '@/common/fetching/fetching.types';
+// EventTypes is consumed across many features; it currently lives on
+// query-filters' store. Imported via the legacy path until query-filters
+// migrates and exposes a public type.
+import { EventTypes } from '@/features/filtering/filters/query-filters/query-filters.store';
 import { API } from '@/store/api';
-
-import { EventTypes } from '../filters/query-filters/query-filters.store';
 
 export const DatesAPI = API.injectEndpoints({
   endpoints: (builder) => ({
-    // QUERIES
     getAutoDateRange: builder.query<
       { min_timestamp: number; max_timestamp: number },
       Tenant & Partial<EventTypes>

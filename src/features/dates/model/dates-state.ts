@@ -1,3 +1,10 @@
+/**
+ * Date-range filter state. Four modes — open-ended (`all`), absolute
+ * (`range`), relative (`from`), and auto-fitted to the data (`auto`).
+ * `start_date` / `end_date` are epoch milliseconds; the wire-shape
+ * stays here for now and will migrate to a `DateRange` value object
+ * when downstream features adopt it.
+ */
 export type DatesState = {
   start_date: number | undefined;
   end_date: number | undefined;
@@ -17,34 +24,13 @@ export type DatesPayload =
     };
 
 export const TIME_PRESETS: { duration: number; unit: TimeUnit }[] = [
-  {
-    duration: 1,
-    unit: 'years',
-  },
-  {
-    duration: 30,
-    unit: 'days',
-  },
-  {
-    duration: 7,
-    unit: 'days',
-  },
-  {
-    duration: 2,
-    unit: 'days',
-  },
-  {
-    duration: 24,
-    unit: 'hours',
-  },
-  {
-    duration: 6,
-    unit: 'hours',
-  },
-  {
-    duration: 1,
-    unit: 'hours',
-  },
+  { duration: 1, unit: 'years' },
+  { duration: 30, unit: 'days' },
+  { duration: 7, unit: 'days' },
+  { duration: 2, unit: 'days' },
+  { duration: 24, unit: 'hours' },
+  { duration: 6, unit: 'hours' },
+  { duration: 1, unit: 'hours' },
 ];
 
 export const units = {

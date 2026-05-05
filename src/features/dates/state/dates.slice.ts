@@ -2,9 +2,13 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 import { API } from '@/store/api';
 
-import { DatesAPI } from './dates.api';
-import { DatesPayload, DatesState, UNITS_IN_MILLISECONDS } from './dates.model';
-import { getPersistedDates, persistDates } from './dates.utils';
+import { DatesAPI } from '../api/dates.api';
+import {
+  DatesPayload,
+  DatesState,
+  UNITS_IN_MILLISECONDS,
+} from '../model/dates-state';
+import { getPersistedDates, persistDates } from './dates.persist';
 
 const initialState: DatesState = getPersistedDates();
 

@@ -11,17 +11,16 @@ import {
   formatUnit,
   TimeUnit,
   units,
-} from '@/features/filtering/dates/dates.model';
-import { selectDates } from '@/features/filtering/dates/dates.selectors';
-import { setDates } from '@/features/filtering/dates/dates.store';
-import { useAutoRange } from '@/features/filtering/dates/use-cases/auto-range/use-auto-range';
+  useAutoRange,
+  useDates,
+  useSetDates,
+} from '@/features/dates';
 import {
   selectAutoReloadInterval,
   selectAutoReloadStartDate,
   setAutoReloadInterval,
 } from '@/features/ui/ui-state.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
-import { store } from '@/store/store-instance';
 
 import { Divider } from '../../atoms/ui/divider';
 import { Input } from '../../atoms/ui/input';
@@ -46,32 +45,18 @@ import {
   TooltipTrigger,
 } from '../../atoms/ui/tooltip';
 
-const handleSubmit = (startDate: Date, endDate: Date) => {
-  if (!startDate || !endDate) return;
-  store.dispatch(
-    setDates({
-      type: 'range',
-      start_date: startDate.getTime(),
-      end_date: endDate.getTime(),
-    }),
-  );
-};
-
 export const DatesPicker = () => {
-  const { type, from_duration, from_unit, start_date, end_date } =
-    useAppSelector(selectDates);
+  const { type, from_duration, from_unit, start_date, end_date } = useDates();
 
   const { data, isFetching } = useAutoRange();
-  const dispatch = useAppDispatch();
+  const setDates = useSetDates();
   const handleUseAutoRange = () => {
     if (!data || isFetching) return;
-    dispatch(
-      setDates({
-        type: 'auto',
-        start_date: data.min_timestamp,
-        end_date: data.max_timestamp,
-      }),
-    );
+    setDates({
+      type: 'auto',
+      start_date: data.min_timestamp,
+      end_date: data.max_timestamp,
+    });
   };
 
   return (
@@ -179,14 +164,12 @@ export const DatesPicker = () => {
 };
 
 const FromTimeButton = ({ value, unit }: { value: number; unit: TimeUnit }) => {
-  const dispatch = useAppDispatch();
+  const setDates = useSetDates();
   return (
     <Button
-      onClick={() => {
-        dispatch(
-          setDates({ type: 'from', from_duration: value, from_unit: unit }),
-        );
-      }}
+      onClick={() =>
+        setDates({ type: 'from', from_duration: value, from_unit: unit })
+      }
       variant="outline"
     >
       {value} {formatUnit(unit, value)}
@@ -256,7 +239,8 @@ const AutoReloadProgress = () => {
 };
 
 const CustomRelativeDateInput = () => {
-  const { from_duration, from_unit } = useAppSelector(selectDates);
+  const { from_duration, from_unit } = useDates();
+  const setDates = useSetDates();
   const [duration, setDuration] = useState<number>(from_duration ?? 1);
   const [unit, setUnit] = useState<TimeUnit>(from_unit ?? 'days');
 
@@ -288,15 +272,13 @@ const CustomRelativeDateInput = () => {
           </SelectContent>
         </Select>
         <Button
-          onClick={() => {
-            store.dispatch(
-              setDates({
-                type: 'from',
-                from_duration: duration,
-                from_unit: unit,
-              }),
-            );
-          }}
+          onClick={() =>
+            setDates({
+              type: 'from',
+              from_duration: duration,
+              from_unit: unit,
+            })
+          }
         >
           Submit
         </Button>
@@ -306,13 +288,22 @@ const CustomRelativeDateInput = () => {
 };
 
 const AbsoluteRangePicker = () => {
-  const { start_date, end_date } = useAppSelector(selectDates);
+  const { start_date, end_date } = useDates();
+  const setDates = useSetDates();
   const [startDate, setStartDate] = useState<Date | undefined>(
     start_date ? new Date(start_date) : new Date(),
   );
   const [endDate, setEndDate] = useState<Date | undefined>(
     end_date ? new Date(end_date) : new Date(),
   );
+  const handleSubmit = () => {
+    if (!startDate || !endDate) return;
+    setDates({
+      type: 'range',
+      start_date: startDate.getTime(),
+      end_date: endDate.getTime(),
+    });
+  };
   return (
     <Row className="items-end gap-2">
       <Column
@@ -338,7 +329,7 @@ const AbsoluteRangePicker = () => {
         />
       </Column>
       <Button
-        onClick={() => handleSubmit(startDate!, endDate!)}
+        onClick={handleSubmit}
         disabled={!endDate || !startDate}
       >
         Submit

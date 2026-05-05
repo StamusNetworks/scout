@@ -28,7 +28,7 @@ import { TextFilter } from '@/common/design-system/molecules/data-table/filters/
 import { ValueListCard } from '@/common/design-system/molecules/value-list-card';
 import { Paginated } from '@/common/fetching/fetching.types';
 import { esEscape } from '@/common/lib/strings';
-import { setDates } from '@/features/filtering/dates/dates.store';
+import { useSetDates } from '@/features/dates';
 import { QueryFilterState } from '@/features/filtering/filters/query-filters/query-filter.model';
 import { TagFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
 import { useClearFilters } from '@/features/filtering/filters/query-filters/use-cases/clear-filters/clear-filters';
@@ -42,7 +42,7 @@ import { InvestigationStage } from '@/features/investigation/components/investig
 import { inventoryHistoryOptions } from '@/features/investigation/components/ongoing-investigation/ongoing-investigation.save';
 import { InvestigationState } from '@/features/investigation/investigation.slice';
 import { InvestigationHistory } from '@/features/investigation/investigations-history.slice';
-import { useAppDispatch, useAppSelector } from '@/store/store';
+import { useAppSelector } from '@/store/store';
 
 function useShowOnlyKept() {
   return useQueryState('only_kept', parseAsBoolean.withDefault(true));
@@ -212,7 +212,7 @@ const InvestigationHistoryItem = ({
 }: {
   investigation: InvestigationHistory;
 }) => {
-  const dispatch = useAppDispatch();
+  const setDates = useSetDates();
   const [showOnlyKept] = useShowOnlyKept();
   const clearFilters = useClearFilters();
   const createFilter = useCreateFilter();
@@ -233,13 +233,11 @@ const InvestigationHistoryItem = ({
     stages: InvestigationState['stages'];
   }) => {
     clearFilters();
-    dispatch(
-      setDates({
-        type: 'range',
-        start_date,
-        end_date,
-      }),
-    );
+    setDates({
+      type: 'range',
+      start_date,
+      end_date,
+    });
     if (tags) tagFiltersRepo.set(tags);
     replaceFilters(qfilter);
     stages.forEach((stage) => {

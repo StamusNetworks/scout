@@ -24,7 +24,7 @@ import {
   PageSelector,
 } from '@/common/design-system/molecules/pagination';
 import { TableCard } from '@/common/design-system/molecules/table-card';
-import { selectDates } from '@/features/filtering/dates/dates.selectors';
+import { selectDates } from '@/features/dates';
 import { EventValue } from '@/features/filtering/filters/query-filters/use-cases/interactive-value/event-value';
 
 import { useValuesSortParam } from './use-values-sort-param';

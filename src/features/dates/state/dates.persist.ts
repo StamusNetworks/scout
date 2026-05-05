@@ -1,6 +1,6 @@
 import { isEmpty } from 'ramda';
 
-import { DatesState, UNITS_IN_MILLISECONDS } from './dates.model';
+import { DatesState, UNITS_IN_MILLISECONDS } from '../model/dates-state';
 
 const getDefaultDates = (): DatesState => ({
   start_date: new Date().getTime() - 30 * UNITS_IN_MILLISECONDS['days'],

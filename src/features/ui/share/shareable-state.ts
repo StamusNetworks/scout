@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { type DatesState } from '@/features/filtering/dates/dates.model';
+import { type DatesState } from '@/features/dates';
 import { type QueryFilterState } from '@/features/filtering/filters/query-filters/query-filter.model';
 import { type TagFilters } from '@/features/filtering/filters/query-filters/query-filters.store';
 
