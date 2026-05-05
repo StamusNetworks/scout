@@ -8,8 +8,17 @@ import {
 } from '@/features/query-filters/model/filter-flags';
 import { type QueryFilterState } from '@/features/query-filters/model/query-filter';
 
+/**
+ * Filter `key` shapes that are valid in this codebase: alphanumeric +
+ * dot/underscore (e.g. `src_ip`, `host_id.roles.name`,
+ * `alert.signature_id`). The key flows into qfilter template strings
+ * so we constrain it here — the value goes through `esEscape` at the
+ * builder, but the key does not.
+ */
+const FILTER_KEY_RE = /^[a-zA-Z][a-zA-Z0-9_.]*$/;
+
 const shareableFilterSchema = z.object({
-  key: z.string(),
+  key: z.string().regex(FILTER_KEY_RE),
   value: z.union([z.string(), z.number()]),
   negated: z.boolean().optional(),
   wildcarded: z.boolean().optional(),
@@ -48,8 +57,29 @@ const shareableFlagsSchema = z.object({
   novelty: z.boolean(),
 }) satisfies z.ZodType<SerializedFilterFlags>;
 
+/**
+ * Route must be a same-origin path: starts with `/`, doesn't try to
+ * escape into another origin (`//evil.com` or `/\\evil`), no embedded
+ * protocol, no control characters. TanStack Router only routes
+ * internally so there's no open-redirect surface, but any XSS-prone
+ * route param renderer downstream still benefits from these guards.
+ */
+const routeSchema = z
+  .string()
+  .startsWith('/')
+  .refine((s) => !s.startsWith('//') && !s.startsWith('/\\'), {
+    message: 'protocol-relative or backslash-escaped path',
+  })
+  // eslint-disable-next-line no-control-regex
+  .refine((s) => !/[\x00-\x1f]/.test(s), {
+    message: 'control characters not allowed',
+  })
+  .refine((s) => !/^\/[^/]*:\/\//.test(s), {
+    message: 'embedded protocol not allowed',
+  });
+
 const shareableStateSchema = z.object({
-  route: z.string().startsWith('/'),
+  route: routeSchema,
   tenant: z.number().optional(),
   time: shareableTimeSchema,
   tags: shareableFlagsSchema,
