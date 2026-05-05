@@ -10,8 +10,8 @@ import { cn } from '@/common/lib/utils';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { ThreatTag } from '@/features/threats/common/molecules/threat-tag';
 
-import { useGetImpactedEntitiesQuery } from '../../entities.api';
-import { Threat } from '../../entity';
+import { useGetImpactedEntitiesQuery } from '../../../api/entities.api';
+import { Threat } from '../../../api/impacted-entity.dto';
 
 interface EntityThreatTagsListProps {
   entity: string;

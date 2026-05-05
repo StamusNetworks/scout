@@ -4,14 +4,14 @@ import { values } from 'ramda';
 import { sortBy } from '@/common/lib/sorting';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { CoverageBlockSkeleton } from '../molecules/coverage-block/coverage-block.skeleton';
-import { FamilyBlockView } from '../molecules/coverage-block/family-block';
-import { ThreatGrid } from '../molecules/threat-grid';
-import { ThreatFamily } from '../threat-family.model';
+import { ThreatFamily } from '../../api/threat-family.dto';
 import {
   useGetActiveThreatFamiliesQuery,
   useGetThreatFamiliesQuery,
-} from '../threats.api';
+} from '../../api/threats.api';
+import { CoverageBlockSkeleton } from '../molecules/coverage-block/coverage-block.skeleton';
+import { FamilyBlockView } from '../molecules/coverage-block/family-block';
+import { ThreatGrid } from '../molecules/threat-grid';
 
 export const FamiliesList = ({
   familyClass,

@@ -37,7 +37,7 @@ import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-
 import { HostHeader } from '@/features/host-insights/use-cases/host-details/entities/host-header';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useTenancy } from '@/features/tenancy';
-import { useGetThreatsStatusQuery } from '@/features/threats/common/threats.api';
+import { useGetThreatsStatusQuery } from '@/features/threats/api/threats.api';
 
 export const Route = createFileRoute('/_enterprise/hosts/$hostId')({
   component: () => (

@@ -2,7 +2,7 @@ import { compressIPv6, isIPv6 } from '@/common/lib/ips';
 import { esEscape } from '@/common/lib/strings';
 import { KillChainStepsEnum } from '@/features/query-filters/definitions/query-filter.config';
 
-import { AttackerInfrastructureAggregation } from './attacker-infrastructure.schema';
+import { AttackerInfrastructureAggregation } from '../../../api/attacker-infrastructure.dto';
 
 export type Node = {
   id: string;

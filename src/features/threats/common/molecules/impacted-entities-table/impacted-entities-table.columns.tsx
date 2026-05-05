@@ -21,7 +21,7 @@ import { Username } from '@/features/host-insights/use-cases/host-details/molecu
 import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
 import { killChainsConfig } from '@/features/threats/common/killchain/killchain';
 
-import { Entity } from '../../entity';
+import { Entity } from '../../../api/impacted-entity.dto';
 import { EntityThreatTagsListTemplate } from '../entities-threat-tags-list/entities-threat-tags-list';
 import { IpOrEntityEventValue } from '../ip-or-entity';
 import { ImpactedEntitiesTableActions } from './impacted-entities-table.actions';

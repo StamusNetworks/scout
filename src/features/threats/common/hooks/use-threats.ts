@@ -6,7 +6,7 @@ import { useTenant } from '@/features/tenancy';
 import {
   useGetCustomThreatsQuery,
   useGetSTIThreatsQuery,
-} from '../threats.api';
+} from '../../api/threats.api';
 
 interface ThreatsHookParams {
   family_class?: 'doc' | 'dopv';

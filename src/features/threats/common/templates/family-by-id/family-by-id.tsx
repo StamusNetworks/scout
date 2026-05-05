@@ -43,13 +43,13 @@ import { KIND_LABEL, ThreatForm } from '@/features/threats';
 import { KillChainCountersByFamilyId } from '@/features/threats/common/killchain/components/killchain-counters/killchain-counters';
 import { ImpactedEntitiesTable } from '@/features/threats/common/molecules/impacted-entities-table/impacted-entities-table';
 
-import { useFamilyDetectionMethods } from '../../hooks/use-family-detection-methods';
-import { useFamilyEvents } from '../../hooks/use-family-events';
-import { ThreatFamily } from '../../threat-family.model';
+import { ThreatFamily } from '../../../api/threat-family.dto';
 import {
   useGetActiveThreatFamiliesQuery,
   useGetThreatFamiliesQuery,
-} from '../../threats.api';
+} from '../../../api/threats.api';
+import { useFamilyDetectionMethods } from '../../hooks/use-family-detection-methods';
+import { useFamilyEvents } from '../../hooks/use-family-events';
 import { FamilyActiveThreats } from '../family-active-threats';
 
 const usePageFamilyEvents = () => {

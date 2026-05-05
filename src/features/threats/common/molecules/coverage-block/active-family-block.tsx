@@ -4,7 +4,7 @@ import {
   useGetActiveThreatFamiliesQuery,
   useGetActiveThreatsQuery,
   useGetThreatFamiliesQuery,
-} from '../../threats.api';
+} from '../../../api/threats.api';
 import { CoverageBlock, CoverageBlockRow } from './coverage-block';
 import { CoverageBlockSkeleton } from './coverage-block.skeleton';
 

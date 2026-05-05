@@ -23,15 +23,15 @@ import { CommandFilterMultiple } from '@/common/design-system/molecules/data-tab
 import { isIP } from '@/common/lib/strings';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
-import { useGetImpactedEntitiesQuery } from '@/features/threats/common/entities.api';
+import { useGetImpactedEntitiesQuery } from '@/features/threats/api/entities.api';
+import { ThreatStatus } from '@/features/threats/api/threat-status.dto';
+import { useGetThreatsStatusQuery } from '@/features/threats/api/threats.api';
 import { useThreats } from '@/features/threats/common/hooks/use-threats';
 import {
   KillChainKeysWithoutPolicies,
   killChainsConfig,
   killChainWithoutPoliciesOptions,
 } from '@/features/threats/common/killchain/killchain';
-import { ThreatStatus } from '@/features/threats/common/threat-status.schema';
-import { useGetThreatsStatusQuery } from '@/features/threats/common/threats.api';
 
 import { compromiseIncidentsColumns } from './compromise-incidents.columns';
 

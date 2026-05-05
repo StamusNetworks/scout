@@ -11,11 +11,11 @@ import {
 import { API } from '@/store/api';
 import { applyOptimisticUpdateToAllCacheEntries } from '@/store/utils';
 
-import { ActiveThreatFamily } from '../common/active-threat-family.model';
-import { ActiveThreat } from '../common/active-threat.model';
-import { ThreatFamily } from '../common/threat-family.model';
-import { ThreatStatus } from '../common/threat-status.schema';
 import { Threat as DomainThreat } from '../model/threat';
+import { ActiveThreatFamily } from './active-threat-family.dto';
+import { ActiveThreat } from './active-threat.dto';
+import { ThreatFamily } from './threat-family.dto';
+import { ThreatStatus } from './threat-status.dto';
 import { ThreatDto, ThreatPayloadDto } from './threat.dto';
 import { toThreat } from './threat.transforms';
 

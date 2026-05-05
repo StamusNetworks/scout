@@ -19,8 +19,8 @@ import { TextFilter } from '@/common/design-system/molecules/data-table/filters/
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { useGetImpactedEntitiesQuery } from '../../entities.api';
-import { Entity } from '../../entity';
+import { useGetImpactedEntitiesQuery } from '../../../api/entities.api';
+import { Entity } from '../../../api/impacted-entity.dto';
 import { ExpandedRow } from './impacted-asstets-table.expanded-row';
 import {
   exportThreatsColumns,

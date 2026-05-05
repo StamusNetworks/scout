@@ -4,16 +4,16 @@ import { values } from 'ramda';
 import { sortBy } from '@/common/lib/sorting';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { ActiveThreat } from '../active-threat.model';
+import { ActiveThreat } from '../../api/active-threat.dto';
+import { Threat } from '../../api/threat.dto';
+import {
+  useGetActiveThreatsQuery,
+  useGetThreatFamiliesQuery,
+} from '../../api/threats.api';
 import { useCombinedThreats } from '../hooks/use-combined-threats';
 import { ActiveThreatBlockView } from '../molecules/coverage-block/active-threat-block';
 import { CoverageBlockSkeleton } from '../molecules/coverage-block/coverage-block.skeleton';
 import { ThreatGrid } from '../molecules/threat-grid';
-import { Threat } from '../threat.model';
-import {
-  useGetActiveThreatsQuery,
-  useGetThreatFamiliesQuery,
-} from '../threats.api';
 
 export const ActiveThreatsList = ({
   familyClass,

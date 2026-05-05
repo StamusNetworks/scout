@@ -1,5 +1,5 @@
-import { ActiveThreatFamily } from '../active-threat-family.model';
-import { CombinedFamily, ThreatFamily } from '../threat-family.model';
+import { ActiveThreatFamily } from '../../api/active-threat-family.dto';
+import { CombinedFamily, ThreatFamily } from '../../api/threat-family.dto';
 
 export const combineFamiliesWithStats = (
   familiesList: ThreatFamily[],

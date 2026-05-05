@@ -16,11 +16,11 @@ import { usePaginationState } from '@/common/design-system/molecules/data-table/
 import { isIP } from '@/common/lib/strings';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
+import { ThreatStatus } from '@/features/threats/api/threat-status.dto';
+import { useGetThreatsStatusQuery } from '@/features/threats/api/threats.api';
 import { useThreats } from '@/features/threats/common/hooks/use-threats';
 import { KillChainKeysWithoutPolicies } from '@/features/threats/common/killchain/killchain';
 import { threatStatusColumnDefs } from '@/features/threats/common/molecules/threat-status-columns';
-import { ThreatStatus } from '@/features/threats/common/threat-status.schema';
-import { useGetThreatsStatusQuery } from '@/features/threats/common/threats.api';
 
 export const IndicidentsTable = () => {
   const params = useGlobalQueryParams(['tenant', 'dates']);

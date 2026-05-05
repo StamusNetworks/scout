@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/common/design-system/atoms/ui/dropdown-menu';
 
-import { useUpdateEntityStatusMutation } from '../../entities.api';
+import { useUpdateEntityStatusMutation } from '../../../api/entities.api';
 
 export const ImpactedEntitiesTableActions = ({
   threatId,

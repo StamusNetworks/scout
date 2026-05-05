@@ -2,14 +2,14 @@ import { useMemo } from 'react';
 
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
+import {
+  useGetActiveThreatsQuery,
+  useGetThreatFamiliesQuery,
+} from '../../api/threats.api';
 import { useThreats } from '../hooks/use-threats';
 import { CoverageBlockSkeleton } from '../molecules/coverage-block/coverage-block.skeleton';
 import { ThreatBlockView } from '../molecules/coverage-block/threat-block';
 import { ThreatGrid } from '../molecules/threat-grid';
-import {
-  useGetActiveThreatsQuery,
-  useGetThreatFamiliesQuery,
-} from '../threats.api';
 
 export const ThreatsList = ({
   familyClass,

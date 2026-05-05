@@ -4,11 +4,11 @@ import { values } from 'ramda';
 import { sortBy } from '@/common/lib/sorting';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { ActiveThreatFamily } from '../active-threat-family.model';
+import { ActiveThreatFamily } from '../../api/active-threat-family.dto';
+import { useGetActiveThreatFamiliesQuery } from '../../api/threats.api';
 import { ActiveFamilyBlock } from '../molecules/coverage-block/active-family-block';
 import { CoverageBlockSkeleton } from '../molecules/coverage-block/coverage-block.skeleton';
 import { ThreatGrid } from '../molecules/threat-grid';
-import { useGetActiveThreatFamiliesQuery } from '../threats.api';
 
 export const ActiveFamiliesList = ({
   familyClass,

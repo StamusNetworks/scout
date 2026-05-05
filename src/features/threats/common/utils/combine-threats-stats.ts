@@ -1,5 +1,5 @@
-import { ActiveThreat } from '../active-threat.model';
-import { CombinedThreat, Threat } from '../threat.model';
+import { ActiveThreat } from '../../api/active-threat.dto';
+import { CombinedThreat, Threat } from '../../api/threat.dto';
 
 export const combineThreatsWithStats = (
   threatsList: Threat[],

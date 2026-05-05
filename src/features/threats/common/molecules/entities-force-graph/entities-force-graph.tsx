@@ -2,7 +2,7 @@ import { Column } from '@/common/design-system/atoms/layout/column';
 import { ExpandableWrapper } from '@/common/design-system/molecules/expandable-wrapper';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { useGetImpactedEntitiesQuery } from '../../entities.api';
+import { useGetImpactedEntitiesQuery } from '../../../api/entities.api';
 import { EntitiesForceGraphComponent } from './entities-force-graph.force-graph';
 import { formatForcegraph } from './entities-force-graph.utils';
 

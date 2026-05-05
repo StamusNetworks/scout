@@ -11,7 +11,7 @@ export const killChainPhaseSchema = z.union([
   z.literal('pre_condition'),
 ]);
 
-export const threatSchema = z.object({
+export const entityThreatSchema = z.object({
   threat__threat_id: z.number(),
   threat__name: z.string(),
   threat__family__family_id: z.number(),
@@ -21,7 +21,7 @@ export const threatSchema = z.object({
   first_seen: z.string(),
   last_seen: z.string(),
 });
-export type EntityThreat = z.infer<typeof threatSchema>;
+export type EntityThreatDto = z.infer<typeof entityThreatSchema>;
 
 export const impactedEntitySchema = z.object({
   pk: z.number(),
@@ -31,10 +31,16 @@ export const impactedEntitySchema = z.object({
   network_def: z.string(),
   first_seen: z.string(),
   last_seen: z.string(),
-  threats: z.array(threatSchema),
+  threats: z.array(entityThreatSchema),
   status: z.union([z.literal('new'), z.literal('fixed')]),
   fixed_date: z.string(),
   kill_chain: killChainPhaseSchema,
   kill_chain_offender: killChainPhaseSchema,
   is_offender: z.boolean(),
 });
+
+export type ImpactedEntityDto = z.infer<typeof impactedEntitySchema>;
+/** @deprecated Use ImpactedEntityDto. */
+export type Entity = ImpactedEntityDto;
+/** @deprecated Use EntityThreatDto. */
+export type Threat = EntityThreatDto;

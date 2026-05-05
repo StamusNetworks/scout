@@ -47,12 +47,12 @@ import { useGetRulesetsQuery } from '@/features/detection-methods/rulesets.api';
 import { FilterInput } from '@/features/query-filters/components/edit-qfilter-modal/filter-input';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { KIND_LABEL, ThreatForm, toThreat } from '@/features/threats';
+import { useGetCustomThreatsQuery } from '@/features/threats/api/threats.api';
 import {
   KillChainKeys,
   killChainSchema,
   killChainsConfig,
 } from '@/features/threats/common/killchain/killchain';
-import { useGetCustomThreatsQuery } from '@/features/threats/common/threats.api';
 
 import {
   useCreateFilterActionMutation,

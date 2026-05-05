@@ -1,6 +1,6 @@
 import { compressIPv6, isIPv6 } from '@/common/lib/ips';
 
-import { Entity } from '../../entity';
+import { Entity } from '../../../api/impacted-entity.dto';
 
 export type Node = {
   id: string;

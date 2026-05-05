@@ -17,8 +17,8 @@ import { useGetEventsQuery } from '@/features/events';
 import { useGetSightingEventsQuery } from '@/features/events';
 import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
-import { useGetImpactedEntitiesQuery } from '@/features/threats/common/entities.api';
-import { useGetThreatsStatusQuery } from '@/features/threats/common/threats.api';
+import { useGetImpactedEntitiesQuery } from '@/features/threats/api/entities.api';
+import { useGetThreatsStatusQuery } from '@/features/threats/api/threats.api';
 
 import { HostDetectionsRadar } from '../molecules/host-detections-radar';
 import { HostProfile } from '../molecules/host-profile';

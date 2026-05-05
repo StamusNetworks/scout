@@ -4,9 +4,9 @@ import { Paginated, Pagination } from '@/common/fetching/fetching.types';
 import { killChainsConfig } from '@/features/threats/common/killchain/killchain';
 import { API } from '@/store/api';
 
-import { Entity } from './entity';
-import { AttackerInfrastructureAggregation } from './molecules/attacker-infrastructure/attacker-infrastructure.schema';
-import { getESParams } from './molecules/attacker-infrastructure/attacker-infrastructure.utils';
+import { getESParams } from '../common/molecules/attacker-infrastructure/attacker-infrastructure.utils';
+import { AttackerInfrastructureAggregation } from './attacker-infrastructure.dto';
+import { Entity } from './impacted-entity.dto';
 
 export const EntitiesAPI = API.injectEndpoints({
   endpoints: (builder) => ({

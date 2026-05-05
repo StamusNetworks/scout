@@ -12,7 +12,7 @@ import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-
 import { CompromiseHuntingTrail } from '@/features/threats';
 import { CompromiseTimeline } from '@/features/threats';
 
-import { Entity } from '../../entity';
+import { Entity } from '../../../api/impacted-entity.dto';
 import { AttackerInfrastructure } from '../attacker-infrastructure/attacker-infrastructure';
 import { ThreatsTable } from '../threats-table/threats-table';
 

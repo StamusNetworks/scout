@@ -5,7 +5,7 @@ import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-
 import {
   useGetKillChainCountersByThreatIdQuery,
   useGetKillChainCountersQuery,
-} from '@/features/threats/common/entities.api';
+} from '@/features/threats/api/entities.api';
 import { useKillChainCounters } from '@/features/threats/common/hooks/useKillChainCounters';
 
 import { killChainsConfig } from '../../killchain';

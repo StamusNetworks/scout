@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { ActiveThreatFamily } from './active-threat-family.model';
+import { ActiveThreatFamily } from './active-threat-family.dto';
 
 export const threatFamilySchema = z.object({
   pk: z.number(),

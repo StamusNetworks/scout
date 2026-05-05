@@ -17,9 +17,9 @@ import { Roles } from '@/features/host-insights/use-cases/host-details/molecules
 import { Username } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';
 import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
 
+import { ThreatStatus } from '../../api/threat-status.dto';
 import { useThreat } from '../hooks/use-threat';
 import { IpOrEntityEventValue } from '../molecules/ip-or-entity';
-import { ThreatStatus } from '../threat-status.schema';
 import { ThreatTag } from './threat-tag';
 
 export const KillChainTagWithContext = ({ row }: { row: ThreatStatus }) => {

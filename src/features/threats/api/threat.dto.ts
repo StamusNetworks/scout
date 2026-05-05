@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { ActiveThreat } from '../common/active-threat.model';
+import { ActiveThreat } from './active-threat.dto';
 
 /**
  * Wire-shape (snake_case, server vocabulary). Internal to the threats
@@ -60,3 +60,14 @@ export const threatPayloadDtoSchema = z.object({
 });
 
 export type ThreatPayloadDto = z.infer<typeof threatPayloadDtoSchema>;
+
+/** @deprecated Use ThreatDto. */
+export type Threat = ThreatDto;
+/** @deprecated Use ThreatPayloadDto. */
+export type ThreatPayload = ThreatPayloadDto;
+/** @deprecated Use CombinedThreatDto. */
+export type CombinedThreat = CombinedThreatDto;
+/** @deprecated Use threatDtoSchema. */
+export const threatSchema = threatDtoSchema;
+/** @deprecated Use threatPayloadDtoSchema. */
+export const threatPayload = threatPayloadDtoSchema;

@@ -7,10 +7,10 @@ import {
 } from '@/common/design-system/atoms/ui/scroll-area';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
+import { useGetActiveThreatsQuery } from '../../api/threats.api';
 import { useCombinedThreats } from '../hooks/use-combined-threats';
 import { ActiveThreatBlockView } from '../molecules/coverage-block/active-threat-block';
 import { CoverageBlockSkeleton } from '../molecules/coverage-block/coverage-block.skeleton';
-import { useGetActiveThreatsQuery } from '../threats.api';
 
 export const FamilyActiveThreats = ({ familyId }: { familyId: number }) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
