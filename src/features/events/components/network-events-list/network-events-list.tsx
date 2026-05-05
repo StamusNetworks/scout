@@ -13,7 +13,7 @@ import { useNetworkEventsQfilter } from '@/features/events/hooks/use-network-eve
 import { Event } from '@/features/events/model/event';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { TransactionCard } from '../molecules/transaction-card';
+import { TransactionCard } from './transaction-card';
 
 export interface NetworkEventsListProps {
   page: number;

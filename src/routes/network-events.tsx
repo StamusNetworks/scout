@@ -13,8 +13,8 @@ import {
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
-import { NetworkEventsList } from '@/features/events/network-events/use-cases/network-events-list/entities/network-events-list';
-import { NetworkEventsTimeline } from '@/features/events/network-events/use-cases/network-events-timeline/entities/network-events-timeline';
+import { NetworkEventsList } from '@/features/events/components/network-events-list/network-events-list';
+import { NetworkEventsTimeline } from '@/features/events/components/network-events-timeline/network-events-timeline';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 const searchSchema = z.object({

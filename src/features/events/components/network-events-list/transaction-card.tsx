@@ -26,13 +26,13 @@ import { ThreatTag } from '@/features/threats/common/molecules/threat-tag';
 import { selectDefaultEventDetailTab } from '@/features/ui/preferences/preferences.slice';
 import { useAppSelector } from '@/store/store';
 
-import { AnomalyCardContent } from '../protocol/anomaly-card-content';
-import { DnsCardContent } from '../protocol/dns-card-content';
-import { FileinfoCardContent } from '../protocol/fileinfo-card-content';
-import { FlowCardContent } from '../protocol/flow-card-content';
-import { HttpCardContent } from '../protocol/http-card-content';
-import { SmbCardContent } from '../protocol/smb-card-content';
-import { TlsCardContent } from '../protocol/tls-card-content';
+import { AnomalyCardContent } from './protocol/anomaly-card-content';
+import { DnsCardContent } from './protocol/dns-card-content';
+import { FileinfoCardContent } from './protocol/fileinfo-card-content';
+import { FlowCardContent } from './protocol/flow-card-content';
+import { HttpCardContent } from './protocol/http-card-content';
+import { SmbCardContent } from './protocol/smb-card-content';
+import { TlsCardContent } from './protocol/tls-card-content';
 
 export const TransactionCard = ({ event }: { event: Event }) => {
   const [open, setOpen] = useState(false);

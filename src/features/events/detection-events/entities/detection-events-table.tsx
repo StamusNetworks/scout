@@ -25,6 +25,13 @@ import {
   TIMESTAMP_COLUMN,
 } from '@/features/events/definitions/event-columns';
 import {
+  HTTP_REQUEST_COLUMN,
+  HTTP_RESPONSE_COLUMN,
+  HTTP_URL_COLUMN,
+  PAYLOAD_COLUMN,
+  TLS_SNI_COLUMN,
+} from '@/features/events/definitions/network-event-columns';
+import {
   CATEGORY_COLUMN,
   EXPORT_COLUMNS,
   LATERAL_COLUMN,
@@ -33,13 +40,6 @@ import {
   TAG_COLUMN,
 } from '@/features/events/detection-events/detection-events.table';
 import type { Event } from '@/features/events/model/event';
-import {
-  HTTP_REQUEST_COLUMN,
-  HTTP_RESPONSE_COLUMN,
-  HTTP_URL_COLUMN,
-  PAYLOAD_COLUMN,
-  TLS_SNI_COLUMN,
-} from '@/features/events/network-events/network-events.table';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 // --- Props ---
