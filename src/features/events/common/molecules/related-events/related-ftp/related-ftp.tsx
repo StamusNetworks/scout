@@ -1,4 +1,4 @@
-import { FtpEvent } from '@/features/events/common/model/app-proto/ftp.schema';
+import { FtpEvent } from '@/features/events/model/app-proto/ftp.schema';
 
 import { RelatedTable } from '../related-table';
 import { relatedFlowColumns } from './related-ftp.columns';

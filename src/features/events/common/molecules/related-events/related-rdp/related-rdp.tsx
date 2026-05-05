@@ -1,4 +1,4 @@
-import { RdpEvent } from '@/features/events/common/model/app-proto/rdp.schema';
+import { RdpEvent } from '@/features/events/model/app-proto/rdp.schema';
 
 import { RelatedTable } from '../related-table';
 import { relatedFlowColumns } from './related-rdp.columns';

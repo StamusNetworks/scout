@@ -5,7 +5,7 @@ import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Label as UILabel } from '@/common/design-system/atoms/ui/label';
 import { formatBytes, formatNumber } from '@/common/lib/numbers';
-import { Event } from '@/features/events/common/events.model';
+import { Event } from '@/features/events/model/event';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 import { ProtocolLabel } from './protocol-label';

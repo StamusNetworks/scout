@@ -2,7 +2,7 @@ import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
-import { Anomaly } from '@/features/events/common/model/event-types/anomaly.schema';
+import { Anomaly } from '@/features/events/model/event-types/anomaly.schema';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 export const relatedFlowColumns: CustomColumnDef<Anomaly>[] = [

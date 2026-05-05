@@ -1,4 +1,4 @@
-import { RfbEvent } from '@/features/events/common/model/app-proto/rfb.schema';
+import { RfbEvent } from '@/features/events/model/app-proto/rfb.schema';
 
 import { RelatedTable } from '../related-table';
 import { relatedFlowColumns } from './related-rfb.columns';

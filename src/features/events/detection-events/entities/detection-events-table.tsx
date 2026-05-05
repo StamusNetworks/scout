@@ -15,7 +15,6 @@ import { Table } from '@/common/design-system/molecules/table';
 import { esEscape } from '@/common/lib/strings';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useGetEventsQuery } from '@/features/events/common/events.api';
-import type { Event } from '@/features/events/common/events.model';
 import {
   DESTINATION_COLUMN,
   HOST_COLUMN,
@@ -33,6 +32,7 @@ import {
   OUTLIER_COLUMN,
   TAG_COLUMN,
 } from '@/features/events/detection-events/detection-events.table';
+import type { Event } from '@/features/events/model/event';
 import {
   HTTP_REQUEST_COLUMN,
   HTTP_RESPONSE_COLUMN,

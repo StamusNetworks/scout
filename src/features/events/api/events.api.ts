@@ -14,15 +14,15 @@ import { esEscape } from '@/common/lib/strings';
 import {
   BeaconingEvent,
   TlsTail,
-} from '@/features/events/beaconing/common/beaconing-event.model';
-import { Event } from '@/features/events/common/events.model';
-import { EventsTimeline } from '@/features/events/common/model/events-timeline.schema';
+} from '@/features/events/model/beaconing-event';
+import { CountsTimeline } from '@/features/events/model/counts-timeline';
+import { Event } from '@/features/events/model/event';
+import { EventsTimeline } from '@/features/events/model/events-timeline.schema';
 import {
   FlowEventFileRetrieve,
   FlowEventFileStatus,
   FlowEvents,
-} from '@/features/events/common/model/flowEvent.schema';
-import { CountsTimeline } from '@/features/events/counts-timeline/counts-timeline.model';
+} from '@/features/events/model/flow-event.schema';
 import { type EventTypeFlags } from '@/features/query-filters';
 import { API } from '@/store/api';
 

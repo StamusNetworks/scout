@@ -28,7 +28,7 @@ import {
   useRequestPcapUploadMutation,
   useUploadAlertToProbeMutation,
 } from '@/features/events/common/events.api';
-import { Event } from '@/features/events/common/events.model';
+import { Event } from '@/features/events/model/event';
 
 const steps = {
   1: 'Send PCAP extraction request to probe',

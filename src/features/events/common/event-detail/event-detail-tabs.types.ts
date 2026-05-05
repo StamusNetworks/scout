@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
-import { EventFileInfo } from '@/features/events/common/model/event-types/fileinfo.schema';
-import { FlowEvents } from '@/features/events/common/model/flowEvent.schema';
+import { EventFileInfo } from '@/features/events/model/event-types/fileinfo.schema';
+import { FlowEvents } from '@/features/events/model/flow-event.schema';
 
 export interface TabConfig {
   id: string;

@@ -1,5 +1,5 @@
 import { JsonView } from '@/common/design-system/atoms/json-view';
-import { Event } from '@/features/events/common/events.model';
+import { Event } from '@/features/events/model/event';
 
 import { TabComponentType } from '../event-detail-tabs.types';
 

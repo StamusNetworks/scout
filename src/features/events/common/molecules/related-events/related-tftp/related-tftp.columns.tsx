@@ -2,7 +2,7 @@ import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
-import { TftpEvent } from '@/features/events/common/model/app-proto/tftp.schema';
+import { TftpEvent } from '@/features/events/model/app-proto/tftp.schema';
 
 export const relatedFlowColumns: CustomColumnDef<TftpEvent>[] = [
   {

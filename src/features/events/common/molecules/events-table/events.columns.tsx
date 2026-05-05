@@ -13,7 +13,7 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { cn } from '@/common/lib/utils';
-import { Event } from '@/features/events/common/events.model';
+import { Event } from '@/features/events/model/event';
 import { Hostname } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
 import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';

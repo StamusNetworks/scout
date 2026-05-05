@@ -1,4 +1,4 @@
-import { SnmpEvent } from '@/features/events/common/model/app-proto/snmp.schema';
+import { SnmpEvent } from '@/features/events/model/app-proto/snmp.schema';
 
 import { RelatedTable } from '../related-table';
 import { relatedFlowColumns } from './related-snmp.columns';

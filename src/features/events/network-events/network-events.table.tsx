@@ -3,7 +3,7 @@ import type { CustomColumnDef } from '@/common/design-system/molecules/data-tabl
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 import { Scrollable } from '../common/atoms/scrollable';
-import type { Event } from '../common/events.model';
+import type { Event } from '../model/event';
 
 export const TLS_SNI_COLUMN: CustomColumnDef<Event> = {
   id: 'tls_sni',

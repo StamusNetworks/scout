@@ -1,5 +1,5 @@
-import { Event } from '@/features/events/common/events.model';
 import { DetectionMethodTab as DetectionMethodTabContent } from '@/features/events/common/molecules/detection-method/detection-method';
+import { Event } from '@/features/events/model/event';
 
 import { TabComponentType } from '../event-detail-tabs.types';
 

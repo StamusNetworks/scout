@@ -1,4 +1,4 @@
-import { StamusEvent } from '@/features/events/common/model/event-types/stamus.schema';
+import { StamusEvent } from '@/features/events/model/event-types/stamus.schema';
 
 import { RelatedTable } from '../related-table';
 import { relatedStamusColumns } from './related-stamus.columns';

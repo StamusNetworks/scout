@@ -3,7 +3,7 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { getDuration } from '@/common/lib/duration';
-import { NetflowEvent } from '@/features/events/common/model/app-proto/netflow.schema';
+import { NetflowEvent } from '@/features/events/model/app-proto/netflow.schema';
 
 export const relatedFlowColumns: CustomColumnDef<NetflowEvent>[] = [
   {

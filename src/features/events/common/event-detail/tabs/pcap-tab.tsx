@@ -1,5 +1,5 @@
-import { Event } from '@/features/events/common/events.model';
 import { Pcap } from '@/features/events/common/molecules/pcap/pcap';
+import { Event } from '@/features/events/model/event';
 
 import { TabComponentType } from '../event-detail-tabs.types';
 

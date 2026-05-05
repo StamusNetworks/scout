@@ -11,7 +11,7 @@ import { getDuration } from '@/common/lib/duration';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { BeaconingEvent } from '../beaconing-event.model';
+import { BeaconingEvent } from '../../../model/beaconing-event';
 import { useGetBeaconingEventsQuery } from '../beaconing.api';
 
 // Columns

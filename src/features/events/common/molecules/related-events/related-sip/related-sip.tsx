@@ -1,4 +1,4 @@
-import { SipEvent } from '@/features/events/common/model/app-proto/sip.schema';
+import { SipEvent } from '@/features/events/model/app-proto/sip.schema';
 
 import { RelatedTable } from '../related-table';
 import { relatedFlowColumns } from './related-sip.columns';

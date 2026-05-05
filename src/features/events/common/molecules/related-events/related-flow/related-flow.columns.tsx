@@ -3,7 +3,7 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { getDuration } from '@/common/lib/duration';
-import { FlowEvent } from '@/features/events/common/model/event-types/flow.schema';
+import { FlowEvent } from '@/features/events/model/event-types/flow.schema';
 
 export const relatedFlowColumns: CustomColumnDef<FlowEvent>[] = [
   {

@@ -11,7 +11,7 @@ import { renderWithProviders } from '@/common/testing/test-utils';
 import {
   makeLateralEvent,
   makeNrdEvent,
-} from '@/features/events/common/events.mocks';
+} from '@/features/events/model/event.mocks';
 import { PurposeGroupData } from '@/features/hunting-trail/hunting-trail.model';
 
 import { PurposeTabContent } from './purpose-tab-content';

@@ -7,7 +7,7 @@ import {
   useLazyGetEventFileRetrieveQuery,
 } from '@/features/events/common/events.api';
 
-import { EventFileInfo } from '../../model/event-types/fileinfo.schema';
+import { EventFileInfo } from '../../../model/event-types/fileinfo.schema';
 import { getColumns } from './files-columns';
 
 export const Files = ({

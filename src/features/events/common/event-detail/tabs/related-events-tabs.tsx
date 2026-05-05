@@ -2,7 +2,6 @@ import { keys } from 'ramda';
 import { ComponentType } from 'react';
 
 import { TabsBadge } from '@/common/design-system/atoms/ui/borderTabs';
-import { FlowEvents } from '@/features/events/common/model/flowEvent.schema';
 import { RelatedAlertsTab } from '@/features/events/common/molecules/related-events/related-alerts/related-alerts';
 import { RelatedAnomalyTab } from '@/features/events/common/molecules/related-events/related-anomaly/related-anomaly';
 import { RelatedDcerpcTab } from '@/features/events/common/molecules/related-events/related-dcerpc/related-dcerpc';
@@ -28,6 +27,7 @@ import { RelatedSshTab } from '@/features/events/common/molecules/related-events
 import { RelatedStamusTab } from '@/features/events/common/molecules/related-events/related-stamus/related-stamus';
 import { RelatedTftpTab } from '@/features/events/common/molecules/related-events/related-tftp/related-tftp';
 import { RelatedTlsTab } from '@/features/events/common/molecules/related-events/related-tls/related-tls';
+import { FlowEvents } from '@/features/events/model/flow-event.schema';
 
 import { TabComponentType, TabConfig } from '../event-detail-tabs.types';
 

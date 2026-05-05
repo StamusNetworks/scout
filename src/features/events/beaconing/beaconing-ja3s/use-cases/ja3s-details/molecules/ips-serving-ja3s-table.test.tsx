@@ -10,7 +10,7 @@ import { vi } from 'vitest';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
 import { IpsServingJa3sTable } from '@/features/events/beaconing/beaconing-ja3s/use-cases/ja3s-details/molecules/ips-serving-ja3s-table';
-import { BeaconingEvent } from '@/features/events/beaconing/common/beaconing-event.model';
+import { BeaconingEvent } from '@/features/events/model/beaconing-event';
 
 const createTestRouter = () =>
   createRouter({

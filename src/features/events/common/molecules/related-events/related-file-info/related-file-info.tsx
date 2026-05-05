@@ -1,4 +1,4 @@
-import { FileinfoEvent } from '@/features/events/common/model/event-types/fileinfo.schema';
+import { FileinfoEvent } from '@/features/events/model/event-types/fileinfo.schema';
 
 import { RelatedTable } from '../related-table';
 import { relatedFileinfoColumns } from './related-file-info.columns';

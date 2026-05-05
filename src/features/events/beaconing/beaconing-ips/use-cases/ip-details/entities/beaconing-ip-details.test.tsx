@@ -8,7 +8,7 @@ import { http, HttpResponse } from 'msw';
 
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
-import { BeaconingEvent } from '@/features/events/beaconing/common/beaconing-event.model';
+import { BeaconingEvent } from '@/features/events/model/beaconing-event';
 
 import { BeaconingIpDetails } from './beaconing-ip-details';
 

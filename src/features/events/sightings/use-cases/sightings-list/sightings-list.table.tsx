@@ -5,7 +5,7 @@ import { ExportColumn } from '@/common/design-system/molecules/data-table/data-t
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { Filter } from '@/common/design-system/molecules/data-table/filters/filters.types';
-import { Event } from '@/features/events/common/events.model';
+import { Event } from '@/features/events/model/event';
 import { Hostname } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
 import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 import { RoleBadge } from '@/features/host-insights/use-cases/host-details/molecules/host-details/roles';

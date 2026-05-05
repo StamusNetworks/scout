@@ -1,4 +1,4 @@
-import { Anomaly } from '@/features/events/common/model/event-types/anomaly.schema';
+import { Anomaly } from '@/features/events/model/event-types/anomaly.schema';
 
 import { RelatedTable } from '../related-table';
 import { relatedFlowColumns } from './related-anomaly.columns';

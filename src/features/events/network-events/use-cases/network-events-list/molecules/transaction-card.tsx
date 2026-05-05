@@ -16,7 +16,7 @@ import {
   RelatedEventsTabs,
   SyntheticTab,
 } from '@/features/events/common/event-detail';
-import { Event } from '@/features/events/common/events.model';
+import { Event } from '@/features/events/model/event';
 import { Hostname } from '@/features/host-insights/use-cases/host-details/molecules/host-details/hostname';
 import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';

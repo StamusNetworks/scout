@@ -4,8 +4,8 @@ import { DataTable } from '@/common/design-system/molecules/data-table';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { usePaginationState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { esEscape } from '@/common/lib/strings';
-import { BeaconingEvent } from '@/features/events/beaconing/common/beaconing-event.model';
 import { useGetBeaconingEventsQuery } from '@/features/events/beaconing/common/beaconing.api';
+import { BeaconingEvent } from '@/features/events/model/beaconing-event';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 

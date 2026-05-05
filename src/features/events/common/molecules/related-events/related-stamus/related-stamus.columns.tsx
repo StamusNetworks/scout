@@ -2,7 +2,7 @@ import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
-import { StamusEvent } from '@/features/events/common/model/event-types/stamus.schema';
+import { StamusEvent } from '@/features/events/model/event-types/stamus.schema';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
 import { KillChainPhase } from '@/features/threats/common/killchain/killchain';

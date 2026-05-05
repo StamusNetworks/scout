@@ -11,8 +11,8 @@ import { renderWithProviders } from '@/common/testing/test-utils';
 import {
   makeLateralEvent,
   makeNrdEvent,
-} from '@/features/events/common/events.mocks';
-import { makeSightingApiEvent } from '@/features/events/sightings/common/sightings.mocks';
+} from '@/features/events/model/event.mocks';
+import { makeSightingApiEvent } from '@/features/events/model/event.mocks';
 
 import { CompromiseHuntingTrail } from './compromise-hunting-trail';
 

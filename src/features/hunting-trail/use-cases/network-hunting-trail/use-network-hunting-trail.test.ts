@@ -13,7 +13,7 @@ import {
 import {
   makeLateralEvent,
   makeNrdEvent,
-} from '@/features/events/common/events.mocks';
+} from '@/features/events/model/event.mocks';
 
 import { useNetworkHuntingTrail } from './use-network-hunting-trail';
 

@@ -1,4 +1,4 @@
-import { MqttEvent } from '@/features/events/common/model/app-proto/mqtt.schema';
+import { MqttEvent } from '@/features/events/model/app-proto/mqtt.schema';
 
 import { RelatedTable } from '../related-table';
 import { relatedFlowColumns } from './related-mqtt.columns';

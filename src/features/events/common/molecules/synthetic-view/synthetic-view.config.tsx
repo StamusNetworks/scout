@@ -1,7 +1,7 @@
 import { keys } from 'ramda';
 import React from 'react';
 
-import { Event } from '@/features/events/common/events.model';
+import { Event } from '@/features/events/model/event';
 import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
 import { ThreatTag } from '@/features/threats/common/molecules/threat-tag';
 

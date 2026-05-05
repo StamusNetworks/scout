@@ -1,4 +1,4 @@
-import { CountsTimeline } from '@/features/events/counts-timeline/counts-timeline.model';
+import { CountsTimeline } from '@/features/events/model/counts-timeline';
 
 export const getTimelineData = (res: CountsTimeline) => {
   // Server response is an object with keys: from_date, interval, and then a bunch of other keys which contain

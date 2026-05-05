@@ -1,6 +1,6 @@
 import { Row } from '@tanstack/react-table';
 
-import { Event } from '@/features/events/common/events.model';
+import { Event } from '@/features/events/model/event';
 import { selectDefaultEventDetailTab } from '@/features/ui/preferences/preferences.slice';
 import { useAppSelector } from '@/store/store';
 

@@ -1,4 +1,4 @@
-import { FlowEvent } from '@/features/events/common/model/event-types/flow.schema';
+import { FlowEvent } from '@/features/events/model/event-types/flow.schema';
 
 import { RelatedTable } from '../related-table';
 import { relatedFlowColumns } from './related-flow.columns';

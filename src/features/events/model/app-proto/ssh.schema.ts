@@ -1,0 +1,38 @@
+import { z } from 'zod';
+
+import { baseEventSchema } from '@/features/events/model/event';
+
+export const sshSchema = z.object({
+  client: z
+    .object({
+      hassh: z
+        .object({
+          hash: z.string(),
+          string: z.string(),
+        })
+        .optional(),
+      proto_version: z.string(),
+      software_version: z.string(),
+    })
+    .optional(),
+  server: z
+    .object({
+      hassh: z
+        .object({
+          hash: z.string(),
+          string: z.string(),
+        })
+        .optional(),
+      proto_version: z.string(),
+      software_version: z.string(),
+    })
+    .optional(),
+});
+
+export const sshEventSchema = baseEventSchema.extend({
+  event_type: z.literal('ssh'),
+  app_proto: z.literal('ssh'),
+  ssh: sshSchema,
+});
+
+export type SshEvent = z.infer<typeof sshEventSchema>;

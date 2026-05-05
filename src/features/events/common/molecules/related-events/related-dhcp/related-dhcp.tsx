@@ -1,4 +1,4 @@
-import { DhcpEvent } from '@/features/events/common/model/app-proto/dhcp.schema';
+import { DhcpEvent } from '@/features/events/model/app-proto/dhcp.schema';
 
 import { RelatedTable } from '../related-table';
 import { relatedFlowColumns } from './related-dhcp.columns';

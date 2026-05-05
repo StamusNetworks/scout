@@ -13,7 +13,7 @@ import {
   useGetEventsQuery,
   useGetEventsTailQuery,
 } from '@/features/events/common/events.api';
-import { makeNrdEvent } from '@/features/events/common/events.mocks';
+import { makeNrdEvent } from '@/features/events/model/event.mocks';
 import { useGetSightingEventsQuery } from '@/features/events/sightings/common/sightings.api';
 
 import { useHostHuntingTrail } from './use-host-hunting-trail';

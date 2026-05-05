@@ -2,7 +2,7 @@ import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
-import { DnsEvent } from '@/features/events/common/model/app-proto/dns.schema';
+import { DnsEvent } from '@/features/events/model/app-proto/dns.schema';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 export const relatedFlowColumns: CustomColumnDef<DnsEvent>[] = [

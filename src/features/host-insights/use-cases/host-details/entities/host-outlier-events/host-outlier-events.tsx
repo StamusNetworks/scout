@@ -9,7 +9,6 @@ import { PaginationFooter } from '@/common/design-system/molecules/pagination-fo
 import { Table } from '@/common/design-system/molecules/table';
 import { esEscape } from '@/common/lib/strings';
 import { useGetEventsQuery } from '@/features/events/common/events.api';
-import type { Event } from '@/features/events/common/events.model';
 import {
   DESTINATION_COLUMN,
   HOST_COLUMN,
@@ -25,6 +24,7 @@ import {
   METHOD_COLUMN,
   OUTLIER_COLUMN,
 } from '@/features/events/detection-events/detection-events.table';
+import type { Event } from '@/features/events/model/event';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 const outlierColumns = [

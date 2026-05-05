@@ -1,6 +1,6 @@
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
-import { Event } from '@/features/events/common/events.model';
+import { Event } from '@/features/events/model/event';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 import { ProtocolLabel } from './protocol-label';

@@ -7,7 +7,7 @@ import { Hostname } from '@/features/host-insights/use-cases/host-details/molecu
 import { Network } from '@/features/host-insights/use-cases/host-details/molecules/host-details/network';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
-import type { Event } from './events.model';
+import type { Event } from '../model/event';
 
 export const TIMESTAMP_COLUMN: CustomColumnDef<Event> = {
   id: 'timestamp',

@@ -1,7 +1,7 @@
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
-import { FtpDataEvent } from '@/features/events/common/model/app-proto/ftp_data.schema';
+import { FtpDataEvent } from '@/features/events/model/app-proto/ftp-data.schema';
 
 export const relatedFlowColumns: CustomColumnDef<FtpDataEvent>[] = [
   {

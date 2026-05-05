@@ -1,4 +1,4 @@
-import { SmtpEvent } from '@/features/events/common/model/app-proto/smtp.schema';
+import { SmtpEvent } from '@/features/events/model/app-proto/smtp.schema';
 
 import { RelatedTable } from '../related-table';
 import { relatedFlowColumns } from './related-smtp.columns';
