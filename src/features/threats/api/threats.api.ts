@@ -15,13 +15,15 @@ import { ActiveThreat } from '../model/active-threat';
 import { ActiveThreatFamily } from '../model/active-threat-family';
 import { Threat as DomainThreat } from '../model/threat';
 import { ThreatFamily } from '../model/threat-family';
+import { ThreatStatus } from '../model/threat-status';
 import { ActiveThreatFamily as ActiveThreatFamilyDto } from './active-threat-family.dto';
 import { toActiveThreatFamily } from './active-threat-family.transforms';
 import { ActiveThreat as ActiveThreatDto } from './active-threat.dto';
 import { toActiveThreat } from './active-threat.transforms';
 import { ThreatFamily as ThreatFamilyDto } from './threat-family.dto';
 import { toThreatFamily } from './threat-family.transforms';
-import { ThreatStatus } from './threat-status.dto';
+import { ThreatStatus as ThreatStatusDto } from './threat-status.dto';
+import { toThreatStatus } from './threat-status.transforms';
 import { ThreatDto, ThreatPayloadDto } from './threat.dto';
 import { toThreat } from './threat.transforms';
 
@@ -259,6 +261,12 @@ export const ThreatsAPI = API.injectEndpoints({
         url: `/api/v2/appliances/threat-status/`,
         method: 'GET',
         params: buildQueryParams(params),
+      }),
+      transformResponse: (
+        res: Paginated<ThreatStatusDto>,
+      ): Paginated<ThreatStatus> => ({
+        ...res,
+        results: res.results.map(toThreatStatus),
       }),
       providesTags: ['Reload', 'Incidents'],
     }),

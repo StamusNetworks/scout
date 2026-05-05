@@ -16,11 +16,11 @@ import { usePaginationState } from '@/common/design-system/molecules/data-table/
 import { isIP } from '@/common/lib/strings';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
-import { ThreatStatus } from '@/features/threats/api/threat-status.dto';
 import { useGetThreatsStatusQuery } from '@/features/threats/api/threats.api';
 import { useThreats } from '@/features/threats/common/hooks/use-threats';
 import { KillChainKeysWithoutPolicies } from '@/features/threats/common/killchain/killchain';
 import { threatStatusColumnDefs } from '@/features/threats/common/molecules/threat-status-columns';
+import { ThreatStatus } from '@/features/threats/model/threat-status';
 
 export const IndicidentsTable = () => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
@@ -46,13 +46,13 @@ export const IndicidentsTable = () => {
     } else {
       replaceFilters([
         {
-          key: row.original.is_offender ? 'stamus.source' : 'stamus.asset',
+          key: row.original.isOffender ? 'stamus.source' : 'stamus.asset',
           value: row.original.asset,
         },
         {
           key: 'stamus.threat_name',
           value:
-            threats.data?.find((threat) => threat.id === row.original.threat_id)
+            threats.data?.find((threat) => threat.id === row.original.threatId)
               ?.name || '',
         },
       ]);

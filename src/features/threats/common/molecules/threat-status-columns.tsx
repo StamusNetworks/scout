@@ -17,17 +17,17 @@ import { Roles } from '@/features/host-insights/use-cases/host-details/molecules
 import { Username } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';
 import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
 
-import { ThreatStatus } from '../../api/threat-status.dto';
+import { ThreatStatus } from '../../model/threat-status';
 import { useThreat } from '../hooks/use-threat';
 import { IpOrEntityEventValue } from '../molecules/ip-or-entity';
 import { ThreatTag } from './threat-tag';
 
 export const KillChainTagWithContext = ({ row }: { row: ThreatStatus }) => {
-  const { data, isLoading } = useThreat(row.threat_id);
+  const { data, isLoading } = useThreat(row.threatId);
   if (isLoading) return <Spin />;
   return (
     <KillchainTag
-      kc={row.is_offender ? row.kill_chain_offender : row.kill_chain}
+      kc={row.isOffender ? row.offenderPhase : row.phase}
       status={row.status}
       context={[
         { es_key: 'stamus.asset', value: row.asset },
@@ -44,26 +44,26 @@ export const threatStatusColumnDefs: Record<
   first_seen: {
     id: 'first_seen',
     enableSorting: false,
-    accessorKey: 'first_seen',
+    accessorKey: 'firstSeen',
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
         title="First seen"
       />
     ),
-    cell: ({ row }) => <DateTime date={row.original.first_seen} />,
+    cell: ({ row }) => <DateTime date={row.original.firstSeen} />,
   },
   last_seen: {
     id: 'last_seen',
     enableSorting: false,
-    accessorKey: 'last_seen',
+    accessorKey: 'lastSeen',
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
         title="Last seen"
       />
     ),
-    cell: ({ row }) => <DateTime date={row.original.last_seen} />,
+    cell: ({ row }) => <DateTime date={row.original.lastSeen} />,
   },
   threat: {
     id: 'threat',
@@ -75,11 +75,11 @@ export const threatStatusColumnDefs: Record<
     ),
     cell: ({ row }) => (
       <ThreatTag
-        threat_id={row.original.threat_id}
-        is_offender={row.original.is_offender}
-        kill_chain={row.original.kill_chain}
-        first_seen={row.original.first_seen}
-        last_seen={row.original.last_seen}
+        threat_id={row.original.threatId}
+        is_offender={row.original.isOffender}
+        kill_chain={row.original.phase}
+        first_seen={row.original.firstSeen.toISOString()}
+        last_seen={row.original.lastSeen.toISOString()}
         status={row.original.status}
       />
     ),
@@ -97,11 +97,11 @@ export const threatStatusColumnDefs: Record<
   },
   is_offender: {
     id: 'is_offender',
-    accessorKey: 'is_offender',
+    accessorKey: 'isOffender',
     visible: false,
     header: () => null,
     cell: ({ row }) =>
-      row.original.is_offender ? (
+      row.original.isOffender ? (
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
@@ -132,7 +132,7 @@ export const threatStatusColumnDefs: Record<
     cell: ({ row }) => (
       <IpOrEntityEventValue
         entity={row.original.asset}
-        offender={row.original.is_offender}
+        offender={row.original.isOffender}
       />
     ),
   },

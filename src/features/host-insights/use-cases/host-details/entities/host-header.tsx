@@ -157,12 +157,10 @@ export const HostHeader = ({ hostId }: HostHeaderProps) => {
       <div className="h-fit max-w-[450px] grow">
         <HostDetectionsRadar
           threatsVictim={
-            incidents?.results.filter((i) => i.kill_chain_offender === null)
-              .length || 0
+            incidents?.results.filter((i) => !i.isOffender).length || 0
           }
           threatsAttacker={
-            incidents?.results.filter((i) => i.kill_chain_offender !== null)
-              .length || 0
+            incidents?.results.filter((i) => i.isOffender).length || 0
           }
           beacons={beaconingData?.count || 0}
           detectionMethods={detectionMethodsList?.count || 0}

@@ -22,10 +22,10 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { isIP } from '@/common/lib/ips';
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
-import { ThreatStatus } from '@/features/threats/api/threat-status.dto';
 import { useThreat } from '@/features/threats/common/hooks/use-threat';
 import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
 import { ThreatTag } from '@/features/threats/common/molecules/threat-tag';
+import { ThreatStatus } from '@/features/threats/model/threat-status';
 
 export const threatStatusColumns: CustomColumnDef<ThreatStatus>[] = [
   {
@@ -36,7 +36,7 @@ export const threatStatusColumns: CustomColumnDef<ThreatStatus>[] = [
         title="First seen"
       />
     ),
-    cell: ({ row }) => <DateTime date={row.original.first_seen} />,
+    cell: ({ row }) => <DateTime date={row.original.firstSeen} />,
   },
   {
     id: 'last_seen',
@@ -46,7 +46,7 @@ export const threatStatusColumns: CustomColumnDef<ThreatStatus>[] = [
         title="Last seen"
       />
     ),
-    cell: ({ row }) => <DateTime date={row.original.last_seen} />,
+    cell: ({ row }) => <DateTime date={row.original.lastSeen} />,
   },
   {
     id: 'threat',
@@ -58,22 +58,22 @@ export const threatStatusColumns: CustomColumnDef<ThreatStatus>[] = [
     ),
     cell: ({ row }) => (
       <ThreatTag
-        threat_id={row.original.threat_id}
-        is_offender={row.original.is_offender}
-        kill_chain={row.original.kill_chain}
-        first_seen={row.original.first_seen}
-        last_seen={row.original.last_seen}
+        threat_id={row.original.threatId}
+        is_offender={row.original.isOffender}
+        kill_chain={row.original.phase}
+        first_seen={row.original.firstSeen.toISOString()}
+        last_seen={row.original.lastSeen.toISOString()}
         status={row.original.status}
       />
     ),
   },
   {
     id: 'is_offender',
-    accessorKey: 'is_offender',
+    accessorKey: 'isOffender',
     visible: false,
     header: () => null,
     cell: ({ row }) =>
-      row.original.is_offender ? (
+      row.original.isOffender ? (
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
@@ -117,11 +117,11 @@ export const threatStatusColumns: CustomColumnDef<ThreatStatus>[] = [
 ];
 
 export const KillChainTagWithContext = ({ row }: { row: ThreatStatus }) => {
-  const { data, isLoading } = useThreat(row.threat_id);
+  const { data, isLoading } = useThreat(row.threatId);
   if (isLoading) return <Spin />;
   return (
     <KillchainTag
-      kc={row.is_offender ? row.kill_chain_offender : row.kill_chain}
+      kc={row.isOffender ? row.offenderPhase : row.phase}
       status={row.status}
       context={[
         { es_key: isIP(row.asset) ? 'ip' : 'stamus.asset', value: row.asset },
@@ -134,7 +134,7 @@ export const KillChainTagWithContext = ({ row }: { row: ThreatStatus }) => {
 export const ExploreButtons = ({ row }: { row: ThreatStatus }) => {
   const navigate = useNavigate();
   const replaceFilters = useReplaceFilters();
-  const { data, isLoading } = useThreat(row.threat_id);
+  const { data, isLoading } = useThreat(row.threatId);
   const handleClick = useCallback(
     (route: string) => {
       replaceFilters([

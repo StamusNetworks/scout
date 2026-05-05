@@ -24,7 +24,6 @@ import { isIP } from '@/common/lib/strings';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
 import { useGetImpactedEntitiesQuery } from '@/features/threats/api/entities.api';
-import { ThreatStatus } from '@/features/threats/api/threat-status.dto';
 import { useGetThreatsStatusQuery } from '@/features/threats/api/threats.api';
 import { useThreats } from '@/features/threats/common/hooks/use-threats';
 import {
@@ -32,6 +31,7 @@ import {
   killChainsConfig,
   killChainWithoutPoliciesOptions,
 } from '@/features/threats/common/killchain/killchain';
+import { ThreatStatus } from '@/features/threats/model/threat-status';
 
 import { compromiseIncidentsColumns } from './compromise-incidents.columns';
 
@@ -85,13 +85,13 @@ export const CompromiseIncidentsTable = ({
     } else {
       replaceFilters([
         {
-          key: row.original.is_offender ? 'stamus.source' : 'stamus.asset',
+          key: row.original.isOffender ? 'stamus.source' : 'stamus.asset',
           value: row.original.asset,
         },
         {
           key: 'stamus.threat_name',
           value:
-            threats.data?.find((threat) => threat.id === row.original.threat_id)
+            threats.data?.find((threat) => threat.id === row.original.threatId)
               ?.name || '',
         },
       ]);
