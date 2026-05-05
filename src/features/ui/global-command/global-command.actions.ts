@@ -17,7 +17,7 @@ import { getShortcutDisplay } from '@/common/lib/platform';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { getConfig } from '@/config';
 import { useUpdatePushRulesetMutation } from '@/features/detection-methods/rulesets.api';
-import { useFilterActionModal } from '@/features/filter-actions/hooks/use-filter-action-modal';
+import { useFilterActionModal } from '@/features/filter-actions';
 import { useQueryFilters } from '@/features/query-filters';
 import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
 import {

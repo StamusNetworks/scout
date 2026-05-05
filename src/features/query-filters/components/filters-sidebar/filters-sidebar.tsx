@@ -24,8 +24,10 @@ import {
 } from '@/common/design-system/atoms/ui/tooltip';
 import { startsWithOneOf } from '@/common/lib/strings';
 import { cn } from '@/common/lib/utils';
-import { FilterActionsDropdown } from '@/features/filter-actions/components/filter-actions-dropdown/filter-actions-dropdown';
-import { useSupportedFilters } from '@/features/filter-actions/hooks/use-supported-filters';
+import {
+  FilterActionsDropdown,
+  useSupportedFilters,
+} from '@/features/filter-actions';
 import {
   SideBarQueryFilterSets,
   useSaveFilterSetModal,

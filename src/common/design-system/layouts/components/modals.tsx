@@ -1,8 +1,10 @@
-import { DeclarationModal } from '@/features/filter-actions/components/declaration-modal/declaration-modal';
-import { SendMailModal } from '@/features/filter-actions/components/send-mail-modal/send-mail-modal';
-import { SuppressModal } from '@/features/filter-actions/components/suppress-modal/suppress-modal';
-import { TagModal } from '@/features/filter-actions/components/tag-modal/tag-modal';
-import { ThresholdModal } from '@/features/filter-actions/components/threshold-modal/threshold-modal';
+import {
+  DeclarationModal,
+  SendMailModal,
+  SuppressModal,
+  TagModal,
+  ThresholdModal,
+} from '@/features/filter-actions';
 import { SaveFilterSetModal } from '@/features/filter-sets';
 import { AddQfilterCommand } from '@/features/query-filters/components/add-qfilter-command/add-qfilter-command';
 import { AddEsFilterModal } from '@/features/query-filters/components/add-qfilter-modal/add-es-filter.modal';

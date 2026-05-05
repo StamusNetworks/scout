@@ -17,9 +17,11 @@ import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
-import { FilterActionsDropdown } from '@/features/filter-actions/components/filter-actions-dropdown/filter-actions-dropdown';
-import { FiltersActionsTable } from '@/features/filter-actions/components/filter-actions-table/filter-actions-table';
-import { UpdatePushRuleset } from '@/features/filter-actions/components/update-push-ruleset';
+import {
+  FilterActionsDropdown,
+  FiltersActionsTable,
+  UpdatePushRuleset,
+} from '@/features/filter-actions';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 const filtersActionsSearchSchema = z.object({
