@@ -37,7 +37,7 @@ export const threatHistorySchema = z.object({
         timestamp: z.string(),
         threat_id: z.string(),
         is_offender: z.boolean(),
-        step: killChainPhaseSchema,
+        kc_step: killChainPhaseSchema,
         kc_step_offender: killChainPhaseSchema.nullable(),
       }),
       z.object({
@@ -58,7 +58,7 @@ export type KCChange = {
   timestamp: string;
   threat_id: string;
   is_offender: boolean;
-  step: string;
+  kc_step: string;
   kc_step_offender: string | null;
 };
 
