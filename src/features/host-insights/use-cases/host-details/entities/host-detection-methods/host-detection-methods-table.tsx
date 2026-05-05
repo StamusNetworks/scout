@@ -8,8 +8,8 @@ import { PaginationFooter } from '@/common/design-system/molecules/pagination-fo
 import { Table } from '@/common/design-system/molecules/table';
 import { esEscape } from '@/common/lib/strings';
 import { useGetRulesQuery } from '@/features/detection-methods/api/rules.api';
-import { detectionMethodsColumns } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.columns';
-import { DetectionMethodsExpandedRow } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.expanded-row';
+import { rulesTableColumns } from '@/features/detection-methods/components/rules-table/rules-table.columns';
+import { RuleExpandedRow } from '@/features/detection-methods/components/rules-table/rules-table.expanded-row';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 interface HostDetectionMethodsTableProps {
@@ -66,11 +66,11 @@ export function HostDetectionMethodsTable({
     <div className="space-y-2">
       <Table
         data={results}
-        columns={detectionMethodsColumns}
+        columns={rulesTableColumns}
         isLoading={isFetching}
         sorting={sorting}
         onSortingChange={onSortingChange}
-        ExpandedRow={DetectionMethodsExpandedRow}
+        ExpandedRow={RuleExpandedRow}
         getRowId={(row) => row.id?.toString()}
         Empty={
           <DataTableEmpty

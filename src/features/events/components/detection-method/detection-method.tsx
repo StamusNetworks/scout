@@ -12,7 +12,7 @@ import {
 } from '@/common/design-system/atoms/ui/empty';
 import { Skeleton } from '@/common/design-system/atoms/ui/skeleton';
 import { useGetRuleBySidQuery } from '@/features/detection-methods/api/rules.api';
-import { DetectionMethodExpandedRowTemplate } from '@/features/detection-methods/signatures/components/signatures-table/signatures-table.expanded-row';
+import { RuleExpandedRowTemplate } from '@/features/detection-methods/components/rules-table/rules-table.expanded-row';
 
 export const DetectionMethodTab = ({ sid }: { sid: number }) => {
   const { data, isLoading } = useGetRuleBySidQuery({ sid });
@@ -66,5 +66,5 @@ export const DetectionMethodTab = ({ sid }: { sid: number }) => {
       </Empty>
     );
 
-  return <DetectionMethodExpandedRowTemplate detectionMethod={data} />;
+  return <RuleExpandedRowTemplate rule={data} />;
 };

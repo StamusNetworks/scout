@@ -24,7 +24,6 @@ import { Route as DetectionEventsRouteRouteImport } from './routes/detection-eve
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DetectionMethodsIndexRouteImport } from './routes/detection-methods/index'
 import { Route as DetectionEventsIndexRouteImport } from './routes/detection-events/index'
-import { Route as DetectionMethodsDetectionMethodIdRouteImport } from './routes/detection-methods/$detectionMethodId'
 import { Route as DetectionEventsEventRouteImport } from './routes/detection-events/event'
 import { Route as EnterpriseVolumetryRouteImport } from './routes/_enterprise/volumetry'
 import { Route as EnterpriseOperationalCenterRouteImport } from './routes/_enterprise/operational-center'
@@ -167,12 +166,6 @@ const DetectionEventsIndexRoute = DetectionEventsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DetectionEventsRouteRoute,
 } as any)
-const DetectionMethodsDetectionMethodIdRoute =
-  DetectionMethodsDetectionMethodIdRouteImport.update({
-    id: '/detection-methods/$detectionMethodId',
-    path: '/detection-methods/$detectionMethodId',
-    getParentRoute: () => rootRouteImport,
-  } as any)
 const DetectionEventsEventRoute = DetectionEventsEventRouteImport.update({
   id: '/event',
   path: '/event',
@@ -603,7 +596,6 @@ export interface FileRoutesByFullPath {
   '/operational-center': typeof EnterpriseOperationalCenterRoute
   '/volumetry': typeof EnterpriseVolumetryRoute
   '/detection-events/event': typeof DetectionEventsEventRoute
-  '/detection-methods/$detectionMethodId': typeof DetectionMethodsDetectionMethodIdRoute
   '/detection-events/': typeof DetectionEventsIndexRoute
   '/detection-methods/': typeof DetectionMethodsIndexRoute
   '/analytics/beaconing': typeof EnterpriseAnalyticsBeaconingRouteRouteWithChildren
@@ -681,7 +673,6 @@ export interface FileRoutesByTo {
   '/operational-center': typeof EnterpriseOperationalCenterRoute
   '/volumetry': typeof EnterpriseVolumetryRoute
   '/detection-events/event': typeof DetectionEventsEventRoute
-  '/detection-methods/$detectionMethodId': typeof DetectionMethodsDetectionMethodIdRoute
   '/detection-events': typeof DetectionEventsIndexRoute
   '/detection-methods': typeof DetectionMethodsIndexRoute
   '/attack-surface/inventory': typeof EnterpriseAttackSurfaceInventoryRoute
@@ -756,7 +747,6 @@ export interface FileRoutesById {
   '/_enterprise/operational-center': typeof EnterpriseOperationalCenterRoute
   '/_enterprise/volumetry': typeof EnterpriseVolumetryRoute
   '/detection-events/event': typeof DetectionEventsEventRoute
-  '/detection-methods/$detectionMethodId': typeof DetectionMethodsDetectionMethodIdRoute
   '/detection-events/': typeof DetectionEventsIndexRoute
   '/detection-methods/': typeof DetectionMethodsIndexRoute
   '/_enterprise/analytics/beaconing': typeof EnterpriseAnalyticsBeaconingRouteRouteWithChildren
@@ -842,7 +832,6 @@ export interface FileRouteTypes {
     | '/operational-center'
     | '/volumetry'
     | '/detection-events/event'
-    | '/detection-methods/$detectionMethodId'
     | '/detection-events/'
     | '/detection-methods/'
     | '/analytics/beaconing'
@@ -920,7 +909,6 @@ export interface FileRouteTypes {
     | '/operational-center'
     | '/volumetry'
     | '/detection-events/event'
-    | '/detection-methods/$detectionMethodId'
     | '/detection-events'
     | '/detection-methods'
     | '/attack-surface/inventory'
@@ -994,7 +982,6 @@ export interface FileRouteTypes {
     | '/_enterprise/operational-center'
     | '/_enterprise/volumetry'
     | '/detection-events/event'
-    | '/detection-methods/$detectionMethodId'
     | '/detection-events/'
     | '/detection-methods/'
     | '/_enterprise/analytics/beaconing'
@@ -1072,7 +1059,6 @@ export interface RootRouteChildren {
   NetworkEventsRoute: typeof NetworkEventsRoute
   ShareRoute: typeof ShareRoute
   UserSettingsRoute: typeof UserSettingsRoute
-  DetectionMethodsDetectionMethodIdRoute: typeof DetectionMethodsDetectionMethodIdRoute
   DetectionMethodsIndexRoute: typeof DetectionMethodsIndexRoute
 }
 
@@ -1182,13 +1168,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/detection-events/'
       preLoaderRoute: typeof DetectionEventsIndexRouteImport
       parentRoute: typeof DetectionEventsRouteRoute
-    }
-    '/detection-methods/$detectionMethodId': {
-      id: '/detection-methods/$detectionMethodId'
-      path: '/detection-methods/$detectionMethodId'
-      fullPath: '/detection-methods/$detectionMethodId'
-      preLoaderRoute: typeof DetectionMethodsDetectionMethodIdRouteImport
-      parentRoute: typeof rootRouteImport
     }
     '/detection-events/event': {
       id: '/detection-events/event'
@@ -2070,8 +2049,6 @@ const rootRouteChildren: RootRouteChildren = {
   NetworkEventsRoute: NetworkEventsRoute,
   ShareRoute: ShareRoute,
   UserSettingsRoute: UserSettingsRoute,
-  DetectionMethodsDetectionMethodIdRoute:
-    DetectionMethodsDetectionMethodIdRoute,
   DetectionMethodsIndexRoute: DetectionMethodsIndexRoute,
 }
 export const routeTree = rootRouteImport
