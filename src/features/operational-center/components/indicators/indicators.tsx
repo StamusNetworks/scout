@@ -119,7 +119,7 @@ export const IndicatorsTemplate = ({
               onClick={() =>
                 navigate({
                   to: '/threats/coverage',
-                  search: { show: 'threats' },
+                  search: { show: 'threat' },
                 })
               }
               loading={isGlobalLoading || isPreviousGlobalLoading}
@@ -154,7 +154,7 @@ export const IndicatorsTemplate = ({
               onClick={() =>
                 navigate({
                   to: '/policy-violations/coverage',
-                  search: { show: 'threats' },
+                  search: { show: 'threat' },
                 })
               }
               loading={isGlobalLoading || isPreviousGlobalLoading}

@@ -8,12 +8,12 @@ import {
   useGetActiveThreatsQuery,
   useGetThreatFamiliesQuery,
 } from '../../api/threats.api';
-import { ActiveThreatBlockView } from '../../components/coverage-block/active-threat-block';
-import { CoverageBlockSkeleton } from '../../components/coverage-block/coverage-block.skeleton';
-import { ThreatGrid } from '../../components/threat-grid/threat-grid';
 import { useCombinedThreats } from '../../hooks/use-combined-threats';
 import { ActiveThreat } from '../../model/active-threat';
 import { Threat, ThreatKind } from '../../model/threat';
+import { ActiveThreatBlockView } from '../coverage-block/active-threat-block';
+import { CoverageBlockSkeleton } from '../coverage-block/coverage-block.skeleton';
+import { ThreatGrid } from '../threat-grid/threat-grid';
 
 export const ActiveThreatsList = ({
   kind,

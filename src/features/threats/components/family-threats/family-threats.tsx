@@ -3,13 +3,13 @@ import { useParams } from '@tanstack/react-router';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { useGetActiveThreatsQuery } from '../../../api/threats.api';
-import { CoverageBlockSkeleton } from '../../../components/coverage-block/coverage-block.skeleton';
-import { ThreatBlockView } from '../../../components/coverage-block/threat-block';
-import { ThreatGrid } from '../../../components/threat-grid/threat-grid';
-import { useThreats } from '../../../hooks/use-threats';
+import { useGetActiveThreatsQuery } from '../../api/threats.api';
+import { useThreats } from '../../hooks/use-threats';
+import { CoverageBlockSkeleton } from '../coverage-block/coverage-block.skeleton';
+import { ThreatBlockView } from '../coverage-block/threat-block';
+import { ThreatGrid } from '../threat-grid/threat-grid';
 
-export const ThreatFamilyThreatsList = () => {
+export const FamilyThreats = () => {
   const { familyId } = useParams({ strict: false }) as { familyId: string };
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const { data: threats, isLoading } = useThreats({

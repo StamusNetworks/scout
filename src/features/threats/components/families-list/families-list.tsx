@@ -4,14 +4,17 @@ import { values } from 'ramda';
 import { sortBy } from '@/common/lib/sorting';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { useGetActiveThreatFamiliesQuery } from '../../api/threats.api';
-import { ActiveFamilyBlock } from '../../components/coverage-block/active-family-block';
-import { CoverageBlockSkeleton } from '../../components/coverage-block/coverage-block.skeleton';
-import { ThreatGrid } from '../../components/threat-grid/threat-grid';
-import { ActiveThreatFamily } from '../../model/active-threat-family';
+import {
+  useGetActiveThreatFamiliesQuery,
+  useGetThreatFamiliesQuery,
+} from '../../api/threats.api';
 import { ThreatKind } from '../../model/threat';
+import { ThreatFamily } from '../../model/threat-family';
+import { CoverageBlockSkeleton } from '../coverage-block/coverage-block.skeleton';
+import { FamilyBlockView } from '../coverage-block/family-block';
+import { ThreatGrid } from '../threat-grid/threat-grid';
 
-export const ActiveFamiliesList = ({
+export const FamiliesList = ({
   kind,
   searchInput,
 }: {
@@ -19,39 +22,50 @@ export const ActiveFamiliesList = ({
   searchInput: string;
 }) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
+  const { data: families, isLoading: familiesLoading } =
+    useGetThreatFamiliesQuery(
+      {},
+      {
+        selectFromResult: (result) => ({
+          ...result,
+          data:
+            result.data?.entities &&
+            filterFamilies(result.data.entities, kind, searchInput),
+        }),
+      },
+    );
+  const { data: activeFamiliesData } = useGetActiveThreatFamiliesQuery(params);
 
-  const { data: activeFamilies, isLoading: activeFamiliesLoading } =
-    useGetActiveThreatFamiliesQuery(params, {
-      selectFromResult: (result) => ({
-        ...result,
-        data:
-          result.data?.entities &&
-          filterActiveFamilies(result.data.entities, kind, searchInput),
-      }),
-    });
-  if (activeFamiliesLoading) {
+  if (familiesLoading) {
     return (
       <ThreatGrid>
-        {Array.from({ length: 6 }).map((_, i) => (
+        {Array.from({ length: 20 }).map((_, i) => (
           <CoverageBlockSkeleton key={i} />
         ))}
       </ThreatGrid>
     );
   }
+
+  if (!families) return null;
+
   return (
     <ThreatGrid>
-      {activeFamilies?.map((family) => (
-        <ActiveFamilyBlock
+      {families.map((family) => (
+        <FamilyBlockView
           key={family.id}
           id={family.id}
+          name={family.name}
+          isActive={!!activeFamiliesData?.entities[family.id]}
+          description={family.description}
+          kind={family.kind}
         />
       ))}
     </ThreatGrid>
   );
 };
 
-const filterActiveFamilies = (
-  families: EntityState<ActiveThreatFamily, number>['entities'],
+const filterFamilies = (
+  families: EntityState<ThreatFamily, number>['entities'],
   kind: ThreatKind | undefined,
   searchInput: string,
 ) => {
