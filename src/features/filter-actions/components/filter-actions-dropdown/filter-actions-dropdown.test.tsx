@@ -12,7 +12,7 @@ import { Button } from '@/common/design-system/atoms/ui/button';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
 
-import { FilterActionsDropdown } from './filter-actions.dropdown';
+import { FilterActionsDropdown } from './filter-actions-dropdown';
 
 const SMTP_TOOLTIP =
   'You need to configure the SMTP and enable the Output plugin in the Global Appliance Settings';

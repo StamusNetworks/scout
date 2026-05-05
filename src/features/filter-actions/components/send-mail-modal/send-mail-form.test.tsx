@@ -11,11 +11,8 @@ import { describe, expect, test } from 'vitest';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
 
-import { SendMailFilterAction } from '../../../model/filter-action';
-import {
-  CreateEditSendMailFilterActionForm,
-  DEFAULT_MAX_MAILS_PER_DAY,
-} from './create-edit-send-mail.form';
+import { SendMailFilterAction } from '../../model/filter-action';
+import { DEFAULT_MAX_MAILS_PER_DAY, SendMailForm } from './send-mail-form';
 
 const createTestRouter = () =>
   createRouter({
@@ -44,33 +41,30 @@ const setupRulesetsAndTestActions = () => {
 
 const renderForm = async () => {
   setupRulesetsAndTestActions();
-  return renderWithProviders(
-    <CreateEditSendMailFilterActionForm edit={false} />,
-    {
-      router: createTestRouter(),
-      preloadedState: {
-        filters: {
-          queryFilters: {
-            queryFilters: [
-              {
-                id: 'test-1',
-                key: 'src_ip',
-                value: '10.0.0.1',
-                isNegated: false,
-                isWildcarded: false,
-                isSuspended: false,
-              },
-            ],
-            displayedQueryFiltersIds: [],
-          },
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any,
-      },
+  return renderWithProviders(<SendMailForm edit={false} />, {
+    router: createTestRouter(),
+    preloadedState: {
+      filters: {
+        queryFilters: {
+          queryFilters: [
+            {
+              id: 'test-1',
+              key: 'src_ip',
+              value: '10.0.0.1',
+              isNegated: false,
+              isWildcarded: false,
+              isSuspended: false,
+            },
+          ],
+          displayedQueryFiltersIds: [],
+        },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any,
     },
-  );
+  });
 };
 
-describe('CreateEditSendMailFilterActionForm', () => {
+describe('SendMailForm', () => {
   test('renders Maximum mails sent per day pre-filled to the default', async () => {
     await renderForm();
 
@@ -207,7 +201,7 @@ describe('CreateEditSendMailFilterActionForm', () => {
 
     setupRulesetsAndTestActions();
     await renderWithProviders(
-      <CreateEditSendMailFilterActionForm
+      <SendMailForm
         edit
         filterAction={existing}
       />,

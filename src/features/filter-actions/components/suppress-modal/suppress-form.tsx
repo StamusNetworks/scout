@@ -18,13 +18,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/common/design-system/atoms/ui/form';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/common/design-system/atoms/ui/select';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { useGetRulesetsQuery } from '@/features/detection-methods/rulesets.api';
 import { FilterInput } from '@/features/query-filters/components/edit-qfilter-modal/filter-input';
@@ -32,52 +25,33 @@ import { FilterInput } from '@/features/query-filters/components/edit-qfilter-mo
 import {
   useCreateFilterActionMutation,
   useUpdateFilterActionMutation,
-} from '../../../api/filter-actions.api';
-import { useFilterActionFormValues } from '../../../hooks/use-filter-action-form-values';
+} from '../../api/filter-actions.api';
+import { useFilterActionFormValues } from '../../hooks/use-filter-action-form-values';
 import {
   FilterActionPayload,
-  TagAndKeepFilterAction,
-  TagFilterAction,
-} from '../../../model/filter-action';
-import { baseFilterActionFormSchema } from '../../../model/filter-action-form';
+  SuppressFilterAction,
+} from '../../model/filter-action';
+import { baseFilterActionFormSchema } from '../../model/filter-action-form';
 
-const formSchema = baseFilterActionFormSchema.extend({
-  tag: z.enum(['relevant', 'informational']),
-});
+const formSchema = baseFilterActionFormSchema;
 
-export type TagFilterActionFormValues = z.infer<typeof formSchema>;
+export type SuppressFormValues = z.infer<typeof formSchema>;
 
-const useInitialTagValues = (
-  keep?: boolean,
-  filterAction?: TagFilterAction | TagAndKeepFilterAction,
-): TagFilterActionFormValues => {
-  const initialValues = useFilterActionFormValues(
-    keep ? 'tagAndKeep' : 'tag',
-    filterAction,
-  );
-  return {
-    ...initialValues,
-    tag: filterAction?.options.tag ?? 'relevant',
-  };
-};
-
-interface CreateEditTagFilterActionFormProps {
+interface SuppressFormProps {
   edit: boolean;
-  filterAction?: TagFilterAction | TagAndKeepFilterAction | undefined;
-  keep?: boolean;
+  filterAction?: SuppressFilterAction | undefined;
   onClose?: () => void;
 }
-export const CreateEditTagFilterActionForm = ({
+export const SuppressForm = ({
   edit,
   filterAction,
-  keep,
   onClose,
-}: CreateEditTagFilterActionFormProps) => {
+}: SuppressFormProps) => {
   const navigate = useNavigate();
-  const initialValues = useInitialTagValues(keep, filterAction);
+  const initialValues = useFilterActionFormValues('suppress', filterAction);
   const { data: rulesetsList } = useGetRulesetsQuery();
 
-  const form = useForm<TagFilterActionFormValues>({
+  const form = useForm<SuppressFormValues>({
     defaultValues: initialValues,
     resolver: zodResolver(formSchema),
     mode: 'onChange',
@@ -94,9 +68,9 @@ export const CreateEditTagFilterActionForm = ({
   const [createFilterAction] = useCreateFilterActionMutation();
   const [updateFilterAction] = useUpdateFilterActionMutation();
 
-  const handleSubmit = (data: TagFilterActionFormValues): void => {
+  const handleSubmit = (data: SuppressFormValues): void => {
     const payload: FilterActionPayload = {
-      kind: keep ? 'tagAndKeep' : 'tag',
+      kind: 'suppress',
       comment: data.comment || '',
       filterDefs: data.filters
         .filter((f) => f.enabled)
@@ -107,9 +81,6 @@ export const CreateEditTagFilterActionForm = ({
           isWildcarded: f.isWildcarded,
         })),
       rulesets: data.rulesets,
-      options: {
-        tag: data.tag,
-      },
     };
     const submitFn =
       edit && filterAction
@@ -174,30 +145,6 @@ export const CreateEditTagFilterActionForm = ({
         />
         <FormField
           control={form.control}
-          name="tag"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{keep ? 'Tag and keep' : 'Tag'}</FormLabel>
-              <Select
-                value={field.value}
-                onValueChange={field.onChange}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select tag" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="informational">Informational</SelectItem>
-                  <SelectItem value="relevant">Relevant</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
           name="rulesets"
           render={() => (
             <FormItem>
@@ -232,7 +179,9 @@ export const CreateEditTagFilterActionForm = ({
                             }}
                           />
                         </FormControl>
-                        <FormLabel>{item.name}</FormLabel>
+                        <FormLabel className="font-normal">
+                          {item.name}
+                        </FormLabel>
                       </FormItem>
                     );
                   }}

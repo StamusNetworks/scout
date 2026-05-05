@@ -5,10 +5,10 @@ import {
   DialogTitle,
 } from '@/common/design-system/atoms/ui/dialog';
 
-import { useFilterActionModal } from '../../../hooks/use-filter-action-modal';
-import { CreateEditSendMailFilterActionForm } from './create-edit-send-mail.form';
+import { useFilterActionModal } from '../../hooks/use-filter-action-modal';
+import { SendMailForm } from './send-mail-form';
 
-export const CreateEditSendMailModal = () => {
+export const SendMailModal = () => {
   const { state, close } = useFilterActionModal();
   const sendMail = state.kind === 'sendMail' ? state : null;
 
@@ -28,7 +28,7 @@ export const CreateEditSendMailModal = () => {
             SMTP and the Output plugin to be configured in the Global Appliance
             Settings.
           </DialogDescription>
-          <CreateEditSendMailFilterActionForm
+          <SendMailForm
             edit={sendMail.mode === 'edit'}
             filterAction={sendMail.filterAction}
             onClose={close}

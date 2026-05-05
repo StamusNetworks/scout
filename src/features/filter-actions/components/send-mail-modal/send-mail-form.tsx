@@ -1,4 +1,3 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -19,66 +18,63 @@ import {
   FormMessage,
 } from '@/common/design-system/atoms/ui/form';
 import { Input } from '@/common/design-system/atoms/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/common/design-system/atoms/ui/select';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { DefaultField } from '@/common/design-system/molecules/default-field';
+import { zodV4Resolver } from '@/common/lib/zod-resolver';
 import { useGetRulesetsQuery } from '@/features/detection-methods/rulesets.api';
 import { FilterInput } from '@/features/query-filters/components/edit-qfilter-modal/filter-input';
 
 import {
   useCreateFilterActionMutation,
   useUpdateFilterActionMutation,
-} from '../../../api/filter-actions.api';
-import { useFilterActionFormValues } from '../../../hooks/use-filter-action-form-values';
+} from '../../api/filter-actions.api';
+import { useFilterActionFormValues } from '../../hooks/use-filter-action-form-values';
 import {
   FilterActionPayload,
-  ThresholdFilterAction,
-} from '../../../model/filter-action';
-import { baseFilterActionFormSchema } from '../../../model/filter-action-form';
+  SendMailFilterAction,
+} from '../../model/filter-action';
+import { baseFilterActionFormSchema } from '../../model/filter-action-form';
+
+export const DEFAULT_MAX_MAILS_PER_DAY = 5;
 
 const formSchema = baseFilterActionFormSchema.extend({
-  count: z.number().min(1, 'Count must be a positive number'),
-  seconds: z.number().min(1, 'Seconds must be a positive number'),
-  track: z.enum(['by_src', 'by_dst']),
+  maxMailsPerDay: z
+    .number({ message: 'Maximum mails sent per day must be a number' })
+    .int('Maximum mails sent per day must be an integer')
+    .min(1, 'Maximum mails sent per day must be a positive number'),
 });
 
-export type ThresholdFilterActionFormValues = z.infer<typeof formSchema>;
+export type SendMailFormValues = z.infer<typeof formSchema>;
 
-const useThresholdInitialValues = (
-  filterAction?: ThresholdFilterAction,
-): ThresholdFilterActionFormValues => {
-  const initialValues = useFilterActionFormValues('threshold', filterAction);
+const useSendMailInitialValues = (
+  filterAction?: SendMailFilterAction,
+): SendMailFormValues => {
+  const initialValues = useFilterActionFormValues('sendMail', filterAction);
   return {
     ...initialValues,
-    count: filterAction?.options.count ?? 1,
-    seconds: filterAction?.options.seconds ?? 60,
-    track: filterAction?.options.track ?? 'by_src',
+    maxMailsPerDay:
+      filterAction?.options.maxMailsPerDay ?? DEFAULT_MAX_MAILS_PER_DAY,
   };
 };
 
-interface CreateEditThresholdFilterActionFormProps {
+interface SendMailFormProps {
   edit: boolean;
-  filterAction?: ThresholdFilterAction | undefined;
+  filterAction?: SendMailFilterAction | undefined;
   onClose?: () => void;
 }
-export const CreateEditThresholdFilterActionForm = ({
+
+export const SendMailForm = ({
   edit,
   filterAction,
   onClose,
-}: CreateEditThresholdFilterActionFormProps) => {
+}: SendMailFormProps) => {
   const navigate = useNavigate();
-  const initialValues = useThresholdInitialValues(filterAction);
+  const initialValues = useSendMailInitialValues(filterAction);
   const { data: rulesetsList } = useGetRulesetsQuery();
 
-  const form = useForm<ThresholdFilterActionFormValues>({
+  const form = useForm<SendMailFormValues>({
     defaultValues: initialValues,
-    resolver: zodResolver(formSchema),
+    resolver: zodV4Resolver(formSchema),
     mode: 'onChange',
   });
 
@@ -93,9 +89,9 @@ export const CreateEditThresholdFilterActionForm = ({
   const [createFilterAction] = useCreateFilterActionMutation();
   const [updateFilterAction] = useUpdateFilterActionMutation();
 
-  const handleSubmit = (data: ThresholdFilterActionFormValues): void => {
+  const handleSubmit = (data: SendMailFormValues): void => {
     const payload: FilterActionPayload = {
-      kind: 'threshold',
+      kind: 'sendMail',
       comment: data.comment || '',
       filterDefs: data.filters
         .filter((f) => f.enabled)
@@ -107,10 +103,7 @@ export const CreateEditThresholdFilterActionForm = ({
         })),
       rulesets: data.rulesets,
       options: {
-        type: 'both',
-        count: data.count,
-        seconds: data.seconds,
-        track: data.track,
+        maxMailsPerDay: data.maxMailsPerDay,
       },
     };
     const submitFn =
@@ -131,7 +124,7 @@ export const CreateEditThresholdFilterActionForm = ({
       })
       .catch((error) =>
         toast.error(`Failed to ${edit ? 'update' : 'create'} filter action`, {
-          description: error.data.detail,
+          description: error?.data?.detail,
         }),
       );
   };
@@ -174,58 +167,18 @@ export const CreateEditThresholdFilterActionForm = ({
             </FormItem>
           )}
         />
-        <Row className="gap-2">
-          <FormField
-            control={form.control}
-            name="count"
-            render={({ field }) => (
-              <DefaultField label="Count">
-                <Input
-                  {...field}
-                  type="number"
-                  value={field.value}
-                  onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                />
-              </DefaultField>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="seconds"
-            render={({ field }) => (
-              <DefaultField label="Seconds">
-                <Input
-                  {...field}
-                  type="number"
-                  value={field.value}
-                  onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                />
-              </DefaultField>
-            )}
-          />
-        </Row>
         <FormField
           control={form.control}
-          name="track"
+          name="maxMailsPerDay"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Track by</FormLabel>
-              <Select
-                onValueChange={field.onChange}
-                defaultValue={field.value}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Track by" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="by_src">Source</SelectItem>
-                  <SelectItem value="by_dst">Destination</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
+            <DefaultField label="Maximum mails sent per day">
+              <Input
+                {...field}
+                type="number"
+                value={field.value}
+                onChange={(e) => field.onChange(e.target.valueAsNumber)}
+              />
+            </DefaultField>
           )}
         />
         <FormField
@@ -272,6 +225,19 @@ export const CreateEditThresholdFilterActionForm = ({
                   }}
                 />
               ))}
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="comment"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Comment</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}

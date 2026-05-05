@@ -1,3 +1,4 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -17,64 +18,68 @@ import {
   FormLabel,
   FormMessage,
 } from '@/common/design-system/atoms/ui/form';
-import { Input } from '@/common/design-system/atoms/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/common/design-system/atoms/ui/select';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
-import { DefaultField } from '@/common/design-system/molecules/default-field';
-import { zodV4Resolver } from '@/common/lib/zod-resolver';
 import { useGetRulesetsQuery } from '@/features/detection-methods/rulesets.api';
 import { FilterInput } from '@/features/query-filters/components/edit-qfilter-modal/filter-input';
 
 import {
   useCreateFilterActionMutation,
   useUpdateFilterActionMutation,
-} from '../../../api/filter-actions.api';
-import { useFilterActionFormValues } from '../../../hooks/use-filter-action-form-values';
+} from '../../api/filter-actions.api';
+import { useFilterActionFormValues } from '../../hooks/use-filter-action-form-values';
 import {
   FilterActionPayload,
-  SendMailFilterAction,
-} from '../../../model/filter-action';
-import { baseFilterActionFormSchema } from '../../../model/filter-action-form';
-
-export const DEFAULT_MAX_MAILS_PER_DAY = 5;
+  TagAndKeepFilterAction,
+  TagFilterAction,
+} from '../../model/filter-action';
+import { baseFilterActionFormSchema } from '../../model/filter-action-form';
 
 const formSchema = baseFilterActionFormSchema.extend({
-  maxMailsPerDay: z
-    .number({ message: 'Maximum mails sent per day must be a number' })
-    .int('Maximum mails sent per day must be an integer')
-    .min(1, 'Maximum mails sent per day must be a positive number'),
+  tag: z.enum(['relevant', 'informational']),
 });
 
-export type SendMailFilterActionFormValues = z.infer<typeof formSchema>;
+export type TagFormValues = z.infer<typeof formSchema>;
 
-const useSendMailInitialValues = (
-  filterAction?: SendMailFilterAction,
-): SendMailFilterActionFormValues => {
-  const initialValues = useFilterActionFormValues('sendMail', filterAction);
+const useInitialTagValues = (
+  keep?: boolean,
+  filterAction?: TagFilterAction | TagAndKeepFilterAction,
+): TagFormValues => {
+  const initialValues = useFilterActionFormValues(
+    keep ? 'tagAndKeep' : 'tag',
+    filterAction,
+  );
   return {
     ...initialValues,
-    maxMailsPerDay:
-      filterAction?.options.maxMailsPerDay ?? DEFAULT_MAX_MAILS_PER_DAY,
+    tag: filterAction?.options.tag ?? 'relevant',
   };
 };
 
-interface CreateEditSendMailFilterActionFormProps {
+interface TagFormProps {
   edit: boolean;
-  filterAction?: SendMailFilterAction | undefined;
+  filterAction?: TagFilterAction | TagAndKeepFilterAction | undefined;
+  keep?: boolean;
   onClose?: () => void;
 }
-
-export const CreateEditSendMailFilterActionForm = ({
+export const TagForm = ({
   edit,
   filterAction,
+  keep,
   onClose,
-}: CreateEditSendMailFilterActionFormProps) => {
+}: TagFormProps) => {
   const navigate = useNavigate();
-  const initialValues = useSendMailInitialValues(filterAction);
+  const initialValues = useInitialTagValues(keep, filterAction);
   const { data: rulesetsList } = useGetRulesetsQuery();
 
-  const form = useForm<SendMailFilterActionFormValues>({
+  const form = useForm<TagFormValues>({
     defaultValues: initialValues,
-    resolver: zodV4Resolver(formSchema),
+    resolver: zodResolver(formSchema),
     mode: 'onChange',
   });
 
@@ -89,9 +94,9 @@ export const CreateEditSendMailFilterActionForm = ({
   const [createFilterAction] = useCreateFilterActionMutation();
   const [updateFilterAction] = useUpdateFilterActionMutation();
 
-  const handleSubmit = (data: SendMailFilterActionFormValues): void => {
+  const handleSubmit = (data: TagFormValues): void => {
     const payload: FilterActionPayload = {
-      kind: 'sendMail',
+      kind: keep ? 'tagAndKeep' : 'tag',
       comment: data.comment || '',
       filterDefs: data.filters
         .filter((f) => f.enabled)
@@ -103,7 +108,7 @@ export const CreateEditSendMailFilterActionForm = ({
         })),
       rulesets: data.rulesets,
       options: {
-        maxMailsPerDay: data.maxMailsPerDay,
+        tag: data.tag,
       },
     };
     const submitFn =
@@ -124,7 +129,7 @@ export const CreateEditSendMailFilterActionForm = ({
       })
       .catch((error) =>
         toast.error(`Failed to ${edit ? 'update' : 'create'} filter action`, {
-          description: error?.data?.detail,
+          description: error.data.detail,
         }),
       );
   };
@@ -169,16 +174,26 @@ export const CreateEditSendMailFilterActionForm = ({
         />
         <FormField
           control={form.control}
-          name="maxMailsPerDay"
+          name="tag"
           render={({ field }) => (
-            <DefaultField label="Maximum mails sent per day">
-              <Input
-                {...field}
-                type="number"
+            <FormItem>
+              <FormLabel>{keep ? 'Tag and keep' : 'Tag'}</FormLabel>
+              <Select
                 value={field.value}
-                onChange={(e) => field.onChange(e.target.valueAsNumber)}
-              />
-            </DefaultField>
+                onValueChange={field.onChange}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select tag" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="informational">Informational</SelectItem>
+                  <SelectItem value="relevant">Relevant</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
           )}
         />
         <FormField
@@ -201,7 +216,7 @@ export const CreateEditSendMailFilterActionForm = ({
                     return (
                       <FormItem
                         key={item.pk}
-                        className="flex flex-row items-center space-y-0 space-x-3"
+                        className="flex flex-row items-start space-y-0 space-x-3"
                       >
                         <FormControl>
                           <Checkbox
@@ -217,27 +232,12 @@ export const CreateEditSendMailFilterActionForm = ({
                             }}
                           />
                         </FormControl>
-                        <FormLabel className="font-normal">
-                          {item.name}
-                        </FormLabel>
+                        <FormLabel>{item.name}</FormLabel>
                       </FormItem>
                     );
                   }}
                 />
               ))}
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="comment"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Comment</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
               <FormMessage />
             </FormItem>
           )}

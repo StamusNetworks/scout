@@ -5,10 +5,10 @@ import {
   DialogTitle,
 } from '@/common/design-system/atoms/ui/dialog';
 
-import { useFilterActionModal } from '../../../hooks/use-filter-action-modal';
-import { CreateEditSuppressFilterActionForm } from './create-edit-suppress.form';
+import { useFilterActionModal } from '../../hooks/use-filter-action-modal';
+import { SuppressForm } from './suppress-form';
 
-export const CreateEditSuppressModal = () => {
+export const SuppressModal = () => {
   const { state, close } = useFilterActionModal();
   const suppress = state.kind === 'suppress' ? state : null;
 
@@ -27,7 +27,7 @@ export const CreateEditSuppressModal = () => {
             Create a Suppress filter action to suppress events matching the
             filters.
           </DialogDescription>
-          <CreateEditSuppressFilterActionForm
+          <SuppressForm
             edit={suppress.mode === 'edit'}
             filterAction={suppress.filterAction}
             onClose={close}

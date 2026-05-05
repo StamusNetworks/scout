@@ -16,8 +16,8 @@ import { Button } from '@/common/design-system/atoms/ui/button';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
+import { FilterActionsDropdown } from '@/features/filter-actions/components/filter-actions-dropdown/filter-actions-dropdown';
 import { FiltersActionsTable } from '@/features/filter-actions/components/filter-actions-table/filter-actions-table';
-import { FilterActionsDropdown } from '@/features/filter-actions/components/filter-actions/filter-actions.dropdown';
 import { UpdatePushRuleset } from '@/features/filter-actions/components/update-push-ruleset';
 
 const filtersActionsSearchSchema = z.object({

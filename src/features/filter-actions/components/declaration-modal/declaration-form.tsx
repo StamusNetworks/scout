@@ -57,13 +57,13 @@ import {
 import {
   useCreateFilterActionMutation,
   useUpdateFilterActionMutation,
-} from '../../../api/filter-actions.api';
-import { useFilterActionFormValues } from '../../../hooks/use-filter-action-form-values';
+} from '../../api/filter-actions.api';
+import { useFilterActionFormValues } from '../../hooks/use-filter-action-form-values';
 import {
   FilterActionPayload,
   ThreatFilterAction,
-} from '../../../model/filter-action';
-import { baseFilterActionFormSchema } from '../../../model/filter-action-form';
+} from '../../model/filter-action';
+import { baseFilterActionFormSchema } from '../../model/filter-action-form';
 
 const filterActionTargetTypeSchema = z.enum(['ip', 'username', 'mail']);
 
@@ -119,16 +119,16 @@ const useDeclarationInitialValues = (
   );
 };
 
-interface CreateEditDeclarationThreatFilterActionFormProps {
+interface DeclarationFormProps {
   edit: boolean;
   filterAction?: ThreatFilterAction | undefined;
   onClose?: () => void;
 }
-export const CreateEditDeclarationFilterActionForm = ({
+export const DeclarationForm = ({
   edit,
   filterAction,
   onClose,
-}: CreateEditDeclarationThreatFilterActionFormProps) => {
+}: DeclarationFormProps) => {
   const params = useGlobalQueryParams(['tenant', 'qfilter', 'dates']);
   const navigate = useNavigate();
   const { data: rulesetsList } = useGetRulesetsQuery();

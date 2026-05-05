@@ -5,10 +5,10 @@ import {
   DialogTitle,
 } from '@/common/design-system/atoms/ui/dialog';
 
-import { useFilterActionModal } from '../../../hooks/use-filter-action-modal';
-import { CreateEditThresholdFilterActionForm } from './create-edit-threshold.form';
+import { useFilterActionModal } from '../../hooks/use-filter-action-modal';
+import { ThresholdForm } from './threshold-form';
 
-export const CreateEditThresholdModal = () => {
+export const ThresholdModal = () => {
   const { state, close } = useFilterActionModal();
   const threshold = state.kind === 'threshold' ? state : null;
 
@@ -27,7 +27,7 @@ export const CreateEditThresholdModal = () => {
             Create a Threshold filter action to limit the number of events
             matching the filters in a given time period.
           </DialogDescription>
-          <CreateEditThresholdFilterActionForm
+          <ThresholdForm
             edit={threshold.mode === 'edit'}
             filterAction={threshold.filterAction}
             onClose={close}

@@ -18,40 +18,65 @@ import {
   FormLabel,
   FormMessage,
 } from '@/common/design-system/atoms/ui/form';
+import { Input } from '@/common/design-system/atoms/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/common/design-system/atoms/ui/select';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
+import { DefaultField } from '@/common/design-system/molecules/default-field';
 import { useGetRulesetsQuery } from '@/features/detection-methods/rulesets.api';
 import { FilterInput } from '@/features/query-filters/components/edit-qfilter-modal/filter-input';
 
 import {
   useCreateFilterActionMutation,
   useUpdateFilterActionMutation,
-} from '../../../api/filter-actions.api';
-import { useFilterActionFormValues } from '../../../hooks/use-filter-action-form-values';
+} from '../../api/filter-actions.api';
+import { useFilterActionFormValues } from '../../hooks/use-filter-action-form-values';
 import {
   FilterActionPayload,
-  SuppressFilterAction,
-} from '../../../model/filter-action';
-import { baseFilterActionFormSchema } from '../../../model/filter-action-form';
+  ThresholdFilterAction,
+} from '../../model/filter-action';
+import { baseFilterActionFormSchema } from '../../model/filter-action-form';
 
-const formSchema = baseFilterActionFormSchema;
+const formSchema = baseFilterActionFormSchema.extend({
+  count: z.number().min(1, 'Count must be a positive number'),
+  seconds: z.number().min(1, 'Seconds must be a positive number'),
+  track: z.enum(['by_src', 'by_dst']),
+});
 
-export type SuppressFilterActionFormValues = z.infer<typeof formSchema>;
+export type ThresholdFormValues = z.infer<typeof formSchema>;
 
-interface CreateEditSuppressFilterActionFormProps {
+const useThresholdInitialValues = (
+  filterAction?: ThresholdFilterAction,
+): ThresholdFormValues => {
+  const initialValues = useFilterActionFormValues('threshold', filterAction);
+  return {
+    ...initialValues,
+    count: filterAction?.options.count ?? 1,
+    seconds: filterAction?.options.seconds ?? 60,
+    track: filterAction?.options.track ?? 'by_src',
+  };
+};
+
+interface ThresholdFormProps {
   edit: boolean;
-  filterAction?: SuppressFilterAction | undefined;
+  filterAction?: ThresholdFilterAction | undefined;
   onClose?: () => void;
 }
-export const CreateEditSuppressFilterActionForm = ({
+export const ThresholdForm = ({
   edit,
   filterAction,
   onClose,
-}: CreateEditSuppressFilterActionFormProps) => {
+}: ThresholdFormProps) => {
   const navigate = useNavigate();
-  const initialValues = useFilterActionFormValues('suppress', filterAction);
+  const initialValues = useThresholdInitialValues(filterAction);
   const { data: rulesetsList } = useGetRulesetsQuery();
 
-  const form = useForm<SuppressFilterActionFormValues>({
+  const form = useForm<ThresholdFormValues>({
     defaultValues: initialValues,
     resolver: zodResolver(formSchema),
     mode: 'onChange',
@@ -68,9 +93,9 @@ export const CreateEditSuppressFilterActionForm = ({
   const [createFilterAction] = useCreateFilterActionMutation();
   const [updateFilterAction] = useUpdateFilterActionMutation();
 
-  const handleSubmit = (data: SuppressFilterActionFormValues): void => {
+  const handleSubmit = (data: ThresholdFormValues): void => {
     const payload: FilterActionPayload = {
-      kind: 'suppress',
+      kind: 'threshold',
       comment: data.comment || '',
       filterDefs: data.filters
         .filter((f) => f.enabled)
@@ -81,6 +106,12 @@ export const CreateEditSuppressFilterActionForm = ({
           isWildcarded: f.isWildcarded,
         })),
       rulesets: data.rulesets,
+      options: {
+        type: 'both',
+        count: data.count,
+        seconds: data.seconds,
+        track: data.track,
+      },
     };
     const submitFn =
       edit && filterAction
@@ -143,6 +174,60 @@ export const CreateEditSuppressFilterActionForm = ({
             </FormItem>
           )}
         />
+        <Row className="gap-2">
+          <FormField
+            control={form.control}
+            name="count"
+            render={({ field }) => (
+              <DefaultField label="Count">
+                <Input
+                  {...field}
+                  type="number"
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                />
+              </DefaultField>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="seconds"
+            render={({ field }) => (
+              <DefaultField label="Seconds">
+                <Input
+                  {...field}
+                  type="number"
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                />
+              </DefaultField>
+            )}
+          />
+        </Row>
+        <FormField
+          control={form.control}
+          name="track"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Track by</FormLabel>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Track by" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="by_src">Source</SelectItem>
+                  <SelectItem value="by_dst">Destination</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="rulesets"
@@ -163,7 +248,7 @@ export const CreateEditSuppressFilterActionForm = ({
                     return (
                       <FormItem
                         key={item.pk}
-                        className="flex flex-row items-start space-y-0 space-x-3"
+                        className="flex flex-row items-center space-y-0 space-x-3"
                       >
                         <FormControl>
                           <Checkbox

@@ -4,10 +4,10 @@ import {
   DialogTitle,
 } from '@/common/design-system/atoms/ui/dialog';
 
-import { useFilterActionModal } from '../../../hooks/use-filter-action-modal';
-import { CreateEditDeclarationFilterActionForm } from './create-edit-declaration.form';
+import { useFilterActionModal } from '../../hooks/use-filter-action-modal';
+import { DeclarationForm } from './declaration-form';
 
-export const CreateEditDeclarationModal = () => {
+export const DeclarationModal = () => {
   const { state, close } = useFilterActionModal();
   const declaration = state.kind === 'declaration' ? state : null;
 
@@ -26,7 +26,7 @@ export const CreateEditDeclarationModal = () => {
               ? 'Create declaration'
               : 'Edit declaration'}
           </DialogTitle>
-          <CreateEditDeclarationFilterActionForm
+          <DeclarationForm
             edit={declaration.mode === 'edit'}
             filterAction={declaration.filterAction}
             onClose={close}

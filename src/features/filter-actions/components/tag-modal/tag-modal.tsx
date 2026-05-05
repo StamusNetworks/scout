@@ -5,10 +5,10 @@ import {
   DialogTitle,
 } from '@/common/design-system/atoms/ui/dialog';
 
-import { useFilterActionModal } from '../../../hooks/use-filter-action-modal';
-import { CreateEditTagFilterActionForm } from './create-edit-tag.form';
+import { useFilterActionModal } from '../../hooks/use-filter-action-modal';
+import { TagForm } from './tag-form';
 
-export const CreateEditTagModal = () => {
+export const TagModal = () => {
   const { state, close } = useFilterActionModal();
   const tag = state.kind === 'tag' ? state : null;
 
@@ -29,7 +29,7 @@ export const CreateEditTagModal = () => {
             last applicable tag filter action will be applied. Tag and Keep will
             ignore the next applicable tag filter actions.
           </DialogDescription>
-          <CreateEditTagFilterActionForm
+          <TagForm
             edit={tag.mode === 'edit'}
             keep={tag.keep}
             filterAction={tag.filterAction}
