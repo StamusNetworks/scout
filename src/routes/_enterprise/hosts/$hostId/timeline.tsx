@@ -1,7 +1,7 @@
 import { createFileRoute, useParams } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
-import { HostTimeline } from '@/features/host-insights/use-cases/host-details/entities/host-timeline/host-timeline';
+import { HostTimeline } from '@/features/host-insights/components/host-timeline/host-timeline';
 
 export const Route = createFileRoute('/_enterprise/hosts/$hostId/timeline')({
   component: () => (
