@@ -8,11 +8,8 @@ import { http, HttpResponse } from 'msw';
 
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
-import {
-  makeLateralEvent,
-  makeNrdEvent,
-} from '@/features/events/model/event.mocks';
-import { makeSightingApiEvent } from '@/features/events/model/event.mocks';
+import { makeLateralEvent, makeNrdEvent } from '@/features/events';
+import { makeSightingApiEvent } from '@/features/events';
 
 import { CompromiseHuntingTrail } from './compromise-hunting-trail';
 

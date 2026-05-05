@@ -28,7 +28,7 @@ import {
 import {
   useGetEventsAggregationQuery,
   useGetProtocolsFromEventsQuery,
-} from '@/features/events/common/events.api';
+} from '@/features/events';
 import { ContextMenuContent } from '@/features/query-filters/components/interactive-value/context-menu/context-menu.content';
 import { useCreateFilter } from '@/features/query-filters/hooks/use-create-filter';
 import { useESMapping } from '@/features/query-filters/hooks/use-es-mapping';

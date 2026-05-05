@@ -8,9 +8,9 @@ import { useTablePreferences } from '@/common/design-system/molecules/data-table
 import { ExportButton } from '@/common/design-system/molecules/export-button';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
-import { useGetBeaconingEventsQuery } from '@/features/events/beaconing/common/beaconing.api';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
+import { useGetBeaconingEventsQuery } from '../../api/events.api';
 import { exportColumns, tlsJ3ASTableColumns } from './ja3s-hash-table.columns';
 
 interface JA3SHashTableProps {

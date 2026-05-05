@@ -5,7 +5,7 @@ import { Row } from '@/common/design-system/atoms/layout/row';
 import { Card } from '@/common/design-system/atoms/ui/card';
 import { StatsCardHorizontalContent } from '@/common/design-system/molecules/stats-card-horizontal';
 import { usePreviousDates } from '@/features/dates';
-import { useGlobalStats } from '@/features/events/hooks/use-global-stats';
+import { useGlobalStats } from '@/features/events';
 import { indicators } from '@/features/operational-center/config';
 
 export const IndicatorsDocDopv = () => {

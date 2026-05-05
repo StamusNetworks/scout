@@ -21,7 +21,7 @@ import {
   DataEntry,
   ValueListCard,
 } from '@/common/design-system/molecules/value-list-card';
-import { useGetDashboardFieldsQuery } from '@/features/events/api/dashboard.api';
+import { useGetDashboardFieldsQuery } from '@/features/events';
 import {
   toSerializedFilterFlags,
   useGatedFilterFlags,

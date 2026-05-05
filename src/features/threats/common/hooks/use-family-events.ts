@@ -1,6 +1,6 @@
 import { PaginationState } from '@tanstack/react-table';
 
-import { useGetEventsQuery } from '@/features/events/common/events.api';
+import { useGetEventsQuery } from '@/features/events';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 

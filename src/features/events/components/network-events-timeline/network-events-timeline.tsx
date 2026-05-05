@@ -1,8 +1,9 @@
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
-import { useGetEventsTimelineQuery } from '@/features/events/common/events.api';
 import { useNetworkEventsQfilter } from '@/features/events/hooks/use-network-events-qfilter';
 import { CountsTimeline } from '@/features/events/model/counts-timeline';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+
+import { useGetEventsTimelineQuery } from '../../api/events.api';
 
 export const NetworkEventsTimeline = () => {
   const params = useGlobalQueryParams(['dates', 'tenant']);

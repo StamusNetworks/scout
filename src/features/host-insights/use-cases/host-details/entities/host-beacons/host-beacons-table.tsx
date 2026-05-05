@@ -7,8 +7,8 @@ import { serializeSorting } from '@/common/design-system/molecules/data-table/ho
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
 import { esEscape } from '@/common/lib/strings';
-import { useGetBeaconingEventsQuery } from '@/features/events/beaconing/common/beaconing.api';
-import { beaconingTableColumns } from '@/features/events/components/beaconing-table/beaconing-table';
+import { useGetBeaconingEventsQuery } from '@/features/events';
+import { beaconingTableColumns } from '@/features/events';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 interface HostBeaconsTableProps {

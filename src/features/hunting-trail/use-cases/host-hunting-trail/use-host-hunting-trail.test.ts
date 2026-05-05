@@ -1,20 +1,18 @@
 import { renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('@/features/events/common/events.api', () => ({
+vi.mock('@/features/events/api/events.api', () => ({
   useGetEventsQuery: vi.fn(),
   useGetEventsTailQuery: vi.fn(),
-}));
-vi.mock('@/features/events/sightings/common/sightings.api', () => ({
   useGetSightingEventsQuery: vi.fn(),
 }));
 
 import {
   useGetEventsQuery,
   useGetEventsTailQuery,
-} from '@/features/events/common/events.api';
-import { makeNrdEvent } from '@/features/events/model/event.mocks';
-import { useGetSightingEventsQuery } from '@/features/events/sightings/common/sightings.api';
+  useGetSightingEventsQuery,
+} from '@/features/events';
+import { makeNrdEvent } from '@/features/events';
 
 import { useHostHuntingTrail } from './use-host-hunting-trail';
 

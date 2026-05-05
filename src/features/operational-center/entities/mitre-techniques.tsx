@@ -25,7 +25,7 @@ import {
   PageSelector,
 } from '@/common/design-system/molecules/pagination';
 import { formatNumber } from '@/common/lib/numbers';
-import { useGetDashboardFieldsQuery } from '@/features/events/api/dashboard.api';
+import { useGetDashboardFieldsQuery } from '@/features/events';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { useEnableFilterFlags } from '@/features/query-filters/hooks/use-enable-filter-flags';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';

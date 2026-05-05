@@ -11,7 +11,7 @@ import {
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
-import { ExplorerView } from '@/features/events/components/explorer/explorer-view';
+import { ExplorerView } from '@/features/events';
 
 export const Route = createFileRoute('/explorer')({
   component: () => (

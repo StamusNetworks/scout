@@ -8,11 +8,11 @@ import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { Switch } from '@/common/design-system/atoms/ui/switch';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import { Pagination } from '@/common/design-system/molecules/pagination';
-import { useGetEventsTailQuery } from '@/features/events/common/events.api';
 import { useNetworkEventsQfilter } from '@/features/events/hooks/use-network-events-qfilter';
 import { Event } from '@/features/events/model/event';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
+import { useGetEventsTailQuery } from '../../api/events.api';
 import { TransactionCard } from './transaction-card';
 
 export interface NetworkEventsListProps {

@@ -14,7 +14,6 @@ import { PaginationFooter } from '@/common/design-system/molecules/pagination-fo
 import { Table } from '@/common/design-system/molecules/table';
 import { esEscape } from '@/common/lib/strings';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
-import { useGetEventsQuery } from '@/features/events/common/events.api';
 import { ExpandedEventRow } from '@/features/events/components/expanded-event-row/expanded-event-row';
 import {
   CATEGORY_COLUMN,
@@ -41,6 +40,8 @@ import {
 } from '@/features/events/definitions/network-event-columns';
 import type { Event } from '@/features/events/model/event';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+
+import { useGetEventsQuery } from '../../api/events.api';
 
 // --- Props ---
 

@@ -1,4 +1,4 @@
-import { Event } from '@/features/events/model/event';
+import { Event } from '@/features/events';
 
 export type TimelineEventType =
   | 'sightings'

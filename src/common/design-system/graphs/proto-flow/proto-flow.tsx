@@ -1,5 +1,5 @@
 import { Column } from '@/common/design-system/atoms/layout/column';
-import { Event } from '@/features/events/model/event';
+import { Event } from '@/features/events';
 
 import { DetectionAttributes } from './attributes';
 import Flow from './flow';

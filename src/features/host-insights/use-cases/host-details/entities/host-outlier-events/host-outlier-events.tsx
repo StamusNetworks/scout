@@ -8,23 +8,23 @@ import { serializeSorting } from '@/common/design-system/molecules/data-table/ho
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
 import { esEscape } from '@/common/lib/strings';
-import { useGetEventsQuery } from '@/features/events/common/events.api';
-import { ExpandedEventRow } from '@/features/events/components/expanded-event-row/expanded-event-row';
-import { useGetCountsTimelineQuery } from '@/features/events/counts-timeline/counts-timeline.api';
+import { useGetEventsQuery } from '@/features/events';
+import { ExpandedEventRow } from '@/features/events';
+import { useGetCountsTimelineQuery } from '@/features/events';
 import {
   CATEGORY_COLUMN,
   LATERAL_COLUMN,
   METHOD_COLUMN,
   OUTLIER_COLUMN,
-} from '@/features/events/definitions/detection-event-columns';
+} from '@/features/events';
 import {
   DESTINATION_COLUMN,
   HOST_COLUMN,
   PROTOCOL_COLUMN,
   SOURCE_COLUMN,
   TIMESTAMP_COLUMN,
-} from '@/features/events/definitions/event-columns';
-import type { Event } from '@/features/events/model/event';
+} from '@/features/events';
+import type { Event } from '@/features/events';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 const outlierColumns = [

@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
-import { BeaconingJa3sDetails } from '@/features/events/components/beaconing-ja3s-details/beaconing-ja3s-details';
+import { BeaconingJa3sDetails } from '@/features/events';
 
 export const Route = createFileRoute(
   '/_enterprise/analytics/beaconing/ja3s/$ja3s',

@@ -30,7 +30,7 @@ import { useGetSignaturesQuery } from '@/features/detection-methods/signatures/a
 import {
   useGetEventsCountQuery,
   useGetEventsTailQuery,
-} from '@/features/events/common/events.api';
+} from '@/features/events';
 import {
   useGetHostsQuery,
   useGetHostsWithAlertsQuery,

@@ -1,9 +1,6 @@
 import { esEscape } from '@/common/lib/strings';
-import {
-  useGetEventsQuery,
-  useGetEventsTailQuery,
-} from '@/features/events/common/events.api';
-import { useGetSightingEventsQuery } from '@/features/events/sightings/common/sightings.api';
+import { useGetEventsQuery, useGetEventsTailQuery } from '@/features/events';
+import { useGetSightingEventsQuery } from '@/features/events';
 import {
   PURPOSE_SLUG_MAP,
   PURPOSE_SLUGS,

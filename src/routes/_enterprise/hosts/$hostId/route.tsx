@@ -30,9 +30,9 @@ import { TogglePageContainer } from '@/common/design-system/molecules/toggle-con
 import { isIP } from '@/common/lib/ips';
 import { esEscape } from '@/common/lib/strings';
 import { useGetSignaturesQuery } from '@/features/detection-methods/signatures/api/signatures.api';
-import { useGetBeaconingEventsQuery } from '@/features/events/beaconing/common/beaconing.api';
-import { useGetEventsQuery } from '@/features/events/common/events.api';
-import { useGetSightingEventsQuery } from '@/features/events/sightings/common/sightings.api';
+import { useGetBeaconingEventsQuery } from '@/features/events';
+import { useGetEventsQuery } from '@/features/events';
+import { useGetSightingEventsQuery } from '@/features/events';
 import { useGetHostWithAlertsQuery } from '@/features/host-insights/common/host-insights.api';
 import { HostHeader } from '@/features/host-insights/use-cases/host-details/entities/host-header';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';

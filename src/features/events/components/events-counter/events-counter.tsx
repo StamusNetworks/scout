@@ -3,8 +3,9 @@ import { ChartConfig } from '@/common/design-system/atoms/ui/chart';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { PieChart } from '@/common/design-system/graphs/pie-chart/pie-chart';
 import { formatNumber } from '@/common/lib/numbers';
-import { useGetEventsCountQuery } from '@/features/events/common/events.api';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+
+import { useGetEventsCountQuery } from '../../api/events.api';
 
 const chartConfig = {
   current: {

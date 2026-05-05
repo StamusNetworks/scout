@@ -1,8 +1,8 @@
 import { esEscape } from '@/common/lib/strings';
-import { useGetEventsFromFlowQuery } from '@/features/events/common/events.api';
 import { Event } from '@/features/events/model/event';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
+import { useGetEventsFromFlowQuery } from '../../api/events.api';
 import { getViewModel } from './meta-view.data-preparation';
 import { MetaViewTemplate } from './meta-view.timeline';
 

@@ -1,7 +1,4 @@
-import {
-  useGetEventsQuery,
-  useGetEventsTailQuery,
-} from '@/features/events/common/events.api';
+import { useGetEventsQuery, useGetEventsTailQuery } from '@/features/events';
 import {
   PURPOSE_SLUG_MAP,
   PURPOSE_SLUGS,

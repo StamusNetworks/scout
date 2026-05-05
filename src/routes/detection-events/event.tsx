@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { Page } from '@/common/design-system/atoms/page';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
-import { EventDetail } from '@/features/events/components/event-detail/event-detail';
+import { EventDetail } from '@/features/events';
 
 const searchSchema = z.object({
   _id: z.string(),

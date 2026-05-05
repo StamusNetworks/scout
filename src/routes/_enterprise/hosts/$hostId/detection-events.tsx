@@ -3,8 +3,8 @@ import { z } from 'zod';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
-import { DetectionEventsTable } from '@/features/events/components/detection-events-table/detection-events-table';
-import { EventsTimeline } from '@/features/events/components/events-timeline/events-timeline';
+import { DetectionEventsTable } from '@/features/events';
+import { EventsTimeline } from '@/features/events';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 const searchSchema = z.object({

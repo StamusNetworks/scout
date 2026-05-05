@@ -5,9 +5,9 @@ import { Row } from '@/common/design-system/atoms/layout/row';
 import { Card } from '@/common/design-system/atoms/ui/card';
 import { StatsCardHorizontalContent } from '@/common/design-system/molecules/stats-card-horizontal';
 import { usePreviousDates } from '@/features/dates';
-import { GlobalStats } from '@/features/events/api/dashboard.api';
-import { useEventsCount } from '@/features/events/hooks/use-events-count';
-import { useGlobalStats } from '@/features/events/hooks/use-global-stats';
+import { GlobalStats } from '@/features/events';
+import { useEventsCount } from '@/features/events';
+import { useGlobalStats } from '@/features/events';
 import { indicators } from '@/features/operational-center/config';
 import { useSystemSettings } from '@/features/settings';
 

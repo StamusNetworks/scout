@@ -1,5 +1,5 @@
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
-import { useGetCountsTimelineQuery } from '@/features/events/counts-timeline/counts-timeline.api';
+import { useGetCountsTimelineQuery } from '@/features/events';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 export const OutliersTimeline = () => {
