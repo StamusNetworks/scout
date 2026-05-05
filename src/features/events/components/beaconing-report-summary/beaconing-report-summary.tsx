@@ -4,8 +4,8 @@ import { DataTable } from '@/common/design-system/molecules/data-table';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { formatBytes } from '@/common/lib/numbers';
 
-import { useBeaconReport } from '../../../hooks/use-beacon-report';
-import { BeaconingEvent } from '../../../model/beaconing-event';
+import { useBeaconReport } from '../../hooks/use-beacon-report';
+import { BeaconingEvent } from '../../model/beaconing-event';
 
 // Columns
 

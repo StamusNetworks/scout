@@ -10,7 +10,7 @@ import { vi } from 'vitest';
 
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
-import { BeaconingIPsTable } from '@/features/events/beaconing/beaconing-ips/molecules/beaconing-ips-table';
+import { BeaconingIPsTable } from '@/features/events/components/beaconing-ips-table/beaconing-ips-table';
 import { Host } from '@/features/host-insights/common/host.model';
 import { Entity } from '@/features/threats/common/entity';
 import { Threat } from '@/features/threats/common/threat.model';

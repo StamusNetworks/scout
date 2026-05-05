@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
-import { BeaconingIpDetails } from '@/features/events/beaconing/beaconing-ips/use-cases/ip-details/entities/beaconing-ip-details';
+import { BeaconingIpDetails } from '@/features/events/components/beaconing-ip-details/beaconing-ip-details';
 
 export const Route = createFileRoute(
   '/_enterprise/analytics/beaconing/ips/$ip',

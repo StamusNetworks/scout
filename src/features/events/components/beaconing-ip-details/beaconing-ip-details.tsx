@@ -1,3 +1,5 @@
+import { ExternalLink } from '@/common/design-system/atoms/external-link';
+import { Country } from '@/common/design-system/atoms/flag';
 import { Column } from '@/common/design-system/atoms/layout/column';
 import {
   Page,
@@ -15,21 +17,20 @@ import {
 } from '@/common/design-system/atoms/ui/scroll-area';
 import { DateTime } from '@/common/design-system/entities/date-time';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
-import { BeaconingIPsTable } from '@/features/events/beaconing/beaconing-ips/molecules/beaconing-ips-table';
-import { BeaconingMetadata } from '@/features/events/beaconing/common/molecules/beaconing-metadata';
-import { ReportSummary } from '@/features/events/beaconing/common/molecules/report-summary';
+import { BeaconingMetadata } from '@/features/events/components/beaconing-metadata/beaconing-metadata';
+import { ReportSummary } from '@/features/events/components/beaconing-report-summary/beaconing-report-summary';
 import { useBeaconReport } from '@/features/events/hooks/use-beacon-report';
 import { formatBeaconMetric } from '@/features/events/utils/format-beacon-metric';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
-import { IpsServingJa3sTable } from '../molecules/ips-serving-ja3s-table';
+import { BeaconingIPsTable } from '../beaconing-ips-table/beaconing-ips-table';
 
-interface BeaconingJa3sDetailsProps {
-  ja3s: string;
+interface BeaconingIpDetailsProps {
+  ip: string;
 }
 
-export const BeaconingJa3sDetails = ({ ja3s }: BeaconingJa3sDetailsProps) => {
-  const { reports, isLoading, isError } = useBeaconReport('ja3s', ja3s);
+export const BeaconingIpDetails = ({ ip }: BeaconingIpDetailsProps) => {
+  const { reports, isLoading, isError } = useBeaconReport('ip', ip);
 
   if (isLoading) {
     return (
@@ -37,7 +38,7 @@ export const BeaconingJa3sDetails = ({ ja3s }: BeaconingJa3sDetailsProps) => {
         <TogglePageContainer>
           <PageHeader>
             <PageHeaderContent>
-              <PageTitle>Beaconing JA3S</PageTitle>
+              <PageTitle>Beaconing IP</PageTitle>
             </PageHeaderContent>
           </PageHeader>
           Loading...
@@ -52,10 +53,10 @@ export const BeaconingJa3sDetails = ({ ja3s }: BeaconingJa3sDetailsProps) => {
         <TogglePageContainer>
           <PageHeader>
             <PageHeaderContent>
-              <PageTitle>Beaconing JA3S</PageTitle>
+              <PageTitle>Beaconing IP</PageTitle>
             </PageHeaderContent>
           </PageHeader>
-          Error loading beaconing JA3S details.
+          Error loading beaconing IP details.
         </TogglePageContainer>
       </Page>
     );
@@ -67,10 +68,10 @@ export const BeaconingJa3sDetails = ({ ja3s }: BeaconingJa3sDetailsProps) => {
         <TogglePageContainer>
           <PageHeader>
             <PageHeaderContent>
-              <PageTitle>Beaconing JA3S</PageTitle>
+              <PageTitle>Beaconing IP</PageTitle>
             </PageHeaderContent>
           </PageHeader>
-          No beaconing data found for this JA3S.
+          No beaconing data found for this IP.
         </TogglePageContainer>
       </Page>
     );
@@ -83,16 +84,25 @@ export const BeaconingJa3sDetails = ({ ja3s }: BeaconingJa3sDetailsProps) => {
       <TogglePageContainer className="space-y-8">
         <PageHeader>
           <PageHeaderContent>
-            <PageTitle>Beaconing JA3S</PageTitle>
+            <PageTitle>Beaconing IP</PageTitle>
           </PageHeaderContent>
         </PageHeader>
         <PageStats>
           <PageStat
-            label="JA3S"
+            label="Country"
+            value={
+              <Country
+                code={report?.geoip_serving_ip?.country_code}
+                country={report?.geoip_serving_ip?.ip_country || 'unknown'}
+              />
+            }
+          />
+          <PageStat
+            label="IP"
             value={
               <EventValue
-                query_key="tls.ja3s.hash"
-                value={ja3s}
+                query_key="ip"
+                value={ip}
               />
             }
           />
@@ -100,7 +110,7 @@ export const BeaconingJa3sDetails = ({ ja3s }: BeaconingJa3sDetailsProps) => {
             label="Score"
             value={
               <Badge variant="secondary">
-                {formatBeaconMetric(report?.beacon_metric)}
+                {formatBeaconMetric(report?.beacon_metric || 0)}
               </Badge>
             }
           />
@@ -120,12 +130,20 @@ export const BeaconingJa3sDetails = ({ ja3s }: BeaconingJa3sDetailsProps) => {
               report?.last_seen ? <DateTime date={report?.last_seen} /> : 'n/a'
             }
           />
+          <PageStat
+            label="External link"
+            value={
+              <ExternalLink to={`http://virustotal.com/gui/ip-address/${ip}`}>
+                VirusTotal
+              </ExternalLink>
+            }
+          />
         </PageStats>
         <Column>
           <CardTitle className="mb-3">Beacon</CardTitle>
           <ReportSummary
-            value={ja3s}
-            type="ja3s"
+            value={ip}
+            type="ip"
           />
         </Column>
         <Column>
@@ -135,8 +153,8 @@ export const BeaconingJa3sDetails = ({ ja3s }: BeaconingJa3sDetailsProps) => {
             type="always"
           >
             <BeaconingMetadata
-              value={ja3s}
-              type="ja3s"
+              value={ip}
+              type="ip"
             />
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
@@ -144,10 +162,6 @@ export const BeaconingJa3sDetails = ({ ja3s }: BeaconingJa3sDetailsProps) => {
         <Column>
           <CardTitle className="mb-3">IPs</CardTitle>
           <BeaconingIPsTable ips={report?.assets} />
-        </Column>
-        <Column>
-          <CardTitle className="mb-3">IPs serving this JA3S</CardTitle>
-          <IpsServingJa3sTable ja3s={ja3s} />
         </Column>
       </TogglePageContainer>
     </Page>

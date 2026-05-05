@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
-import { JA3SHashTable } from '@/features/events/beaconing/beaconing-ja3s/use-cases/ja3s-list/entities/ja3s-hash-table';
+import { JA3SHashTable } from '@/features/events/components/ja3s-hash-table/ja3s-hash-table';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 const searchSchema = z.object({

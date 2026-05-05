@@ -11,7 +11,10 @@ import { Table } from '@/common/design-system/molecules/table';
 import { useGetBeaconingEventsQuery } from '@/features/events/beaconing/common/beaconing.api';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
-import { exportColumns, servingIpsTableColumns } from '../ips-list.table';
+import {
+  exportColumns,
+  servingIpsTableColumns,
+} from './serving-ips-table.columns';
 
 interface ServingIpsTableProps {
   page: number;

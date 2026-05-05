@@ -8,7 +8,7 @@ import { PaginationFooter } from '@/common/design-system/molecules/pagination-fo
 import { Table } from '@/common/design-system/molecules/table';
 import { esEscape } from '@/common/lib/strings';
 import { useGetBeaconingEventsQuery } from '@/features/events/beaconing/common/beaconing.api';
-import { beaconingTableColumns } from '@/features/events/beaconing/common/molecules/beaconing-table';
+import { beaconingTableColumns } from '@/features/events/components/beaconing-table/beaconing-table';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 interface HostBeaconsTableProps {
