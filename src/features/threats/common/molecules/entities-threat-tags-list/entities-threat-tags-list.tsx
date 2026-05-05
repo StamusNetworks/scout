@@ -11,7 +11,7 @@ import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-
 import { ThreatTag } from '@/features/threats/common/molecules/threat-tag';
 
 import { useGetImpactedEntitiesQuery } from '../../../api/entities.api';
-import { Threat } from '../../../api/impacted-entity.dto';
+import { EntityThreat } from '../../../model/impacted-entity';
 
 interface EntityThreatTagsListProps {
   entity: string;
@@ -49,7 +49,7 @@ export const EntityThreatTagsList = ({
 };
 
 interface EntityThreatTagsListTemplateProps {
-  threats: Threat[];
+  threats: EntityThreat[];
   maxThreats?: number;
   className?: string;
 }
@@ -58,59 +58,43 @@ export const EntityThreatTagsListTemplate = ({
   threats,
   maxThreats,
   className,
-}: EntityThreatTagsListTemplateProps) => (
-  <Row className={cn('gap-1', className)}>
-    {maxThreats && maxThreats < threats.length ? (
-      <>
-        {threats.slice(0, maxThreats).map((threat) => (
-          <ThreatTag
-            key={threat.threat__threat_id}
-            threat_id={threat.threat__threat_id}
-            kill_chain={threat.kill_chain}
-            is_offender={threat.kill_chain_offender > 0}
-            first_seen={threat.first_seen}
-            last_seen={threat.last_seen}
-            status={threat.status}
-          />
-        ))}
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              size="sm"
-              variant="ghost"
-              className="h-6"
-              onClick={(e) => e.stopPropagation()}
-            >
-              +{threats.length - maxThreats}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="flex max-w-96 flex-wrap gap-0.5 px-1.5 py-1">
-            {threats.slice(maxThreats).map((threat) => (
-              <ThreatTag
-                key={threat.threat__threat_id}
-                threat_id={threat.threat__threat_id}
-                kill_chain={threat.kill_chain}
-                is_offender={threat.kill_chain_offender > 0}
-                first_seen={threat.first_seen}
-                last_seen={threat.last_seen}
-                status={threat.status}
-              />
-            ))}
-          </PopoverContent>
-        </Popover>
-      </>
-    ) : (
-      threats?.map((threat) => (
-        <ThreatTag
-          key={threat.threat__threat_id}
-          threat_id={threat.threat__threat_id}
-          kill_chain={threat.kill_chain}
-          is_offender={threat.kill_chain_offender > 0}
-          first_seen={threat.first_seen}
-          last_seen={threat.last_seen}
-          status={threat.status}
-        />
-      ))
-    )}
-  </Row>
-);
+}: EntityThreatTagsListTemplateProps) => {
+  const tag = (threat: EntityThreat) => (
+    <ThreatTag
+      key={threat.threatId}
+      threat_id={threat.threatId}
+      kill_chain={threat.phase ?? undefined}
+      is_offender={threat.isOffender}
+      first_seen={threat.firstSeen.toISOString()}
+      last_seen={threat.lastSeen.toISOString()}
+      status={threat.status}
+    />
+  );
+
+  return (
+    <Row className={cn('gap-1', className)}>
+      {maxThreats && maxThreats < threats.length ? (
+        <>
+          {threats.slice(0, maxThreats).map(tag)}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                size="sm"
+                variant="ghost"
+                className="h-6"
+                onClick={(e) => e.stopPropagation()}
+              >
+                +{threats.length - maxThreats}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="flex max-w-96 flex-wrap gap-0.5 px-1.5 py-1">
+              {threats.slice(maxThreats).map(tag)}
+            </PopoverContent>
+          </Popover>
+        </>
+      ) : (
+        threats?.map(tag)
+      )}
+    </Row>
+  );
+};

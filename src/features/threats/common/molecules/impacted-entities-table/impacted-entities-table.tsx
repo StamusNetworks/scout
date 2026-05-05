@@ -20,23 +20,29 @@ import { useServerTableState } from '@/common/design-system/molecules/data-table
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 import { useGetImpactedEntitiesQuery } from '../../../api/entities.api';
-import { Entity } from '../../../api/impacted-entity.dto';
+import { ImpactedEntity } from '../../../model/impacted-entity';
+import { ThreatKind } from '../../../model/threat';
 import { ExpandedRow } from './impacted-asstets-table.expanded-row';
 import {
   exportThreatsColumns,
   getColumns,
 } from './impacted-entities-table.columns';
 
+const FAMILY_CLASS_BY_KIND = {
+  compromise: 'doc',
+  policyViolation: 'dopv',
+} as const;
+
 export const ImpactedEntitiesTable = ({
   threatId,
   familyId,
   customColumns,
-  familyClass,
+  kind = 'compromise',
 }: {
   threatId?: number;
   familyId?: number;
-  familyClass?: 'doc' | 'dopv';
-  customColumns?: CustomColumnDef<Entity>[];
+  kind?: ThreatKind;
+  customColumns?: CustomColumnDef<ImpactedEntity>[];
 }) => {
   const navigate = useNavigate();
   const params = useGlobalQueryParams(['dates', 'tenant']);
@@ -52,7 +58,7 @@ export const ImpactedEntitiesTable = ({
       ...params,
       threat_id: threatId,
       family_id: familyId,
-      family_class: familyClass,
+      family_class: FAMILY_CLASS_BY_KIND[kind],
       search,
       kill_chain: killchain,
       status,
@@ -61,8 +67,8 @@ export const ImpactedEntitiesTable = ({
   const { data, isFetching } = useGetImpactedEntitiesQuery(queryParams);
 
   const columns = useMemo(
-    () => getColumns({ threatId, familyClass, setKillchain }),
-    [threatId, familyClass, setKillchain],
+    () => getColumns({ threatId, kind, setKillchain }),
+    [threatId, kind, setKillchain],
   );
 
   const toolBar = (
@@ -72,7 +78,7 @@ export const ImpactedEntitiesTable = ({
         onChange={setSearch}
         placeholder="Search for entity..."
       />
-      {familyClass === 'doc' && (
+      {kind === 'compromise' && (
         <CommandFilterSingle
           title="Kill Chain"
           value={killchain}
@@ -136,9 +142,9 @@ export const ImpactedEntitiesTable = ({
       data={data}
       isLoading={isFetching}
       columns={customColumns || columns}
-      exportColumns={exportThreatsColumns({ threatId, familyClass })}
+      exportColumns={exportThreatsColumns({ threatId, kind })}
       toolBar={toolBar}
-      ExpandedRow={ExpandedRow(familyClass || 'doc')}
+      ExpandedRow={ExpandedRow(kind)}
       onRowClick={(row) =>
         navigate({
           to: `/hosts/${row.original.value}/incidents`,
@@ -148,11 +154,11 @@ export const ImpactedEntitiesTable = ({
       onPaginationChange={setPagination}
       sorting={sorting}
       onSortingChange={setSorting}
-      getRowId={(row) => row.pk?.toString()}
+      getRowId={(row) => row.id?.toString()}
       Empty={
         <Empty>
           <EmptyMedia variant="icon">
-            {familyClass === 'doc' ? <Biohazard /> : <Scale />}
+            {kind === 'compromise' ? <Biohazard /> : <Scale />}
           </EmptyMedia>
           <EmptyContent>
             <EmptyHeader>No impacted entities found</EmptyHeader>

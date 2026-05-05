@@ -19,22 +19,23 @@ import { Network } from '@/features/host-insights/use-cases/host-details/molecul
 import { Roles } from '@/features/host-insights/use-cases/host-details/molecules/host-details/roles';
 import { Username } from '@/features/host-insights/use-cases/host-details/molecules/host-details/username';
 import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
-import { killChainsConfig } from '@/features/threats/common/killchain/killchain';
 
-import { Entity } from '../../../api/impacted-entity.dto';
+import { ImpactedEntity } from '../../../model/impacted-entity';
+import { KILL_CHAIN_PHASES } from '../../../model/kill-chain';
+import { ThreatKind } from '../../../model/threat';
 import { EntityThreatTagsListTemplate } from '../entities-threat-tags-list/entities-threat-tags-list';
 import { IpOrEntityEventValue } from '../ip-or-entity';
 import { ImpactedEntitiesTableActions } from './impacted-entities-table.actions';
 
 export const getColumns = ({
   threatId,
-  familyClass = 'doc',
+  kind = 'compromise',
   setKillchain,
 }: {
   threatId?: number;
-  familyClass?: 'doc' | 'dopv';
+  kind?: ThreatKind;
   setKillchain: (kc: string) => void;
-}): CustomColumnDef<Entity>[] => [
+}): CustomColumnDef<ImpactedEntity>[] => [
   {
     id: 'event-expanded',
     cell: ({ row }) => <DataTableRowExpander row={row} />,
@@ -53,7 +54,7 @@ export const getColumns = ({
       <Column className="gap-1">
         <IpOrEntityEventValue
           entity={row.original.value}
-          offender={row.original.is_offender}
+          offender={row.original.isOffender}
         />
         <Hostname
           host={row.original.value}
@@ -64,7 +65,7 @@ export const getColumns = ({
   },
   {
     id: 'asset_type',
-    accessorKey: 'asset_type',
+    accessorKey: 'assetType',
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
@@ -77,7 +78,7 @@ export const getColumns = ({
           className="rounded-full"
           variant="secondary"
         >
-          {row.original.asset_type?.toUpperCase()}
+          {row.original.assetType?.toUpperCase()}
         </Badge>
       );
     },
@@ -85,7 +86,7 @@ export const getColumns = ({
 
   {
     id: 'kill_chain',
-    accessorKey: 'kill_chain',
+    accessorKey: 'phase',
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
@@ -93,12 +94,12 @@ export const getColumns = ({
       />
     ),
     cell: ({ row }) => {
-      const kc = row.original.kill_chain;
+      const phase = row.original.phase;
       return (
         <KillchainTag
-          kc={kc}
+          kc={phase}
           status={row.original.status}
-          onClick={() => setKillchain?.(kc)}
+          onClick={() => setKillchain?.(phase)}
         />
       );
     },
@@ -108,7 +109,7 @@ export const getColumns = ({
     cell: ({ row }) => {
       return (
         <Row className="justify-center">
-          {row.original.is_offender ? (
+          {row.original.isOffender ? (
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
@@ -125,11 +126,11 @@ export const getColumns = ({
   ...(!threatId
     ? ([
         {
-          id: familyClass === 'doc' ? 'threats' : 'policy_violations',
+          id: kind === 'compromise' ? 'threats' : 'policy_violations',
           header: ({ column }) => (
             <DataTableColumnHeader
               column={column}
-              title={familyClass === 'doc' ? 'Threats' : 'Policy Violations'}
+              title={kind === 'compromise' ? 'Threats' : 'Policy Violations'}
             />
           ),
           cell: ({ row }) => {
@@ -142,29 +143,29 @@ export const getColumns = ({
             );
           },
         },
-      ] as CustomColumnDef<Entity>[])
+      ] as CustomColumnDef<ImpactedEntity>[])
     : []),
   {
     id: 'first_seen',
-    accessorKey: 'first_seen',
+    accessorKey: 'firstSeen',
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
         title="Incidents start"
       />
     ),
-    cell: ({ row }) => <DateTime date={row.original.first_seen} />,
+    cell: ({ row }) => <DateTime date={row.original.firstSeen} />,
   },
   {
     id: 'last_seen',
-    accessorKey: 'last_seen',
+    accessorKey: 'lastSeen',
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
         title="Last Seen"
       />
     ),
-    cell: ({ row }) => <DateTime date={row.original.last_seen} />,
+    cell: ({ row }) => <DateTime date={row.original.lastSeen} />,
   },
   {
     id: 'roles',
@@ -194,7 +195,7 @@ export const getColumns = ({
         <Username host={row.original.value} />
         <Network
           host={row.original.value}
-          keyType={row.original.is_offender ? 'source' : 'target'}
+          keyType={row.original.isOffender ? 'source' : 'target'}
         />
       </Column>
     ),
@@ -203,13 +204,12 @@ export const getColumns = ({
     id: 'actions',
     cell: ({ row }) => (
       <ImpactedEntitiesTableActions
-        entityId={row.original.pk}
+        entityId={row.original.id}
         entityStatus={row.original.status}
         threatId={threatId}
         threatStatus={
-          row.original.threats.find(
-            (threat) => threat.threat__threat_id === threatId,
-          )?.status
+          row.original.threats.find((threat) => threat.threatId === threatId)
+            ?.status
         }
       />
     ),
@@ -220,7 +220,7 @@ export const getColumns = ({
     visible: false,
   },
   {
-    id: 'family_class',
+    id: 'kind',
     enableHiding: false,
     visible: false,
   },
@@ -233,48 +233,46 @@ export const getColumns = ({
 
 export const exportThreatsColumns = ({
   threatId,
-  familyClass = 'doc',
+  kind = 'compromise',
 }: {
   threatId?: number;
-  familyClass?: 'doc' | 'dopv';
-}): ExportColumn<Entity>[] => [
+  kind?: ThreatKind;
+}): ExportColumn<ImpactedEntity>[] => [
   {
     label: 'Entity',
     value: ({ value }) => value,
   },
   {
     label: 'Asset type',
-    value: ({ asset_type }) => asset_type,
+    value: ({ assetType }) => assetType,
   },
-  ...(familyClass === 'doc'
+  ...(kind === 'compromise'
     ? ([
         {
           label: 'Kill chain',
-          value: ({ is_offender, kill_chain, kill_chain_offender }) =>
-            killChainsConfig?.[is_offender ? kill_chain_offender : kill_chain]
-              ?.name,
+          value: ({ isOffender, phase, offenderPhase }) =>
+            KILL_CHAIN_PHASES[isOffender ? offenderPhase : phase]?.name,
         },
         {
           label: 'Offender/Victim',
-          value: ({ is_offender }) => (is_offender ? 'Offender' : 'Victim'),
+          value: ({ isOffender }) => (isOffender ? 'Offender' : 'Victim'),
         },
-      ] as ExportColumn<Entity>[])
+      ] as ExportColumn<ImpactedEntity>[])
     : []),
   ...(!threatId
     ? ([
         {
-          label: familyClass === 'doc' ? 'Threats' : 'Policy Violations',
-          value: ({ threats }) =>
-            threats?.map((t) => t.threat__name).join(', ') || '',
+          label: kind === 'compromise' ? 'Threats' : 'Policy Violations',
+          value: ({ threats }) => threats?.map((t) => t.name).join(', ') || '',
         },
-      ] as ExportColumn<Entity>[])
+      ] as ExportColumn<ImpactedEntity>[])
     : []),
   {
     label: 'First seen',
-    value: ({ first_seen }) => first_seen,
+    value: ({ firstSeen }) => firstSeen.toISOString(),
   },
   {
     label: 'Last seen',
-    value: ({ last_seen }) => last_seen,
+    value: ({ lastSeen }) => lastSeen.toISOString(),
   },
 ];

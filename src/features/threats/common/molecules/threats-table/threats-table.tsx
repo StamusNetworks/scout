@@ -5,32 +5,15 @@ import { usePaginationState } from '@/common/design-system/molecules/data-table/
 import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
 import { ThreatTag } from '@/features/threats/common/molecules/threat-tag';
 
-type EntityThreat = {
-  status: 'new' | 'fixed';
-  first_seen: string;
-  last_seen: string;
-  threat__threat_id: number;
-  threat__name: string;
-  threat__family__family_id: number;
-  kill_chain: number;
-  kill_chain_offender: number;
-};
+import { EntityThreat } from '../../../model/impacted-entity';
+import { ThreatKind } from '../../../model/threat';
 
 export const ThreatsTable = ({
   data,
-  type,
+  kind,
 }: {
-  data: {
-    status: 'new' | 'fixed';
-    first_seen: string;
-    last_seen: string;
-    threat__threat_id: number;
-    threat__name: string;
-    threat__family__family_id: number;
-    kill_chain: number;
-    kill_chain_offender: number;
-  }[];
-  type: 'doc' | 'dopv';
+  data: EntityThreat[];
+  kind: ThreatKind;
 }) => {
   const [pagination, setPagination] = usePaginationState();
   return (
@@ -40,16 +23,14 @@ export const ThreatsTable = ({
         results: data,
         count: data.length,
       }}
-      columns={threatsColumns(type)}
+      columns={threatsColumns(kind)}
       pagination={pagination}
       onPaginationChange={setPagination}
     />
   );
 };
 
-const threatsColumns = (
-  type: 'doc' | 'dopv',
-): CustomColumnDef<EntityThreat>[] => [
+const threatsColumns = (kind: ThreatKind): CustomColumnDef<EntityThreat>[] => [
   {
     id: 'status',
     header: 'Status',
@@ -59,22 +40,22 @@ const threatsColumns = (
     id: 'kill_chain',
     header: 'Kill chain',
     cell: ({ row }) =>
-      row.original.kill_chain_offender ? (
-        <KillchainTag kc={row.original.kill_chain_offender} />
-      ) : (
-        <KillchainTag kc={row.original.kill_chain} />
-      ),
+      row.original.offenderPhase ? (
+        <KillchainTag kc={row.original.offenderPhase} />
+      ) : row.original.phase ? (
+        <KillchainTag kc={row.original.phase} />
+      ) : null,
   },
   {
-    id: type === 'doc' ? 'threat' : 'policy_violation',
-    header: type === 'doc' ? 'Threat' : 'Policy Violation',
+    id: kind === 'compromise' ? 'threat' : 'policy_violation',
+    header: kind === 'compromise' ? 'Threat' : 'Policy Violation',
     cell: ({ row }) => (
       <ThreatTag
-        threat_id={row.original.threat__threat_id}
-        kill_chain={row.original.kill_chain}
-        is_offender={row.original.kill_chain_offender > 0}
-        first_seen={row.original.first_seen}
-        last_seen={row.original.last_seen}
+        threat_id={row.original.threatId}
+        kill_chain={row.original.phase ?? undefined}
+        is_offender={row.original.isOffender}
+        first_seen={row.original.firstSeen.toISOString()}
+        last_seen={row.original.lastSeen.toISOString()}
         status={row.original.status}
       />
     ),
@@ -82,11 +63,11 @@ const threatsColumns = (
   {
     id: 'first_seen',
     header: 'First seen',
-    cell: ({ row }) => <DateTime date={row.original.first_seen} />,
+    cell: ({ row }) => <DateTime date={row.original.firstSeen} />,
   },
   {
     id: 'last_seen',
     header: 'Last seen',
-    cell: ({ row }) => <DateTime date={row.original.last_seen} />,
+    cell: ({ row }) => <DateTime date={row.original.lastSeen} />,
   },
 ];

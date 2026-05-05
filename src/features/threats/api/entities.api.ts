@@ -1,18 +1,27 @@
 import { buildQueryParams } from '@/common/fetching/buildQueryParams';
 import { Dates, Tenant } from '@/common/fetching/fetching.types';
 import { Paginated, Pagination } from '@/common/fetching/fetching.types';
-import { killChainsConfig } from '@/features/threats/common/killchain/killchain';
 import { API } from '@/store/api';
 
 import { getESParams } from '../common/molecules/attacker-infrastructure/attacker-infrastructure.utils';
+import { ImpactedEntity } from '../model/impacted-entity';
+import {
+  KILL_CHAIN_PHASES,
+  KillChainCounters,
+  KillChainPhase,
+} from '../model/kill-chain';
 import { AttackerInfrastructureAggregation } from './attacker-infrastructure.dto';
-import { Entity } from './impacted-entity.dto';
+import { ImpactedEntityDto } from './impacted-entity.dto';
+import {
+  toImpactedEntity,
+  toKillChainCounters,
+} from './impacted-entity.transforms';
 
 export const EntitiesAPI = API.injectEndpoints({
   endpoints: (builder) => ({
     // QUERIES
     getImpactedEntities: builder.query<
-      Paginated<Entity>,
+      Paginated<ImpactedEntity>,
       Dates &
         Tenant &
         Pagination & {
@@ -31,10 +40,16 @@ export const EntitiesAPI = API.injectEndpoints({
         method: 'GET',
         params: buildQueryParams(params),
       }),
+      transformResponse: (
+        res: Paginated<ImpactedEntityDto>,
+      ): Paginated<ImpactedEntity> => ({
+        ...res,
+        results: res.results.map(toImpactedEntity),
+      }),
       providesTags: ['Reload', 'Entities'],
     }),
     getImpactedEntity: builder.query<
-      Entity | undefined,
+      ImpactedEntity | undefined,
       Dates & Tenant & { asset: string }
     >({
       query: (params) => ({
@@ -42,42 +57,31 @@ export const EntitiesAPI = API.injectEndpoints({
         method: 'GET',
         params: buildQueryParams(params),
       }),
-      transformResponse: (response: Paginated<Entity>) => {
+      transformResponse: (response: Paginated<ImpactedEntityDto>) => {
         if (!response.results.length) return undefined;
-        if (response.results.length === 1) return response.results[0];
+        const entities = response.results.map(toImpactedEntity);
+        if (entities.length === 1) return entities[0];
 
-        const getKillChainStep = (
-          phase: keyof typeof killChainsConfig,
-        ): number =>
-          killChainsConfig[phase]?.kc_step ?? Number.NEGATIVE_INFINITY;
-        const getHighestKillChain = (
-          first: keyof typeof killChainsConfig,
-          second: keyof typeof killChainsConfig,
-        ) =>
-          getKillChainStep(first) >= getKillChainStep(second) ? first : second;
-        const getEarliestDate = (first: string, second: string) =>
-          new Date(first).getTime() <= new Date(second).getTime()
-            ? first
-            : second;
-        const getLatestDate = (first: string, second: string) =>
-          new Date(first).getTime() >= new Date(second).getTime()
-            ? first
-            : second;
+        const stepOf = (phase: KillChainPhase): number =>
+          KILL_CHAIN_PHASES[phase]?.step ?? Number.NEGATIVE_INFINITY;
+        const highestPhase = (a: KillChainPhase, b: KillChainPhase) =>
+          stepOf(a) >= stepOf(b) ? a : b;
+        const earliest = (a: Date, b: Date) =>
+          a.getTime() <= b.getTime() ? a : b;
+        const latest = (a: Date, b: Date) =>
+          a.getTime() >= b.getTime() ? a : b;
 
-        return response.results.reduce((merged, current) => ({
+        return entities.reduce((merged, current) => ({
           ...merged,
-          first_seen: getEarliestDate(merged.first_seen, current.first_seen),
-          last_seen: getLatestDate(merged.last_seen, current.last_seen),
+          firstSeen: earliest(merged.firstSeen, current.firstSeen),
+          lastSeen: latest(merged.lastSeen, current.lastSeen),
           threats: [...merged.threats, ...current.threats],
-          kill_chain: getHighestKillChain(
-            merged.kill_chain,
-            current.kill_chain,
+          phase: highestPhase(merged.phase, current.phase),
+          offenderPhase: highestPhase(
+            merged.offenderPhase,
+            current.offenderPhase,
           ),
-          kill_chain_offender: getHighestKillChain(
-            merged.kill_chain_offender,
-            current.kill_chain_offender,
-          ),
-          is_offender: merged.is_offender || current.is_offender,
+          isOffender: merged.isOffender || current.isOffender,
           status:
             merged.status === 'new' || current.status === 'new'
               ? 'new'
@@ -86,7 +90,7 @@ export const EntitiesAPI = API.injectEndpoints({
       },
     }),
     getKillChainCounters: builder.query<
-      { kill_chain: keyof typeof killChainsConfig; nb_assets: number }[],
+      KillChainCounters,
       Dates & Tenant & { family_id?: string }
     >({
       query: (params) => ({
@@ -94,10 +98,13 @@ export const EntitiesAPI = API.injectEndpoints({
         method: 'GET',
         params: buildQueryParams(params),
       }),
+      transformResponse: (
+        res: { kill_chain: KillChainPhase; nb_assets: number }[],
+      ) => toKillChainCounters(res),
       providesTags: ['Reload', 'Dashboard'],
     }),
     getKillChainCountersByThreatId: builder.query<
-      { kill_chain: keyof typeof killChainsConfig; nb_assets: number }[],
+      KillChainCounters,
       Dates & Tenant & { threat_id: string }
     >({
       query: ({ threat_id, ...rest }) => ({
@@ -106,20 +113,8 @@ export const EntitiesAPI = API.injectEndpoints({
         params: buildQueryParams(rest),
       }),
       transformResponse: (
-        response: Record<keyof typeof killChainsConfig, number>,
-      ) =>
-        (
-          Object.entries(response) as [keyof typeof killChainsConfig, number][]
-        ).reduce(
-          (acc, [key, value]) => [
-            ...acc,
-            { kill_chain: key, nb_assets: value },
-          ],
-          [] as {
-            kill_chain: keyof typeof killChainsConfig;
-            nb_assets: number;
-          }[],
-        ),
+        response: Partial<Record<KillChainPhase, number>>,
+      ): KillChainCounters => response,
       providesTags: ['Reload', 'Dashboard'],
     }),
     updateEntityStatus: builder.mutation<

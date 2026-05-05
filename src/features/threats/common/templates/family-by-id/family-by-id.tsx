@@ -286,7 +286,7 @@ export const ThreatFamilyDefault = ({
       )}
       <ImpactedEntitiesTable
         familyId={parseInt(familyId!)}
-        familyClass={kind === 'compromise' ? 'doc' : 'dopv'}
+        kind={kind}
       />
     </>
   );

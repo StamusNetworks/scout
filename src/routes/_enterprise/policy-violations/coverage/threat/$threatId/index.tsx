@@ -27,7 +27,7 @@ function PolicyViolationEntitiesTab() {
     <Column className="mt-6">
       <ImpactedEntitiesTable
         threatId={threat.id}
-        familyClass="dopv"
+        kind="policyViolation"
       />
     </Column>
   );

@@ -3,7 +3,12 @@ import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Card } from '@/common/design-system/atoms/ui/card';
 import { cn } from '@/common/lib/utils';
 
-import { killChainsConfig } from '../../killchain';
+import {
+  KILL_CHAIN_PHASES,
+  KILL_CHAIN_PHASES_KEYS_WITHOUT_POLICIES,
+  KillChainCounters,
+  KillChainPhase,
+} from '../../../../model/kill-chain';
 import { KCItem, KCTitle } from './killchain-counters.item';
 
 export const KillChainCountersTemplate = ({
@@ -12,72 +17,20 @@ export const KillChainCountersTemplate = ({
   onKCClick,
   isLoading,
 }: {
-  data?: { kill_chain: keyof typeof killChainsConfig; nb_assets: number }[];
+  data?: KillChainCounters;
   className?: string;
-  onKCClick: (killchain: keyof typeof killChainsConfig) => void;
+  onKCClick: (killchain: KillChainPhase) => void;
   isLoading: boolean;
 }) => {
-  const typedData = (data || []) as {
-    kill_chain: keyof typeof killChainsConfig;
-    nb_assets: number;
-  }[];
-
-  const items = [
-    {
-      title: 'Reconnaissance',
-      value: typedData?.find((item) => item.kill_chain === 'reconnaissance')
-        ?.nb_assets,
-      variant: 'reconnaissance',
-    },
-    {
-      title: 'Weaponization',
-      value: typedData?.find((item) => item.kill_chain === 'weaponization')
-        ?.nb_assets,
-      variant: 'weaponization',
-    },
-    {
-      title: 'Delivery',
-      value: typedData?.find((item) => item.kill_chain === 'delivery')
-        ?.nb_assets,
-      variant: 'delivery',
-    },
-    {
-      title: 'Exploitation',
-      value: typedData?.find((item) => item.kill_chain === 'exploitation')
-        ?.nb_assets,
-      variant: 'exploitation',
-    },
-    {
-      title: 'Installation',
-      value: typedData?.find((item) => item.kill_chain === 'installation')
-        ?.nb_assets,
-      variant: 'installation',
-    },
-    {
-      title: 'Command and Control',
-      value: typedData?.find(
-        (item) => item.kill_chain === 'command_and_control',
-      )?.nb_assets,
-      variant: 'command_and_control',
-    },
-    {
-      title: 'Actions on Objectives',
-      value: typedData?.find(
-        (item) => item.kill_chain === 'actions_on_objectives',
-      )?.nb_assets,
-      variant: 'actions_on_objectives',
-    },
-  ];
-
   return (
     <Column className={cn('gap-2', className)}>
       <Card className="p-1 shadow-none">
         <Grid className="grid-cols-7 gap-[32px] overflow-clip rounded-lg">
-          {items.map((item) => (
+          {KILL_CHAIN_PHASES_KEYS_WITHOUT_POLICIES.map((phase) => (
             <KCItem
-              key={item.title}
-              value={item.value || 0}
-              variant={item.variant as keyof typeof killChainsConfig}
+              key={phase}
+              value={data?.[phase] ?? 0}
+              variant={phase}
               onKCClick={onKCClick}
               isLoading={isLoading}
             />
@@ -85,10 +38,10 @@ export const KillChainCountersTemplate = ({
         </Grid>
       </Card>
       <Grid className="grid-cols-7">
-        {items.map((item) => (
+        {KILL_CHAIN_PHASES_KEYS_WITHOUT_POLICIES.map((phase) => (
           <KCTitle
-            key={item.title}
-            value={item.title}
+            key={phase}
+            value={KILL_CHAIN_PHASES[phase].name}
           />
         ))}
       </Grid>

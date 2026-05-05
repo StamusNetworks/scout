@@ -12,41 +12,45 @@ import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-
 import { CompromiseHuntingTrail } from '@/features/threats';
 import { CompromiseTimeline } from '@/features/threats';
 
-import { Entity } from '../../../api/impacted-entity.dto';
+import { ImpactedEntity } from '../../../model/impacted-entity';
+import { ThreatKind } from '../../../model/threat';
 import { AttackerInfrastructure } from '../attacker-infrastructure/attacker-infrastructure';
 import { ThreatsTable } from '../threats-table/threats-table';
 
-export const ExpandedRow = (type: 'doc' | 'dopv') => {
-  const ImpactedEntitiesTableExpandedRow = ({ row }: { row: Row<Entity> }) => {
+export const ExpandedRow = (kind: ThreatKind) => {
+  const ImpactedEntitiesTableExpandedRow = ({
+    row,
+  }: {
+    row: Row<ImpactedEntity>;
+  }) => {
     const { start_date, end_date } = useGlobalQueryParams(['dates']);
+    const isCompromise = kind === 'compromise';
     return (
       <Tabs
-        defaultValue={type === 'doc' ? 'timeline' : 'threats'}
+        defaultValue={isCompromise ? 'timeline' : 'threats'}
         className="p-2"
       >
         <TabsList>
-          {type === 'doc' && (
-            <TabsTrigger value="timeline">Timeline</TabsTrigger>
-          )}
-          {type === 'doc' && (
+          {isCompromise && <TabsTrigger value="timeline">Timeline</TabsTrigger>}
+          {isCompromise && (
             <TabsTrigger value="hunting-trail">Hunting Trail</TabsTrigger>
           )}
-          {type === 'doc' && (
+          {isCompromise && (
             <TabsTrigger value="attacker_infrastructure">
               Attacker infrastructure
             </TabsTrigger>
           )}
           <TabsTrigger value="threats">
-            {type === 'doc' ? 'Threats' : 'Policy Violations'}
+            {isCompromise ? 'Threats' : 'Policy Violations'}
           </TabsTrigger>
           <TabsTrigger value="insights">Host Insights</TabsTrigger>
         </TabsList>
-        {type === 'doc' && (
+        {isCompromise && (
           <TabsContent value="timeline">
             <CompromiseTimeline entity={row.original.value} />
           </TabsContent>
         )}
-        {type === 'doc' && (
+        {isCompromise && (
           <TabsContent value="hunting-trail">
             <ScrollArea className="max-h-[800px]">
               <CompromiseHuntingTrail
@@ -57,7 +61,7 @@ export const ExpandedRow = (type: 'doc' | 'dopv') => {
             </ScrollArea>
           </TabsContent>
         )}
-        {type === 'doc' && (
+        {isCompromise && (
           <TabsContent value="attacker_infrastructure">
             <AttackerInfrastructure entity={row.original.value} />
           </TabsContent>
@@ -65,7 +69,7 @@ export const ExpandedRow = (type: 'doc' | 'dopv') => {
         <TabsContent value="threats">
           <ThreatsTable
             data={row.original.threats}
-            type={type}
+            kind={kind}
           />
         </TabsContent>
         <TabsContent value="insights">

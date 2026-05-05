@@ -6,10 +6,9 @@ import { DateTime } from '@/common/design-system/entities/date-time';
 import { cn } from '@/common/lib/utils';
 import { Host } from '@/features/host-insights/common/host.model';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
-import { Entity } from '@/features/threats/api/impacted-entity.dto';
 import { KillchainTag } from '@/features/threats/common/killchain/components/killchain-tag';
-import { KillChainPhase } from '@/features/threats/common/killchain/killchain';
 import { EntityThreatTagsListTemplate } from '@/features/threats/common/molecules/entities-threat-tags-list/entities-threat-tags-list';
+import { ImpactedEntity } from '@/features/threats/model/impacted-entity';
 
 import { HostnameTemplate } from './host-details/hostname';
 import { NetworkTemplate } from './host-details/network';
@@ -23,7 +22,7 @@ export const HostSummary = ({
   hostId,
 }: {
   host: Host | undefined;
-  entity: Entity | undefined;
+  entity: ImpactedEntity | undefined;
   hostId?: string | undefined;
 }) => (
   <Column>
@@ -36,9 +35,7 @@ export const HostSummary = ({
         query_key="ip"
         className="text-xl font-bold"
       />
-      {entity?.kill_chain && (
-        <KillchainTag kc={entity?.kill_chain as KillChainPhase} />
-      )}
+      {entity?.phase && <KillchainTag kc={entity.phase} />}
     </Row>
     {entity && (
       <EntityThreatTagsListTemplate

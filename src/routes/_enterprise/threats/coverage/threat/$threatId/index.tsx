@@ -33,7 +33,7 @@ function ThreatEntitiesTab() {
       )}
       <ImpactedEntitiesTable
         threatId={threat.id}
-        familyClass="doc"
+        kind="compromise"
       />
     </Column>
   );

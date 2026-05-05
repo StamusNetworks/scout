@@ -17,7 +17,7 @@ const createTestRouter = () =>
     history: createMemoryHistory({ initialEntries: ['/'] }),
   });
 
-import { KillChainPhase } from '../../killchain';
+import { KillChainCounters as KillChainCountersData } from '../../../../model/kill-chain';
 import {
   KillChainCounters,
   KillChainCountersByFamilyId,
@@ -32,7 +32,7 @@ afterEach(() => {
 beforeEach(() => {
   server.use(
     http.get(baseUrl + '/appliances/threat_family/kill_chain_family/', () => {
-      return HttpResponse.json(mockKillChainData);
+      return HttpResponse.json(mockKillChainWireData);
     }),
     http.get(baseUrl + '/rules/es/mapping/', () => {
       return HttpResponse.json({
@@ -127,7 +127,19 @@ describe('KillChainCounters', () => {
   });
 });
 
-const mockKillChainData: { kill_chain: KillChainPhase; nb_assets: number }[] = [
+const mockKillChainData: KillChainCountersData = {
+  reconnaissance: 10,
+  weaponization: 5,
+  delivery: 3,
+  exploitation: 2,
+  installation: 1,
+  command_and_control: 7,
+  actions_on_objectives: 4,
+};
+
+// Wire-shape used by MSW handlers — server returns array, ACL maps it to
+// the Record-shaped domain type at the boundary.
+const mockKillChainWireData = [
   { kill_chain: 'reconnaissance', nb_assets: 10 },
   { kill_chain: 'weaponization', nb_assets: 5 },
   { kill_chain: 'delivery', nb_assets: 3 },

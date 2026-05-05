@@ -2,11 +2,6 @@ import { KillChainCounters } from '../../common/killchain/components/killchain-c
 import { ImpactedEntitiesTable } from '../../common/molecules/impacted-entities-table/impacted-entities-table';
 import { ThreatKind } from '../../model/threat';
 
-const FAMILY_CLASS_BY_KIND = {
-  compromise: 'doc',
-  policyViolation: 'dopv',
-} as const;
-
 type Props = { kind: ThreatKind };
 
 /**
@@ -22,6 +17,6 @@ export const ThreatEntitiesOverview = ({ kind }: Props) => (
         <div className="mb-4" />
       </>
     )}
-    <ImpactedEntitiesTable familyClass={FAMILY_CLASS_BY_KIND[kind]} />
+    <ImpactedEntitiesTable kind={kind} />
   </>
 );
