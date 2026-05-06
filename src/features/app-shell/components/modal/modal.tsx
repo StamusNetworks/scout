@@ -4,12 +4,13 @@ import {
   DialogDescription,
   DialogTitle,
 } from '@/common/design-system/atoms/ui/dialog';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+
 import {
   type Modal as TModal,
   selectIsModalOpen,
   setOpenModal,
-} from '@/features/app-shell/state/ui-state.slice';
-import { useAppDispatch, useAppSelector } from '@/store/store';
+} from '../../state/ui-state.slice';
 
 interface ModalProps {
   title: string;

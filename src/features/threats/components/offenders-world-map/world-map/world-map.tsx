@@ -10,11 +10,14 @@ import {
   ZoomableGroup,
 } from 'react-simple-maps';
 
+import {
+  Tooltip,
+  TooltipContent,
+} from '@/common/design-system/molecules/tooltip';
 import { useEnableFilterFlags } from '@/features/query-filters/hooks/use-enable-filter-flags';
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
 import { useTheme } from '@/features/theming';
 
-import { Tooltip, TooltipContent } from '../../molecules/tooltip';
 import { WorldCountriesMap } from './world-map.config';
 
 interface MapChartProps {

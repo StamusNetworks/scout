@@ -9,7 +9,6 @@ import { Button } from '@/common/design-system/atoms/ui/button';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import { serializeSorting } from '@/common/design-system/molecules/data-table/hooks/sorting-parser';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
-import { ExportButton } from '@/common/design-system/molecules/export-button';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
 import { esEscape } from '@/common/lib/strings';
@@ -39,6 +38,7 @@ import {
   TLS_SNI_COLUMN,
 } from '@/features/events/definitions/network-event-columns';
 import type { Event } from '@/features/events/model/event';
+import { ExportButton } from '@/features/preferences';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 import { useGetEventsQuery } from '../../api/events.api';

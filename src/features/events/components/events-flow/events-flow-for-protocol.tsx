@@ -6,7 +6,6 @@ import {
   ContextMenu,
   ContextMenuTrigger,
 } from '@/common/design-system/atoms/ui/context-menu';
-import { DateTime } from '@/common/design-system/entities/date-time';
 import {
   SankeyChart,
   type SankeyNodeInfo,
@@ -24,6 +23,7 @@ import {
   transformAggToSankey,
 } from '@/common/design-system/graphs/sankey/sankey.utils';
 import { buildEventsFlowQfilter } from '@/features/events/builders/build-events-flow-qfilter';
+import { DateTime } from '@/features/preferences';
 import { type EventTypeFlags } from '@/features/query-filters';
 import { ContextMenuContent } from '@/features/query-filters/components/interactive-value/context-menu/context-menu.content';
 import { useCreateFilter } from '@/features/query-filters/hooks/use-create-filter';

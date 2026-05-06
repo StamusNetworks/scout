@@ -1,7 +1,7 @@
-import { JsonView } from '@/common/design-system/atoms/json-view';
 import { FormItem } from '@/common/design-system/atoms/ui/form';
 import { Input } from '@/common/design-system/atoms/ui/input';
 import { Label } from '@/common/design-system/atoms/ui/label';
+import { JsonView } from '@/features/app-shell';
 import {
   selectJsonViewOpen,
   setJsonViewOpen,

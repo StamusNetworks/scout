@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router';
 import { Binary } from 'lucide-react';
 
 import { Button } from '@/common/design-system/atoms/ui/button';
-import { DateTime } from '@/common/design-system/entities/date-time';
+import { DateTime } from '@/features/preferences';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 import { TimelineEventType, TimelineGroup } from '../../model/hunting-trail';

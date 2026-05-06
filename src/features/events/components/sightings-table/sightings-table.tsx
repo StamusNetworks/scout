@@ -8,10 +8,10 @@ import { CommandFilterSingle } from '@/common/design-system/molecules/data-table
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
 import { serializeSorting } from '@/common/design-system/molecules/data-table/hooks/sorting-parser';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
-import { ExportButton } from '@/common/design-system/molecules/export-button';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
 import { esEscape } from '@/common/lib/strings';
+import { ExportButton } from '@/features/preferences';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 import { useGetSightingEventsQuery } from '../../api/events.api';

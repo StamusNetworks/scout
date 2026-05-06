@@ -11,9 +11,9 @@ import {
   PageTitle,
 } from '@/common/design-system/atoms/page';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
-import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { usePageTitle } from '@/common/lib/use-page-title';
+import { TogglePageContainer } from '@/features/app-shell';
 import { OperationalCenterView } from '@/features/operational-center';
 
 export const Route = createFileRoute('/_enterprise/operational-center')({

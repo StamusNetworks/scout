@@ -15,12 +15,12 @@ import {
   ScrollArea,
   ScrollBar,
 } from '@/common/design-system/atoms/ui/scroll-area';
-import { DateTime } from '@/common/design-system/entities/date-time';
-import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
+import { TogglePageContainer } from '@/features/app-shell';
 import { BeaconingMetadata } from '@/features/events/components/beaconing-metadata/beaconing-metadata';
 import { ReportSummary } from '@/features/events/components/beaconing-report-summary/beaconing-report-summary';
 import { useBeaconReport } from '@/features/events/hooks/use-beacon-report';
 import { formatBeaconMetric } from '@/features/events/utils/format-beacon-metric';
+import { DateTime } from '@/features/preferences';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 import { BeaconingIPsTable } from '../beaconing-ips-table/beaconing-ips-table';

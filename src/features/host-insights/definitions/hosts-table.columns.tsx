@@ -1,11 +1,11 @@
 import { Row } from '@tanstack/react-table';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
-import { DateTime } from '@/common/design-system/entities/date-time';
 import { ExportColumn } from '@/common/design-system/molecules/data-table/data-table';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { FormattedBadge } from '@/common/design-system/molecules/formatted-badge';
+import { DateTime } from '@/features/preferences';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 import { HostnameTemplate } from '../components/host-attributes/hostname';

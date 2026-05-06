@@ -7,9 +7,9 @@ import { Button } from '@/common/design-system/atoms/ui/button';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import { serializeSorting } from '@/common/design-system/molecules/data-table/hooks/sorting-parser';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
-import { ExportButton } from '@/common/design-system/molecules/export-button';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
+import { ExportButton } from '@/features/preferences';
 
 import {
   HOSTS_BASE_COLUMNS,

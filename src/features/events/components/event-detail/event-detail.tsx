@@ -5,7 +5,6 @@ import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { StatsBlock } from '@/common/design-system/atoms/page-stats';
 import { Card } from '@/common/design-system/atoms/ui/card';
-import { DateTime } from '@/common/design-system/entities/date-time';
 import { esEscape } from '@/common/lib/strings';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { Event } from '@/features/events/model/event';
@@ -13,6 +12,7 @@ import {
   HostSummary,
   useGetHostWithAlertsQuery,
 } from '@/features/host-insights';
+import { DateTime } from '@/features/preferences';
 import { useDefaultEventDetailTab } from '@/features/preferences';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';

@@ -6,7 +6,6 @@ import {
   ContextMenu,
   ContextMenuTrigger,
 } from '@/common/design-system/atoms/ui/context-menu';
-import { DateTime } from '@/common/design-system/entities/date-time';
 import type { ProtoColumn } from '@/common/design-system/graphs/proto-flow/flow.columns';
 import protoColumns from '@/common/design-system/graphs/proto-flow/flow.columns';
 import {
@@ -29,6 +28,7 @@ import {
   useGetEventsAggregationQuery,
   useGetProtocolsFromEventsQuery,
 } from '@/features/events';
+import { DateTime } from '@/features/preferences';
 import { ContextMenuContent } from '@/features/query-filters/components/interactive-value/context-menu/context-menu.content';
 import { useCreateFilter } from '@/features/query-filters/hooks/use-create-filter';
 import { useESMapping } from '@/features/query-filters/hooks/use-es-mapping';

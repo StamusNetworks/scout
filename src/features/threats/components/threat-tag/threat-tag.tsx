@@ -9,9 +9,9 @@ import {
   HoverCardTrigger,
 } from '@/common/design-system/atoms/ui/hover-card';
 import { Skeleton } from '@/common/design-system/atoms/ui/skeleton';
-import { DateTime } from '@/common/design-system/entities/date-time';
 import { cn } from '@/common/lib/utils';
 import { useIsAfterStart } from '@/features/dates';
+import { DateTime } from '@/features/preferences';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { KillchainTag } from '@/features/threats/components/kill-chain-tag/kill-chain-tag';
 import { type KillChainPhase } from '@/features/threats/model/kill-chain';

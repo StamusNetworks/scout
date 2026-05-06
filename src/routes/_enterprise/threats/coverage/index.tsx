@@ -18,7 +18,7 @@ import {
 } from '@/common/design-system/atoms/ui/pillTabs';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
-import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
+import { TogglePageContainer } from '@/features/app-shell';
 import {
   ActiveFamiliesList,
   ActiveThreatsList,

@@ -10,8 +10,8 @@ import {
   PageTitle,
 } from '@/common/design-system/atoms/page';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
-import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
+import { TogglePageContainer } from '@/features/app-shell';
 import { VolumetryView } from '@/features/events';
 
 const seriesKeySchema = z.enum([

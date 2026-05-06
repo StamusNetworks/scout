@@ -17,10 +17,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/common/design-system/atoms/ui/tooltip';
-import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { isIP } from '@/common/lib/ips';
+import { DateTime } from '@/features/preferences';
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
 import { KillchainTag } from '@/features/threats';
 import { ThreatTag } from '@/features/threats';

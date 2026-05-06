@@ -5,7 +5,6 @@ import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { CardContent } from '@/common/design-system/atoms/ui/card';
-import { DateTime } from '@/common/design-system/entities/date-time';
 import { getDuration } from '@/common/lib/duration';
 import {
   EventDetailTabs,
@@ -18,6 +17,7 @@ import {
 } from '@/features/events/components/event-detail';
 import { Event } from '@/features/events/model/event';
 import { Hostname, Network } from '@/features/host-insights';
+import { DateTime } from '@/features/preferences';
 import { useDefaultEventDetailTab } from '@/features/preferences';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { KillchainTag, KillChainPhase, ThreatTag } from '@/features/threats';

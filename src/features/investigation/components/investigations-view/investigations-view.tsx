@@ -16,7 +16,6 @@ import {
   EmptyMedia,
 } from '@/common/design-system/atoms/ui/empty';
 import { Separator } from '@/common/design-system/atoms/ui/separator';
-import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
@@ -29,6 +28,7 @@ import { ValueListCard } from '@/common/design-system/molecules/value-list-card'
 import { Paginated } from '@/common/fetching/fetching.types';
 import { esEscape } from '@/common/lib/strings';
 import { useSetDates } from '@/features/dates';
+import { DateTime } from '@/features/preferences';
 import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
 import { useCreateFilter } from '@/features/query-filters/hooks/use-create-filter';
 import { useFilterFlagsRepository } from '@/features/query-filters/hooks/use-filter-flags-repository';

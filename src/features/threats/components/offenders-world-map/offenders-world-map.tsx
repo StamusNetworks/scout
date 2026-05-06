@@ -1,6 +1,7 @@
-import { WorldMap } from '@/common/design-system/graphs/world-map/world-map';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useGetWorldMapOffendersCountsQuery } from '@/features/threats/api/threats.api';
+
+import { WorldMap } from './world-map/world-map';
 
 export const OffendersWorldMap = () => {
   const params = useGlobalQueryParams(['tenant', 'dates']);

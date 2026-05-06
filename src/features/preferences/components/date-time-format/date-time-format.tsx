@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/common/design-system/atoms/ui/select';
-import { DateTime } from '@/common/design-system/entities/date-time';
+import { DateTime } from '@/features/preferences';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import {

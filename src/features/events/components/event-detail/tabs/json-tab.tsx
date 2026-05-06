@@ -1,4 +1,4 @@
-import { JsonView } from '@/common/design-system/atoms/json-view';
+import { JsonView } from '@/features/app-shell';
 import { Event } from '@/features/events/model/event';
 
 import { TabComponentType } from '../event-detail-tabs.types';

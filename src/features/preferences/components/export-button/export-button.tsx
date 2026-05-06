@@ -1,25 +1,7 @@
-import { Copy, Download, EllipsisVertical } from 'lucide-react';
-import { toPairs } from 'ramda';
+import { EllipsisVertical } from 'lucide-react';
 
-import {
-  downloadBlob,
-  formatTo,
-  formatToCsv,
-  formatToHtmlTable,
-  formatToMarkdown,
-  saveToClipboard,
-} from '@/common/lib/save';
-import { cn } from '@/common/lib/utils';
-import {
-  ExportAction,
-  selectEnabledActions,
-  selectExportAction,
-  selectExportFormat,
-} from '@/features/preferences/state/preferences.slice';
-import { useAppSelector } from '@/store/store';
-
-import { Button } from '../atoms/ui/button';
-import { ButtonGroup } from '../atoms/ui/button-group';
+import { Button } from '@/common/design-system/atoms/ui/button';
+import { ButtonGroup } from '@/common/design-system/atoms/ui/button-group';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,75 +10,23 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '../atoms/ui/dropdown-menu';
+} from '@/common/design-system/atoms/ui/dropdown-menu';
+import { cn } from '@/common/lib/utils';
+import { useAppSelector } from '@/store/store';
 
-export const actionTypes = {
-  download: {
-    label: 'Download',
-    Icon: Download,
-  },
-  copy: {
-    label: 'Copy',
-    Icon: Copy,
-  },
-};
-
-type Action = {
-  label: string;
-  action: (data: object[], headers?: string[]) => void;
-};
-
-export const downloadActions: Record<string, Action> = {
-  csv: {
-    label: 'CSV',
-    action: (data, headers) => downloadBlob(formatToCsv(data, headers)),
-  },
-  tsv: {
-    label: 'TSV',
-    action: (data, headers) => downloadBlob(formatTo('\t', data, headers)),
-  },
-};
-export const downloadActionsItems = toPairs(downloadActions).map(
-  ([key, action]) => ({
-    id: 'download-' + key,
-    Icon: actionTypes.download.Icon,
-    label: actionTypes.download.label + ' as ' + action.label,
-    formatLabel: action.label,
-    format: key,
-    action: action.action,
-  }),
-);
-
-export const copyActions: Record<string, Action> = {
-  csv: {
-    label: 'CSV',
-    action: (data, headers) =>
-      saveToClipboard(
-        formatToCsv(data, headers),
-        formatToHtmlTable(data, headers),
-      ),
-  },
-  tsv: {
-    label: 'TSV',
-    action: (data, headers) =>
-      saveToClipboard(
-        formatTo('\t', data, headers),
-        formatToHtmlTable(data, headers),
-      ),
-  },
-  markdown: {
-    label: 'Markdown',
-    action: (data, headers) => saveToClipboard(formatToMarkdown(data, headers)),
-  },
-};
-export const copyActionsItems = toPairs(copyActions).map(([key, action]) => ({
-  id: 'copy-' + key,
-  Icon: actionTypes.copy.Icon,
-  label: actionTypes.copy.label + ' as ' + action.label,
-  formatLabel: action.label,
-  format: key,
-  action: action.action,
-}));
+import {
+  actionTypes,
+  copyActions,
+  copyActionsItems,
+  downloadActions,
+  downloadActionsItems,
+} from '../../definitions/export-actions.config';
+import {
+  ExportAction,
+  selectEnabledActions,
+  selectExportAction,
+  selectExportFormat,
+} from '../../state/preferences.slice';
 
 interface ExportButtonProps {
   data: object[];
@@ -104,6 +34,7 @@ interface ExportButtonProps {
   className?: string;
   demo?: boolean;
 }
+
 export const ExportButton = ({
   data,
   headers,

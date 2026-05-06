@@ -1,8 +1,8 @@
-import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { FtpEvent } from '@/features/events/model/app-proto/ftp.schema';
+import { DateTime } from '@/features/preferences';
 
 export const relatedFlowColumns: CustomColumnDef<FtpEvent>[] = [
   {

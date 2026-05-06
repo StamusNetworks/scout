@@ -22,9 +22,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/common/design-system/atoms/ui/table';
-import { DateTime } from '@/common/design-system/entities/date-time';
 import { FormattedBadge } from '@/common/design-system/molecules/formatted-badge';
 import { Event } from '@/features/events/model/event';
+import { DateTime } from '@/features/preferences';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { KillchainTag } from '@/features/threats';
 import { ThreatTag } from '@/features/threats';

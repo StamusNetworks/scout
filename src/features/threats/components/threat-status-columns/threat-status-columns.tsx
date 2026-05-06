@@ -8,10 +8,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/common/design-system/atoms/ui/tooltip';
-import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { Hostname, Network, Roles, Username } from '@/features/host-insights';
+import { DateTime } from '@/features/preferences';
 import { KillchainTag } from '@/features/threats/components/kill-chain-tag/kill-chain-tag';
 
 import { useThreat } from '../../hooks/use-threat';

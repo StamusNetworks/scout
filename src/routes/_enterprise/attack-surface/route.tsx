@@ -20,9 +20,9 @@ import {
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/pillTabs';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
-import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { useSearchNavigate } from '@/common/lib/use-search-navigate';
+import { TogglePageContainer } from '@/features/app-shell';
 import { DiscoveredHosts, HomeNetPicker } from '@/features/host-insights';
 
 const searchSchema = z.object({

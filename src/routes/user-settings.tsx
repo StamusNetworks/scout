@@ -10,7 +10,7 @@ import {
   PageTitle,
 } from '@/common/design-system/atoms/page';
 import { Separator } from '@/common/design-system/atoms/ui/separator';
-import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
+import { TogglePageContainer } from '@/features/app-shell';
 import {
   ColorBlindnessSelector,
   DataDisplay,

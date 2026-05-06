@@ -12,7 +12,7 @@ import {
   TabsList,
   TabsTriggerLink,
 } from '@/common/design-system/atoms/ui/pillTabs';
-import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
+import { TogglePageContainer } from '@/features/app-shell';
 import { IndicatorsDopv } from '@/features/operational-center';
 
 export const Route = createFileRoute(

@@ -5,9 +5,9 @@ import { useMemo } from 'react';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import { serializeSorting } from '@/common/design-system/molecules/data-table/hooks/sorting-parser';
 import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
-import { ExportButton } from '@/common/design-system/molecules/export-button';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
+import { ExportButton } from '@/features/preferences';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 import { useGetBeaconingEventsQuery } from '../../api/events.api';

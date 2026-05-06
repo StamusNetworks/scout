@@ -1,6 +1,5 @@
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
-import { DateTime } from '@/common/design-system/entities/date-time';
 import { ExportColumn } from '@/common/design-system/molecules/data-table/data-table';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
@@ -12,6 +11,7 @@ import {
   RoleBadge,
   Username,
 } from '@/features/host-insights';
+import { DateTime } from '@/features/preferences';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { EntityThreatTagsList } from '@/features/threats';
 import { IpOrEntityEventValue } from '@/features/threats';

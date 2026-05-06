@@ -19,7 +19,7 @@ import {
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/borderTabs';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
-import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
+import { TogglePageContainer } from '@/features/app-shell';
 import { useGetBeaconingEventsQuery } from '@/features/events';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 

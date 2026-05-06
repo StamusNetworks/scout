@@ -1,6 +1,5 @@
 import { Radar } from 'lucide-react';
 
-import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
@@ -8,6 +7,7 @@ import { CustomColumnDef } from '@/common/design-system/molecules/data-table/fil
 import { useServerTableState } from '@/common/design-system/molecules/data-table/hooks/use-server-table-state.ts';
 import { SNI } from '@/common/design-system/molecules/sni';
 import { getDuration } from '@/common/lib/duration';
+import { DateTime } from '@/features/preferences';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 

@@ -1,9 +1,9 @@
+import { Container } from '@/common/design-system/atoms/layout/container';
+import { PageContainer } from '@/common/design-system/atoms/page';
 import { cn } from '@/common/lib/utils';
-import { selectWithPageContainer } from '@/features/app-shell/state/ui-state.slice';
 import { useAppSelector } from '@/store/store';
 
-import { Container } from '../atoms/layout/container';
-import { PageContainer } from '../atoms/page';
+import { selectWithPageContainer } from '../../state/ui-state.slice';
 
 type PageContainerProps = React.ComponentProps<typeof Container>;
 export const TogglePageContainer = ({

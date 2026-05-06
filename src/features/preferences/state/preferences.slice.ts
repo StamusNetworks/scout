@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { RootState } from '@/store/store';
+
 import {
   actionTypes,
   copyActions,
   downloadActions,
-} from '@/common/design-system/molecules/export-button';
-import { RootState } from '@/store/store';
+} from '../definitions/export-actions.config';
 
 const initialState: PreferencesState = {
   timeDisplay: 'human_readable',

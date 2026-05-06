@@ -19,14 +19,14 @@ import {
   ScrollBar,
 } from '@/common/design-system/atoms/ui/scroll-area';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
-import { DateTime } from '@/common/design-system/entities/date-time';
-import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
+import { TogglePageContainer } from '@/features/app-shell';
 import { EventsStream } from '@/features/events/components/events-stream/events-stream';
 import { SightingEventsTailFlow } from '@/features/events/components/events-tail-flow/events-tail-flow';
 import { PatientZeroDetails } from '@/features/events/components/patient-zero-details/patient-zero-details';
 import { SightingEventsCountsTimeline } from '@/features/events/components/sighting-events-counts-timeline/sighting-events-counts-timeline';
 import { SightingsMetadata } from '@/features/events/components/sightings-metadata/sightings-metadata';
 import { useGetSightingById } from '@/features/events/hooks/use-get-sighting-by-id';
+import { DateTime } from '@/features/preferences';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { getFilterDef } from '@/features/query-filters/definitions/query-filter.definitions';
 

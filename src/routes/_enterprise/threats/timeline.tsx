@@ -7,7 +7,7 @@ import {
   PageHeaderContent,
   PageTitle,
 } from '@/common/design-system/atoms/page';
-import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
+import { TogglePageContainer } from '@/features/app-shell';
 import { Timeline } from '@/features/threats';
 
 export const Route = createFileRoute('/_enterprise/threats/timeline')({

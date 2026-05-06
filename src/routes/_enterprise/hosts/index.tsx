@@ -11,9 +11,9 @@ import {
 } from '@/common/design-system/atoms/page';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
-import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { useSearchNavigate } from '@/common/lib/use-search-navigate';
+import { TogglePageContainer } from '@/features/app-shell';
 import {
   DiscoveredHosts,
   HomeNetPicker,

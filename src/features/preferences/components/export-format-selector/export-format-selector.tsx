@@ -10,14 +10,13 @@ import {
   RadioGroupItem,
 } from '@/common/design-system/atoms/ui/radio-group';
 import { Separator } from '@/common/design-system/atoms/ui/separator';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+
 import {
   actionTypes,
   copyActionsItems,
   downloadActionsItems,
-  ExportButton,
-} from '@/common/design-system/molecules/export-button';
-import { useAppDispatch, useAppSelector } from '@/store/store';
-
+} from '../../definitions/export-actions.config';
 import {
   ExportAction,
   selectEnabledActions,
@@ -27,6 +26,7 @@ import {
   setExportFormat,
   toggleEnabledAction,
 } from '../../state/preferences.slice';
+import { ExportButton } from '../export-button/export-button';
 import {
   Category,
   CategoryContent,

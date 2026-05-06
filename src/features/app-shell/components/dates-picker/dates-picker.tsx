@@ -6,24 +6,9 @@ import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { DateTimeInput } from '@/common/design-system/atoms/ui/date-time-input';
-import { Label } from '@/common/design-system/atoms/ui/label';
-import {
-  selectAutoReloadInterval,
-  selectAutoReloadStartDate,
-  setAutoReloadInterval,
-} from '@/features/app-shell/state/ui-state.slice';
-import {
-  formatUnit,
-  TimeUnit,
-  units,
-  useAutoRange,
-  useDates,
-  useSetDates,
-} from '@/features/dates';
-import { useAppDispatch, useAppSelector } from '@/store/store';
-
 import { Divider } from '@/common/design-system/atoms/ui/divider';
 import { Input } from '@/common/design-system/atoms/ui/input';
+import { Label } from '@/common/design-system/atoms/ui/label';
 import {
   Popover,
   PopoverContent,
@@ -44,6 +29,20 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/common/design-system/atoms/ui/tooltip';
+import {
+  selectAutoReloadInterval,
+  selectAutoReloadStartDate,
+  setAutoReloadInterval,
+} from '@/features/app-shell/state/ui-state.slice';
+import {
+  formatUnit,
+  TimeUnit,
+  units,
+  useAutoRange,
+  useDates,
+  useSetDates,
+} from '@/features/dates';
+import { useAppDispatch, useAppSelector } from '@/store/store';
 
 export const DatesPicker = () => {
   const { type, from_duration, from_unit, start_date, end_date } = useDates();

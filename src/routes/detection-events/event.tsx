@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import { PageBoundary } from '@/common/design-system/atoms/error-boundary';
 import { Page } from '@/common/design-system/atoms/page';
-import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
+import { TogglePageContainer } from '@/features/app-shell';
 import { EventDetail } from '@/features/events';
 
 const searchSchema = z.object({

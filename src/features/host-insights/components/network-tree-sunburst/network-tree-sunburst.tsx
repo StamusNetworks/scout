@@ -19,10 +19,6 @@ import {
   EmptyHeader,
   EmptyMedia,
 } from '@/common/design-system/atoms/ui/empty';
-import {
-  SunburstGraph,
-  type SunburstNode,
-} from '@/common/design-system/graphs/sunburst/sunburst';
 import { CommandFilterSingle } from '@/common/design-system/molecules/data-table/filters/command-filter-single';
 import { formatNumber } from '@/common/lib/numbers';
 import { esEscape } from '@/common/lib/strings';
@@ -34,6 +30,7 @@ import {
 
 import { useGetNetworkTreeQuery } from '../../api/hosts.api';
 import { NetworkTreeFilterService } from '../../utils/network-tree-filter-service';
+import { SunburstGraph, type SunburstNode } from './sunburst/sunburst';
 
 export type TreeDataPayload = {
   path: string;

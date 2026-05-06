@@ -1,10 +1,10 @@
 import { formatDuration, intervalToDuration } from 'date-fns';
 
-import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { DhcpEvent } from '@/features/events/model/app-proto/dhcp.schema';
+import { DateTime } from '@/features/preferences';
 
 export const relatedFlowColumns: CustomColumnDef<DhcpEvent>[] = [
   {

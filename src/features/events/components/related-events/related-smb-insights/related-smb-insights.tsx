@@ -1,4 +1,4 @@
-import { JsonView } from '@/common/design-system/atoms/json-view';
+import { JsonView } from '@/features/app-shell';
 import { SmbInsightsEvent } from '@/features/events/model/event-types/smb-insights.schema';
 
 export const RelatedSmbInsightsTab = ({

@@ -1,9 +1,9 @@
 import { Row } from '@tanstack/react-table';
 import { useMemo } from 'react';
 
-import { JsonView } from '@/common/design-system/atoms/json-view';
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
+import { JsonView } from '@/features/app-shell';
 
 interface RelatedTableProps<EventType extends object> {
   data: EventType[];

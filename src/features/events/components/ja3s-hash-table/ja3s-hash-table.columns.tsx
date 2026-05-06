@@ -1,5 +1,4 @@
 import { Badge } from '@/common/design-system/atoms/ui/badge';
-import { DateTime } from '@/common/design-system/entities/date-time';
 import { ExportColumn } from '@/common/design-system/molecules/data-table/data-table';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
@@ -7,6 +6,7 @@ import { SNI } from '@/common/design-system/molecules/sni';
 import { getDuration } from '@/common/lib/duration';
 import { BeaconingEvent } from '@/features/events/model/beaconing-event';
 import { formatBeaconMetric } from '@/features/events/utils/format-beacon-metric';
+import { DateTime } from '@/features/preferences';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 export const tlsJ3ASTableColumns: CustomColumnDef<BeaconingEvent>[] = [

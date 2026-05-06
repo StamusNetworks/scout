@@ -1,12 +1,10 @@
 import ReactJson, { type ThemeKeys } from '@microlink/react-json-view';
 import { useMemo } from 'react';
 
-import {
-  BaseTheme,
-  selectJsonViewOpen,
-} from '@/features/app-shell/state/ui-state.slice';
 import { useGetPreferredColorScheme, useTheme } from '@/features/theming';
 import { useAppSelector } from '@/store/store';
+
+import { BaseTheme, selectJsonViewOpen } from '../../state/ui-state.slice';
 
 const ThemesMap = {
   light: 'bright:inverted',

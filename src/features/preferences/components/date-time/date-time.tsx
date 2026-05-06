@@ -1,19 +1,16 @@
 import { format } from 'date-fns';
 
-import { dateFromNow } from '@/common/lib/date-from-now';
-import {
-  selectTimeDisplay,
-  TimeDisplay,
-} from '@/features/preferences/state/preferences.slice';
-import { useAppSelector } from '@/store/store';
-
-import { Grid } from '../atoms/layout/grid';
+import { Grid } from '@/common/design-system/atoms/layout/grid';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '../atoms/ui/tooltip';
+} from '@/common/design-system/atoms/ui/tooltip';
+import { dateFromNow } from '@/common/lib/date-from-now';
+import { useAppSelector } from '@/store/store';
+
+import { selectTimeDisplay, TimeDisplay } from '../../state/preferences.slice';
 
 export const DateTime = ({ date }: { date: Date | string | number }) => {
   const displayPreference = useAppSelector(selectTimeDisplay);

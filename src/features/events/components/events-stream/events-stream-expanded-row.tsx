@@ -1,12 +1,12 @@
 import { Row } from '@tanstack/react-table';
 
-import { JsonView } from '@/common/design-system/atoms/json-view';
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from '@/common/design-system/atoms/ui/pillTabs';
+import { JsonView } from '@/features/app-shell';
 import { Event } from '@/features/events/model/event';
 
 interface EventsStreamExpandedRowProps {

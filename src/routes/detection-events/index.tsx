@@ -11,8 +11,8 @@ import {
   PageTitle,
 } from '@/common/design-system/atoms/page';
 import { usePaginatedSearch } from '@/common/design-system/molecules/data-table/hooks/use-paginated-search';
-import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
+import { TogglePageContainer } from '@/features/app-shell';
 import { DetectionEventsTable } from '@/features/events';
 import { EventsCounter } from '@/features/events';
 import { EventsTimeline } from '@/features/events';

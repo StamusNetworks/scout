@@ -1,9 +1,9 @@
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
-import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import type { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { Hostname, Network } from '@/features/host-insights';
+import { DateTime } from '@/features/preferences';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 import type { Event } from '../model/event';

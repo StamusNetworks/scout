@@ -7,7 +7,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/common/design-system/atoms/ui/tooltip';
-import { DateTime } from '@/common/design-system/entities/date-time';
 import { ExportColumn } from '@/common/design-system/molecules/data-table/data-table';
 import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { DataTableRowExpander } from '@/common/design-system/molecules/data-table/data-table.row-expander';
@@ -15,6 +14,7 @@ import { CustomColumnDef } from '@/common/design-system/molecules/data-table/fil
 import { cn } from '@/common/lib/utils';
 import { Event } from '@/features/events/model/event';
 import { Hostname, Network } from '@/features/host-insights';
+import { DateTime } from '@/features/preferences';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 
 export const getColumns = (

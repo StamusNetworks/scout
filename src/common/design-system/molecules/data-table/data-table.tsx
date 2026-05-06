@@ -52,6 +52,7 @@ import { DataTablePagination } from '@/common/design-system/molecules/data-table
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { Paginated } from '@/common/fetching/fetching.types';
 import { cn } from '@/common/lib/utils';
+import { ExportButton } from '@/features/preferences';
 
 import { Row as RowComponent } from '../../atoms/layout/row';
 import { Button } from '../../atoms/ui/button';
@@ -63,7 +64,6 @@ import {
   EmptyMedia,
 } from '../../atoms/ui/empty';
 import { Skeleton } from '../../atoms/ui/skeleton';
-import { ExportButton } from '../export-button';
 import { DataTableViewOptions } from './data-table.viewOptions';
 
 export type ExportColumn<T> = {

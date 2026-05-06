@@ -1,7 +1,7 @@
-import { DateTime } from '@/common/design-system/entities/date-time';
 import { DataTable } from '@/common/design-system/molecules/data-table';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { usePaginationState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
+import { DateTime } from '@/features/preferences';
 import { KillchainTag } from '@/features/threats/components/kill-chain-tag/kill-chain-tag';
 import { ThreatTag } from '@/features/threats/components/threat-tag/threat-tag';
 
