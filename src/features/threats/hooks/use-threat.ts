@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import { useTenant } from '@/features/tenancy';
 
 import {
@@ -9,21 +7,15 @@ import {
 
 export const useThreat = (id?: number) => {
   const tenant = useTenant();
-  const { data: allThreats, isLoading: STILoading } = useGetSTIThreatsQuery();
+  const { data: stiThreats, isLoading: stiLoading } = useGetSTIThreatsQuery();
   const { data: customThreats, isLoading: customLoading } =
     useGetCustomThreatsQuery({ tenant });
 
-  return useMemo(
-    () =>
-      id === undefined
-        ? {
-            data: undefined,
-            isLoading: STILoading || customLoading,
-          }
-        : {
-            data: allThreats?.entities[id] || customThreats?.entities[id],
-            isLoading: STILoading || customLoading,
-          },
-    [allThreats, customThreats, id, STILoading, customLoading],
-  );
+  const isLoading = stiLoading || customLoading;
+  if (id === undefined) return { data: undefined, isLoading };
+
+  return {
+    data: stiThreats?.entities[id] ?? customThreats?.entities[id],
+    isLoading,
+  };
 };
