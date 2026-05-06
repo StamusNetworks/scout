@@ -19,6 +19,8 @@ import { cn } from '@/common/lib/utils';
 import { useGetEventsTimelineQuery } from '@/features/events';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
+import { joinCipherSecurityTimelines } from '../../model/cipher-security';
+
 const chartConfig = {
   recommended: {
     label: 'Recommended',
@@ -112,15 +114,11 @@ export const CipherSecurity = () => {
     qfilter: 'tls.cipher_security:degraded',
   });
 
-  const data = useMemo(() => {
-    if (!recommendedData || !insecureData || !degradedData) return undefined;
-    return recommendedData.map((recommended, i) => ({
-      ...recommended,
-      recommended: recommendedData[i]?.count,
-      insecure: insecureData[i]?.count,
-      degraded: degradedData[i]?.count,
-    }));
-  }, [recommendedData, insecureData, degradedData]);
+  const data = useMemo(
+    () =>
+      joinCipherSecurityTimelines(recommendedData, insecureData, degradedData),
+    [recommendedData, insecureData, degradedData],
+  );
 
   return (
     <ChartContainer
