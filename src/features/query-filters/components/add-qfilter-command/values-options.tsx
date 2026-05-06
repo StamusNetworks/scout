@@ -5,22 +5,22 @@ import {
   CommandLoading,
 } from '@/common/design-system/atoms/ui/command';
 import { formatNumber } from '@/common/lib/numbers';
-import { setOpenModal } from '@/features/app-shell/state/ui-state.slice';
 import { useGetDashboardFieldsQuery } from '@/features/events';
-import { useAppDispatch, useAppSelector } from '@/store/store';
+import { useAppSelector } from '@/store/store';
 
 import { FilterInputType } from '../../definitions/query-filter.config';
 import { useCreateFilter } from '../../hooks/use-create-filter';
 import { useQueryFilterDefinition } from '../../hooks/use-filters-definitions';
 import { useGlobalQueryParams } from '../../hooks/use-global-query-params';
+import { useQfilterModal } from '../../hooks/use-qfilter-modal';
 import { selectFilterCommand } from '../../state/add-qfilter-command.selectors';
 import { getFilterValue } from '../../utils/get-filter-label';
 import { handleSubmit } from './add-qfilter-command';
 
 export const ValuesOptions = () => {
-  const dispatch = useAppDispatch();
   const createFilter = useCreateFilter();
-  const closeModal = () => dispatch(setOpenModal(null));
+  const qfilterModal = useQfilterModal();
+  const closeModal = qfilterModal.close;
   const { filter, search, negated, wildcarded } =
     useAppSelector(selectFilterCommand);
   const filterDef = useQueryFilterDefinition(filter ?? '');

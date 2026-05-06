@@ -12,6 +12,7 @@ import { investigationsHistoryInitialState } from '@/features/investigation/stat
 import { marketingInitialState } from '@/features/marketing/state/marketing.slice';
 import { preferencesInitialState } from '@/features/preferences/state/preferences.slice';
 import { addQfilterCommandInitialState } from '@/features/query-filters/state/add-qfilter-command.slice';
+import { qfilterModalInitialState } from '@/features/query-filters/state/qfilter-modal.slice';
 import { queryFiltersInitialState } from '@/features/query-filters/state/query-filters.slice';
 import { settingsInitialState } from '@/features/settings/state/settings.slice';
 import { tenancyInitialState } from '@/features/tenancy/state/tenancy.slice';
@@ -40,6 +41,7 @@ export const initialState: Omit<RootState, 'API'> = {
   },
   modals: {
     addFiltersCommand: addQfilterCommandInitialState,
+    qfilterModal: qfilterModalInitialState,
     saveFilterSetModal: saveFilterSetModalInitialState,
     filterActionModal: filterActionModalInitialState,
   },

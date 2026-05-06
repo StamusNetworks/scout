@@ -18,7 +18,7 @@ export type BaseTheme = 'dark' | 'light' | 'catppuccin' | 'diesel' | 'matrix';
 
 export type Theme = 'system' | BaseTheme;
 
-export type Modal = 'globalCommand' | 'addFilterCommand' | 'addEsFilter';
+export type Modal = 'globalCommand';
 
 type UIState = {
   theme: Theme;

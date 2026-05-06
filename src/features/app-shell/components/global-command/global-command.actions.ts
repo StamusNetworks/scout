@@ -18,7 +18,7 @@ import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { getConfig } from '@/config';
 import { useFilterActionModal } from '@/features/filter-actions';
 import { useSaveFilterSetModal } from '@/features/filter-sets';
-import { useQueryFilters } from '@/features/query-filters';
+import { useQfilterModal, useQueryFilters } from '@/features/query-filters';
 import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
 import { useUpdatePushRuleSetMutation } from '@/features/rules';
 import { API } from '@/store/api';
@@ -27,7 +27,6 @@ import { useAppDispatch, useAppSelector } from '@/store/store';
 import {
   selectIsSidebarOpen,
   setIsSidebarOpen,
-  setOpenModal,
 } from '../../state/ui-state.slice';
 
 export type GlobalCommandAction = {
@@ -53,6 +52,7 @@ export const useGlobalCommands = (): GlobalCommands[] => {
   const clearFilters = useClearFilters();
   const filterActionModal = useFilterActionModal();
   const saveFilterSetModal = useSaveFilterSetModal();
+  const qfilterModal = useQfilterModal();
   const handleUpdatePushRuleset = () => {
     updatePushRuleset({ enterprise })
       .unwrap()
@@ -94,17 +94,13 @@ export const useGlobalCommands = (): GlobalCommands[] => {
           Icon: Filter,
           title: 'Add filter',
           shortcut: getShortcutDisplay('L'),
-          action: () => {
-            dispatch(setOpenModal('addFilterCommand'));
-          },
+          action: qfilterModal.openAddFilter,
         },
         {
           Icon: Code,
           title: 'Add Custom ES Filter',
           shortcut: getShortcutDisplay('O'),
-          action: () => {
-            dispatch(setOpenModal('addEsFilter'));
-          },
+          action: qfilterModal.openAddEsFilter,
         },
         {
           Icon: FilterX,

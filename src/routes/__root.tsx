@@ -19,6 +19,7 @@ import {
   setIsSidebarOpen,
   setOpenModal,
 } from '@/features/app-shell/state/ui-state.slice';
+import { useQfilterModal } from '@/features/query-filters';
 import { FiltersSideBar } from '@/features/query-filters/components/filters-sidebar/filters-sidebar';
 import { useSystemSettings } from '@/features/settings';
 import type { AppStore } from '@/store/store';
@@ -36,6 +37,7 @@ function RootComponent() {
   const dispatch = useAppDispatch();
   const { enterprise } = useFeatureFlags();
   const isFiltersOpen = useAppSelector(selectIsSidebarOpen);
+  const qfilterModal = useQfilterModal();
 
   useEffect(() => {
     const keyPress = (e: KeyboardEvent) => {
@@ -46,11 +48,11 @@ function RootComponent() {
         }
         if (e.key === 'l') {
           e.preventDefault();
-          dispatch(setOpenModal('addFilterCommand'));
+          qfilterModal.openAddFilter();
         }
         if (e.key === 'o') {
           e.preventDefault();
-          dispatch(setOpenModal('addEsFilter'));
+          qfilterModal.openAddEsFilter();
         }
       }
       const activeElement = document.activeElement;
@@ -69,7 +71,7 @@ function RootComponent() {
     return () => {
       document.removeEventListener('keydown', keyPress);
     };
-  }, [dispatch]);
+  }, [dispatch, qfilterModal]);
 
   const { data: systemSettings } = useSystemSettings();
 

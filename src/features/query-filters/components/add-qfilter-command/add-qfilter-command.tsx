@@ -9,13 +9,10 @@ import {
   CommandList,
 } from '@/common/design-system/atoms/ui/command';
 import { cn } from '@/common/lib/utils';
-import {
-  selectIsModalOpen,
-  setOpenModal,
-} from '@/features/app-shell/state/ui-state.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { getFilterDef } from '../../definitions/query-filter.definitions';
+import { useQfilterModal } from '../../hooks/use-qfilter-modal';
 import { selectFilterCommand } from '../../state/add-qfilter-command.selectors';
 import {
   resetCommand,
@@ -56,7 +53,8 @@ const handleItemsFiltering = (value: string, search: string) => {
 export const AddQfilterCommand = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
-  const open = useAppSelector(selectIsModalOpen('addFilterCommand'));
+  const qfilterModal = useQfilterModal();
+  const open = qfilterModal.kind === 'addFilter';
   const { step, filter, search, negated, wildcarded } =
     useAppSelector(selectFilterCommand);
 
@@ -98,7 +96,9 @@ export const AddQfilterCommand = () => {
     <CommandDialog
       label="Add filter"
       open={open}
-      onOpenChange={() => dispatch(setOpenModal('addFilterCommand'))}
+      onOpenChange={(next) =>
+        next ? qfilterModal.openAddFilter() : qfilterModal.close()
+      }
       filter={handleItemsFiltering}
     >
       <Row className="shadow-border items-center justify-between gap-3 px-3 shadow-[0_0_0_1px]">

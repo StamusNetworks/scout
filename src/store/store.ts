@@ -18,6 +18,7 @@ import { investigationsHistorySlice } from '@/features/investigation/state/inves
 import { marketingSlice } from '@/features/marketing/state/marketing.slice';
 import { preferencesSlice } from '@/features/preferences/state/preferences.slice';
 import { addQfilterCommandSlice } from '@/features/query-filters/state/add-qfilter-command.slice';
+import { qfilterModalSlice } from '@/features/query-filters/state/qfilter-modal.slice';
 import { queryFiltersSlice } from '@/features/query-filters/state/query-filters.slice';
 import { settingsSlice } from '@/features/settings/state/settings.slice';
 import { tenancySlice } from '@/features/tenancy/state/tenancy.slice';
@@ -116,6 +117,7 @@ export const rootReducer = () =>
     }),
     modals: combineReducers({
       addFiltersCommand: addQfilterCommandSlice.reducer,
+      qfilterModal: qfilterModalSlice.reducer,
       saveFilterSetModal: saveFilterSetModalSlice.reducer,
       filterActionModal: filterActionModalSlice.reducer,
     }),

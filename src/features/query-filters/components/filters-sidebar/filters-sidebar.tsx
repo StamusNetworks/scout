@@ -27,7 +27,6 @@ import { cn } from '@/common/lib/utils';
 import {
   selectIsSidebarOpen,
   setIsSidebarOpen,
-  setOpenModal,
 } from '@/features/app-shell/state/ui-state.slice';
 import {
   FilterActionsDropdown,
@@ -47,6 +46,7 @@ import { FilterCategory } from '../../definitions/query-filter.config';
 import { getFilterDef } from '../../definitions/query-filter.definitions';
 import { useClearFilters } from '../../hooks/use-clear-filters';
 import { useFilterFlagsRepository } from '../../hooks/use-filter-flags-repository';
+import { useQfilterModal } from '../../hooks/use-qfilter-modal';
 import { useReorderFilters } from '../../hooks/use-reorder-filters';
 import { useSuspendFilter } from '../../hooks/use-suspend-filter';
 import { AlertTagFlags, EventTypeFlags } from '../../model/filter-flags';
@@ -104,6 +104,7 @@ type SideBarConfig = {
 export const FiltersSideBar = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
+  const qfilterModal = useQfilterModal();
   const saveFilterSetModal = useSaveFilterSetModal();
   const flags = useSelector(selectGatedFilterFlags);
   const queryFilters = useSelector(selectQueryFilters);
@@ -222,7 +223,7 @@ export const FiltersSideBar = () => {
       key: 'add-filter',
       label: 'Add filter',
       render: (
-        <button onClick={() => dispatch(setOpenModal('addFilterCommand'))}>
+        <button onClick={qfilterModal.openAddFilter}>
           <SidebarActionIcon type={PlusCircle} />
         </button>
       ),

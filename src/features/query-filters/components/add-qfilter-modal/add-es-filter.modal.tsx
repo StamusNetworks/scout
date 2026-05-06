@@ -8,24 +8,20 @@ import {
 } from '@/common/design-system/atoms/ui/dialog';
 import { VisuallyHidden } from '@/common/design-system/atoms/ui/visually-hidden';
 import { LuceneEditor } from '@/common/design-system/molecules/lucene-editor';
-import {
-  selectIsModalOpen,
-  setOpenModal,
-} from '@/features/app-shell/state/ui-state.slice';
-import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { useCreateFilter } from '../../hooks/use-create-filter';
 import { useQueryFiltersDefinitions } from '../../hooks/use-filters-definitions';
+import { useQfilterModal } from '../../hooks/use-qfilter-modal';
 
 export const AddEsFilterModal = () => {
-  const dispatch = useAppDispatch();
   const createFilter = useCreateFilter();
-  const isOpen = useAppSelector(selectIsModalOpen('addEsFilter'));
+  const qfilterModal = useQfilterModal();
+  const isOpen = qfilterModal.kind === 'addEsFilter';
   const [query, setQuery] = useState('');
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
-      dispatch(setOpenModal(null));
+      qfilterModal.close();
       setQuery('');
     }
   };
@@ -46,7 +42,7 @@ export const AddEsFilterModal = () => {
       key: 'es_filter',
       value: trimmed,
     });
-    dispatch(setOpenModal(null));
+    qfilterModal.close();
     setQuery('');
   };
 

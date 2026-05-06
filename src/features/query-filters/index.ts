@@ -58,6 +58,9 @@ export {
   useQueryFilters,
 } from './hooks/use-query-filters';
 
+// Modal hook
+export { useQfilterModal } from './hooks/use-qfilter-modal';
+
 // Action hooks
 export { useClearFilters } from './hooks/use-clear-filters';
 export { useCreateFilter } from './hooks/use-create-filter';
