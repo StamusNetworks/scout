@@ -486,10 +486,19 @@ Phase 4 — composition cleanup. Three strands.
   fetch host counts. `routes/__root.tsx` keyboard shortcuts moved
   into `useGlobalKeyboardShortcuts` in app-shell.
 
-- **Extract pure logic from React** — pending. Hunt for `useMemo`-of-
-  pure-derivations and hooks that compute without state, move them
-  into `model/` or `common/lib/` so they can be tested with vitest
-  alone.
+- **Extract pure logic from React** — done for the surveyed targets.
+  STI+custom threat merge → `threats/model/threat-merge.ts`
+  (`mergeThreatCollections`, `filterThreatsByKind`); previous-range
+  math → `dates/model/previous-dates.ts`; news-feed dedup/sort/tag →
+  `marketing/model/news-feed.ts`; events qfilter assembly →
+  `query-filters/builders/build-events-qfilter.ts`; hunting-trail
+  group-by-type-and-sort → `hunting-trail/model/purpose-grouping.ts`
+  (also dedup'd a duplicate definition in another component);
+  volumetry timeline series → `events/builders/build-timeline-series.ts`
+  (with `TimelineSeries` / `TimelinePoint` lifted to `definitions/`);
+  cipher-security index-join → `operational-center/model/cipher-security.ts`;
+  filter category order by route → `query-filters/model/filter-category-order.ts`.
+  Hooks reduced to thin compose; pure logic gained vitest coverage.
 
 Phase 5 — tighten lint rules from `warn` to `error`, add CI checks for
 mandatory `index.ts` per feature.
