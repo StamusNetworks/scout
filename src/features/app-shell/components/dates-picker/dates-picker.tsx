@@ -35,6 +35,7 @@ import {
   setAutoReloadInterval,
 } from '@/features/app-shell/state/ui-state.slice';
 import {
+  computeDates,
   formatUnit,
   TimeUnit,
   units,
@@ -45,7 +46,9 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 export const DatesPicker = () => {
-  const { type, from_duration, from_unit, from, to } = useDates();
+  const dates = useDates();
+  const { type, from_duration, from_unit, from, to } = dates;
+  const absolute = computeDates(dates);
 
   const { data, isFetching } = useAutoRange();
   const setDates = useSetDates();
@@ -153,9 +156,9 @@ export const DatesPicker = () => {
         </Popover>
         <TooltipContent className="grid grid-cols-[2rem_1fr] gap-2">
           <p>From</p>
-          <p>{formatDate(from!, 'yyyy-MM-dd HH:mm:ss')}</p>
+          <p>{formatDate(absolute.from, 'yyyy-MM-dd HH:mm:ss')}</p>
           <p>To</p>
-          <p>{formatDate(to || new Date(), 'yyyy-MM-dd HH:mm:ss')}</p>
+          <p>{formatDate(absolute.to, 'yyyy-MM-dd HH:mm:ss')}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
