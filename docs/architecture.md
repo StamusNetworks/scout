@@ -388,18 +388,48 @@ under `state/`, and a route orchestrator), rules (formerly
 the marketing label "Detection Methods" stays on the route and UI
 strings — the wire `signatures` and `rulesets` collapse into Rule,
 RuleVersion, RuleSet, and RuleStatus, with the Suricata Analysis dump
-preserved as a documented wire-passthrough leaf), and host-insights
+preserved as a documented wire-passthrough leaf), host-insights
 (folder migration only — common/ and use-cases/ legacy structure
 collapsed into canonical api/, model/, hooks/, definitions/,
 components/, utils/; wire shape kept intact since ~30 external
 consumers in events/threats/query-filters/filter-sets reach into
 the host-id-nested wire schema, so transforming was deferred to a
-later focused effort). Remaining: peripheral contexts (deeplinks,
-hunting-trail, investigation, marketing, operational-center, ui). As each context
-migrates, its API surface adopts the domain-shaped `Pagination`
-(`{ page, pageSize, ordering }`) and `DateRange` (`{ from, to }`);
-`buildQueryParams` translates to wire at the boundary. The
-kernel-wide collapse falls out of these per-feature migrations.
+later focused effort), deeplinks (full ACL: domain `id` /
+`userDefined` / flat `entities: FilterType[]` translated from wire
+`pk` / `user_defined` / `[{name}]` arrays), marketing (full ACL with
+`pubDate` → domain `publishedAt`; slice name and selector typo
+fixed), operational-center (entities/ flattened to per-component
+folders; static `indicators` config moved to `definitions/`; events
+volumetry-view deep-imports the config to dodge a barrel cycle),
+investigation (slice + history-slice moved to `state/`; cross-feature
+read/write goes through new public hooks `useInvestigationStage`,
+`useCurrentInvestigationStage`, `useInvestigationFilter`,
+`useIsActiveFindings`, `useStartInvestigation`, `useAddEvidence`,
+`useAddFindingsKey`), and hunting-trail (legacy `*.model.ts` /
+`*.queries.ts` / `molecules/` / `use-cases/` collapsed into canonical
+`model/` / `definitions/` / `hooks/` / `components/`). The umbrella
+`features/ui/` retired into five focused contexts: `preferences`
+(slice + UI components, plus public read hooks
+`useDefaultEventDetailTab`, `useAutoOpenSidebarOnNavigation`,
+`useColorBlindness`), `theming` (useTheme + ThemeSelector),
+`help` (slice + `useHelpState`, `useDisableHelp`), `share`
+(shareable-state utilities), and `app-shell` (ui-state slice for
+modal/sidebar/auto-reload, GlobalCommand, Header, Modals).
+The chrome that used to sit under
+`common/design-system/layouts/components/` (header, modals,
+dates-picker, help-menu, reload-button) and the smart molecules that
+read feature state (json-view, toggle-container, modal entity,
+date-time, export-button, world-map, sunburst) now live inside the
+feature that owns their state, so `common/` is feature-free in
+direction except for one documented edge: `data-table` still
+imports `ExportButton` from the preferences barrel because a
+render-prop refactor was out of scope.
+
+As each context migrates, its API surface adopts the domain-shaped
+`Pagination` (`{ page, pageSize, ordering }`) and `DateRange`
+(`{ from, to }`); `buildQueryParams` translates to wire at the
+boundary. The kernel-wide collapse falls out of these per-feature
+migrations.
 
 ### Deferred kernel cleanup
 
