@@ -29,6 +29,7 @@ export {
 } from './api/rules.api';
 
 // Public components
+export { HostDetectionMethodsTabBadge } from './components/host-detection-methods-tab-badge/host-detection-methods-tab-badge';
 export { RuleAnalysis } from './components/rule-analysis';
 export { RuleFlow } from './components/rule-flow/rule-flow';
 export { RuleRulesetStatus } from './components/rule-ruleset-status/rule-ruleset-status';

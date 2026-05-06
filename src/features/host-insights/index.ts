@@ -36,6 +36,7 @@ export { HostSummary, HostStats } from './components/host-summary';
 export { InternalExternal } from './components/internal-external';
 export { HostInsightsBlocks } from './components/host-insights-blocks';
 export { HostHeader } from './components/host-header/host-header';
+export { HostDetailsShell } from './components/host-details-shell/host-details-shell';
 export { HostInsightsView } from './components/host-insights-view/host-insights-view';
 export { HostTimeline } from './components/host-timeline/host-timeline';
 export { HostBeaconsTable } from './components/host-beacons-table/host-beacons-table';

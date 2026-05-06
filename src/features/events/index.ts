@@ -139,3 +139,9 @@ export { SightingEventsTailFlow } from './components/events-tail-flow/events-tai
 export { PatientZeroDetails } from './components/patient-zero-details/patient-zero-details';
 export { SightingsMetadata } from './components/sightings-metadata/sightings-metadata';
 export { SightingEventsCountsTimeline } from './components/sighting-events-counts-timeline/sighting-events-counts-timeline';
+export {
+  HostBeaconsTabBadge,
+  HostDetectionEventsTabBadge,
+  HostOutlierEventsTabBadge,
+  HostSightingsTabBadge,
+} from './components/host-tab-badges/host-tab-badges';

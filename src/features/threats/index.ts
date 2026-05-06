@@ -94,6 +94,7 @@ export { FamilyActiveThreats } from './components/family-active-threats/family-a
 // `@/features/rules` (which themselves transitively import from
 // the threats barrel), creating a barrel-to-barrel cycle. Routes deep-import
 // them directly via `@/features/threats/components/<name>/<name>`.
+export { HostIncidentsTabBadge } from './components/host-incidents-tab-badge/host-incidents-tab-badge';
 export { HuntingTrail } from './components/hunting-trail/hunting-trail';
 export { ImpactedEntitiesTable } from './components/impacted-entities-table/impacted-entities-table';
 export { IncidentsTable } from './components/incidents-table/incidents-table';
