@@ -21,6 +21,7 @@ export type ESMapping = Record<
 >;
 
 export const ESMappingAPI = API.injectEndpoints({
+  overrideExisting: import.meta.env.DEV,
   endpoints: (builder) => ({
     getESMapping: builder.query<ESMapping, void>({
       query: () => ({

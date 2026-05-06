@@ -18,6 +18,7 @@ import {
 } from './impacted-entity.transforms';
 
 export const EntitiesAPI = API.injectEndpoints({
+  overrideExisting: import.meta.env.DEV,
   endpoints: (builder) => ({
     // QUERIES
     getImpactedEntities: builder.query<

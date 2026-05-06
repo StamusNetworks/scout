@@ -132,6 +132,7 @@ export const getAggregationBody = (
 });
 
 export const HostsAPI = API.injectEndpoints({
+  overrideExisting: import.meta.env.DEV,
   endpoints: (builder) => ({
     // QUERIES
     getHosts: builder.query<

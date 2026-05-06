@@ -14,6 +14,7 @@ type NetworkDefinitionDto = {
 };
 
 export const TenancyAPI = API.injectEndpoints({
+  overrideExisting: import.meta.env.DEV,
   endpoints: (builder) => ({
     getTenantsList: builder.query<Tenant[], void>({
       query: () => ({

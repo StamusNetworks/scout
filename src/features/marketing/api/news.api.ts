@@ -28,6 +28,7 @@ const getTracker = (isEE: boolean) =>
       : '?utm_source=clear-ndr-community&utm_medium=newsfeed&utm_campaign=clear-ndr-news';
 
 export const NewsAPI = API.injectEndpoints({
+  overrideExisting: import.meta.env.DEV,
   endpoints: (builder) => ({
     getCENewsFeed: builder.query<News[], { isEE: boolean }>({
       query: ({ isEE }) => ({

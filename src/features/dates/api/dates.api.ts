@@ -6,6 +6,7 @@ import { type EventTypeFlags } from '@/features/query-filters';
 import { API } from '@/store/api';
 
 export const DatesAPI = API.injectEndpoints({
+  overrideExisting: import.meta.env.DEV,
   endpoints: (builder) => ({
     getAutoDateRange: builder.query<
       { min_timestamp: number; max_timestamp: number },

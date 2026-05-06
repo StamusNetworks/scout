@@ -18,6 +18,7 @@ import type { SystemSettingsDto } from './system-settings.dto';
 import { toSystemSettings } from './system-settings.transforms';
 
 export const SettingsAPI = API.injectEndpoints({
+  overrideExisting: import.meta.env.DEV,
   endpoints: (builder) => ({
     getSystemSettings: builder.query<SystemSettings, void>({
       query: () => ({

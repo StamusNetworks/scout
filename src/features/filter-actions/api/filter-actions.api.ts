@@ -29,6 +29,7 @@ import {
 } from './filter-action.transforms';
 
 export const FilterActionsAPI = API.injectEndpoints({
+  overrideExisting: import.meta.env.DEV,
   endpoints: (builder) => ({
     // QUERIES
     getFilterActions: builder.query<

@@ -35,6 +35,7 @@ import { API } from '@/store/api';
  * with the model+ACL phase.
  */
 export const EventsAPI = API.injectEndpoints({
+  overrideExisting: import.meta.env.DEV,
   endpoints: (builder) => ({
     // === IDS events (alert / stamus / discovery) ===
     getEvents: builder.query<
