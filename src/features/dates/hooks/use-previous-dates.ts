@@ -1,22 +1,10 @@
-import { useMemo } from 'react';
-
 import { useAppSelector } from '@/store/store';
 
 import { computeDates } from '../model/dates-state';
+import { computePreviousRange } from '../model/previous-dates';
 import { selectDates } from '../state/dates.selectors';
 
-/**
- * The window immediately preceding the active one, of the same length.
- * Used by trend indicators that compare "now" vs the previous period.
- */
 export const usePreviousDates = () => {
   const dates = useAppSelector(selectDates);
-  const absDates = computeDates(dates);
-  return useMemo(() => {
-    const interval = absDates.to - absDates.from;
-    return {
-      from: absDates.from - interval,
-      to: absDates.from,
-    };
-  }, [absDates.to, absDates.from]);
+  return computePreviousRange(computeDates(dates));
 };
