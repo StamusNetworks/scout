@@ -38,14 +38,14 @@ import {
   selectInvestigationStages,
   selectStageIsValidToContinue,
   terminateInvestigation,
-} from '../../investigation.slice';
+} from '../../state/investigation.slice';
 import {
   addInvestigation,
   selectCurrentSave,
   updateCurrentSaveComment,
   updateCurrentSaveName,
   updateCurrentSaveTags,
-} from '../../investigations-history.slice';
+} from '../../state/investigations-history.slice';
 import { InvestigationParams } from '../investigation-details/investigation-params';
 import { InvestigationResults } from '../investigation-details/investigation-results';
 import { InvestigationStage } from '../investigation-details/investigation-stage';

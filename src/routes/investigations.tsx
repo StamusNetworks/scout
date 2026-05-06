@@ -13,7 +13,7 @@ import {
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
-import { InvestigationHistoryList } from '@/features/investigation/entities/investigations-view';
+import { InvestigationHistoryList } from '@/features/investigation';
 
 export const Route = createFileRoute('/investigations')({
   component: () => (

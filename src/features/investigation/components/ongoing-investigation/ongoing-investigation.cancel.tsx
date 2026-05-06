@@ -7,7 +7,7 @@ import {
   cancelStage,
   selectInvestigationStage,
   terminateInvestigation,
-} from '../../investigation.slice';
+} from '../../state/investigation.slice';
 
 export const CancelStageOrInvestigation = () => {
   const dispatch = useAppDispatch();

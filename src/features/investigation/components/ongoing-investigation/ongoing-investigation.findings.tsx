@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from '@/store/store';
 import {
   removeFindingsKey,
   selectInvestigationFindingsKeys,
-} from '../../investigation.slice';
+} from '../../state/investigation.slice';
 
 export const FindingsKeys = () => {
   const dispatch = useAppDispatch();

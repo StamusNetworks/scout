@@ -33,8 +33,7 @@ import {
   useSaveFilterSetModal,
 } from '@/features/filter-sets';
 import { useWithAlertsParam } from '@/features/host-insights';
-import { Investigation } from '@/features/investigation/components/ongoing-investigation/ongoing-investigation';
-import { selectInvestigationStage } from '@/features/investigation/investigation.slice';
+import { Investigation, useInvestigationStage } from '@/features/investigation';
 import { useIsEnterprise } from '@/features/settings';
 import { selectAutoOpenSidebarOnNavigation } from '@/features/ui/preferences/preferences.slice';
 import {
@@ -198,7 +197,7 @@ export const FiltersSideBar = () => {
     }
   }, [sideBarConfig?.enabled, dispatch, autoOpenSidebarOnNavigation]);
 
-  const investigationStage = useAppSelector(selectInvestigationStage);
+  const investigationStage = useInvestigationStage();
 
   const handleKeyPress = useCallback(
     (event: KeyboardEvent) => {

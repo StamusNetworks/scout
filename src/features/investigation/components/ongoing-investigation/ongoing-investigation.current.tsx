@@ -20,7 +20,7 @@ import {
   selectStageIsValidToContinue,
   setStageComment,
   voteForCurrentItem,
-} from '../../investigation.slice';
+} from '../../state/investigation.slice';
 
 export const CurrentStage = () => {
   const dispatch = useAppDispatch();

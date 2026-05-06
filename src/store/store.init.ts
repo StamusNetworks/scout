@@ -5,8 +5,8 @@ import { dashboardPageStateInitialState } from '@/features/events/state/dashboar
 import { filterActionModalInitialState } from '@/features/filter-actions/state/filter-action-modal.slice';
 import { queryFiltersSetsInitialState } from '@/features/filter-sets/state/filter-sets.slice';
 import { saveFilterSetModalInitialState } from '@/features/filter-sets/state/save-filter-set.slice';
-import { investigationInitialState } from '@/features/investigation/investigation.slice';
-import { investigationsHistoryInitialState } from '@/features/investigation/investigations-history.slice';
+import { investigationInitialState } from '@/features/investigation/state/investigation.slice';
+import { investigationsHistoryInitialState } from '@/features/investigation/state/investigations-history.slice';
 import { marketingInitialState } from '@/features/marketing/state/marketing.slice';
 import { addQfilterCommandInitialState } from '@/features/query-filters/state/add-qfilter-command.slice';
 import { queryFiltersInitialState } from '@/features/query-filters/state/query-filters.slice';

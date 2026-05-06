@@ -15,7 +15,7 @@ import {
   InvestigationStage as InvestigationStageType,
   selectInvestigationStage,
   selectInvestigationStages,
-} from '../../investigation.slice';
+} from '../../state/investigation.slice';
 
 export const InvestigationStages = () => {
   const currStage = useAppSelector(selectInvestigationStage);

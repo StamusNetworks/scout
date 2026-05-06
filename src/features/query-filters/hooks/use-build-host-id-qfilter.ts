@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 
-import { selectInvestigationFilter } from '@/features/investigation/investigation.slice';
-import { useAppSelector } from '@/store/store';
+import { useInvestigationFilter } from '@/features/investigation';
 
 import { useQFBuilder } from '../hooks/use-qf-builder';
 import { QueryFilterState } from '../model/query-filter';
@@ -13,7 +12,7 @@ export function useBuildHostIdQfilter(
 ): string | undefined {
   const repo = useQueryFiltersRepository();
   const qfBuilder = useQFBuilder();
-  const investigation = useAppSelector(selectInvestigationFilter);
+  const investigation = useInvestigationFilter();
 
   return useMemo(() => {
     const queryFilters = repo.getAll();

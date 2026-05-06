@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
 
 import { esEscape } from '@/common/lib/strings';
-import { selectInvestigationFilter } from '@/features/investigation/investigation.slice';
+import { useInvestigationFilter } from '@/features/investigation';
 import { useIsEnterprise } from '@/features/settings';
-import { useAppSelector } from '@/store/store';
 
 import {
   FilterCategory,
@@ -22,7 +21,7 @@ export function useBuildEventsQfilter(
   const repo = useQueryFiltersRepository();
   const tagRepo = useFilterFlagsRepository();
   const qfBuilder = useQFBuilder();
-  const investigation = useAppSelector(selectInvestigationFilter);
+  const investigation = useInvestigationFilter();
   const isEnterprise = useIsEnterprise();
 
   return useMemo(() => {

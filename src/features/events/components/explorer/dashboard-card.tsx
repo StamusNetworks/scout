@@ -57,13 +57,13 @@ import { FormattedBadge } from '@/common/design-system/molecules/formatted-badge
 import { downloadBlob, formatToCsv, saveToClipboard } from '@/common/lib/save';
 import { cn } from '@/common/lib/utils';
 import {
-  addFindingsKey,
-  selectInvestigationStage,
-  selectIsActiveFindings,
-  startInvestigation,
-} from '@/features/investigation/investigation.slice';
+  useAddFindingsKey,
+  useInvestigationStage,
+  useIsActiveFindings,
+  useStartInvestigation,
+} from '@/features/investigation';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
-import { useAppDispatch, useAppSelector } from '@/store/store';
+import { useAppSelector } from '@/store/store';
 
 import { useDashboard } from '../../hooks/use-dashboard';
 import { useFieldsStats } from '../../hooks/use-fields-stats';
@@ -88,10 +88,10 @@ export const ValueListCard = ({
   title: string;
   tooltip: string;
 }) => {
-  const dispatch = useAppDispatch();
-
-  const investigationStage = useAppSelector(selectInvestigationStage);
-  const isActiveIoc = useAppSelector(selectIsActiveFindings(es_key));
+  const startInvestigation = useStartInvestigation();
+  const addFindingsKey = useAddFindingsKey();
+  const investigationStage = useInvestigationStage();
+  const isActiveIoc = useIsActiveFindings(es_key);
 
   const { data: dashboardData } = useDashboard();
   const data =
@@ -148,12 +148,10 @@ export const ValueListCard = ({
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() =>
-                  dispatch(
-                    startInvestigation({
-                      key: es_key,
-                      values: data.map((d) => d.key),
-                    }),
-                  )
+                  startInvestigation({
+                    key: es_key,
+                    values: data.map((d) => d.key),
+                  })
                 }
                 disabled={
                   actionDisabled ||
@@ -168,7 +166,7 @@ export const ValueListCard = ({
               </DropdownMenuItem>
               {investigationStage !== null && (
                 <DropdownMenuItem
-                  onClick={() => dispatch(addFindingsKey(es_key))}
+                  onClick={() => addFindingsKey(es_key)}
                   disabled={actionDisabled}
                   data-testid="dashboard-card-dropdown-item-copy"
                 >

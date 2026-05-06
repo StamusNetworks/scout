@@ -11,7 +11,7 @@ import {
   getFilterValue,
 } from '@/features/query-filters/utils/get-filter-label';
 
-import { InvestigationStage as InvestigationStageType } from '../../investigation.slice';
+import { InvestigationStage as InvestigationStageType } from '../../state/investigation.slice';
 import { valueVariants } from '../ongoing-investigation/ongoing-investigation.current';
 
 interface InvestigationStageProps {

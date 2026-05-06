@@ -26,11 +26,10 @@ import { startsWithOneOf } from '@/common/lib/strings';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useGetDeeplinksQuery } from '@/features/deeplinks';
 import {
-  addEvidence,
-  selectCurrentInvestigationStage,
-  selectInvestigationStage,
-} from '@/features/investigation/investigation.slice';
-import { useAppDispatch, useAppSelector } from '@/store/store';
+  useAddEvidence,
+  useCurrentInvestigationStage,
+  useInvestigationStage,
+} from '@/features/investigation';
 
 import { useCreateFilter } from '../../../hooks/use-create-filter';
 import { useEnableFilterFlags } from '../../../hooks/use-enable-filter-flags';
@@ -56,7 +55,7 @@ export const ContextMenuContent = ({
 }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const addEvidence = useAddEvidence();
   const createFilter = useCreateFilter();
   const replaceFilters = useReplaceFilters();
   const enableTags = useEnableFilterFlags();
@@ -83,8 +82,8 @@ export const ContextMenuContent = ({
             )),
     );
   }, [deeplinksData, resolvedEntity]);
-  const investigationStage = useAppSelector(selectInvestigationStage);
-  const currentStage = useAppSelector(selectCurrentInvestigationStage);
+  const investigationStage = useInvestigationStage();
+  const currentStage = useCurrentInvestigationStage();
   const { enterprise } = useFeatureFlags();
   return (
     <ContextMenuContentBase
@@ -106,12 +105,10 @@ export const ContextMenuContent = ({
               investigationStage === 'idle' || currentStage?.currentIndex === -1
             }
             onClick={() =>
-              dispatch(
-                addEvidence({
-                  key: query_key,
-                  value,
-                }),
-              )
+              addEvidence({
+                key: query_key,
+                value,
+              })
             }
             className="font-medium"
           >

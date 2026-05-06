@@ -11,8 +11,8 @@ import { dashboardPageStateSlice } from '@/features/events/state/dashboard.slice
 import { filterActionModalSlice } from '@/features/filter-actions/state/filter-action-modal.slice';
 import { queryFiltersSetsSlice } from '@/features/filter-sets/state/filter-sets.slice';
 import { saveFilterSetModalSlice } from '@/features/filter-sets/state/save-filter-set.slice';
-import { investigationSlice } from '@/features/investigation/investigation.slice';
-import { investigationsHistorySlice } from '@/features/investigation/investigations-history.slice';
+import { investigationSlice } from '@/features/investigation/state/investigation.slice';
+import { investigationsHistorySlice } from '@/features/investigation/state/investigations-history.slice';
 import { marketingSlice } from '@/features/marketing/state/marketing.slice';
 import { addQfilterCommandSlice } from '@/features/query-filters/state/add-qfilter-command.slice';
 import { queryFiltersSlice } from '@/features/query-filters/state/query-filters.slice';

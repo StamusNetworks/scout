@@ -6,6 +6,7 @@ import { Card } from '@/common/design-system/atoms/ui/card';
 import { StatsCardHorizontalContent } from '@/common/design-system/molecules/stats-card-horizontal';
 import { usePreviousDates } from '@/features/dates';
 import { useGlobalStats } from '@/features/events';
+
 import { indicators } from '../../definitions/indicators.config';
 
 export const IndicatorsDocDopv = () => {

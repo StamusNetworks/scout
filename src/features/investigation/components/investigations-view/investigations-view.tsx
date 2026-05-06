@@ -29,12 +29,6 @@ import { ValueListCard } from '@/common/design-system/molecules/value-list-card'
 import { Paginated } from '@/common/fetching/fetching.types';
 import { esEscape } from '@/common/lib/strings';
 import { useSetDates } from '@/features/dates';
-import { InvestigationParams } from '@/features/investigation/components/investigation-details/investigation-params';
-import { InvestigationResults } from '@/features/investigation/components/investigation-details/investigation-results';
-import { InvestigationStage } from '@/features/investigation/components/investigation-details/investigation-stage';
-import { inventoryHistoryOptions } from '@/features/investigation/components/ongoing-investigation/ongoing-investigation.save';
-import { InvestigationState } from '@/features/investigation/investigation.slice';
-import { InvestigationHistory } from '@/features/investigation/investigations-history.slice';
 import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
 import { useCreateFilter } from '@/features/query-filters/hooks/use-create-filter';
 import { useFilterFlagsRepository } from '@/features/query-filters/hooks/use-filter-flags-repository';
@@ -46,6 +40,13 @@ import {
 import { QueryFilterState } from '@/features/query-filters/model/query-filter';
 import { getFilterLabel } from '@/features/query-filters/utils/get-filter-label';
 import { useAppSelector } from '@/store/store';
+
+import { InvestigationState } from '../../state/investigation.slice';
+import { InvestigationHistory } from '../../state/investigations-history.slice';
+import { InvestigationParams } from '../investigation-details/investigation-params';
+import { InvestigationResults } from '../investigation-details/investigation-results';
+import { InvestigationStage } from '../investigation-details/investigation-stage';
+import { inventoryHistoryOptions } from '../ongoing-investigation/ongoing-investigation.save';
 
 function useShowOnlyKept() {
   return useQueryState('only_kept', parseAsBoolean.withDefault(true));
