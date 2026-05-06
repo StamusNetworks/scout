@@ -11,10 +11,6 @@ import {
 import { SidebarTrigger } from '@/common/design-system/atoms/ui/sidebar';
 import { BreadcrumbsOutlet } from '@/common/design-system/molecules/breadcrumbs';
 import { getShortcutDisplay } from '@/common/lib/platform';
-import {
-  selectWithPageContainer,
-  setWithPageContainer,
-} from '@/features/app-shell/state/ui-state.slice';
 import { useDisableHelp, useHelpState } from '@/features/help';
 import { NewsFeedModal } from '@/features/marketing';
 import { ShareButton } from '@/features/share';
@@ -22,6 +18,10 @@ import { ThemeSelector } from '@/features/theming';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { useGlobalCommandModal } from '../../hooks/use-global-command-modal';
+import {
+  selectWithPageContainer,
+  setWithPageContainer,
+} from '../../state/ui-state.slice';
 import { DatesPicker } from '../dates-picker/dates-picker';
 import { HelpMenu } from '../help-menu/help-menu';
 import { ReloadButton } from '../reload-button/reload-button';

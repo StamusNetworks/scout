@@ -30,11 +30,6 @@ import {
   TooltipTrigger,
 } from '@/common/design-system/atoms/ui/tooltip';
 import {
-  selectAutoReloadInterval,
-  selectAutoReloadStartDate,
-  setAutoReloadInterval,
-} from '@/features/app-shell/state/ui-state.slice';
-import {
   computeDates,
   formatUnit,
   TimeUnit,
@@ -44,6 +39,12 @@ import {
   useSetDates,
 } from '@/features/dates';
 import { useAppDispatch, useAppSelector } from '@/store/store';
+
+import {
+  selectAutoReloadInterval,
+  selectAutoReloadStartDate,
+  setAutoReloadInterval,
+} from '../../state/ui-state.slice';
 
 export const DatesPicker = () => {
   const dates = useDates();

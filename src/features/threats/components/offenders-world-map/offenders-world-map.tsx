@@ -1,6 +1,6 @@
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
-import { useGetWorldMapOffendersCountsQuery } from '@/features/threats/api/threats.api';
 
+import { useGetWorldMapOffendersCountsQuery } from '../../api/threats.api';
 import { WorldMap } from './world-map/world-map';
 
 export const OffendersWorldMap = () => {

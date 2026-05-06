@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { killChainPhaseSchema } from '@/features/threats/api/impacted-entity.dto';
-import { KillChainPhase } from '@/features/threats/model/kill-chain';
+import { killChainPhaseSchema } from '../api/impacted-entity.dto';
+import { KillChainPhase } from './kill-chain';
 
 export const threatHistorySchema = z.object({
   asset: z.string(),

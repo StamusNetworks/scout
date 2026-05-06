@@ -23,16 +23,16 @@ import { CommandFilterMultiple } from '@/common/design-system/molecules/data-tab
 import { isIP } from '@/common/lib/strings';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
-import { useGetImpactedEntitiesQuery } from '@/features/threats/api/entities.api';
-import { useGetThreatsStatusQuery } from '@/features/threats/api/threats.api';
-import { useThreats } from '@/features/threats/hooks/use-threats';
+
+import { useGetImpactedEntitiesQuery } from '../../api/entities.api';
+import { useGetThreatsStatusQuery } from '../../api/threats.api';
+import { useThreats } from '../../hooks/use-threats';
 import {
   KILL_CHAIN_PHASES_KEYS_WITHOUT_POLICIES,
   KILL_CHAIN_PHASES,
   killChainWithoutPoliciesOptions,
-} from '@/features/threats/model/kill-chain';
-import { ThreatStatus } from '@/features/threats/model/threat-status';
-
+} from '../../model/kill-chain';
+import { ThreatStatus } from '../../model/threat-status';
 import { incidentsColumns } from './incidents.columns';
 
 export interface CompromiseIncidentsTableProps {
