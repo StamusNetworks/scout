@@ -17,15 +17,11 @@ import {
   Header,
   Modals,
   useGlobalKeyboardShortcuts,
+  useSidebar,
 } from '@/features/app-shell';
-import {
-  selectIsSidebarOpen,
-  setIsSidebarOpen,
-} from '@/features/app-shell/state/ui-state.slice';
 import { FiltersSideBar } from '@/features/query-filters/components/filters-sidebar/filters-sidebar';
 import { useSystemSettings } from '@/features/settings';
 import type { AppStore } from '@/store/store';
-import { useAppDispatch, useAppSelector } from '@/store/store';
 
 export interface RouterContext {
   store: AppStore;
@@ -36,9 +32,8 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 });
 
 function RootComponent() {
-  const dispatch = useAppDispatch();
   const { enterprise } = useFeatureFlags();
-  const isFiltersOpen = useAppSelector(selectIsSidebarOpen);
+  const sidebar = useSidebar();
   useGlobalKeyboardShortcuts();
 
   const { data: systemSettings } = useSystemSettings();
@@ -65,11 +60,11 @@ function RootComponent() {
                 <div className="relative grow">
                   <Button
                     className="absolute top-[6px] right-0 z-50 -translate-x-2"
-                    onClick={() => dispatch(setIsSidebarOpen(!isFiltersOpen))}
+                    onClick={sidebar.toggle}
                     variant="ghost"
                     size="icon"
                   >
-                    {isFiltersOpen ? <PanelRightClose /> : <PanelRightOpen />}
+                    {sidebar.isOpen ? <PanelRightClose /> : <PanelRightOpen />}
                   </Button>
                   <Outlet />
                 </div>

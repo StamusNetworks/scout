@@ -1,10 +1,7 @@
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Switch } from '@/common/design-system/atoms/ui/switch';
-import {
-  selectAutoOpenSidebarOnFilterAdd,
-  setAutoOpenSidebarOnFilterAdd,
-} from '@/features/app-shell/state/ui-state.slice';
+import { useAutoOpenSidebarOnFilterAdd } from '@/features/app-shell';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import {
@@ -25,9 +22,7 @@ export const SidebarConfig = () => {
   const autoOpenSidebarOnNavigation = useAppSelector(
     selectAutoOpenSidebarOnNavigation,
   );
-  const autoOpenSidebarOnFilterAdd = useAppSelector(
-    selectAutoOpenSidebarOnFilterAdd,
-  );
+  const filterAdd = useAutoOpenSidebarOnFilterAdd();
   return (
     <Category>
       <CategoryHeader>
@@ -57,12 +52,8 @@ export const SidebarConfig = () => {
           </Row>
           <Row className="gap-2">
             <Switch
-              checked={autoOpenSidebarOnFilterAdd}
-              onCheckedChange={() =>
-                dispatch(
-                  setAutoOpenSidebarOnFilterAdd(!autoOpenSidebarOnFilterAdd),
-                )
-              }
+              checked={filterAdd.value}
+              onCheckedChange={() => filterAdd.setValue(!filterAdd.value)}
               className="mt-1"
               size="sm"
             />

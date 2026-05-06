@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import { Reorder } from 'motion/react';
 import { useCallback, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
@@ -24,10 +24,7 @@ import {
 } from '@/common/design-system/atoms/ui/tooltip';
 import { startsWithOneOf } from '@/common/lib/strings';
 import { cn } from '@/common/lib/utils';
-import {
-  selectIsSidebarOpen,
-  setIsSidebarOpen,
-} from '@/features/app-shell/state/ui-state.slice';
+import { useSidebar as useAppSidebar } from '@/features/app-shell';
 import {
   FilterActionsDropdown,
   useSupportedFilters,
@@ -40,7 +37,6 @@ import { useWithAlertsParam } from '@/features/host-insights';
 import { Investigation, useInvestigationStage } from '@/features/investigation';
 import { useAutoOpenSidebarOnNavigation } from '@/features/preferences';
 import { useIsEnterprise } from '@/features/settings';
-import { useAppSelector } from '@/store/store';
 
 import { FilterCategory } from '../../definitions/query-filter.config';
 import { getFilterDef } from '../../definitions/query-filter.definitions';
@@ -103,12 +99,12 @@ type SideBarConfig = {
 
 export const FiltersSideBar = () => {
   const { pathname } = useLocation();
-  const dispatch = useDispatch();
   const qfilterModal = useQfilterModal();
   const saveFilterSetModal = useSaveFilterSetModal();
   const flags = useSelector(selectGatedFilterFlags);
   const queryFilters = useSelector(selectQueryFilters);
-  const isOpen = useAppSelector(selectIsSidebarOpen);
+  const sidebar = useAppSidebar();
+  const isOpen = sidebar.isOpen;
   const filterActionSupportedFilters = useSupportedFilters();
   const autoOpenSidebarOnNavigation = useAutoOpenSidebarOnNavigation();
   const enterprise = useIsEnterprise();
@@ -189,12 +185,8 @@ export const FiltersSideBar = () => {
 
   useEffect(() => {
     if (!autoOpenSidebarOnNavigation) return;
-    if (sideBarConfig?.enabled) {
-      dispatch(setIsSidebarOpen(true));
-    } else {
-      dispatch(setIsSidebarOpen(false));
-    }
-  }, [sideBarConfig?.enabled, dispatch, autoOpenSidebarOnNavigation]);
+    sidebar.setOpen(Boolean(sideBarConfig?.enabled));
+  }, [sideBarConfig?.enabled, sidebar, autoOpenSidebarOnNavigation]);
 
   const investigationStage = useInvestigationStage();
 
@@ -202,10 +194,10 @@ export const FiltersSideBar = () => {
     (event: KeyboardEvent) => {
       if (event.key === 'g' && (event.metaKey || event.ctrlKey)) {
         event.preventDefault();
-        dispatch(setIsSidebarOpen(!isOpen));
+        sidebar.toggle();
       }
     },
-    [isOpen, dispatch],
+    [sidebar],
   );
 
   useEffect(() => {

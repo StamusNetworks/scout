@@ -1,12 +1,7 @@
 import { FormItem } from '@/common/design-system/atoms/ui/form';
 import { Input } from '@/common/design-system/atoms/ui/input';
 import { Label } from '@/common/design-system/atoms/ui/label';
-import { JsonView } from '@/features/app-shell';
-import {
-  selectJsonViewOpen,
-  setJsonViewOpen,
-} from '@/features/app-shell/state/ui-state.slice';
-import { useAppDispatch, useAppSelector } from '@/store/store';
+import { JsonView, useJsonViewOpen } from '@/features/app-shell';
 
 import {
   Category,
@@ -28,8 +23,7 @@ export const DataDisplay = () => {
 };
 
 export const JsonViewOpenInput = () => {
-  const dispatch = useAppDispatch();
-  const jsonViewOpen = useAppSelector(selectJsonViewOpen);
+  const jsonView = useJsonViewOpen();
   return (
     <CategoryContent>
       <FormItem>
@@ -39,8 +33,8 @@ export const JsonViewOpenInput = () => {
         </FieldDescription>
         <Input
           type="number"
-          value={jsonViewOpen}
-          onChange={(e) => dispatch(setJsonViewOpen(parseInt(e.target.value)))}
+          value={jsonView.value}
+          onChange={(e) => jsonView.setValue(parseInt(e.target.value))}
           min={1}
           className="max-w-64"
         />

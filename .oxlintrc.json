@@ -60,6 +60,8 @@
         "src/features/**/*.store.ts",
         "src/features/**/*.selectors.ts",
         "src/features/**/*-filter-service.ts",
+        "src/features/**/*.test.ts",
+        "src/features/**/*.test.tsx",
         "src/routes/_enterprise.tsx"
       ],
       "rules": {

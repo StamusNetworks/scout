@@ -12,8 +12,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/common/design-system/atoms/ui/dropdown-menu';
-import { setTheme, Theme } from '@/features/app-shell/state/ui-state.slice';
-import { useAppDispatch } from '@/store/store';
+import { type Theme, useThemeState } from '@/features/app-shell';
 
 import { useTheme } from '../../hooks/use-theme';
 
@@ -119,11 +118,11 @@ const ThemeOption = ({
   label: string;
   selected: boolean;
 }) => {
-  const dispatch = useAppDispatch();
+  const { setTheme } = useThemeState();
   return (
     <DropdownMenuItem
       key={theme}
-      onClick={() => dispatch(setTheme(theme))}
+      onClick={() => setTheme(theme)}
       className="flex items-center justify-between"
     >
       <span>{label}</span>
