@@ -16,6 +16,8 @@ import {
   downloadActionsItems,
   ExportButton,
 } from '@/common/design-system/molecules/export-button';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+
 import {
   ExportAction,
   selectEnabledActions,
@@ -24,9 +26,7 @@ import {
   setExportAction,
   setExportFormat,
   toggleEnabledAction,
-} from '@/features/ui/preferences/preferences.slice';
-import { useAppDispatch, useAppSelector } from '@/store/store';
-
+} from '../../state/preferences.slice';
 import {
   Category,
   CategoryContent,
@@ -34,7 +34,7 @@ import {
   CategoryTitle,
   FieldDescription,
   FieldTitle,
-} from './layout';
+} from '../preferences-layout';
 
 export const ExportFormatSelector = () => {
   const dispatch = useAppDispatch();

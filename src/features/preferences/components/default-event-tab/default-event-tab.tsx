@@ -12,20 +12,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/common/design-system/atoms/ui/select';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+
 import {
   EventDetailDefaultTab,
   selectDefaultEventDetailTab,
   setDefaultEventDetailTab,
-} from '@/features/ui/preferences/preferences.slice';
-import { useAppDispatch, useAppSelector } from '@/store/store';
-
+} from '../../state/preferences.slice';
 import {
   Category,
   CategoryContent,
   CategoryHeader,
   CategoryTitle,
   FieldDescription,
-} from './layout';
+} from '../preferences-layout';
 
 export const DefaultEventTab = () => {
   const dispatch = useAppDispatch();

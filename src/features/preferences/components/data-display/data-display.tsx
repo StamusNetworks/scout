@@ -14,7 +14,7 @@ import {
   CategoryHeader,
   CategoryTitle,
   FieldDescription,
-} from './layout';
+} from '../preferences-layout';
 
 export const DataDisplay = () => {
   return (

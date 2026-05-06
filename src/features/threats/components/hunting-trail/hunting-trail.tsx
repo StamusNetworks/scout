@@ -1,4 +1,7 @@
-import { PurposeAggregated, useHostHuntingTrail } from '@/features/hunting-trail';
+import {
+  PurposeAggregated,
+  useHostHuntingTrail,
+} from '@/features/hunting-trail';
 
 interface CompromiseHuntingTrailProps {
   asset: string;

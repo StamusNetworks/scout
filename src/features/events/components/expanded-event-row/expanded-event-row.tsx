@@ -1,8 +1,7 @@
 import { Row } from '@tanstack/react-table';
 
 import { Event } from '@/features/events/model/event';
-import { selectDefaultEventDetailTab } from '@/features/ui/preferences/preferences.slice';
-import { useAppSelector } from '@/store/store';
+import { useDefaultEventDetailTab } from '@/features/preferences';
 
 import {
   DetectionMethodTab,
@@ -16,7 +15,7 @@ import {
 } from '../event-detail';
 
 export const ExpandedEventRow = ({ row }: { row: Row<Event> }) => {
-  const defaultTab = useAppSelector(selectDefaultEventDetailTab);
+  const defaultTab = useDefaultEventDetailTab();
   return (
     <EventDetailTabs
       event={row.original}

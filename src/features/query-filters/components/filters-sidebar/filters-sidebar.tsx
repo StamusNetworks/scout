@@ -35,7 +35,7 @@ import {
 import { useWithAlertsParam } from '@/features/host-insights';
 import { Investigation, useInvestigationStage } from '@/features/investigation';
 import { useIsEnterprise } from '@/features/settings';
-import { selectAutoOpenSidebarOnNavigation } from '@/features/ui/preferences/preferences.slice';
+import { useAutoOpenSidebarOnNavigation } from '@/features/preferences';
 import {
   selectIsSidebarOpen,
   setIsSidebarOpen,
@@ -109,9 +109,7 @@ export const FiltersSideBar = () => {
   const queryFilters = useSelector(selectQueryFilters);
   const isOpen = useAppSelector(selectIsSidebarOpen);
   const filterActionSupportedFilters = useSupportedFilters();
-  const autoOpenSidebarOnNavigation = useAppSelector(
-    selectAutoOpenSidebarOnNavigation,
-  );
+  const autoOpenSidebarOnNavigation = useAutoOpenSidebarOnNavigation();
   const enterprise = useIsEnterprise();
   const [withAlerts] = useWithAlertsParam();
   const clearFilters = useClearFilters();

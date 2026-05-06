@@ -9,20 +9,20 @@ import {
   SelectValue,
 } from '@/common/design-system/atoms/ui/select';
 import { DateTime } from '@/common/design-system/entities/date-time';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+
 import {
   selectTimeDisplay,
   setTimeDisplay,
   TimeDisplay,
-} from '@/features/ui/preferences/preferences.slice';
-import { useAppDispatch, useAppSelector } from '@/store/store';
-
+} from '../../state/preferences.slice';
 import {
   Category,
   CategoryContent,
   CategoryHeader,
   CategoryTitle,
   FieldDescription,
-} from './layout';
+} from '../preferences-layout';
 
 export const DateTimeSelector = () => {
   return (

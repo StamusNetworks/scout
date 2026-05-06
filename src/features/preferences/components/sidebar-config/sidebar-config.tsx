@@ -2,15 +2,15 @@ import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Switch } from '@/common/design-system/atoms/ui/switch';
 import {
-  selectAutoOpenSidebarOnNavigation,
-  setAutoOpenSidebarOnNavigation,
-} from '@/features/ui/preferences/preferences.slice';
-import {
   selectAutoOpenSidebarOnFilterAdd,
   setAutoOpenSidebarOnFilterAdd,
 } from '@/features/ui/ui-state.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
+import {
+  selectAutoOpenSidebarOnNavigation,
+  setAutoOpenSidebarOnNavigation,
+} from '../../state/preferences.slice';
 import {
   Category,
   CategoryContent,
@@ -18,7 +18,7 @@ import {
   CategoryTitle,
   FieldDescription,
   FieldTitle,
-} from './layout';
+} from '../preferences-layout';
 
 export const SidebarConfig = () => {
   const dispatch = useAppDispatch();

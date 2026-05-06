@@ -13,7 +13,7 @@ import { queryFiltersInitialState } from '@/features/query-filters/state/query-f
 import { settingsInitialState } from '@/features/settings/state/settings.slice';
 import { tenancyInitialState } from '@/features/tenancy/state/tenancy.slice';
 import { helpInitialState } from '@/features/ui/help/help.slice';
-import { preferencesInitialState } from '@/features/ui/preferences/preferences.slice';
+import { preferencesInitialState } from '@/features/preferences/state/preferences.slice';
 import { uiStateInitialState } from '@/features/ui/ui-state.slice';
 
 import { RootState } from './store';

@@ -19,9 +19,8 @@ import {
 import { Event } from '@/features/events/model/event';
 import { Hostname, Network } from '@/features/host-insights';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
+import { useDefaultEventDetailTab } from '@/features/preferences';
 import { KillchainTag, KillChainPhase, ThreatTag } from '@/features/threats';
-import { selectDefaultEventDetailTab } from '@/features/ui/preferences/preferences.slice';
-import { useAppSelector } from '@/store/store';
 
 import { AnomalyCardContent } from './protocol/anomaly-card-content';
 import { DnsCardContent } from './protocol/dns-card-content';
@@ -175,7 +174,7 @@ const ProtocolContent = ({ event }: { event: Event }) => {
 };
 
 const ExpandedRow = ({ event }: { event: Event }) => {
-  const defaultTab = useAppSelector(selectDefaultEventDetailTab);
+  const defaultTab = useDefaultEventDetailTab();
   return (
     <EventDetailTabs
       event={event}

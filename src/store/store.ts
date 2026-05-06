@@ -19,7 +19,7 @@ import { queryFiltersSlice } from '@/features/query-filters/state/query-filters.
 import { settingsSlice } from '@/features/settings/state/settings.slice';
 import { tenancySlice } from '@/features/tenancy/state/tenancy.slice';
 import { helpSlice } from '@/features/ui/help/help.slice';
-import { preferencesSlice } from '@/features/ui/preferences/preferences.slice';
+import { preferencesSlice } from '@/features/preferences/state/preferences.slice';
 import { uiStateSlice } from '@/features/ui/ui-state.slice';
 
 import { API } from './api';

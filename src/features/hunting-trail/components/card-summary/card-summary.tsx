@@ -3,9 +3,10 @@ import { useMemo, useState } from 'react';
 
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { FormattedBadge } from '@/common/design-system/molecules/formatted-badge';
-import { TimelineEventType, TimelineGroup } from '../../model/hunting-trail';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { getFilterLabel } from '@/features/query-filters/utils/get-filter-label';
+
+import { TimelineEventType, TimelineGroup } from '../../model/hunting-trail';
 
 const SUMMARY_PAGE_SIZE = 5;
 

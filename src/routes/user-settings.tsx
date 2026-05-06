@@ -12,12 +12,14 @@ import {
 import { Separator } from '@/common/design-system/atoms/ui/separator';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { useIsEnterprise } from '@/features/settings';
-import { ColorBlindnessSelector } from '@/features/ui/preferences/components/color-blindness';
-import { DataDisplay } from '@/features/ui/preferences/components/data-display';
-import { DateTimeSelector } from '@/features/ui/preferences/components/date-time-format';
-import { DefaultEventTab } from '@/features/ui/preferences/components/default-event-tab';
-import { ExportFormatSelector } from '@/features/ui/preferences/components/export-format-selector';
-import { SidebarConfig } from '@/features/ui/preferences/components/sidebars';
+import {
+  ColorBlindnessSelector,
+  DataDisplay,
+  DateTimeSelector,
+  DefaultEventTab,
+  ExportFormatSelector,
+  SidebarConfig,
+} from '@/features/preferences';
 
 export const Route = createFileRoute('/user-settings')({
   component: () => (

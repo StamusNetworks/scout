@@ -15,9 +15,8 @@ import {
 } from '@/features/host-insights';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
+import { useDefaultEventDetailTab } from '@/features/preferences';
 import { useGetImpactedEntitiesQuery } from '@/features/threats';
-import { selectDefaultEventDetailTab } from '@/features/ui/preferences/preferences.slice';
-import { useAppSelector } from '@/store/store';
 
 import { useGetEventsQuery } from '../../api/events.api';
 import { EventDetailTabs } from './event-detail-tabs';
@@ -59,7 +58,7 @@ export const EventDetail = ({ eventId }: EventDetailProps) => {
   const event = eventData?.results?.[0];
 
   const { enterprise } = useFeatureFlags();
-  const defaultTab = useAppSelector(selectDefaultEventDetailTab);
+  const defaultTab = useDefaultEventDetailTab();
 
   const { data: sourceHost } = useGetHostWithAlertsQuery(
     {

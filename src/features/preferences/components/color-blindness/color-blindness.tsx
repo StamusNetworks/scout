@@ -9,19 +9,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/common/design-system/atoms/ui/select';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+
 import {
   ColorBlindness,
   selectColorBlindness,
   setColorBlindness,
-} from '@/features/ui/preferences/preferences.slice';
-import { useAppDispatch, useAppSelector } from '@/store/store';
-
+} from '../../state/preferences.slice';
 import {
   Category,
   CategoryContent,
   CategoryHeader,
   CategoryTitle,
-} from './layout';
+} from '../preferences-layout';
 
 export const ColorBlindnessSelector = () => {
   const dispatch = useAppDispatch();

@@ -15,7 +15,7 @@ import {
   selectEnabledActions,
   selectExportAction,
   selectExportFormat,
-} from '@/features/ui/preferences/preferences.slice';
+} from '@/features/preferences/state/preferences.slice';
 import { useAppSelector } from '@/store/store';
 
 import { Button } from '../atoms/ui/button';

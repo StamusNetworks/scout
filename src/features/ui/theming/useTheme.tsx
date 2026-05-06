@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { RootState, useAppSelector } from '@/store/store';
 
-import { selectColorBlindness } from '../preferences/preferences.slice';
+import { selectColorBlindness } from '@/features/preferences/state/preferences.slice';
 
 const selectTheme = (state: RootState) => state.uiState.theme;
 

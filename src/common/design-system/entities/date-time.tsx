@@ -4,7 +4,7 @@ import { dateFromNow } from '@/common/lib/date-from-now';
 import {
   selectTimeDisplay,
   TimeDisplay,
-} from '@/features/ui/preferences/preferences.slice';
+} from '@/features/preferences/state/preferences.slice';
 import { useAppSelector } from '@/store/store';
 
 import { Grid } from '../atoms/layout/grid';
