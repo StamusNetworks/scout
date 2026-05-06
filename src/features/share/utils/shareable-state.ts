@@ -1,12 +1,13 @@
 import { z } from 'zod';
 
-import { type DatesState } from '@/features/dates';
+import { type DatesPayload, type DatesState } from '@/features/dates';
 import {
   type FilterFlags,
   type SerializedFilterFlags,
   toSerializedFilterFlags,
 } from '@/features/query-filters/model/filter-flags';
 import { type QueryFilterState } from '@/features/query-filters/model/query-filter';
+import { type FilterInput } from '@/features/query-filters/utils/filter-mapper';
 
 /**
  * Filter `key` shapes that are valid in this codebase: alphanumeric +
@@ -135,6 +136,35 @@ const buildTimePayload = (dates: DatesState): ShareableTime => {
       };
   }
 };
+
+export const toDatesPayload = (time: ShareableTime): DatesPayload => {
+  switch (time.type) {
+    case 'all':
+      return { type: 'all' };
+    case 'auto':
+      return { type: 'auto', from: 0, to: Date.now() };
+    case 'from':
+      return {
+        type: 'from',
+        from_duration: time.duration,
+        from_unit: time.unit,
+      };
+    case 'range':
+      return { type: 'range', from: time.start, to: time.end };
+  }
+};
+
+export const toFilterInputs = (
+  filters: ShareableState['filters'],
+): FilterInput[] =>
+  filters.map((f) => ({
+    key: f.key,
+    value: f.value,
+    options: {
+      ...(f.negated && { isNegated: true }),
+      ...(f.wildcarded && { isWildcarded: true }),
+    },
+  }));
 
 export const buildShareableState = (
   route: string,

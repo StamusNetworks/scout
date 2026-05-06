@@ -6,6 +6,9 @@ import {
   decodeShareableState,
   encodeShareableState,
   type ShareableState,
+  type ShareableTime,
+  toDatesPayload,
+  toFilterInputs,
 } from './shareable-state';
 
 const FULL_STATE: ShareableState = {
@@ -289,5 +292,77 @@ describe('buildShareUrl', () => {
   test('handles base path without trailing slash', () => {
     const url = buildShareUrl(FULL_STATE, 'https://scout.app', '/app');
     expect(url).toMatch(/^https:\/\/scout\.app\/app\/share\?s=.+$/);
+  });
+});
+
+describe('toDatesPayload', () => {
+  test('passes through "all"', () => {
+    expect(toDatesPayload({ type: 'all' })).toEqual({ type: 'all' });
+  });
+
+  test('expands "auto" to a concrete range bounded at now', () => {
+    const before = Date.now();
+    const payload = toDatesPayload({ type: 'auto' });
+    const after = Date.now();
+    if (payload.type !== 'auto') throw new Error('expected auto');
+    expect(payload.from).toBe(0);
+    expect(payload.to).toBeGreaterThanOrEqual(before);
+    expect(payload.to).toBeLessThanOrEqual(after);
+  });
+
+  test('renames the "from" relative-window keys to domain shape', () => {
+    const time: ShareableTime = {
+      type: 'from',
+      duration: 7,
+      unit: 'days',
+    };
+    expect(toDatesPayload(time)).toEqual({
+      type: 'from',
+      from_duration: 7,
+      from_unit: 'days',
+    });
+  });
+
+  test('renames "range" start/end to from/to', () => {
+    const time: ShareableTime = {
+      type: 'range',
+      start: 1_000_000,
+      end: 2_000_000,
+    };
+    expect(toDatesPayload(time)).toEqual({
+      type: 'range',
+      from: 1_000_000,
+      to: 2_000_000,
+    });
+  });
+});
+
+describe('toFilterInputs', () => {
+  test('omits negated/wildcarded options when absent', () => {
+    expect(toFilterInputs([{ key: 'src_ip', value: '10.0.0.1' }])).toEqual([
+      { key: 'src_ip', value: '10.0.0.1', options: {} },
+    ]);
+  });
+
+  test('passes negated and wildcarded options through', () => {
+    expect(
+      toFilterInputs([
+        { key: 'msg', value: 'x', negated: true, wildcarded: true },
+      ]),
+    ).toEqual([
+      {
+        key: 'msg',
+        value: 'x',
+        options: { isNegated: true, isWildcarded: true },
+      },
+    ]);
+  });
+
+  test('drops false flags rather than emitting them', () => {
+    expect(
+      toFilterInputs([
+        { key: 'k', value: 'v', negated: false, wildcarded: false },
+      ]),
+    ).toEqual([{ key: 'k', value: 'v', options: {} }]);
   });
 });

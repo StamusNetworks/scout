@@ -11,5 +11,8 @@ export {
   encodeShareableState,
 } from './utils/shareable-state';
 
+// hooks
+export { useHydrateFromShareLink } from './hooks/use-hydrate-from-share-link';
+
 // components
 export { ShareButton } from './components/share-button/share-button';
