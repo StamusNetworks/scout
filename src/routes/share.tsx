@@ -18,7 +18,7 @@ import {
   decodeShareableState,
   type ShareableState,
   type ShareableTime,
-} from '@/features/ui/share/shareable-state';
+} from '@/features/share';
 
 export const Route = createFileRoute('/share')({
   component: () => (

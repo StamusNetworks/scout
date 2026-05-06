@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, test, vi } from 'vitest';
 
 import { renderWithProviders } from '@/common/testing/test-utils';
-import { decodeShareableState } from '@/features/ui/share/shareable-state';
+import { decodeShareableState } from '@/features/share';
 import { initialState } from '@/store/store.init';
 
 import { ShareButton } from './share-button';

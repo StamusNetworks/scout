@@ -7,10 +7,7 @@ import { beforeEach, describe, expect, test } from 'vitest';
 
 import { mockNavigate } from '@/common/testing/mocks/hooks/use-navigate.mock';
 import { renderWithProviders, withoutIds } from '@/common/testing/test-utils';
-import {
-  encodeShareableState,
-  type ShareableState,
-} from '@/features/ui/share/shareable-state';
+import { encodeShareableState, type ShareableState } from '@/features/share';
 import { initialState } from '@/store/store.init';
 
 import { SharePage } from './share';

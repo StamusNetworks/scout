@@ -11,9 +11,9 @@ import {
 import { SidebarTrigger } from '@/common/design-system/atoms/ui/sidebar';
 import { BreadcrumbsOutlet } from '@/common/design-system/molecules/breadcrumbs';
 import { getShortcutDisplay } from '@/common/lib/platform';
+import { useDisableHelp, useHelpState } from '@/features/help';
 import { NewsFeedModal } from '@/features/marketing';
 import { ThemeSelector } from '@/features/theming';
-import { useDisableHelp, useHelpState } from '@/features/help';
 import {
   selectWithPageContainer,
   setOpenModal,
