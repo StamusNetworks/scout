@@ -4,16 +4,16 @@ import { GitGraph, Lock, ShieldAlert, Swords } from 'lucide-react';
 import { BlockTitle } from '@/common/design-system/atoms/block';
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
-import { IndicatorsDocDopv } from '@/features/operational-center/components/indicators/docdopv.indicators';
-import { IndicatorsAppliancePreview } from '@/features/operational-center/components/indicators/indicators.preview';
-import { CipherSecurity } from '@/features/operational-center/entities/cipher-security';
-import { IndicidentsTable } from '@/features/operational-center/entities/incidents-table';
-import { MitreTechniques } from '@/features/operational-center/entities/mitre-techniques';
-import { OutliersTimeline } from '@/features/operational-center/entities/outliers-timeline';
 import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
 import { useEnableFilterFlags } from '@/features/query-filters/hooks/use-enable-filter-flags';
-import { KillChainCounters } from '@/features/threats';
-import { OffendersWorldMap } from '@/features/threats';
+import { KillChainCounters, OffendersWorldMap } from '@/features/threats';
+
+import { CipherSecurity } from '../cipher-security/cipher-security';
+import { IndicidentsTable } from '../incidents-table/incidents-table';
+import { IndicatorsDocDopv } from '../indicators/docdopv.indicators';
+import { IndicatorsAppliancePreview } from '../indicators/indicators.preview';
+import { MitreTechniques } from '../mitre-techniques/mitre-techniques';
+import { OutliersTimeline } from '../outliers-timeline/outliers-timeline';
 interface OperationalCenterViewProps {
   enterprise: boolean;
 }

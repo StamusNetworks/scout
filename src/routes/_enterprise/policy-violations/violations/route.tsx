@@ -13,7 +13,7 @@ import {
   TabsTriggerLink,
 } from '@/common/design-system/atoms/ui/pillTabs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
-import { IndicatorsDopv } from '@/features/operational-center/components/indicators/docdopv.indicators';
+import { IndicatorsDopv } from '@/features/operational-center';
 
 export const Route = createFileRoute(
   '/_enterprise/policy-violations/violations',

@@ -8,7 +8,7 @@ import { usePreviousDates } from '@/features/dates';
 import { GlobalStats } from '@/features/events';
 import { useEventsCount } from '@/features/events';
 import { useGlobalStats } from '@/features/events';
-import { indicators } from '@/features/operational-center/config';
+import { indicators } from '../../definitions/indicators.config';
 import { useSystemSettings } from '@/features/settings';
 
 export const Indicators = () => {

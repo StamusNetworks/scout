@@ -13,7 +13,7 @@ import {
   TabsTriggerLink,
 } from '@/common/design-system/atoms/ui/pillTabs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
-import { IndicatorsDoc } from '@/features/operational-center/components/indicators/docdopv.indicators';
+import { IndicatorsDoc } from '@/features/operational-center';
 
 export const Route = createFileRoute('/_enterprise/threats/compromises')({
   component: CompromisesLayout,

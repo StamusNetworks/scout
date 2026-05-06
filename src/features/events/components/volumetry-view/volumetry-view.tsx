@@ -24,7 +24,7 @@ import { esEscape } from '@/common/lib/strings';
 import { usePreviousDates } from '@/features/dates';
 import { useEventsCount } from '@/features/events/hooks/use-events-count';
 import { useGlobalStats } from '@/features/events/hooks/use-global-stats';
-import { indicators } from '@/features/operational-center/config';
+import { indicators } from '@/features/operational-center/definitions/indicators.config';
 import { useProbes } from '@/features/settings';
 import { Route } from '@/routes/_enterprise/volumetry';
 
