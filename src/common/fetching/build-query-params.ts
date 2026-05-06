@@ -1,7 +1,7 @@
 import { isNil } from 'ramda';
 
 import { Pagination } from './fetching.types';
-import { GlobalDeps } from './GlobalDeps';
+import { GlobalDeps } from './global-deps';
 
 export const buildQueryParams = (
   params: Pagination &

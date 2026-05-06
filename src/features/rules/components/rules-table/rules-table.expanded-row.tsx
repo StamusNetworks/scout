@@ -6,7 +6,7 @@ import { Grid } from '@/common/design-system/atoms/layout/grid';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { SwitchFilter } from '@/common/design-system/molecules/data-table/filters/switch-filter';
-import { HtmlCodeDisplay } from '@/common/design-system/molecules/htmlCodeDisplay/htmlCodeDisplay';
+import { HtmlCodeDisplay } from '@/common/design-system/molecules/html-code-display/html-code-display';
 import {
   DataEntry,
   ValueListCard,

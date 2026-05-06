@@ -1,7 +1,7 @@
 import { createEntityAdapter, EntityState } from '@reduxjs/toolkit';
 import { isNil } from 'ramda';
 
-import { buildQueryParams } from '@/common/fetching/buildQueryParams';
+import { buildQueryParams } from '@/common/fetching/build-query-params';
 import {
   DateRange,
   Paginated,

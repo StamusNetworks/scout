@@ -4,8 +4,8 @@ import {
   Tabs,
   TabsBadge,
   TabsList,
-} from '@/common/design-system/atoms/ui/borderTabs';
-import { TabsTriggerLink } from '@/common/design-system/atoms/ui/pillTabs';
+} from '@/common/design-system/atoms/ui/border-tabs';
+import { TabsTriggerLink } from '@/common/design-system/atoms/ui/pill-tabs';
 
 import { ThreatFamily } from '../../model/threat-family';
 

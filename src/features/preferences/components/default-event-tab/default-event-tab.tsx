@@ -4,7 +4,7 @@ import {
   Tabs,
   TabsList,
   TabsTrigger,
-} from '@/common/design-system/atoms/ui/pillTabs';
+} from '@/common/design-system/atoms/ui/pill-tabs';
 import {
   Select,
   SelectContent,

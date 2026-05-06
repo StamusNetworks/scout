@@ -17,7 +17,7 @@ import {
   TabsBadge,
   TabsList,
   TabsTrigger,
-} from '@/common/design-system/atoms/ui/borderTabs';
+} from '@/common/design-system/atoms/ui/border-tabs';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/features/app-shell';
 import { useGetBeaconingEventsQuery } from '@/features/events';

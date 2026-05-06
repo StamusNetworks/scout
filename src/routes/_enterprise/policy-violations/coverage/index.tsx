@@ -15,7 +15,7 @@ import {
   Tabs,
   TabsList,
   TabsTrigger,
-} from '@/common/design-system/atoms/ui/pillTabs';
+} from '@/common/design-system/atoms/ui/pill-tabs';
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TextFilter } from '@/common/design-system/molecules/data-table/filters/text-filter';
 import { TogglePageContainer } from '@/features/app-shell';

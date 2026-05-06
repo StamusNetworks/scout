@@ -1,11 +1,11 @@
 import { Row } from '@tanstack/react-table';
 
-import { TabsContent } from '@/common/design-system/atoms/ui/borderTabs';
+import { TabsContent } from '@/common/design-system/atoms/ui/border-tabs';
 import {
   Tabs,
   TabsList,
   TabsTrigger,
-} from '@/common/design-system/atoms/ui/pillTabs';
+} from '@/common/design-system/atoms/ui/pill-tabs';
 import { ScrollArea } from '@/common/design-system/atoms/ui/scroll-area';
 import { HostInsightsBlocks } from '@/features/host-insights';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';

@@ -4,7 +4,7 @@ import {
   Tabs,
   TabsList,
   TabsTrigger,
-} from '@/common/design-system/atoms/ui/pillTabs';
+} from '@/common/design-system/atoms/ui/pill-tabs';
 import { BarChartTimeline } from '@/common/design-system/graphs/bar-chart-timeline/bar-chart-timeline';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useCountsTimeline } from '@/features/events/hooks/use-counts-timeline';

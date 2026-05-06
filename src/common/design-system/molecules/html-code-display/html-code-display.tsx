@@ -1,4 +1,4 @@
-import styles from './htmlCodeDisplay.module.css';
+import styles from './html-code-display.module.css';
 
 export const HtmlCodeDisplay = ({
   key,

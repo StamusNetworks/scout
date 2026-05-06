@@ -11,7 +11,7 @@ import {
   Tabs,
   TabsList,
   TabsTrigger,
-} from '@/common/design-system/atoms/ui/borderTabs';
+} from '@/common/design-system/atoms/ui/border-tabs';
 import { Separator } from '@/common/design-system/atoms/ui/separator';
 import {
   HostBeaconsTabBadge,

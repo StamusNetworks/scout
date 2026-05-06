@@ -1,6 +1,6 @@
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
-import { buildQueryParams } from '@/common/fetching/buildQueryParams';
+import { buildQueryParams } from '@/common/fetching/build-query-params';
 import { ENDPOINTS } from '@/common/fetching/fetch.endpoints';
 import {
   DateRange,

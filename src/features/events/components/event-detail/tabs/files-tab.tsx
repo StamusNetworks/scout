@@ -1,4 +1,4 @@
-import { TabsBadge } from '@/common/design-system/atoms/ui/borderTabs';
+import { TabsBadge } from '@/common/design-system/atoms/ui/border-tabs';
 import { Files } from '@/features/events/components/files-table/files-table';
 
 import { TabComponentType } from '../event-detail-tabs.types';

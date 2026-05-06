@@ -1,4 +1,4 @@
-import { buildQueryParams } from '@/common/fetching/buildQueryParams.ts';
+import { buildQueryParams } from '@/common/fetching/build-query-params';
 import { ENDPOINTS } from '@/common/fetching/fetch.endpoints.ts';
 import {
   DateRange,

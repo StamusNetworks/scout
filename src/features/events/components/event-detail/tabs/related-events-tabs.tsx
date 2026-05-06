@@ -1,7 +1,7 @@
 import { keys } from 'ramda';
 import { ComponentType } from 'react';
 
-import { TabsBadge } from '@/common/design-system/atoms/ui/borderTabs';
+import { TabsBadge } from '@/common/design-system/atoms/ui/border-tabs';
 import { RelatedAlertsTab } from '@/features/events/components/related-events/related-alerts/related-alerts';
 import { RelatedAnomalyTab } from '@/features/events/components/related-events/related-anomaly/related-anomaly';
 import { RelatedDcerpcTab } from '@/features/events/components/related-events/related-dcerpc/related-dcerpc';

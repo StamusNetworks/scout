@@ -2,7 +2,7 @@ import {
   Tabs,
   TabsList,
   TabsTrigger,
-} from '@/common/design-system/atoms/ui/pillTabs';
+} from '@/common/design-system/atoms/ui/pill-tabs';
 
 type HomeNetPickerProps = {
   value: 'true' | 'false' | 'all';

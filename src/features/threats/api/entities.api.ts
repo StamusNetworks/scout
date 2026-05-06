@@ -1,4 +1,4 @@
-import { buildQueryParams } from '@/common/fetching/buildQueryParams';
+import { buildQueryParams } from '@/common/fetching/build-query-params';
 import { DateRange, Tenant } from '@/common/fetching/fetching.types';
 import { Paginated, Pagination } from '@/common/fetching/fetching.types';
 import { API } from '@/store/api';

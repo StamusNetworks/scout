@@ -7,7 +7,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '@/common/design-system/atoms/ui/borderTabs';
+} from '@/common/design-system/atoms/ui/border-tabs';
 import { TableCard } from '@/common/design-system/molecules/table-card';
 import { useGetRuleSetsQuery } from '@/features/rules';
 

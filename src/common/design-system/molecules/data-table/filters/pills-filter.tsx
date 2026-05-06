@@ -1,5 +1,5 @@
-import { TabsList } from '../../../atoms/ui/borderTabs';
-import { Tabs, TabsTrigger } from '../../../atoms/ui/pillTabs';
+import { TabsList } from '../../../atoms/ui/border-tabs';
+import { Tabs, TabsTrigger } from '../../../atoms/ui/pill-tabs';
 
 export interface PillFilterOption {
   label: string;

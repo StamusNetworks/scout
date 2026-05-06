@@ -1,5 +1,5 @@
 import { DataEntry } from '@/common/design-system/molecules/value-list-card';
-import { buildQueryParams } from '@/common/fetching/buildQueryParams';
+import { buildQueryParams } from '@/common/fetching/build-query-params';
 import {
   DateRange,
   Pagination,

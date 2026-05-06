@@ -1,4 +1,4 @@
-import { TabsBadge } from '@/common/design-system/atoms/ui/borderTabs';
+import { TabsBadge } from '@/common/design-system/atoms/ui/border-tabs';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 import { useGetThreatsStatusQuery } from '../../api/threats.api';

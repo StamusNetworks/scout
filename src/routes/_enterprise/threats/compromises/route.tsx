@@ -11,7 +11,7 @@ import {
   Tabs,
   TabsList,
   TabsTriggerLink,
-} from '@/common/design-system/atoms/ui/pillTabs';
+} from '@/common/design-system/atoms/ui/pill-tabs';
 import { TogglePageContainer } from '@/features/app-shell';
 import { IndicatorsDoc } from '@/features/operational-center';
 

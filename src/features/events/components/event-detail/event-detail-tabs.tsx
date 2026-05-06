@@ -5,13 +5,13 @@ import {
   TabsContent as BorderTabsContent,
   TabsList as BorderTabsList,
   TabsTrigger as BorderTabsTrigger,
-} from '@/common/design-system/atoms/ui/borderTabs';
+} from '@/common/design-system/atoms/ui/border-tabs';
 import {
   Tabs as PillTabs,
   TabsContent as PillTabsContent,
   TabsList as PillTabsList,
   TabsTrigger as PillTabsTrigger,
-} from '@/common/design-system/atoms/ui/pillTabs';
+} from '@/common/design-system/atoms/ui/pill-tabs';
 import { Event } from '@/features/events/model/event';
 
 import { useEventDetailData } from '../../hooks/use-event-detail-data';

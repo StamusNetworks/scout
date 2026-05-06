@@ -1,11 +1,11 @@
 import { useLocation } from '@tanstack/react-router';
 
-import { TabsBadge } from '@/common/design-system/atoms/ui/borderTabs';
+import { TabsBadge } from '@/common/design-system/atoms/ui/border-tabs';
 import {
   Tabs,
   TabsList,
   TabsTriggerLink,
-} from '@/common/design-system/atoms/ui/pillTabs';
+} from '@/common/design-system/atoms/ui/pill-tabs';
 
 import { Threat, ThreatKind } from '../../model/threat';
 
