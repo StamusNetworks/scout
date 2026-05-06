@@ -10,6 +10,9 @@ export {
   useUpdateDeepLinkMutation,
 } from './api/deeplinks.api';
 
+// hooks
+export { useApplyDeeplink } from './hooks/use-apply-deeplink';
+
 // components
 export { DeeplinksForm } from './components/deeplinks-form/deeplinks-form';
 export { DeeplinksTable } from './components/deeplinks-table/deeplinks-table';
