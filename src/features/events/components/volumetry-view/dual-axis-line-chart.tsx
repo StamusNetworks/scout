@@ -10,14 +10,9 @@ import {
 } from '@/common/design-system/atoms/ui/chart';
 import { cn } from '@/common/lib/utils';
 
-export type TimelineSeries = {
-  key: string;
-  label: string;
-  color: string;
-  data: { time: number; count: number }[];
-  interval: number;
-};
+import { type TimelineSeries } from '../../definitions/timeline-series';
 
+export type { TimelineSeries };
 export type ChartScale = 'normalized' | 'log' | 'default';
 
 type MultiSeriesLineChartProps = {

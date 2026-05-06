@@ -75,3 +75,13 @@ export function computeInterval(data: { time: number }[]): number {
   if (data.length < 2) return 0;
   return data[1].time - data[0].time;
 }
+
+export type TimelinePoint = { time: number; count: number };
+
+export type TimelineSeries = {
+  key: string;
+  label: string;
+  color: string;
+  data: TimelinePoint[];
+  interval: number;
+};

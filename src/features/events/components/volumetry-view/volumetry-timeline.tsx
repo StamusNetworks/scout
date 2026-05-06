@@ -5,17 +5,10 @@ import { cn } from '@/common/lib/utils';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 import { useGetEventsTimelineQuery } from '../../api/events.api';
-import {
-  computeInterval,
-  SeriesKey,
-  TIMELINE_SERIES,
-} from '../../definitions/timeline-series';
+import { buildTimelineSeries } from '../../builders/build-timeline-series';
+import { SeriesKey, TIMELINE_SERIES } from '../../definitions/timeline-series';
 import { useTimelineVisibility } from '../../hooks/use-timeline-visibility';
-import {
-  type ChartScale,
-  MultiSeriesLineChart,
-  type TimelineSeries,
-} from './dual-axis-line-chart';
+import { type ChartScale, MultiSeriesLineChart } from './dual-axis-line-chart';
 
 type EventsTimelineProps = {
   qfilterPrefix?: string;
@@ -105,15 +98,14 @@ export const EventsTimeline = memo(function EventsTimeline({
     (s) => (qByKey[s.key].data?.length ?? 0) > 0,
   );
 
-  const series: TimelineSeries[] = useMemo(
+  const series = useMemo(
     () =>
-      activeConfigs.map((config) => ({
-        key: config.key,
-        label: config.label,
-        color: config.color,
-        data: qByKey[config.key].data ?? [],
-        interval: computeInterval(qByKey[config.key].data ?? []),
-      })),
+      buildTimelineSeries(
+        activeConfigs,
+        Object.fromEntries(
+          activeConfigs.map((s) => [s.key, qByKey[s.key].data]),
+        ),
+      ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [enabledSeries, ...activeConfigs.map((s) => qByKey[s.key].data)],
   );
