@@ -12,8 +12,8 @@ import { SidebarTrigger } from '@/common/design-system/atoms/ui/sidebar';
 import { BreadcrumbsOutlet } from '@/common/design-system/molecules/breadcrumbs';
 import { getShortcutDisplay } from '@/common/lib/platform';
 import { NewsFeedModal } from '@/features/marketing';
-import { disableHelp, selectHelpState } from '@/features/ui/help/help.slice';
 import { ThemeSelector } from '@/features/theming';
+import { useDisableHelp, useHelpState } from '@/features/help';
 import {
   selectWithPageContainer,
   setOpenModal,
@@ -28,13 +28,14 @@ import { ShareButton } from './share-button';
 
 export const Header = () => {
   const dispatch = useAppDispatch();
-  const { highlightGlobalCommands } = useAppSelector(selectHelpState);
+  const disableHelp = useDisableHelp();
+  const { highlightGlobalCommands } = useHelpState();
   const handleOpenGlobalCommands = useCallback(() => {
     if (highlightGlobalCommands) {
-      dispatch(disableHelp('highlightGlobalCommands'));
+      disableHelp('highlightGlobalCommands');
     }
     dispatch(setOpenModal('globalCommand'));
-  }, [dispatch, highlightGlobalCommands]);
+  }, [dispatch, disableHelp, highlightGlobalCommands]);
   return (
     <Row className="bg-primary-muted h-12 w-full shrink-0 items-center justify-between border-b px-2">
       <Row className="min-w-0 flex-1 items-center">

@@ -7,14 +7,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/common/design-system/atoms/ui/popover';
-import { disableHelp, selectHelpState } from '@/features/ui/help/help.slice';
-import { useAppDispatch, useAppSelector } from '@/store/store';
+import { useDisableHelp, useHelpState } from '@/features/help';
 
 export function TimelineHelpButton() {
-  const dispatch = useAppDispatch();
-  const { highlightTimelineHelp } = useAppSelector(selectHelpState);
+  const disableHelp = useDisableHelp();
+  const { highlightTimelineHelp } = useHelpState();
   const handleDisableHelp = (open: boolean) => {
-    if (!open) dispatch(disableHelp('highlightTimelineHelp'));
+    if (!open) disableHelp('highlightTimelineHelp');
   };
   return (
     <Popover onOpenChange={handleDisableHelp}>

@@ -12,9 +12,8 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/common/design-system/atoms/ui/dropdown-menu';
-import { useAppDispatch } from '@/store/store';
-
 import { setTheme, Theme } from '@/features/ui/ui-state.slice';
+import { useAppDispatch } from '@/store/store';
 
 import { useTheme } from '../../hooks/use-theme';
 

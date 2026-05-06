@@ -20,8 +20,7 @@ import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { FilterSetsView, useSaveFilterSetModal } from '@/features/filter-sets';
-import { disableHelp } from '@/features/ui/help/help.slice';
-import { useAppDispatch, useAppSelector } from '@/store/store';
+import { useDisableHelp, useHelpState } from '@/features/help';
 
 export const Route = createFileRoute('/filter-sets')({
   component: () => (
@@ -33,11 +32,9 @@ export const Route = createFileRoute('/filter-sets')({
 
 function FilterSetsPage() {
   usePageTitle('Filter Sets');
-  const dispatch = useAppDispatch();
+  const disableHelp = useDisableHelp();
   const saveFilterSetModal = useSaveFilterSetModal();
-  const showFilterSetsBackNavTip = useAppSelector(
-    (state) => state.help.showFilterSetsBackNavTip,
-  );
+  const { showFilterSetsBackNavTip } = useHelpState();
   return (
     <>
       <OutletBreadcrumb>Filter Sets</OutletBreadcrumb>
@@ -56,9 +53,7 @@ function FilterSetsPage() {
                 variant="ghost"
                 size="icon-sm"
                 className="absolute top-2 right-2 size-7 pl-0!"
-                onClick={() =>
-                  dispatch(disableHelp('showFilterSetsBackNavTip'))
-                }
+                onClick={() => disableHelp('showFilterSetsBackNavTip')}
               >
                 <X />
               </Button>

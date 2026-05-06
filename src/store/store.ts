@@ -19,7 +19,7 @@ import { addQfilterCommandSlice } from '@/features/query-filters/state/add-qfilt
 import { queryFiltersSlice } from '@/features/query-filters/state/query-filters.slice';
 import { settingsSlice } from '@/features/settings/state/settings.slice';
 import { tenancySlice } from '@/features/tenancy/state/tenancy.slice';
-import { helpSlice } from '@/features/ui/help/help.slice';
+import { helpSlice } from '@/features/help/state/help.slice';
 import { uiStateSlice } from '@/features/ui/ui-state.slice';
 
 import { API } from './api';

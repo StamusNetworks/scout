@@ -13,7 +13,7 @@ import { addQfilterCommandInitialState } from '@/features/query-filters/state/ad
 import { queryFiltersInitialState } from '@/features/query-filters/state/query-filters.slice';
 import { settingsInitialState } from '@/features/settings/state/settings.slice';
 import { tenancyInitialState } from '@/features/tenancy/state/tenancy.slice';
-import { helpInitialState } from '@/features/ui/help/help.slice';
+import { helpInitialState } from '@/features/help/state/help.slice';
 import { uiStateInitialState } from '@/features/ui/ui-state.slice';
 
 import { RootState } from './store';
