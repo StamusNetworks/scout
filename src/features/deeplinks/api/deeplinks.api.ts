@@ -3,17 +3,19 @@ import { Paginated, Pagination } from '@/common/fetching/fetching.types';
 import { API } from '@/store/api';
 import { applyOptimisticUpdateToAllCacheEntries } from '@/store/utils';
 
-import { Deeplink } from '../model/deep-link.model';
-
-export type URLParams = Record<string, string>;
+import { CreateDeeplink, Deeplink } from '../model/deep-link';
+import { DeeplinkDto } from './deeplink.dto';
+import {
+  toCreateDeeplinkPayload,
+  toDeeplink,
+  toUpdateDeeplinkPayload,
+} from './deeplinks.transforms';
 
 export const DeeplinkAPI = API.injectEndpoints({
   endpoints: (builder) => ({
-    // QUERIES
     getDeeplinks: builder.query<
       Paginated<Deeplink>,
       Pagination & {
-        ordering?: string;
         entities__name?: string;
         user_defined?: 'true' | 'false';
         enabled?: 'true' | 'false';
@@ -24,46 +26,41 @@ export const DeeplinkAPI = API.injectEndpoints({
         method: 'GET',
         params: buildQueryParams(params),
       }),
+      transformResponse: (response: Paginated<DeeplinkDto>) => ({
+        ...response,
+        results: response.results.map(toDeeplink),
+      }),
       providesTags: ['Reload', 'Deeplinks'],
     }),
-    createDeepLink: builder.mutation<
-      Deeplink,
-      Omit<Deeplink, 'pk' | 'enabled' | 'user_defined'>
-    >({
-      query: ({ name, template, entities, all }) => ({
+    createDeepLink: builder.mutation<Deeplink, CreateDeeplink>({
+      query: (domain) => ({
         url: `/rules/deeplink/`,
         method: 'POST',
-        body: {
-          name,
-          template,
-          entities,
-          all,
-        },
+        body: toCreateDeeplinkPayload(domain),
       }),
+      transformResponse: toDeeplink,
       invalidatesTags: ['Deeplinks'],
     }),
     updateDeepLink: builder.mutation<
       Deeplink,
-      Partial<Omit<Deeplink, 'user_defined'>>
+      Partial<CreateDeeplink> & { id: number; enabled?: boolean }
     >({
-      query: ({ pk, name, template, entities, all, enabled }) => ({
-        url: `/rules/deeplink/${pk}/`,
-        method: 'PATCH',
-        body: {
-          name,
-          template,
-          entities,
-          all,
-          enabled,
-        },
-      }),
-      async onQueryStarted({ pk, ...patch }, api) {
+      query: (domain) => {
+        const { pk, ...body } = toUpdateDeeplinkPayload(domain);
+        return {
+          url: `/rules/deeplink/${pk}/`,
+          method: 'PATCH',
+          body,
+        };
+      },
+      transformResponse: toDeeplink,
+      async onQueryStarted({ id, ...patch }, api) {
         applyOptimisticUpdateToAllCacheEntries<Paginated<Deeplink>>(
           api,
           DeeplinkAPI,
           'getDeeplinks',
           (draft) => {
-            const d = draft.results.find((m) => m.pk === pk);
+            const d = draft.results.find((m) => m.id === id);
             if (d) {
               Object.assign(d, patch);
             }
@@ -72,9 +69,9 @@ export const DeeplinkAPI = API.injectEndpoints({
       },
       invalidatesTags: ['Deeplinks'],
     }),
-    deleteDeepLink: builder.mutation<void, { pk: number }>({
-      query: ({ pk }) => ({
-        url: `/rules/deeplink/${pk}/`,
+    deleteDeepLink: builder.mutation<void, { id: number }>({
+      query: ({ id }) => ({
+        url: `/rules/deeplink/${id}/`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Deeplinks'],

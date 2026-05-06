@@ -24,7 +24,7 @@ import { isIP } from '@/common/lib/ips';
 import { saveToClipboard } from '@/common/lib/save';
 import { startsWithOneOf } from '@/common/lib/strings';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
-import { useGetDeeplinksQuery } from '@/features/deeplinks/api/deeplinks.api';
+import { useGetDeeplinksQuery } from '@/features/deeplinks';
 import {
   addEvidence,
   selectCurrentInvestigationStage,
@@ -76,13 +76,11 @@ export const ContextMenuContent = ({
         ? false
         : deeplink.all ||
           (resolvedEntity &&
-            deeplink.entities
-              .map((e) => e.name)
-              .some((entity) =>
-                Array.isArray(resolvedEntity)
-                  ? resolvedEntity.includes(entity)
-                  : resolvedEntity === entity,
-              )),
+            deeplink.entities.some((entity) =>
+              Array.isArray(resolvedEntity)
+                ? resolvedEntity.includes(entity)
+                : resolvedEntity === entity,
+            )),
     );
   }, [deeplinksData, resolvedEntity]);
   const investigationStage = useAppSelector(selectInvestigationStage);
@@ -227,7 +225,7 @@ export const ContextMenuContent = ({
         <ContextMenuSubContent>
           {deeplinks?.map((d) => (
             <ContextMenuItem
-              key={d.pk}
+              key={d.id}
               asChild
             >
               <Link

@@ -28,12 +28,12 @@ import {
   CreateDeeplink,
   Deeplink,
   deeplinkCreateSchema,
-} from '../../model/deep-link.model';
+} from '../../model/deep-link';
 
-const getInitialValues = (deepLink?: Deeplink) => ({
+const getInitialValues = (deepLink?: Deeplink): CreateDeeplink => ({
   name: deepLink?.name ?? '',
   template: deepLink?.template ?? '',
-  entities: deepLink?.entities.map((entity) => entity.name) ?? [],
+  entities: deepLink?.entities ?? [],
   all: deepLink?.all ?? false,
 });
 
@@ -44,7 +44,7 @@ export const DeeplinksForm = ({
   handleClose: () => void;
   deepLink?: Deeplink;
 }) => {
-  const isCreate = isNil(deepLink?.pk);
+  const isCreate = isNil(deepLink?.id);
 
   const form = useForm<CreateDeeplink>({
     resolver: zodResolver(deeplinkCreateSchema),
@@ -55,19 +55,9 @@ export const DeeplinksForm = ({
   const [updateDeepLink] = useUpdateDeepLinkMutation();
 
   const handleSubmit = (data: CreateDeeplink) => {
-    console.log('hello');
     const submitFn = isCreate
-      ? () =>
-          createDeepLink({
-            ...data,
-            entities: data.entities.map((e) => ({ name: e })),
-          })
-      : () =>
-          updateDeepLink({
-            ...data,
-            entities: data.entities.map((e) => ({ name: e })),
-            pk: deepLink.pk,
-          });
+      ? () => createDeepLink(data)
+      : () => updateDeepLink({ ...data, id: deepLink.id });
     submitFn()
       .unwrap()
       .then((payload) => {

@@ -22,8 +22,7 @@ import {
 import { OutletBreadcrumb } from '@/common/design-system/molecules/breadcrumbs';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
 import { usePageTitle } from '@/common/lib/use-page-title';
-import { DeeplinksForm } from '@/features/deeplinks/components/deeplinks-form/deeplinks-form';
-import { DeeplinksTable } from '@/features/deeplinks/components/deeplinks-table/deeplinks-table';
+import { DeeplinksForm, DeeplinksTable } from '@/features/deeplinks';
 
 export const Route = createFileRoute('/deeplinks')({
   component: () => (

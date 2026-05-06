@@ -19,7 +19,7 @@ import {
   useDeleteDeepLinkMutation,
   useUpdateDeepLinkMutation,
 } from '../../api/deeplinks.api';
-import { Deeplink } from '../../model/deep-link.model';
+import { Deeplink } from '../../model/deep-link';
 import { DeeplinksForm } from '../deeplinks-form/deeplinks-form';
 
 export const columns: CustomColumnDef<Deeplink>[] = [
@@ -48,9 +48,7 @@ export const columns: CustomColumnDef<Deeplink>[] = [
       />
     ),
     cell: ({ row }) =>
-      row.original.all
-        ? 'All'
-        : row.original.entities.map((entity) => entity.name).join(', '),
+      row.original.all ? 'All' : row.original.entities.join(', '),
   },
   {
     id: 'template',
@@ -82,7 +80,7 @@ const DeeplinkActions = ({ deeplink }: { deeplink: Deeplink }) => {
   const [deleteDeepLink] = useDeleteDeepLinkMutation();
 
   const handleDelete = () => {
-    deleteDeepLink({ pk: deeplink.pk })
+    deleteDeepLink({ id: deeplink.id })
       .unwrap()
       .then(() => {
         toast.info('Deeplink deleted successfully');
@@ -94,7 +92,7 @@ const DeeplinkActions = ({ deeplink }: { deeplink: Deeplink }) => {
       });
   };
 
-  if (!deeplink.user_defined) return null;
+  if (!deeplink.userDefined) return null;
 
   return (
     <Row className="w-0 items-center">
@@ -153,7 +151,7 @@ const DeeplinkActions = ({ deeplink }: { deeplink: Deeplink }) => {
 const SwitchDeeplinkEnabled = ({ deeplink }: { deeplink: Deeplink }) => {
   const [updateDeeplink] = useUpdateDeepLinkMutation();
   const handleSwitchEnabled = () => {
-    updateDeeplink({ pk: deeplink.pk, enabled: !deeplink.enabled })
+    updateDeeplink({ id: deeplink.id, enabled: !deeplink.enabled })
       .unwrap()
       .then(() => {
         toast.info(
