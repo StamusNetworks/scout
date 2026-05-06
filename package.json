@@ -10,6 +10,7 @@
     "fmt": "oxfmt ./src",
     "fmt:check": "oxfmt --check ./src",
     "check": "tsc --noEmit",
+    "check:features": "node scripts/check-feature-index.mjs",
     "test": "vitest",
     "test:ci": "vitest run",
     "coverage": "vitest run --coverage",

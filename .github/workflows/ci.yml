@@ -27,6 +27,9 @@ jobs:
       - name: Run linting
         run: pnpm lint
 
+      - name: Verify feature barrels
+        run: pnpm check:features
+
   typescript:
     name: TypeScript Check
     runs-on: ubuntu-latest

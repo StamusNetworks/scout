@@ -321,14 +321,13 @@ Linting enforces kebab-case (`unicorn/filename-case`, see
 Conventions are enforced by `.oxlintrc.json` where the linter supports
 them. Two relevant rules in this phase:
 
-- **`unicorn/filename-case`** — enforces kebab-case file names. Currently
-  set to `warn`; existing violations are tracked and fixed during their
-  context's migration. New code that introduces non-kebab names should be
-  rejected at review.
+- **`unicorn/filename-case`** — enforces kebab-case file names. Set to
+  `error`. TanStack Router `$param.tsx` files are exempted via override.
 
 - **`no-restricted-imports`** — forbids cross-feature deep imports targeting
-  `api/` and `state/` folders. As features migrate this enforces public-API
-  discipline on real code.
+  `api/` and `state/` folders. Set to `error`. Test files
+  (`**/*.test.ts(x)`) are exempted so they can construct mocks and
+  fixtures from internal DTOs.
 
   Several framework-level patterns override the rule, since the public
   barrel can't carry their needs:
@@ -500,8 +499,17 @@ Phase 4 — composition cleanup. Three strands.
   filter category order by route → `query-filters/model/filter-category-order.ts`.
   Hooks reduced to thin compose; pure logic gained vitest coverage.
 
-Phase 5 — tighten lint rules from `warn` to `error`, add CI checks for
-mandatory `index.ts` per feature.
+Phase 5 — done. `unicorn/filename-case` and `no-restricted-imports`
+promoted from `warn` to `error`. Cross-feature deep imports cleaned
+up: same-feature traffic now uses relative paths (per §2);
+ui-state.slice exposes its surface through public hooks
+(`useSidebar`, `useThemeState`, `useJsonViewOpen`,
+`useAutoOpenSidebarOnFilterAdd`) so theming, query-filters,
+preferences, and the root route stop reaching into app-shell
+internals. Five remaining camelCase filenames renamed
+(`borderTabs.tsx` → `border-tabs.tsx`, etc.). CI gains a
+`check:features` step (`scripts/check-feature-index.mjs`) that
+fails when a `src/features/<context>/` folder lacks `index.ts`.
 
 ---
 
