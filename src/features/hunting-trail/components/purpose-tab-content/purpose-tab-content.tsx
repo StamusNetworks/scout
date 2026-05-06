@@ -1,42 +1,12 @@
 import { useMemo } from 'react';
 
-import {
-  PurposeGroupData,
-  TaggedEvent,
-  TimelineEventType,
-} from '../../model/hunting-trail';
-import { QueryCard, QueryGroup } from '../query-card/query-card';
-
-function buildQueryGroups(events: TaggedEvent[]): QueryGroup[] {
-  const byType = new Map<TimelineEventType, TaggedEvent[]>();
-  for (const event of events) {
-    const list = byType.get(event.timelineType);
-    if (list) {
-      list.push(event);
-    } else {
-      byType.set(event.timelineType, [event]);
-    }
-  }
-
-  const groups: QueryGroup[] = [];
-  for (const [type, evts] of byType) {
-    const sorted = [...evts].toSorted(
-      (a, b) =>
-        new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
-    );
-    groups.push({
-      type,
-      events: sorted,
-      startTime: sorted[0].timestamp,
-      endTime: sorted[sorted.length - 1].timestamp,
-    });
-  }
-  return groups;
-}
+import { type PurposeGroupData } from '../../model/hunting-trail';
+import { groupEventsByType } from '../../model/purpose-grouping';
+import { QueryCard } from '../query-card/query-card';
 
 export function PurposeTabContent({ group }: { group: PurposeGroupData }) {
   const queryGroups = useMemo(
-    () => buildQueryGroups(group.events),
+    () => groupEventsByType(group.events),
     [group.events],
   );
 

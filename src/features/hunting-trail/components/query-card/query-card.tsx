@@ -6,11 +6,11 @@ import { Button } from '@/common/design-system/atoms/ui/button';
 import { DateTime } from '@/features/preferences';
 
 import {
-  TaggedEvent,
   TimelineEventType,
   TYPE_COLOR,
   TYPE_LABEL,
 } from '../../model/hunting-trail';
+import { type QueryGroup } from '../../model/purpose-grouping';
 import { CardEventsTable } from '../card-events-table/card-events-table';
 import { CardSummary } from '../card-summary/card-summary';
 
@@ -86,13 +86,6 @@ const QUERY_DESCRIPTION: Record<TimelineEventType, string> = {
     'ICMP flows transferring more than 1MB data. Monitoring ICMP flows that exceed 1MB helps identify potential **data exfiltration** or **command-and-control (C2) tunneling** that bypasses standard protocol filters. This investigative tactic narrows the hunt by highlighting volume-based anomalies in a protocol typically reserved for small diagnostic packets.\n\nExample: An analyst identifies a workstation sending 15MB of ICMP Echo Requests to an external IP, suggesting a "ping tunnel" is being used to smuggle sensitive files out of the network.',
   longerIcmp:
     'ICMP flows lasting longer than 20 minutes. Detecting ICMP flows that persist for longer periods of time is a powerful method for identifying **persistent communication channels** established by stealthy malware. Since ICMP is designed for short-lived diagnostic checks, an extended duration often can signal an active **covert tunnel** or a "heartbeat" beacon used to maintain a connection with a remote attacker.\n\nExample: A hunt query reveals a continuous 6-hour ICMP session between a sensitive database server and an unknown external host, indicating a persistent backdoor used for remote access.',
-};
-
-export type QueryGroup = {
-  type: TimelineEventType;
-  events: TaggedEvent[];
-  startTime: string;
-  endTime: string;
 };
 
 export const QueryCard = ({ group }: { group: QueryGroup }) => {

@@ -2,58 +2,14 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 import {
-  PURPOSE_SLUG_MAP,
-  PURPOSE_SLUGS,
-  PurposeGroupData,
-  PurposeSlug,
-  TaggedEvent,
-  TimelineEventType,
-  TypeColorConfig,
+  type PurposeGroupData,
+  type PurposeSlug,
 } from '../../model/hunting-trail';
-import { QueryCard, QueryGroup } from '../query-card/query-card';
-
-// --- Transform ---
-
-type PurposeGroup = {
-  label: string;
-  color: TypeColorConfig;
-  queryGroups: QueryGroup[];
-  totalEvents: number;
-};
-
-function buildPurposeGroups(
-  groups: Record<PurposeSlug, PurposeGroupData>,
-): PurposeGroup[] {
-  return PURPOSE_SLUGS.map(({ slug }) => {
-    const { label, color } = PURPOSE_SLUG_MAP[slug];
-    const groupData = groups[slug];
-
-    const byType = new Map<TimelineEventType, TaggedEvent[]>();
-    for (const event of groupData.events) {
-      const list = byType.get(event.timelineType);
-      if (list) list.push(event);
-      else byType.set(event.timelineType, [event]);
-    }
-
-    const queryGroups: QueryGroup[] = [];
-    for (const [type, evts] of byType) {
-      const sorted = [...evts].toSorted(
-        (a, b) =>
-          new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
-      );
-      queryGroups.push({
-        type,
-        events: sorted,
-        startTime: sorted[0].timestamp,
-        endTime: sorted[sorted.length - 1].timestamp,
-      });
-    }
-
-    return { label, color, queryGroups, totalEvents: groupData.count };
-  }).filter((g) => g.queryGroups.length > 0);
-}
-
-// --- UI ---
+import {
+  buildPurposeGroups,
+  type PurposeGroup,
+} from '../../model/purpose-grouping';
+import { QueryCard } from '../query-card/query-card';
 
 const PurposeSection = ({ group }: { group: PurposeGroup }) => {
   const [collapsed, setCollapsed] = useState(false);
