@@ -459,8 +459,27 @@ The two deferred items are now resolved:
   the magic number. When the backend lifts the cap, only the
   `SERVER_FETCH_LIMIT` constant in `fetching.types.ts` moves.
 
-Phase 4 — composition cleanup: thin routes, consolidate modal slices,
-extract pure logic from React.
+Phase 4 — composition cleanup. Three strands.
+
+- **Consolidate modal slices** — done. Each feature owns its own
+  modal state and exposes a public hook (`useFilterActionModal`,
+  `useSaveFilterSetModal`, `useQfilterModal`,
+  `useGlobalCommandModal`); the cross-feature `openModal` union in
+  app-shell is gone (it had collected eleven names from three
+  different features, six of which were dead, and double-tracked
+  `saveFilterSet` against the filter-sets slice — the global-command
+  entry that dispatched the dead name was a silent no-op until this
+  cleanup). The app-shell `uiState` slice now keeps only chrome
+  concerns (`isGlobalCommandOpen`, sidebar, theme, auto-reload, json
+  view, page container) and no longer knows about feature modals.
+
+- **Thin routes** — pending. Most routes are already thin; the
+  outlier is `_enterprise/hosts/$hostId/route.tsx` (~360 lines).
+
+- **Extract pure logic from React** — pending. Hunt for `useMemo`-of-
+  pure-derivations and hooks that compute without state, move them
+  into `model/` or `common/lib/` so they can be tested with vitest
+  alone.
 
 Phase 5 — tighten lint rules from `warn` to `error`, add CI checks for
 mandatory `index.ts` per feature.

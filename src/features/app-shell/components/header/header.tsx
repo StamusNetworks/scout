@@ -13,7 +13,6 @@ import { BreadcrumbsOutlet } from '@/common/design-system/molecules/breadcrumbs'
 import { getShortcutDisplay } from '@/common/lib/platform';
 import {
   selectWithPageContainer,
-  setOpenModal,
   setWithPageContainer,
 } from '@/features/app-shell/state/ui-state.slice';
 import { useDisableHelp, useHelpState } from '@/features/help';
@@ -22,20 +21,21 @@ import { ShareButton } from '@/features/share';
 import { ThemeSelector } from '@/features/theming';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
+import { useGlobalCommandModal } from '../../hooks/use-global-command-modal';
 import { DatesPicker } from '../dates-picker/dates-picker';
 import { HelpMenu } from '../help-menu/help-menu';
 import { ReloadButton } from '../reload-button/reload-button';
 
 export const Header = () => {
-  const dispatch = useAppDispatch();
   const disableHelp = useDisableHelp();
   const { highlightGlobalCommands } = useHelpState();
+  const globalCommandModal = useGlobalCommandModal();
   const handleOpenGlobalCommands = useCallback(() => {
     if (highlightGlobalCommands) {
       disableHelp('highlightGlobalCommands');
     }
-    dispatch(setOpenModal('globalCommand'));
-  }, [dispatch, disableHelp, highlightGlobalCommands]);
+    globalCommandModal.open();
+  }, [globalCommandModal, disableHelp, highlightGlobalCommands]);
   return (
     <Row className="bg-primary-muted h-12 w-full shrink-0 items-center justify-between border-b px-2">
       <Row className="min-w-0 flex-1 items-center">

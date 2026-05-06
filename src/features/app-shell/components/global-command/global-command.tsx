@@ -7,22 +7,19 @@ import {
   CommandList,
   CommandShortcut,
 } from '@/common/design-system/atoms/ui/command';
-import { useAppDispatch, useAppSelector } from '@/store/store';
 
-import { selectIsModalOpen, setOpenModal } from '../../state/ui-state.slice';
+import { useGlobalCommandModal } from '../../hooks/use-global-command-modal';
 import { useGlobalCommands } from './global-command.actions';
 
 export const GlobalCommand = () => {
-  const dispatch = useAppDispatch();
-  const globalCommandOpen = useAppSelector(selectIsModalOpen('globalCommand'));
-  const handleOpenChange = () => dispatch(setOpenModal('globalCommand'));
+  const { isOpen, close, setOpen } = useGlobalCommandModal();
 
   const globalCommands = useGlobalCommands();
 
   return (
     <CommandDialog
-      open={globalCommandOpen}
-      onOpenChange={handleOpenChange}
+      open={isOpen}
+      onOpenChange={setOpen}
       className="**:[[cmdk-item]]:py-2"
     >
       <CommandInput placeholder="Type a command or search..." />
@@ -37,7 +34,7 @@ export const GlobalCommand = () => {
               <CommandItem
                 key={title}
                 onSelect={() => {
-                  dispatch(setOpenModal(null));
+                  close();
                   action();
                 }}
                 disabled={disabled}

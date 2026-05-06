@@ -13,11 +13,10 @@ import { AppSidebar } from '@/common/design-system/layouts/components/navigation
 import { defaultMenu } from '@/common/design-system/layouts/components/navigation/navigation.config';
 import { BreadcrumbProvider } from '@/common/design-system/molecules/breadcrumbs';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
-import { Header, Modals } from '@/features/app-shell';
+import { Header, Modals, useGlobalCommandModal } from '@/features/app-shell';
 import {
   selectIsSidebarOpen,
   setIsSidebarOpen,
-  setOpenModal,
 } from '@/features/app-shell/state/ui-state.slice';
 import { useQfilterModal } from '@/features/query-filters';
 import { FiltersSideBar } from '@/features/query-filters/components/filters-sidebar/filters-sidebar';
@@ -38,13 +37,14 @@ function RootComponent() {
   const { enterprise } = useFeatureFlags();
   const isFiltersOpen = useAppSelector(selectIsSidebarOpen);
   const qfilterModal = useQfilterModal();
+  const globalCommandModal = useGlobalCommandModal();
 
   useEffect(() => {
     const keyPress = (e: KeyboardEvent) => {
       if (e.ctrlKey || e.metaKey) {
         if (e.key === 'k') {
           e.preventDefault();
-          dispatch(setOpenModal('globalCommand'));
+          globalCommandModal.toggle();
         }
         if (e.key === 'l') {
           e.preventDefault();
@@ -64,14 +64,14 @@ function RootComponent() {
 
       if (e.key === '/' && !isTyping) {
         e.preventDefault();
-        dispatch(setOpenModal('globalCommand'));
+        globalCommandModal.toggle();
       }
     };
     document.addEventListener('keydown', keyPress);
     return () => {
       document.removeEventListener('keydown', keyPress);
     };
-  }, [dispatch, qfilterModal]);
+  }, [qfilterModal, globalCommandModal]);
 
   const { data: systemSettings } = useSystemSettings();
 

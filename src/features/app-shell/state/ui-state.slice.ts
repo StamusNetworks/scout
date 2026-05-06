@@ -5,7 +5,7 @@ import { RootState } from '@/store/store';
 
 const initialState: UIState = {
   theme: (localStorage.getItem('theme') as Theme) || 'system',
-  openModal: null,
+  isGlobalCommandOpen: false,
   isSidebarOpen: false,
   autoReloadInterval: 0,
   autoReloadStartDate: 0,
@@ -18,11 +18,9 @@ export type BaseTheme = 'dark' | 'light' | 'catppuccin' | 'diesel' | 'matrix';
 
 export type Theme = 'system' | BaseTheme;
 
-export type Modal = 'globalCommand';
-
 type UIState = {
   theme: Theme;
-  openModal: null | Modal;
+  isGlobalCommandOpen: boolean;
   isSidebarOpen: boolean;
   autoReloadInterval: number;
   autoReloadStartDate: number;
@@ -39,12 +37,11 @@ export const uiStateSlice = createSlice({
       state.theme = action.payload;
       localStorage.setItem('theme', action.payload);
     },
-    setOpenModal: (state, action: PayloadAction<UIState['openModal']>) => {
-      if (action.payload === state.openModal) {
-        state.openModal = null;
-        return;
-      }
-      state.openModal = action.payload;
+    setIsGlobalCommandOpen: (state, action: PayloadAction<boolean>) => {
+      state.isGlobalCommandOpen = action.payload;
+    },
+    toggleGlobalCommand: (state) => {
+      state.isGlobalCommandOpen = !state.isGlobalCommandOpen;
     },
     setIsSidebarOpen: (state, action: PayloadAction<boolean>) => {
       state.isSidebarOpen = action.payload;
@@ -84,7 +81,8 @@ export const uiStateSlice = createSlice({
 
 export const {
   setTheme,
-  setOpenModal,
+  setIsGlobalCommandOpen,
+  toggleGlobalCommand,
   setIsSidebarOpen,
   setAutoReloadInterval,
   resetAutoReloadStartDate,
@@ -94,8 +92,8 @@ export const {
 } = uiStateSlice.actions;
 export const uiStateInitialState = initialState;
 
-export const selectIsModalOpen = (modal: Modal) => (state: RootState) =>
-  state.uiState.openModal === modal;
+export const selectIsGlobalCommandOpen = (state: RootState) =>
+  state.uiState.isGlobalCommandOpen;
 
 export const selectAutoReloadInterval = (state: RootState) =>
   state.uiState.autoReloadInterval;
