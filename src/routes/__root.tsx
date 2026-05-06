@@ -1,7 +1,7 @@
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { PanelRightClose, PanelRightOpen } from 'lucide-react';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Button } from '@/common/design-system/atoms/ui/button';
@@ -13,12 +13,15 @@ import { AppSidebar } from '@/common/design-system/layouts/components/navigation
 import { defaultMenu } from '@/common/design-system/layouts/components/navigation/navigation.config';
 import { BreadcrumbProvider } from '@/common/design-system/molecules/breadcrumbs';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
-import { Header, Modals, useGlobalCommandModal } from '@/features/app-shell';
+import {
+  Header,
+  Modals,
+  useGlobalKeyboardShortcuts,
+} from '@/features/app-shell';
 import {
   selectIsSidebarOpen,
   setIsSidebarOpen,
 } from '@/features/app-shell/state/ui-state.slice';
-import { useQfilterModal } from '@/features/query-filters';
 import { FiltersSideBar } from '@/features/query-filters/components/filters-sidebar/filters-sidebar';
 import { useSystemSettings } from '@/features/settings';
 import type { AppStore } from '@/store/store';
@@ -36,48 +39,14 @@ function RootComponent() {
   const dispatch = useAppDispatch();
   const { enterprise } = useFeatureFlags();
   const isFiltersOpen = useAppSelector(selectIsSidebarOpen);
-  const qfilterModal = useQfilterModal();
-  const globalCommandModal = useGlobalCommandModal();
-
-  useEffect(() => {
-    const keyPress = (e: KeyboardEvent) => {
-      if (e.ctrlKey || e.metaKey) {
-        if (e.key === 'k') {
-          e.preventDefault();
-          globalCommandModal.toggle();
-        }
-        if (e.key === 'l') {
-          e.preventDefault();
-          qfilterModal.openAddFilter();
-        }
-        if (e.key === 'o') {
-          e.preventDefault();
-          qfilterModal.openAddEsFilter();
-        }
-      }
-      const activeElement = document.activeElement;
-      const isTyping =
-        activeElement?.tagName === 'INPUT' ||
-        activeElement?.tagName === 'TEXTAREA' ||
-        activeElement?.getAttribute('contenteditable') === 'true' ||
-        activeElement?.getAttribute('role') === 'textbox';
-
-      if (e.key === '/' && !isTyping) {
-        e.preventDefault();
-        globalCommandModal.toggle();
-      }
-    };
-    document.addEventListener('keydown', keyPress);
-    return () => {
-      document.removeEventListener('keydown', keyPress);
-    };
-  }, [qfilterModal, globalCommandModal]);
+  useGlobalKeyboardShortcuts();
 
   const { data: systemSettings } = useSystemSettings();
 
-  const menu = useMemo(() => {
-    return defaultMenu(systemSettings!, enterprise);
-  }, [systemSettings, enterprise]);
+  const menu = useMemo(
+    () => defaultMenu(systemSettings!, enterprise),
+    [systemSettings, enterprise],
+  );
 
   return (
     <>

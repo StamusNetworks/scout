@@ -473,8 +473,18 @@ Phase 4 — composition cleanup. Three strands.
   concerns (`isGlobalCommandOpen`, sidebar, theme, auto-reload, json
   view, page container) and no longer knows about feature modals.
 
-- **Thin routes** — pending. Most routes are already thin; the
-  outlier is `_enterprise/hosts/$hostId/route.tsx` (~360 lines).
+- **Thin routes** — done for the heavy outliers.
+  `routes/share.tsx` (119 → 19 lines) and `routes/deeplink.tsx`
+  (51 → 19 lines) are now one-line wrappers around feature hooks
+  (`useHydrateFromShareLink`, `useApplyDeeplink`); the URL-parse +
+  state-hydrate orchestration moved into the owning features along
+  with their pure transforms (vitest-tested).
+  `routes/_enterprise/hosts/$hostId/route.tsx` (362 → 154 lines)
+  delegates the loading/empty shell to host-insights'
+  `HostDetailsShell` and the seven tab-badge counts to per-feature
+  badge components in threats / rules / events. Routes no longer
+  fetch host counts. `routes/__root.tsx` keyboard shortcuts moved
+  into `useGlobalKeyboardShortcuts` in app-shell.
 
 - **Extract pure logic from React** — pending. Hunt for `useMemo`-of-
   pure-derivations and hooks that compute without state, move them
