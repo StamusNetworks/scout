@@ -6,7 +6,6 @@ import { RootState } from '@/store/store';
 const initialState: UIState = {
   theme: (localStorage.getItem('theme') as Theme) || 'system',
   openModal: null,
-  initialValues: null,
   isSidebarOpen: false,
   autoReloadInterval: 0,
   autoReloadStartDate: 0,
@@ -19,23 +18,11 @@ export type BaseTheme = 'dark' | 'light' | 'catppuccin' | 'diesel' | 'matrix';
 
 export type Theme = 'system' | BaseTheme;
 
-export type Modal =
-  | 'globalCommand'
-  | 'addQfilter'
-  | 'saveFilterSet'
-  | 'addFilterCommand'
-  | 'addTagFilterAction'
-  | 'addTagAndKeepFilterAction'
-  | 'addSuppressFilterAction'
-  | 'addThresholdFilterAction'
-  | 'addDeclarationFilterAction'
-  | 'editFilterAction'
-  | 'addEsFilter';
+export type Modal = 'globalCommand' | 'addFilterCommand' | 'addEsFilter';
 
 type UIState = {
   theme: Theme;
   openModal: null | Modal;
-  initialValues: object | null;
   isSidebarOpen: boolean;
   autoReloadInterval: number;
   autoReloadStartDate: number;

@@ -17,6 +17,7 @@ import { getShortcutDisplay } from '@/common/lib/platform';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { getConfig } from '@/config';
 import { useFilterActionModal } from '@/features/filter-actions';
+import { useSaveFilterSetModal } from '@/features/filter-sets';
 import { useQueryFilters } from '@/features/query-filters';
 import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
 import { useUpdatePushRuleSetMutation } from '@/features/rules';
@@ -51,6 +52,7 @@ export const useGlobalCommands = (): GlobalCommands[] => {
   const [updatePushRuleset] = useUpdatePushRuleSetMutation();
   const clearFilters = useClearFilters();
   const filterActionModal = useFilterActionModal();
+  const saveFilterSetModal = useSaveFilterSetModal();
   const handleUpdatePushRuleset = () => {
     updatePushRuleset({ enterprise })
       .unwrap()
@@ -115,7 +117,7 @@ export const useGlobalCommands = (): GlobalCommands[] => {
           Icon: Save,
           title: 'Save Filter Set',
           action: () => {
-            dispatch(setOpenModal('saveFilterSet'));
+            saveFilterSetModal.open();
           },
         },
       ],
