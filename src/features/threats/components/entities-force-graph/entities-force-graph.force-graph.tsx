@@ -12,7 +12,7 @@ import {
 
 import { convertOklch } from '@/common/lib/colors';
 import { useRootCssVariableValue } from '@/common/lib/use-root-css-variable-value';
-import { useTheme } from '@/features/ui/theming/useTheme';
+import { useTheme } from '@/features/theming';
 
 import { ForceGraphData, Node } from './entities-force-graph.utils';
 

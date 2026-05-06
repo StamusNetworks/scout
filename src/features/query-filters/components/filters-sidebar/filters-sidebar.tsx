@@ -34,8 +34,8 @@ import {
 } from '@/features/filter-sets';
 import { useWithAlertsParam } from '@/features/host-insights';
 import { Investigation, useInvestigationStage } from '@/features/investigation';
-import { useIsEnterprise } from '@/features/settings';
 import { useAutoOpenSidebarOnNavigation } from '@/features/preferences';
+import { useIsEnterprise } from '@/features/settings';
 import {
   selectIsSidebarOpen,
   setIsSidebarOpen,

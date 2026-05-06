@@ -18,8 +18,8 @@ import {
 } from '@/features/events/components/event-detail';
 import { Event } from '@/features/events/model/event';
 import { Hostname, Network } from '@/features/host-insights';
-import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { useDefaultEventDetailTab } from '@/features/preferences';
+import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { KillchainTag, KillChainPhase, ThreatTag } from '@/features/threats';
 
 import { AnomalyCardContent } from './protocol/anomaly-card-content';

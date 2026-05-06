@@ -14,8 +14,9 @@ import {
 } from '@/common/design-system/atoms/ui/dropdown-menu';
 import { useAppDispatch } from '@/store/store';
 
-import { setTheme, Theme } from '../ui-state.slice';
-import { useTheme } from './useTheme';
+import { setTheme, Theme } from '@/features/ui/ui-state.slice';
+
+import { useTheme } from '../../hooks/use-theme';
 
 export const ThemeSelector = () => {
   const { theme, colorBlindness } = useTheme();

@@ -13,9 +13,9 @@ import {
   HostSummary,
   useGetHostWithAlertsQuery,
 } from '@/features/host-insights';
+import { useDefaultEventDetailTab } from '@/features/preferences';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
-import { useDefaultEventDetailTab } from '@/features/preferences';
 import { useGetImpactedEntitiesQuery } from '@/features/threats';
 
 import { useGetEventsQuery } from '../../api/events.api';

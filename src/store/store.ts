@@ -14,12 +14,12 @@ import { saveFilterSetModalSlice } from '@/features/filter-sets/state/save-filte
 import { investigationSlice } from '@/features/investigation/state/investigation.slice';
 import { investigationsHistorySlice } from '@/features/investigation/state/investigations-history.slice';
 import { marketingSlice } from '@/features/marketing/state/marketing.slice';
+import { preferencesSlice } from '@/features/preferences/state/preferences.slice';
 import { addQfilterCommandSlice } from '@/features/query-filters/state/add-qfilter-command.slice';
 import { queryFiltersSlice } from '@/features/query-filters/state/query-filters.slice';
 import { settingsSlice } from '@/features/settings/state/settings.slice';
 import { tenancySlice } from '@/features/tenancy/state/tenancy.slice';
 import { helpSlice } from '@/features/ui/help/help.slice';
-import { preferencesSlice } from '@/features/preferences/state/preferences.slice';
 import { uiStateSlice } from '@/features/ui/ui-state.slice';
 
 import { API } from './api';

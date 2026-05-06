@@ -11,7 +11,6 @@ import {
 } from '@/common/design-system/atoms/page';
 import { Separator } from '@/common/design-system/atoms/ui/separator';
 import { TogglePageContainer } from '@/common/design-system/molecules/toggle-container';
-import { useIsEnterprise } from '@/features/settings';
 import {
   ColorBlindnessSelector,
   DataDisplay,
@@ -20,6 +19,7 @@ import {
   ExportFormatSelector,
   SidebarConfig,
 } from '@/features/preferences';
+import { useIsEnterprise } from '@/features/settings';
 
 export const Route = createFileRoute('/user-settings')({
   component: () => (

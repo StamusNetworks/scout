@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { useTheme } from '@/features/ui/theming/useTheme';
+import { useTheme } from '@/features/theming';
 
 import { SunburstGraphReturn } from './use-draw-graph';
 

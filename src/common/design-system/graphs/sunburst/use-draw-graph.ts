@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 import React, { useEffect, useRef, useState } from 'react';
 
-import { useTheme } from '@/features/ui/theming/useTheme';
+import { useTheme } from '@/features/theming';
 
 import { SunburstNode } from './sunburst';
 import {

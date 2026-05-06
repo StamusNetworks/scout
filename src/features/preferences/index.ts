@@ -8,6 +8,7 @@ export type {
 
 // hooks (cross-feature read surface)
 export { useAutoOpenSidebarOnNavigation } from './hooks/use-auto-open-sidebar-on-navigation';
+export { useColorBlindness } from './hooks/use-color-blindness';
 export { useDefaultEventDetailTab } from './hooks/use-default-event-detail-tab';
 
 // components (route-consumed)

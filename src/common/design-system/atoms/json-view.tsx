@@ -1,8 +1,7 @@
 import ReactJson, { type ThemeKeys } from '@microlink/react-json-view';
 import { useMemo } from 'react';
 
-import { useGetPreferredColorScheme } from '@/features/ui/theming/themeSelector';
-import { useTheme } from '@/features/ui/theming/useTheme';
+import { useGetPreferredColorScheme, useTheme } from '@/features/theming';
 import { BaseTheme, selectJsonViewOpen } from '@/features/ui/ui-state.slice';
 import { useAppSelector } from '@/store/store';
 

@@ -12,7 +12,7 @@ import {
 
 import { useEnableFilterFlags } from '@/features/query-filters/hooks/use-enable-filter-flags';
 import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
-import { useTheme } from '@/features/ui/theming/useTheme';
+import { useTheme } from '@/features/theming';
 
 import { Tooltip, TooltipContent } from '../../molecules/tooltip';
 import { WorldCountriesMap } from './world-map.config';
