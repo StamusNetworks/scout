@@ -21,7 +21,7 @@ export type URLParams = Pagination &
   };
 
 export const DashboardAPI = API.injectEndpoints({
-  overrideExisting: import.meta.env.DEV,
+  overrideExisting: import.meta.env.VITE_APP_MODE === 'development',
   endpoints: (builder) => ({
     // QUERIES
     getDashboardFields: builder.query<Record<string, DataEntry[]>, URLParams>({

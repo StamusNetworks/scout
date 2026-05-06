@@ -29,7 +29,7 @@ import {
 } from './filter-action.transforms';
 
 export const FilterActionsAPI = API.injectEndpoints({
-  overrideExisting: import.meta.env.DEV,
+  overrideExisting: import.meta.env.VITE_APP_MODE === 'development',
   endpoints: (builder) => ({
     // QUERIES
     getFilterActions: builder.query<

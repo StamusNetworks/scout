@@ -59,7 +59,7 @@ const activeThreatFamiliesInitialState =
   activeThreatFamiliesAdapter.getInitialState();
 
 export const ThreatsAPI = API.injectEndpoints({
-  overrideExisting: import.meta.env.DEV,
+  overrideExisting: import.meta.env.VITE_APP_MODE === 'development',
   endpoints: (builder) => ({
     // QUERIES
     getThreatFamilies: builder.query<

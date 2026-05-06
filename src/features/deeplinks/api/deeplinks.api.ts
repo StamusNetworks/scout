@@ -12,7 +12,7 @@ import {
 } from './deeplinks.transforms';
 
 export const DeeplinkAPI = API.injectEndpoints({
-  overrideExisting: import.meta.env.DEV,
+  overrideExisting: import.meta.env.VITE_APP_MODE === 'development',
   endpoints: (builder) => ({
     getDeeplinks: builder.query<
       Paginated<Deeplink>,

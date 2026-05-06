@@ -5,7 +5,7 @@ import type { CurrentUserDto } from './current-user.dto';
 import { toCurrentUser } from './current-user.transforms';
 
 export const AuthAPI = API.injectEndpoints({
-  overrideExisting: import.meta.env.DEV,
+  overrideExisting: import.meta.env.VITE_APP_MODE === 'development',
   endpoints: (builder) => ({
     sessionActivity: builder.mutation<{ disconnect: boolean }, number>({
       query: (timeout) => ({

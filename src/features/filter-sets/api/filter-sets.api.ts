@@ -5,7 +5,7 @@ import { type FilterSetDto } from './filter-set.dto';
 import { toCreatePayloadDto, toFilterSet } from './filter-set.transforms';
 
 export const FilterSetsAPI = API.injectEndpoints({
-  overrideExisting: import.meta.env.DEV,
+  overrideExisting: import.meta.env.VITE_APP_MODE === 'development',
   endpoints: (builder) => ({
     getFilterSets: builder.query<FilterSet[], void>({
       query: () => ({

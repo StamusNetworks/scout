@@ -10,7 +10,7 @@ import { OffendersData } from '../model/offenders';
 import { ThreatHistory } from '../model/threat-history';
 
 export const TimelineAPI = API.injectEndpoints({
-  overrideExisting: import.meta.env.DEV,
+  overrideExisting: import.meta.env.VITE_APP_MODE === 'development',
   endpoints: (builder) => ({
     getThreatHistory: builder.query<
       Paginated<ThreatHistory>,

@@ -19,7 +19,7 @@ import { RuleDto } from './rule.dto';
 import { toRule } from './rule.transforms';
 
 export const RulesAPI = API.injectEndpoints({
-  overrideExisting: import.meta.env.DEV,
+  overrideExisting: import.meta.env.VITE_APP_MODE === 'development',
   endpoints: (builder) => ({
     getRules: builder.query<
       Paginated<Rule>,
