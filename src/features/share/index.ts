@@ -10,3 +10,6 @@ export {
   decodeShareableState,
   encodeShareableState,
 } from './utils/shareable-state';
+
+// components
+export { ShareButton } from './components/share-button/share-button';

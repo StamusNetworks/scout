@@ -1,8 +1,11 @@
 import ReactJson, { type ThemeKeys } from '@microlink/react-json-view';
 import { useMemo } from 'react';
 
+import {
+  BaseTheme,
+  selectJsonViewOpen,
+} from '@/features/app-shell/state/ui-state.slice';
 import { useGetPreferredColorScheme, useTheme } from '@/features/theming';
-import { BaseTheme, selectJsonViewOpen } from '@/features/app-shell/state/ui-state.slice';
 import { useAppSelector } from '@/store/store';
 
 const ThemesMap = {

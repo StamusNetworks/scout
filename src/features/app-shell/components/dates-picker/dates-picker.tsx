@@ -8,6 +8,11 @@ import { Button } from '@/common/design-system/atoms/ui/button';
 import { DateTimeInput } from '@/common/design-system/atoms/ui/date-time-input';
 import { Label } from '@/common/design-system/atoms/ui/label';
 import {
+  selectAutoReloadInterval,
+  selectAutoReloadStartDate,
+  setAutoReloadInterval,
+} from '@/features/app-shell/state/ui-state.slice';
+import {
   formatUnit,
   TimeUnit,
   units,
@@ -15,35 +20,30 @@ import {
   useDates,
   useSetDates,
 } from '@/features/dates';
-import {
-  selectAutoReloadInterval,
-  selectAutoReloadStartDate,
-  setAutoReloadInterval,
-} from '@/features/app-shell/state/ui-state.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
-import { Divider } from '../../atoms/ui/divider';
-import { Input } from '../../atoms/ui/input';
+import { Divider } from '@/common/design-system/atoms/ui/divider';
+import { Input } from '@/common/design-system/atoms/ui/input';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '../../atoms/ui/popover';
-import { Progress } from '../../atoms/ui/progress';
+} from '@/common/design-system/atoms/ui/popover';
+import { Progress } from '@/common/design-system/atoms/ui/progress';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../../atoms/ui/select';
-import { Separator } from '../../atoms/ui/separator';
+} from '@/common/design-system/atoms/ui/select';
+import { Separator } from '@/common/design-system/atoms/ui/separator';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '../../atoms/ui/tooltip';
+} from '@/common/design-system/atoms/ui/tooltip';
 
 export const DatesPicker = () => {
   const { type, from_duration, from_unit, start_date, end_date } = useDates();

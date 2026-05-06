@@ -9,19 +9,18 @@ import {
   SidebarInset,
   SidebarProvider,
 } from '@/common/design-system/atoms/ui/sidebar';
-import { Header } from '@/common/design-system/layouts/components/header/header';
-import { Modals } from '@/common/design-system/layouts/components/modals';
 import { AppSidebar } from '@/common/design-system/layouts/components/navigation/app-sidebar';
 import { defaultMenu } from '@/common/design-system/layouts/components/navigation/navigation.config';
 import { BreadcrumbProvider } from '@/common/design-system/molecules/breadcrumbs';
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
-import { FiltersSideBar } from '@/features/query-filters/components/filters-sidebar/filters-sidebar';
-import { useSystemSettings } from '@/features/settings';
+import { Header, Modals } from '@/features/app-shell';
 import {
   selectIsSidebarOpen,
   setIsSidebarOpen,
   setOpenModal,
 } from '@/features/app-shell/state/ui-state.slice';
+import { FiltersSideBar } from '@/features/query-filters/components/filters-sidebar/filters-sidebar';
+import { useSystemSettings } from '@/features/settings';
 import type { AppStore } from '@/store/store';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 

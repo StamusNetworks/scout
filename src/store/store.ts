@@ -5,6 +5,7 @@ import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/es/storage';
 
 import { tablePreferencesSlice } from '@/common/design-system/molecules/data-table/table-preferences.slice';
+import { uiStateSlice } from '@/features/app-shell/state/ui-state.slice';
 import { authSlice } from '@/features/auth/state/auth.slice';
 import { datesFiltersSlice } from '@/features/dates/state/dates.slice';
 import { dashboardPageStateSlice } from '@/features/events/state/dashboard.slice';
@@ -20,7 +21,6 @@ import { addQfilterCommandSlice } from '@/features/query-filters/state/add-qfilt
 import { queryFiltersSlice } from '@/features/query-filters/state/query-filters.slice';
 import { settingsSlice } from '@/features/settings/state/settings.slice';
 import { tenancySlice } from '@/features/tenancy/state/tenancy.slice';
-import { uiStateSlice } from '@/features/app-shell/state/ui-state.slice';
 
 import { API } from './api';
 

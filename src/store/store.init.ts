@@ -1,4 +1,5 @@
 import { tablePreferencesInitialState } from '@/common/design-system/molecules/data-table/table-preferences.slice';
+import { uiStateInitialState } from '@/features/app-shell/state/ui-state.slice';
 import { authInitialState } from '@/features/auth/state/auth.slice';
 import { datesFiltersInitialState } from '@/features/dates/state/dates.slice';
 import { dashboardPageStateInitialState } from '@/features/events/state/dashboard.slice';
@@ -14,7 +15,6 @@ import { addQfilterCommandInitialState } from '@/features/query-filters/state/ad
 import { queryFiltersInitialState } from '@/features/query-filters/state/query-filters.slice';
 import { settingsInitialState } from '@/features/settings/state/settings.slice';
 import { tenancyInitialState } from '@/features/tenancy/state/tenancy.slice';
-import { uiStateInitialState } from '@/features/app-shell/state/ui-state.slice';
 
 import { RootState } from './store';
 

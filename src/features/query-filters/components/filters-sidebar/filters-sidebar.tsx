@@ -25,6 +25,11 @@ import {
 import { startsWithOneOf } from '@/common/lib/strings';
 import { cn } from '@/common/lib/utils';
 import {
+  selectIsSidebarOpen,
+  setIsSidebarOpen,
+  setOpenModal,
+} from '@/features/app-shell/state/ui-state.slice';
+import {
   FilterActionsDropdown,
   useSupportedFilters,
 } from '@/features/filter-actions';
@@ -36,11 +41,6 @@ import { useWithAlertsParam } from '@/features/host-insights';
 import { Investigation, useInvestigationStage } from '@/features/investigation';
 import { useAutoOpenSidebarOnNavigation } from '@/features/preferences';
 import { useIsEnterprise } from '@/features/settings';
-import {
-  selectIsSidebarOpen,
-  setIsSidebarOpen,
-  setOpenModal,
-} from '@/features/app-shell/state/ui-state.slice';
 import { useAppSelector } from '@/store/store';
 
 import { FilterCategory } from '../../definitions/query-filter.config';

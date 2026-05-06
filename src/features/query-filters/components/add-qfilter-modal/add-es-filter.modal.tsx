@@ -8,7 +8,10 @@ import {
 } from '@/common/design-system/atoms/ui/dialog';
 import { VisuallyHidden } from '@/common/design-system/atoms/ui/visually-hidden';
 import { LuceneEditor } from '@/common/design-system/molecules/lucene-editor';
-import { selectIsModalOpen, setOpenModal } from '@/features/app-shell/state/ui-state.slice';
+import {
+  selectIsModalOpen,
+  setOpenModal,
+} from '@/features/app-shell/state/ui-state.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { useCreateFilter } from '../../hooks/use-create-filter';
