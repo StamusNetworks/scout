@@ -7,8 +7,7 @@ import { useGetAutoDateRangeQuery } from '../api/dates.api';
  * Fetches the appliance-derived "auto" date window — the min/max
  * timestamps of available alerts for the current tenant + event-type
  * filters. The dates slice listens to this query's fulfilled action
- * and updates `state.start_date`/`end_date` when the active mode is
- * `auto`.
+ * and updates `state.from`/`to` when the active mode is `auto`.
  */
 export const useAutoRange = () => {
   const params = useEventTypeFlagsParams();

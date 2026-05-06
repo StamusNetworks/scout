@@ -36,8 +36,8 @@ import protoColumns from '../../definitions/events-flow.columns';
 export interface EventsFlowForProtocolProps {
   appProto: string;
   globalParams: {
-    start_date?: number;
-    end_date?: number;
+    from?: number;
+    to?: number;
     tenant?: number;
     qfilter?: string;
   };
@@ -75,8 +75,8 @@ export function EventsFlowForProtocol({
   }, [appProto, enhancedQfilter]);
 
   const { data } = useGetEventsAggregationQuery({
-    start_date: globalParams.start_date,
-    end_date: globalParams.end_date,
+    from: globalParams.from,
+    to: globalParams.to,
     qfilter,
     tenant: globalParams.tenant,
     aggs,

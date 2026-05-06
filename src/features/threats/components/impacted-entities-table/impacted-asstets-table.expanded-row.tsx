@@ -23,7 +23,7 @@ export const ExpandedRow = (kind: ThreatKind) => {
   }: {
     row: Row<ImpactedEntity>;
   }) => {
-    const { start_date, end_date } = useGlobalQueryParams(['dates']);
+    const { from, to } = useGlobalQueryParams(['dates']);
     const isCompromise = kind === 'compromise';
     return (
       <Tabs
@@ -55,8 +55,8 @@ export const ExpandedRow = (kind: ThreatKind) => {
             <ScrollArea className="max-h-[800px]">
               <HuntingTrail
                 asset={row.original.value}
-                startDate={start_date}
-                endDate={end_date}
+                from={from}
+                to={to}
               />
             </ScrollArea>
           </TabsContent>

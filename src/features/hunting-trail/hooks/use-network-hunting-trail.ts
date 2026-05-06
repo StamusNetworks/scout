@@ -14,15 +14,15 @@ import {
 } from '../model/hunting-trail';
 
 interface UseNetworkHuntingTrailParams {
-  startDate: number | undefined;
-  endDate: number | undefined;
+  from: number | undefined;
+  to: number | undefined;
 }
 
 export function useNetworkHuntingTrail({
-  startDate,
-  endDate,
+  from,
+  to,
 }: UseNetworkHuntingTrailParams) {
-  const common = { start_date: startDate, end_date: endDate, page_size: 10000 };
+  const common = { from, to, page_size: 10000 };
   const alertParams = { ...common, alert: true as const };
 
   // --- Alert queries (25) ---

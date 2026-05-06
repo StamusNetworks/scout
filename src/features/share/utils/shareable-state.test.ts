@@ -96,30 +96,30 @@ const DATES_FROM = {
   type: 'from' as const,
   from_duration: 30,
   from_unit: 'days' as const,
-  start_date: 1700000000000,
-  end_date: 1700100000000,
+  from: 1700000000000,
+  to: 1700100000000,
 };
 
 const DATES_RANGE = {
   type: 'range' as const,
-  start_date: 1700000000000,
-  end_date: 1700100000000,
+  from: 1700000000000,
+  to: 1700100000000,
   from_duration: undefined,
   from_unit: undefined,
 };
 
 const DATES_AUTO = {
   type: 'auto' as const,
-  start_date: 1700000000000,
-  end_date: 1700100000000,
+  from: 1700000000000,
+  to: 1700100000000,
   from_duration: undefined,
   from_unit: undefined,
 };
 
 const DATES_ALL = {
   type: 'all' as const,
-  start_date: undefined,
-  end_date: undefined,
+  from: undefined,
+  to: undefined,
   from_duration: undefined,
   from_unit: undefined,
 };

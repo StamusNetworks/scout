@@ -90,11 +90,11 @@ export const CipherSecurity = () => {
   const interval = useMemo(
     () =>
       Math.ceil(
-        ((params.end_date || new Date().getTime()) - (params.start_date || 0)) /
+        ((params.to || new Date().getTime()) - (params.from || 0)) /
           RANGES_COUNT /
           1000,
       ),
-    [params.start_date, params.end_date],
+    [params.from, params.to],
   );
   const { data: recommendedData } = useGetEventsTimelineQuery({
     ...params,

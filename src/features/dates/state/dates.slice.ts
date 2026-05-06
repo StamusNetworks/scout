@@ -20,13 +20,13 @@ export const datesFiltersSlice = createSlice({
       switch (action.payload.type) {
         case 'all':
           state.type = 'all';
-          state.start_date = undefined;
-          state.end_date = undefined;
+          state.from = undefined;
+          state.to = undefined;
           break;
         case 'range':
           state.type = 'range';
-          state.start_date = action.payload.start_date;
-          state.end_date = action.payload.end_date;
+          state.from = action.payload.from;
+          state.to = action.payload.to;
           state.from_duration = undefined;
           state.from_unit = undefined;
           break;
@@ -34,16 +34,16 @@ export const datesFiltersSlice = createSlice({
           state.type = 'from';
           state.from_duration = action.payload.from_duration;
           state.from_unit = action.payload.from_unit;
-          state.start_date =
+          state.from =
             new Date().getTime() -
             action.payload.from_duration *
               UNITS_IN_MILLISECONDS[action.payload.from_unit!];
-          state.end_date = new Date().getTime();
+          state.to = new Date().getTime();
           break;
         case 'auto':
           state.type = 'auto';
-          state.start_date = action.payload.start_date;
-          state.end_date = action.payload.end_date;
+          state.from = action.payload.from;
+          state.to = action.payload.to;
           break;
         default:
           break;
@@ -52,28 +52,28 @@ export const datesFiltersSlice = createSlice({
     },
     refreshRange: (state) => {
       if (state.type !== 'from') return;
-      state.start_date =
+      state.from =
         new Date().getTime() -
         (state.from_duration || 30) *
           UNITS_IN_MILLISECONDS[state.from_unit || 'days'];
-      state.end_date = new Date().getTime();
+      state.to = new Date().getTime();
     },
   },
   extraReducers: (builder) => {
     builder.addCase(API.util.invalidateTags(['Reload']).type, (state) => {
       if (state.type !== 'from') return;
-      state.start_date =
+      state.from =
         new Date().getTime() -
         state.from_duration! * UNITS_IN_MILLISECONDS[state.from_unit!];
-      state.end_date = new Date().getTime();
+      state.to = new Date().getTime();
       persistDates(state);
     });
     builder.addMatcher(
       DatesAPI.endpoints.getAutoDateRange.matchFulfilled,
       (state, action) => {
         if (state.type !== 'auto') return;
-        state.start_date = action.payload.min_timestamp;
-        state.end_date = action.payload.max_timestamp;
+        state.from = action.payload.min_timestamp;
+        state.to = action.payload.max_timestamp;
         persistDates(state);
       },
     );

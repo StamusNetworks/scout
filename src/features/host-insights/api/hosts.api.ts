@@ -2,7 +2,7 @@ import { isNil } from 'ramda';
 import { z } from 'zod';
 
 import { buildQueryParams } from '@/common/fetching/buildQueryParams';
-import { Dates, QFilter, Tenant } from '@/common/fetching/fetching.types';
+import { DateRange, QFilter, Tenant } from '@/common/fetching/fetching.types';
 import { Paginated, Pagination } from '@/common/fetching/fetching.types';
 import { Aggregation } from '@/common/lib/aggregation';
 import { API } from '@/store/api';
@@ -57,30 +57,30 @@ export const aggSchema = z.object({
 
 export type HostsCountsAggregation = z.infer<typeof aggSchema>;
 
-export const getCustomFilter = (start_date: number, end_date: number) => ({
+export const getCustomFilter = (from: number, to: number) => ({
   bool: {
     should: [
       {
         range: {
           'host_id.first_seen': {
-            gte: start_date,
-            lte: end_date,
+            gte: from,
+            lte: to,
           },
         },
       },
       {
         range: {
           'host_id.last_seen': {
-            gte: start_date,
-            lte: end_date,
+            gte: from,
+            lte: to,
           },
         },
       },
       {
         bool: {
           must: [
-            { range: { 'host_id.first_seen': { lte: start_date } } },
-            { range: { 'host_id.last_seen': { gte: end_date } } },
+            { range: { 'host_id.first_seen': { lte: from } } },
+            { range: { 'host_id.last_seen': { gte: to } } },
           ],
         },
       },
@@ -136,7 +136,7 @@ export const HostsAPI = API.injectEndpoints({
     // QUERIES
     getHosts: builder.query<
       Paginated<Host>,
-      Pagination & Dates & Tenant & QFilter & { withAlerts?: boolean }
+      Pagination & DateRange & Tenant & QFilter & { withAlerts?: boolean }
     >({
       query: ({ withAlerts, ...params }) => ({
         url: `/appliances/host_id${withAlerts ? '_alerts' : ''}/`,
@@ -150,7 +150,7 @@ export const HostsAPI = API.injectEndpoints({
     }),
     getHostsWithAlerts: builder.query<
       Paginated<Host>,
-      Pagination & Dates & Tenant & QFilter & { highlight?: boolean }
+      Pagination & DateRange & Tenant & QFilter & { highlight?: boolean }
     >({
       query: (params) => ({
         url: `/appliances/host_id_alerts/`,
@@ -179,7 +179,7 @@ export const HostsAPI = API.injectEndpoints({
         httpProxiesCount: number;
         printersCount: number;
       },
-      Tenant & Dates & { body: ReturnType<typeof getAggregationBody> }
+      Tenant & DateRange & { body: ReturnType<typeof getAggregationBody> }
     >({
       query: (params) => ({
         url: `/rules/es/search/`,
@@ -218,9 +218,9 @@ export const HostsAPI = API.injectEndpoints({
         usernames_count: number;
         services_count: number;
       }[],
-      Tenant & Dates & QFilter
+      Tenant & DateRange & QFilter
     >({
-      query: ({ start_date, end_date, host_id_qfilter, ...params }) => ({
+      query: ({ from, to, host_id_qfilter, ...params }) => ({
         url: `/rules/es/search/`,
         method: 'POST',
         params: buildQueryParams(params, { time_format: 'elastic' }),
@@ -231,7 +231,7 @@ export const HostsAPI = API.injectEndpoints({
               : `host_id-${params.tenant}`,
           size: 0,
           qfilter: host_id_qfilter || '*',
-          custom_filter: getCustomFilter(start_date!, end_date!),
+          custom_filter: getCustomFilter(from!, to!),
           aggs: {
             aggs: {
               network_nodes: {

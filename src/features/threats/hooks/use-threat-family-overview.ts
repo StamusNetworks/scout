@@ -42,7 +42,7 @@ export const useThreatFamilyOverview = ({
 
   const { data: activeFamily, isLoading: activeFamilyLoading } =
     useGetActiveThreatFamiliesQuery(
-      { tenant, start_date: startDate, end_date: endDate },
+      { tenant, from: startDate, to: endDate },
       {
         selectFromResult: (result) => ({
           ...result,

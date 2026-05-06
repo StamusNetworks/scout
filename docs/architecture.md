@@ -433,24 +433,21 @@ migrations.
 
 ### Deferred kernel cleanup
 
-Two kernel-level smells are intentionally **not** fixed in a single
-sweeping refactor:
+The two deferred items are now resolved:
 
-- **Duplicate `Pagination` shape.** `common/fetching/fetching.types.ts`
-  exposes both `{ page, page_size }` (wire) and `{ pageIndex, pageSize }`
-  (UI-table) keys on the same type. 91 files reference these names; many
-  use literal `page_size: 1000` to bypass pagination. A single big-bang
-  rewrite would touch every feature and is high-risk for features whose
-  test coverage is thin. Instead, each feature migrates its API surface
-  to the domain shape during its Phase 3 migration; the kernel type
-  stays permissive in the interim.
+- **`Dates` → `DateRange { from: number; to: number }`.** Epoch
+  milliseconds preserved (numbers, not `Date` objects, so the slice
+  stays Redux-serializable). The kernel `buildQueryParams` translates
+  to wire (`start_date` / `end_date` epoch seconds for postgres,
+  `from_date` / `to_date` epoch milliseconds for elastic). The
+  `DatesState` slice keys (`from_duration`, `from_unit`) describe the
+  relative-window mode and stay; only the absolute bounds were
+  renamed. `getPersistedDates` includes a one-shot legacy-key
+  migration so existing localStorage entries (`start_date`/`end_date`)
+  are read once and rewritten in the new shape on next persist.
 
-- **`Dates` as `{ start_date?: number; end_date?: number }` (epoch
-  millis).** 78 files reference these names. The target is a
-  `DateRange = { from: Date; to: Date }` value object, with the kernel
-  `buildQueryParams` translating to `start_date` / `end_date` (or
-  `from_date` / `to_date` for elastic) at the wire. Same blast-radius
-  argument as `Pagination`: migrated per feature in Phase 3.
+- **`Pagination` strict domain shape.** _(See next commit — done as a
+  separate sweep.)_
 
 Phase 4 — composition cleanup: thin routes, consolidate modal slices,
 extract pure logic from React.

@@ -12,8 +12,8 @@ import {
 
 export type InvestigationHistory = {
   initialParams: {
-    start_date: number | undefined;
-    end_date: number | undefined;
+    from: number | undefined;
+    to: number | undefined;
     qfilter: QueryFilterState[] | undefined;
     /**
      * Snapshot of the active filter flags at save time. The

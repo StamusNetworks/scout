@@ -42,10 +42,10 @@ export const Route = createFileRoute('/_enterprise/hunting-trail')({
 function HuntingTrailLayout() {
   usePageTitle('Hunting Trail');
   const { pathname } = useLocation();
-  const { start_date, end_date } = useGlobalQueryParams(['dates']);
+  const { from, to } = useGlobalQueryParams(['dates']);
   const { groups } = useNetworkHuntingTrail({
-    startDate: start_date,
-    endDate: end_date,
+    from,
+    to,
   });
 
   return (

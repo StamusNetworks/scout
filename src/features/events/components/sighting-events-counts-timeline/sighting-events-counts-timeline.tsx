@@ -15,13 +15,13 @@ export const SightingEventsCountsTimeline = ({
   sightingId,
 }: SightingEventsCountsTimelineProps) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
-  const start_date = useMemo(() => {
-    return params.start_date || 0;
-  }, [params.start_date]);
-  const end_date = useMemo(() => {
-    return params.end_date || new Date().getTime();
-  }, [params.end_date]);
-  const interval = Math.floor((end_date - start_date) / 24 / 1000);
+  const from = useMemo(() => {
+    return params.from || 0;
+  }, [params.from]);
+  const to = useMemo(() => {
+    return params.to || new Date().getTime();
+  }, [params.to]);
+  const interval = Math.floor((to - from) / 24 / 1000);
   const { data: sighting } = useGetSightingById(sightingId);
   const qfilter = buildSightingQfilter(
     sighting?.discovery?.key,
@@ -30,8 +30,8 @@ export const SightingEventsCountsTimeline = ({
   );
   const { data: timeline } = useGetEventsTimelineQuery(
     {
-      start_date,
-      end_date,
+      from,
+      to,
       qfilter,
       interval,
     },
@@ -40,8 +40,8 @@ export const SightingEventsCountsTimeline = ({
       selectFromResult: (result) => ({
         ...result,
         data: {
-          from_date: start_date.toString(),
-          to_date: end_date.toString(),
+          from_date: from.toString(),
+          to_date: to.toString(),
           interval: interval.toString(),
           events: {
             entries: result.data,

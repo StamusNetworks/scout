@@ -55,8 +55,8 @@ function DetectionEventsPage() {
       {
         resetOn: [
           globals.tenant,
-          globals.start_date,
-          globals.end_date,
+          globals.from,
+          globals.to,
           globals.qfilter,
           globals.host_id_qfilter,
         ],

@@ -22,8 +22,8 @@ const mockUseGetSightingEventsQuery = vi.mocked(useGetSightingEventsQuery);
 
 const params = {
   asset: '192.168.1.5',
-  startDate: new Date('2026-01-12T00:00:00Z').getTime(),
-  endDate: new Date('2026-01-15T00:00:00Z').getTime(),
+  from: new Date('2026-01-12T00:00:00Z').getTime(),
+  to: new Date('2026-01-15T00:00:00Z').getTime(),
 };
 
 const emptyResult = {

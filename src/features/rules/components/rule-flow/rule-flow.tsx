@@ -54,8 +54,8 @@ export const RuleFlow = ({
   }, [sid, globalParams.qfilter]);
 
   const { data: protocols, isLoading } = useGetProtocolsFromEventsQuery({
-    start_date: globalParams.start_date,
-    end_date: globalParams.end_date,
+    from: globalParams.from,
+    to: globalParams.to,
     qfilter: protocolsQfilter,
     tenant: globalParams.tenant,
   });
@@ -120,8 +120,8 @@ function RuleFlowForProtocol({
   ]);
 
   const { data } = useGetEventsAggregationQuery({
-    start_date: globalParams.start_date,
-    end_date: globalParams.end_date,
+    from: globalParams.from,
+    to: globalParams.to,
     qfilter,
     tenant: globalParams.tenant,
     aggs,

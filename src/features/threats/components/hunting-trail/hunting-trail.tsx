@@ -5,19 +5,19 @@ import {
 
 interface CompromiseHuntingTrailProps {
   asset: string;
-  startDate: number | undefined;
-  endDate: number | undefined;
+  from: number | undefined;
+  to: number | undefined;
 }
 
 export const HuntingTrail = ({
   asset,
-  startDate,
-  endDate,
+  from,
+  to,
 }: CompromiseHuntingTrailProps) => {
   const { groups, isLoading, isError, isEmpty } = useHostHuntingTrail({
     asset,
-    startDate,
-    endDate,
+    from,
+    to,
   });
 
   if (isLoading) {

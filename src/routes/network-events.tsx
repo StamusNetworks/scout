@@ -46,12 +46,7 @@ function NetworkEventsPage() {
   const { page, setPage } = usePaginatedSearch(
     { search, navigate },
     {
-      resetOn: [
-        globals.tenant,
-        globals.start_date,
-        globals.end_date,
-        globals.qfilter,
-      ],
+      resetOn: [globals.tenant, globals.from, globals.to, globals.qfilter],
     },
   );
 

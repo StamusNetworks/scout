@@ -39,8 +39,8 @@ const renderComponent = () =>
   renderWithProviders(
     <HuntingTrail
       asset="192.168.1.5"
-      startDate={1736640000000}
-      endDate={1736899200000}
+      from={1736640000000}
+      to={1736899200000}
     />,
     {
       router: createTestRouter(),
@@ -58,8 +58,8 @@ describe('HuntingTrail', () => {
     renderWithProviders(
       <HuntingTrail
         asset="192.168.1.5"
-        startDate={1736640000000}
-        endDate={1736899200000}
+        from={1736640000000}
+        to={1736899200000}
       />,
     );
     expect(document.querySelectorAll('.animate-pulse')).toHaveLength(3);

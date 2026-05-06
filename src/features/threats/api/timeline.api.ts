@@ -1,5 +1,9 @@
 import { buildQueryParams } from '@/common/fetching/buildQueryParams.ts';
-import { Dates, Paginated, Tenant } from '@/common/fetching/fetching.types.ts';
+import {
+  DateRange,
+  Paginated,
+  Tenant,
+} from '@/common/fetching/fetching.types.ts';
 import { API } from '@/store/api';
 
 import { OffendersData } from '../model/offenders';
@@ -9,7 +13,7 @@ export const TimelineAPI = API.injectEndpoints({
   endpoints: (builder) => ({
     getThreatHistory: builder.query<
       Paginated<ThreatHistory>,
-      Dates & Tenant & { is_offender?: boolean; asset?: string }
+      DateRange & Tenant & { is_offender?: boolean; asset?: string }
     >({
       query: (params) => ({
         url: '/appliances/threat_history/',
@@ -22,7 +26,7 @@ export const TimelineAPI = API.injectEndpoints({
       }),
       providesTags: ['Reload'],
     }),
-    getOffenders: builder.query<OffendersData, Dates & Tenant>({
+    getOffenders: builder.query<OffendersData, DateRange & Tenant>({
       query: (params) => ({
         url: '/appliances/threat_event/offenders/',
         method: 'GET',

@@ -86,8 +86,8 @@ function HostDetailsLayout() {
       {
         host_id_qfilter: `ip:"${esEscape(hostId ?? '')}"`,
         tenant: params.tenant,
-        start_date: params.start_date,
-        end_date: params.end_date,
+        from: params.from,
+        to: params.to,
         hits_min: 1,
         ordering: '-hits',
         page: 1,
@@ -100,8 +100,8 @@ function HostDetailsLayout() {
     useGetBeaconingEventsQuery(
       {
         tenant: params.tenant,
-        start_date: params.start_date,
-        end_date: params.end_date,
+        from: params.from,
+        to: params.to,
         qfilter: `beacon_report.assets:${esEscape(hostId ?? '')}`,
         page: 1,
         page_size: 10,
@@ -113,8 +113,8 @@ function HostDetailsLayout() {
     useGetSightingEventsQuery(
       {
         tenant: params.tenant,
-        start_date: params.start_date,
-        end_date: params.end_date,
+        from: params.from,
+        to: params.to,
         qfilter: `discovery.asset:${esEscape(hostId ?? '')}`,
         page: 1,
         page_size: 10,

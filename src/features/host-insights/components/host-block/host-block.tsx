@@ -55,8 +55,8 @@ export const HostBlock = ({
   const [sort] = useValuesSortParam();
   const datesFilter = useDates();
   const [fallbackEndDate] = useState(() => Date.now());
-  const start_date = datesFilter.start_date ?? 0;
-  const end_date = datesFilter.end_date ?? fallbackEndDate;
+  const from = datesFilter.from ?? 0;
+  const to = datesFilter.to ?? fallbackEndDate;
   const [pageIndex, setPageIndex] = useState(0);
 
   const sortedData = useMemo(() => {
@@ -96,12 +96,12 @@ export const HostBlock = ({
               <Row className="items-end gap-1">
                 <span className="bg-foreground/50 h-2 w-0.5" />
                 <span className="text-xs">
-                  {format(new Date(start_date), 'MMM do yyyy')}
+                  {format(new Date(from), 'MMM do yyyy')}
                 </span>
               </Row>
               <Row className="items-end gap-1">
                 <span className="text-right text-xs">
-                  {format(new Date(end_date), 'MMM do yyyy')}
+                  {format(new Date(to), 'MMM do yyyy')}
                 </span>
                 <span className="bg-foreground/50 h-2 w-0.5" />
               </Row>
@@ -113,16 +113,16 @@ export const HostBlock = ({
                 <HostBlockRow
                   key={index}
                   item={item}
-                  startDate={start_date}
-                  endDate={end_date}
+                  startDate={from}
+                  endDate={to}
                   filterId={filterId}
                 />
               ) : type === 'expandable' ? (
                 <HostBlockExpandableRow
                   key={index}
                   item={item}
-                  startDate={start_date}
-                  endDate={end_date}
+                  startDate={from}
+                  endDate={to}
                   filterId={filterId}
                 />
               ) : null,

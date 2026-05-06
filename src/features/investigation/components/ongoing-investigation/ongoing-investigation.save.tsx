@@ -58,7 +58,7 @@ export const inventoryHistoryOptions = [
 
 export const SaveInvestigation = () => {
   const dispatch = useAppDispatch();
-  const { start_date, end_date } = useGlobalQueryParams(['dates']);
+  const { from, to } = useGlobalQueryParams(['dates']);
   const flags = useGatedFilterFlags();
   const queryFilters = useQueryFilters();
   const serializedFlags = flags ? toSerializedFilterFlags(flags) : undefined;
@@ -93,8 +93,8 @@ export const SaveInvestigation = () => {
           <div className="space-y-4 p-4">
             <DialogTitle className="mb-4">Save investigation</DialogTitle>
             <InvestigationParams
-              startDate={start_date!}
-              endDate={end_date!}
+              startDate={from!}
+              endDate={to!}
               flags={serializedFlags}
               qfilter={queryFilters}
             />
@@ -159,8 +159,8 @@ export const SaveInvestigation = () => {
                     dispatch(
                       addInvestigation({
                         initialParams: {
-                          start_date,
-                          end_date,
+                          from,
+                          to,
                           qfilter: queryFilters,
                           flags: serializedFlags,
                         },

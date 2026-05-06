@@ -65,8 +65,8 @@ export const IncidentsTable = ({
     page_size: pageSize,
     ordering,
     tenant: params.tenant,
-    first_seen__gte: params.start_date,
-    first_seen__lte: params.end_date,
+    first_seen__gte: params.from,
+    first_seen__lte: params.to,
     kill_chain:
       killChain.length === 0
         ? KILL_CHAIN_PHASES_KEYS_WITHOUT_POLICIES.join(',')
@@ -152,8 +152,8 @@ const IncidentsEmpty = ({ killChain }: { killChain: string[] }) => {
     page: 1,
     page_size: 1,
     tenant: params.tenant,
-    start_date: params.start_date,
-    end_date: params.end_date,
+    from: params.from,
+    to: params.to,
     family_class: 'doc',
   });
 

@@ -260,8 +260,8 @@ function useFilterSetClickHandler(
 function FilterSetEventsBadge({ filterSet }: { filterSet: FilterSet }) {
   const params = useFilterSetQueryParams(filterSet);
   const events = useGetEventsCountQuery({
-    start_date: params.start_date,
-    end_date: params.end_date,
+    from: params.from,
+    to: params.to,
     tenant: params.tenant,
     qfilter: params.qfilter,
     stamus: params.stamus,
@@ -284,8 +284,8 @@ function FilterSetEventsBadge({ filterSet }: { filterSet: FilterSet }) {
 function FilterSetTransactionsBadge({ filterSet }: { filterSet: FilterSet }) {
   const params = useFilterSetQueryParams(filterSet);
   const events = useGetEventsTailQuery({
-    start_date: params.start_date,
-    end_date: params.end_date,
+    from: params.from,
+    to: params.to,
     tenant: params.tenant,
     qfilter: params.qfilter,
     pageSize: 1,
@@ -306,8 +306,8 @@ function FilterSetTransactionsBadge({ filterSet }: { filterSet: FilterSet }) {
 function FilterSetHostsBadge({ filterSet }: { filterSet: FilterSet }) {
   const params = useFilterSetQueryParams(filterSet);
   const hosts = useGetHostsQuery({
-    start_date: params.start_date,
-    end_date: params.end_date,
+    from: params.from,
+    to: params.to,
     tenant: params.tenant,
     host_id_qfilter: params.host_id_qfilter,
     pageSize: 1,
@@ -332,8 +332,8 @@ function FilterSetInternalHostsBadge({ filterSet }: { filterSet: FilterSet }) {
     QFBuilder.createFilter('host_id.in_home_net', 'true'),
   ]);
   const hosts = useGetHostsQuery({
-    start_date: params.start_date,
-    end_date: params.end_date,
+    from: params.from,
+    to: params.to,
     tenant: params.tenant,
     host_id_qfilter: params.host_id_qfilter,
     pageSize: 1,
@@ -411,8 +411,8 @@ function FilterSetDetectionMethodsBadge({
 }) {
   const params = useFilterSetQueryParams(filterSet);
   const detectionMethods = useGetRulesQuery({
-    start_date: params.start_date,
-    end_date: params.end_date,
+    from: params.from,
+    to: params.to,
     tenant: params.tenant,
     qfilter: params.qfilter,
     stamus: params.stamus,
@@ -496,8 +496,8 @@ function useFilterSetQueryParams(
       ...filterSet.filters.map(mapPersistedToFilterState),
     ];
     return {
-      start_date: params.start_date,
-      end_date: params.end_date,
+      from: params.from,
+      to: params.to,
       tenant: params.tenant,
       qfilter: QFBuilder.toQFString(filters, {
         untagged: setTags?.untagged ?? !!appFlags?.alertTags.untagged,
@@ -513,8 +513,8 @@ function useFilterSetQueryParams(
   }, [
     filterSet,
     additionalFilters,
-    params.start_date,
-    params.end_date,
+    params.from,
+    params.to,
     params.tenant,
     appFlags,
     QFBuilder,

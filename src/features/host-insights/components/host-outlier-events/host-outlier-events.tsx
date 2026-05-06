@@ -77,15 +77,7 @@ export function HostOutlierEvents({
       ordering,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      hostId,
-      params.tenant,
-      params.start_date,
-      params.end_date,
-      page,
-      pageSize,
-      ordering,
-    ],
+    [hostId, params.tenant, params.from, params.to, page, pageSize, ordering],
   );
 
   const { data, isFetching } = useGetEventsQuery(queryParams);

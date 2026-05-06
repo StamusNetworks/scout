@@ -1,6 +1,6 @@
 import { buildQueryParams } from '@/common/fetching/buildQueryParams';
 import {
-  Dates,
+  DateRange,
   Paginated,
   Pagination,
   QFilter,
@@ -22,7 +22,7 @@ export const RulesAPI = API.injectEndpoints({
   endpoints: (builder) => ({
     getRules: builder.query<
       Paginated<Rule>,
-      Dates &
+      DateRange &
         Tenant &
         Pagination &
         QFilter & {

@@ -50,8 +50,8 @@ export const HostHeader = ({ hostId }: HostHeaderProps) => {
     {
       asset: hostId,
       tenant: params.tenant,
-      start_date: params.start_date,
-      end_date: params.end_date,
+      from: params.from,
+      to: params.to,
     },
     { skip: !hostId },
   );
@@ -74,8 +74,8 @@ export const HostHeader = ({ hostId }: HostHeaderProps) => {
     {
       host_id_qfilter: `ip:"${esEscape(hostId)}"`,
       tenant: params.tenant,
-      start_date: params.start_date,
-      end_date: params.end_date,
+      from: params.from,
+      to: params.to,
       hits_min: 1,
       ordering: '-hits',
       page: 1,
@@ -88,8 +88,8 @@ export const HostHeader = ({ hostId }: HostHeaderProps) => {
   const { data: beaconingData } = useGetBeaconingEventsQuery(
     {
       tenant: params.tenant,
-      start_date: params.start_date,
-      end_date: params.end_date,
+      from: params.from,
+      to: params.to,
       qfilter: `beacon_report.assets:${esEscape(hostId)}`,
       page: 1,
       page_size: 10,
@@ -101,8 +101,8 @@ export const HostHeader = ({ hostId }: HostHeaderProps) => {
   const { data: sightingsData } = useGetSightingEventsQuery(
     {
       tenant: params.tenant,
-      start_date: params.start_date,
-      end_date: params.end_date,
+      from: params.from,
+      to: params.to,
       qfilter: `discovery.asset:${esEscape(hostId)}`,
       page: 1,
       page_size: 10,

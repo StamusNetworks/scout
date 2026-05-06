@@ -29,10 +29,7 @@ export const Route = createFileRoute(
 
 function PolicyViolationFamilyPage() {
   const { familyId } = useParams({ strict: false }) as { familyId: string };
-  const { tenant, start_date, end_date } = useGlobalQueryParams([
-    'tenant',
-    'dates',
-  ]);
+  const { tenant, from, to } = useGlobalQueryParams(['tenant', 'dates']);
   const [pagination] = usePaginationUrlState();
   const [, , ordering] = useSortingUrlState();
 
@@ -47,8 +44,8 @@ function PolicyViolationFamilyPage() {
   } = useThreatFamilyOverview({
     familyId: parseInt(familyId),
     tenant,
-    startDate: start_date,
-    endDate: end_date,
+    startDate: from,
+    endDate: to,
     pagination,
     ordering,
   });

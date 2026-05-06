@@ -61,8 +61,8 @@ export function ServingIpsTable({
       page,
       pageSize,
       ordering,
-      globalParams.start_date,
-      globalParams.end_date,
+      globalParams.from,
+      globalParams.to,
       globalParams.tenant,
     ],
   );

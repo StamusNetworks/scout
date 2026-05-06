@@ -1,5 +1,5 @@
 import { buildQueryParams } from '@/common/fetching/buildQueryParams';
-import { Dates, Tenant } from '@/common/fetching/fetching.types';
+import { DateRange, Tenant } from '@/common/fetching/fetching.types';
 import { Paginated, Pagination } from '@/common/fetching/fetching.types';
 import { API } from '@/store/api';
 
@@ -22,7 +22,7 @@ export const EntitiesAPI = API.injectEndpoints({
     // QUERIES
     getImpactedEntities: builder.query<
       Paginated<ImpactedEntity>,
-      Dates &
+      DateRange &
         Tenant &
         Pagination & {
           asset?: string;
@@ -50,7 +50,7 @@ export const EntitiesAPI = API.injectEndpoints({
     }),
     getImpactedEntity: builder.query<
       ImpactedEntity | undefined,
-      Dates & Tenant & { asset: string }
+      DateRange & Tenant & { asset: string }
     >({
       query: (params) => ({
         url: `/appliances/threat/threats_per_asset/`,
@@ -90,7 +90,7 @@ export const EntitiesAPI = API.injectEndpoints({
     }),
     getKillChainCounters: builder.query<
       KillChainCountersData,
-      Dates & Tenant & { family_id?: string }
+      DateRange & Tenant & { family_id?: string }
     >({
       query: (params) => ({
         url: `/appliances/threat_family/kill_chain_family/`,
@@ -104,7 +104,7 @@ export const EntitiesAPI = API.injectEndpoints({
     }),
     getKillChainCountersByThreatId: builder.query<
       KillChainCountersData,
-      Dates & Tenant & { threat_id: string }
+      DateRange & Tenant & { threat_id: string }
     >({
       query: ({ threat_id, ...rest }) => ({
         url: `/appliances/threat/${threat_id}/kill_chain/`,
@@ -134,7 +134,7 @@ export const EntitiesAPI = API.injectEndpoints({
     }),
     getAttackerInfrastructure: builder.query<
       AttackerInfrastructureAggregation,
-      Dates & Tenant & { asset: string }
+      DateRange & Tenant & { asset: string }
     >({
       query: ({ asset, ...rest }) => ({
         url: `/rules/es/search/`,

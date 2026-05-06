@@ -138,8 +138,8 @@ export function DetectionEventsTable({
       ordering,
       hostQfilter,
       globals.tenant,
-      globals.start_date,
-      globals.end_date,
+      globals.from,
+      globals.to,
       ...(hostId ? [] : [globals.qfilter, globals.host_id_qfilter]),
     ],
   );

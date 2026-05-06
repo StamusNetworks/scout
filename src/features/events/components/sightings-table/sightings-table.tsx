@@ -88,8 +88,8 @@ export function SightingsTable({
       pageSize,
       ordering,
       qfilter,
-      globalParams.start_date,
-      globalParams.end_date,
+      globalParams.from,
+      globalParams.to,
       globalParams.tenant,
     ],
   );

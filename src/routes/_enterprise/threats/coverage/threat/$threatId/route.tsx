@@ -42,17 +42,14 @@ export const Route = createFileRoute(
 
 function ThreatDetailPage() {
   const { threatId } = useParams({ strict: false }) as { threatId: string };
-  const { tenant, start_date, end_date } = useGlobalQueryParams([
-    'tenant',
-    'dates',
-  ]);
+  const { tenant, from, to } = useGlobalQueryParams(['tenant', 'dates']);
   const [, , ordering] = useSortingUrlState();
   const [pagination] = usePaginationUrlState();
 
   const { data: threat } = useThreatById({ threatId, tenant });
   const { data: activeThreat, isLoading: activeThreatLoading } =
     useGetActiveThreatsQuery(
-      { tenant, start_date, end_date },
+      { tenant, from, to },
       {
         selectFromResult: (result) => ({
           ...result,

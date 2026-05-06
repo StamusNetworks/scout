@@ -38,8 +38,8 @@ export const useRuleDetailsParams = (
   }, [applyGlobalFilters, params, QFBuilder, sid]);
 
   return {
-    start_date: params.start_date,
-    end_date: params.end_date,
+    from: params.from,
+    to: params.to,
     tenant: params.tenant,
     ...QF,
   };

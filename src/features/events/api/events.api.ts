@@ -3,7 +3,7 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { buildQueryParams } from '@/common/fetching/buildQueryParams';
 import { ENDPOINTS } from '@/common/fetching/fetch.endpoints';
 import {
-  Dates,
+  DateRange,
   Ordering,
   Paginated,
   Pagination,
@@ -39,7 +39,7 @@ export const EventsAPI = API.injectEndpoints({
     // === IDS events (alert / stamus / discovery) ===
     getEvents: builder.query<
       Paginated<Event>,
-      Pagination & Dates & Tenant & QFilter
+      Pagination & DateRange & Tenant & QFilter
     >({
       query: (params) => ({
         url: `/rules/es/alerts_tail`,
@@ -51,7 +51,7 @@ export const EventsAPI = API.injectEndpoints({
     getEventsCount: builder.query<
       { prev_doc_count: number; doc_count: number },
       Tenant &
-        Dates & {
+        DateRange & {
           hosts?: string;
           prev?: number;
         } & QFilter &
@@ -67,7 +67,7 @@ export const EventsAPI = API.injectEndpoints({
     getEventsTimeline: builder.query<
       { time: number; count: number }[],
       QFilter &
-        Dates &
+        DateRange &
         Tenant & {
           interval?: number;
         }
@@ -88,7 +88,7 @@ export const EventsAPI = API.injectEndpoints({
     // === NSM / protocol events ===
     getEventsTail: builder.query<
       Paginated<Event>,
-      QFilter & Dates & Tenant & Ordering & Pagination
+      QFilter & DateRange & Tenant & Ordering & Pagination
     >({
       query: (params) => ({
         url: `/rules/es/events_tail/`,
@@ -97,7 +97,7 @@ export const EventsAPI = API.injectEndpoints({
       }),
       providesTags: ['Reload'],
     }),
-    getEventsFromFlow: builder.query<FlowEvents, Dates & Tenant & QFilter>({
+    getEventsFromFlow: builder.query<FlowEvents, DateRange & Tenant & QFilter>({
       query: (params) => ({
         url: `/rules/es/events_from_flow_id/`,
         method: 'GET',
@@ -109,7 +109,7 @@ export const EventsAPI = API.injectEndpoints({
     // === Sightings (discovery) ===
     getSightingEvents: builder.query<
       Paginated<Event>,
-      QFilter & Dates & Tenant & Pagination
+      QFilter & DateRange & Tenant & Pagination
     >({
       query: (params) => ({
         url: `appliances/es_discovery_events/`,
@@ -122,7 +122,7 @@ export const EventsAPI = API.injectEndpoints({
     // === Beaconing reports ===
     getBeaconingEvents: builder.query<
       Paginated<BeaconingEvent>,
-      QFilter & Dates & Tenant & Pagination & Ordering
+      QFilter & DateRange & Tenant & Pagination & Ordering
     >({
       query: (params) => ({
         url: `appliances/es_beaconing_events/`,
@@ -133,7 +133,7 @@ export const EventsAPI = API.injectEndpoints({
     }),
     getTlsTail: builder.query<
       Paginated<TlsTail>,
-      QFilter & Dates & Tenant & Pagination
+      QFilter & DateRange & Tenant & Pagination
     >({
       query: (params) => ({
         url: `rules/es/tls_tail/`,
@@ -146,7 +146,7 @@ export const EventsAPI = API.injectEndpoints({
     // === Files & pcaps ===
     getEventFilesInfo: builder.query<
       FlowEventFileStatus[],
-      Dates & Array<{ host: string; sha256: string }>
+      DateRange & Array<{ host: string; sha256: string }>
     >({
       queryFn: async (params, _api, _extraOptions, baseQuery) => {
         try {
@@ -220,7 +220,7 @@ export const EventsAPI = API.injectEndpoints({
     // === Aggregations ===
     getProtocolsFromEvents: builder.query<
       string[],
-      Dates & Tenant & { qfilter?: string }
+      DateRange & Tenant & { qfilter?: string }
     >({
       query: ({ qfilter, tenant, ...rest }) => {
         const qfilterParts: string[] = [];
@@ -263,7 +263,7 @@ export const EventsAPI = API.injectEndpoints({
     }),
     getEventsAggregation: builder.query<
       { aggregations: Record<string, unknown> },
-      Dates & Tenant & { qfilter?: string; aggs: Record<string, unknown> }
+      DateRange & Tenant & { qfilter?: string; aggs: Record<string, unknown> }
     >({
       query: ({ aggs, qfilter, tenant, ...rest }) => {
         const qfilterParts: string[] = [];
@@ -287,7 +287,7 @@ export const EventsAPI = API.injectEndpoints({
     }),
     getCountsTimeline: builder.query<
       CountsTimeline,
-      Tenant & Dates & QFilter & { target: string }
+      Tenant & DateRange & QFilter & { target: string }
     >({
       query: (params) => ({
         url: `${ENDPOINTS.TIMELINE.url}/?hosts=*`,

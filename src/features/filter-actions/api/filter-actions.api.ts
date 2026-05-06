@@ -1,7 +1,7 @@
 import { buildQueryParams } from '@/common/fetching/buildQueryParams.ts';
 import { ENDPOINTS } from '@/common/fetching/fetch.endpoints.ts';
 import {
-  Dates,
+  DateRange,
   Paginated,
   Pagination,
   QFilter,
@@ -53,7 +53,7 @@ export const FilterActionsAPI = API.injectEndpoints({
     }),
     getFilterActionStats: builder.query<
       FilterActionStats[],
-      Dates & Tenant & { id: number }
+      DateRange & Tenant & { id: number }
     >({
       query: ({ id, ...params }) => ({
         url: `rules${ENDPOINTS.ES_FILTER_ACTIONS_DATA.url}`,
@@ -69,7 +69,7 @@ export const FilterActionsAPI = API.injectEndpoints({
     }),
     createFilterAction: builder.mutation<
       FilterAction,
-      FilterActionPayload & { params?: Tenant & Dates & QFilter }
+      FilterActionPayload & { params?: Tenant & DateRange & QFilter }
     >({
       query: ({ params, ...payload }) => ({
         url: ENDPOINTS.FILTER_ACTIONS.url,

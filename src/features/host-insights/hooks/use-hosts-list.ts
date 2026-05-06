@@ -26,8 +26,8 @@ export const useHostsList = ({
 
   const hostsResult = useGetHostsQuery({
     tenant: params.tenant,
-    start_date: params.start_date,
-    end_date: params.end_date,
+    from: params.from,
+    to: params.to,
     host_id_qfilter: params.host_id_qfilter,
     qfilter: withAlerts ? params.qfilter : undefined,
     ordering,

@@ -13,10 +13,10 @@ export const usePreviousDates = () => {
   const dates = useAppSelector(selectDates);
   const absDates = computeDates(dates);
   return useMemo(() => {
-    const interval = absDates.end_date - absDates.start_date;
+    const interval = absDates.to - absDates.from;
     return {
-      start_date: absDates.start_date - interval,
-      end_date: absDates.start_date,
+      from: absDates.from - interval,
+      to: absDates.from,
     };
-  }, [absDates.end_date, absDates.start_date]);
+  }, [absDates.to, absDates.from]);
 };

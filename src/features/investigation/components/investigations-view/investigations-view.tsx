@@ -92,28 +92,26 @@ const investigationHistoryColumns: CustomColumnDef<InvestigationHistory>[] = [
     cell: ({ row }) => <DataTableRowExpander row={row} />,
   },
   {
-    id: 'start_date',
-    accessorKey: 'start_date',
+    id: 'from',
+    accessorKey: 'from',
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
         title="Start date"
       />
     ),
-    cell: ({ row }) => (
-      <DateTime date={row.original.initialParams.start_date!} />
-    ),
+    cell: ({ row }) => <DateTime date={row.original.initialParams.from!} />,
   },
   {
-    id: 'end_date',
-    accessorKey: 'end_date',
+    id: 'to',
+    accessorKey: 'to',
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
         title="End date"
       />
     ),
-    cell: ({ row }) => <DateTime date={row.original.initialParams.end_date!} />,
+    cell: ({ row }) => <DateTime date={row.original.initialParams.to!} />,
   },
   {
     id: 'name',
@@ -224,14 +222,14 @@ const InvestigationHistoryItem = ({
   const tagFiltersRepo = useFilterFlagsRepository();
 
   const handleLoadAsFilters = ({
-    start_date,
-    end_date,
+    from,
+    to,
     flags: serializedFlags,
     qfilter,
     stages,
   }: {
-    start_date: number;
-    end_date: number;
+    from: number;
+    to: number;
     flags?: SerializedFilterFlags;
     qfilter: QueryFilterState[];
     stages: InvestigationState['stages'];
@@ -239,8 +237,8 @@ const InvestigationHistoryItem = ({
     clearFilters();
     setDates({
       type: 'range',
-      start_date,
-      end_date,
+      from,
+      to,
     });
     if (serializedFlags) {
       const flags = toFilterFlags(serializedFlags);
@@ -263,8 +261,8 @@ const InvestigationHistoryItem = ({
     <div className="p-3">
       <Row className="justify-between gap-8">
         <InvestigationParams
-          startDate={investigation.initialParams.start_date!}
-          endDate={investigation.initialParams.end_date!}
+          startDate={investigation.initialParams.from!}
+          endDate={investigation.initialParams.to!}
           flags={investigation.initialParams.flags ?? undefined}
           qfilter={investigation.initialParams.qfilter!}
           comment={investigation.comment}
@@ -274,8 +272,8 @@ const InvestigationHistoryItem = ({
             variant="outline"
             onClick={() =>
               handleLoadAsFilters({
-                start_date: investigation.initialParams.start_date!,
-                end_date: investigation.initialParams.end_date!,
+                from: investigation.initialParams.from!,
+                to: investigation.initialParams.to!,
                 flags: investigation.initialParams.flags,
                 qfilter: investigation.initialParams.qfilter!,
                 stages: investigation.stages,

@@ -1,7 +1,7 @@
 import { DataEntry } from '@/common/design-system/molecules/value-list-card';
 import { buildQueryParams } from '@/common/fetching/buildQueryParams';
 import {
-  Dates,
+  DateRange,
   Pagination,
   QFilter,
   Tenant,
@@ -16,7 +16,7 @@ export type URLParams = Pagination &
   Tenant &
   Fields &
   QFilter &
-  Dates & {
+  DateRange & {
     investigation?: { key: string; value: string };
     page_size?: number;
   };

@@ -1,6 +1,6 @@
 export type GlobalDeps = {
-  start_date: number;
-  end_date: number;
+  from: number;
+  to: number;
   eventsTypes: {
     stamus: boolean;
     alert: boolean;

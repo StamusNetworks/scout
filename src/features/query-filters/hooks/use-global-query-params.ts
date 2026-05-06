@@ -31,8 +31,8 @@ export const useGlobalQueryParams = (
 
   return {
     ...(subscribe?.includes('dates') && {
-      start_date: computedDates.start_date,
-      end_date: computedDates.end_date,
+      from: computedDates.from,
+      to: computedDates.to,
     }),
     ...(subscribe?.includes('qfilter') && {
       qfilter,

@@ -40,7 +40,7 @@ const S = Object.fromEntries(TIMELINE_SERIES.map((s) => [s.key, s])) as {
  * Each call references its config by literal key to avoid index-based coupling.
  */
 function useAllSeriesQueries(
-  params: { start_date?: number; end_date?: number; tenant?: number },
+  params: { from?: number; to?: number; tenant?: number },
   qfilterPrefix: string | undefined,
   enabledKeys: string[],
 ) {

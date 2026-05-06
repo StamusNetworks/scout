@@ -1,13 +1,15 @@
 /**
  * Date-range filter state. Four modes — open-ended (`all`), absolute
  * (`range`), relative (`from`), and auto-fitted to the data (`auto`).
- * `start_date` / `end_date` are epoch milliseconds; the wire-shape
- * stays here for now and will migrate to a `DateRange` value object
- * when downstream features adopt it.
+ * `from` and `to` are epoch milliseconds (domain shape — kept as plain
+ * numbers so the slice stays serializable). The wire translation
+ * (`start_date`/`end_date` epoch seconds for postgres,
+ * `from_date`/`to_date` epoch milliseconds for elastic) happens in
+ * `buildQueryParams`.
  */
 export type DatesState = {
-  start_date: number | undefined;
-  end_date: number | undefined;
+  from: number | undefined;
+  to: number | undefined;
   type: 'all' | 'range' | 'from' | 'auto';
   from_duration: number | undefined;
   from_unit: TimeUnit | undefined;
@@ -15,8 +17,8 @@ export type DatesState = {
 
 export type DatesPayload =
   | { type: 'all' }
-  | { type: 'range'; start_date: number; end_date: number }
-  | { type: 'auto'; start_date: number; end_date: number }
+  | { type: 'range'; from: number; to: number }
+  | { type: 'auto'; from: number; to: number }
   | {
       type: 'from';
       from_duration: number;
@@ -58,27 +60,27 @@ export const UNITS_IN_MILLISECONDS: Record<TimeUnit, number> = {
 } as const;
 
 /**
- * Pure: collapse a `DatesState` into an absolute `[start_date, end_date]`
- * window. `all` widens to "since epoch → now"; `range`/`from`/`auto`
- * pass through their stored values. Used by query builders that always
- * need concrete bounds.
+ * Pure: collapse a `DatesState` into an absolute `DateRange`. `all`
+ * widens to "since epoch → now"; `range`/`from`/`auto` pass through
+ * their stored values. Used by query builders that always need
+ * concrete bounds.
  */
 const nowCeiledToMinute = () => Math.ceil(Date.now() / 60_000) * 60_000;
 
 export const computeDates = (
   dates: DatesState,
-): { start_date: number; end_date: number } => {
+): { from: number; to: number } => {
   if (dates.type === 'all') {
-    return { start_date: 0, end_date: nowCeiledToMinute() };
+    return { from: 0, to: nowCeiledToMinute() };
   }
   if (
     (dates.type === 'range' ||
       dates.type === 'from' ||
       dates.type === 'auto') &&
-    dates.start_date &&
-    dates.end_date
+    dates.from &&
+    dates.to
   ) {
-    return { start_date: dates.start_date, end_date: dates.end_date };
+    return { from: dates.from, to: dates.to };
   }
-  return { start_date: 0, end_date: nowCeiledToMinute() };
+  return { from: 0, to: nowCeiledToMinute() };
 };

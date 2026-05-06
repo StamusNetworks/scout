@@ -9,5 +9,5 @@ export const selectDates = (state: RootState) => state.filters.datesFilters;
  */
 export const selectIsAfterStart = (date: Date) => (state: RootState) => {
   const dates = selectDates(state);
-  return dates.start_date && date.getTime() > dates.start_date;
+  return dates.from && date.getTime() > dates.from;
 };

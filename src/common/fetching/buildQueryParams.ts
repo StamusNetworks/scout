@@ -12,22 +12,21 @@ export const buildQueryParams = (
     time_format: 'elastic' | 'postgre';
   },
 ) => {
-  const { start_date, end_date, qfilter, body, pageSize, pageIndex, ...rest } =
-    params;
+  const { from, to, qfilter, body, pageSize, pageIndex, ...rest } = params;
 
   const response: Record<string, string | number | unknown> = {};
 
   const isElastic = options?.time_format === 'elastic';
 
-  if (start_date) {
+  if (from) {
     response[!isElastic ? 'start_date' : 'from_date'] = !isElastic
-      ? Math.floor(start_date / 1000)
-      : start_date;
+      ? Math.floor(from / 1000)
+      : from;
   }
-  if (end_date) {
+  if (to) {
     response[!isElastic ? 'end_date' : 'to_date'] = !isElastic
-      ? Math.floor(end_date / 1000)
-      : end_date;
+      ? Math.floor(to / 1000)
+      : to;
   }
   if (qfilter) {
     response.qfilter = qfilter;

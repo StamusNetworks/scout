@@ -33,8 +33,8 @@ export function HostTimeline({ hostId }: HostTimelineProps) {
     isError: isThreatHistoryError,
   } = useGetThreatHistoryQuery({
     tenant: params.tenant,
-    start_date: params.start_date,
-    end_date: params.end_date,
+    from: params.from,
+    to: params.to,
     asset: hostId,
   });
 

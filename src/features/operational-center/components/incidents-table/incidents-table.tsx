@@ -30,8 +30,8 @@ export const IndicidentsTable = () => {
     tenant: params.tenant,
     ordering: '-first_seen',
     kill_chain: KILL_CHAIN_PHASES_KEYS_WITHOUT_POLICIES.join(','),
-    first_seen__gte: params.start_date,
-    first_seen__lte: params.end_date,
+    first_seen__gte: params.from,
+    first_seen__lte: params.to,
   });
   const threats = useThreats({});
 

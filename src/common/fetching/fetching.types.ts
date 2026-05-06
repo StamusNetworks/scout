@@ -2,9 +2,16 @@ export type Tenant = {
   tenant?: number;
 };
 
-export type Dates = {
-  start_date?: number;
-  end_date?: number;
+/**
+ * Domain time window. `from` and `to` are epoch milliseconds — the
+ * value is kept as plain numbers (not `Date` objects) so the shape
+ * survives Redux/RTK Query serialization. `buildQueryParams`
+ * translates to the wire shape (`start_date`/`end_date` epoch seconds
+ * for postgres, `from_date`/`to_date` epoch milliseconds for elastic).
+ */
+export type DateRange = {
+  from?: number;
+  to?: number;
 };
 
 export type QFilter = {

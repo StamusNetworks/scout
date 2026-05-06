@@ -45,7 +45,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 export const DatesPicker = () => {
-  const { type, from_duration, from_unit, start_date, end_date } = useDates();
+  const { type, from_duration, from_unit, from, to } = useDates();
 
   const { data, isFetching } = useAutoRange();
   const setDates = useSetDates();
@@ -53,8 +53,8 @@ export const DatesPicker = () => {
     if (!data || isFetching) return;
     setDates({
       type: 'auto',
-      start_date: data.min_timestamp,
-      end_date: data.max_timestamp,
+      from: data.min_timestamp,
+      to: data.max_timestamp,
     });
   };
 
@@ -81,10 +81,10 @@ export const DatesPicker = () => {
                 ) : (
                   <Column>
                     <p className="text-sm leading-4">
-                      {format(new Date(start_date!), 'yyyy-MM-dd HH:mm')}
+                      {format(new Date(from!), 'yyyy-MM-dd HH:mm')}
                     </p>
                     <p className="text-sm leading-4">
-                      {format(new Date(end_date!), 'yyyy-MM-dd HH:mm')}
+                      {format(new Date(to!), 'yyyy-MM-dd HH:mm')}
                     </p>
                   </Column>
                 )}
@@ -153,9 +153,9 @@ export const DatesPicker = () => {
         </Popover>
         <TooltipContent className="grid grid-cols-[2rem_1fr] gap-2">
           <p>From</p>
-          <p>{formatDate(start_date!, 'yyyy-MM-dd HH:mm:ss')}</p>
+          <p>{formatDate(from!, 'yyyy-MM-dd HH:mm:ss')}</p>
           <p>To</p>
-          <p>{formatDate(end_date || new Date(), 'yyyy-MM-dd HH:mm:ss')}</p>
+          <p>{formatDate(to || new Date(), 'yyyy-MM-dd HH:mm:ss')}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
@@ -287,20 +287,20 @@ const CustomRelativeDateInput = () => {
 };
 
 const AbsoluteRangePicker = () => {
-  const { start_date, end_date } = useDates();
+  const { from, to } = useDates();
   const setDates = useSetDates();
   const [startDate, setStartDate] = useState<Date | undefined>(
-    start_date ? new Date(start_date) : new Date(),
+    from ? new Date(from) : new Date(),
   );
   const [endDate, setEndDate] = useState<Date | undefined>(
-    end_date ? new Date(end_date) : new Date(),
+    to ? new Date(to) : new Date(),
   );
   const handleSubmit = () => {
     if (!startDate || !endDate) return;
     setDates({
       type: 'range',
-      start_date: startDate.getTime(),
-      end_date: endDate.getTime(),
+      from: startDate.getTime(),
+      to: endDate.getTime(),
     });
   };
   return (

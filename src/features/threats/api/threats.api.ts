@@ -3,7 +3,7 @@ import { isNil } from 'ramda';
 
 import { buildQueryParams } from '@/common/fetching/buildQueryParams';
 import {
-  Dates,
+  DateRange,
   Paginated,
   Pagination,
   Tenant,
@@ -83,7 +83,7 @@ export const ThreatsAPI = API.injectEndpoints({
     }),
     getActiveThreatFamilies: builder.query<
       EntityState<ActiveThreatFamily, number>,
-      Tenant & Dates & Partial<ThreatDto>
+      Tenant & DateRange & Partial<ThreatDto>
     >({
       query: (params) => ({
         url: `/appliances/threat_family/top_list/`,
@@ -145,7 +145,7 @@ export const ThreatsAPI = API.injectEndpoints({
     }),
     getActiveThreats: builder.query<
       EntityState<ActiveThreat, number>,
-      Tenant & Dates & Partial<ThreatDto> & { family_id?: number }
+      Tenant & DateRange & Partial<ThreatDto> & { family_id?: number }
     >({
       query: (params) => ({
         url: `/appliances/threat/top_list/`,
@@ -230,7 +230,7 @@ export const ThreatsAPI = API.injectEndpoints({
       {
         res: { key: string; doc_count: number; offenders: { value: number } }[];
       },
-      Dates &
+      DateRange &
         Tenant & {
           status?: 'new' | 'fixed' | undefined;
         }

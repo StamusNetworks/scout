@@ -41,7 +41,7 @@ import {
 import { Separator } from '@/common/design-system/atoms/ui/separator';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { DefaultField } from '@/common/design-system/molecules/default-field';
-import { Dates, QFilter, Tenant } from '@/common/fetching/fetching.types';
+import { DateRange, QFilter, Tenant } from '@/common/fetching/fetching.types';
 import { useUpdateEffect } from '@/common/lib/use-update-effect';
 import { FilterInput } from '@/features/query-filters/components/edit-qfilter-modal/filter-input';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
@@ -180,32 +180,33 @@ export const DeclarationForm = ({
   const [createThreatFilterAction] = useCreateFilterActionMutation();
   const [updateFilterAction] = useUpdateFilterActionMutation();
   const handleSubmit = (data: z.infer<typeof formSchema>): void => {
-    const payload: FilterActionPayload & { params: Tenant & Dates & QFilter } =
-      {
-        params,
-        kind: 'threat',
-        comment: data.comment || '',
-        filterDefs: data.filters
-          .filter((f) => f.enabled)
-          .map((f) => ({
-            key: f.key,
-            value: f.value,
-            isNegated: f.isNegated,
-            isWildcarded: f.isWildcarded,
-          })),
-        rulesets: data.rulesets,
-        options: {
-          threat: data.threat,
-          killChain: data.killChain,
-          sourceKey: data.sourceKey,
-          targetKey: data.targetKey,
-          trackOffender: data.trackOptions.trackOffender,
-          trackTarget: data.trackOptions.trackTarget,
-          targetType: data.targetType,
-          stamusEvent: data.stamusEvent,
-          checkWebhooks: data.stamusEvent && data.checkWebhooks,
-        },
-      };
+    const payload: FilterActionPayload & {
+      params: Tenant & DateRange & QFilter;
+    } = {
+      params,
+      kind: 'threat',
+      comment: data.comment || '',
+      filterDefs: data.filters
+        .filter((f) => f.enabled)
+        .map((f) => ({
+          key: f.key,
+          value: f.value,
+          isNegated: f.isNegated,
+          isWildcarded: f.isWildcarded,
+        })),
+      rulesets: data.rulesets,
+      options: {
+        threat: data.threat,
+        killChain: data.killChain,
+        sourceKey: data.sourceKey,
+        targetKey: data.targetKey,
+        trackOffender: data.trackOptions.trackOffender,
+        trackTarget: data.trackOptions.trackTarget,
+        targetType: data.targetType,
+        stamusEvent: data.stamusEvent,
+        checkWebhooks: data.stamusEvent && data.checkWebhooks,
+      },
+    };
     const submitFn =
       edit && filterAction
         ? () => updateFilterAction({ id: filterAction.id, ...payload })

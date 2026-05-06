@@ -60,8 +60,8 @@ export const AttackFlow = () => {
   );
 
   const { data } = useGetEventsAggregationQuery({
-    start_date: globalParams.start_date,
-    end_date: globalParams.end_date,
+    from: globalParams.from,
+    to: globalParams.to,
     qfilter: 'event_type:stamus AND NOT stamus.kill_chain:pre_condition',
     tenant: globalParams.tenant,
     aggs,

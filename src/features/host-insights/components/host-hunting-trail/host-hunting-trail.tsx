@@ -9,11 +9,11 @@ export interface HostHuntingTrailProps {
 }
 
 export function HostHuntingTrail({ hostId }: HostHuntingTrailProps) {
-  const { start_date, end_date } = useGlobalQueryParams(['dates']);
+  const { from, to } = useGlobalQueryParams(['dates']);
   const { groups, isLoading, isError, isEmpty } = useHostHuntingTrail({
     asset: hostId,
-    startDate: start_date,
-    endDate: end_date,
+    from,
+    to,
   });
 
   if (isLoading) {

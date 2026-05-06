@@ -20,17 +20,17 @@ import {
 
 interface UseHostHuntingTrailParams {
   asset: string;
-  startDate: number | undefined;
-  endDate: number | undefined;
+  from: number | undefined;
+  to: number | undefined;
 }
 
 export function useHostHuntingTrail({
   asset,
-  startDate,
-  endDate,
+  from,
+  to,
 }: UseHostHuntingTrailParams) {
   const ipFilter = `src_ip:${esEscape(asset)} OR dest_ip:${esEscape(asset)}`;
-  const common = { start_date: startDate, end_date: endDate, page_size: 10000 };
+  const common = { from, to, page_size: 10000 };
   const alertParams = { ...common, alert: true as const };
 
   // --- Alert queries (alerts_tail) ---

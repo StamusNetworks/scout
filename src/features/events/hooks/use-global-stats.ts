@@ -1,15 +1,15 @@
-import { Dates } from '@/common/fetching/fetching.types';
+import { DateRange } from '@/common/fetching/fetching.types';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 import { useGetGlobalStatsQuery } from '../api/dashboard.api';
 
-export const useGlobalStats = (dates?: Dates) => {
+export const useGlobalStats = (dates?: DateRange) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
   return useGetGlobalStatsQuery({
     ...params,
     ...(dates && {
-      start_date: dates.start_date,
-      end_date: dates.end_date,
+      from: dates.from,
+      to: dates.to,
     }),
   });
 };

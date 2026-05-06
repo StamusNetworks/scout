@@ -33,7 +33,7 @@ const toDatesPayload = (time: ShareableTime): DatesPayload => {
     case 'all':
       return { type: 'all' };
     case 'auto':
-      return { type: 'auto', start_date: 0, end_date: Date.now() };
+      return { type: 'auto', from: 0, to: Date.now() };
     case 'from':
       return {
         type: 'from',
@@ -41,7 +41,7 @@ const toDatesPayload = (time: ShareableTime): DatesPayload => {
         from_unit: time.unit,
       };
     case 'range':
-      return { type: 'range', start_date: time.start, end_date: time.end };
+      return { type: 'range', from: time.start, to: time.end };
   }
 };
 

@@ -130,8 +130,8 @@ const buildTimePayload = (dates: DatesState): ShareableTime => {
     case 'range':
       return {
         type: 'range',
-        start: dates.start_date!,
-        end: dates.end_date!,
+        start: dates.from!,
+        end: dates.to!,
       };
   }
 };

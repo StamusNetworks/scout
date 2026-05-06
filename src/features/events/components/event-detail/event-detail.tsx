@@ -43,7 +43,7 @@ export const EventDetail = ({ eventId }: EventDetailProps) => {
   } = useGetEventsQuery(
     {
       ...params,
-      start_date: 1,
+      from: 1,
       qfilter: `_id:"${esEscape(eventId)}"`,
       pageIndex: 0,
       pageSize: 1,
@@ -73,8 +73,8 @@ export const EventDetail = ({ eventId }: EventDetailProps) => {
     {
       asset: event?.flow?.src_ip || event?.src_ip,
       tenant: params.tenant,
-      start_date: params.start_date,
-      end_date: params.end_date,
+      from: params.from,
+      to: params.to,
     },
     {
       skip: !event,
@@ -95,8 +95,8 @@ export const EventDetail = ({ eventId }: EventDetailProps) => {
     {
       asset: event?.flow?.dest_ip || event?.dest_ip,
       tenant: params.tenant,
-      start_date: params.start_date,
-      end_date: params.end_date,
+      from: params.from,
+      to: params.to,
     },
     {
       skip: !event,

@@ -14,8 +14,8 @@ export const NetworkEventsTimeline = () => {
     {
       selectFromResult: (result) => ({
         data: {
-          from_date: params.start_date || 0,
-          to_date: params.end_date || new Date().getTime(),
+          from_date: params.from || 0,
+          to_date: params.to || new Date().getTime(),
           interval: result.data ? result.data[1].time - result.data[0].time : 0,
           events: {
             entries: result.data,

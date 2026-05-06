@@ -35,7 +35,7 @@ function BeaconingJa3sPage() {
     usePaginatedSearch(
       { search, navigate },
       {
-        resetOn: [globals.tenant, globals.start_date, globals.end_date],
+        resetOn: [globals.tenant, globals.from, globals.to],
       },
     );
 

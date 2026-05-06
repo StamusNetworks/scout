@@ -13,20 +13,17 @@ export const useFetchHostsCounts = ({
   inHomeNetwork: 'true' | 'false' | 'all';
 }) => {
   const dateFilters = useDates();
-  const { tenant, start_date, end_date } = useGlobalQueryParams([
-    'tenant',
-    'dates',
-  ]);
+  const { tenant, from, to } = useGlobalQueryParams(['tenant', 'dates']);
   const customFilter =
     dateFilters.type === 'range' || dateFilters.type === 'auto'
-      ? getCustomFilter(start_date!, end_date!)
+      ? getCustomFilter(from!, to!)
       : undefined;
   const agg = getAggregationBody(tenant, inHomeNetwork, customFilter);
 
   return useFetchHostsCountsQuery({
     body: agg,
-    start_date,
-    end_date,
+    from,
+    to,
     tenant,
   });
 };

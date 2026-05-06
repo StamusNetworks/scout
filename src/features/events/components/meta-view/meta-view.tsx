@@ -11,8 +11,8 @@ export const MetaView = ({ event }: { event: Event }) => {
 
   const { data: flowEvents } = useGetEventsFromFlowQuery({
     tenant: params.tenant,
-    start_date: params.start_date,
-    end_date: params.end_date,
+    from: params.from,
+    to: params.to,
     qfilter: `flow_id:${esEscape(String(event.flow_id))}`,
   });
 
