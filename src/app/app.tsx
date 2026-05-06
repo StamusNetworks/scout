@@ -1,4 +1,4 @@
-import '@/common/design-system/molecules/htmlCodeDisplay/pygments.css';
+import '@/common/design-system/molecules/html-code-display/pygments.css';
 import { RouterProvider } from '@tanstack/react-router';
 import { NuqsAdapter } from 'nuqs/adapters/tanstack-router';
 import { Provider } from 'react-redux';
