@@ -14,7 +14,7 @@ import { addQfilterCommandInitialState } from '@/features/query-filters/state/ad
 import { queryFiltersInitialState } from '@/features/query-filters/state/query-filters.slice';
 import { settingsInitialState } from '@/features/settings/state/settings.slice';
 import { tenancyInitialState } from '@/features/tenancy/state/tenancy.slice';
-import { uiStateInitialState } from '@/features/ui/ui-state.slice';
+import { uiStateInitialState } from '@/features/app-shell/state/ui-state.slice';
 
 import { RootState } from './store';
 

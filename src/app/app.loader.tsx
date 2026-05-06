@@ -7,7 +7,7 @@ import { useRefreshDates } from '@/features/dates';
 import { useESMapping } from '@/features/query-filters/hooks/use-es-mapping';
 import { useGlobalSettings, useSystemSettings } from '@/features/settings';
 import { useFetchTenantsList } from '@/features/tenancy';
-import { useAutoReload } from '@/features/ui/use-auto-reload';
+import { useAutoReload } from '@/features/app-shell';
 
 import { Error502, useDisplayError502 } from './502';
 

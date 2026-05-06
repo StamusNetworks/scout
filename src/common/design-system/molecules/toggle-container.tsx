@@ -1,5 +1,5 @@
 import { cn } from '@/common/lib/utils';
-import { selectWithPageContainer } from '@/features/ui/ui-state.slice';
+import { selectWithPageContainer } from '@/features/app-shell/state/ui-state.slice';
 import { useAppSelector } from '@/store/store';
 
 import { Container } from '../atoms/layout/container';

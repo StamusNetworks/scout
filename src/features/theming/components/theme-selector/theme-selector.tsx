@@ -12,7 +12,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/common/design-system/atoms/ui/dropdown-menu';
-import { setTheme, Theme } from '@/features/ui/ui-state.slice';
+import { setTheme, Theme } from '@/features/app-shell/state/ui-state.slice';
 import { useAppDispatch } from '@/store/store';
 
 import { useTheme } from '../../hooks/use-theme';

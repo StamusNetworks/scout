@@ -20,13 +20,14 @@ import { useFilterActionModal } from '@/features/filter-actions';
 import { useQueryFilters } from '@/features/query-filters';
 import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
 import { useUpdatePushRuleSetMutation } from '@/features/rules';
+import { API } from '@/store/api';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+
 import {
   selectIsSidebarOpen,
   setIsSidebarOpen,
   setOpenModal,
-} from '@/features/ui/ui-state.slice';
-import { API } from '@/store/api';
-import { useAppDispatch, useAppSelector } from '@/store/store';
+} from '../../state/ui-state.slice';
 
 export type GlobalCommandAction = {
   Icon?: LucideIcon;

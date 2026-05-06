@@ -7,7 +7,10 @@ import {
   CommandList,
   CommandShortcut,
 } from '@/common/design-system/atoms/ui/command';
-import { selectIsModalOpen, setOpenModal } from '@/features/ui/ui-state.slice';
+import {
+  selectIsModalOpen,
+  setOpenModal,
+} from '../../state/ui-state.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { useGlobalCommands } from './global-command.actions';

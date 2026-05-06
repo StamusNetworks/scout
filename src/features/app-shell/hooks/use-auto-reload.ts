@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/store/store';
 import {
   resetAutoReloadStartDate,
   selectAutoReloadInterval,
-} from './ui-state.slice';
+} from '../state/ui-state.slice';
 
 export const useAutoReload = () => {
   const dispatch = useAppDispatch();

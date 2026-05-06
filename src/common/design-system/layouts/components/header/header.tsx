@@ -18,7 +18,7 @@ import {
   selectWithPageContainer,
   setOpenModal,
   setWithPageContainer,
-} from '@/features/ui/ui-state.slice';
+} from '@/features/app-shell/state/ui-state.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { DatesPicker } from '../dates-picker';

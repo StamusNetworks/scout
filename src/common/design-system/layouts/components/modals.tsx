@@ -8,7 +8,7 @@ import {
 import { SaveFilterSetModal } from '@/features/filter-sets';
 import { AddQfilterCommand } from '@/features/query-filters/components/add-qfilter-command/add-qfilter-command';
 import { AddEsFilterModal } from '@/features/query-filters/components/add-qfilter-modal/add-es-filter.modal';
-import { GlobalCommand } from '@/features/ui/global-command/global-command';
+import { GlobalCommand } from '@/features/app-shell';
 
 export const Modals = () => (
   <>

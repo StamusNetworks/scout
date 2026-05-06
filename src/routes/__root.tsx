@@ -21,7 +21,7 @@ import {
   selectIsSidebarOpen,
   setIsSidebarOpen,
   setOpenModal,
-} from '@/features/ui/ui-state.slice';
+} from '@/features/app-shell/state/ui-state.slice';
 import type { AppStore } from '@/store/store';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 

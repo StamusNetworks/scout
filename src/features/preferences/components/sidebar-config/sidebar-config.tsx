@@ -4,7 +4,7 @@ import { Switch } from '@/common/design-system/atoms/ui/switch';
 import {
   selectAutoOpenSidebarOnFilterAdd,
   setAutoOpenSidebarOnFilterAdd,
-} from '@/features/ui/ui-state.slice';
+} from '@/features/app-shell/state/ui-state.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import {

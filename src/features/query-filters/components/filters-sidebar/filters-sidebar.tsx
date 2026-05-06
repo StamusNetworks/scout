@@ -40,7 +40,7 @@ import {
   selectIsSidebarOpen,
   setIsSidebarOpen,
   setOpenModal,
-} from '@/features/ui/ui-state.slice';
+} from '@/features/app-shell/state/ui-state.slice';
 import { useAppSelector } from '@/store/store';
 
 import { FilterCategory } from '../../definitions/query-filter.config';

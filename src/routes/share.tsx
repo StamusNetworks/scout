@@ -13,12 +13,12 @@ import {
   useFilterFlagsRepository,
 } from '@/features/query-filters';
 import { type FilterInput } from '@/features/query-filters/utils/filter-mapper';
-import { useSetTenant } from '@/features/tenancy';
 import {
   decodeShareableState,
   type ShareableState,
   type ShareableTime,
 } from '@/features/share';
+import { useSetTenant } from '@/features/tenancy';
 
 export const Route = createFileRoute('/share')({
   component: () => (

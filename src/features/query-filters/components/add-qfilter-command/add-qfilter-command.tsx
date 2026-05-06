@@ -9,7 +9,7 @@ import {
   CommandList,
 } from '@/common/design-system/atoms/ui/command';
 import { cn } from '@/common/lib/utils';
-import { selectIsModalOpen, setOpenModal } from '@/features/ui/ui-state.slice';
+import { selectIsModalOpen, setOpenModal } from '@/features/app-shell/state/ui-state.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import { getFilterDef } from '../../definitions/query-filter.definitions';

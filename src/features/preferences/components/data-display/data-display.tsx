@@ -5,7 +5,7 @@ import { Label } from '@/common/design-system/atoms/ui/label';
 import {
   selectJsonViewOpen,
   setJsonViewOpen,
-} from '@/features/ui/ui-state.slice';
+} from '@/features/app-shell/state/ui-state.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import {

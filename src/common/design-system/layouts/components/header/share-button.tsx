@@ -5,8 +5,8 @@ import { toast } from 'sonner';
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { useDates } from '@/features/dates';
 import { useFilterFlags, useQueryFilters } from '@/features/query-filters';
-import { useTenant } from '@/features/tenancy';
 import { buildShareableState, buildShareUrl } from '@/features/share';
+import { useTenant } from '@/features/tenancy';
 
 export const ShareButton = () => {
   const location = useLocation();

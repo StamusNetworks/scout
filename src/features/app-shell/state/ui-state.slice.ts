@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from '@/store/store';
 
-import { setQueryFilters } from '../query-filters/state/query-filters.slice';
+import { setQueryFilters } from '@/features/query-filters/state/query-filters.slice';
 
 const initialState: UIState = {
   theme: (localStorage.getItem('theme') as Theme) || 'system',
