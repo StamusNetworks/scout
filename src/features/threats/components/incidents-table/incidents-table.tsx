@@ -62,7 +62,7 @@ export const IncidentsTable = ({
 
   const { data, isFetching } = useGetThreatsStatusQuery({
     page,
-    page_size: pageSize,
+    pageSize: pageSize,
     ordering,
     tenant: params.tenant,
     first_seen__gte: params.from,
@@ -150,7 +150,7 @@ const IncidentsEmpty = ({ killChain }: { killChain: string[] }) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const { data: entitiesData } = useGetImpactedEntitiesQuery({
     page: 1,
-    page_size: 1,
+    pageSize: 1,
     tenant: params.tenant,
     from: params.from,
     to: params.to,

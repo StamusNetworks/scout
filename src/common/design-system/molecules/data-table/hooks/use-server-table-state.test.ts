@@ -16,7 +16,7 @@ describe('useServerTableState', () => {
     expect(result.current.sorting).toEqual([]);
     expect(result.current.queryParams).toEqual({
       tenant: 1,
-      pageIndex: 0,
+      page: 1,
       pageSize: 10,
     });
   });
@@ -32,7 +32,7 @@ describe('useServerTableState', () => {
     );
 
     expect(result.current.pagination).toEqual({ pageIndex: 2, pageSize: 25 });
-    expect(result.current.queryParams.pageIndex).toBe(2);
+    expect(result.current.queryParams.page).toBe(3);
     expect(result.current.queryParams.pageSize).toBe(25);
   });
 

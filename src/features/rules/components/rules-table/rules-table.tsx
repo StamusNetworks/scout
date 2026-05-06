@@ -73,7 +73,7 @@ export function RulesTable({
     hits_min: withAlerts ? 1 : undefined,
     ...(sidFilter && { sid: sidFilter }),
     ...(withAlerts ? { qfilter } : {}),
-    pageIndex: page - 1,
+    page,
     pageSize,
     ordering: ordering ?? '-hits',
   });

@@ -29,7 +29,7 @@ export const ValuesOptions = () => {
   const { data, isFetching } = useGetDashboardFieldsQuery({
     ...params,
     fields: filter || '',
-    page_size: 100,
+    pageSize: 100,
     discovery: true,
     alert: true,
     stamus: true,

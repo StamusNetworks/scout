@@ -44,7 +44,7 @@ export const MitreTechniques = () => {
       discovery: true,
       stamus: true,
       fields: 'alert.metadata.mitre_technique_name',
-      page_size: 100000,
+      pageSize: 100000,
     },
     {
       selectFromResult: (result) => ({

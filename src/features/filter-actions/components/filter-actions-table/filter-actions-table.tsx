@@ -25,7 +25,7 @@ export const FiltersActionsTable = ({
 
   const { data, isFetching } = useGetFilterActionsQuery({
     ...params,
-    pageIndex,
+    page,
     pageSize,
   });
 

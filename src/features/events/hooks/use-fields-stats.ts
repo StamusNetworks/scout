@@ -7,7 +7,7 @@ export const useFieldsStats = (
   fields: string,
   options?: {
     qfilter?: { key: string; value: string | number }[];
-    page_size?: number;
+    pageSize?: number;
   },
 ) => {
   const QFBuilder = useQFBuilder();
@@ -23,6 +23,6 @@ export const useFieldsStats = (
   return useGetDashboardFieldsQuery({
     ...params,
     fields,
-    page_size: options?.page_size,
+    pageSize: options?.pageSize,
   });
 };

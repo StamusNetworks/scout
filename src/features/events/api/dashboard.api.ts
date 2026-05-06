@@ -18,19 +18,18 @@ export type URLParams = Pagination &
   QFilter &
   DateRange & {
     investigation?: { key: string; value: string };
-    page_size?: number;
   };
 
 export const DashboardAPI = API.injectEndpoints({
   endpoints: (builder) => ({
     // QUERIES
     getDashboardFields: builder.query<Record<string, DataEntry[]>, URLParams>({
-      query: ({ page_size, ...params }: URLParams) => ({
+      query: ({ pageSize, ...params }: URLParams) => ({
         url: `/rules/es/fields_stats`,
         method: 'GET',
         params: {
           ...buildQueryParams(params),
-          ...(page_size === 0 ? {} : { page_size: page_size || 5 }),
+          ...(pageSize === 0 ? {} : { page_size: pageSize || 5 }),
         },
       }),
       providesTags: ['Reload', 'Dashboard'],

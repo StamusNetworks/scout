@@ -9,7 +9,7 @@ export const useBeaconReport = (type: 'ja3s' | 'ip', value: string) => {
   return useGetBeaconingEventsQuery(
     {
       ...params,
-      page_size: 1,
+      pageSize: 1,
       qfilter: `beacon_report.document_type:${esEscape(doctype)} AND beacon_report.value:${esEscape(value)}`,
     },
     {

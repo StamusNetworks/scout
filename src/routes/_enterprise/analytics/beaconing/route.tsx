@@ -34,7 +34,7 @@ function BeaconingLayout() {
   const { data: ipsData, isLoading: ipsIsLoading } = useGetBeaconingEventsQuery(
     {
       ...params,
-      pageIndex: 0,
+      page: 1,
       pageSize: 10,
       qfilter: 'beacon_report.document_type:agg_serving_ip',
     },
@@ -43,7 +43,7 @@ function BeaconingLayout() {
   const { data: ja3sData, isLoading: ja3sIsLoading } =
     useGetBeaconingEventsQuery({
       ...params,
-      pageIndex: 0,
+      page: 1,
       pageSize: 10,
       qfilter: 'beacon_report.document_type:agg_ja3s_src_only',
     });

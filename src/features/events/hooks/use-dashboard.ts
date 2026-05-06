@@ -14,6 +14,6 @@ export const useDashboard = () => {
     Object.values(enterprise ? dashboard : CEdashboard)
       .flatMap((panel) => panel.items.map((i) => `${prefix}${i.i}`))
       .join(','),
-    { page_size: pageSize },
+    { pageSize },
   );
 };

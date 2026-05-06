@@ -199,7 +199,7 @@ const ResultsDetails = ({
   const { data } = useGetDashboardFieldsQuery({
     ...params,
     fields: es_key,
-    page_size: 1000000,
+    pageSize: 1000000,
   });
 
   useEffect(() => {

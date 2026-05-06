@@ -60,7 +60,7 @@ export const ContextMenuContent = ({
   const replaceFilters = useReplaceFilters();
   const enableTags = useEnableFilterFlags();
   const { data: deeplinksData } = useGetDeeplinksQuery({
-    pageIndex: 0,
+    page: 1,
     pageSize: 1000000,
   });
   const filterDef = useQueryFilterDefinition(query_key);

@@ -73,7 +73,7 @@ function HostDetailsLayout() {
     useGetThreatsStatusQuery(
       {
         page: 1,
-        page_size: 10,
+        pageSize: 10,
         asset: hostId,
         tenant: params.tenant,
         ordering: undefined,
@@ -91,7 +91,7 @@ function HostDetailsLayout() {
         hits_min: 1,
         ordering: '-hits',
         page: 1,
-        page_size: 10,
+        pageSize: 10,
       },
       { skip: !isValidIp },
     );
@@ -104,7 +104,7 @@ function HostDetailsLayout() {
         to: params.to,
         qfilter: `beacon_report.assets:${esEscape(hostId ?? '')}`,
         page: 1,
-        page_size: 10,
+        pageSize: 10,
       },
       { skip: !isValidIp },
     );
@@ -117,7 +117,7 @@ function HostDetailsLayout() {
         to: params.to,
         qfilter: `discovery.asset:${esEscape(hostId ?? '')}`,
         page: 1,
-        page_size: 10,
+        pageSize: 10,
       },
       { skip: !isValidIp },
     );
@@ -127,7 +127,7 @@ function HostDetailsLayout() {
       {
         ...params,
         page: 1,
-        page_size: 10,
+        pageSize: 10,
         qfilter: `(src_ip:"${esEscape(hostId ?? '')}" OR dest_ip:"${esEscape(hostId ?? '')}") AND stamus_novel:true`,
         stamus: true,
         alert: true,
@@ -141,7 +141,7 @@ function HostDetailsLayout() {
       {
         ...params,
         page: 1,
-        page_size: 10,
+        pageSize: 10,
         qfilter: `(src_ip:"${esEscape(hostId ?? '')}" OR dest_ip:"${esEscape(hostId ?? '')}")`,
         stamus: true,
         alert: true,

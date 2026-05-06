@@ -12,7 +12,7 @@ export const buildQueryParams = (
     time_format: 'elastic' | 'postgre';
   },
 ) => {
-  const { from, to, qfilter, body, pageSize, pageIndex, ...rest } = params;
+  const { from, to, qfilter, body, page, pageSize, ...rest } = params;
 
   const response: Record<string, string | number | unknown> = {};
 
@@ -34,8 +34,8 @@ export const buildQueryParams = (
   if (pageSize) {
     response.page_size = pageSize;
   }
-  if (pageIndex) {
-    response.page = pageIndex + 1;
+  if (page) {
+    response.page = page;
   }
 
   if (rest) {

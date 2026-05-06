@@ -45,7 +45,7 @@ export const EventDetail = ({ eventId }: EventDetailProps) => {
       ...params,
       from: 1,
       qfilter: `_id:"${esEscape(eventId)}"`,
-      pageIndex: 0,
+      page: 1,
       pageSize: 1,
       stamus: true,
       alert: true,

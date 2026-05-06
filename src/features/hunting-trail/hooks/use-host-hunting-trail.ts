@@ -1,3 +1,4 @@
+import { FETCH_ALL } from '@/common/fetching/fetching.types';
 import { esEscape } from '@/common/lib/strings';
 import {
   useGetEventsQuery,
@@ -30,7 +31,7 @@ export function useHostHuntingTrail({
   to,
 }: UseHostHuntingTrailParams) {
   const ipFilter = `src_ip:${esEscape(asset)} OR dest_ip:${esEscape(asset)}`;
-  const common = { from, to, page_size: 10000 };
+  const common = { from, to, ...FETCH_ALL };
   const alertParams = { ...common, alert: true as const };
 
   // --- Alert queries (alerts_tail) ---

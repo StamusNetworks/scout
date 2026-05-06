@@ -16,7 +16,7 @@ export const EntitiesForceGraph = ({ kind }: { kind: ThreatKind }) => {
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const { data, isLoading } = useGetImpactedEntitiesQuery({
     ...params,
-    page_size: 1000000,
+    pageSize: 1000000,
     family_class: FAMILY_CLASS_BY_KIND[kind],
   });
   if (isLoading)

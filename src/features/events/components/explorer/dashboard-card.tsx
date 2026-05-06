@@ -238,7 +238,7 @@ const ViewAll = ({ es_key, title }: { es_key: string; title: string }) => {
   const ordering = useAppSelector(selectOrdering);
   const { data: allData, isFetching: isLoadingAllData } = useFieldsStats(
     `${ordering === 'ascending' ? '-' : ''}${es_key}`,
-    { page_size: 100000000 },
+    { pageSize: 100000000 },
   );
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(pageSizeOptions[0]);

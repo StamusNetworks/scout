@@ -18,7 +18,7 @@ export type PaginationSearch = {
 
 export type ServerTableState<TParams> = {
   queryParams: TParams & {
-    pageIndex: number;
+    page: number;
     pageSize: number;
     ordering?: string;
   };
@@ -79,7 +79,7 @@ function useServerTableStateLegacy<TParams extends Record<string, unknown>>(
   const queryParams = useMemo(
     () => ({
       ...params,
-      pageIndex: pagination.pageIndex,
+      page: pagination.pageIndex + 1,
       pageSize: pagination.pageSize,
       ...(ordering !== undefined && { ordering }),
     }),
@@ -90,7 +90,7 @@ function useServerTableStateLegacy<TParams extends Record<string, unknown>>(
       ordering,
       ...Object.values(params),
     ],
-  ) as TParams & { pageIndex: number; pageSize: number; ordering?: string };
+  ) as TParams & { page: number; pageSize: number; ordering?: string };
 
   return useMemo(
     () => ({
@@ -171,13 +171,13 @@ function useServerTableStateRouter<
   const queryParams = useMemo(
     () => ({
       ...params,
-      pageIndex: effectivePage - 1,
+      page: effectivePage,
       pageSize: page_size,
       ...(ordering !== undefined && { ordering }),
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [effectivePage, page_size, ordering, paramsChanged],
-  ) as TParams & { pageIndex: number; pageSize: number; ordering?: string };
+  ) as TParams & { page: number; pageSize: number; ordering?: string };
 
   return useMemo(
     () => ({

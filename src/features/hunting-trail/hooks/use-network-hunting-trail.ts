@@ -1,3 +1,4 @@
+import { FETCH_ALL } from '@/common/fetching/fetching.types';
 import { useGetEventsQuery, useGetEventsTailQuery } from '@/features/events';
 
 import {
@@ -22,7 +23,7 @@ export function useNetworkHuntingTrail({
   from,
   to,
 }: UseNetworkHuntingTrailParams) {
-  const common = { from, to, page_size: 10000 };
+  const common = { from, to, ...FETCH_ALL };
   const alertParams = { ...common, alert: true as const };
 
   // --- Alert queries (25) ---

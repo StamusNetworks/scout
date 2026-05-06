@@ -4,6 +4,7 @@ import {
   ProtoColumn,
 } from '@/common/design-system/graphs/proto-flow/flow.columns';
 import { FlowSkeleton } from '@/common/design-system/graphs/proto-flow/flow.skeleton';
+import { FETCH_ALL } from '@/common/fetching/fetching.types';
 import { esEscape } from '@/common/lib/strings';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
@@ -62,7 +63,7 @@ export const BeaconingMetadata = ({ value, type }: BeaconingMetadataProps) => {
   const { data: events, isFetching } = useGetTlsTailQuery(
     {
       ...params,
-      pageSize: 10000,
+      ...FETCH_ALL,
       qfilter: `${type === 'ja3s' ? 'tls.ja3s.hash' : `dest_ip.raw`}:${esEscape(value)}`,
     },
     {

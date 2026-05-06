@@ -446,8 +446,18 @@ The two deferred items are now resolved:
   migration so existing localStorage entries (`start_date`/`end_date`)
   are read once and rewritten in the new shape on next persist.
 
-- **`Pagination` strict domain shape.** _(See next commit — done as a
-  separate sweep.)_
+- **`Pagination` strict domain shape `{ page, pageSize, ordering? }`**
+  (1-based page, camelCase). Permissive `pageIndex`/`page_size` keys
+  are gone from the kernel type. URL search keeps the wire-aligned
+  `{ page, page_size, sort }` (route boundary), and
+  `useServerTableState` translates at the table boundary —
+  `pagination: PaginationState` (TanStack 0-based `pageIndex`) for
+  the table API, `queryParams: { page, pageSize, ordering? }` (1-based
+  domain) for RTK Query args. The kernel exports a `FETCH_ALL`
+  constant that hides the elastic-bound `index.max_result_window`
+  cap (10 000) so callers spell `...FETCH_ALL` instead of repeating
+  the magic number. When the backend lifts the cap, only the
+  `SERVER_FETCH_LIMIT` constant in `fetching.types.ts` moves.
 
 Phase 4 — composition cleanup: thin routes, consolidate modal slices,
 extract pure logic from React.

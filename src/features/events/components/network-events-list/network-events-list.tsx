@@ -42,7 +42,7 @@ export const NetworkEventsList = ({
       ...params,
       qfilter: networkEventsQfilter,
       ordering: '-timestamp',
-      pageIndex,
+      page,
       pageSize,
     },
     {
