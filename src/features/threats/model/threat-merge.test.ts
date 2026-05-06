@@ -1,7 +1,11 @@
 import { describe, expect, test } from 'vitest';
 
 import type { Threat } from './threat';
-import { mergeThreatCollections, type ThreatCollection } from './threat-merge';
+import {
+  filterThreatsByKind,
+  mergeThreatCollections,
+  type ThreatCollection,
+} from './threat-merge';
 
 const threatA: Threat = {
   kind: 'compromise',
@@ -62,5 +66,31 @@ describe('mergeThreatCollections', () => {
       entities: { 1: threatC },
     };
     expect(mergeThreatCollections(primary, overlap).entities[1]).toBe(threatC);
+  });
+});
+
+describe('filterThreatsByKind', () => {
+  const compA = { kind: 'compromise', id: 1 } as unknown as Threat;
+  const compB = { kind: 'compromise', id: 2 } as unknown as Threat;
+  const polA = { kind: 'policyViolation', id: 3 } as unknown as Threat;
+
+  test('returns only threats of the requested kind', () => {
+    const collection: ThreatCollection = {
+      ids: [1, 2, 3],
+      entities: { 1: compA, 2: compB, 3: polA },
+    };
+    expect(filterThreatsByKind(collection, 'compromise')).toEqual([
+      compA,
+      compB,
+    ]);
+    expect(filterThreatsByKind(collection, 'policyViolation')).toEqual([polA]);
+  });
+
+  test('returns an empty array when no threats match', () => {
+    const collection: ThreatCollection = {
+      ids: [1],
+      entities: { 1: compA },
+    };
+    expect(filterThreatsByKind(collection, 'policyViolation')).toEqual([]);
   });
 });

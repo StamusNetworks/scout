@@ -1,4 +1,4 @@
-import type { Threat } from './threat';
+import type { Threat, ThreatKind } from './threat';
 
 export type ThreatCollection = {
   ids: number[];
@@ -12,3 +12,11 @@ export const mergeThreatCollections = (
   ids: [...(primary?.ids ?? []), ...(secondary?.ids ?? [])],
   entities: { ...primary?.entities, ...secondary?.entities },
 });
+
+export const filterThreatsByKind = (
+  collection: ThreatCollection,
+  kind: ThreatKind,
+): Threat[] =>
+  Object.values(collection.entities).filter(
+    (t): t is Threat => t !== undefined && t.kind === kind,
+  );

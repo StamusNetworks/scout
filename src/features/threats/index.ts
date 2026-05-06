@@ -19,6 +19,11 @@ export type { ActiveThreat, ActiveThreatAssets } from './model/active-threat';
 export type { ActiveThreatFamily } from './model/active-threat-family';
 export type { ImpactedEntity, EntityThreat } from './model/impacted-entity';
 export type { ThreatStatus } from './model/threat-status';
+export type { ThreatCollection } from './model/threat-merge';
+export {
+  filterThreatsByKind,
+  mergeThreatCollections,
+} from './model/threat-merge';
 export type {
   KillChainPhase,
   KillChainPhaseConfig,

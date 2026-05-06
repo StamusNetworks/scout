@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
 import { Edit, Plus } from 'lucide-react';
-import { values } from 'ramda';
 import { useEffect, useMemo, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -46,12 +45,14 @@ import { useUpdateEffect } from '@/common/lib/use-update-effect';
 import { FilterInput } from '@/features/query-filters/components/edit-qfilter-modal/filter-input';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useGetRuleSetsQuery } from '@/features/rules';
-import { KIND_LABEL, ThreatForm } from '@/features/threats';
-import { useGetCustomThreatsQuery } from '@/features/threats';
 import {
-  KILL_CHAIN_PHASES_KEYS,
-  killChainPhaseSchema,
+  filterThreatsByKind,
   KILL_CHAIN_PHASES,
+  KILL_CHAIN_PHASES_KEYS,
+  KIND_LABEL,
+  killChainPhaseSchema,
+  ThreatForm,
+  useGetCustomThreatsQuery,
 } from '@/features/threats';
 
 import {
@@ -167,12 +168,12 @@ export const DeclarationForm = ({
     {
       selectFromResult: (result) => ({
         ...result,
-        data:
-          result.data &&
-          values(result.data.entities).filter(
-            (threat) =>
-              threat.kind === (isDoc ? 'compromise' : 'policyViolation'),
-          ),
+        data: result.data
+          ? filterThreatsByKind(
+              result.data,
+              isDoc ? 'compromise' : 'policyViolation',
+            )
+          : undefined,
       }),
     },
   );

@@ -16,6 +16,7 @@ import {
   QueryFiltersRecord,
 } from '../../definitions/query-filter.definitions';
 import { useQueryFiltersDefinitions } from '../../hooks/use-filters-definitions';
+import { getCategoryOrderForPath } from '../../model/filter-category-order';
 import { selectFilterCommand } from '../../state/add-qfilter-command.selectors';
 import { setFilter } from '../../state/add-qfilter-command.slice';
 
@@ -41,33 +42,10 @@ export const FilterOptions = () => {
       }));
   }, [filters, negated]);
 
-  const categories = useMemo(() => {
-    if (
-      location.pathname.includes('/attack-surface') ||
-      location.pathname.includes('/hosts')
-    ) {
-      return [
-        FilterCategory.HOST,
-        FilterCategory.EVENT,
-        FilterCategory.SIGNATURE,
-        FilterCategory.HISTORY,
-      ];
-    }
-    if (location.pathname.includes('/detection-methods')) {
-      return [
-        FilterCategory.SIGNATURE,
-        FilterCategory.EVENT,
-        FilterCategory.HOST,
-        FilterCategory.HISTORY,
-      ];
-    }
-    return [
-      FilterCategory.EVENT,
-      FilterCategory.HOST,
-      FilterCategory.SIGNATURE,
-      FilterCategory.HISTORY,
-    ];
-  }, [location.pathname]);
+  const categories = useMemo(
+    () => getCategoryOrderForPath(location.pathname),
+    [location.pathname],
+  );
 
   return (
     <>
