@@ -28,7 +28,8 @@ export const useIsActiveFindings = (key: string) =>
 export const useStartInvestigation = () => {
   const dispatch = useAppDispatch();
   return useCallback(
-    (payload: InvestigationStagePayload) => dispatch(startInvestigation(payload)),
+    (payload: InvestigationStagePayload) =>
+      dispatch(startInvestigation(payload)),
     [dispatch],
   );
 };

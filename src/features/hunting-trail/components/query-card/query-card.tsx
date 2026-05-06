@@ -9,9 +9,9 @@ import {
   TimelineEventType,
   TYPE_COLOR,
   TYPE_LABEL,
-} from '@/features/hunting-trail/hunting-trail.model';
-import { CardEventsTable } from '@/features/hunting-trail/molecules/card-events-table';
-import { CardSummary } from '@/features/hunting-trail/molecules/card-summary';
+} from '../../model/hunting-trail';
+import { CardEventsTable } from '../card-events-table/card-events-table';
+import { CardSummary } from '../card-summary/card-summary';
 
 // --- Query descriptions ---
 

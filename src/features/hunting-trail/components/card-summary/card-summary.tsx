@@ -3,10 +3,7 @@ import { useMemo, useState } from 'react';
 
 import { Button } from '@/common/design-system/atoms/ui/button';
 import { FormattedBadge } from '@/common/design-system/molecules/formatted-badge';
-import {
-  TimelineEventType,
-  TimelineGroup,
-} from '@/features/hunting-trail/hunting-trail.model';
+import { TimelineEventType, TimelineGroup } from '../../model/hunting-trail';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { getFilterLabel } from '@/features/query-filters/utils/get-filter-label';
 

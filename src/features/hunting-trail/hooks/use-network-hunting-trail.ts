@@ -1,4 +1,9 @@
 import { useGetEventsQuery, useGetEventsTailQuery } from '@/features/events';
+
+import {
+  ALERT_QFILTERS,
+  EVENTS_TAIL_QFILTERS,
+} from '../definitions/hunting-trail.qfilters';
 import {
   PURPOSE_SLUG_MAP,
   PURPOSE_SLUGS,
@@ -6,11 +11,7 @@ import {
   PurposeSlug,
   TaggedEvent,
   TimelineEventType,
-} from '@/features/hunting-trail/hunting-trail.model';
-import {
-  ALERT_QFILTERS,
-  EVENTS_TAIL_QFILTERS,
-} from '@/features/hunting-trail/hunting-trail.queries';
+} from '../model/hunting-trail';
 
 interface UseNetworkHuntingTrailParams {
   startDate: number | undefined;

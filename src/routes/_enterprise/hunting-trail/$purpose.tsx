@@ -3,9 +3,9 @@ import { createFileRoute } from '@tanstack/react-router';
 import {
   PURPOSE_SLUG_MAP,
   PurposeSlug,
-} from '@/features/hunting-trail/hunting-trail.model';
-import { PurposeTabContent } from '@/features/hunting-trail/molecules/purpose-tab-content';
-import { useNetworkHuntingTrailContext } from '@/features/hunting-trail/use-cases/network-hunting-trail/network-hunting-trail-context';
+  PurposeTabContent,
+  useNetworkHuntingTrailContext,
+} from '@/features/hunting-trail';
 
 export const Route = createFileRoute('/_enterprise/hunting-trail/$purpose')({
   component: PurposePage,

@@ -9,11 +9,8 @@ import {
   TaggedEvent,
   TimelineEventType,
   TypeColorConfig,
-} from '@/features/hunting-trail/hunting-trail.model';
-import {
-  QueryCard,
-  QueryGroup,
-} from '@/features/hunting-trail/molecules/query-card';
+} from '../../model/hunting-trail';
+import { QueryCard, QueryGroup } from '../query-card/query-card';
 
 // --- Transform ---
 

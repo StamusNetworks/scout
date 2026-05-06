@@ -1,5 +1,4 @@
-import { PurposeAggregated } from '@/features/hunting-trail/molecules/purpose-aggregated';
-import { useHostHuntingTrail } from '@/features/hunting-trail/use-cases/host-hunting-trail/use-host-hunting-trail';
+import { PurposeAggregated, useHostHuntingTrail } from '@/features/hunting-trail';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
 export interface HostHuntingTrailProps {

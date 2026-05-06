@@ -9,7 +9,7 @@ import { describe, expect, it } from 'vitest';
 
 import { renderWithProviders } from '@/common/testing/test-utils';
 import { makeLateralEvent, makeNrdEvent } from '@/features/events';
-import { PurposeGroupData } from '@/features/hunting-trail/hunting-trail.model';
+import { PurposeGroupData } from '../../model/hunting-trail';
 
 import { PurposeTabContent } from './purpose-tab-content';
 
