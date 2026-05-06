@@ -2,16 +2,16 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from '@/store/store';
 
-const initialState: MarketingState = {
-  newsFeedLastRead: localStorage.getItem('news-feed-last-read') || undefined,
-};
-
 export type MarketingState = {
   newsFeedLastRead: string | undefined;
 };
 
-export const marketingStateSlice = createSlice({
-  name: 'dashboardPageState',
+const initialState: MarketingState = {
+  newsFeedLastRead: localStorage.getItem('news-feed-last-read') || undefined,
+};
+
+export const marketingSlice = createSlice({
+  name: 'marketing',
   initialState,
   reducers: {
     setNewsFeedLastRead: (
@@ -24,9 +24,9 @@ export const marketingStateSlice = createSlice({
   },
 });
 
-export const { setNewsFeedLastRead } = marketingStateSlice.actions;
+export const { setNewsFeedLastRead } = marketingSlice.actions;
 
-export const marketingStateInitialState = initialState;
+export const marketingInitialState = initialState;
 
-export const selectNewstFeedLastRead = (state: RootState) =>
+export const selectNewsFeedLastRead = (state: RootState) =>
   state.marketing.newsFeedLastRead;

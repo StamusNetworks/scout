@@ -5,11 +5,11 @@ import { useAppSelector } from '@/store/store';
 
 import { useGetCENewsFeedQuery, useGetEENewsFeedQuery } from '../api/news.api';
 import { getLastRead } from '../components/news-feed';
-import { selectNewstFeedLastRead } from '../store/marketing.store';
+import { selectNewsFeedLastRead } from '../state/marketing.slice';
 
 export const useNewsFeed = () => {
   const isEE = true;
-  const storedDate = useAppSelector(selectNewstFeedLastRead);
+  const storedDate = useAppSelector(selectNewsFeedLastRead);
   const readDate = getLastRead(storedDate);
   const { data: ceNews } = useGetCENewsFeedQuery({ isEE }, { skip: isEE });
   const { data: eeNews } = useGetEENewsFeedQuery({ isEE });
@@ -22,11 +22,11 @@ export const useNewsFeed = () => {
     );
     const sortedFeed = uniqueFeed
       .toSorted((a, b) =>
-        isBefore(new Date(a.pubDate), new Date(b.pubDate)) ? 1 : -1,
+        isBefore(new Date(a.publishedAt), new Date(b.publishedAt)) ? 1 : -1,
       )
       .map((news) => ({
         ...news,
-        isRead: isBefore(new Date(news.pubDate), readDate),
+        isRead: isBefore(new Date(news.publishedAt), readDate),
       }));
     return {
       lastNews: sortedFeed.slice(0, 10),

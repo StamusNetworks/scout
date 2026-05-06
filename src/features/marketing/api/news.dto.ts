@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const newsSchema = z.object({
+export const newsDtoSchema = z.object({
   title: z.string(),
   link: z.string(),
   pubDate: z.string(),
@@ -8,4 +8,4 @@ export const newsSchema = z.object({
   categories: z.array(z.string()),
 });
 
-export type News = z.infer<typeof newsSchema>;
+export type NewsDto = z.infer<typeof newsDtoSchema>;

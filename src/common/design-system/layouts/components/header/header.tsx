@@ -11,7 +11,7 @@ import {
 import { SidebarTrigger } from '@/common/design-system/atoms/ui/sidebar';
 import { BreadcrumbsOutlet } from '@/common/design-system/molecules/breadcrumbs';
 import { getShortcutDisplay } from '@/common/lib/platform';
-import { NewsFeedModal } from '@/features/marketing/components/news-modal';
+import { NewsFeedModal } from '@/features/marketing';
 import { disableHelp, selectHelpState } from '@/features/ui/help/help.slice';
 import { ThemeSelector } from '@/features/ui/theming/themeSelector';
 import {

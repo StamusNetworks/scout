@@ -13,7 +13,7 @@ import { queryFiltersSetsSlice } from '@/features/filter-sets/state/filter-sets.
 import { saveFilterSetModalSlice } from '@/features/filter-sets/state/save-filter-set.slice';
 import { investigationSlice } from '@/features/investigation/investigation.slice';
 import { investigationsHistorySlice } from '@/features/investigation/investigations-history.slice';
-import { marketingStateSlice } from '@/features/marketing/store/marketing.store';
+import { marketingSlice } from '@/features/marketing/state/marketing.slice';
 import { addQfilterCommandSlice } from '@/features/query-filters/state/add-qfilter-command.slice';
 import { queryFiltersSlice } from '@/features/query-filters/state/query-filters.slice';
 import { settingsSlice } from '@/features/settings/state/settings.slice';
@@ -106,7 +106,7 @@ export const rootReducer = () =>
       explorer: dashboardPageStateSlice.reducer,
     }),
     tablePreferences: tablePreferencesSlice.reducer,
-    marketing: marketingStateSlice.reducer,
+    marketing: marketingSlice.reducer,
     uiState: uiStateSlice.reducer,
     preferences: preferencesSlice.reducer,
     help: helpSlice.reducer,

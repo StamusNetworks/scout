@@ -11,11 +11,11 @@ import {
 } from '@/common/design-system/atoms/ui/dialog';
 import { ScrollArea } from '@/common/design-system/atoms/ui/scroll-area';
 import { VisuallyHidden } from '@/common/design-system/atoms/ui/visually-hidden';
-import { NewsFeed } from '@/features/marketing/components/news-feed';
-import { useNewsFeed } from '@/features/marketing/hooks/use-news-feed';
 import { useAppDispatch } from '@/store/store';
 
-import { setNewsFeedLastRead } from '../store/marketing.store';
+import { useNewsFeed } from '../hooks/use-news-feed';
+import { setNewsFeedLastRead } from '../state/marketing.slice';
+import { NewsFeed } from './news-feed';
 
 export const NewsFeedModal = () => {
   const { unreadCount } = useNewsFeed();

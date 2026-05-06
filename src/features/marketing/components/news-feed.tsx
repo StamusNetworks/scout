@@ -8,17 +8,17 @@ import { cn } from '@/common/lib/utils';
 import { useAppSelector } from '@/store/store';
 
 import { useNewsFeed } from '../hooks/use-news-feed';
-import { selectNewstFeedLastRead } from '../store/marketing.store';
+import { selectNewsFeedLastRead } from '../state/marketing.slice';
 
 export const NewsFeed = () => {
-  const storedReadDate = useAppSelector(selectNewstFeedLastRead);
+  const storedReadDate = useAppSelector(selectNewsFeedLastRead);
   const readDate = getLastRead(storedReadDate);
   const { lastNews } = useNewsFeed();
 
   return (
     <Column className="gap-1">
       {lastNews.map((item) => {
-        const isUnread = isAfter(new Date(item.pubDate), readDate);
+        const isUnread = isAfter(new Date(item.publishedAt), readDate);
         return (
           <Link
             key={item.title}
@@ -27,7 +27,7 @@ export const NewsFeed = () => {
             rel="noreferrer"
             className="hover:bg-primary/5 rounded-md p-2"
           >
-            <p className="text-muted-foreground text-xs">{item.pubDate}</p>
+            <p className="text-muted-foreground text-xs">{item.publishedAt}</p>
             <p
               className={cn(
                 'mt-1 mb-2 text-sm font-medium',
