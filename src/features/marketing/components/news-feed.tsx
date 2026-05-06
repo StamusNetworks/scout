@@ -1,24 +1,19 @@
 import { Link } from '@tanstack/react-router';
-import { isAfter, sub } from 'date-fns';
 
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Row } from '@/common/design-system/atoms/layout/row';
 import { Badge } from '@/common/design-system/atoms/ui/badge';
 import { cn } from '@/common/lib/utils';
-import { useAppSelector } from '@/store/store';
 
 import { useNewsFeed } from '../hooks/use-news-feed';
-import { selectNewsFeedLastRead } from '../state/marketing.slice';
 
 export const NewsFeed = () => {
-  const storedReadDate = useAppSelector(selectNewsFeedLastRead);
-  const readDate = getLastRead(storedReadDate);
   const { lastNews } = useNewsFeed();
 
   return (
     <Column className="gap-1">
       {lastNews.map((item) => {
-        const isUnread = isAfter(new Date(item.publishedAt), readDate);
+        const isUnread = !item.isRead;
         return (
           <Link
             key={item.title}
@@ -55,16 +50,4 @@ export const NewsFeed = () => {
       })}
     </Column>
   );
-};
-
-export const getLastRead = (lastRead?: string) => {
-  const thirtyDaysAgo = sub(new Date(), { days: 30 });
-
-  if (!lastRead) return thirtyDaysAgo;
-
-  if (isAfter(new Date(lastRead), thirtyDaysAgo)) {
-    return lastRead;
-  }
-
-  return thirtyDaysAgo;
 };
