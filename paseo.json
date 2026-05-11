@@ -1,0 +1,19 @@
+{
+  "worktree": {
+    "setup": "pnpm install --frozen-lockfile"
+  },
+  "scripts": {
+    "dev": {
+      "type": "service",
+      "command": "pnpm run dev --port $PASEO_PORT"
+    }
+  },
+  "metadataGeneration": {
+    "branchName": {
+      "instructions": "Do not use forward/backward slash in branch name (will break ci)\n\nuse <prefix>-<issuenumber>-name\nexample: feat-862-hunting-trails"
+    },
+    "commitMessage": {
+      "instructions": "Use conventional commits with scope. Use fix only if the bug was present in a previous release / found by a customer, otherwise use `chore` prefix and fix in the message."
+    }
+  }
+}
