@@ -25,8 +25,10 @@ import { formatNumber } from '@/common/lib/numbers';
 import { usePageTitle } from '@/common/lib/use-page-title';
 import { TogglePageContainer } from '@/features/app-shell';
 import {
+  HUNTING_TRAIL_DOCS_URL,
   NetworkHuntingTrailProvider,
   PURPOSE_SLUGS,
+  RunBanner,
   useNetworkHuntingTrail,
 } from '@/features/hunting-trail';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
@@ -43,7 +45,7 @@ function HuntingTrailLayout() {
   usePageTitle('Hunting Trail');
   const { pathname } = useLocation();
   const { from, to } = useGlobalQueryParams(['dates']);
-  const { groups } = useNetworkHuntingTrail({
+  const { groups, runStats } = useNetworkHuntingTrail({
     from,
     to,
   });
@@ -63,6 +65,11 @@ function HuntingTrailLayout() {
               </PageDescription>
             </PageHeaderContent>
           </PageHeader>
+          <RunBanner
+            total={runStats.total}
+            withResults={runStats.withResults}
+            docsUrl={HUNTING_TRAIL_DOCS_URL}
+          />
           <Tabs value={pathname}>
             <TabsList>
               {PURPOSE_SLUGS.map(({ slug, label }) => {

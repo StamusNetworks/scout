@@ -118,4 +118,84 @@ describe('useHostHuntingTrail', () => {
       true,
     );
   });
+
+  describe('runStats', () => {
+    const withHits = {
+      ...emptyResult,
+      data: { results: [makeNrdEvent()], count: 1 },
+    } as unknown as ReturnType<typeof useGetEventsQuery>;
+
+    it('reports total=37 with zero results when all queries return empty', () => {
+      mockUseGetEventsQuery.mockReturnValue(emptyResult);
+      mockUseGetEventsTailQuery.mockReturnValue(emptyResult);
+      mockUseGetSightingEventsQuery.mockReturnValue(
+        emptyResult as unknown as ReturnType<typeof useGetSightingEventsQuery>,
+      );
+      const { result } = renderHook(() => useHostHuntingTrail(params));
+      expect(result.current.runStats).toEqual({
+        total: 37,
+        withResults: 0,
+        errored: 0,
+      });
+    });
+
+    it('counts only queries with at least one event toward withResults', () => {
+      mockUseGetEventsQuery
+        .mockReturnValueOnce(withHits)
+        .mockReturnValueOnce(withHits)
+        .mockReturnValueOnce(withHits)
+        .mockReturnValueOnce(withHits)
+        .mockReturnValueOnce(withHits)
+        .mockReturnValue(emptyResult);
+      mockUseGetEventsTailQuery.mockReturnValue(emptyResult);
+      mockUseGetSightingEventsQuery.mockReturnValue(
+        emptyResult as unknown as ReturnType<typeof useGetSightingEventsQuery>,
+      );
+      const { result } = renderHook(() => useHostHuntingTrail(params));
+      expect(result.current.runStats).toEqual({
+        total: 37,
+        withResults: 5,
+        errored: 0,
+      });
+    });
+
+    it('excludes errored queries from withResults and counts them as errored', () => {
+      mockUseGetEventsQuery
+        .mockReturnValueOnce(errorResult)
+        .mockReturnValueOnce(errorResult)
+        .mockReturnValueOnce(withHits)
+        .mockReturnValueOnce(withHits)
+        .mockReturnValueOnce(withHits)
+        .mockReturnValueOnce(withHits)
+        .mockReturnValue(emptyResult);
+      mockUseGetEventsTailQuery.mockReturnValue(emptyResult);
+      mockUseGetSightingEventsQuery.mockReturnValue(
+        emptyResult as unknown as ReturnType<typeof useGetSightingEventsQuery>,
+      );
+      const { result } = renderHook(() => useHostHuntingTrail(params));
+      expect(result.current.runStats).toEqual({
+        total: 37,
+        withResults: 4,
+        errored: 2,
+      });
+    });
+
+    it('treats inflight queries as not-yet-counted toward withResults but counts them toward total', () => {
+      mockUseGetEventsQuery
+        .mockReturnValueOnce(loadingResult)
+        .mockReturnValueOnce(loadingResult)
+        .mockReturnValueOnce(withHits)
+        .mockReturnValue(emptyResult);
+      mockUseGetEventsTailQuery.mockReturnValue(emptyResult);
+      mockUseGetSightingEventsQuery.mockReturnValue(
+        emptyResult as unknown as ReturnType<typeof useGetSightingEventsQuery>,
+      );
+      const { result } = renderHook(() => useHostHuntingTrail(params));
+      expect(result.current.runStats).toEqual({
+        total: 37,
+        withResults: 1,
+        errored: 0,
+      });
+    });
+  });
 });

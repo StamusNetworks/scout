@@ -8,6 +8,7 @@ export type {
   TypeColorConfig,
 } from './model/hunting-trail';
 export {
+  HUNTING_TRAIL_DOCS_URL,
   PURPOSE_GROUPS,
   PURPOSE_SLUG_MAP,
   PURPOSE_SLUGS,
@@ -15,6 +16,8 @@ export {
   TYPE_COLOR,
   TYPE_LABEL,
 } from './model/hunting-trail';
+export { computeRunStats } from './model/run-stats';
+export type { RunStats } from './model/run-stats';
 
 // hooks
 export { useHostHuntingTrail } from './hooks/use-host-hunting-trail';
@@ -27,3 +30,4 @@ export {
 } from './components/network-hunting-trail-context/network-hunting-trail-context';
 export { PurposeAggregated } from './components/purpose-aggregated/purpose-aggregated';
 export { PurposeTabContent } from './components/purpose-tab-content/purpose-tab-content';
+export { RunBanner } from './components/run-banner/run-banner';

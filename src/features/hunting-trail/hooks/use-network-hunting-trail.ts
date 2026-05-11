@@ -13,6 +13,7 @@ import {
   TaggedEvent,
   TimelineEventType,
 } from '../model/hunting-trail';
+import { computeRunStats } from '../model/run-stats';
 
 interface UseNetworkHuntingTrailParams {
   from: number | undefined;
@@ -287,5 +288,13 @@ export function useNetworkHuntingTrail({
     }),
   ) as Record<PurposeSlug, PurposeGroupData>;
 
-  return { groups };
+  const runStats = computeRunStats(
+    Object.values(queryResults).map((q) => ({
+      data: q.data as { results?: unknown[] } | undefined,
+      isLoading: q.isLoading,
+      isError: q.isError,
+    })),
+  );
+
+  return { groups, runStats };
 }

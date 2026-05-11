@@ -1,5 +1,9 @@
 import { Event } from '@/features/events';
 
+// TODO: replace with the real Hunting Trail documentation URL once it ships.
+export const HUNTING_TRAIL_DOCS_URL =
+  'https://docs.stamus-networks.com/42.0.0/index.html';
+
 export type TimelineEventType =
   | 'sightings'
   | 'hunting'

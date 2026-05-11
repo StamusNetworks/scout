@@ -113,4 +113,70 @@ describe('useNetworkHuntingTrail', () => {
     expect(result.current.groups['lateral-movement'].isLoading).toBe(false);
     expect(result.current.groups['lateral-movement'].isError).toBe(false);
   });
+
+  describe('runStats', () => {
+    const withHits = {
+      ...emptyResult,
+      data: { results: [makeNrdEvent()], count: 1 },
+    } as unknown as ReturnType<typeof useGetEventsQuery>;
+
+    it('reports total=36 with zero results when all queries return empty (sightings excluded)', () => {
+      mockUseGetEventsQuery.mockReturnValue(emptyResult);
+      mockUseGetEventsTailQuery.mockReturnValue(emptyResult);
+      const { result } = renderHook(() => useNetworkHuntingTrail(params));
+      expect(result.current.runStats).toEqual({
+        total: 36,
+        withResults: 0,
+        errored: 0,
+      });
+    });
+
+    it('counts only queries with at least one event toward withResults', () => {
+      mockUseGetEventsQuery
+        .mockReturnValueOnce(withHits)
+        .mockReturnValueOnce(withHits)
+        .mockReturnValueOnce(withHits)
+        .mockReturnValue(emptyResult);
+      mockUseGetEventsTailQuery.mockReturnValue(emptyResult);
+      const { result } = renderHook(() => useNetworkHuntingTrail(params));
+      expect(result.current.runStats).toEqual({
+        total: 36,
+        withResults: 3,
+        errored: 0,
+      });
+    });
+
+    it('excludes errored queries from withResults and counts them as errored', () => {
+      mockUseGetEventsQuery
+        .mockReturnValueOnce(errorResult)
+        .mockReturnValueOnce(errorResult)
+        .mockReturnValueOnce(withHits)
+        .mockReturnValueOnce(withHits)
+        .mockReturnValueOnce(withHits)
+        .mockReturnValueOnce(withHits)
+        .mockReturnValue(emptyResult);
+      mockUseGetEventsTailQuery.mockReturnValue(emptyResult);
+      const { result } = renderHook(() => useNetworkHuntingTrail(params));
+      expect(result.current.runStats).toEqual({
+        total: 36,
+        withResults: 4,
+        errored: 2,
+      });
+    });
+
+    it('does not count inflight queries toward withResults but counts them in total', () => {
+      mockUseGetEventsQuery
+        .mockReturnValueOnce(loadingResult)
+        .mockReturnValueOnce(loadingResult)
+        .mockReturnValueOnce(withHits)
+        .mockReturnValue(emptyResult);
+      mockUseGetEventsTailQuery.mockReturnValue(emptyResult);
+      const { result } = renderHook(() => useNetworkHuntingTrail(params));
+      expect(result.current.runStats).toEqual({
+        total: 36,
+        withResults: 1,
+        errored: 0,
+      });
+    });
+  });
 });

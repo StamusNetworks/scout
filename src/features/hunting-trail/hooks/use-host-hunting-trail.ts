@@ -18,6 +18,7 @@ import {
   TaggedEvent,
   TimelineEventType,
 } from '../model/hunting-trail';
+import { computeRunStats } from '../model/run-stats';
 
 interface UseHostHuntingTrailParams {
   asset: string;
@@ -280,6 +281,8 @@ export function useHostHuntingTrail({
   const isLoading = allQueries.some((q) => q.isLoading);
   const isError = allQueries.every((q) => q.isError);
 
+  const runStats = computeRunStats(allQueries);
+
   const groups = Object.fromEntries(
     PURPOSE_SLUGS.map(({ slug }) => {
       const purposeGroup = PURPOSE_SLUG_MAP[slug];
@@ -309,5 +312,5 @@ export function useHostHuntingTrail({
   const isEmpty =
     !isLoading && !isError && Object.values(groups).every((g) => g.count === 0);
 
-  return { groups, isLoading, isError, isEmpty };
+  return { groups, isLoading, isError, isEmpty, runStats };
 }

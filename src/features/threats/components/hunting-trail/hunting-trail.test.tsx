@@ -145,4 +145,35 @@ describe('HuntingTrail', () => {
       screen.queryByText(/failed to load hunting trail data/i),
     ).not.toBeInTheDocument();
   });
+
+  describe('run banner', () => {
+    it('renders the banner with the host-surface total (37) when queries settle empty', async () => {
+      await renderComponent();
+      await waitFor(() => {
+        expect(
+          screen.getByText(/37 queries ran · 0 returned results/),
+        ).toBeInTheDocument();
+      });
+      expect(
+        screen.getByRole('link', { name: /learn more/i }),
+      ).toBeInTheDocument();
+    });
+
+    it('renders the banner while queries are still inflight', () => {
+      server.use(
+        http.get(baseUrl + '/rules/es/alerts_tail', async () => {
+          await new Promise(() => {});
+          return HttpResponse.json(emptyPaginated);
+        }),
+      );
+      renderWithProviders(
+        <HuntingTrail
+          asset="192.168.1.5"
+          from={1736640000000}
+          to={1736899200000}
+        />,
+      );
+      expect(screen.getByText(/queries ran ·/)).toBeInTheDocument();
+    });
+  });
 });

@@ -101,4 +101,52 @@ describe('HostHuntingTrail', () => {
       expect(screen.getByText('NRD')).toBeInTheDocument();
     });
   });
+
+  describe('run banner', () => {
+    it('renders the banner with the host-surface total (37) when queries settle empty', async () => {
+      await renderWithProviders(<HostHuntingTrail hostId="192.168.1.5" />, {
+        router: createTestRouter(),
+      });
+      await waitFor(() => {
+        expect(
+          screen.getByText(/37 queries ran · 0 returned results/),
+        ).toBeInTheDocument();
+      });
+      expect(
+        screen.getByRole('link', { name: /learn more/i }),
+      ).toBeInTheDocument();
+    });
+
+    it('renders the banner while queries are still inflight', () => {
+      server.use(
+        http.get(baseUrl + '/rules/es/alerts_tail', async () => {
+          await new Promise(() => {});
+          return HttpResponse.json(emptyPaginated);
+        }),
+      );
+      renderWithProviders(<HostHuntingTrail hostId="192.168.1.5" />);
+      expect(screen.getByText(/queries ran ·/)).toBeInTheDocument();
+    });
+
+    it('renders the banner alongside the error message when every query fails', async () => {
+      server.use(
+        http.get(baseUrl + '/rules/es/alerts_tail', () => HttpResponse.error()),
+        http.get(baseUrl + '/rules/es/events_tail/', () =>
+          HttpResponse.error(),
+        ),
+        http.get(baseUrl + '/appliances/es_discovery_events/', () =>
+          HttpResponse.error(),
+        ),
+      );
+      await renderWithProviders(<HostHuntingTrail hostId="192.168.1.5" />, {
+        router: createTestRouter(),
+      });
+      await waitFor(() => {
+        expect(
+          screen.getByText(/failed to load hunting trail data/i),
+        ).toBeInTheDocument();
+      });
+      expect(screen.getByText(/37 queries ran/)).toBeInTheDocument();
+    });
+  });
 });
