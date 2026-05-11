@@ -21,7 +21,7 @@ import { DataTableColumnHeader } from '@/common/design-system/molecules/data-tab
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
 import { isIP } from '@/common/lib/ips';
 import { DateTime } from '@/features/preferences';
-import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
+import { useSoftReplaceFilters } from '@/features/query-filters/hooks/use-soft-replace-filters';
 import { KillchainTag } from '@/features/threats';
 import { ThreatTag } from '@/features/threats';
 import { useThreat } from '@/features/threats';
@@ -133,7 +133,7 @@ export const KillChainTagWithContext = ({ row }: { row: ThreatStatus }) => {
 
 export const ExploreButtons = ({ row }: { row: ThreatStatus }) => {
   const navigate = useNavigate();
-  const replaceFilters = useReplaceFilters();
+  const replaceFilters = useSoftReplaceFilters();
   const { data, isLoading } = useThreat(row.threatId);
   const handleClick = useCallback(
     (route: string) => {

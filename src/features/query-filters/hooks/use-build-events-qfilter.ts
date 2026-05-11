@@ -5,15 +5,15 @@ import { useIsEnterprise } from '@/features/settings';
 
 import { buildEventsQfilter } from '../builders/build-events-qfilter';
 import { QueryFilterState } from '../model/query-filter';
-import { useQueryFiltersRepository } from '../state/query-filters.repository';
 import { useFilterFlagsRepository } from './use-filter-flags-repository';
 import { useQFBuilder } from './use-qf-builder';
+import { useQueryFilters } from './use-query-filters';
 
 export function useBuildEventsQfilter(
   filterExtension: QueryFilterState[] | string = [],
   options: Partial<{ tags: boolean }> = { tags: true },
 ): string | undefined {
-  const repo = useQueryFiltersRepository();
+  const queryFilters = useQueryFilters();
   const tagRepo = useFilterFlagsRepository();
   const qfBuilder = useQFBuilder();
   const investigation = useInvestigationFilter();
@@ -22,7 +22,7 @@ export function useBuildEventsQfilter(
   return useMemo(() => {
     const flags = isEnterprise ? tagRepo.getAll() : null;
     return buildEventsQfilter({
-      queryFilters: repo.getAll(),
+      queryFilters,
       alertTags: options.tags ? (flags?.alertTags ?? undefined) : undefined,
       novelty: options.tags ? (flags?.novelty ?? false) : false,
       investigation,
@@ -30,7 +30,7 @@ export function useBuildEventsQfilter(
       qfBuilder,
     });
   }, [
-    repo,
+    queryFilters,
     tagRepo,
     qfBuilder,
     investigation,

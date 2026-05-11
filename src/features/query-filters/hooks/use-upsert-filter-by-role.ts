@@ -1,25 +1,26 @@
 import { useCallback } from 'react';
 
-import { useQFBuilder } from '../hooks/use-qf-builder';
-import { useQueryFiltersRepository } from '../state/query-filters.repository';
 import { FilterInput } from '../utils/filter-mapper';
 import { applyUpsertByRole } from '../utils/suspension-rules';
+import { useQFBuilder } from './use-qf-builder';
+import { useQueryFilters } from './use-query-filters';
+import { useSetQueryFilters } from './use-set-query-filters';
 
 export function useUpsertFilterByRole(): (input: FilterInput) => void {
-  const repo = useQueryFiltersRepository();
+  const filters = useQueryFilters();
+  const setFilters = useSetQueryFilters();
   const qfBuilder = useQFBuilder();
 
   return useCallback(
     (input) => {
-      const filters = repo.getAll();
       const newFilter = qfBuilder.createFilter(
         input.key,
         input.value,
         input.options,
       );
       const result = applyUpsertByRole(filters, newFilter);
-      repo.set(result);
+      setFilters(result);
     },
-    [repo, qfBuilder],
+    [filters, setFilters, qfBuilder],
   );
 }

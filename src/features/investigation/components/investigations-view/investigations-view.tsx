@@ -29,10 +29,10 @@ import { Paginated } from '@/common/fetching/fetching.types';
 import { esEscape } from '@/common/lib/strings';
 import { useSetDates } from '@/features/dates';
 import { DateTime } from '@/features/preferences';
-import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
+import { useClearQueryFilters } from '@/features/query-filters/hooks/use-clear-query-filters';
 import { useCreateFilter } from '@/features/query-filters/hooks/use-create-filter';
 import { useFilterFlagsRepository } from '@/features/query-filters/hooks/use-filter-flags-repository';
-import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
+import { useSoftReplaceFilters } from '@/features/query-filters/hooks/use-soft-replace-filters';
 import {
   type SerializedFilterFlags,
   toFilterFlags,
@@ -216,9 +216,9 @@ const InvestigationHistoryItem = ({
 }) => {
   const setDates = useSetDates();
   const [showOnlyKept] = useShowOnlyKept();
-  const clearFilters = useClearFilters();
+  const clearFilters = useClearQueryFilters();
   const createFilter = useCreateFilter();
-  const replaceFilters = useReplaceFilters();
+  const replaceFilters = useSoftReplaceFilters();
   const tagFiltersRepo = useFilterFlagsRepository();
 
   const handleLoadAsFilters = ({

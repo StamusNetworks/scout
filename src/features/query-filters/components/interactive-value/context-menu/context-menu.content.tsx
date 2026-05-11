@@ -34,7 +34,7 @@ import {
 import { useCreateFilter } from '../../../hooks/use-create-filter';
 import { useEnableFilterFlags } from '../../../hooks/use-enable-filter-flags';
 import { useQueryFilterDefinition } from '../../../hooks/use-filters-definitions';
-import { useReplaceFilters } from '../../../hooks/use-replace-filters';
+import { useSoftReplaceFilters } from '../../../hooks/use-soft-replace-filters';
 import { resolveEntityTypes } from '../../../utils/entity-validators';
 import { MitreTacticIdOption, MitreTechniqueIdOption } from './options/mitre';
 import { ThreatFamilyNameOption } from './options/threat-family-name';
@@ -57,7 +57,7 @@ export const ContextMenuContent = ({
   const navigate = useNavigate();
   const addEvidence = useAddEvidence();
   const createFilter = useCreateFilter();
-  const replaceFilters = useReplaceFilters();
+  const replaceFilters = useSoftReplaceFilters();
   const enableTags = useEnableFilterFlags();
   const { data: deeplinksData } = useGetDeeplinksQuery({
     page: 1,

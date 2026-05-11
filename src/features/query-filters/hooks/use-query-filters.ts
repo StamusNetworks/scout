@@ -6,6 +6,7 @@ import {
   selectEventTypeFlags,
   selectEventTypeFlagsParams,
   selectFilterFlags,
+  selectFilterTypes,
   selectGatedFilterFlags,
   selectNovelty,
   selectQueryFilters,
@@ -17,6 +18,12 @@ import {
  * stays internal.
  */
 export const useQueryFilters = () => useAppSelector(selectQueryFilters);
+
+/**
+ * ES-mapping types keyed by filter key. `undefined` until the mapping
+ * fetch resolves.
+ */
+export const useQueryTypes = () => useAppSelector(selectFilterTypes);
 
 /** Combined flag bag (event types + alert tags + novelty), un-gated. */
 export const useFilterFlags = () => useAppSelector(selectFilterFlags);

@@ -4,18 +4,17 @@ import { useInvestigationFilter } from '@/features/investigation';
 
 import { useQFBuilder } from '../hooks/use-qf-builder';
 import { QueryFilterState } from '../model/query-filter';
-import { useQueryFiltersRepository } from '../state/query-filters.repository';
+import { useQueryFilters } from './use-query-filters';
 
 export function useBuildHostIdQfilter(
   extra?: QueryFilterState[],
   blacklist?: string[],
 ): string | undefined {
-  const repo = useQueryFiltersRepository();
+  const queryFilters = useQueryFilters();
   const qfBuilder = useQFBuilder();
   const investigation = useInvestigationFilter();
 
   return useMemo(() => {
-    const queryFilters = repo.getAll();
     const filters = [...queryFilters, ...(extra || [])];
     if (investigation?.current.key && investigation?.current.value) {
       filters.push(
@@ -29,5 +28,5 @@ export function useBuildHostIdQfilter(
       ? filters.filter((f) => !blacklist.includes(f.key))
       : filters;
     return qfBuilder.toHostIdQFString(filtered);
-  }, [repo, qfBuilder, investigation, extra, blacklist]);
+  }, [queryFilters, qfBuilder, investigation, extra, blacklist]);
 }

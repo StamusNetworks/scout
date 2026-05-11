@@ -4,6 +4,7 @@
 
 // --- Domain types --------------------------------------------------------
 
+export { qfilterDef, shouldShowWildcard } from './model/query-filter';
 export type {
   PersistedFilter,
   QueryFilterDefinition,
@@ -11,18 +12,17 @@ export type {
   QueryFilterState,
   QueryFilterType,
 } from './model/query-filter';
-export { qfilterDef, shouldShowWildcard } from './model/query-filter';
 
+export {
+  defaultFilterFlags,
+  toFilterFlags,
+  toSerializedFilterFlags,
+} from './model/filter-flags';
 export type {
   AlertTagFlags,
   EventTypeFlags,
   FilterFlags,
   SerializedFilterFlags,
-} from './model/filter-flags';
-export {
-  defaultFilterFlags,
-  toFilterFlags,
-  toSerializedFilterFlags,
 } from './model/filter-flags';
 
 export {
@@ -38,13 +38,12 @@ export type { MixedQueryFilterDefinitions } from './state/query-filters.selector
 
 // --- Hooks ---------------------------------------------------------------
 
-export { useGlobalQueryParams } from './hooks/use-global-query-params';
-export { useESMapping } from './hooks/use-es-mapping';
 export { useEnableFilterFlags } from './hooks/use-enable-filter-flags';
+export { useESMapping } from './hooks/use-es-mapping';
 export { useFilterFlagsRepository } from './hooks/use-filter-flags-repository';
-export { useQueryFiltersRepository } from './state/query-filters.repository';
-export { useQFBuilder } from './hooks/use-qf-builder';
 export { useQueryFilterDefinition } from './hooks/use-filters-definitions';
+export { useGlobalQueryParams } from './hooks/use-global-query-params';
+export { useQFBuilder } from './hooks/use-qf-builder';
 
 // State-read hooks (replace cross-feature selector imports)
 export {
@@ -56,18 +55,23 @@ export {
   useGatedFilterFlags,
   useNovelty,
   useQueryFilters,
+  useQueryTypes,
 } from './hooks/use-query-filters';
 
 // Modal hook
 export { useQfilterModal } from './hooks/use-qfilter-modal';
 
-// Action hooks
-export { useClearFilters } from './hooks/use-clear-filters';
+// Primitive dispatchers
+export { useClearQueryFilters } from './hooks/use-clear-query-filters';
+export { useSetQueryFilters } from './hooks/use-set-query-filters';
+
+// Action hooks (compose primitives + suspension/dedup rules)
 export { useCreateFilter } from './hooks/use-create-filter';
 export { useDeleteFilter } from './hooks/use-delete-filter';
+export { useHardReplaceFilters } from './hooks/use-hard-replace-filters';
 export { useListFilters } from './hooks/use-list-filters';
 export { useReorderFilters } from './hooks/use-reorder-filters';
-export { useReplaceFilters } from './hooks/use-replace-filters';
+export { useSoftReplaceFilters } from './hooks/use-soft-replace-filters';
 export { useSuspendFilter } from './hooks/use-suspend-filter';
 export { useUpdateFilter } from './hooks/use-update-filter';
 export { useUpsertFilterByRole } from './hooks/use-upsert-filter-by-role';
@@ -79,11 +83,11 @@ export { useBuildSignatureFilter } from './hooks/use-build-signature-params';
 
 // --- Components ----------------------------------------------------------
 
+export { AddQfilterCommand } from './components/add-qfilter-command/add-qfilter-command';
+export { AddEsFilterModal } from './components/add-qfilter-modal/add-es-filter.modal';
+export { FilterInput } from './components/edit-qfilter-modal/filter-input';
 export {
   FiltersSideBar,
   SideBarHeader,
 } from './components/filters-sidebar/filters-sidebar';
 export { EventValue } from './components/interactive-value/event-value';
-export { FilterInput } from './components/edit-qfilter-modal/filter-input';
-export { AddEsFilterModal } from './components/add-qfilter-modal/add-es-filter.modal';
-export { AddQfilterCommand } from './components/add-qfilter-command/add-qfilter-command';

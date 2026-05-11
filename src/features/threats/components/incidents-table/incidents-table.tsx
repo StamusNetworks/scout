@@ -22,7 +22,7 @@ import { DataTableToolbar } from '@/common/design-system/molecules/data-table/da
 import { CommandFilterMultiple } from '@/common/design-system/molecules/data-table/filters/command-filter-multiple';
 import { isIP } from '@/common/lib/strings';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
-import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
+import { useSoftReplaceFilters } from '@/features/query-filters/hooks/use-soft-replace-filters';
 
 import { useGetImpactedEntitiesQuery } from '../../api/entities.api';
 import { useGetThreatsStatusQuery } from '../../api/threats.api';
@@ -75,7 +75,7 @@ export const IncidentsTable = ({
   const threats = useThreats({});
 
   const navigate = useNavigate();
-  const replaceFilters = useReplaceFilters();
+  const replaceFilters = useSoftReplaceFilters();
 
   const onRowClick = (row: TanstackRow<ThreatStatus>) => {
     if (isIP(row.original.asset)) {

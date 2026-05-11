@@ -2,32 +2,31 @@ import { useMemo } from 'react';
 import { toast } from 'sonner';
 
 import { QueryFilterState } from '../model/query-filter';
-import { useQueryFiltersRepository } from '../state/query-filters.repository';
 import { applyToggleSuspension } from '../utils/suspension-rules';
+import { useQueryFilters, useQueryTypes } from './use-query-filters';
+import { useSetQueryFilters } from './use-set-query-filters';
 
 export function useSuspendFilter() {
-  const repo = useQueryFiltersRepository();
+  const filters = useQueryFilters();
+  const types = useQueryTypes();
+  const setFilters = useSetQueryFilters();
 
   return useMemo(
     () => ({
       toggle: (filterId: string) => {
-        const filters = repo.getAll();
-        const types = repo.getTypes();
         const result = applyToggleSuspension(filters, filterId, types);
-        repo.set(result);
+        setFilters(result);
       },
       suspendMany: (predicate: (f: QueryFilterState) => boolean) => {
-        const filters = repo.getAll();
-        repo.set(
+        setFilters(
           filters.map((f) => (predicate(f) ? { ...f, isSuspended: true } : f)),
         );
       },
       clearSuspended: () => {
-        const filters = repo.getAll();
-        repo.set(filters.filter((f) => !f.isSuspended));
+        setFilters(filters.filter((f) => !f.isSuspended));
         toast.success('Cleared suspended filters');
       },
     }),
-    [repo],
+    [filters, types, setFilters],
   );
 }

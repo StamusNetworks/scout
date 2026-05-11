@@ -5,16 +5,15 @@ import {
   type SignatureParams,
 } from '../builders/build-signature-params';
 import { QueryFilterState } from '../model/query-filter';
-import { useQueryFiltersRepository } from '../state/query-filters.repository';
+import { useQueryFilters } from './use-query-filters';
 
 export function useBuildSignatureFilter(
   extra?: QueryFilterState[],
 ): SignatureParams | undefined {
-  const repo = useQueryFiltersRepository();
+  const queryFilters = useQueryFilters();
 
   return useMemo(() => {
-    const queryFilters = repo.getAll();
     const filters = [...queryFilters, ...(extra || [])];
     return buildSignatureParams(filters);
-  }, [repo, extra]);
+  }, [queryFilters, extra]);
 }

@@ -29,11 +29,11 @@ import { useGetDashboardFieldsQuery } from '@/features/events';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
 import { useEnableFilterFlags } from '@/features/query-filters/hooks/use-enable-filter-flags';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
-import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
+import { useSoftReplaceFilters } from '@/features/query-filters/hooks/use-soft-replace-filters';
 
 export const MitreTechniques = () => {
   const navigate = useNavigate();
-  const replaceFilters = useReplaceFilters();
+  const replaceFilters = useSoftReplaceFilters();
   const enableTags = useEnableFilterFlags();
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const [pagination, setPagination] = usePaginationState();

@@ -24,7 +24,7 @@ import {
   DropdownMenuTrigger,
 } from '@/common/design-system/atoms/ui/dropdown-menu';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
-import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
+import { useSoftReplaceFilters } from '@/features/query-filters/hooks/use-soft-replace-filters';
 
 import { useGetFilterActionsQuery } from '../../api/filter-actions.api';
 import { useFilterActionModal } from '../../hooks/use-filter-action-modal';
@@ -44,7 +44,7 @@ export const FilterActionRowActions = ({
   filterAction: FilterAction;
 }) => {
   const modal = useFilterActionModal();
-  const replaceFilters = useReplaceFilters();
+  const replaceFilters = useSoftReplaceFilters();
   const { data, isLoading } = useGetFilterActionsQuery({});
   const [moveFilterActionModalOpen, setMoveFilterActionModalOpen] =
     useState(false);

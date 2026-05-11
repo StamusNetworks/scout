@@ -15,7 +15,7 @@ import {
   TooltipContent,
 } from '@/common/design-system/molecules/tooltip';
 import { useEnableFilterFlags } from '@/features/query-filters/hooks/use-enable-filter-flags';
-import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
+import { useSoftReplaceFilters } from '@/features/query-filters/hooks/use-soft-replace-filters';
 import { useTheme } from '@/features/theming';
 
 import { WorldCountriesMap } from './world-map.config';
@@ -25,7 +25,7 @@ interface MapChartProps {
 }
 const WorldMap = ({ data }: MapChartProps) => {
   const navigate = useNavigate();
-  const replaceFilters = useReplaceFilters();
+  const replaceFilters = useSoftReplaceFilters();
   const forceTags = useEnableFilterFlags();
   const { isDark } = useTheme();
   const moving = useRef<boolean>(false);

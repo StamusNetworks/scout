@@ -4,7 +4,7 @@ import { GitGraph, Lock, ShieldAlert, Swords } from 'lucide-react';
 import { BlockTitle } from '@/common/design-system/atoms/block';
 import { Column } from '@/common/design-system/atoms/layout/column';
 import { Grid } from '@/common/design-system/atoms/layout/grid';
-import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
+import { useClearQueryFilters } from '@/features/query-filters/hooks/use-clear-query-filters';
 import { useEnableFilterFlags } from '@/features/query-filters/hooks/use-enable-filter-flags';
 import { KillChainCounters, OffendersWorldMap } from '@/features/threats';
 
@@ -22,7 +22,7 @@ export const OperationalCenterView = ({
   enterprise,
 }: OperationalCenterViewProps) => {
   const navigate = useNavigate();
-  const clearFilters = useClearFilters();
+  const clearFilters = useClearQueryFilters();
   const enableTags = useEnableFilterFlags();
 
   const handleClickOutliers = () => {

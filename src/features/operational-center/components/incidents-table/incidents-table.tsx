@@ -15,7 +15,7 @@ import { DataTable } from '@/common/design-system/molecules/data-table';
 import { usePaginationState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { isIP } from '@/common/lib/strings';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
-import { useReplaceFilters } from '@/features/query-filters/hooks/use-replace-filters';
+import { useSoftReplaceFilters } from '@/features/query-filters/hooks/use-soft-replace-filters';
 import { useGetThreatsStatusQuery } from '@/features/threats';
 import { KILL_CHAIN_PHASES_KEYS_WITHOUT_POLICIES } from '@/features/threats';
 import { threatStatusColumnDefs } from '@/features/threats';
@@ -36,7 +36,7 @@ export const IndicidentsTable = () => {
   const threats = useThreats({});
 
   const navigate = useNavigate();
-  const replaceFilters = useReplaceFilters();
+  const replaceFilters = useSoftReplaceFilters();
 
   const onRowClick = (row: TanstackRow<ThreatStatus>) => {
     if (isIP(row.original.asset)) {

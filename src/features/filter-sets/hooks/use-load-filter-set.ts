@@ -2,9 +2,9 @@ import { useCallback } from 'react';
 import { toast } from 'sonner';
 
 import {
-  useQFBuilder,
-  useQueryFiltersRepository,
   useFilterFlagsRepository,
+  useQFBuilder,
+  useSetQueryFilters,
 } from '@/features/query-filters';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
@@ -24,7 +24,7 @@ export const useLoadFilterSet = () => {
   const loadedFilterSetId = useAppSelector(selectLoadedFilterSetId);
   const qfBuilder = useQFBuilder();
   const tagFiltersRepo = useFilterFlagsRepository();
-  const queryFiltersRepo = useQueryFiltersRepository();
+  const setQueryFilters = useSetQueryFilters();
 
   return useCallback(
     (filterSet: FilterSet) => {
@@ -49,10 +49,10 @@ export const useLoadFilterSet = () => {
           isNegated: filter.negated,
         }),
       );
-      queryFiltersRepo.set(newFilters);
+      setQueryFilters(newFilters);
       dispatch(setLoadedFilterSetId(filterSet.id));
       toast.success('Filter set applied');
     },
-    [dispatch, loadedFilterSetId, qfBuilder, tagFiltersRepo, queryFiltersRepo],
+    [dispatch, loadedFilterSetId, qfBuilder, tagFiltersRepo, setQueryFilters],
   );
 };

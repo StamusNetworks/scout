@@ -19,7 +19,7 @@ import { getConfig } from '@/config';
 import { useFilterActionModal } from '@/features/filter-actions';
 import { useSaveFilterSetModal } from '@/features/filter-sets';
 import { useQfilterModal, useQueryFilters } from '@/features/query-filters';
-import { useClearFilters } from '@/features/query-filters/hooks/use-clear-filters';
+import { useClearQueryFilters } from '@/features/query-filters/hooks/use-clear-query-filters';
 import { useUpdatePushRuleSetMutation } from '@/features/rules';
 import { API } from '@/store/api';
 import { useAppDispatch, useAppSelector } from '@/store/store';
@@ -49,7 +49,7 @@ export const useGlobalCommands = (): GlobalCommands[] => {
   const isSidebarOpen = useAppSelector(selectIsSidebarOpen);
   const { enterprise } = useFeatureFlags();
   const [updatePushRuleset] = useUpdatePushRuleSetMutation();
-  const clearFilters = useClearFilters();
+  const clearFilters = useClearQueryFilters();
   const filterActionModal = useFilterActionModal();
   const saveFilterSetModal = useSaveFilterSetModal();
   const qfilterModal = useQfilterModal();

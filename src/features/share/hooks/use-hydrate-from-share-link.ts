@@ -7,8 +7,8 @@ import { useSetDates } from '@/features/dates';
 import {
   toFilterFlags,
   useFilterFlagsRepository,
+  useHardReplaceFilters,
   useQFBuilder,
-  useQueryFiltersRepository,
 } from '@/features/query-filters';
 import { useSetTenant } from '@/features/tenancy';
 
@@ -21,7 +21,7 @@ import {
 export const useHydrateFromShareLink = () => {
   const navigate = useNavigate();
   const { enterprise } = useFeatureFlags();
-  const queryFiltersRepo = useQueryFiltersRepository();
+  const hardReplaceFilters = useHardReplaceFilters();
   const tagFiltersRepo = useFilterFlagsRepository();
   const qfBuilder = useQFBuilder();
   const setTenant = useSetTenant();
@@ -59,7 +59,7 @@ export const useHydrateFromShareLink = () => {
     tagFiltersRepo.setAlertTags(flags.alertTags);
     tagFiltersRepo.setNovelty(flags.novelty);
 
-    queryFiltersRepo.set(
+    hardReplaceFilters(
       toFilterInputs(state.filters).map((input) =>
         qfBuilder.createFilter(input.key, input.value, input.options),
       ),

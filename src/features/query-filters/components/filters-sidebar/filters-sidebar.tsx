@@ -40,7 +40,7 @@ import { useIsEnterprise } from '@/features/settings';
 
 import { FilterCategory } from '../../definitions/query-filter.config';
 import { getFilterDef } from '../../definitions/query-filter.definitions';
-import { useClearFilters } from '../../hooks/use-clear-filters';
+import { useClearQueryFilters } from '../../hooks/use-clear-query-filters';
 import { useFilterFlagsRepository } from '../../hooks/use-filter-flags-repository';
 import { useQfilterModal } from '../../hooks/use-qfilter-modal';
 import { useReorderFilters } from '../../hooks/use-reorder-filters';
@@ -109,7 +109,7 @@ export const FiltersSideBar = () => {
   const autoOpenSidebarOnNavigation = useAutoOpenSidebarOnNavigation();
   const enterprise = useIsEnterprise();
   const [withAlerts] = useWithAlertsParam();
-  const clearFilters = useClearFilters();
+  const clearFilters = useClearQueryFilters();
   const reorderFilters = useReorderFilters();
   const { clearSuspended } = useSuspendFilter();
   const tagFiltersRepo = useFilterFlagsRepository();

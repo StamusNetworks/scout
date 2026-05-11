@@ -24,6 +24,9 @@ import { QueryFilterDefinition, QueryFilterType } from '../model/query-filter';
 export const selectQueryFilters = (state: RootState) =>
   state.filters.queryFilters.queryFilters;
 
+export const selectFilterTypes = (state: RootState) =>
+  state.filters.queryFilters.types;
+
 export const selectFilterFlags = (state: RootState) =>
   state.filters.queryFilters.flags;
 

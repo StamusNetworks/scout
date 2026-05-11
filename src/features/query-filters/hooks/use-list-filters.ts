@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
 
-import { useQueryFiltersRepository } from '../state/query-filters.repository';
+import { useAppSelector } from '@/store/store';
+
+import { selectQueryFilters } from '../state/query-filters.selectors';
 
 export function useListFilters() {
-  const repo = useQueryFiltersRepository();
-  const filters = repo.getAll();
+  const filters = useAppSelector(selectQueryFilters);
 
   return useMemo(
     () => ({
