@@ -163,5 +163,13 @@
     "react-force-graph-2d": {
       "force-graph": "^1.49.4"
     }
+  },
+  "packageManager": "pnpm@10.26.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@swc/core",
+      "esbuild",
+      "msw"
+    ]
   }
 }
