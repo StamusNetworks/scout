@@ -72,6 +72,12 @@ function HuntingTrailLayout() {
           />
           <Tabs value={pathname}>
             <TabsList>
+              <TabsTrigger
+                value="/hunting-trail/summary"
+                asChild
+              >
+                <Link to="/hunting-trail/summary">Summary</Link>
+              </TabsTrigger>
               {PURPOSE_SLUGS.map(({ slug, label }) => {
                 const group = groups[slug];
                 return (

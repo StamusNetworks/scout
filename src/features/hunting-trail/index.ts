@@ -31,3 +31,12 @@ export {
 export { PurposeAggregated } from './components/purpose-aggregated/purpose-aggregated';
 export { PurposeTabContent } from './components/purpose-tab-content/purpose-tab-content';
 export { RunBanner } from './components/run-banner/run-banner';
+export { SummaryMatrix } from './components/summary-matrix/summary-matrix';
+export {
+  buildAssetMatrix,
+  filterGroupsByAsset,
+} from './components/summary-matrix/summary-matrix.aggregate';
+export type {
+  AssetCell,
+  AssetRow,
+} from './components/summary-matrix/summary-matrix.aggregate';

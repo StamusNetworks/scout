@@ -39,6 +39,7 @@ import { Route as EnterpriseHostsIndexRouteImport } from './routes/_enterprise/h
 import { Route as EnterpriseAttackSurfaceIndexRouteImport } from './routes/_enterprise/attack-surface/index'
 import { Route as EnterpriseAnalyticsIndexRouteImport } from './routes/_enterprise/analytics/index'
 import { Route as EnterpriseThreatsTimelineRouteImport } from './routes/_enterprise/threats/timeline'
+import { Route as EnterpriseHuntingTrailSummaryRouteImport } from './routes/_enterprise/hunting-trail/summary'
 import { Route as EnterpriseHuntingTrailPurposeRouteImport } from './routes/_enterprise/hunting-trail/$purpose'
 import { Route as EnterpriseAttackSurfaceInventoryRouteImport } from './routes/_enterprise/attack-surface/inventory'
 import { Route as EnterpriseThreatsCompromisesRouteRouteImport } from './routes/_enterprise/threats/compromises/route'
@@ -250,6 +251,12 @@ const EnterpriseThreatsTimelineRoute =
     id: '/timeline',
     path: '/timeline',
     getParentRoute: () => EnterpriseThreatsRouteRoute,
+  } as any)
+const EnterpriseHuntingTrailSummaryRoute =
+  EnterpriseHuntingTrailSummaryRouteImport.update({
+    id: '/summary',
+    path: '/summary',
+    getParentRoute: () => EnterpriseHuntingTrailRouteRoute,
   } as any)
 const EnterpriseHuntingTrailPurposeRoute =
   EnterpriseHuntingTrailPurposeRouteImport.update({
@@ -605,6 +612,7 @@ export interface FileRoutesByFullPath {
   '/threats/compromises': typeof EnterpriseThreatsCompromisesRouteRouteWithChildren
   '/attack-surface/inventory': typeof EnterpriseAttackSurfaceInventoryRoute
   '/hunting-trail/$purpose': typeof EnterpriseHuntingTrailPurposeRoute
+  '/hunting-trail/summary': typeof EnterpriseHuntingTrailSummaryRoute
   '/threats/timeline': typeof EnterpriseThreatsTimelineRoute
   '/analytics/': typeof EnterpriseAnalyticsIndexRoute
   '/attack-surface/': typeof EnterpriseAttackSurfaceIndexRoute
@@ -677,6 +685,7 @@ export interface FileRoutesByTo {
   '/detection-methods': typeof DetectionMethodsIndexRoute
   '/attack-surface/inventory': typeof EnterpriseAttackSurfaceInventoryRoute
   '/hunting-trail/$purpose': typeof EnterpriseHuntingTrailPurposeRoute
+  '/hunting-trail/summary': typeof EnterpriseHuntingTrailSummaryRoute
   '/threats/timeline': typeof EnterpriseThreatsTimelineRoute
   '/analytics': typeof EnterpriseAnalyticsIndexRoute
   '/attack-surface': typeof EnterpriseAttackSurfaceIndexRoute
@@ -756,6 +765,7 @@ export interface FileRoutesById {
   '/_enterprise/threats/compromises': typeof EnterpriseThreatsCompromisesRouteRouteWithChildren
   '/_enterprise/attack-surface/inventory': typeof EnterpriseAttackSurfaceInventoryRoute
   '/_enterprise/hunting-trail/$purpose': typeof EnterpriseHuntingTrailPurposeRoute
+  '/_enterprise/hunting-trail/summary': typeof EnterpriseHuntingTrailSummaryRoute
   '/_enterprise/threats/timeline': typeof EnterpriseThreatsTimelineRoute
   '/_enterprise/analytics/': typeof EnterpriseAnalyticsIndexRoute
   '/_enterprise/attack-surface/': typeof EnterpriseAttackSurfaceIndexRoute
@@ -841,6 +851,7 @@ export interface FileRouteTypes {
     | '/threats/compromises'
     | '/attack-surface/inventory'
     | '/hunting-trail/$purpose'
+    | '/hunting-trail/summary'
     | '/threats/timeline'
     | '/analytics/'
     | '/attack-surface/'
@@ -913,6 +924,7 @@ export interface FileRouteTypes {
     | '/detection-methods'
     | '/attack-surface/inventory'
     | '/hunting-trail/$purpose'
+    | '/hunting-trail/summary'
     | '/threats/timeline'
     | '/analytics'
     | '/attack-surface'
@@ -991,6 +1003,7 @@ export interface FileRouteTypes {
     | '/_enterprise/threats/compromises'
     | '/_enterprise/attack-surface/inventory'
     | '/_enterprise/hunting-trail/$purpose'
+    | '/_enterprise/hunting-trail/summary'
     | '/_enterprise/threats/timeline'
     | '/_enterprise/analytics/'
     | '/_enterprise/attack-surface/'
@@ -1273,6 +1286,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/threats/timeline'
       preLoaderRoute: typeof EnterpriseThreatsTimelineRouteImport
       parentRoute: typeof EnterpriseThreatsRouteRoute
+    }
+    '/_enterprise/hunting-trail/summary': {
+      id: '/_enterprise/hunting-trail/summary'
+      path: '/summary'
+      fullPath: '/hunting-trail/summary'
+      preLoaderRoute: typeof EnterpriseHuntingTrailSummaryRouteImport
+      parentRoute: typeof EnterpriseHuntingTrailRouteRoute
     }
     '/_enterprise/hunting-trail/$purpose': {
       id: '/_enterprise/hunting-trail/$purpose'
@@ -1768,12 +1788,14 @@ const EnterpriseAttackSurfaceRouteRouteWithChildren =
 
 interface EnterpriseHuntingTrailRouteRouteChildren {
   EnterpriseHuntingTrailPurposeRoute: typeof EnterpriseHuntingTrailPurposeRoute
+  EnterpriseHuntingTrailSummaryRoute: typeof EnterpriseHuntingTrailSummaryRoute
   EnterpriseHuntingTrailIndexRoute: typeof EnterpriseHuntingTrailIndexRoute
 }
 
 const EnterpriseHuntingTrailRouteRouteChildren: EnterpriseHuntingTrailRouteRouteChildren =
   {
     EnterpriseHuntingTrailPurposeRoute: EnterpriseHuntingTrailPurposeRoute,
+    EnterpriseHuntingTrailSummaryRoute: EnterpriseHuntingTrailSummaryRoute,
     EnterpriseHuntingTrailIndexRoute: EnterpriseHuntingTrailIndexRoute,
   }
 
