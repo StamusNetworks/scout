@@ -1,8 +1,14 @@
-import type { ExpandedState, Row } from '@tanstack/react-table';
+import type {
+  ExpandedState,
+  HeaderContext,
+  Row,
+  SortingState,
+  Updater,
+} from '@tanstack/react-table';
 import { useMemo } from 'react';
 
+import { DataTableColumnHeader } from '@/common/design-system/molecules/data-table/data-table.columnHeader';
 import { CustomColumnDef } from '@/common/design-system/molecules/data-table/filters/filters.types';
-import { usePaginationUrlState } from '@/common/design-system/molecules/data-table/hooks/use-pagination';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
 import { EventValue } from '@/features/query-filters/components/interactive-value/event-value';
@@ -17,12 +23,18 @@ import {
   type AssetRow,
   buildAssetMatrix,
   filterGroupsByAsset,
+  sortAssetRows,
+  sortingStateToKeyDirection,
 } from './summary-matrix.aggregate';
-
-const DEFAULT_PAGE_SIZE = 20;
 
 interface SummaryMatrixProps {
   groups: Record<PurposeSlug, PurposeGroupData>;
+  page: number;
+  pageSize: number;
+  sorting: SortingState;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (pageSize: number) => void;
+  onSortingChange: (updater: Updater<SortingState>) => void;
 }
 
 const useColumns = (): CustomColumnDef<AssetRow>[] =>
@@ -30,7 +42,16 @@ const useColumns = (): CustomColumnDef<AssetRow>[] =>
     () => [
       {
         id: 'asset',
-        header: 'Asset',
+        // accessorFn is only required so TanStack's getCanSort() returns true;
+        // actual sort ordering is done by sortAssetRows under manualSorting.
+        accessorFn: (row) => row.asset,
+        header: ({ column }) => (
+          <DataTableColumnHeader
+            column={column}
+            title="Asset"
+          />
+        ),
+        enableSorting: true,
         cell: ({ row }) => (
           <EventValue
             query_key="ip"
@@ -38,29 +59,49 @@ const useColumns = (): CustomColumnDef<AssetRow>[] =>
           />
         ),
       },
-      ...PURPOSE_SLUGS.map(({ slug, label }) => ({
-        id: slug,
-        header: label,
-        cell: ({ row }: { row: Row<AssetRow> }) => {
-          const cell = row.original.cells[slug];
-          return cell ? (
-            <span className="text-muted-foreground text-sm">
-              {cell.eventCount} events · {cell.queryCount} queries
-            </span>
-          ) : null;
-        },
-      })),
+      ...PURPOSE_SLUGS.map(
+        ({ slug, label }): CustomColumnDef<AssetRow> => ({
+          id: slug,
+          accessorFn: (row) => row.cells[slug]?.queryCount ?? 0,
+          header: ({ column }: HeaderContext<AssetRow, unknown>) => (
+            <DataTableColumnHeader
+              column={column}
+              title={label}
+            />
+          ),
+          enableSorting: true,
+          cell: ({ row }: { row: Row<AssetRow> }) => {
+            const cell = row.original.cells[slug];
+            return cell ? (
+              <span className="text-muted-foreground text-sm">
+                {cell.eventCount} events · {cell.queryCount} queries
+              </span>
+            ) : null;
+          },
+        }),
+      ),
     ],
     [],
   );
 
-export function SummaryMatrix({ groups }: SummaryMatrixProps) {
+export function SummaryMatrix({
+  groups,
+  page,
+  pageSize,
+  sorting,
+  onPageChange,
+  onPageSizeChange,
+  onSortingChange,
+}: SummaryMatrixProps) {
   const allGroups = Object.values(groups);
   const isLoading = allGroups.some((g) => g.isLoading);
   const isError = allGroups.length > 0 && allGroups.every((g) => g.isError);
 
   const rows = useMemo(() => buildAssetMatrix(groups), [groups]);
-  const [pagination, setPagination] = usePaginationUrlState(DEFAULT_PAGE_SIZE);
+  const sortedRows = useMemo(() => {
+    const { key, direction } = sortingStateToKeyDirection(sorting);
+    return sortAssetRows(rows, key, direction);
+  }, [rows, sorting]);
   const columns = useColumns();
 
   if (isError) {
@@ -74,10 +115,11 @@ export function SummaryMatrix({ groups }: SummaryMatrixProps) {
     );
   }
 
-  const pageStart = pagination.pageIndex * pagination.pageSize;
+  const pageIndex = Math.max(0, page - 1);
+  const pageStart = pageIndex * pageSize;
   const pageRows = isLoading
     ? []
-    : rows.slice(pageStart, pageStart + pagination.pageSize);
+    : sortedRows.slice(pageStart, pageStart + pageSize);
 
   const renderExpansion = ({ row }: { row: Row<AssetRow> }) => (
     <PurposeAggregated
@@ -91,7 +133,9 @@ export function SummaryMatrix({ groups }: SummaryMatrixProps) {
         data={pageRows}
         columns={columns}
         isLoading={isLoading}
-        skeletonRows={pagination.pageSize}
+        skeletonRows={pageSize}
+        sorting={sorting}
+        onSortingChange={onSortingChange}
         ExpandedRow={renderExpansion}
         getRowId={(row) => row.asset}
         reorder={false}
@@ -101,17 +145,13 @@ export function SummaryMatrix({ groups }: SummaryMatrixProps) {
           </div>
         }
       />
-      {!isLoading && rows.length > 0 && (
+      {!isLoading && sortedRows.length > 0 && (
         <PaginationFooter
-          page={pagination.pageIndex + 1}
-          pageSize={pagination.pageSize}
-          total={rows.length}
-          onPageChange={(page) =>
-            setPagination((prev) => ({ ...prev, pageIndex: page - 1 }))
-          }
-          onPageSizeChange={(pageSize) =>
-            setPagination((prev) => ({ ...prev, pageSize, pageIndex: 0 }))
-          }
+          page={page}
+          pageSize={pageSize}
+          total={sortedRows.length}
+          onPageChange={onPageChange}
+          onPageSizeChange={onPageSizeChange}
         />
       )}
     </div>

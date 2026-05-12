@@ -29,6 +29,19 @@ export function DataTableColumnHeader<TData, TValue>({
   title,
   className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
+  const sortDirection = column?.getIsSorted();
+  const TriggerIcon =
+    sortDirection === 'asc'
+      ? ArrowUpIcon
+      : sortDirection === 'desc'
+        ? ArrowDownIcon
+        : CaretSortIcon;
+  const triggerLabel =
+    sortDirection === 'asc'
+      ? 'Sorted ascending'
+      : sortDirection === 'desc'
+        ? 'Sorted descending'
+        : 'Not sorted';
   return (
     <div className={cn('flex items-center space-x-2', className)}>
       <span>{title}</span>
@@ -38,18 +51,31 @@ export function DataTableColumnHeader<TData, TValue>({
             variant="ghost"
             size="icon-sm"
             className="data-[state=open]:bg-accent h-8"
+            aria-label={triggerLabel}
           >
-            <CaretSortIcon className="h-4 w-4" />
+            <TriggerIcon className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">
           {column?.getCanSort() && (
             <>
-              <DropdownMenuItem onClick={() => column?.toggleSorting(false)}>
+              <DropdownMenuItem
+                onClick={() =>
+                  sortDirection === 'asc'
+                    ? column.clearSorting()
+                    : column.toggleSorting(false)
+                }
+              >
                 <ArrowUpIcon className="text-muted-foreground/70 mr-2 h-3.5 w-3.5" />
                 Asc
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
+              <DropdownMenuItem
+                onClick={() =>
+                  sortDirection === 'desc'
+                    ? column.clearSorting()
+                    : column.toggleSorting(true)
+                }
+              >
                 <ArrowDownIcon className="text-muted-foreground/70 mr-2 h-3.5 w-3.5" />
                 Desc
               </DropdownMenuItem>

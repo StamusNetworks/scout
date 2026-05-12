@@ -1,3 +1,5 @@
+import type { SortingState } from '@tanstack/react-table';
+
 import {
   PURPOSE_SLUGS,
   type PurposeGroupData,
@@ -16,6 +18,7 @@ export type AssetRow = {
   cells: Partial<Record<PurposeSlug, AssetCell>>;
   groupsWithHits: number;
   totalEvents: number;
+  totalQueriesWithResults: number;
 };
 
 type Accumulator = {
@@ -80,21 +83,101 @@ export function buildAssetMatrix(
     const cells: Partial<Record<PurposeSlug, AssetCell>> = {};
     let groupsWithHits = 0;
     let totalEvents = 0;
+    let totalQueriesWithResults = 0;
     for (const slug of Object.keys(acc.cells) as PurposeSlug[]) {
       const raw = acc.cells[slug];
       if (!raw || raw.eventCount === 0) continue;
       cells[slug] = { eventCount: raw.eventCount, queryCount: raw.types.size };
       groupsWithHits += 1;
       totalEvents += raw.eventCount;
+      totalQueriesWithResults += raw.types.size;
     }
-    rows.push({ asset, cells, groupsWithHits, totalEvents });
+    rows.push({
+      asset,
+      cells,
+      groupsWithHits,
+      totalEvents,
+      totalQueriesWithResults,
+    });
   }
 
-  rows.sort((a, b) => {
-    if (b.groupsWithHits !== a.groupsWithHits)
-      return b.groupsWithHits - a.groupsWithHits;
-    return b.totalEvents - a.totalEvents;
-  });
-
   return rows;
+}
+
+export type SortKey = 'asset' | PurposeSlug | null;
+export type SortDirection = 'asc' | 'desc';
+
+const PURPOSE_SLUG_SET: ReadonlySet<string> = new Set(
+  PURPOSE_SLUGS.map(({ slug }) => slug),
+);
+
+function compareAssetAsc(a: AssetRow, b: AssetRow): number {
+  return a.asset.localeCompare(b.asset, undefined, { sensitivity: 'base' });
+}
+
+function compareDefault(a: AssetRow, b: AssetRow): number {
+  if (a.totalQueriesWithResults !== b.totalQueriesWithResults) {
+    return b.totalQueriesWithResults - a.totalQueriesWithResults;
+  }
+  if (a.totalEvents !== b.totalEvents) {
+    return b.totalEvents - a.totalEvents;
+  }
+  return compareAssetAsc(a, b);
+}
+
+function comparePurposeCellNonEmpty(
+  cellA: AssetCell,
+  cellB: AssetCell,
+): number {
+  if (cellA.queryCount !== cellB.queryCount) {
+    return cellB.queryCount - cellA.queryCount;
+  }
+  return cellB.eventCount - cellA.eventCount;
+}
+
+export function sortAssetRows(
+  rows: AssetRow[],
+  key: SortKey,
+  direction: SortDirection,
+): AssetRow[] {
+  const copy = [...rows];
+  if (key === null) {
+    copy.sort((a, b) => {
+      const cmp = compareDefault(a, b);
+      return direction === 'asc' ? -cmp : cmp;
+    });
+    return copy;
+  }
+  if (key === 'asset') {
+    copy.sort((a, b) => {
+      const cmp = compareAssetAsc(a, b);
+      return direction === 'desc' ? -cmp : cmp;
+    });
+    return copy;
+  }
+  // Purpose-group slug. Empties always sort last regardless of direction.
+  copy.sort((a, b) => {
+    const cellA = a.cells[key];
+    const cellB = b.cells[key];
+    if (!cellA && !cellB) return compareAssetAsc(a, b);
+    if (!cellA) return 1;
+    if (!cellB) return -1;
+    const cmp = comparePurposeCellNonEmpty(cellA, cellB);
+    return direction === 'asc' ? -cmp : cmp;
+  });
+  return copy;
+}
+
+export function sortingStateToKeyDirection(sorting: SortingState): {
+  key: SortKey;
+  direction: SortDirection;
+} {
+  if (sorting.length === 0) return { key: null, direction: 'desc' };
+  const [{ id, desc }] = sorting;
+  const direction: SortDirection = desc ? 'desc' : 'asc';
+  if (id === 'asset') return { key: 'asset', direction };
+  if (PURPOSE_SLUG_SET.has(id)) {
+    return { key: id as PurposeSlug, direction };
+  }
+  return { key: null, direction: 'desc' };
 }
