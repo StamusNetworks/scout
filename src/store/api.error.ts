@@ -15,6 +15,20 @@ type ApiError =
     }
   | unknown;
 
+const isUnauthenticatedStatus = (status: unknown) =>
+  status === 401 || status === 403 || status === '401' || status === '403';
+
+const isUnauthenticatedError = (error: ApiError) => {
+  if (!error || typeof error !== 'object') {
+    return false;
+  }
+  const errorRecord = error as Record<string, unknown>;
+  return (
+    isUnauthenticatedStatus(errorRecord.status) ||
+    isUnauthenticatedStatus(errorRecord.originalStatus)
+  );
+};
+
 const isAbortLikeError = (error: ApiError) => {
   if (!error || typeof error !== 'object') {
     return false;
@@ -72,7 +86,7 @@ export const apiErrorToast = (params: {
 }) => {
   const { args, error } = params;
 
-  if (isAbortLikeError(error)) {
+  if (isAbortLikeError(error) || isUnauthenticatedError(error)) {
     return;
   }
 

@@ -6,5 +6,6 @@
 
 export type { CurrentUser } from './model/current-user';
 
+export { redirectToLogin } from './utils/redirect-to-login';
 export { useCurrentUser } from './hooks/use-current-user';
 export { useSessionActivity } from './hooks/use-session-activity';

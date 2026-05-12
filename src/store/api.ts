@@ -9,6 +9,9 @@ import { getConfig } from '@/config';
 
 import { apiErrorToast } from './api.error';
 import { type RootState, RootStateWithAPI } from './store';
+import { withReauth } from './with-reauth';
+
+export { setOnUnauthenticated } from './with-reauth';
 
 const getCookieValue = (cookieName: string) => {
   if (typeof document === 'undefined') {
@@ -76,7 +79,7 @@ const baseQuery: BaseQueryFn = async (...baseQueryArgs) => {
 
 export const API = createApi({
   reducerPath: 'API',
-  baseQuery,
+  baseQuery: withReauth(baseQuery),
   tagTypes: [
     'Reload',
     'Entities',

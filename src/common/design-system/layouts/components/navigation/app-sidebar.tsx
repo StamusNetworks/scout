@@ -43,7 +43,7 @@ import {
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { cn } from '@/common/lib/utils';
 import { getConfig } from '@/config';
-import { useCurrentUser } from '@/features/auth';
+import { redirectToLogin, useCurrentUser } from '@/features/auth';
 import { type Tenant, useSetTenant, useTenancy } from '@/features/tenancy';
 
 import type { MenuItem, Submenu } from './navigation.config';
@@ -288,7 +288,7 @@ const LegacyUIButton = () => {
   );
 };
 
-const SidebarUserFooter = () => {
+export const SidebarUserFooter = () => {
   const { data } = useCurrentUser();
   const { state } = useSidebar();
 
@@ -307,9 +307,7 @@ const SidebarUserFooter = () => {
         <Button
           variant="link"
           className="h-3 p-0 text-xs"
-          onClick={() =>
-            (window.location.href = getConfig()?.apiUrl + '/accounts/logout/')
-          }
+          onClick={() => redirectToLogin({ variant: 'logout' })}
         >
           Log Out
         </Button>
