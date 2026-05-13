@@ -391,6 +391,7 @@ export const CEQueryFilters: QueryFilterDefinition[] = [
     description: 'Destination port numbers used in network connections',
     category: FilterCategory.EVENT,
     inputType: FilterInputType.NUMBER,
+    entity: FilterType.PORT,
   },
   {
     label: 'Bytes to server',
