@@ -18,6 +18,10 @@ afterEach(() => {
 
 describe('redirectToLogin', () => {
   describe('in non-development modes', () => {
+    beforeEach(() => {
+      vi.stubEnv('VITE_APP_MODE', 'production');
+    });
+
     it('navigates to the backend login URL preserving the current SPA path', () => {
       window.location.href = `http://localhost${BASE_URL}explorer/threats`;
 
