@@ -11,7 +11,7 @@ export function buildEventsFlowQfilter(
     const activeTypes = [
       eventTypes.alert && 'event_type:alert',
       eventTypes.stamus && 'event_type:stamus',
-      eventTypes.discovery && 'event_type:discovery',
+      eventTypes.discovery && '(event_type:alert AND discovery:*)',
     ].filter(Boolean);
     // Only restrict when a subset is active (all true = no restriction needed)
     if (activeTypes.length > 0) {
