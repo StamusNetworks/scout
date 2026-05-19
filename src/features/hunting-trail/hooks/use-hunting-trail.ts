@@ -1,7 +1,11 @@
 import { useMemo } from 'react';
 
 import { useFilterSets } from '@/features/filter-sets';
-import { type QueryFilterState, useQFBuilder } from '@/features/query-filters';
+import {
+  type QueryFilterState,
+  useGlobalQueryParams,
+  useQFBuilder,
+} from '@/features/query-filters';
 
 import { useGetHuntingTrailQuery } from '../api/hunting-trail.api';
 import {
@@ -39,6 +43,7 @@ export function useHuntingTrail({
   additionalFilter,
 }: UseHuntingTrailParams) {
   const qfBuilder = useQFBuilder();
+  const { tenant } = useGlobalQueryParams(['tenant']);
   const {
     data: filterSets,
     isLoading: filterSetsLoading,
@@ -60,7 +65,7 @@ export function useHuntingTrail({
     {
       from,
       to,
-      tenant: undefined,
+      tenant,
       resolvedQueries,
     },
     { skip: filterSetsLoading || filterSetsError },

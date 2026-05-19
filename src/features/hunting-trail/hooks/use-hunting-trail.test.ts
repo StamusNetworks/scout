@@ -9,6 +9,7 @@ vi.mock('@/features/query-filters', () => ({
   useQFBuilder: () => ({
     toQFString: () => 'STUB_QFILTER',
   }),
+  useGlobalQueryParams: () => ({ tenant: undefined }),
 }));
 
 vi.mock('../api/hunting-trail.api', () => ({
