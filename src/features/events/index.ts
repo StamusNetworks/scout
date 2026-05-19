@@ -142,6 +142,7 @@ export { SightingEventsCountsTimeline } from './components/sighting-events-count
 export {
   HostBeaconsTabBadge,
   HostDetectionEventsTabBadge,
+  HostFilesTabBadge,
   HostOutlierEventsTabBadge,
   HostSightingsTabBadge,
 } from './components/host-tab-badges/host-tab-badges';

@@ -17,7 +17,14 @@ export const httpSchema = z.object({
   content_length: z.string().optional(),
   content_location: z.string().optional(),
   content_md5: z.string().optional(),
-  content_range: z.any().optional(),
+  content_range: z
+    .object({
+      raw: z.string().optional(),
+      start: z.number().optional(),
+      end: z.number().optional(),
+      size: z.number().optional(),
+    })
+    .optional(),
   content_type: z.string().optional(),
   cookie: z.string().optional(),
   date: z.string().optional(),

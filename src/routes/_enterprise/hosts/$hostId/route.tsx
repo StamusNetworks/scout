@@ -16,6 +16,7 @@ import { Separator } from '@/common/design-system/atoms/ui/separator';
 import {
   HostBeaconsTabBadge,
   HostDetectionEventsTabBadge,
+  HostFilesTabBadge,
   HostOutlierEventsTabBadge,
   HostSightingsTabBadge,
 } from '@/features/events';
@@ -141,6 +142,17 @@ function HostDetailsLayout() {
               params={{ hostId }}
             >
               Beacons <HostBeaconsTabBadge hostId={hostId} />
+            </Link>
+          </TabsTrigger>
+          <TabsTrigger
+            value={`/hosts/${hostId}/files`}
+            asChild
+          >
+            <Link
+              to="/hosts/$hostId/files"
+              params={{ hostId }}
+            >
+              Files <HostFilesTabBadge hostId={hostId} />
             </Link>
           </TabsTrigger>
         </TabsList>

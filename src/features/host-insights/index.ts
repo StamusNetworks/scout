@@ -40,6 +40,7 @@ export { HostDetailsShell } from './components/host-details-shell/host-details-s
 export { HostInsightsView } from './components/host-insights-view/host-insights-view';
 export { HostTimeline } from './components/host-timeline/host-timeline';
 export { HostBeaconsTable } from './components/host-beacons-table/host-beacons-table';
+export { HostFilesTable } from './components/host-files-table/host-files-table';
 export { HostDetectionMethodsTable } from './components/host-detection-methods-table/host-detection-methods-table';
 export { HostHuntingTrail } from './components/host-hunting-trail/host-hunting-trail';
 export { HostIncidentsTable } from './components/host-incidents-table/host-incidents-table';

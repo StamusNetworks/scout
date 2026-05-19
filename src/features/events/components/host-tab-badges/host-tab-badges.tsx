@@ -5,6 +5,7 @@ import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-
 import {
   useGetBeaconingEventsQuery,
   useGetEventsQuery,
+  useGetEventsTailQuery,
   useGetSightingEventsQuery,
 } from '../../api/events.api';
 
@@ -52,6 +53,22 @@ export const HostOutlierEventsTabBadge = ({ hostId }: Props) => {
     stamus: true,
     alert: true,
     discovery: true,
+  });
+  return (
+    <TabsBadge
+      count={data?.count ?? 0}
+      isLoading={isLoading}
+    />
+  );
+};
+
+export const HostFilesTabBadge = ({ hostId }: Props) => {
+  const params = useGlobalQueryParams(['tenant', 'dates']);
+  const escaped = esEscape(hostId);
+  const { data, isLoading } = useGetEventsTailQuery({
+    ...params,
+    ...COUNT_QUERY,
+    qfilter: `(src_ip:"${escaped}" OR dest_ip:"${escaped}") AND event_type:fileinfo`,
   });
   return (
     <TabsBadge

@@ -74,6 +74,9 @@ beforeEach(() => {
     http.get(baseUrl + '/appliances/threat/threats_per_asset/', () =>
       HttpResponse.json(emptyPaginated),
     ),
+    http.get(baseUrl + '/rules/es/events_tail/', () =>
+      HttpResponse.json(emptyPaginated),
+    ),
   );
 });
 
@@ -119,6 +122,28 @@ describe('HostDetailsLayout', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Host not found')).toBeInTheDocument();
+    });
+  });
+
+  it('renders a Files tab linking to /hosts/<id>/files', async () => {
+    server.use(
+      http.get(baseUrl + '/appliances/host_id/:hostId', () =>
+        HttpResponse.json({
+          ip: '10.0.0.1',
+          hits: 5,
+          host_id: { ip: '10.0.0.1' },
+        }),
+      ),
+    );
+
+    await renderPage('10.0.0.1');
+
+    await waitFor(() => {
+      const filesTab = screen
+        .getAllByRole('tab')
+        .find((tab) => tab.getAttribute('href') === '/hosts/10.0.0.1/files');
+      expect(filesTab).toBeDefined();
+      expect(filesTab).toHaveTextContent(/^Files/);
     });
   });
 
