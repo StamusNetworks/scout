@@ -29,7 +29,7 @@ import {
   NetworkHuntingTrailProvider,
   PURPOSE_SLUGS,
   RunBanner,
-  useNetworkHuntingTrail,
+  useHuntingTrail,
 } from '@/features/hunting-trail';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 
@@ -45,7 +45,7 @@ function HuntingTrailLayout() {
   usePageTitle('Hunting Trail');
   const { pathname } = useLocation();
   const { from, to } = useGlobalQueryParams(['dates']);
-  const { groups, runStats } = useNetworkHuntingTrail({
+  const { groups, runStats, queryMetadata } = useHuntingTrail({
     from,
     to,
   });
@@ -107,7 +107,7 @@ function HuntingTrailLayout() {
             </TabsList>
           </Tabs>
           <div className="mt-4">
-            <NetworkHuntingTrailProvider value={{ groups }}>
+            <NetworkHuntingTrailProvider value={{ groups, queryMetadata }}>
               <Outlet />
             </NetworkHuntingTrailProvider>
           </div>

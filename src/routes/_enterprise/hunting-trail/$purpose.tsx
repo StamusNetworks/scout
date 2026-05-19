@@ -13,7 +13,7 @@ export const Route = createFileRoute('/_enterprise/hunting-trail/$purpose')({
 
 function PurposePage() {
   const { purpose } = Route.useParams();
-  const { groups } = useNetworkHuntingTrailContext();
+  const { groups, queryMetadata } = useNetworkHuntingTrailContext();
 
   const slug = purpose as PurposeSlug;
   const purposeGroup = PURPOSE_SLUG_MAP[slug];
@@ -24,5 +24,10 @@ function PurposePage() {
     );
   }
 
-  return <PurposeTabContent group={groups[slug]} />;
+  return (
+    <PurposeTabContent
+      group={groups[slug]}
+      queryMetadata={queryMetadata}
+    />
+  );
 }

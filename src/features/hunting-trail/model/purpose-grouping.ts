@@ -8,8 +8,17 @@ import {
   type TypeColorConfig,
 } from './hunting-trail';
 
+export type QueryMetadata = {
+  name: string;
+  description: string;
+};
+
+export type QueryMetadataMap = Record<string, QueryMetadata>;
+
 export type QueryGroup = {
   type: TimelineEventType;
+  name: string;
+  description: string;
   events: TaggedEvent[];
   startTime: string;
   endTime: string;
@@ -22,7 +31,15 @@ export type PurposeGroup = {
   totalEvents: number;
 };
 
-export const groupEventsByType = (events: TaggedEvent[]): QueryGroup[] => {
+const fallbackMeta = (type: TimelineEventType): QueryMetadata => ({
+  name: type,
+  description: '',
+});
+
+export const groupEventsByType = (
+  events: TaggedEvent[],
+  metadata: QueryMetadataMap = {},
+): QueryGroup[] => {
   const byType = new Map<TimelineEventType, TaggedEvent[]>();
   for (const event of events) {
     const list = byType.get(event.timelineType);
@@ -36,8 +53,11 @@ export const groupEventsByType = (events: TaggedEvent[]): QueryGroup[] => {
       (a, b) =>
         new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
     );
+    const meta = metadata[type] ?? fallbackMeta(type);
     groups.push({
       type,
+      name: meta.name,
+      description: meta.description,
       events: sorted,
       startTime: sorted[0].timestamp,
       endTime: sorted[sorted.length - 1].timestamp,
@@ -48,6 +68,7 @@ export const groupEventsByType = (events: TaggedEvent[]): QueryGroup[] => {
 
 export const buildPurposeGroups = (
   groups: Record<PurposeSlug, PurposeGroupData>,
+  metadata: QueryMetadataMap = {},
 ): PurposeGroup[] =>
   PURPOSE_SLUGS.map(({ slug }) => {
     const { label, color } = PURPOSE_SLUG_MAP[slug];
@@ -55,7 +76,7 @@ export const buildPurposeGroups = (
     return {
       label,
       color,
-      queryGroups: groupEventsByType(groupData.events),
+      queryGroups: groupEventsByType(groupData.events, metadata),
       totalEvents: groupData.count,
     };
   }).filter((g) => g.queryGroups.length > 0);

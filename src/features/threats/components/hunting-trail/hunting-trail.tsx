@@ -1,8 +1,9 @@
+import { esEscape } from '@/common/lib/strings';
 import {
   HUNTING_TRAIL_DOCS_URL,
   PurposeAggregated,
   RunBanner,
-  useHostHuntingTrail,
+  useHuntingTrail,
 } from '@/features/hunting-trail';
 
 interface CompromiseHuntingTrailProps {
@@ -16,13 +17,12 @@ export const HuntingTrail = ({
   from,
   to,
 }: CompromiseHuntingTrailProps) => {
-  const { groups, isLoading, isError, isEmpty, runStats } = useHostHuntingTrail(
-    {
-      asset,
+  const { groups, isLoading, isError, isEmpty, runStats, queryMetadata } =
+    useHuntingTrail({
       from,
       to,
-    },
-  );
+      additionalFilter: `(src_ip:${esEscape(asset)} OR dest_ip:${esEscape(asset)})`,
+    });
 
   const body = isLoading ? (
     <div className="flex flex-col gap-2">
@@ -42,7 +42,10 @@ export const HuntingTrail = ({
       No hunting trail data found for this host.
     </div>
   ) : (
-    <PurposeAggregated groups={groups} />
+    <PurposeAggregated
+      groups={groups}
+      queryMetadata={queryMetadata}
+    />
   );
 
   return (

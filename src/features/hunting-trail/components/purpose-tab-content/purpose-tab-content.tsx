@@ -1,13 +1,22 @@
 import { useMemo } from 'react';
 
 import { type PurposeGroupData } from '../../model/hunting-trail';
-import { groupEventsByType } from '../../model/purpose-grouping';
+import {
+  groupEventsByType,
+  type QueryMetadataMap,
+} from '../../model/purpose-grouping';
 import { QueryCard } from '../query-card/query-card';
 
-export function PurposeTabContent({ group }: { group: PurposeGroupData }) {
+export function PurposeTabContent({
+  group,
+  queryMetadata,
+}: {
+  group: PurposeGroupData;
+  queryMetadata?: QueryMetadataMap;
+}) {
   const queryGroups = useMemo(
-    () => groupEventsByType(group.events),
-    [group.events],
+    () => groupEventsByType(group.events, queryMetadata),
+    [group.events, queryMetadata],
   );
 
   if (group.isLoading) {

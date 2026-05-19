@@ -5,11 +5,12 @@ import {
 } from '@tanstack/react-router';
 import { screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
+import { vi } from 'vitest';
 
+import { huntingTrailFilterSetsFixture } from '@/common/testing/fixtures/hunting-trail-filter-sets';
 import { baseUrl, server } from '@/common/testing/mocks/server';
 import { renderWithProviders } from '@/common/testing/test-utils';
 import { makeLateralEvent, makeNrdEvent } from '@/features/events';
-import { makeSightingApiEvent } from '@/features/events';
 
 import { HuntingTrail } from './hunting-trail';
 
@@ -29,8 +30,8 @@ beforeEach(() => {
     http.get(baseUrl + '/rules/es/events_tail/', () =>
       HttpResponse.json(emptyPaginated),
     ),
-    http.get(baseUrl + '/appliances/es_discovery_events/', () =>
-      HttpResponse.json(emptyPaginated),
+    http.get(baseUrl + '/rules/hunt_filter_sets/', () =>
+      HttpResponse.json(huntingTrailFilterSetsFixture),
     ),
   );
 });
@@ -76,9 +77,6 @@ describe('HuntingTrail', () => {
     server.use(
       http.get(baseUrl + '/rules/es/alerts_tail', () => HttpResponse.error()),
       http.get(baseUrl + '/rules/es/events_tail/', () => HttpResponse.error()),
-      http.get(baseUrl + '/appliances/es_discovery_events/', () =>
-        HttpResponse.error(),
-      ),
     );
     await renderComponent();
     await waitFor(() => {
@@ -119,23 +117,49 @@ describe('HuntingTrail', () => {
 
     await renderComponent();
     await waitFor(() => {
-      expect(screen.getByText('NRD')).toBeInTheDocument();
-      expect(screen.getByText('Lateral')).toBeInTheDocument();
+      expect(
+        screen.getByText('Hunt: Newly Registered Domains (NRD)'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('Hunt: Stamus critical lateral SMB, DCERPC'),
+      ).toBeInTheDocument();
     });
     expect(screen.getAllByText('2 events').length).toBeGreaterThan(0);
   });
 
-  it('shows partial results when only some sources succeed', async () => {
+  it('shows partial results when only the Sightings qfilter succeeds on alerts_tail', async () => {
+    const discoverySpy = vi.fn();
     server.use(
-      http.get(baseUrl + '/rules/es/alerts_tail', () => HttpResponse.error()),
-      http.get(baseUrl + '/appliances/es_discovery_events/', () =>
-        HttpResponse.json({
-          count: 1,
-          next: null,
-          previous: null,
-          results: [makeSightingApiEvent()],
-        }),
-      ),
+      http.get(baseUrl + '/appliances/es_discovery_events/', () => {
+        discoverySpy();
+        return HttpResponse.json(emptyPaginated);
+      }),
+      http.get(baseUrl + '/rules/es/alerts_tail', ({ request }) => {
+        const url = new URL(request.url);
+        const qfilter = url.searchParams.get('qfilter') ?? '';
+        // After Slice B, `alert=true` is a separate query param (event-type
+        // flag), so the Sightings qfilter is just `discovery:*` plus the
+        // host-IP wrapper.
+        if (
+          qfilter.includes('discovery:*') &&
+          qfilter.includes('192.168.1.5') &&
+          url.searchParams.get('alert') === 'true'
+        ) {
+          return HttpResponse.json({
+            count: 1,
+            next: null,
+            previous: null,
+            results: [
+              makeNrdEvent({
+                _id: 's1',
+                timestamp: '2026-01-12T08:00:00Z',
+              }),
+            ],
+          });
+        }
+        return HttpResponse.error();
+      }),
+      http.get(baseUrl + '/rules/es/events_tail/', () => HttpResponse.error()),
     );
     await renderComponent();
     await waitFor(() => {
@@ -144,6 +168,7 @@ describe('HuntingTrail', () => {
     expect(
       screen.queryByText(/failed to load hunting trail data/i),
     ).not.toBeInTheDocument();
+    expect(discoverySpy).not.toHaveBeenCalled();
   });
 
   describe('run banner', () => {

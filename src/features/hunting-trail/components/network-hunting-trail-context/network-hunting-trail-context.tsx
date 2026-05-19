@@ -1,9 +1,11 @@
 import { createContext, useContext } from 'react';
 
 import { PurposeGroupData, PurposeSlug } from '../../model/hunting-trail';
+import type { QueryMetadataMap } from '../../model/purpose-grouping';
 
 type NetworkHuntingTrailContextValue = {
   groups: Record<PurposeSlug, PurposeGroupData>;
+  queryMetadata?: QueryMetadataMap;
 };
 
 const NetworkHuntingTrailContext =

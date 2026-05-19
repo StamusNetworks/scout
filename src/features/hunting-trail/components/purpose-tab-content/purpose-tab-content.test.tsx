@@ -61,10 +61,20 @@ describe('PurposeTabContent', () => {
       timelineType: 'nrd' as const,
     };
     await renderWithProviders(
-      <PurposeTabContent group={makeEmptyGroup({ events: [nrd], count: 1 })} />,
+      <PurposeTabContent
+        group={makeEmptyGroup({ events: [nrd], count: 1 })}
+        queryMetadata={{
+          nrd: {
+            name: 'Hunt: Newly Registered Domains (NRD)',
+            description: 'Newly registered domains detection in TLS SNI etc.',
+          },
+        }}
+      />,
       { router: createTestRouter() },
     );
-    expect(screen.getByText('NRD')).toBeInTheDocument();
+    expect(
+      screen.getByText('Hunt: Newly Registered Domains (NRD)'),
+    ).toBeInTheDocument();
     expect(
       screen.getByText(/newly registered domains detection in tls sni/i),
     ).toBeInTheDocument();
@@ -82,11 +92,25 @@ describe('PurposeTabContent', () => {
     await renderWithProviders(
       <PurposeTabContent
         group={makeEmptyGroup({ events: [nrd, lateral], count: 2 })}
+        queryMetadata={{
+          nrd: {
+            name: 'Hunt: Newly Registered Domains (NRD)',
+            description: '',
+          },
+          lateral: {
+            name: 'Hunt: Stamus critical lateral SMB, DCERPC',
+            description: '',
+          },
+        }}
       />,
       { router: createTestRouter() },
     );
-    expect(screen.getByText('NRD')).toBeInTheDocument();
-    expect(screen.getByText('Lateral')).toBeInTheDocument();
+    expect(
+      screen.getByText('Hunt: Newly Registered Domains (NRD)'),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('Hunt: Stamus critical lateral SMB, DCERPC'),
+    ).toBeInTheDocument();
   });
 
   it('toggles between summary and events view', async () => {

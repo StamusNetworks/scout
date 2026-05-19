@@ -8,6 +8,7 @@ import {
 import {
   buildPurposeGroups,
   type PurposeGroup,
+  type QueryMetadataMap,
 } from '../../model/purpose-grouping';
 import { QueryCard } from '../query-card/query-card';
 
@@ -51,10 +52,15 @@ const PurposeSection = ({ group }: { group: PurposeGroup }) => {
 
 export const PurposeAggregated = ({
   groups,
+  queryMetadata,
 }: {
   groups: Record<PurposeSlug, PurposeGroupData>;
+  queryMetadata?: QueryMetadataMap;
 }) => {
-  const purposeGroups = useMemo(() => buildPurposeGroups(groups), [groups]);
+  const purposeGroups = useMemo(
+    () => buildPurposeGroups(groups, queryMetadata),
+    [groups, queryMetadata],
+  );
 
   return (
     <div className="flex flex-col gap-1 p-2">

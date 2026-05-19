@@ -9,19 +9,15 @@ export type {
 } from './model/hunting-trail';
 export {
   HUNTING_TRAIL_DOCS_URL,
-  PURPOSE_GROUPS,
   PURPOSE_SLUG_MAP,
   PURPOSE_SLUGS,
-  TIMELINE_TYPE_PRIORITY,
   TYPE_COLOR,
-  TYPE_LABEL,
 } from './model/hunting-trail';
 export { computeRunStats } from './model/run-stats';
 export type { RunStats } from './model/run-stats';
 
 // hooks
-export { useHostHuntingTrail } from './hooks/use-host-hunting-trail';
-export { useNetworkHuntingTrail } from './hooks/use-network-hunting-trail';
+export { useHuntingTrail } from './hooks/use-hunting-trail';
 
 // components
 export {
