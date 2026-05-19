@@ -115,4 +115,20 @@ describe('HostsTable', () => {
       expect(screen.getByText('No hosts found')).toBeInTheDocument();
     });
   });
+
+  it('forwards the page prop to the API request', async () => {
+    let receivedPage: string | null = null;
+    server.use(
+      http.get(baseUrl + '/appliances/host_id_alerts/', ({ request }) => {
+        receivedPage = new URL(request.url).searchParams.get('page');
+        return HttpResponse.json(emptyPaginated);
+      }),
+    );
+
+    await renderTable({ page: 2 });
+
+    await waitFor(() => {
+      expect(receivedPage).toBe('2');
+    });
+  });
 });

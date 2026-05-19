@@ -113,4 +113,20 @@ describe('HostIncidentsTable', () => {
       expect(screen.getByText('No incidents found')).toBeInTheDocument();
     });
   });
+
+  it('forwards the page prop to the API request', async () => {
+    let receivedPage: string | null = null;
+    server.use(
+      http.get('*/api/v2/appliances/threat-status/', ({ request }) => {
+        receivedPage = new URL(request.url).searchParams.get('page');
+        return HttpResponse.json(emptyPaginated);
+      }),
+    );
+
+    await renderTable({ page: 2 });
+
+    await waitFor(() => {
+      expect(receivedPage).toBe('2');
+    });
+  });
 });

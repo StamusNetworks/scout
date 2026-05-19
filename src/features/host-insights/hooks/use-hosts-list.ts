@@ -1,5 +1,3 @@
-import { PaginationState } from '@tanstack/react-table';
-
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 
@@ -7,12 +5,14 @@ import { useGetHostsQuery } from '../api/hosts.api';
 
 export const useHostsList = ({
   withAlerts,
-  pagination,
+  page,
+  pageSize,
   inHomeNetwork,
   ordering,
 }: {
   withAlerts: boolean;
-  pagination: PaginationState;
+  page: number;
+  pageSize: number;
   inHomeNetwork: 'true' | 'false' | 'all';
   ordering: string;
 }) => {
@@ -39,7 +39,8 @@ export const useHostsList = ({
           stamus: params.stamus,
         }
       : {}),
-    ...pagination,
+    page,
+    pageSize,
   });
 
   return hostsResult;

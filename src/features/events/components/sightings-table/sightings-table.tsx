@@ -78,7 +78,7 @@ export function SightingsTable({
     () => ({
       ...globalParams,
       ...(qfilter && { qfilter }),
-      pageIndex: page - 1,
+      page,
       pageSize,
       ordering,
     }),

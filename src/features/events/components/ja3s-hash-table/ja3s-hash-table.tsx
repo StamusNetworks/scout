@@ -49,7 +49,7 @@ export function JA3SHashTable({
     () => ({
       ...globalParams,
       qfilter: 'beacon_report.document_type:agg_ja3s_src_only',
-      pageIndex: page - 1,
+      page,
       pageSize,
       ordering,
     }),

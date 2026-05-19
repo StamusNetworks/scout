@@ -44,7 +44,7 @@ export function HostDetectionMethodsTable({
       hits_min: 1,
       alert: true,
       stamus: true,
-      pageIndex: page - 1,
+      page,
       pageSize,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps

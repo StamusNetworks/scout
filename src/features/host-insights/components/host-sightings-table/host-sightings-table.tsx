@@ -38,7 +38,7 @@ export function HostSightingsTable({
     () => ({
       ...params,
       qfilter: `discovery.asset:${esEscape(hostId ?? '')}`,
-      pageIndex: page - 1,
+      page,
       pageSize,
       ordering,
     }),

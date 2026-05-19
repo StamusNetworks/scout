@@ -72,7 +72,7 @@ export function HostOutlierEvents({
       stamus: true,
       alert: true,
       discovery: true,
-      pageIndex: page - 1,
+      page,
       pageSize,
       ordering,
     }),

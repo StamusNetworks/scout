@@ -119,7 +119,7 @@ export function DetectionEventsTable({
   const queryParams = useMemo(
     () => ({
       ...globals,
-      pageIndex: page - 1,
+      page,
       pageSize,
       ...(ordering !== undefined && { ordering }),
       ...(hostId

@@ -60,7 +60,8 @@ export function HostsInventoryTable({
 
   const { data, isFetching } = useHostsList({
     withAlerts: false,
-    pagination: { pageIndex: page - 1, pageSize },
+    page,
+    pageSize,
     inHomeNetwork,
     ordering,
   });

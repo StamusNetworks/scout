@@ -41,7 +41,7 @@ export function HostIncidentsTable({
     () => ({
       asset: hostId,
       tenant: params.tenant,
-      pageIndex: page - 1,
+      page,
       pageSize,
       ordering,
     }),

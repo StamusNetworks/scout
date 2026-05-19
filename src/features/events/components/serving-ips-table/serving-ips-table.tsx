@@ -52,7 +52,7 @@ export function ServingIpsTable({
     () => ({
       ...globalParams,
       qfilter: 'beacon_report.document_type:agg_serving_ip',
-      pageIndex: page - 1,
+      page,
       pageSize,
       ordering,
     }),

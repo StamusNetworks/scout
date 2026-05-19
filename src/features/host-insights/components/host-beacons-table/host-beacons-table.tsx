@@ -37,7 +37,7 @@ export function HostBeaconsTable({
     () => ({
       ...params,
       qfilter: `beacon_report.assets:${esEscape(hostId ?? '')}`,
-      pageIndex: page - 1,
+      page,
       pageSize,
       ordering,
     }),

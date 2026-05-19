@@ -79,7 +79,8 @@ export function HostsTable({
   // Fetch host data
   const { data, isFetching } = useHostsList({
     withAlerts,
-    pagination: { pageIndex: page - 1, pageSize },
+    page,
+    pageSize,
     inHomeNetwork,
     ordering,
   });
