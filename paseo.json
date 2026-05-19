@@ -1,6 +1,6 @@
 {
   "worktree": {
-    "setup": "cp \\\"$PASEO_SOURCE_CHECKOUT_PATH/.env\\\" .env\nmkdir -p public && printf '{\"apiUrl\": \"\"}\\n' > public/config.json\npnpm install --frozen-lockfile"
+    "setup": "cp $PASEO_SOURCE_CHECKOUT_PATH/.env .env\nmkdir -p public && printf '{\"apiUrl\": \"\"}\\n' > public/config.json\npnpm install --frozen-lockfile"
   },
   "scripts": {
     "dev": {
