@@ -28,7 +28,8 @@ export const Route = createFileRoute(
 function ThreatFamilyPage() {
   const { familyId } = useParams({ strict: false }) as { familyId: string };
   const { tenant, from, to } = useGlobalQueryParams(['tenant', 'dates']);
-  const [pagination] = usePaginationUrlState();
+  const [{ pageIndex, pageSize }] = usePaginationUrlState();
+  const page = pageIndex + 1;
   const [, , ordering] = useSortingUrlState();
 
   const {
@@ -44,7 +45,8 @@ function ThreatFamilyPage() {
     tenant,
     startDate: from,
     endDate: to,
-    pagination,
+    page,
+    pageSize,
     ordering,
   });
 

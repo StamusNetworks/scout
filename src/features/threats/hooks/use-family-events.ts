@@ -1,18 +1,18 @@
-import { PaginationState } from '@tanstack/react-table';
-
 import { useGetEventsQuery } from '@/features/events';
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 
 interface UseFamilyEventsParams {
   familyId: string;
-  pagination: PaginationState;
+  page: number;
+  pageSize: number;
   ordering?: string;
 }
 
 export const useFamilyEvents = ({
   familyId,
-  pagination,
+  page,
+  pageSize,
   ordering,
 }: UseFamilyEventsParams) => {
   const QFBuilder = useQFBuilder();
@@ -20,7 +20,8 @@ export const useFamilyEvents = ({
   return useGetEventsQuery(
     {
       ...params,
-      ...pagination,
+      page,
+      pageSize,
       alert: true,
       stamus: true,
       discovery: true,

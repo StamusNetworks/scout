@@ -1,18 +1,18 @@
-import { PaginationState } from '@tanstack/react-table';
-
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 import { useGetRulesQuery } from '@/features/rules';
 
 interface UseFamilyDetectionMethodsParams {
   familyId: string;
-  pagination: PaginationState;
+  page: number;
+  pageSize: number;
   ordering?: string;
 }
 
 export const useFamilyDetectionMethods = ({
   familyId,
-  pagination,
+  page,
+  pageSize,
   ordering,
 }: UseFamilyDetectionMethodsParams) => {
   const QFBuilder = useQFBuilder();
@@ -20,7 +20,8 @@ export const useFamilyDetectionMethods = ({
   return useGetRulesQuery(
     {
       ...params,
-      ...pagination,
+      page,
+      pageSize,
       hits_min: 1,
       alert: true,
       stamus: true,

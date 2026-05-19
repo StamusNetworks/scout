@@ -46,7 +46,8 @@ function PolicyViolationDetailPage() {
   const { threatId } = useParams({ strict: false }) as { threatId: string };
   const { tenant, from, to } = useGlobalQueryParams(['tenant', 'dates']);
   const [, , ordering] = useSortingUrlState();
-  const [pagination] = usePaginationUrlState();
+  const [{ pageIndex, pageSize }] = usePaginationUrlState();
+  const page = pageIndex + 1;
 
   const { data: threat } = useThreatById({ threatId, tenant });
   const { data: activeThreat, isLoading: activeThreatLoading } =
@@ -71,11 +72,12 @@ function PolicyViolationDetailPage() {
   );
   const { data: events, isLoading: eventsLoading } = useThreatEvents({
     threatId,
-    pagination,
+    page,
+    pageSize,
     ordering,
   });
   const { data: detectionMethods, isLoading: detectionMethodsLoading } =
-    useThreatDetectionMethods({ threatId, pagination, ordering });
+    useThreatDetectionMethods({ threatId, page, pageSize, ordering });
 
   if (!threat) return null;
 

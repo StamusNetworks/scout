@@ -30,7 +30,8 @@ export const Route = createFileRoute(
 function PolicyViolationFamilyPage() {
   const { familyId } = useParams({ strict: false }) as { familyId: string };
   const { tenant, from, to } = useGlobalQueryParams(['tenant', 'dates']);
-  const [pagination] = usePaginationUrlState();
+  const [{ pageIndex, pageSize }] = usePaginationUrlState();
+  const page = pageIndex + 1;
   const [, , ordering] = useSortingUrlState();
 
   const {
@@ -46,7 +47,8 @@ function PolicyViolationFamilyPage() {
     tenant,
     startDate: from,
     endDate: to,
-    pagination,
+    page,
+    pageSize,
     ordering,
   });
 

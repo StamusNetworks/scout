@@ -10,7 +10,8 @@ interface UseThreatFamilyOverviewParams {
   tenant?: number;
   startDate?: number;
   endDate?: number;
-  pagination: { pageIndex: number; pageSize: number };
+  page: number;
+  pageSize: number;
   ordering?: string;
 }
 
@@ -25,7 +26,8 @@ export const useThreatFamilyOverview = ({
   tenant,
   startDate,
   endDate,
-  pagination,
+  page,
+  pageSize,
   ordering,
 }: UseThreatFamilyOverviewParams) => {
   const familyIdStr = familyId.toString();
@@ -53,14 +55,16 @@ export const useThreatFamilyOverview = ({
 
   const { data: events, isLoading: eventsLoading } = useFamilyEvents({
     familyId: familyIdStr,
-    pagination,
+    page,
+    pageSize,
     ordering,
   });
 
   const { data: detectionMethods, isLoading: detectionMethodsLoading } =
     useFamilyDetectionMethods({
       familyId: familyIdStr,
-      pagination,
+      page,
+      pageSize,
       ordering,
     });
 

@@ -1,26 +1,27 @@
-import { PaginationState } from '@tanstack/react-table';
-
 import { useGlobalQueryParams } from '@/features/query-filters/hooks/use-global-query-params';
 import { useQFBuilder } from '@/features/query-filters/hooks/use-qf-builder';
 import { useGetRulesQuery } from '@/features/rules';
 
-interface UseThreatEventsParams {
+interface UseThreatDetectionMethodsParams {
   threatId: string;
-  pagination: PaginationState;
+  page: number;
+  pageSize: number;
   ordering?: string;
 }
 
 export const useThreatDetectionMethods = ({
   threatId,
-  pagination,
+  page,
+  pageSize,
   ordering,
-}: UseThreatEventsParams) => {
+}: UseThreatDetectionMethodsParams) => {
   const QFBuilder = useQFBuilder();
   const params = useGlobalQueryParams(['tenant', 'dates']);
   return useGetRulesQuery(
     {
       ...params,
-      ...pagination,
+      page,
+      pageSize,
       hits_min: 1,
       alert: true,
       stamus: true,
