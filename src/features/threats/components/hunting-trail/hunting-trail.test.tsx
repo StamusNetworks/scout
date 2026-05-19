@@ -176,7 +176,7 @@ describe('HuntingTrail', () => {
       await renderComponent();
       await waitFor(() => {
         expect(
-          screen.getByText(/37 queries ran · 0 returned results/),
+          screen.getByText(/41 queries ran · 0 returned results/),
         ).toBeInTheDocument();
       });
       expect(

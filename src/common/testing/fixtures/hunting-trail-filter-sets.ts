@@ -24,6 +24,15 @@ const SESSION_EVENTS_IDS = new Set([
   -107, -105, -108, -106, -103, -104, -102, -101, -99, -100,
 ]);
 
+const HOSTS_LIST_IDS = new Set([-86, -87, -74, -75]);
+
+const pageFor = (id: number) =>
+  SESSION_EVENTS_IDS.has(id)
+    ? 'SESSION_EVENTS'
+    : HOSTS_LIST_IDS.has(id)
+      ? 'HOSTS_LIST'
+      : 'DASHBOARDS';
+
 type Spec = {
   name: string;
   contentKey: string;
@@ -201,6 +210,26 @@ const SPECS: Record<number, Spec> = {
     contentKey: 'proto',
     contentValue: 'ICMP',
   },
+  [-86]: {
+    name: 'Policy: Unencrypted SMTP service',
+    contentKey: 'host_id.services.values.app_proto',
+    contentValue: 'smtp',
+  },
+  [-87]: {
+    name: 'Policy: Unencrypted SMTP usage',
+    contentKey: 'host_id.client_service.name',
+    contentValue: 'smtp',
+  },
+  [-74]: {
+    name: 'Policy: FTP application used',
+    contentKey: 'host_id.client_service.name',
+    contentValue: 'ftp*',
+  },
+  [-75]: {
+    name: 'Policy: FTP network services',
+    contentKey: 'host_id.services.values.app_proto',
+    contentValue: 'ftp*',
+  },
 };
 
 export const huntingTrailFilterSetsFixture: FilterSetFixture[] = Object.entries(
@@ -213,7 +242,7 @@ export const huntingTrailFilterSetsFixture: FilterSetFixture[] = Object.entries(
     description: `Description for ${spec.name}`,
     imported: false,
     share: 'static',
-    page: SESSION_EVENTS_IDS.has(id) ? 'SESSION_EVENTS' : 'DASHBOARDS',
+    page: pageFor(id),
     content: [
       {
         id: spec.contentKey,

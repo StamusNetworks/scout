@@ -15,6 +15,7 @@ export type ResolvedQuery =
       isMissing?: false;
       endpoint: 'alerts_tail' | 'events_tail';
       qfilter: string;
+      hostIdQfilter?: string;
       name: string;
       description: string;
       eventTypeFlags: EventTypeFlags;
@@ -24,6 +25,9 @@ type QFBuilderLike = {
   toQFString(
     filters?: Omit<QueryFilterState, 'id'>[],
     alertTags?: AlertTagFlags | null,
+  ): string | undefined;
+  toHostIdQFString?(
+    filters?: Omit<QueryFilterState, 'id'>[],
   ): string | undefined;
 };
 
@@ -99,10 +103,14 @@ export function buildQueryParams(
     const qfilter = additionalAsString
       ? andMerge(additionalAsString, built)
       : built;
+    const hostIdRaw = qfBuilder.toHostIdQFString?.(filters);
+    const hostIdQfilter =
+      hostIdRaw && hostIdRaw.length > 0 ? hostIdRaw : undefined;
     return {
       id: query.id,
       endpoint: filtersetPageToEndpoint(fs.page),
       qfilter,
+      ...(hostIdQfilter ? { hostIdQfilter } : {}),
       name: fs.name,
       description: fs.description,
       eventTypeFlags: mergeEventTypeFlags(fs.tags),

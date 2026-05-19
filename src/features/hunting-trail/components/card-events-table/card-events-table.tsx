@@ -187,6 +187,10 @@ const TYPE_TABLE_COLUMNS: Record<TimelineEventType, TableColumnDef[]> = {
   longerUdp: sessionCols,
   biggerIcmp: biggerSessionCols,
   longerIcmp: sessionCols,
+  unencryptedSmtpService: alertCols,
+  unencryptedSmtpUsage: alertCols,
+  ftpApplication: alertCols,
+  ftpNetworkServices: alertCols,
 };
 
 export const CardEventsTable = ({

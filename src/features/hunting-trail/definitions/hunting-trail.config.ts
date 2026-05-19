@@ -40,6 +40,7 @@ const PURPLE = color(
 );
 const GREEN = color('border-green-500', 'text-green-400', 'bg-green-500/10');
 const BLUE = color('border-blue-500', 'text-blue-400', 'bg-blue-500/10');
+const AMBER = color('border-amber-500', 'text-amber-400', 'bg-amber-500/10');
 
 const SIGHTINGS_DESCRIPTION =
   'New previously unseen communication artifacts, never observed before in the environment, such as a HTTP User-Agent, HTTP Servers, a domain name, a SMB file transfer, SSH software, a JA3S, a JA4 hash, TLS fingerprint, TLS SNI and so on. It can highlight unexpected communication from or to a host. It is valuable piece of metadata in a hunt as it allows to generically highlight new occurrences of communication.\n\nExample: New HTTP server detected that serves internal hosts from untrusted source.';
@@ -163,6 +164,17 @@ export const HUNTING_TRAIL_CONFIG: { groups: HuntingTrailGroup[] } = {
         { id: 'longerUdp', kind: 'filterset', filtersetId: -101 },
         { id: 'biggerIcmp', kind: 'filterset', filtersetId: -99 },
         { id: 'longerIcmp', kind: 'filterset', filtersetId: -100 },
+      ],
+    },
+    {
+      slug: 'network-services',
+      label: '(Network) Services',
+      color: AMBER,
+      queries: [
+        { id: 'unencryptedSmtpService', kind: 'filterset', filtersetId: -86 },
+        { id: 'unencryptedSmtpUsage', kind: 'filterset', filtersetId: -87 },
+        { id: 'ftpApplication', kind: 'filterset', filtersetId: -74 },
+        { id: 'ftpNetworkServices', kind: 'filterset', filtersetId: -75 },
       ],
     },
   ],

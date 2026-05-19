@@ -43,7 +43,11 @@ export type TimelineEventType =
   | 'biggerUdp'
   | 'longerUdp'
   | 'biggerIcmp'
-  | 'longerIcmp';
+  | 'longerIcmp'
+  | 'unencryptedSmtpService'
+  | 'unencryptedSmtpUsage'
+  | 'ftpApplication'
+  | 'ftpNetworkServices';
 
 export type TaggedEvent = Event & { timelineType: TimelineEventType };
 
@@ -68,7 +72,8 @@ export type PurposeSlug =
   | 'dns-domains'
   | 'sightings-discovery'
   | 'hunting-signals'
-  | 'network-sessions';
+  | 'network-sessions'
+  | 'network-services';
 
 export type PurposeGroupData = {
   events: TaggedEvent[];

@@ -5,7 +5,7 @@ import { HUNTING_TRAIL_CONFIG } from './hunting-trail.config';
 const allQueries = HUNTING_TRAIL_CONFIG.groups.flatMap((g) => g.queries);
 
 describe('HUNTING_TRAIL_CONFIG', () => {
-  it('declares 8 groups matching the existing PurposeSlug union', () => {
+  it('declares 9 groups matching the PurposeSlug union', () => {
     const slugs = HUNTING_TRAIL_CONFIG.groups.map((g) => g.slug);
     expect(slugs).toEqual([
       'lateral-movement',
@@ -16,11 +16,12 @@ describe('HUNTING_TRAIL_CONFIG', () => {
       'sightings-discovery',
       'hunting-signals',
       'network-sessions',
+      'network-services',
     ]);
   });
 
-  it('declares 37 queries total', () => {
-    expect(allQueries).toHaveLength(37);
+  it('declares 41 queries total', () => {
+    expect(allQueries).toHaveLength(41);
   });
 
   it('every query has a unique id', () => {
@@ -36,9 +37,9 @@ describe('HUNTING_TRAIL_CONFIG', () => {
     expect(staticIds).toEqual(['dynamicDns', 'file', 'sightings']);
   });
 
-  it('declares 34 filterset queries with integer filtersetIds', () => {
+  it('declares 38 filterset queries with integer filtersetIds', () => {
     const filtersetQueries = allQueries.filter((q) => q.kind === 'filterset');
-    expect(filtersetQueries).toHaveLength(34);
+    expect(filtersetQueries).toHaveLength(38);
     for (const q of filtersetQueries) {
       if (q.kind !== 'filterset') throw new Error('type narrowing');
       expect(Number.isInteger(q.filtersetId)).toBe(true);
@@ -81,12 +82,16 @@ describe('HUNTING_TRAIL_CONFIG', () => {
       longerUdp: -101,
       biggerIcmp: -99,
       longerIcmp: -100,
+      unencryptedSmtpService: -86,
+      unencryptedSmtpUsage: -87,
+      ftpApplication: -74,
+      ftpNetworkServices: -75,
     };
     for (const q of allQueries) {
       if (q.kind !== 'filterset') continue;
       expect(q.filtersetId).toBe(expected[q.id]);
     }
-    expect(Object.keys(expected)).toHaveLength(34);
+    expect(Object.keys(expected)).toHaveLength(38);
   });
 
   it('static entries carry endpoint, qfilter, name, description', () => {

@@ -150,6 +150,10 @@ const TYPE_COLUMNS: Record<TimelineEventType, ColumnDef[]> = {
   longerUdp: sessionCols,
   biggerIcmp: biggerSessionCols,
   longerIcmp: sessionCols,
+  unencryptedSmtpService: alertCols,
+  unencryptedSmtpUsage: alertCols,
+  ftpApplication: alertCols,
+  ftpNetworkServices: alertCols,
 };
 
 type UniqueValue = {

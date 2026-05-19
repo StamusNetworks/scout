@@ -50,14 +50,18 @@ export const HuntingTrailAPI = API.injectEndpoints({
               qfilter: q.qfilter,
               page: 1,
               pageSize: 10000,
-              // Event-type flags are flat wire fields the events endpoints
-              // already accept (see useFilterSetQueryParams). buildQueryParams
-              // funnels unknown keys through its `rest` passthrough.
+              // Event-type flags + host_id_qfilter are flat wire fields the
+              // events endpoints already accept (see useFilterSetQueryParams).
+              // buildQueryParams funnels unknown keys through its `rest`
+              // passthrough.
               ...({
                 alert: q.eventTypeFlags.alert,
                 stamus: q.eventTypeFlags.stamus,
                 discovery: q.eventTypeFlags.discovery,
-              } as Record<string, boolean>),
+                ...(q.hostIdQfilter
+                  ? { host_id_qfilter: q.hostIdQfilter }
+                  : {}),
+              } as Record<string, boolean | string>),
             },
             q.endpoint === 'alerts_tail'
               ? { time_format: 'elastic' }

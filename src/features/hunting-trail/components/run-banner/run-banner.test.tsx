@@ -17,16 +17,16 @@ describe('RunBanner', () => {
     ).toBeInTheDocument();
   });
 
-  it('uses the surface-specific total (37 for host)', () => {
+  it('uses the surface-specific total (41 for host)', () => {
     render(
       <RunBanner
-        total={37}
+        total={41}
         withResults={8}
         docsUrl="https://example.test/docs"
       />,
     );
     expect(
-      screen.getByText(/37 queries ran · 8 returned results/),
+      screen.getByText(/41 queries ran · 8 returned results/),
     ).toBeInTheDocument();
   });
 

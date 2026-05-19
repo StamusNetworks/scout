@@ -236,6 +236,38 @@ describe('useGetHuntingTrailQuery (queryFn fan-out)', () => {
     expect(captured[0].get('discovery')).toBe('true');
   });
 
+  it('passes hostIdQfilter to the endpoint as host_id_qfilter when present', async () => {
+    const captured: Array<URLSearchParams> = [];
+    server.use(
+      http.get(baseUrl + '/rules/es/alerts_tail', ({ request }) => {
+        captured.push(new URL(request.url).searchParams);
+        return HttpResponse.json(emptyPaginated);
+      }),
+    );
+    const resolvedQueries: ResolvedQuery[] = [
+      {
+        id: 'unencryptedSmtpService',
+        endpoint: 'alerts_tail',
+        qfilter: '',
+        hostIdQfilter: 'host_id.services.values.app_proto.raw:"smtp"',
+        name: 'Policy: Unencrypted SMTP service',
+        description: '',
+        eventTypeFlags: { alert: true, stamus: true, discovery: true },
+      },
+    ];
+    const store = setupStore(initialState);
+    await store.dispatch(
+      HuntingTrailAPI.endpoints.getHuntingTrail.initiate({
+        ...range,
+        resolvedQueries,
+      }),
+    );
+    expect(captured).toHaveLength(1);
+    expect(captured[0].get('host_id_qfilter')).toBe(
+      'host_id.services.values.app_proto.raw:"smtp"',
+    );
+  });
+
   it('reuses the cache when called with stable args', async () => {
     const alertSpy = vi.fn();
     server.use(

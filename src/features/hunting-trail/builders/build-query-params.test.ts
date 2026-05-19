@@ -255,6 +255,49 @@ describe('buildQueryParams', () => {
     });
   });
 
+  describe('host_id filters (HOSTS_LIST filtersets)', () => {
+    it('extracts host_id.* content into hostIdQfilter', () => {
+      const fs = makeFilterSet({
+        id: -86,
+        page: 'HOSTS_LIST',
+        name: 'Policy: Unencrypted SMTP service',
+        filters: [
+          {
+            id: 'host_id.services.values.app_proto',
+            label: '',
+            value: 'smtp',
+            negated: false,
+            fullString: true,
+          },
+        ],
+      });
+      const result = buildQueryParams(
+        { id: 'unencryptedSmtpService', kind: 'filterset', filtersetId: -86 },
+        [fs],
+        undefined,
+        qfBuilder,
+      );
+      if (result.isMissing) throw new Error('should not be missing');
+      expect(result.hostIdQfilter).toBeDefined();
+      expect(result.hostIdQfilter).toContain(
+        'host_id.services.values.app_proto',
+      );
+      expect(result.hostIdQfilter).toContain('smtp');
+    });
+
+    it('leaves hostIdQfilter undefined when filterset has no host_id filters', () => {
+      const fs = makeFilterSet({ id: -88 });
+      const result = buildQueryParams(
+        { id: 'nrd', kind: 'filterset', filtersetId: -88 },
+        [fs],
+        undefined,
+        qfBuilder,
+      );
+      if (result.isMissing) throw new Error('should not be missing');
+      expect(result.hostIdQfilter).toBeUndefined();
+    });
+  });
+
   describe('static kind', () => {
     it('eventTypeFlags default to all true', () => {
       const result = buildQueryParams(

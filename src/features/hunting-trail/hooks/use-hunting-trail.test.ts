@@ -122,7 +122,7 @@ describe('useHuntingTrail (slice B)', () => {
     expect(result.current.isLoading).toBe(true);
   });
 
-  it('runStats.total equals the config query count (37)', () => {
+  it('runStats.total equals the config query count (41)', () => {
     mockUseFilterSets.mockReturnValue(stubFilterSets());
     mockUseGetHuntingTrailQuery.mockReturnValue(
       stubEndpoint({
@@ -134,7 +134,7 @@ describe('useHuntingTrail (slice B)', () => {
       }),
     );
     const { result } = renderHook(() => useHuntingTrail(range));
-    expect(result.current.runStats.total).toBe(37);
+    expect(result.current.runStats.total).toBe(41);
     expect(result.current.runStats.withResults).toBe(0);
     expect(result.current.runStats.errored).toBe(0);
   });
@@ -173,7 +173,7 @@ describe('useHuntingTrail (slice B)', () => {
       }),
     );
     const { result } = renderHook(() => useHuntingTrail(range));
-    expect(result.current.runStats.total).toBe(37);
+    expect(result.current.runStats.total).toBe(41);
     expect(result.current.runStats.errored).toBeGreaterThanOrEqual(1);
   });
 
