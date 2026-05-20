@@ -1,3 +1,4 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -20,7 +21,6 @@ import {
 import { Input } from '@/common/design-system/atoms/ui/input';
 import { Spin } from '@/common/design-system/atoms/ui/spin';
 import { DefaultField } from '@/common/design-system/molecules/default-field';
-import { zodV4Resolver } from '@/common/lib/zod-resolver';
 import { FilterInput } from '@/features/query-filters/components/edit-qfilter-modal/filter-input';
 import { useGetRuleSetsQuery } from '@/features/rules';
 
@@ -74,7 +74,7 @@ export const SendMailForm = ({
 
   const form = useForm<SendMailFormValues>({
     defaultValues: initialValues,
-    resolver: zodV4Resolver(formSchema),
+    resolver: zodResolver(formSchema),
     mode: 'onChange',
   });
 
