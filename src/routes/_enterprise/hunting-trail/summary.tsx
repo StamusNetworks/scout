@@ -20,7 +20,7 @@ export const Route = createFileRoute('/_enterprise/hunting-trail/summary')({
 });
 
 function SummaryPage() {
-  const { groups } = useNetworkHuntingTrailContext();
+  const { groups, queryMetadata } = useNetworkHuntingTrailContext();
   const search = Route.useSearch();
   const tanstackNavigate = Route.useNavigate();
   const navigate = (opts: {
@@ -48,6 +48,7 @@ function SummaryPage() {
       onPageChange={setPage}
       onPageSizeChange={setPageSize}
       onSortingChange={onSortingChange}
+      queryMetadata={queryMetadata}
     />
   );
 }

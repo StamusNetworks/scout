@@ -18,6 +18,7 @@ import {
   type PurposeGroupData,
   type PurposeSlug,
 } from '../../model/hunting-trail';
+import type { QueryMetadataMap } from '../../model/purpose-grouping';
 import { PurposeAggregated } from '../purpose-aggregated/purpose-aggregated';
 import {
   type AssetRow,
@@ -35,6 +36,7 @@ interface SummaryMatrixProps {
   onPageChange: (page: number) => void;
   onPageSizeChange: (pageSize: number) => void;
   onSortingChange: (updater: Updater<SortingState>) => void;
+  queryMetadata?: QueryMetadataMap;
 }
 
 const useColumns = (): CustomColumnDef<AssetRow>[] =>
@@ -92,6 +94,7 @@ export function SummaryMatrix({
   onPageChange,
   onPageSizeChange,
   onSortingChange,
+  queryMetadata,
 }: SummaryMatrixProps) {
   const allGroups = Object.values(groups);
   const isLoading = allGroups.some((g) => g.isLoading);
@@ -124,6 +127,7 @@ export function SummaryMatrix({
   const renderExpansion = ({ row }: { row: Row<AssetRow> }) => (
     <PurposeAggregated
       groups={filterGroupsByAsset(groups, row.original.asset)}
+      queryMetadata={queryMetadata}
     />
   );
 

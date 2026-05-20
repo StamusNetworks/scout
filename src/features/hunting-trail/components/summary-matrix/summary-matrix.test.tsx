@@ -16,6 +16,7 @@ import {
   type PurposeSlug,
   type TaggedEvent,
 } from '../../model/hunting-trail';
+import type { QueryMetadataMap } from '../../model/purpose-grouping';
 import { SummaryMatrix } from './summary-matrix';
 
 const createTestRouter = () =>
@@ -33,6 +34,7 @@ interface RenderMatrixOptions {
   onPageChange?: (page: number) => void;
   onPageSizeChange?: (size: number) => void;
   onSortingChange?: (updater: Updater<SortingState>) => void;
+  queryMetadata?: QueryMetadataMap;
 }
 
 const renderMatrix = (
@@ -48,6 +50,7 @@ const renderMatrix = (
       onPageChange={options.onPageChange ?? (() => {})}
       onPageSizeChange={options.onPageSizeChange ?? (() => {})}
       onSortingChange={options.onSortingChange ?? (() => {})}
+      queryMetadata={options.queryMetadata}
     />,
     {
       router: createTestRouter(),
@@ -199,6 +202,26 @@ describe('SummaryMatrix', () => {
     expect(screen.getAllByText(/lateral movement/i).length).toBeGreaterThan(1);
     // Cell sums + PurposeAggregated both report "2 events" for this asset
     expect(screen.getAllByText(/2 events/i).length).toBeGreaterThan(0);
+  });
+
+  it('renders the filter set name from queryMetadata in expanded rows (not the timeline-type slug)', async () => {
+    const groups = setEvents(emptyGroups(), 'lateral-movement', [
+      makeEvent({ src: '10.0.0.5' }, 'lateral'),
+    ]);
+    const queryMetadata: QueryMetadataMap = {
+      lateral: {
+        name: 'Hunt: Lateral Movement (custom)',
+        description: '',
+      },
+    };
+    await renderMatrix(groups, { queryMetadata });
+    const user = userEvent.setup();
+    const row = screen.getByText('10.0.0.5').closest('tr')!;
+    await user.click(within(row).getByRole('button', { name: '+' }));
+    expect(
+      screen.getByText('Hunt: Lateral Movement (custom)'),
+    ).toBeInTheDocument();
+    expect(screen.queryByText('lateral')).not.toBeInTheDocument();
   });
 
   it('collapses an expanded row when the toggle is clicked again', async () => {
