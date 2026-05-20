@@ -132,11 +132,26 @@ describe('SendMailForm', () => {
     });
   });
 
-  test('submit stays disabled until at least one ruleset is selected', async () => {
+  test('shows inline validation error and does not submit when no ruleset is selected', async () => {
+    let postCalled = false;
+    server.use(
+      http.post(baseUrl + '/rules/processing-filter/', () => {
+        postCalled = true;
+        return HttpResponse.json({}, { status: 201 });
+      }),
+    );
+
+    const user = userEvent.setup();
     await renderForm();
 
     const submit = await screen.findByRole('button', { name: /Submit/i });
-    expect(submit).toBeDisabled();
+    expect(submit).not.toBeDisabled();
+    await user.click(submit);
+
+    expect(
+      await screen.findByText('You have to select at least one item.'),
+    ).toBeInTheDocument();
+    expect(postCalled).toBe(false);
   });
 
   test('edit mode PATCHes the existing filter action with its id', async () => {

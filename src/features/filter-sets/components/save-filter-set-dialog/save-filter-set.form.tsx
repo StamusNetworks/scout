@@ -359,7 +359,7 @@ export const SaveFilterSetForm = ({
           </Button>
           <Button
             type="submit"
-            disabled={!form.formState.isValid || isLoading}
+            disabled={isLoading}
           >
             {form.formState.isSubmitting ? <Spin /> : 'Submit'}
           </Button>

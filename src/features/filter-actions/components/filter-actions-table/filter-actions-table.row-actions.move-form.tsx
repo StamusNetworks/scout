@@ -187,10 +187,7 @@ export const MoveFilterActionForm = ({
           >
             Cancel
           </Button>
-          <Button
-            type="submit"
-            disabled={!form.formState.isValid}
-          >
+          <Button type="submit">
             {form.formState.isSubmitting ? <Spin /> : 'Submit'}
           </Button>
         </Row>

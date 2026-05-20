@@ -245,7 +245,6 @@ export const ThreatForm = ({ kind, threat, onClose }: Props) => {
           <Button
             type="button"
             onClick={form.handleSubmit(handleSubmit)}
-            disabled={!form.formState.isValid}
           >
             {form.formState.isSubmitting ? <Spin /> : 'Submit'}
           </Button>
