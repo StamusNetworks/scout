@@ -146,7 +146,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            BASE_PATH=/ui/
+            BASE_PATH=/scout/
 
   # Note: Deploy stage jobs are environment-specific and use GitLab-specific features.
   # These jobs trigger external pipelines and manage review environments.
