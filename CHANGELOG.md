@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/StamusNetworks/scout/compare/1.0.0...1.0.1) (2026-05-21)
+
+
+### Bug Fixes
+
+* **ci:** align pnpm version with packageManager field in package.json ([3f9249f](https://github.com/StamusNetworks/scout/commit/3f9249fbeb8518b00801459cd1b05c90376c5e0d))
+
 # 1.0.0 (2026-05-21)
 
 
