@@ -13,7 +13,7 @@ import {
 import { useFeatureFlags } from '@/common/lib/use-feature-flags';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
-import { CEdashboard, dashboard } from '../../definitions/dashboard.config';
+import { CEdashboard, dashboard, DashboardPanel } from '../../definitions/dashboard.config';
 import { selectDisabledKeys } from '../../state/dashboard.selectors';
 import { toggleDisabledKey } from '../../state/dashboard.slice';
 
@@ -23,9 +23,12 @@ export const DashboardKeysToggler = ({
   panelId: keyof typeof dashboard;
 }) => {
   const { enterprise } = useFeatureFlags();
-  const config = enterprise ? dashboard[panelId] : CEdashboard[panelId];
+  const config: DashboardPanel | undefined = enterprise ? dashboard[panelId] : CEdashboard[panelId];
   const disabledKeys = useAppSelector(selectDisabledKeys);
   const dispatch = useAppDispatch();
+
+  if (!config) return null;
+
   return (
     <Dialog>
       <DialogTrigger asChild>
