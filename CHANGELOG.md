@@ -1,3 +1,11 @@
+## [1.0.2](https://github.com/StamusNetworks/scout/compare/1.0.1...1.0.2) (2026-05-22)
+
+
+### Bug Fixes
+
+* **explorer:** guard dashboard config lookups for CE edition ([2cd8c63](https://github.com/StamusNetworks/scout/commit/2cd8c639bcf7b16e989c07474180638dca8d96d7))
+* **host-insights:** make Files timestamp sortable, persist column order ([06c6d14](https://github.com/StamusNetworks/scout/commit/06c6d1414828fc3a15fbe14fa32d51466b84e813))
+
 ## [1.0.1](https://github.com/StamusNetworks/scout/compare/1.0.0...1.0.1) (2026-05-21)
 
 
