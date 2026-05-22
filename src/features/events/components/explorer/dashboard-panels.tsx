@@ -25,7 +25,7 @@ import {
   CEdashboard,
   dashboard,
   DashboardItem,
-  DashboardPanel as TDashboardPanel
+  DashboardPanel as TDashboardPanel,
 } from '../../definitions/dashboard.config';
 import { useDashboard } from '../../hooks/use-dashboard';
 import {
@@ -83,7 +83,9 @@ export const DashboardPanel = ({
   panelId: keyof typeof dashboard;
 }) => {
   const { enterprise } = useFeatureFlags();
-  const config: TDashboardPanel | undefined = enterprise ? dashboard[panelId] : CEdashboard[panelId];
+  const config: TDashboardPanel | undefined = enterprise
+    ? dashboard[panelId]
+    : CEdashboard[panelId];
   const collapsed = useAppSelector(selectIsPanelCollapsed(panelId));
   const hideEmptyPanels = useAppSelector(selectHideEmptyPanels);
   const { data } = useDashboard();
