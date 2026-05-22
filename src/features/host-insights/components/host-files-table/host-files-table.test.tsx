@@ -3,6 +3,7 @@ import {
   createRootRoute,
   createRouter,
 } from '@tanstack/react-router';
+import type { SortingState } from '@tanstack/react-table';
 import { screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
 
@@ -91,7 +92,7 @@ const defaultProps = {
   hostId: '192.168.1.5',
   page: 1,
   pageSize: 10,
-  sorting: [],
+  sorting: [] as SortingState,
   onPageChange: vi.fn(),
   onPageSizeChange: vi.fn(),
   onSortingChange: vi.fn(),
@@ -280,6 +281,38 @@ describe('HostFilesTable', () => {
 
     await waitFor(() => {
       expect(receivedPage).toBe('2');
+    });
+  });
+
+  it('serializes timestamp sorting into the ordering query param', async () => {
+    let receivedOrdering: string | null = null;
+    server.use(
+      http.get(baseUrl + '/rules/es/events_tail/', ({ request }) => {
+        receivedOrdering = new URL(request.url).searchParams.get('ordering');
+        return HttpResponse.json(emptyPaginated);
+      }),
+    );
+
+    await renderTable({ sorting: [{ id: 'timestamp', desc: false }] });
+
+    await waitFor(() => {
+      expect(receivedOrdering).toBe('timestamp');
+    });
+  });
+
+  it('defaults ordering to -timestamp when no sorting is provided', async () => {
+    let receivedOrdering: string | null = null;
+    server.use(
+      http.get(baseUrl + '/rules/es/events_tail/', ({ request }) => {
+        receivedOrdering = new URL(request.url).searchParams.get('ordering');
+        return HttpResponse.json(emptyPaginated);
+      }),
+    );
+
+    await renderTable();
+
+    await waitFor(() => {
+      expect(receivedOrdering).toBe('-timestamp');
     });
   });
 });

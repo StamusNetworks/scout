@@ -8,6 +8,7 @@ import { EventValue } from '@/features/query-filters/components/interactive-valu
 export const hostFilesTableColumns: CustomColumnDef<Event>[] = [
   {
     id: 'timestamp',
+    accessorFn: (row) => row.timestamp,
     cell: ({ row }) => <DateTime date={row.original.timestamp} />,
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -17,7 +18,8 @@ export const hostFilesTableColumns: CustomColumnDef<Event>[] = [
     ),
   },
   {
-    id: 'filename',
+    id: 'fileinfo.filename',
+    enableSorting: false,
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
@@ -35,7 +37,19 @@ export const hostFilesTableColumns: CustomColumnDef<Event>[] = [
       ),
   },
   {
-    id: 'sha256',
+    id: 'fileinfo.mimetype',
+    enableSorting: false,
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="Mimetype"
+      />
+    ),
+    accessorFn: (row) => row.fileinfo?.mimetype ?? row.fileinfo?.type,
+  },
+  {
+    id: 'fileinfo.sha256',
+    enableSorting: false,
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
@@ -59,17 +73,8 @@ export const hostFilesTableColumns: CustomColumnDef<Event>[] = [
     },
   },
   {
-    id: 'mimetype',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="Mimetype"
-      />
-    ),
-    accessorFn: (row) => row.fileinfo?.mimetype ?? row.fileinfo?.type,
-  },
-  {
-    id: 'size',
+    id: 'fileinfo.size',
+    enableSorting: false,
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
@@ -82,7 +87,8 @@ export const hostFilesTableColumns: CustomColumnDef<Event>[] = [
         : '',
   },
   {
-    id: 'chunk',
+    id: 'fileinfo.chunk',
+    enableSorting: false,
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}

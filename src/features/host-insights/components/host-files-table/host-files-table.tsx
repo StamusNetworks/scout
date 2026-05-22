@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 
 import { DataTableEmpty } from '@/common/design-system/molecules/data-table/data-table-empty';
 import { serializeSorting } from '@/common/design-system/molecules/data-table/hooks/sorting-parser';
+import { useTablePreferences } from '@/common/design-system/molecules/data-table/hooks/use-table-preferences';
 import { PaginationFooter } from '@/common/design-system/molecules/pagination-footer';
 import { Table } from '@/common/design-system/molecules/table';
 import { esEscape } from '@/common/lib/strings';
@@ -34,6 +35,16 @@ export function HostFilesTable({
   const params = useGlobalQueryParams(['tenant', 'dates']);
   const ordering = serializeSorting(sorting) || '-timestamp';
 
+  const {
+    columnOrder,
+    onColumnOrderChange,
+    columnVisibility,
+    onColumnVisibilityChange,
+  } = useTablePreferences({
+    tableId: 'hostFilesTable',
+    columns: hostFilesTableColumns,
+  });
+
   const queryParams = useMemo(
     () => ({
       ...params,
@@ -59,6 +70,10 @@ export function HostFilesTable({
         isLoading={isFetching}
         sorting={sorting}
         onSortingChange={onSortingChange}
+        columnOrder={columnOrder}
+        onColumnOrderChange={onColumnOrderChange}
+        columnVisibility={columnVisibility}
+        onColumnVisibilityChange={onColumnVisibilityChange}
         ExpandedRow={ExpandedEventRow}
         Empty={
           <DataTableEmpty
